@@ -11,14 +11,42 @@ describe('FlashCard', () => {
     hsk_level: 1,
   };
 
-  it('shows hanzi on front', () => {
+  it('shows hanzi on front in recognition mode (default)', () => {
     render(<FlashCard card={card} onRate={vi.fn()} />);
     expect(screen.getByText('你好')).toBeDefined();
   });
 
-  it('reveals answer on click', () => {
+  it('reveals pinyin and meaning on click in recognition mode', () => {
     render(<FlashCard card={card} onRate={vi.fn()} />);
     fireEvent.click(screen.getByText('Show Answer'));
+    expect(screen.getByText('nǐ hǎo')).toBeDefined();
+    expect(screen.getByText('hello')).toBeDefined();
+  });
+
+  it('shows meaning on front in recall mode', () => {
+    render(<FlashCard card={card} onRate={vi.fn()} mode="recall" />);
+    expect(screen.getByText('hello')).toBeDefined();
+    expect(screen.queryByText('你好')).toBeNull();
+  });
+
+  it('reveals hanzi and pinyin on click in recall mode', () => {
+    render(<FlashCard card={card} onRate={vi.fn()} mode="recall" />);
+    fireEvent.click(screen.getByText('Show Answer'));
+    expect(screen.getByText('你好')).toBeDefined();
+    expect(screen.getByText('nǐ hǎo')).toBeDefined();
+  });
+
+  it('hides all text on front in listening mode', () => {
+    render(<FlashCard card={card} onRate={vi.fn()} mode="listening" />);
+    expect(screen.queryByText('你好')).toBeNull();
+    expect(screen.queryByText('hello')).toBeNull();
+    expect(screen.getByText('🔊')).toBeDefined();
+  });
+
+  it('reveals hanzi, pinyin, and meaning on click in listening mode', () => {
+    render(<FlashCard card={card} onRate={vi.fn()} mode="listening" />);
+    fireEvent.click(screen.getByText('Show Answer'));
+    expect(screen.getByText('你好')).toBeDefined();
     expect(screen.getByText('nǐ hǎo')).toBeDefined();
     expect(screen.getByText('hello')).toBeDefined();
   });

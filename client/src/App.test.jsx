@@ -23,6 +23,7 @@ describe('App shell', () => {
   it('renders the navigation', () => {
     render(<App />);
     expect(screen.getByText('汉语')).toBeDefined();
+    expect(screen.getByRole('link', { name: '设' })).toBeDefined();
   });
 
   it('renders the dashboard by default', async () => {

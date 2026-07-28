@@ -34,6 +34,37 @@ export function createStatsRouter(db) {
       `)
       .all(since.toISOString().split('T')[0]);
 
+    const learningCurve = db
+      .prepare(`
+        SELECT substr(rl.reviewed_at, 1, 10) as date,
+          (
+            SELECT COUNT(*)
+            FROM srs_cards
+            WHERE user_id = 1
+              AND status = 'mastered'
+              AND last_review <= substr(rl.reviewed_at, 1, 10)
+          ) as mastered
+        FROM review_log rl
+        JOIN srs_cards sc ON rl.card_id = sc.id
+        WHERE sc.user_id = 1
+        GROUP BY substr(rl.reviewed_at, 1, 10)
+        ORDER BY date
+      `)
+      .all();
+
+    const exerciseByType = db.prepare('SELECT type, COUNT(*) as count FROM exercises GROUP BY type').all();
+
+    const weekAgo = new Date();
+    weekAgo.setUTCDate(weekAgo.getUTCDate() - 7);
+    const weekMs = db
+      .prepare('SELECT COALESCE(SUM(time_spent_ms), 0) as total FROM user_stats WHERE user_id = 1 AND date >= ?')
+      .get(weekAgo.toISOString().split('T')[0]).total;
+    const allTimeMs = db
+      .prepare('SELECT COALESCE(SUM(time_spent_ms), 0) as total FROM user_stats WHERE user_id = 1')
+      .get().total;
+
+    const readingTotal = db.prepare('SELECT COUNT(*) as c FROM readings').get().c;
+
     res.json({
       cards: {
         total: totalCards,
@@ -43,6 +74,20 @@ export function createStatsRouter(db) {
       today: todayStats,
       heatmap,
       streak: calculateStreak(db),
+      learning_curve: learningCurve,
+      exercise_stats: {
+        by_type: Object.fromEntries(exerciseByType.map((row) => [row.type, row.count])),
+        accuracy: null,
+      },
+      reading_stats: {
+        total: readingTotal,
+        avg_score: null,
+      },
+      time: {
+        today_ms: todayStats.time_spent_ms || 0,
+        week_ms: weekMs,
+        all_time_ms: allTimeMs,
+      },
     });
   });
 

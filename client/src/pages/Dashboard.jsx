@@ -1,6 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import {
+  CartesianGrid,
+  Cell,
+  Legend,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import { api } from '../services/api';
 
 const STATUS_COLORS = {
@@ -31,6 +43,8 @@ export default function Dashboard() {
   }
 
   const chartData = Object.entries(data.cards.by_status || {}).map(([name, value]) => ({ name, value }));
+  const weekMin = Math.round((data.time?.week_ms || 0) / 60000);
+  const allTimeMin = Math.round((data.time?.all_time_ms || 0) / 60000);
 
   return (
     <div className="space-y-8">
@@ -51,8 +65,12 @@ export default function Dashboard() {
       <section className="grid gap-4 md:grid-cols-4">
         <StatCard label="Deck size" value={data.cards.total} subtitle="Tracked flashcards" />
         <StatCard label="Exercises" value={data.today.exercises_done || 0} subtitle="Completed today" />
-        <StatCard label="Readings" value={data.today.readings_done || 0} subtitle="Finished today" />
-        <StatCard label="Study time" value={`${Math.round((data.today.time_spent_ms || 0) / 60000)} min`} subtitle={`Longest streak ${data.streak.longest}`} />
+        <StatCard label="Readings" value={data.reading_stats?.total || 0} subtitle={`${data.today.readings_done || 0} today`} />
+        <StatCard
+          label="Study time"
+          value={`${Math.round((data.time?.today_ms || 0) / 60000)} min`}
+          subtitle={`${weekMin} min this week · ${allTimeMin} min total`}
+        />
       </section>
 
       <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
@@ -85,6 +103,37 @@ export default function Dashboard() {
           </div>
         </div>
       </section>
+
+      {data.learning_curve && data.learning_curve.length > 0 ? (
+        <section className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+          <h2 className="mb-4 text-xl font-semibold">Learning curve</h2>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data.learning_curve}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="mastered" stroke="#16a34a" strokeWidth={2} dot={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </section>
+      ) : null}
+
+      {data.exercise_stats && Object.keys(data.exercise_stats.by_type || {}).length > 0 ? (
+        <section className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+          <h2 className="mb-4 text-xl font-semibold">Exercise breakdown</h2>
+          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {Object.entries(data.exercise_stats.by_type).map(([type, count]) => (
+              <div key={type} className="rounded-xl bg-[var(--color-bg)] p-4 text-center">
+                <p className="text-2xl font-bold">{count}</p>
+                <p className="text-xs text-[var(--color-text-muted)]">{type.replace('_', ' ')}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
         <div className="mb-4 flex items-center justify-between">

@@ -69,6 +69,30 @@ export function createExercisesRouter(db) {
       return;
     }
 
+    const prompt = JSON.parse(exercise.prompt);
+    let isCorrect = false;
+
+    switch (exercise.type) {
+      case 'reorder': {
+        const expected = (prompt.correct_order || []).join('');
+        isCorrect = answer === expected;
+        break;
+      }
+      case 'matching':
+        isCorrect = answer === 'matched';
+        break;
+      case 'dictation': {
+        const normalized = String(answer).trim().toLowerCase();
+        const expected = String(prompt.audio_text || exercise.answer || '').trim().toLowerCase();
+        const pinyin = String(prompt.pinyin || '').trim().toLowerCase();
+        isCorrect = normalized === expected || (prompt.accept_pinyin && normalized === pinyin);
+        break;
+      }
+      default:
+        isCorrect = exercise.answer === answer;
+        break;
+    }
+
     const today = new Date().toISOString().split('T')[0];
     const existing = db.prepare('SELECT id FROM user_stats WHERE user_id = 1 AND date = ?').get(today);
     if (existing) {
@@ -77,9 +101,13 @@ export function createExercisesRouter(db) {
       db.prepare('INSERT INTO user_stats (user_id, date, exercises_done) VALUES (1, ?, 1)').run(today);
     }
 
+    const correctAnswer = exercise.type === 'reorder'
+      ? (prompt.correct_order || []).join('')
+      : prompt.audio_text || exercise.answer;
+
     res.json({
-      correct: exercise.answer === answer,
-      correct_answer: exercise.answer,
+      correct: isCorrect,
+      correct_answer: correctAnswer,
     });
   });
 

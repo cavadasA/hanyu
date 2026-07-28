@@ -62,7 +62,32 @@ describe('ExerciseRenderer', () => {
     fireEvent.click(screen.getByText('去'));
     fireEvent.click(screen.getByText('学校'));
     fireEvent.click(screen.getByText('Check answer'));
-    expect(onAnswer).toHaveBeenCalledWith(['我', '去', '学校']);
+    expect(onAnswer).toHaveBeenCalledWith('我去学校');
+  });
+
+  it('submits matching completion as a backend-compatible answer', () => {
+    const onAnswer = vi.fn();
+
+    render(
+      <ExerciseRenderer
+        exercise={{
+          type: 'matching',
+          pairs: [
+            { left: '学生', right: 'student' },
+            { left: '老师', right: 'teacher' },
+          ],
+        }}
+        onAnswer={onAnswer}
+        result={null}
+      />
+    );
+
+    fireEvent.click(screen.getByText('学生'));
+    fireEvent.click(screen.getByText('student'));
+    fireEvent.click(screen.getByText('老师'));
+    fireEvent.click(screen.getByText('teacher'));
+
+    expect(onAnswer).toHaveBeenCalledWith('matched');
   });
 
   it('renders result feedback', () => {

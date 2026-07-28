@@ -1,22 +1,2109 @@
 [
-  {"hanzi": "你", "pinyin": "nǐ", "meaning_en": "you", "pos": "pronoun", "frequency": 1},
-  {"hanzi": "好", "pinyin": "hǎo", "meaning_en": "good; well", "pos": "adjective", "frequency": 2},
-  {"hanzi": "我", "pinyin": "wǒ", "meaning_en": "I; me", "pos": "pronoun", "frequency": 3},
-  {"hanzi": "是", "pinyin": "shì", "meaning_en": "to be; is; am; are", "pos": "verb", "frequency": 4},
-  {"hanzi": "的", "pinyin": "de", "meaning_en": "(possessive particle)", "pos": "particle", "frequency": 5},
-  {"hanzi": "不", "pinyin": "bù", "meaning_en": "not; no", "pos": "adverb", "frequency": 6},
-  {"hanzi": "了", "pinyin": "le", "meaning_en": "(completed action marker)", "pos": "particle", "frequency": 7},
-  {"hanzi": "在", "pinyin": "zài", "meaning_en": "at; in; on", "pos": "preposition", "frequency": 8},
-  {"hanzi": "人", "pinyin": "rén", "meaning_en": "person; people", "pos": "noun", "frequency": 9},
-  {"hanzi": "有", "pinyin": "yǒu", "meaning_en": "to have; there is", "pos": "verb", "frequency": 10},
-  {"hanzi": "这", "pinyin": "zhè", "meaning_en": "this", "pos": "pronoun", "frequency": 11},
-  {"hanzi": "中", "pinyin": "zhōng", "meaning_en": "middle; center; China", "pos": "noun", "frequency": 12},
-  {"hanzi": "大", "pinyin": "dà", "meaning_en": "big; large", "pos": "adjective", "frequency": 13},
-  {"hanzi": "来", "pinyin": "lái", "meaning_en": "to come", "pos": "verb", "frequency": 14},
-  {"hanzi": "上", "pinyin": "shàng", "meaning_en": "up; above; on", "pos": "noun", "frequency": 15},
-  {"hanzi": "国", "pinyin": "guó", "meaning_en": "country; nation", "pos": "noun", "frequency": 16},
-  {"hanzi": "个", "pinyin": "gè", "meaning_en": "(general measure word)", "pos": "measure word", "frequency": 17},
-  {"hanzi": "到", "pinyin": "dào", "meaning_en": "to arrive; to go to", "pos": "verb", "frequency": 18},
-  {"hanzi": "说", "pinyin": "shuō", "meaning_en": "to say; to speak", "pos": "verb", "frequency": 19},
-  {"hanzi": "们", "pinyin": "men", "meaning_en": "(plural marker for pronouns)", "pos": "suffix", "frequency": 20}
+  {
+    "hanzi": "的",
+    "pinyin": "de",
+    "meaning_en": "of; ~'s (possessive particle); (used after an attribute when it modifies a noun)",
+    "pos": "particle",
+    "frequency": 943370349
+  },
+  {
+    "hanzi": "了",
+    "pinyin": "le",
+    "meaning_en": "(completed action marker); (modal particle indicating change of state, situation now); (modal particle intensifying preceding clause)",
+    "pos": "particle",
+    "frequency": 255733044
+  },
+  {
+    "hanzi": "在",
+    "pinyin": "zài",
+    "meaning_en": "to exist; to be alive; (of sb or sth) to be (located) at",
+    "pos": "verb",
+    "frequency": 197672850
+  },
+  {
+    "hanzi": "是",
+    "pinyin": "shì",
+    "meaning_en": "to be (followed by substantives only); correct; right",
+    "pos": "verb",
+    "frequency": 171296602
+  },
+  {
+    "hanzi": "我",
+    "pinyin": "wǒ",
+    "meaning_en": "I; me; my",
+    "pos": "pronoun",
+    "frequency": 169391220
+  },
+  {
+    "hanzi": "和",
+    "pinyin": "hé",
+    "meaning_en": "old variant of 和[he2]; (joining two nouns) and; together with",
+    "pos": "preposition",
+    "frequency": 118878434
+  },
+  {
+    "hanzi": "有",
+    "pinyin": "yǒu",
+    "meaning_en": "to have; there is; (bound form) having",
+    "pos": "verb",
+    "frequency": 94271573
+  },
+  {
+    "hanzi": "你",
+    "pinyin": "nǐ",
+    "meaning_en": "you (informal, as opposed to courteous 您[nin2]); you (Note: In Taiwan, 妳 is used to address females, but in mainland China, it is not commonly used. Instead, 你 is used to address both males and females.)",
+    "pos": "pronoun",
+    "frequency": 88487705
+  },
+  {
+    "hanzi": "个",
+    "pinyin": "gè",
+    "meaning_en": "used in 自個兒|自个儿[zi4 ge3 r5]",
+    "pos": "measure word",
+    "frequency": 87859759
+  },
+  {
+    "hanzi": "也",
+    "pinyin": "yě",
+    "meaning_en": "surname Ye",
+    "pos": "adverb",
+    "frequency": 77259249
+  },
+  {
+    "hanzi": "这",
+    "pinyin": "zhè",
+    "meaning_en": "(pronoun) this; these; (bound form) this",
+    "pos": "pronoun",
+    "frequency": 73252887
+  },
+  {
+    "hanzi": "不",
+    "pinyin": "bù",
+    "meaning_en": "no; not so; (bound form) not",
+    "pos": "adverb",
+    "frequency": 70153387
+  },
+  {
+    "hanzi": "他",
+    "pinyin": "tā",
+    "meaning_en": "(third-person singular) (since the early 20th century, usu. male) he; him; his",
+    "pos": "pronoun",
+    "frequency": 67051085
+  },
+  {
+    "hanzi": "上",
+    "pinyin": "shàng",
+    "meaning_en": "used in 上聲|上声[shang3 sheng1]",
+    "pos": "noun",
+    "frequency": 66509925
+  },
+  {
+    "hanzi": "人",
+    "pinyin": "rén",
+    "meaning_en": "person; people; CL:個|个[ge4],位[wei4]",
+    "pos": "noun",
+    "frequency": 65506298
+  },
+  {
+    "hanzi": "年",
+    "pinyin": "nián",
+    "meaning_en": "surname Nian",
+    "pos": "noun",
+    "frequency": 59830333
+  },
+  {
+    "hanzi": "对",
+    "pinyin": "duì",
+    "meaning_en": "right; correct; towards",
+    "pos": "adjective",
+    "frequency": 56546971
+  },
+  {
+    "hanzi": "说",
+    "pinyin": "shuō",
+    "meaning_en": "to persuade",
+    "pos": "verb",
+    "frequency": 52966771
+  },
+  {
+    "hanzi": "都",
+    "pinyin": "dōu",
+    "meaning_en": "surname Du",
+    "pos": "adverb",
+    "frequency": 52527496
+  },
+  {
+    "hanzi": "要",
+    "pinyin": "yào",
+    "meaning_en": "(bound form) to demand; to coerce",
+    "pos": "verb",
+    "frequency": 50753034
+  },
+  {
+    "hanzi": "到",
+    "pinyin": "dào",
+    "meaning_en": "to reach; to arrive; to leave for",
+    "pos": "verb",
+    "frequency": 50645570
+  },
+  {
+    "hanzi": "日",
+    "pinyin": "rì",
+    "meaning_en": "abbr. for 日本[Ri4 ben3], Japan",
+    "pos": "measure word",
+    "frequency": 42260866
+  },
+  {
+    "hanzi": "我们",
+    "pinyin": "wǒmen",
+    "meaning_en": "we; us; ourselves",
+    "pos": "pronoun",
+    "frequency": 41787606
+  },
+  {
+    "hanzi": "好",
+    "pinyin": "hǎo",
+    "meaning_en": "good; appropriate; proper",
+    "pos": "adjective",
+    "frequency": 41528330
+  },
+  {
+    "hanzi": "月",
+    "pinyin": "yuè",
+    "meaning_en": "moon; month; monthly",
+    "pos": "noun",
+    "frequency": 40981378
+  },
+  {
+    "hanzi": "会",
+    "pinyin": "huì",
+    "meaning_en": "can; to have the skill; to know how to",
+    "pos": "verb",
+    "frequency": 40026863
+  },
+  {
+    "hanzi": "大",
+    "pinyin": "dà",
+    "meaning_en": "big; large; great",
+    "pos": "adjective",
+    "frequency": 38361973
+  },
+  {
+    "hanzi": "来",
+    "pinyin": "lái",
+    "meaning_en": "to come; (used as a substitute for a more specific verb); hither (directional complement for motion toward the speaker, as in 回來|回来[hui2 lai5])",
+    "pos": "verb",
+    "frequency": 37970033
+  },
+  {
+    "hanzi": "还",
+    "pinyin": "hái",
+    "meaning_en": "surname Huan",
+    "pos": "adverb",
+    "frequency": 37384723
+  },
+  {
+    "hanzi": "后",
+    "pinyin": "hòu",
+    "meaning_en": "surname Hou",
+    "pos": "noun",
+    "frequency": 33767571
+  },
+  {
+    "hanzi": "两",
+    "pinyin": "liǎng",
+    "meaning_en": "two; both; some",
+    "pos": "numeral",
+    "frequency": 32745515
+  },
+  {
+    "hanzi": "没有",
+    "pinyin": "méiyǒu",
+    "meaning_en": "haven't; hasn't; doesn't exist",
+    "pos": "verb",
+    "frequency": 30405623
+  },
+  {
+    "hanzi": "去",
+    "pinyin": "qù",
+    "meaning_en": "to go; to go to (a place); (of a time etc) last",
+    "pos": "verb",
+    "frequency": 30059353
+  },
+  {
+    "hanzi": "很",
+    "pinyin": "hěn",
+    "meaning_en": "very; quite; (also, often used before an adjective without intensifying its meaning, i.e. as a meaningless syntactic element)",
+    "pos": "adverb",
+    "frequency": 29046232
+  },
+  {
+    "hanzi": "给",
+    "pinyin": "gěi",
+    "meaning_en": "to; for; for the benefit of",
+    "pos": "verb",
+    "frequency": 28952371
+  },
+  {
+    "hanzi": "中国",
+    "pinyin": "Zhōngguó",
+    "meaning_en": "China",
+    "pos": "noun",
+    "frequency": 27811293
+  },
+  {
+    "hanzi": "元",
+    "pinyin": "yuán",
+    "meaning_en": "surname Yuan; Yuan dynasty (1279–1368)",
+    "pos": "measure word",
+    "frequency": 27576670
+  },
+  {
+    "hanzi": "看",
+    "pinyin": "kàn",
+    "meaning_en": "to look after; to take care of; to watch",
+    "pos": "verb",
+    "frequency": 27275620
+  },
+  {
+    "hanzi": "下",
+    "pinyin": "xià",
+    "meaning_en": "down; downwards; below",
+    "pos": "noun",
+    "frequency": 26737542
+  },
+  {
+    "hanzi": "她",
+    "pinyin": "tā",
+    "meaning_en": "she",
+    "pos": "pronoun",
+    "frequency": 26689468
+  },
+  {
+    "hanzi": "可以",
+    "pinyin": "kěyǐ",
+    "meaning_en": "can; may; possible",
+    "pos": "verb",
+    "frequency": 25881411
+  },
+  {
+    "hanzi": "这个",
+    "pinyin": "zhège",
+    "meaning_en": "(pronoun) this; (adjective) this",
+    "pos": "pronoun",
+    "frequency": 24376948
+  },
+  {
+    "hanzi": "能",
+    "pinyin": "néng",
+    "meaning_en": "surname Neng",
+    "pos": "verb",
+    "frequency": 23909882
+  },
+  {
+    "hanzi": "他们",
+    "pinyin": "tāmen",
+    "meaning_en": "they; them",
+    "pos": "pronoun",
+    "frequency": 23760910
+  },
+  {
+    "hanzi": "做",
+    "pinyin": "zuò",
+    "meaning_en": "to make; to produce; to write",
+    "pos": "verb",
+    "frequency": 23494662
+  },
+  {
+    "hanzi": "想",
+    "pinyin": "xiǎng",
+    "meaning_en": "to think (about); to think of; to devise",
+    "pos": "verb",
+    "frequency": 21944953
+  },
+  {
+    "hanzi": "那",
+    "pinyin": "nà",
+    "meaning_en": "surname Na",
+    "pos": "pronoun",
+    "frequency": 21808185
+  },
+  {
+    "hanzi": "新",
+    "pinyin": "xīn",
+    "meaning_en": "abbr. for Xinjiang 新疆[Xin1 jiang1]; abbr. for Singapore 新加坡[Xin1 jia1 po1]; surname Xin",
+    "pos": "adjective",
+    "frequency": 21776749
+  },
+  {
+    "hanzi": "小",
+    "pinyin": "xiǎo",
+    "meaning_en": "small; tiny; few",
+    "pos": "adjective",
+    "frequency": 20674943
+  },
+  {
+    "hanzi": "天",
+    "pinyin": "tiān",
+    "meaning_en": "day; sky; heaven",
+    "pos": "noun",
+    "frequency": 20457907
+  },
+  {
+    "hanzi": "工作",
+    "pinyin": "gōngzuò",
+    "meaning_en": "to work; (of a machine) to operate; job",
+    "pos": "verb",
+    "frequency": 19699227
+  },
+  {
+    "hanzi": "里",
+    "pinyin": "lǐ",
+    "meaning_en": "variant of 裡|里[li3]; lining; interior",
+    "pos": "noun",
+    "frequency": 19397088
+  },
+  {
+    "hanzi": "前",
+    "pinyin": "qián",
+    "meaning_en": "front; forward; ahead",
+    "pos": "noun",
+    "frequency": 18590729
+  },
+  {
+    "hanzi": "公司",
+    "pinyin": "gōngsī",
+    "meaning_en": "company; firm; corporation",
+    "pos": "noun",
+    "frequency": 18463472
+  },
+  {
+    "hanzi": "问题",
+    "pinyin": "wèntí",
+    "meaning_en": "question; problem; issue",
+    "pos": "noun",
+    "frequency": 18326876
+  },
+  {
+    "hanzi": "家",
+    "pinyin": "jiā",
+    "meaning_en": "used in 傢伙|家伙[jia1 huo5] and 傢俱|家俱[jia1 ju4]; home; family",
+    "pos": "noun",
+    "frequency": 17971399
+  },
+  {
+    "hanzi": "吧",
+    "pinyin": "ba",
+    "meaning_en": "bar (loanword) (serving drinks, or providing Internet access etc); to puff (on a pipe etc); (onom.) bang",
+    "pos": "particle",
+    "frequency": 17812571
+  },
+  {
+    "hanzi": "什么",
+    "pinyin": "shénme",
+    "meaning_en": "what?; something; anything",
+    "pos": "pronoun",
+    "frequency": 17796936
+  },
+  {
+    "hanzi": "没",
+    "pinyin": "méi",
+    "meaning_en": "(negative prefix for verbs) have not; not",
+    "pos": "verb",
+    "frequency": 17613557
+  },
+  {
+    "hanzi": "现在",
+    "pinyin": "xiànzài",
+    "meaning_en": "now; at present; currently",
+    "pos": "noun",
+    "frequency": 16365880
+  },
+  {
+    "hanzi": "真",
+    "pinyin": "zhēn",
+    "meaning_en": "really; truly; indeed",
+    "pos": "adverb",
+    "frequency": 16020066
+  },
+  {
+    "hanzi": "本",
+    "pinyin": "běn",
+    "meaning_en": "(bound form) root; stem; (bound form) origin",
+    "pos": "measure word",
+    "frequency": 15546838
+  },
+  {
+    "hanzi": "太",
+    "pinyin": "tài",
+    "meaning_en": "highest; greatest; too (much)",
+    "pos": "adverb",
+    "frequency": 15451106
+  },
+  {
+    "hanzi": "再",
+    "pinyin": "zài",
+    "meaning_en": "again; once more; re-",
+    "pos": "adverb",
+    "frequency": 15399566
+  },
+  {
+    "hanzi": "时间",
+    "pinyin": "shíjiān",
+    "meaning_en": "(concept of) time; (duration of) time; (point in) time",
+    "pos": "noun",
+    "frequency": 14785440
+  },
+  {
+    "hanzi": "爱",
+    "pinyin": "ài",
+    "meaning_en": "to love; to be fond of; to like",
+    "pos": "verb",
+    "frequency": 13772657
+  },
+  {
+    "hanzi": "吃",
+    "pinyin": "chī",
+    "meaning_en": "to eat; to consume; to eat at (a cafeteria etc)",
+    "pos": "verb",
+    "frequency": 12987492
+  },
+  {
+    "hanzi": "时候",
+    "pinyin": "shíhou",
+    "meaning_en": "time; length of time; moment",
+    "pos": "noun",
+    "frequency": 12888353
+  },
+  {
+    "hanzi": "呢",
+    "pinyin": "ne",
+    "meaning_en": "particle indicating that a previously asked question is to be applied to the preceding word ('What about ...?', 'And ...?'); particle for inquiring about location ('Where is ...?'); particle signaling a pause, to emphasize the preceding words and allow the listener time to take them on board ('ok?', 'are you with me?')",
+    "pos": "particle",
+    "frequency": 12641044
+  },
+  {
+    "hanzi": "只",
+    "pinyin": "zhī",
+    "meaning_en": "variant of 隻|只[zhi1]; grain that has begun to ripen; classifier for birds and certain animals, one of a pair, some utensils, vessels etc",
+    "pos": "measure word",
+    "frequency": 12513893
+  },
+  {
+    "hanzi": "今天",
+    "pinyin": "jīntiān",
+    "meaning_en": "today; the present time; now",
+    "pos": "noun",
+    "frequency": 12378709
+  },
+  {
+    "hanzi": "它",
+    "pinyin": "tā",
+    "meaning_en": "it; it (pronoun for an animal)",
+    "pos": "pronoun",
+    "frequency": 12176287
+  },
+  {
+    "hanzi": "分",
+    "pinyin": "fēn",
+    "meaning_en": "to divide; to separate; to distribute",
+    "pos": "measure word",
+    "frequency": 11826179
+  },
+  {
+    "hanzi": "一些",
+    "pinyin": "yìxiē",
+    "meaning_en": "some; a few; a little",
+    "pos": "数量",
+    "frequency": 11583138
+  },
+  {
+    "hanzi": "这些",
+    "pinyin": "zhèxiē",
+    "meaning_en": "these",
+    "pos": "pronoun",
+    "frequency": 11378382
+  },
+  {
+    "hanzi": "大家",
+    "pinyin": "dàjiā",
+    "meaning_en": "everyone; influential family; great expert",
+    "pos": "pronoun",
+    "frequency": 11129890
+  },
+  {
+    "hanzi": "吗",
+    "pinyin": "ma",
+    "meaning_en": "(coll.) what?",
+    "pos": "particle",
+    "frequency": 10975592
+  },
+  {
+    "hanzi": "几",
+    "pinyin": "jǐ",
+    "meaning_en": "small table; almost",
+    "pos": "pronoun",
+    "frequency": 10023845
+  },
+  {
+    "hanzi": "事",
+    "pinyin": "shì",
+    "meaning_en": "matter; thing; item",
+    "pos": "noun",
+    "frequency": 9941650
+  },
+  {
+    "hanzi": "今年",
+    "pinyin": "jīnnián",
+    "meaning_en": "this year",
+    "pos": "noun",
+    "frequency": 9714475
+  },
+  {
+    "hanzi": "喜欢",
+    "pinyin": "xǐhuan",
+    "meaning_en": "to like; to be fond of",
+    "pos": "verb",
+    "frequency": 9589721
+  },
+  {
+    "hanzi": "知道",
+    "pinyin": "zhīdào",
+    "meaning_en": "to know; to become aware of; also pr. [zhi1dao5]",
+    "pos": "verb",
+    "frequency": 9354835
+  },
+  {
+    "hanzi": "车",
+    "pinyin": "chē",
+    "meaning_en": "surname Che",
+    "pos": "noun",
+    "frequency": 9131035
+  },
+  {
+    "hanzi": "怎么",
+    "pinyin": "zěnme",
+    "meaning_en": "how?; what?; why?",
+    "pos": "pronoun",
+    "frequency": 8708842
+  },
+  {
+    "hanzi": "外",
+    "pinyin": "wài",
+    "meaning_en": "outside; in addition; foreign",
+    "pos": "noun",
+    "frequency": 8587903
+  },
+  {
+    "hanzi": "谁",
+    "pinyin": "shéi/shuí",
+    "meaning_en": "who; also pr. [shui2]",
+    "pos": "pronoun",
+    "frequency": 8548190
+  },
+  {
+    "hanzi": "你们",
+    "pinyin": "nǐmen",
+    "meaning_en": "you (plural)",
+    "pos": "pronoun",
+    "frequency": 8527633
+  },
+  {
+    "hanzi": "见",
+    "pinyin": "jiàn",
+    "meaning_en": "to see; to meet; to appear (to be sth)",
+    "pos": "verb",
+    "frequency": 8490843
+  },
+  {
+    "hanzi": "找",
+    "pinyin": "zhǎo",
+    "meaning_en": "to try to find; to look for; to call on sb",
+    "pos": "verb",
+    "frequency": 8427695
+  },
+  {
+    "hanzi": "岁",
+    "pinyin": "suì",
+    "meaning_en": "variant of 歲|岁[sui4], year; years old; classifier for years (of age)",
+    "pos": "measure word",
+    "frequency": 8215534
+  },
+  {
+    "hanzi": "水",
+    "pinyin": "shuǐ",
+    "meaning_en": "surname Shui",
+    "pos": "noun",
+    "frequency": 8153040
+  },
+  {
+    "hanzi": "非常",
+    "pinyin": "fēicháng",
+    "meaning_en": "very; really; unusual",
+    "pos": "adverb",
+    "frequency": 8056541
+  },
+  {
+    "hanzi": "买",
+    "pinyin": "mǎi",
+    "meaning_en": "to buy; to purchase",
+    "pos": "verb",
+    "frequency": 7979402
+  },
+  {
+    "hanzi": "开",
+    "pinyin": "kāi",
+    "meaning_en": "to open (transitive or intransitive); (of ships, vehicles, troops etc) to start; to turn on",
+    "pos": "verb",
+    "frequency": 7960803
+  },
+  {
+    "hanzi": "觉得",
+    "pinyin": "juéde",
+    "meaning_en": "to think that ...; to feel that ...; to feel (uncomfortable etc)",
+    "pos": "verb",
+    "frequency": 7959167
+  },
+  {
+    "hanzi": "不要",
+    "pinyin": "búyào",
+    "meaning_en": "don't!; must not",
+    "pos": "adverb",
+    "frequency": 7793782
+  },
+  {
+    "hanzi": "号",
+    "pinyin": "hào",
+    "meaning_en": "roar; cry; CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 7363824
+  },
+  {
+    "hanzi": "叫",
+    "pinyin": "jiào",
+    "meaning_en": "to shout; to call; to order",
+    "pos": "verb",
+    "frequency": 7079928
+  },
+  {
+    "hanzi": "学生",
+    "pinyin": "xuéshēng",
+    "meaning_en": "student; schoolchild",
+    "pos": "noun",
+    "frequency": 6886521
+  },
+  {
+    "hanzi": "钱",
+    "pinyin": "qián",
+    "meaning_en": "surname Qian",
+    "pos": "noun",
+    "frequency": 6768858
+  },
+  {
+    "hanzi": "请",
+    "pinyin": "qǐng",
+    "meaning_en": "to ask; to invite; please (do sth)",
+    "pos": "verb",
+    "frequency": 6760332
+  },
+  {
+    "hanzi": "问",
+    "pinyin": "wèn",
+    "meaning_en": "to ask; to inquire",
+    "pos": "verb",
+    "frequency": 6740338
+  },
+  {
+    "hanzi": "孩子",
+    "pinyin": "háizi",
+    "meaning_en": "child",
+    "pos": "noun",
+    "frequency": 6681697
+  },
+  {
+    "hanzi": "听",
+    "pinyin": "tīng",
+    "meaning_en": "smile (archaic)",
+    "pos": "verb",
+    "frequency": 6519997
+  },
+  {
+    "hanzi": "回",
+    "pinyin": "huí",
+    "meaning_en": "to circle; to go back; to turn around",
+    "pos": "verb",
+    "frequency": 6341453
+  },
+  {
+    "hanzi": "女",
+    "pinyin": "nǚ",
+    "meaning_en": "female; woman; daughter",
+    "pos": "adjective",
+    "frequency": 5946513
+  },
+  {
+    "hanzi": "一下",
+    "pinyin": "yíxià",
+    "meaning_en": "(after a verb) a bit; a little (indicating brief duration, or softening the tone, or suggesting giving sth a try); all at once",
+    "pos": "数量、（副）",
+    "frequency": 5932374
+  },
+  {
+    "hanzi": "东西",
+    "pinyin": "dōngxi",
+    "meaning_en": "east and west",
+    "pos": "noun",
+    "frequency": 5827002
+  },
+  {
+    "hanzi": "正在",
+    "pinyin": "zhèngzài",
+    "meaning_en": "to be in the process of (doing sth); to be currently ...-ing",
+    "pos": "adverb",
+    "frequency": 5824702
+  },
+  {
+    "hanzi": "这里",
+    "pinyin": "zhèlǐ",
+    "meaning_en": "variant of 這裡|这里[zhe4 li3]; here",
+    "pos": "pronoun",
+    "frequency": 5812931
+  },
+  {
+    "hanzi": "住",
+    "pinyin": "zhù",
+    "meaning_en": "to live; to dwell; to stay",
+    "pos": "verb",
+    "frequency": 5674865
+  },
+  {
+    "hanzi": "学习",
+    "pinyin": "xuéxí",
+    "meaning_en": "to learn; to study",
+    "pos": "verb",
+    "frequency": 5570557
+  },
+  {
+    "hanzi": "件",
+    "pinyin": "jiàn",
+    "meaning_en": "item; component; classifier for events, things, clothes etc",
+    "pos": "measure word",
+    "frequency": 5517461
+  },
+  {
+    "hanzi": "朋友",
+    "pinyin": "péngyou",
+    "meaning_en": "friend; CL:個|个[ge4],位[wei4]",
+    "pos": "noun",
+    "frequency": 5331707
+  },
+  {
+    "hanzi": "去年",
+    "pinyin": "qùnián",
+    "meaning_en": "last year",
+    "pos": "noun",
+    "frequency": 5301941
+  },
+  {
+    "hanzi": "那个",
+    "pinyin": "nàge",
+    "meaning_en": "that one; that thing; that (as opposed to this)",
+    "pos": "pronoun",
+    "frequency": 5296183
+  },
+  {
+    "hanzi": "有些",
+    "pinyin": "yǒuxiē",
+    "meaning_en": "some; somewhat",
+    "pos": "pronoun",
+    "frequency": 5287025
+  },
+  {
+    "hanzi": "昨天",
+    "pinyin": "zuótiān",
+    "meaning_en": "yesterday",
+    "pos": "noun",
+    "frequency": 5187383
+  },
+  {
+    "hanzi": "学校",
+    "pinyin": "xuéxiào",
+    "meaning_en": "school; CL:所[suo3]",
+    "pos": "noun",
+    "frequency": 5160143
+  },
+  {
+    "hanzi": "写",
+    "pinyin": "xiě",
+    "meaning_en": "to write",
+    "pos": "verb",
+    "frequency": 4943588
+  },
+  {
+    "hanzi": "少",
+    "pinyin": "shǎo",
+    "meaning_en": "few; less; to lack",
+    "pos": "adjective",
+    "frequency": 4710056
+  },
+  {
+    "hanzi": "国",
+    "pinyin": "guó",
+    "meaning_en": "surname Guo",
+    "pos": "noun",
+    "frequency": 4684995
+  },
+  {
+    "hanzi": "小时",
+    "pinyin": "xiǎoshí",
+    "meaning_en": "hour; CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 4629165
+  },
+  {
+    "hanzi": "您",
+    "pinyin": "nín",
+    "meaning_en": "you (courteous, as opposed to informal 你[ni3])",
+    "pos": "pronoun",
+    "frequency": 4560428
+  },
+  {
+    "hanzi": "那些",
+    "pinyin": "nàxiē",
+    "meaning_en": "those",
+    "pos": "pronoun",
+    "frequency": 4520517
+  },
+  {
+    "hanzi": "电话",
+    "pinyin": "diànhuà",
+    "meaning_en": "telephone; CL:部[bu4]; phone call",
+    "pos": "noun",
+    "frequency": 4470310
+  },
+  {
+    "hanzi": "睡",
+    "pinyin": "shuì",
+    "meaning_en": "to sleep; to lie down",
+    "pos": "verb",
+    "frequency": 4464165
+  },
+  {
+    "hanzi": "学",
+    "pinyin": "xué",
+    "meaning_en": "to learn; to study; to imitate",
+    "pos": "verb",
+    "frequency": 4458826
+  },
+  {
+    "hanzi": "口",
+    "pinyin": "kǒu",
+    "meaning_en": "mouth; classifier for things with mouths (people, domestic animals, cannons, wells etc); classifier for bites or mouthfuls",
+    "pos": "noun",
+    "frequency": 4395540
+  },
+  {
+    "hanzi": "下午",
+    "pinyin": "xiàwǔ",
+    "meaning_en": "afternoon; CL:個|个[ge4]; p.m.",
+    "pos": "noun",
+    "frequency": 4251438
+  },
+  {
+    "hanzi": "玩",
+    "pinyin": "wán",
+    "meaning_en": "to play; to have fun; to trifle with",
+    "pos": "verb",
+    "frequency": 4207147
+  },
+  {
+    "hanzi": "明天",
+    "pinyin": "míngtiān",
+    "meaning_en": "tomorrow",
+    "pos": "noun",
+    "frequency": 3889610
+  },
+  {
+    "hanzi": "穿",
+    "pinyin": "chuān",
+    "meaning_en": "to wear; to put on; to dress",
+    "pos": "verb",
+    "frequency": 3884646
+  },
+  {
+    "hanzi": "喝",
+    "pinyin": "hē",
+    "meaning_en": "to drink; variant of 嗬[he1]",
+    "pos": "verb",
+    "frequency": 3881270
+  },
+  {
+    "hanzi": "块",
+    "pinyin": "kuài",
+    "meaning_en": "lump; chunk; piece",
+    "pos": "measure word",
+    "frequency": 3871951
+  },
+  {
+    "hanzi": "早",
+    "pinyin": "zǎo",
+    "meaning_en": "early; morning; Good morning!",
+    "pos": "adjective",
+    "frequency": 3857863
+  },
+  {
+    "hanzi": "男",
+    "pinyin": "nán",
+    "meaning_en": "(bound form) male; baron, the lowest of the five ranks of nobility 五等爵位[wu3 deng3 jue2 wei4]",
+    "pos": "adjective",
+    "frequency": 3847599
+  },
+  {
+    "hanzi": "医院",
+    "pinyin": "yīyuàn",
+    "meaning_en": "hospital; CL:所[suo3],家[jia1],座[zuo4]",
+    "pos": "noun",
+    "frequency": 3813656
+  },
+  {
+    "hanzi": "分钟",
+    "pinyin": "fēnzhōng",
+    "meaning_en": "minute",
+    "pos": "measure word",
+    "frequency": 3812320
+  },
+  {
+    "hanzi": "坐",
+    "pinyin": "zuò",
+    "meaning_en": "surname Zuo",
+    "pos": "verb",
+    "frequency": 3800762
+  },
+  {
+    "hanzi": "电影",
+    "pinyin": "diànyǐng",
+    "meaning_en": "movie; film; CL:部[bu4],片[pian4],場|场[chang3]",
+    "pos": "noun",
+    "frequency": 3689714
+  },
+  {
+    "hanzi": "晚上",
+    "pinyin": "wǎnshang",
+    "meaning_en": "evening; night; CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 3682819
+  },
+  {
+    "hanzi": "书",
+    "pinyin": "shū",
+    "meaning_en": "abbr. for 書經|书经[Shu1 jing1]",
+    "pos": "noun",
+    "frequency": 3571022
+  },
+  {
+    "hanzi": "认识",
+    "pinyin": "rènshi",
+    "meaning_en": "to know; to recognize; to be familiar with",
+    "pos": "verb",
+    "frequency": 3502311
+  },
+  {
+    "hanzi": "晚",
+    "pinyin": "wǎn",
+    "meaning_en": "evening; night; late",
+    "pos": "adjective",
+    "frequency": 3391123
+  },
+  {
+    "hanzi": "字",
+    "pinyin": "zì",
+    "meaning_en": "letter; symbol; character",
+    "pos": "noun",
+    "frequency": 3389991
+  },
+  {
+    "hanzi": "边",
+    "pinyin": "biān",
+    "meaning_en": "side; edge; margin",
+    "pos": "noun",
+    "frequency": 3385425
+  },
+  {
+    "hanzi": "多少",
+    "pinyin": "duōshao",
+    "meaning_en": "number; amount; somewhat",
+    "pos": "pronoun",
+    "frequency": 3379566
+  },
+  {
+    "hanzi": "店",
+    "pinyin": "diàn",
+    "meaning_en": "inn; old-style hotel (CL:家[jia1]); (bound form) shop",
+    "pos": "noun",
+    "frequency": 3193100
+  },
+  {
+    "hanzi": "卖",
+    "pinyin": "mài",
+    "meaning_en": "to sell; to betray; to spare no effort",
+    "pos": "verb",
+    "frequency": 3193070
+  },
+  {
+    "hanzi": "有的",
+    "pinyin": "yǒude",
+    "meaning_en": "(there are) some (who are...); some (exist)",
+    "pos": "pronoun",
+    "frequency": 3183017
+  },
+  {
+    "hanzi": "老师",
+    "pinyin": "lǎoshī",
+    "meaning_en": "teacher; CL:個|个[ge4],位[wei4]",
+    "pos": "noun",
+    "frequency": 2997668
+  },
+  {
+    "hanzi": "们",
+    "pinyin": "men",
+    "meaning_en": "plural marker for pronouns, and nouns referring to individuals",
+    "pos": "suffix",
+    "frequency": 2962827
+  },
+  {
+    "hanzi": "冷",
+    "pinyin": "lěng",
+    "meaning_en": "surname Leng",
+    "pos": "adjective",
+    "frequency": 2914595
+  },
+  {
+    "hanzi": "病",
+    "pinyin": "bìng",
+    "meaning_en": "illness; CL:場|场[chang2]; disease",
+    "pos": "noun",
+    "frequency": 2893603
+  },
+  {
+    "hanzi": "上午",
+    "pinyin": "shàngwǔ",
+    "meaning_en": "morning; CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 2861780
+  },
+  {
+    "hanzi": "半",
+    "pinyin": "bàn",
+    "meaning_en": "half; semi-; incomplete",
+    "pos": "numeral",
+    "frequency": 2854116
+  },
+  {
+    "hanzi": "歌",
+    "pinyin": "gē",
+    "meaning_en": "song (CL:首[shou3],支[zhi1]); (bound form) to sing; variant of 歌[ge1]",
+    "pos": "noun",
+    "frequency": 2763966
+  },
+  {
+    "hanzi": "热",
+    "pinyin": "rè",
+    "meaning_en": "to warm up; to heat up; hot (of weather)",
+    "pos": "adjective",
+    "frequency": 2750130
+  },
+  {
+    "hanzi": "妈妈",
+    "pinyin": "māma",
+    "meaning_en": "mama; mommy; mother",
+    "pos": "noun",
+    "frequency": 2733513
+  },
+  {
+    "hanzi": "电视",
+    "pinyin": "diànshì",
+    "meaning_en": "television; TV; CL:臺|台[tai2],部[bu4]",
+    "pos": "noun",
+    "frequency": 2728539
+  },
+  {
+    "hanzi": "大学",
+    "pinyin": "dàxué",
+    "meaning_en": "the Great Learning, one of the Four Books 四書|四书[Si4 shu1] in Confucianism",
+    "pos": "noun",
+    "frequency": 2616716
+  },
+  {
+    "hanzi": "哪",
+    "pinyin": "nǎ",
+    "meaning_en": "how; which",
+    "pos": "pronoun",
+    "frequency": 2578497
+  },
+  {
+    "hanzi": "电脑",
+    "pinyin": "diànnǎo",
+    "meaning_en": "computer; CL:臺|台[tai2]",
+    "pos": "noun",
+    "frequency": 2576740
+  },
+  {
+    "hanzi": "狗",
+    "pinyin": "gǒu",
+    "meaning_en": "dog; CL:隻|只[zhi1],條|条[tiao2]",
+    "pos": "noun",
+    "frequency": 2568477
+  },
+  {
+    "hanzi": "谢谢",
+    "pinyin": "xièxie",
+    "meaning_en": "to thank; thanks; thank you",
+    "pos": "verb",
+    "frequency": 2528380
+  },
+  {
+    "hanzi": "儿子",
+    "pinyin": "érzi",
+    "meaning_en": "son",
+    "pos": "noun",
+    "frequency": 2389621
+  },
+  {
+    "hanzi": "些",
+    "pinyin": "xiē",
+    "meaning_en": "classifier indicating a small amount or small number greater than 1: some, a few, several",
+    "pos": "measure word",
+    "frequency": 2344133
+  },
+  {
+    "hanzi": "先生",
+    "pinyin": "xiānsheng",
+    "meaning_en": "teacher; gentleman; sir",
+    "pos": "noun",
+    "frequency": 2248041
+  },
+  {
+    "hanzi": "唱",
+    "pinyin": "chàng",
+    "meaning_en": "to sing; to call loudly; to chant",
+    "pos": "verb",
+    "frequency": 2235244
+  },
+  {
+    "hanzi": "睡觉",
+    "pinyin": "shuìjiào",
+    "meaning_en": "to go to bed; to sleep",
+    "pos": "verb",
+    "frequency": 2202995
+  },
+  {
+    "hanzi": "它们",
+    "pinyin": "tāmen",
+    "meaning_en": "they; them",
+    "pos": "pronoun",
+    "frequency": 2024150
+  },
+  {
+    "hanzi": "哪里",
+    "pinyin": "nǎlǐ",
+    "meaning_en": "where?; somewhere; anywhere",
+    "pos": "pronoun",
+    "frequency": 2017051
+  },
+  {
+    "hanzi": "同学",
+    "pinyin": "tóngxué",
+    "meaning_en": "to study at the same school; fellow student; classmate",
+    "pos": "noun",
+    "frequency": 1955697
+  },
+  {
+    "hanzi": "她们",
+    "pinyin": "tāmen",
+    "meaning_en": "they; them (females)",
+    "pos": "pronoun",
+    "frequency": 1938149
+  },
+  {
+    "hanzi": "忙",
+    "pinyin": "máng",
+    "meaning_en": "busy; hurriedly; to hurry",
+    "pos": "adjective",
+    "frequency": 1911546
+  },
+  {
+    "hanzi": "那里",
+    "pinyin": "nàlǐ",
+    "meaning_en": "there; that place; there",
+    "pos": "pronoun",
+    "frequency": 1905367
+  },
+  {
+    "hanzi": "天气",
+    "pinyin": "tiānqì",
+    "meaning_en": "weather",
+    "pos": "noun",
+    "frequency": 1855577
+  },
+  {
+    "hanzi": "读",
+    "pinyin": "dú",
+    "meaning_en": "comma; phrase marked by pause",
+    "pos": "verb",
+    "frequency": 1849464
+  },
+  {
+    "hanzi": "女儿",
+    "pinyin": "nǚ'ér",
+    "meaning_en": "daughter",
+    "pos": "noun",
+    "frequency": 1835470
+  },
+  {
+    "hanzi": "说话",
+    "pinyin": "shuōhuà",
+    "meaning_en": "to speak; to say; to talk",
+    "pos": "verb",
+    "frequency": 1801458
+  },
+  {
+    "hanzi": "名字",
+    "pinyin": "míngzi",
+    "meaning_en": "name (of a person or thing); CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 1765890
+  },
+  {
+    "hanzi": "医生",
+    "pinyin": "yīshēng",
+    "meaning_en": "doctor; CL:個|个[ge4],位[wei4],名[ming2]",
+    "pos": "noun",
+    "frequency": 1758616
+  },
+  {
+    "hanzi": "猫",
+    "pinyin": "māo",
+    "meaning_en": "cat (CL:隻|只[zhi1]); (dialect) to hide oneself; (loanword) (coll.) modem",
+    "pos": "noun",
+    "frequency": 1748687
+  },
+  {
+    "hanzi": "看见",
+    "pinyin": "kànjiàn",
+    "meaning_en": "to see; to catch sight of",
+    "pos": "verb",
+    "frequency": 1739832
+  },
+  {
+    "hanzi": "第",
+    "pinyin": "dì",
+    "meaning_en": "(prefix indicating ordinal number, as in 第六[di4 liu4] 'sixth'); (literary) grades in which successful candidates in the imperial examinations were placed; (old) residence of a high official",
+    "pos": "prefix",
+    "frequency": 1732367
+  },
+  {
+    "hanzi": "雪",
+    "pinyin": "xuě",
+    "meaning_en": "surname Xue",
+    "pos": "noun",
+    "frequency": 1707566
+  },
+  {
+    "hanzi": "菜",
+    "pinyin": "cài",
+    "meaning_en": "vegetable; greens (CL:棵[ke1]); dish (of food) (CL:樣|样[yang4],道[dao4],盤|盘[pan2])",
+    "pos": "noun",
+    "frequency": 1686135
+  },
+  {
+    "hanzi": "飞机",
+    "pinyin": "fēijī",
+    "meaning_en": "airplane; CL:架[jia4]",
+    "pos": "noun",
+    "frequency": 1674767
+  },
+  {
+    "hanzi": "漂亮",
+    "pinyin": "piàoliang",
+    "meaning_en": "pretty; beautiful",
+    "pos": "adjective",
+    "frequency": 1660274
+  },
+  {
+    "hanzi": "早上",
+    "pinyin": "zǎoshang",
+    "meaning_en": "early morning; CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 1636879
+  },
+  {
+    "hanzi": "饭",
+    "pinyin": "fàn",
+    "meaning_en": "cooked rice; CL:碗[wan3]; meal",
+    "pos": "noun",
+    "frequency": 1618796
+  },
+  {
+    "hanzi": "明年",
+    "pinyin": "míngnián",
+    "meaning_en": "next year",
+    "pos": "noun",
+    "frequency": 1578089
+  },
+  {
+    "hanzi": "高兴",
+    "pinyin": "gāoxìng",
+    "meaning_en": "happy; glad; willing (to do sth)",
+    "pos": "adjective",
+    "frequency": 1554692
+  },
+  {
+    "hanzi": "爸爸",
+    "pinyin": "bàba",
+    "meaning_en": "(coll.) father; dad; CL:個|个[ge4],位[wei4]",
+    "pos": "noun",
+    "frequency": 1539349
+  },
+  {
+    "hanzi": "休息",
+    "pinyin": "xiūxi",
+    "meaning_en": "rest; to rest",
+    "pos": "verb",
+    "frequency": 1474359
+  },
+  {
+    "hanzi": "上班",
+    "pinyin": "shàngbān",
+    "meaning_en": "to go to work; to be on duty; to start work",
+    "pos": "verb",
+    "frequency": 1465310
+  },
+  {
+    "hanzi": "课",
+    "pinyin": "kè",
+    "meaning_en": "subject; course; CL:門|门[men2]",
+    "pos": "noun",
+    "frequency": 1435527
+  },
+  {
+    "hanzi": "好看",
+    "pinyin": "hǎokàn",
+    "meaning_en": "good-looking; nice-looking; (of a movie, book, TV show etc) good",
+    "pos": "adjective",
+    "frequency": 1414439
+  },
+  {
+    "hanzi": "茶",
+    "pinyin": "chá",
+    "meaning_en": "tea; tea plant; CL:杯[bei1],壺|壶[hu2]",
+    "pos": "noun",
+    "frequency": 1384389
+  },
+  {
+    "hanzi": "中午",
+    "pinyin": "zhōngwǔ",
+    "meaning_en": "noon; midday; CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 1346954
+  },
+  {
+    "hanzi": "雨",
+    "pinyin": "yǔ",
+    "meaning_en": "rain; CL:陣|阵[zhen4],場|场[chang2]",
+    "pos": "noun",
+    "frequency": 1306669
+  },
+  {
+    "hanzi": "姐姐",
+    "pinyin": "jiějie",
+    "meaning_en": "older sister; CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 1279753
+  },
+  {
+    "hanzi": "贵",
+    "pinyin": "guì",
+    "meaning_en": "abbr. for Guizhou Province 貴州|贵州[Gui4 zhou1]",
+    "pos": "adjective",
+    "frequency": 1228605
+  },
+  {
+    "hanzi": "一半",
+    "pinyin": "yíbàn",
+    "meaning_en": "half",
+    "pos": "numeral",
+    "frequency": 1227406
+  },
+  {
+    "hanzi": "家人",
+    "pinyin": "jiārén",
+    "meaning_en": "family member; (old) servant",
+    "pos": "noun",
+    "frequency": 1165923
+  },
+  {
+    "hanzi": "打电话",
+    "pinyin": "dǎ diànhuà",
+    "meaning_en": "to make a telephone call",
+    "pos": "",
+    "frequency": 1138572
+  },
+  {
+    "hanzi": "苹果",
+    "pinyin": "píngguǒ",
+    "meaning_en": "Apple (American tech company)",
+    "pos": "noun",
+    "frequency": 1102063
+  },
+  {
+    "hanzi": "大学生",
+    "pinyin": "dàxuéshēng",
+    "meaning_en": "university student; college student",
+    "pos": "noun",
+    "frequency": 1078582
+  },
+  {
+    "hanzi": "房间",
+    "pinyin": "fángjiān",
+    "meaning_en": "room; CL:間|间[jian1],個|个[ge4]",
+    "pos": "noun",
+    "frequency": 1060503
+  },
+  {
+    "hanzi": "喂",
+    "pinyin": "wèi",
+    "meaning_en": "hello (when answering the phone)",
+    "pos": "interjection",
+    "frequency": 1042918
+  },
+  {
+    "hanzi": "小学",
+    "pinyin": "xiǎoxué",
+    "meaning_en": "elementary school; primary school",
+    "pos": "noun",
+    "frequency": 1000714
+  },
+  {
+    "hanzi": "哪个",
+    "pinyin": "nǎge",
+    "meaning_en": "which; who",
+    "pos": "pronoun",
+    "frequency": 986728
+  },
+  {
+    "hanzi": "起床",
+    "pinyin": "qǐchuáng",
+    "meaning_en": "to get out of bed; to get up",
+    "pos": "verb",
+    "frequency": 971659
+  },
+  {
+    "hanzi": "哥哥",
+    "pinyin": "gēge",
+    "meaning_en": "older brother; CL:個|个[ge4],位[wei4]",
+    "pos": "noun",
+    "frequency": 957711
+  },
+  {
+    "hanzi": "衣服",
+    "pinyin": "yīfu",
+    "meaning_en": "clothes; CL:件[jian4],套[tao4]",
+    "pos": "noun",
+    "frequency": 932764
+  },
+  {
+    "hanzi": "怎么样",
+    "pinyin": "zěnmeyàng",
+    "meaning_en": "how?; how about?; how was it?",
+    "pos": "pronoun",
+    "frequency": 927693
+  },
+  {
+    "hanzi": "好吃",
+    "pinyin": "hǎochī",
+    "meaning_en": "tasty; delicious",
+    "pos": "adjective",
+    "frequency": 819558
+  },
+  {
+    "hanzi": "便宜",
+    "pinyin": "piányi",
+    "meaning_en": "convenient",
+    "pos": "adjective",
+    "frequency": 812874
+  },
+  {
+    "hanzi": "对不起",
+    "pinyin": "duìbuqǐ",
+    "meaning_en": "I'm sorry; excuse me; I beg your pardon",
+    "pos": "verb",
+    "frequency": 800251
+  },
+  {
+    "hanzi": "水果",
+    "pinyin": "shuǐguǒ",
+    "meaning_en": "fruit; CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 792023
+  },
+  {
+    "hanzi": "星期",
+    "pinyin": "xīngqī",
+    "meaning_en": "week; CL:個|个[ge4]; day of the week",
+    "pos": "noun",
+    "frequency": 755765
+  },
+  {
+    "hanzi": "读书",
+    "pinyin": "dúshū",
+    "meaning_en": "to read a book; to study; to attend school",
+    "pos": "verb",
+    "frequency": 735952
+  },
+  {
+    "hanzi": "妹妹",
+    "pinyin": "mèimei",
+    "meaning_en": "younger sister; young woman; CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 714797
+  },
+  {
+    "hanzi": "中学",
+    "pinyin": "zhōngxué",
+    "meaning_en": "middle school",
+    "pos": "noun",
+    "frequency": 710971
+  },
+  {
+    "hanzi": "上课",
+    "pinyin": "shàngkè",
+    "meaning_en": "to go to class; to attend class; to go to teach a class",
+    "pos": "verb",
+    "frequency": 703933
+  },
+  {
+    "hanzi": "牛奶",
+    "pinyin": "niúnǎi",
+    "meaning_en": "cow's milk; CL:瓶[ping2],杯[bei1]",
+    "pos": "noun",
+    "frequency": 686739
+  },
+  {
+    "hanzi": "没事",
+    "pinyin": "méishì",
+    "meaning_en": "it's not important; it's nothing; never mind",
+    "pos": "verb",
+    "frequency": 667817
+  },
+  {
+    "hanzi": "你好",
+    "pinyin": "nǐ hǎo",
+    "meaning_en": "hello; hi",
+    "pos": "",
+    "frequency": 659697
+  },
+  {
+    "hanzi": "中文",
+    "pinyin": "Zhōngwén",
+    "meaning_en": "Chinese language",
+    "pos": "noun",
+    "frequency": 654899
+  },
+  {
+    "hanzi": "哪些",
+    "pinyin": "nǎxiē",
+    "meaning_en": "which ones?; who?; what?",
+    "pos": "pronoun",
+    "frequency": 648251
+  },
+  {
+    "hanzi": "出租车",
+    "pinyin": "chūzūchē",
+    "meaning_en": "taxi; (Tw) rental car",
+    "pos": "noun",
+    "frequency": 627350
+  },
+  {
+    "hanzi": "下班",
+    "pinyin": "xiàbān",
+    "meaning_en": "to finish work; to get off work; next service (train, bus etc)",
+    "pos": "verb",
+    "frequency": 620525
+  },
+  {
+    "hanzi": "白天",
+    "pinyin": "báitiān",
+    "meaning_en": "daytime; during the day; day",
+    "pos": "noun",
+    "frequency": 606766
+  },
+  {
+    "hanzi": "火车",
+    "pinyin": "huǒchē",
+    "meaning_en": "train; CL:列[lie4],節|节[jie2],班[ban1],趟[tang4]",
+    "pos": "noun",
+    "frequency": 575333
+  },
+  {
+    "hanzi": "开车",
+    "pinyin": "kāichē",
+    "meaning_en": "to drive a car (or train etc); (slang) to post sexual content online; to make a sexual joke",
+    "pos": "verb",
+    "frequency": 571486
+  },
+  {
+    "hanzi": "上学",
+    "pinyin": "shàngxué",
+    "meaning_en": "to go to school; to attend school",
+    "pos": "verb",
+    "frequency": 567120
+  },
+  {
+    "hanzi": "鸡蛋",
+    "pinyin": "jīdàn",
+    "meaning_en": "(chicken) egg; hen's egg; CL:個|个[ge4],打[da2]",
+    "pos": "noun",
+    "frequency": 562123
+  },
+  {
+    "hanzi": "弟弟",
+    "pinyin": "dìdi",
+    "meaning_en": "younger brother; CL:個|个[ge4],位[wei4]",
+    "pos": "noun",
+    "frequency": 561912
+  },
+  {
+    "hanzi": "女士",
+    "pinyin": "nǚshì",
+    "meaning_en": "lady; madam; CL:個|个[ge4],位[wei4]",
+    "pos": "noun",
+    "frequency": 554862
+  },
+  {
+    "hanzi": "好听",
+    "pinyin": "hǎotīng",
+    "meaning_en": "pleasant to hear",
+    "pos": "adjective",
+    "frequency": 535740
+  },
+  {
+    "hanzi": "那边",
+    "pinyin": "nàbiān",
+    "meaning_en": "over there; yonder",
+    "pos": "pronoun",
+    "frequency": 498433
+  },
+  {
+    "hanzi": "再见",
+    "pinyin": "zàijiàn",
+    "meaning_en": "goodbye; see you again later",
+    "pos": "verb",
+    "frequency": 457344
+  },
+  {
+    "hanzi": "饭店",
+    "pinyin": "fàndiàn",
+    "meaning_en": "restaurant; hotel; CL:家[jia1],個|个[ge4]",
+    "pos": "noun",
+    "frequency": 455311
+  },
+  {
+    "hanzi": "小朋友",
+    "pinyin": "xiǎopéngyǒu",
+    "meaning_en": "child; kid (used to refer to a child, or by an adult to address a child, or, in Taiwan, to refer to sb's own child); CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 441938
+  },
+  {
+    "hanzi": "下雨",
+    "pinyin": "xià yǔ",
+    "meaning_en": "to rain",
+    "pos": "",
+    "frequency": 438477
+  },
+  {
+    "hanzi": "哪儿",
+    "pinyin": "nǎr",
+    "meaning_en": "where?; wherever; anywhere",
+    "pos": "pronoun",
+    "frequency": 435352
+  },
+  {
+    "hanzi": "这边",
+    "pinyin": "zhèbiān",
+    "meaning_en": "this side; here",
+    "pos": "pronoun",
+    "frequency": 429528
+  },
+  {
+    "hanzi": "这儿",
+    "pinyin": "zhèr",
+    "meaning_en": "here",
+    "pos": "pronoun",
+    "frequency": 428939
+  },
+  {
+    "hanzi": "女朋友",
+    "pinyin": "nǚpéngyou",
+    "meaning_en": "girlfriend",
+    "pos": "noun",
+    "frequency": 426753
+  },
+  {
+    "hanzi": "商店",
+    "pinyin": "shāngdiàn",
+    "meaning_en": "store; shop; CL:家[jia1],個|个[ge4]",
+    "pos": "noun",
+    "frequency": 425332
+  },
+  {
+    "hanzi": "请问",
+    "pinyin": "qǐngwèn",
+    "meaning_en": "Excuse me, may I ask...?",
+    "pos": "verb",
+    "frequency": 418626
+  },
+  {
+    "hanzi": "听见",
+    "pinyin": "tīngjiàn",
+    "meaning_en": "to hear",
+    "pos": "verb",
+    "frequency": 401801
+  },
+  {
+    "hanzi": "男朋友",
+    "pinyin": "nánpéngyou",
+    "meaning_en": "boyfriend",
+    "pos": "noun",
+    "frequency": 394072
+  },
+  {
+    "hanzi": "汉语",
+    "pinyin": "Hànyǔ",
+    "meaning_en": "Chinese language",
+    "pos": "noun",
+    "frequency": 376386
+  },
+  {
+    "hanzi": "桌子",
+    "pinyin": "zhuōzi",
+    "meaning_en": "table; desk; CL:張|张[zhang1],套[tao4]",
+    "pos": "noun",
+    "frequency": 350339
+  },
+  {
+    "hanzi": "晚饭",
+    "pinyin": "wǎnfàn",
+    "meaning_en": "evening meal; dinner; supper",
+    "pos": "noun",
+    "frequency": 327530
+  },
+  {
+    "hanzi": "生病",
+    "pinyin": "shēngbìng",
+    "meaning_en": "to fall ill",
+    "pos": "verb",
+    "frequency": 311706
+  },
+  {
+    "hanzi": "面包",
+    "pinyin": "miànbāo",
+    "meaning_en": "bread; CL:片[pian4],塊|块[kuai4]",
+    "pos": "noun",
+    "frequency": 308255
+  },
+  {
+    "hanzi": "看病",
+    "pinyin": "kànbìng",
+    "meaning_en": "to visit a doctor; to see a patient",
+    "pos": "verb",
+    "frequency": 292655
+  },
+  {
+    "hanzi": "没关系",
+    "pinyin": "méi guānxi",
+    "meaning_en": "it doesn't matter",
+    "pos": "",
+    "frequency": 289385
+  },
+  {
+    "hanzi": "那儿",
+    "pinyin": "nàr",
+    "meaning_en": "there",
+    "pos": "pronoun",
+    "frequency": 287368
+  },
+  {
+    "hanzi": "椅子",
+    "pinyin": "yǐzi",
+    "meaning_en": "chair; CL:把[ba3],張|张[zhang1]",
+    "pos": "noun",
+    "frequency": 268369
+  },
+  {
+    "hanzi": "做饭",
+    "pinyin": "zuò fàn",
+    "meaning_en": "to prepare a meal; to cook",
+    "pos": "",
+    "frequency": 247090
+  },
+  {
+    "hanzi": "饺子",
+    "pinyin": "jiǎozi",
+    "meaning_en": "dumpling; pot-sticker; CL:個|个[ge4],隻|只[zhi1]",
+    "pos": "noun",
+    "frequency": 244324
+  },
+  {
+    "hanzi": "小学生",
+    "pinyin": "xiǎoxuéshēng",
+    "meaning_en": "primary school student; schoolchild; CL:個|个[ge4],名[ming2]",
+    "pos": "noun",
+    "frequency": 240070
+  },
+  {
+    "hanzi": "书店",
+    "pinyin": "shūdiàn",
+    "meaning_en": "bookstore; CL:家[jia1]",
+    "pos": "noun",
+    "frequency": 213352
+  },
+  {
+    "hanzi": "中学生",
+    "pinyin": "zhōngxuéshēng",
+    "meaning_en": "middle-school student; high school student",
+    "pos": "noun",
+    "frequency": 208792
+  },
+  {
+    "hanzi": "午饭",
+    "pinyin": "wǔfàn",
+    "meaning_en": "lunch; CL:份[fen4],頓|顿[dun4],次[ci4],餐[can1]",
+    "pos": "noun",
+    "frequency": 207337
+  },
+  {
+    "hanzi": "杯子",
+    "pinyin": "bēizi",
+    "meaning_en": "cup; glass; CL:個|个[ge4],隻|只[zhi1]",
+    "pos": "noun",
+    "frequency": 195418
+  },
+  {
+    "hanzi": "下课",
+    "pinyin": "xiàkè",
+    "meaning_en": "to finish class; to get out of class; (fig.) (esp. of a sports coach) to be dismissed",
+    "pos": "verb",
+    "frequency": 183572
+  },
+  {
+    "hanzi": "电影院",
+    "pinyin": "diànyǐngyuàn",
+    "meaning_en": "cinema; movie theater; CL:家[jia1],座[zuo4]",
+    "pos": "noun",
+    "frequency": 180523
+  },
+  {
+    "hanzi": "包子",
+    "pinyin": "bāozi",
+    "meaning_en": "baozi; bao (steamed stuffed bun); CL:個|个[ge4]",
+    "pos": "noun",
+    "frequency": 180316
+  },
+  {
+    "hanzi": "早饭",
+    "pinyin": "zǎofàn",
+    "meaning_en": "breakfast; CL:份[fen4],頓|顿[dun4],次[ci4],餐[can1]",
+    "pos": "noun",
+    "frequency": 171028
+  },
+  {
+    "hanzi": "汉字",
+    "pinyin": "Hànzì",
+    "meaning_en": "Chinese character(s)",
+    "pos": "noun",
+    "frequency": 159378
+  },
+  {
+    "hanzi": "星期天",
+    "pinyin": "xīngqītiān",
+    "meaning_en": "Sunday",
+    "pos": "noun",
+    "frequency": 136670
+  },
+  {
+    "hanzi": "有点儿",
+    "pinyin": "yǒudiǎnr",
+    "meaning_en": "slightly; a little; somewhat",
+    "pos": "adverb",
+    "frequency": 131863
+  },
+  {
+    "hanzi": "米饭",
+    "pinyin": "mǐfàn",
+    "meaning_en": "(cooked) rice",
+    "pos": "noun",
+    "frequency": 129974
+  },
+  {
+    "hanzi": "一点儿",
+    "pinyin": "yìdiǎnr",
+    "meaning_en": "erhua variant of 一點|一点[yi1 dian3]",
+    "pos": "adverb",
+    "frequency": 129371
+  },
+  {
+    "hanzi": "星期日",
+    "pinyin": "xīngqīrì",
+    "meaning_en": "Sunday",
+    "pos": "noun",
+    "frequency": 101243
+  },
+  {
+    "hanzi": "外边",
+    "pinyin": "wàibian",
+    "meaning_en": "outside; outer surface; abroad",
+    "pos": "noun",
+    "frequency": 74404
+  },
+  {
+    "hanzi": "不客气",
+    "pinyin": "bú kèqi",
+    "meaning_en": "you're welcome; don't mention it; impolite",
+    "pos": "",
+    "frequency": 71459
+  },
+  {
+    "hanzi": "好玩儿",
+    "pinyin": "hǎowánr",
+    "meaning_en": "erhua variant of 好玩[hao3 wan2]",
+    "pos": "adjective",
+    "frequency": 21352
+  },
+  {
+    "hanzi": "八",
+    "pinyin": "bā",
+    "meaning_en": "eight",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "百",
+    "pinyin": "bǎi",
+    "meaning_en": "surname Bai",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "超市",
+    "pinyin": "chāoshì",
+    "meaning_en": "supermarket (abbr. for 超級市場|超级市场[chao1 ji2 shi4 chang3]); CL:家[jia1]",
+    "pos": "noun",
+    "frequency": 0
+  },
+  {
+    "hanzi": "点",
+    "pinyin": "diǎn",
+    "meaning_en": "to touch briefly; to tap; to mark with a dot",
+    "pos": "measure word",
+    "frequency": 0
+  },
+  {
+    "hanzi": "多",
+    "pinyin": "duō",
+    "meaning_en": "many; much; more",
+    "pos": "adjective",
+    "frequency": 0
+  },
+  {
+    "hanzi": "二",
+    "pinyin": "èr",
+    "meaning_en": "two; 2; (Beijing dialect) stupid",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "九",
+    "pinyin": "jiǔ",
+    "meaning_en": "nine; 9",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "零",
+    "pinyin": "líng",
+    "meaning_en": "zero; nought; zero sign",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "六",
+    "pinyin": "liù",
+    "meaning_en": "six; 6",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "面条儿",
+    "pinyin": "miàntiáor",
+    "meaning_en": "erhua variant of 麵條|面条[mian4 tiao2]",
+    "pos": "noun",
+    "frequency": 0
+  },
+  {
+    "hanzi": "七",
+    "pinyin": "qī",
+    "meaning_en": "seven; 7",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "千",
+    "pinyin": "qiān",
+    "meaning_en": "thousand; used in 鞦韆|秋千[qiu1 qian1]",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "三",
+    "pinyin": "sān",
+    "meaning_en": "surname San",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "十",
+    "pinyin": "shí",
+    "meaning_en": "ten; 10",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "手机",
+    "pinyin": "shǒujī",
+    "meaning_en": "cell phone; mobile phone; CL:部[bu4]",
+    "pos": "noun",
+    "frequency": 0
+  },
+  {
+    "hanzi": "四",
+    "pinyin": "sì",
+    "meaning_en": "four; 4",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "五",
+    "pinyin": "wǔ",
+    "meaning_en": "five; 5",
+    "pos": "numeral",
+    "frequency": 0
+  },
+  {
+    "hanzi": "一",
+    "pinyin": "yī",
+    "meaning_en": "one; single; a (article)",
+    "pos": "numeral",
+    "frequency": 0
+  }
 ]

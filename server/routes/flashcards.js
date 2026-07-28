@@ -6,15 +6,20 @@ export function createFlashcardsRouter(db) {
 
   router.get('/due', (req, res) => {
     const today = new Date().toISOString().split('T')[0];
-    const limit = Math.min(100, parseInt(req.query.limit, 10) || 50);
+    const settings = JSON.parse(db.prepare('SELECT settings FROM users WHERE id = 1').get()?.settings || '{}');
+    const maxFromSettings = settings.max_reviews_per_session || 100;
+    const limit = Math.min(maxFromSettings, parseInt(req.query.limit, 10) || maxFromSettings);
+    const orderClause = settings.card_order === 'frequency'
+      ? 'ORDER BY w.frequency ASC, sc.next_review ASC'
+      : "ORDER BY sc.next_review ASC, sc.status = 'new' DESC";
 
     const cards = db
       .prepare(`
-        SELECT sc.*, w.hanzi, w.pinyin, w.meaning_en, w.meaning_es, w.hsk_level, w.pos
+        SELECT sc.*, w.hanzi, w.pinyin, w.meaning_en, w.meaning_es, w.hsk_level, w.pos, w.frequency
         FROM srs_cards sc
         JOIN words w ON sc.word_id = w.id
         WHERE sc.user_id = 1 AND sc.next_review <= ?
-        ORDER BY sc.next_review ASC, sc.status = 'new' DESC
+        ${orderClause}
         LIMIT ?
       `)
       .all(today, limit);

@@ -75,4 +75,30 @@ describe('Stats API', () => {
     expect(response.status).toBe(200);
     expect(response.body.time_spent_ms).toBeGreaterThanOrEqual(60000);
   });
+
+  it('GET /api/stats/dashboard includes learning curve', async () => {
+    const response = await request(app, 'GET', '/api/stats/dashboard');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('learning_curve');
+    expect(response.body.learning_curve).toBeInstanceOf(Array);
+  });
+
+  it('GET /api/stats/dashboard includes exercise stats', async () => {
+    const response = await request(app, 'GET', '/api/stats/dashboard');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('exercise_stats');
+    expect(response.body.exercise_stats).toHaveProperty('by_type');
+  });
+
+  it('GET /api/stats/dashboard includes time periods', async () => {
+    const response = await request(app, 'GET', '/api/stats/dashboard');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('time');
+    expect(response.body.time).toHaveProperty('today_ms');
+    expect(response.body.time).toHaveProperty('week_ms');
+    expect(response.body.time).toHaveProperty('all_time_ms');
+  });
 });

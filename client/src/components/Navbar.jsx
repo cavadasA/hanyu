@@ -41,14 +41,14 @@ export default function Navbar() {
         </div>
       </nav>
 
-      <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-around border-t border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-2 md:hidden">
-        {links.slice(0, 5).map(({ to, mobile }) => (
+      <nav className="fixed bottom-0 left-0 right-0 z-50 flex gap-1 overflow-x-auto border-t border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-2 md:hidden">
+        {links.map(({ to, mobile }) => (
           <NavLink
             key={to}
             to={to}
             end={to === '/'}
             className={({ isActive }) =>
-              `rounded-lg px-3 py-2 text-sm font-semibold ${
+              `shrink-0 rounded-lg px-3 py-2 text-sm font-semibold ${
                 isActive ? 'bg-[var(--color-vermilion)] text-white' : 'text-[var(--color-text-muted)]'
               }`
             }

@@ -107,4 +107,21 @@ describe('Flashcards API', () => {
     expect(response.body).toHaveProperty('due');
     expect(response.body).toHaveProperty('by_status');
   });
+
+  it('GET /api/flashcards/due respects max_reviews_per_session from settings', async () => {
+    const settings = JSON.parse(db.prepare('SELECT settings FROM users WHERE id = 1').get().settings);
+    settings.max_reviews_per_session = 1;
+    db.prepare('UPDATE users SET settings = ? WHERE id = 1').run(JSON.stringify(settings));
+
+    const words = db.prepare('SELECT id FROM words LIMIT 3').all();
+    const today = new Date().toISOString().split('T')[0];
+    for (const word of words) {
+      db.prepare("INSERT INTO srs_cards (user_id, word_id, next_review, status) VALUES (1, ?, ?, 'new')").run(word.id, today);
+    }
+
+    const response = await request(app, 'GET', '/api/flashcards/due');
+
+    expect(response.status).toBe(200);
+    expect(response.body.cards.length).toBe(1);
+  });
 });

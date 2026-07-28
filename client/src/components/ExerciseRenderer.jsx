@@ -47,7 +47,6 @@ function MultipleChoice({ exercise, onAnswer, result }) {
 
 function Reorder({ exercise, onAnswer, result }) {
   const [selected, setSelected] = useState([]);
-  const remaining = exercise.words.filter((word, index) => !selected.some((item) => item.index === index));
 
   return (
     <section className="space-y-4">
@@ -82,7 +81,7 @@ function Reorder({ exercise, onAnswer, result }) {
       </div>
       <button
         type="button"
-        onClick={() => onAnswer(selected.map((item) => item.word))}
+        onClick={() => onAnswer(selected.map((item) => item.word).join(''))}
         className="rounded-lg bg-[var(--color-vermilion)] px-4 py-2 font-medium text-white"
       >
         Check answer
@@ -122,27 +121,41 @@ function Dictation({ exercise, onAnswer, result }) {
 
 function Matching({ exercise, onAnswer, result }) {
   const [selectedLeft, setSelectedLeft] = useState(null);
-  const [pairs, setPairs] = useState([]);
-
-  const rightOptions = exercise.pairs.map((pair) => pair.right);
+  const [matched, setMatched] = useState([]);
 
   function togglePair(right) {
     if (!selectedLeft) {
       return;
     }
 
-    setPairs((current) => {
-      const next = current.filter((pair) => pair.left !== selectedLeft && pair.right !== right);
-      return [...next, { left: selectedLeft, right }];
-    });
+    const pair = exercise.pairs.find((item) => item.left === selectedLeft && item.right === right);
+
+    if (pair) {
+      setMatched((current) => {
+        const next = [...current, pair];
+        if (next.length === exercise.pairs.length) {
+          onAnswer('matched');
+        }
+
+        return next;
+      });
+    }
+
     setSelectedLeft(null);
   }
+
+  const unmatchedLeft = exercise.pairs.filter(
+    (pair) => !matched.some((item) => item.left === pair.left)
+  );
+  const unmatchedRight = exercise.pairs.filter(
+    (pair) => !matched.some((item) => item.right === pair.right)
+  );
 
   return (
     <section className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
-          {exercise.pairs.map((pair) => (
+          {unmatchedLeft.map((pair) => (
             <button
               key={pair.left}
               type="button"
@@ -156,25 +169,21 @@ function Matching({ exercise, onAnswer, result }) {
           ))}
         </div>
         <div className="space-y-2">
-          {rightOptions.map((right) => (
+          {unmatchedRight.map((pair) => (
             <button
-              key={right}
+              key={pair.right}
               type="button"
-              onClick={() => togglePair(right)}
+              onClick={() => togglePair(pair.right)}
               className="block w-full rounded-lg border border-[var(--color-border)] px-3 py-2 text-left"
             >
-              {right}
+              {pair.right}
             </button>
           ))}
         </div>
       </div>
-      <button
-        type="button"
-        onClick={() => onAnswer(pairs)}
-        className="rounded-lg bg-[var(--color-vermilion)] px-4 py-2 font-medium text-white"
-      >
-        Check answer
-      </button>
+      {matched.length > 0 ? (
+        <p className="text-sm text-emerald-700">Matched: {matched.length} / {exercise.pairs.length}</p>
+      ) : null}
       <ResultBlock result={result} />
     </section>
   );

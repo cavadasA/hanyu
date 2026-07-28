@@ -1,0 +1,182 @@
+[
+  {
+    "type": "fill_blank",
+    "hsk_level": 1,
+    "prompt": {"type":"fill_blank","sentence":"我___喝茶。","options":["喜欢","已经","可能","虽然"],"correct":"喜欢","explanation":"喜欢 (xǐhuān) means 'to like'."},
+    "answer": "喜欢"
+  },
+  {
+    "type": "fill_blank",
+    "hsk_level": 1,
+    "prompt": {"type":"fill_blank","sentence":"她是我的___。","options":["朋友","学校","中国","时候"],"correct":"朋友","explanation":"朋友 (péngyou) means 'friend'."},
+    "answer": "朋友"
+  },
+  {
+    "type": "fill_blank",
+    "hsk_level": 2,
+    "prompt": {"type":"fill_blank","sentence":"___下雨了，我们不去了。","options":["因为","所以","但是","如果"],"correct":"因为","explanation":"因为 (yīnwèi) means 'because'."},
+    "answer": "因为"
+  },
+  {
+    "type": "fill_blank",
+    "hsk_level": 2,
+    "prompt": {"type":"fill_blank","sentence":"他___到了北京。","options":["已经","可能","虽然","因为"],"correct":"已经","explanation":"已经 (yǐjīng) means 'already'."},
+    "answer": "已经"
+  },
+  {
+    "type": "fill_blank",
+    "hsk_level": 3,
+    "prompt": {"type":"fill_blank","sentence":"___天气不好，我们还是去了。","options":["尽管","所以","因为","而且"],"correct":"尽管","explanation":"尽管 (jǐnguǎn) means 'despite'."},
+    "answer": "尽管"
+  },
+  {
+    "type": "fill_blank",
+    "hsk_level": 3,
+    "prompt": {"type":"fill_blank","sentence":"他的成绩___好的。","options":["比较","已经","终于","而且"],"correct":"比较","explanation":"比较 (bǐjiào) means 'relatively'."},
+    "answer": "比较"
+  },
+  {
+    "type": "multiple_choice",
+    "hsk_level": 1,
+    "prompt": {"type":"multiple_choice","question":"What does 学生 mean?","options":["teacher","student","doctor","friend"],"correct":"student"},
+    "answer": "student"
+  },
+  {
+    "type": "multiple_choice",
+    "hsk_level": 1,
+    "prompt": {"type":"multiple_choice","question":"What does 吃 mean?","options":["to drink","to eat","to see","to go"],"correct":"to eat"},
+    "answer": "to eat"
+  },
+  {
+    "type": "multiple_choice",
+    "hsk_level": 2,
+    "prompt": {"type":"multiple_choice","question":"What does 准备 mean?","options":["to prepare","to forget","to believe","to explain"],"correct":"to prepare"},
+    "answer": "to prepare"
+  },
+  {
+    "type": "multiple_choice",
+    "hsk_level": 2,
+    "prompt": {"type":"multiple_choice","question":"What does 应该 mean?","options":["already","should","maybe","because"],"correct":"should"},
+    "answer": "should"
+  },
+  {
+    "type": "multiple_choice",
+    "hsk_level": 3,
+    "prompt": {"type":"multiple_choice","question":"What does 终于 mean?","options":["suddenly","finally","almost","perhaps"],"correct":"finally"},
+    "answer": "finally"
+  },
+  {
+    "type": "multiple_choice",
+    "hsk_level": 3,
+    "prompt": {"type":"multiple_choice","question":"What does 根据 mean?","options":["according to","regardless","despite","moreover"],"correct":"according to"},
+    "answer": "according to"
+  },
+  {
+    "type": "reorder",
+    "hsk_level": 1,
+    "prompt": {"type":"reorder","words":["喝","我","茶","喜欢"],"correct_order":["我","喜欢","喝","茶"],"translation":"I like to drink tea."},
+    "answer": "我喜欢喝茶"
+  },
+  {
+    "type": "reorder",
+    "hsk_level": 1,
+    "prompt": {"type":"reorder","words":["去","他","学校"],"correct_order":["他","去","学校"],"translation":"He goes to school."},
+    "answer": "他去学校"
+  },
+  {
+    "type": "reorder",
+    "hsk_level": 2,
+    "prompt": {"type":"reorder","words":["很","今天","好","天气"],"correct_order":["今天","天气","很","好"],"translation":"The weather is very good today."},
+    "answer": "今天天气很好"
+  },
+  {
+    "type": "reorder",
+    "hsk_level": 2,
+    "prompt": {"type":"reorder","words":["买","她","了","书","一本"],"correct_order":["她","买","了","一本","书"],"translation":"She bought a book."},
+    "answer": "她买了一本书"
+  },
+  {
+    "type": "reorder",
+    "hsk_level": 3,
+    "prompt": {"type":"reorder","words":["把","请","关上","门"],"correct_order":["请","把","门","关上"],"translation":"Please close the door."},
+    "answer": "请把门关上"
+  },
+  {
+    "type": "reorder",
+    "hsk_level": 3,
+    "prompt": {"type":"reorder","words":["做完","他","作业","把","了"],"correct_order":["他","把","作业","做完","了"],"translation":"He finished his homework."},
+    "answer": "他把作业做完了"
+  },
+  {
+    "type": "dictation",
+    "hsk_level": 1,
+    "prompt": {"type":"dictation","audio_text":"你好","pinyin":"nǐ hǎo","accept_pinyin":true},
+    "answer": "你好"
+  },
+  {
+    "type": "dictation",
+    "hsk_level": 1,
+    "prompt": {"type":"dictation","audio_text":"谢谢","pinyin":"xiè xie","accept_pinyin":true},
+    "answer": "谢谢"
+  },
+  {
+    "type": "dictation",
+    "hsk_level": 2,
+    "prompt": {"type":"dictation","audio_text":"今天天气很好","pinyin":"jīntiān tiānqì hěn hǎo","accept_pinyin":true},
+    "answer": "今天天气很好"
+  },
+  {
+    "type": "dictation",
+    "hsk_level": 2,
+    "prompt": {"type":"dictation","audio_text":"我想去中国","pinyin":"wǒ xiǎng qù zhōngguó","accept_pinyin":true},
+    "answer": "我想去中国"
+  },
+  {
+    "type": "dictation",
+    "hsk_level": 3,
+    "prompt": {"type":"dictation","audio_text":"请把门关上","pinyin":"qǐng bǎ mén guān shàng","accept_pinyin":true},
+    "answer": "请把门关上"
+  },
+  {
+    "type": "dictation",
+    "hsk_level": 3,
+    "prompt": {"type":"dictation","audio_text":"他终于到了","pinyin":"tā zhōngyú dào le","accept_pinyin":true},
+    "answer": "他终于到了"
+  },
+  {
+    "type": "matching",
+    "hsk_level": 1,
+    "prompt": {"type":"matching","pairs":[{"left":"学生","right":"student"},{"left":"老师","right":"teacher"},{"left":"朋友","right":"friend"},{"left":"医生","right":"doctor"}]},
+    "answer": "matched"
+  },
+  {
+    "type": "matching",
+    "hsk_level": 1,
+    "prompt": {"type":"matching","pairs":[{"left":"大","right":"big"},{"left":"小","right":"small"},{"left":"好","right":"good"},{"left":"多","right":"many"}]},
+    "answer": "matched"
+  },
+  {
+    "type": "matching",
+    "hsk_level": 2,
+    "prompt": {"type":"matching","pairs":[{"left":"因为","right":"because"},{"left":"所以","right":"therefore"},{"left":"但是","right":"but"},{"left":"如果","right":"if"}]},
+    "answer": "matched"
+  },
+  {
+    "type": "matching",
+    "hsk_level": 2,
+    "prompt": {"type":"matching","pairs":[{"left":"已经","right":"already"},{"left":"可能","right":"maybe"},{"left":"应该","right":"should"},{"left":"准备","right":"to prepare"}]},
+    "answer": "matched"
+  },
+  {
+    "type": "matching",
+    "hsk_level": 3,
+    "prompt": {"type":"matching","pairs":[{"left":"关系","right":"relationship"},{"left":"终于","right":"finally"},{"left":"根据","right":"according to"},{"left":"甚至","right":"even"}]},
+    "answer": "matched"
+  },
+  {
+    "type": "matching",
+    "hsk_level": 3,
+    "prompt": {"type":"matching","pairs":[{"left":"无论","right":"regardless"},{"left":"尽管","right":"despite"},{"left":"不过","right":"however"},{"left":"而且","right":"moreover"}]},
+    "answer": "matched"
+  }
+]

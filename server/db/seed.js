@@ -40,6 +40,34 @@ export function seedDatabase(db) {
   });
 
   insertGrammarMany(grammarPoints);
+
+  const exercisesPath = join(seedDir, 'exercises-pool.json');
+  const exercises = JSON.parse(readFileSync(exercisesPath, 'utf-8'));
+  const insertExercise = db.prepare(`
+    INSERT INTO exercises (type, hsk_level, prompt, answer, source_model)
+    SELECT @type, @hsk_level, @prompt, @answer, 'seed'
+    WHERE NOT EXISTS (
+      SELECT 1
+      FROM exercises
+      WHERE type = @type
+        AND hsk_level = @hsk_level
+        AND prompt = @prompt
+        AND answer = @answer
+        AND COALESCE(source_model, '') = 'seed'
+    )
+  `);
+  const insertExerciseMany = db.transaction((items) => {
+    for (const exercise of items) {
+      insertExercise.run({
+        type: exercise.type,
+        hsk_level: exercise.hsk_level,
+        prompt: JSON.stringify(exercise.prompt),
+        answer: exercise.answer,
+      });
+    }
+  });
+
+  insertExerciseMany(exercises);
 }
 
 if (process.argv[1] && process.argv[1].endsWith('seed.js')) {

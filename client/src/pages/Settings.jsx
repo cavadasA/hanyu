@@ -5,6 +5,7 @@ import { useAppStore } from '../stores/appStore';
 export default function Settings() {
   const [settings, setSettings] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState('');
   const { setTheme } = useAppStore();
 
   useEffect(() => {
@@ -26,6 +27,7 @@ export default function Settings() {
   async function handleSubmit(event) {
     event.preventDefault();
     setSaving(true);
+    setMessage('');
 
     try {
       const updated = await api.updateSettings(settings);
@@ -33,8 +35,11 @@ export default function Settings() {
       if (updated.theme) {
         setTheme(updated.theme);
       }
+      setMessage('Settings saved!');
+      setTimeout(() => setMessage(''), 3000);
     } catch (error) {
       console.error('Failed to save settings:', error);
+      setMessage('Error: Failed to save settings.');
     } finally {
       setSaving(false);
     }
@@ -91,6 +96,35 @@ export default function Settings() {
               className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2"
             />
           </Field>
+
+          <Field label="Max reviews per session">
+            <input
+              aria-label="Max reviews per session"
+              type="number"
+              min="10"
+              max="500"
+              value={settings.max_reviews_per_session || 100}
+              onChange={(event) =>
+                setSettings((current) => ({
+                  ...current,
+                  max_reviews_per_session: Number(event.target.value),
+                }))
+              }
+              className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2"
+            />
+          </Field>
+
+          <Field label="Card order">
+            <select
+              aria-label="Card order"
+              value={settings.card_order || 'hsk_order'}
+              onChange={(event) => setSettings((current) => ({ ...current, card_order: event.target.value }))}
+              className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2"
+            >
+              <option value="hsk_order">HSK order (default)</option>
+              <option value="frequency">Frequency order</option>
+            </select>
+          </Field>
         </section>
 
         <section className="space-y-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
@@ -107,15 +141,17 @@ export default function Settings() {
             </select>
           </Field>
 
-          <Field label="API key">
-            <input
-              aria-label="API key"
-              type="password"
-              value={settings.api_key}
-              onChange={(event) => setSettings((current) => ({ ...current, api_key: event.target.value }))}
-              className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2"
-            />
-          </Field>
+          {settings.ai_provider !== 'none' ? (
+            <Field label="API key">
+              <input
+                aria-label="API key"
+                type="password"
+                value={settings.api_key}
+                onChange={(event) => setSettings((current) => ({ ...current, api_key: event.target.value }))}
+                className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2"
+              />
+            </Field>
+          ) : null}
 
           <button
             type="submit"
@@ -124,6 +160,12 @@ export default function Settings() {
           >
             {saving ? 'Saving...' : 'Save settings'}
           </button>
+
+          {message ? (
+            <p className={`text-sm ${message.startsWith('Error:') ? 'text-red-700' : 'text-emerald-700'}`}>
+              {message}
+            </p>
+          ) : null}
         </section>
       </form>
     </div>

@@ -64,4 +64,24 @@ describe('Database seeding', () => {
 
     expect(count2).toBe(count1);
   });
+
+  it('seeds fallback exercise pool', () => {
+    db = createTestDb();
+    seedDatabase(db);
+    const count = db.prepare('SELECT COUNT(*) as c FROM exercises').get();
+
+    expect(count.c).toBeGreaterThanOrEqual(30);
+  });
+
+  it('seeds exercises for all five types', () => {
+    db = createTestDb();
+    seedDatabase(db);
+    const types = db.prepare('SELECT DISTINCT type FROM exercises ORDER BY type').all().map((row) => row.type);
+
+    expect(types).toContain('fill_blank');
+    expect(types).toContain('multiple_choice');
+    expect(types).toContain('reorder');
+    expect(types).toContain('dictation');
+    expect(types).toContain('matching');
+  });
 });
