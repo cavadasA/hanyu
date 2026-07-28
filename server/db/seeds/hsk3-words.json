@@ -1,0 +1,12 @@
+[
+  {"hanzi": "关系", "pinyin": "guānxi", "meaning_en": "relationship; connection", "pos": "noun", "frequency": 1},
+  {"hanzi": "终于", "pinyin": "zhōngyú", "meaning_en": "finally; at last", "pos": "adverb", "frequency": 2},
+  {"hanzi": "根据", "pinyin": "gēnjù", "meaning_en": "according to; based on", "pos": "preposition", "frequency": 3},
+  {"hanzi": "无论", "pinyin": "wúlùn", "meaning_en": "regardless; no matter", "pos": "conjunction", "frequency": 4},
+  {"hanzi": "尽管", "pinyin": "jǐnguǎn", "meaning_en": "despite; even though", "pos": "conjunction", "frequency": 5},
+  {"hanzi": "不过", "pinyin": "búguò", "meaning_en": "but; however; only", "pos": "conjunction", "frequency": 6},
+  {"hanzi": "甚至", "pinyin": "shènzhì", "meaning_en": "even (to the point of)", "pos": "adverb", "frequency": 7},
+  {"hanzi": "只要", "pinyin": "zhǐyào", "meaning_en": "as long as", "pos": "conjunction", "frequency": 8},
+  {"hanzi": "比较", "pinyin": "bǐjiào", "meaning_en": "to compare; relatively", "pos": "adverb", "frequency": 9},
+  {"hanzi": "而且", "pinyin": "érqiě", "meaning_en": "moreover; and also", "pos": "conjunction", "frequency": 10}
+]

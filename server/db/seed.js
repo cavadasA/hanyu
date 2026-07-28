@@ -1,0 +1,50 @@
+import { readFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export function seedDatabase(db) {
+  const seedDir = join(__dirname, 'seeds');
+
+  const insertWord = db.prepare(`
+    INSERT OR IGNORE INTO words (hanzi, pinyin, meaning_en, pos, frequency, hsk_level)
+    VALUES (@hanzi, @pinyin, @meaning_en, @pos, @frequency, @hsk_level)
+  `);
+
+  for (const level of [1, 2, 3]) {
+    const filePath = join(seedDir, `hsk${level}-words.json`);
+    const words = JSON.parse(readFileSync(filePath, 'utf-8'));
+    const insertMany = db.transaction((items) => {
+      for (const word of items) {
+        insertWord.run({ ...word, hsk_level: level });
+      }
+    });
+
+    insertMany(words);
+  }
+
+  const grammarPath = join(seedDir, 'grammar-points.json');
+  const grammarPoints = JSON.parse(readFileSync(grammarPath, 'utf-8'));
+  const insertGrammar = db.prepare(`
+    INSERT OR IGNORE INTO grammar_points (hsk_level, title, explanation, examples, order_idx)
+    VALUES (@hsk_level, @title, @explanation, @examples, @order_idx)
+  `);
+  const insertGrammarMany = db.transaction((items) => {
+    for (const point of items) {
+      insertGrammar.run({
+        ...point,
+        examples: JSON.stringify(point.examples),
+      });
+    }
+  });
+
+  insertGrammarMany(grammarPoints);
+}
+
+if (process.argv[1] && process.argv[1].endsWith('seed.js')) {
+  const { getDb } = await import('./index.js');
+  const db = getDb();
+  seedDatabase(db);
+  console.log('Seeding complete.');
+}

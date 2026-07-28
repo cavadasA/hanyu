@@ -1,0 +1,22 @@
+[
+  {"hanzi": "你", "pinyin": "nǐ", "meaning_en": "you", "pos": "pronoun", "frequency": 1},
+  {"hanzi": "好", "pinyin": "hǎo", "meaning_en": "good; well", "pos": "adjective", "frequency": 2},
+  {"hanzi": "我", "pinyin": "wǒ", "meaning_en": "I; me", "pos": "pronoun", "frequency": 3},
+  {"hanzi": "是", "pinyin": "shì", "meaning_en": "to be; is; am; are", "pos": "verb", "frequency": 4},
+  {"hanzi": "的", "pinyin": "de", "meaning_en": "(possessive particle)", "pos": "particle", "frequency": 5},
+  {"hanzi": "不", "pinyin": "bù", "meaning_en": "not; no", "pos": "adverb", "frequency": 6},
+  {"hanzi": "了", "pinyin": "le", "meaning_en": "(completed action marker)", "pos": "particle", "frequency": 7},
+  {"hanzi": "在", "pinyin": "zài", "meaning_en": "at; in; on", "pos": "preposition", "frequency": 8},
+  {"hanzi": "人", "pinyin": "rén", "meaning_en": "person; people", "pos": "noun", "frequency": 9},
+  {"hanzi": "有", "pinyin": "yǒu", "meaning_en": "to have; there is", "pos": "verb", "frequency": 10},
+  {"hanzi": "这", "pinyin": "zhè", "meaning_en": "this", "pos": "pronoun", "frequency": 11},
+  {"hanzi": "中", "pinyin": "zhōng", "meaning_en": "middle; center; China", "pos": "noun", "frequency": 12},
+  {"hanzi": "大", "pinyin": "dà", "meaning_en": "big; large", "pos": "adjective", "frequency": 13},
+  {"hanzi": "来", "pinyin": "lái", "meaning_en": "to come", "pos": "verb", "frequency": 14},
+  {"hanzi": "上", "pinyin": "shàng", "meaning_en": "up; above; on", "pos": "noun", "frequency": 15},
+  {"hanzi": "国", "pinyin": "guó", "meaning_en": "country; nation", "pos": "noun", "frequency": 16},
+  {"hanzi": "个", "pinyin": "gè", "meaning_en": "(general measure word)", "pos": "measure word", "frequency": 17},
+  {"hanzi": "到", "pinyin": "dào", "meaning_en": "to arrive; to go to", "pos": "verb", "frequency": 18},
+  {"hanzi": "说", "pinyin": "shuō", "meaning_en": "to say; to speak", "pos": "verb", "frequency": 19},
+  {"hanzi": "们", "pinyin": "men", "meaning_en": "(plural marker for pronouns)", "pos": "suffix", "frequency": 20}
+]

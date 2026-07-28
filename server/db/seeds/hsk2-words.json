@@ -1,0 +1,12 @@
+[
+  {"hanzi": "但是", "pinyin": "dànshì", "meaning_en": "but; however", "pos": "conjunction", "frequency": 1},
+  {"hanzi": "已经", "pinyin": "yǐjīng", "meaning_en": "already", "pos": "adverb", "frequency": 2},
+  {"hanzi": "因为", "pinyin": "yīnwèi", "meaning_en": "because", "pos": "conjunction", "frequency": 3},
+  {"hanzi": "所以", "pinyin": "suǒyǐ", "meaning_en": "so; therefore", "pos": "conjunction", "frequency": 4},
+  {"hanzi": "如果", "pinyin": "rúguǒ", "meaning_en": "if", "pos": "conjunction", "frequency": 5},
+  {"hanzi": "虽然", "pinyin": "suīrán", "meaning_en": "although", "pos": "conjunction", "frequency": 6},
+  {"hanzi": "可能", "pinyin": "kěnéng", "meaning_en": "maybe; possible", "pos": "adjective", "frequency": 7},
+  {"hanzi": "应该", "pinyin": "yīnggāi", "meaning_en": "should; ought to", "pos": "auxiliary verb", "frequency": 8},
+  {"hanzi": "准备", "pinyin": "zhǔnbèi", "meaning_en": "to prepare", "pos": "verb", "frequency": 9},
+  {"hanzi": "其实", "pinyin": "qíshí", "meaning_en": "actually; in fact", "pos": "adverb", "frequency": 10}
+]
