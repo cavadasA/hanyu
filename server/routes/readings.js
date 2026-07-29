@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import { getAiProvider } from '../services/ai-connector.js';
+import { normalizeReadingQuestions, scoreReadingAnswers } from '../services/reading-answers.js';
+import { recordDailyStats } from '../services/stats-recorder.js';
+import { tokenizeReadingContent } from '../services/reading-tokenizer.js';
 
 const VALID_FORMATS = ['short_text', 'story', 'dialogue'];
 
@@ -47,8 +50,49 @@ export function createReadingsRouter(db) {
 
     res.json({
       ...reading,
-      questions: JSON.parse(reading.questions),
+      questions: normalizeReadingQuestions(JSON.parse(reading.questions)),
+      tokens: tokenizeReadingContent(db, reading.content),
     });
+  });
+
+  router.post('/:id/complete', (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    const { answers = {} } = req.body;
+
+    if (Number.isNaN(id)) {
+      res.status(400).json({ error: 'Invalid ID' });
+      return;
+    }
+
+    const reading = db.prepare('SELECT * FROM readings WHERE id = ?').get(id);
+    if (!reading) {
+      res.status(404).json({ error: 'Reading not found' });
+      return;
+    }
+
+    const score = scoreReadingAnswers(JSON.parse(reading.questions), answers);
+    const today = new Date().toISOString().split('T')[0];
+
+    db.prepare(`
+      CREATE TABLE IF NOT EXISTS reading_completions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL DEFAULT 1,
+        reading_id INTEGER NOT NULL,
+        completed_date TEXT NOT NULL,
+        UNIQUE(user_id, reading_id, completed_date)
+      )
+    `).run();
+
+    const result = db.prepare(`
+      INSERT OR IGNORE INTO reading_completions (user_id, reading_id, completed_date)
+      VALUES (1, ?, ?)
+    `).run(id, today);
+
+    if (result.changes > 0) {
+      recordDailyStats(db, { readings_done: 1 });
+    }
+
+    res.json(score);
   });
 
   router.post('/generate', async (req, res) => {
@@ -69,7 +113,11 @@ export function createReadingsRouter(db) {
         .get(hskLevel, format);
 
       if (cached) {
-        res.json({ ...cached, questions: JSON.parse(cached.questions) });
+        res.json({
+          ...cached,
+          questions: normalizeReadingQuestions(JSON.parse(cached.questions)),
+          tokens: tokenizeReadingContent(db, cached.content),
+        });
         return;
       }
 
@@ -91,15 +139,12 @@ export function createReadingsRouter(db) {
         settings.ai_provider
       );
 
-      const today = new Date().toISOString().split('T')[0];
-      const existing = db.prepare('SELECT id FROM user_stats WHERE user_id = 1 AND date = ?').get(today);
-      if (existing) {
-        db.prepare('UPDATE user_stats SET readings_done = readings_done + 1 WHERE id = ?').run(existing.id);
-      } else {
-        db.prepare('INSERT INTO user_stats (user_id, date, readings_done) VALUES (1, ?, 1)').run(today);
-      }
-
-      res.json({ id: Number(lastInsertRowid), ...reading });
+      res.json({
+        id: Number(lastInsertRowid),
+        ...reading,
+        questions: normalizeReadingQuestions(reading.questions),
+        tokens: tokenizeReadingContent(db, reading.content),
+      });
     } catch (error) {
       console.error('Reading generation failed:', error.message);
       res.status(500).json({ error: 'Failed to generate reading. Try again.' });

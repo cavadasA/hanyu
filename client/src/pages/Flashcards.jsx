@@ -10,6 +10,7 @@ const MODES = [
 
 export default function Flashcards() {
   const [cards, setCards] = useState([]);
+  const [deckSize, setDeckSize] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -19,25 +20,26 @@ export default function Flashcards() {
   const sessionStartedAt = useRef(Date.now());
   const cardStartedAt = useRef(Date.now());
 
-  useEffect(() => {
-    async function loadCards() {
-      setLoading(true);
+  async function loadCards() {
+    setLoading(true);
 
-      try {
-        const data = await api.getDueCards();
-        setCards(data.cards || []);
-        setCurrentIndex(0);
-        setReviewed(0);
-        setSessionDone(false);
-        sessionStartedAt.current = Date.now();
-        cardStartedAt.current = Date.now();
-      } catch (error) {
-        console.error('Failed to load flashcards:', error);
-      } finally {
-        setLoading(false);
-      }
+    try {
+      const data = await api.getDueCards();
+      setCards(data.cards || []);
+      setDeckSize(data.deck_size ?? (data.cards?.length || 0));
+      setCurrentIndex(0);
+      setReviewed(0);
+      setSessionDone(false);
+      sessionStartedAt.current = Date.now();
+      cardStartedAt.current = Date.now();
+    } catch (error) {
+      console.error('Failed to load flashcards:', error);
+    } finally {
+      setLoading(false);
     }
+  }
 
+  useEffect(() => {
     loadCards();
   }, []);
 
@@ -63,6 +65,18 @@ export default function Flashcards() {
       }
     } catch (error) {
       console.error('Failed to review card:', error);
+    }
+  }
+
+  async function handleCreateStarterDeck() {
+    setLoading(true);
+    try {
+      await api.createStarterDeck({ strategy: 'hsk2_consolidation', limit: 150 });
+      await loadCards();
+    } catch (error) {
+      console.error('Failed to create starter deck:', error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -121,9 +135,27 @@ export default function Flashcards() {
 
       {currentCard ? (
         <FlashCard card={currentCard} onRate={handleRate} mode={mode} />
+      ) : deckSize === 0 ? (
+        <div className="rounded-2xl border border-dashed border-[var(--color-border)] p-8 text-center">
+          <h2 className="text-xl font-semibold">Set up your HSK2 starter deck</h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm text-[var(--color-text-muted)]">
+            Start with 150 HSK1 review and HSK2 consolidation cards. You can still add custom words later.
+          </p>
+          <button
+            type="button"
+            onClick={handleCreateStarterDeck}
+            disabled={loading}
+            className="mt-4 rounded-lg bg-[var(--color-vermilion)] px-4 py-2 font-medium text-white disabled:opacity-50"
+          >
+            Create starter deck
+          </button>
+        </div>
       ) : (
         <div className="rounded-2xl border border-dashed border-[var(--color-border)] p-8 text-center text-[var(--color-text-muted)]">
-          No flashcards due right now.
+          <h2 className="text-xl font-semibold text-[var(--color-text)]">No flashcards due right now</h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm">
+            You've reviewed all cards due for today. Practice exercises or read a new passage to keep learning!
+          </p>
         </div>
       )}
     </div>

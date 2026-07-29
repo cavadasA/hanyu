@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 
 const links = [
-  { to: '/', label: '仪表盘', desc: 'Overview', mobile: '仪' },
+  { to: '/', label: '今日', desc: 'Today', mobile: '今' },
   { to: '/flashcards', label: '卡片', desc: 'Flashcards', mobile: '卡' },
   { to: '/exercises', label: '练习', desc: 'Exercises', mobile: '练' },
   { to: '/readings', label: '阅读', desc: 'Readings', mobile: '读' },

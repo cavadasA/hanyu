@@ -33,6 +33,11 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ word_id: wordId }),
     }),
+  createStarterDeck: (data = {}) =>
+    request('/flashcards/starter-deck', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
   getFlashcardStats: () => request('/flashcards/stats'),
   generateExercise: (type, level) =>
     request('/exercises/generate', {
@@ -52,6 +57,12 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ level, format }),
     }),
+  completeReading: (id, answers) =>
+    request(`/readings/${id}/complete`, {
+      method: 'POST',
+      body: JSON.stringify({ answers }),
+    }),
+  getToday: () => request('/today'),
   getDashboard: () => request('/stats/dashboard'),
   getStreak: () => request('/stats/streak'),
   logTime: (ms) =>

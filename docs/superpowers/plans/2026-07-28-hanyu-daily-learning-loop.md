@@ -435,7 +435,7 @@ git commit -m "fix: normalize reading comprehension answers"
 - Produces: flashcard "Review again" button reloads due cards without a scope error
 - Produces: reading completion increments `readings_done`
 
-- [ ] **Step 1: Write failing stats-recorder tests**
+- [x] **Step 1: Write failing stats-recorder tests**
 
 Create `server/services/stats-recorder.test.js`:
 
@@ -468,7 +468,7 @@ describe('recordDailyStats', () => {
 });
 ```
 
-- [ ] **Step 2: Implement stats recorder**
+- [x] **Step 2: Implement stats recorder**
 
 Create `server/services/stats-recorder.js`:
 
@@ -508,7 +508,7 @@ export function recordDailyStats(db, updates, date = todayIsoDate()) {
 }
 ```
 
-- [ ] **Step 3: Use recorder in flashcard reviews**
+- [x] **Step 3: Use recorder in flashcard reviews**
 
 In `server/routes/flashcards.js`, import:
 
@@ -525,7 +525,7 @@ recordDailyStats(db, {
 });
 ```
 
-- [ ] **Step 4: Use recorder in exercises and readings**
+- [x] **Step 4: Use recorder in exercises and readings**
 
 In `server/routes/exercises.js`, replace manual `user_stats` upsert with:
 
@@ -539,7 +539,7 @@ In `server/routes/readings.js`, remove `readings_done` increments from generatio
 recordDailyStats(db, { readings_done: 1 });
 ```
 
-- [ ] **Step 5: Update streak to count readings**
+- [x] **Step 5: Update streak to count readings**
 
 In `server/routes/stats.js`, update the streak query:
 
@@ -547,7 +547,7 @@ In `server/routes/stats.js`, update the streak query:
 WHERE user_id = 1 AND (cards_reviewed > 0 OR exercises_done > 0 OR readings_done > 0)
 ```
 
-- [ ] **Step 6: Add backend tests for stat increments**
+- [x] **Step 6: Add backend tests for stat increments**
 
 Add to `server/routes/flashcards.test.js`:
 
@@ -583,7 +583,7 @@ Add to `server/routes/readings.test.js`:
   });
 ```
 
-- [ ] **Step 7: Fix flashcards reload scope**
+- [x] **Step 7: Fix flashcards reload scope**
 
 In `client/src/pages/Flashcards.jsx`, move `loadCards` out of `useEffect`:
 
@@ -611,7 +611,7 @@ useEffect(() => {
 }, []);
 ```
 
-- [ ] **Step 8: Add client reload test**
+- [x] **Step 8: Add client reload test**
 
 Add to `client/src/pages/Flashcards.test.jsx`:
 
@@ -638,7 +638,7 @@ Add to `client/src/pages/Flashcards.test.jsx`:
   });
 ```
 
-- [ ] **Step 9: Run task verification**
+- [x] **Step 9: Run task verification**
 
 Run:
 
@@ -649,7 +649,7 @@ npm test
 
 Expected: all tests pass.
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit (Skipped per user instruction)**
 
 ```bash
 git add server/services/stats-recorder.js server/services/stats-recorder.test.js server/routes/flashcards.js server/routes/flashcards.test.js server/routes/exercises.js server/routes/readings.js server/routes/readings.test.js server/routes/stats.js client/src/pages/Flashcards.jsx client/src/pages/Flashcards.test.jsx
@@ -917,7 +917,7 @@ git commit -m "feat: add HSK2 starter deck activation"
 - Reading detail includes `tokens: Array<{ id, text, type, word?: { id, hanzi, pinyin, meaning_en, meaning_es, hsk_level, pos, in_srs } }>`
 - `WordPopup` consumes `token` instead of `character`
 
-- [ ] **Step 1: Write tokenizer tests**
+- [x] **Step 1: Write tokenizer tests**
 
 Create `server/services/reading-tokenizer.test.js`:
 
@@ -963,7 +963,7 @@ describe('tokenizeReadingContent', () => {
 });
 ```
 
-- [ ] **Step 2: Implement tokenizer**
+- [x] **Step 2: Implement tokenizer**
 
 Create `server/services/reading-tokenizer.js`:
 
@@ -1033,7 +1033,7 @@ export function tokenizeReadingContent(db, content) {
 }
 ```
 
-- [ ] **Step 3: Include tokens in reading detail**
+- [x] **Step 3: Include tokens in reading detail**
 
 In `server/routes/readings.js`, import:
 
@@ -1049,7 +1049,7 @@ tokens: tokenizeReadingContent(db, reading.content),
 
 In generated/cached reading responses, add tokens for the returned `content`.
 
-- [ ] **Step 4: Add route test for tokens**
+- [x] **Step 4: Add route test for tokens**
 
 Add to `server/routes/readings.test.js`:
 
@@ -1068,7 +1068,7 @@ Add to `server/routes/readings.test.js`:
   });
 ```
 
-- [ ] **Step 5: Update ReadingView token rendering**
+- [x] **Step 5: Update ReadingView token rendering**
 
 In `client/src/components/ReadingView.jsx`, replace character mapping with token mapping:
 
@@ -1107,7 +1107,7 @@ Render:
 })}
 ```
 
-- [ ] **Step 6: Update WordPopup to consume token**
+- [x] **Step 6: Update WordPopup to consume token**
 
 In `client/src/components/WordPopup.jsx`, change signature:
 
@@ -1140,7 +1140,7 @@ Render:
 )}
 ```
 
-- [ ] **Step 7: Add WordPopup component tests**
+- [x] **Step 7: Add WordPopup component tests**
 
 Create `client/src/components/WordPopup.test.jsx`:
 
@@ -1214,7 +1214,7 @@ describe('WordPopup', () => {
 });
 ```
 
-- [ ] **Step 8: Update ReadingView component tests**
+- [x] **Step 8: Update ReadingView component tests**
 
 In `client/src/components/ReadingView.test.jsx`, include:
 
@@ -1239,7 +1239,7 @@ Add test:
   });
 ```
 
-- [ ] **Step 9: Run task verification**
+- [x] **Step 9: Run task verification**
 
 Run:
 
@@ -1250,7 +1250,7 @@ npm test
 
 Expected: all tests pass.
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit (Skipped per user instruction)**
 
 ```bash
 git add server/services/reading-tokenizer.js server/services/reading-tokenizer.test.js server/routes/readings.js server/routes/readings.test.js client/src/components/ReadingView.jsx client/src/components/ReadingView.test.jsx client/src/components/WordPopup.jsx client/src/components/WordPopup.test.jsx
@@ -1395,7 +1395,7 @@ import { createTodayRouter } from './routes/today.js';
 app.use('/api/today', createTodayRouter(db));
 ```
 
-- [ ] **Step 3: Add client API**
+- [x] **Step 3: Add client API**
 
 In `client/src/services/api.js`, add:
 
@@ -1403,7 +1403,7 @@ In `client/src/services/api.js`, add:
   getToday: () => request('/today'),
 ```
 
-- [ ] **Step 4: Update Dashboard tests**
+- [x] **Step 4: Update Dashboard tests**
 
 In `client/src/pages/Dashboard.test.jsx`, mock both `api.getToday` and `api.getDashboard`:
 
@@ -1427,7 +1427,7 @@ expect(screen.getByText('Practice 5 exercises')).toBeDefined();
 expect(screen.getByText('Read one HSK2 passage')).toBeDefined();
 ```
 
-- [ ] **Step 5: Implement Today-first Dashboard UI**
+- [x] **Step 5: Implement Today-first Dashboard UI**
 
 In `client/src/pages/Dashboard.jsx`, load Today and existing dashboard data:
 
@@ -1468,7 +1468,7 @@ Render Today before analytics:
 </section>
 ```
 
-- [ ] **Step 6: Rename nav copy**
+- [x] **Step 6: Rename nav copy**
 
 In `client/src/components/Navbar.jsx`, change the `/` link descriptor:
 
@@ -1476,7 +1476,7 @@ In `client/src/components/Navbar.jsx`, change the `/` link descriptor:
 { to: '/', label: '今日', desc: 'Today', mobile: '今' },
 ```
 
-- [ ] **Step 7: Run task verification**
+- [x] **Step 7: Run task verification**
 
 Run:
 
@@ -1487,7 +1487,7 @@ npm test
 
 Expected: all tests pass.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit (Skipped per user instruction)**
 
 ```bash
 git add server/routes/today.js server/routes/today.test.js server/app.js client/src/services/api.js client/src/pages/Dashboard.jsx client/src/pages/Dashboard.test.jsx client/src/components/Navbar.jsx
@@ -1644,50 +1644,21 @@ In `README.md`, add under "Alcance actual":
 ```markdown
 - Daily learning loop oriented to HSK2 consolidation
 - Starter deck flow for HSK1 review + HSK2 focus
-```
-
-Update the settings note:
-
-```markdown
-- La API key se guarda en SQLite en V1, pero la API no devuelve el valor almacenado al cliente
-```
-
-- [ ] **Step 6: Run task verification**
-
-Run:
-
-```bash
-npx vitest run server/routes/settings.test.js client/src/pages/Settings.test.jsx
-npm test
-npm run build
-```
-
-Expected: all tests pass and production build completes.
-
-- [ ] **Step 7: Commit**
-
-```bash
-git add PRODUCT.md README.md server/routes/settings.js server/routes/settings.test.js client/src/pages/Settings.jsx client/src/pages/Settings.test.jsx
-git commit -m "chore: add product foundations and redact API keys"
-```
+- [x] **Step 1: Write settings redaction tests**
+- [x] **Step 2: Implement settings redaction**
+- [x] **Step 3: Update Settings UI copy**
+- [x] **Step 4: Create PRODUCT.md**
+- [x] **Step 5: Update README product note**
+- [x] **Step 6: Run task verification**
+- [x] **Step 7: Commit (Skipped per user instruction)**
 
 ---
 
 ## Final Verification
 
-- [ ] Run full test suite:
-
-```bash
-npm test
-```
-
-- [ ] Run production build:
-
-```bash
-npm run build
-```
-
-- [ ] Manually verify local flows:
+- [x] Run full test suite: `npm test`
+- [x] Run production build: `npm run build`
+- [x] Verified local flows without committing changes.
 
 ```bash
 npm run dev

@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { calculateSrs } from '../services/srs-engine.js';
+import { recordDailyStats } from '../services/stats-recorder.js';
+import { createStarterDeck } from '../services/starter-deck.js';
 
 export function createFlashcardsRouter(db) {
   const router = Router();
@@ -24,7 +26,9 @@ export function createFlashcardsRouter(db) {
       `)
       .all(today, limit);
 
-    res.json({ cards, total: cards.length });
+    const deckSize = db.prepare('SELECT COUNT(*) as c FROM srs_cards WHERE user_id = 1').get().c;
+
+    res.json({ cards, total: cards.length, deck_size: deckSize });
   });
 
   router.post('/:id/review', (req, res) => {
@@ -76,6 +80,11 @@ export function createFlashcardsRouter(db) {
       VALUES (?, ?, ?, ?)
     `).run(cardId, new Date().toISOString(), quality, time_ms || null);
 
+    recordDailyStats(db, {
+      cards_reviewed: 1,
+      cards_new: card.status === 'new' ? 1 : 0,
+    });
+
     res.json({
       card_id: cardId,
       interval: result.interval,
@@ -110,6 +119,11 @@ export function createFlashcardsRouter(db) {
       by_status: Object.fromEntries(byStatus.map((row) => [row.status, row.count])),
       by_level: Object.fromEntries(byLevel.map((row) => [row.hsk_level, row.count])),
     });
+  });
+
+  router.post('/starter-deck', (req, res) => {
+    const result = createStarterDeck(db, req.body || {});
+    res.status(result.inserted > 0 ? 201 : 200).json(result);
   });
 
   router.post('/add', (req, res) => {

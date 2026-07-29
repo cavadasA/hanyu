@@ -23,6 +23,9 @@ vi.mock('../services/api', () => ({
 }));
 
 describe('Flashcards page', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
   it('renders due cards and mode selector', async () => {
     render(<Flashcards />);
 
@@ -66,5 +69,57 @@ describe('Flashcards page', () => {
 
     expect(api.reviewCard).toHaveBeenCalledTimes(1);
     expect(api.logTime).toHaveBeenCalledTimes(1);
+  });
+
+  it('reloads cards when Review again is clicked', async () => {
+    render(<Flashcards />);
+
+    await waitFor(() => {
+      expect(screen.getByText('你好')).toBeDefined();
+    });
+
+    fireEvent.click(screen.getByText('Show Answer'));
+    fireEvent.click(screen.getByText('Good'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Session Complete!')).toBeDefined();
+    });
+
+    fireEvent.click(screen.getByText('Review again'));
+
+    await waitFor(() => {
+      expect(api.getDueCards).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  it('creates the starter deck from the empty state', async () => {
+    api.getDueCards.mockResolvedValueOnce({ cards: [], deck_size: 0 }).mockResolvedValueOnce({
+      cards: [{ id: 2, hanzi: '学习', pinyin: 'xuéxí', meaning_en: 'to study', hsk_level: 2, status: 'new' }],
+      deck_size: 150,
+    });
+    api.createStarterDeck = vi.fn().mockResolvedValue({ inserted: 150, total_deck_size: 150 });
+
+    render(<Flashcards />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Set up your HSK2 starter deck')).toBeDefined();
+    });
+
+    fireEvent.click(screen.getByText('Create starter deck'));
+
+    await waitFor(() => {
+      expect(api.createStarterDeck).toHaveBeenCalledWith({ strategy: 'hsk2_consolidation', limit: 150 });
+      expect(screen.getByText('学习')).toBeDefined();
+    });
+  });
+
+  it('renders caught-up state when deck exists but zero cards are due', async () => {
+    api.getDueCards.mockResolvedValueOnce({ cards: [], deck_size: 20 });
+
+    render(<Flashcards />);
+
+    await waitFor(() => {
+      expect(screen.getByText('No flashcards due right now')).toBeDefined();
+    });
   });
 });

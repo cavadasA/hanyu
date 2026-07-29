@@ -6,6 +6,8 @@ Hanyu es una plataforma web para practicar chino mandarin con tarjetas SRS, ejer
 
 - Modo single-user en V1, sin autenticacion
 - Contenido y filtros HSK 1-3
+- Daily learning loop oriented to HSK2 consolidation
+- Starter deck flow for HSK1 review + HSK2 focus
 - Flashcards con algoritmo SM-2
 - Ejercicios y lecturas con proveedor de IA configurable o fallback local
 - Dashboard con estadisticas, racha y distribucion SRS
@@ -125,7 +127,7 @@ npm start
 
 - Referencia gramatical por niveles HSK 1-3
 - Configuracion de tema, nivel actual, cartas por dia y proveedor IA
-- La API key se guarda en SQLite en texto plano en V1
+- La API key se guarda en SQLite en V1, pero la API no devuelve el valor almacenado al cliente
 
 ## Estructura del proyecto
 

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getAiProvider } from '../services/ai-connector.js';
+import { recordDailyStats } from '../services/stats-recorder.js';
 
 const VALID_TYPES = ['fill_blank', 'multiple_choice', 'reorder', 'dictation', 'matching'];
 
@@ -93,13 +94,7 @@ export function createExercisesRouter(db) {
         break;
     }
 
-    const today = new Date().toISOString().split('T')[0];
-    const existing = db.prepare('SELECT id FROM user_stats WHERE user_id = 1 AND date = ?').get(today);
-    if (existing) {
-      db.prepare('UPDATE user_stats SET exercises_done = exercises_done + 1 WHERE id = ?').run(existing.id);
-    } else {
-      db.prepare('INSERT INTO user_stats (user_id, date, exercises_done) VALUES (1, ?, 1)').run(today);
-    }
+    recordDailyStats(db, { exercises_done: 1 });
 
     const correctAnswer = exercise.type === 'reorder'
       ? (prompt.correct_order || []).join('')

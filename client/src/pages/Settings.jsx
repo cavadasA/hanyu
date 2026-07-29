@@ -146,10 +146,15 @@ export default function Settings() {
               <input
                 aria-label="API key"
                 type="password"
-                value={settings.api_key}
+                value={settings.api_key || ''}
                 onChange={(event) => setSettings((current) => ({ ...current, api_key: event.target.value }))}
                 className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2"
               />
+              {settings.api_key_configured ? (
+                <p className="mt-1 text-xs text-[var(--color-text-muted)]">
+                  API key saved. Leave blank to keep the current key.
+                </p>
+              ) : null}
             </Field>
           ) : null}
 

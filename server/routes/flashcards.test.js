@@ -99,6 +99,19 @@ describe('Flashcards API', () => {
     expect(response.body.next_review).toBeTruthy();
   });
 
+  it('POST /api/flashcards/:id/review increments reviewed and new card stats', async () => {
+    const word = db.prepare('SELECT id FROM words LIMIT 1').get();
+    const today = new Date().toISOString().split('T')[0];
+    const { lastInsertRowid } = db.prepare(
+      "INSERT INTO srs_cards (user_id, word_id, next_review, status) VALUES (1, ?, ?, 'new')"
+    ).run(word.id, today);
+
+    await request(app, 'POST', `/api/flashcards/${lastInsertRowid}/review`, { quality: 4 });
+
+    const stats = db.prepare('SELECT cards_reviewed, cards_new FROM user_stats WHERE user_id = 1 AND date = ?').get(today);
+    expect(stats).toEqual({ cards_reviewed: 1, cards_new: 1 });
+  });
+
   it('GET /api/flashcards/stats returns statistics', async () => {
     const response = await request(app, 'GET', '/api/flashcards/stats');
 
@@ -106,6 +119,17 @@ describe('Flashcards API', () => {
     expect(response.body).toHaveProperty('total');
     expect(response.body).toHaveProperty('due');
     expect(response.body).toHaveProperty('by_status');
+  });
+
+  it('POST /api/flashcards/starter-deck creates recommended deck', async () => {
+    const response = await request(app, 'POST', '/api/flashcards/starter-deck', {
+      strategy: 'hsk2_consolidation',
+      limit: 25,
+    });
+
+    expect(response.status).toBe(201);
+    expect(response.body.inserted).toBe(25);
+    expect(response.body.total_deck_size).toBe(25);
   });
 
   it('GET /api/flashcards/due respects max_reviews_per_session from settings', async () => {

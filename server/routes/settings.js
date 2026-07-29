@@ -1,5 +1,13 @@
 import { Router } from 'express';
 
+function redactSettings(settings) {
+  return {
+    ...settings,
+    api_key: '',
+    api_key_configured: Boolean(settings.api_key),
+  };
+}
+
 export function createSettingsRouter(db) {
   const router = Router();
 
@@ -10,7 +18,7 @@ export function createSettingsRouter(db) {
       return;
     }
 
-    res.json(JSON.parse(user.settings));
+    res.json(redactSettings(JSON.parse(user.settings)));
   });
 
   router.put('/', (req, res) => {
@@ -22,6 +30,18 @@ export function createSettingsRouter(db) {
 
     const current = JSON.parse(user.settings);
     const updated = { ...current, ...req.body };
+
+    if (updated.ai_provider === 'none') {
+      updated.api_key = '';
+    } else if (req.body.clear_api_key === true) {
+      updated.api_key = '';
+    } else if (req.body.api_key === '') {
+      if (req.body.ai_provider && req.body.ai_provider !== current.ai_provider) {
+        updated.api_key = '';
+      } else {
+        updated.api_key = current.api_key || '';
+      }
+    }
 
     if (updated.cards_per_day !== undefined) {
       updated.cards_per_day = Math.max(1, Math.min(200, parseInt(updated.cards_per_day, 10) || 20));
@@ -36,7 +56,7 @@ export function createSettingsRouter(db) {
     }
 
     db.prepare('UPDATE users SET settings = ? WHERE id = 1').run(JSON.stringify(updated));
-    res.json(updated);
+    res.json(redactSettings(updated));
   });
 
   return router;

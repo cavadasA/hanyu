@@ -9,6 +9,7 @@ import { createGrammarRouter } from './routes/grammar.js';
 import { createReadingsRouter } from './routes/readings.js';
 import { createSettingsRouter } from './routes/settings.js';
 import { createStatsRouter } from './routes/stats.js';
+import { createTodayRouter } from './routes/today.js';
 import { createWordsRouter } from './routes/words.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -32,6 +33,7 @@ app.use('/api/exercises', createExercisesRouter(db));
 app.use('/api/readings', createReadingsRouter(db));
 app.use('/api/settings', createSettingsRouter(db));
 app.use('/api/stats', createStatsRouter(db));
+app.use('/api/today', createTodayRouter(db));
 
 const clientDist = join(__dirname, '..', 'client', 'dist');
 app.use(express.static(clientDist));

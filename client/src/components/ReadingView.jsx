@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { api } from '../services/api';
 import AudioButton from './AudioButton';
 import PinyinToggle from './PinyinToggle';
 import WordPopup from './WordPopup';
@@ -7,22 +8,46 @@ export default function ReadingView({ reading }) {
   const [showPinyin, setShowPinyin] = useState(false);
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [scoreResult, setScoreResult] = useState(null);
   const [popup, setPopup] = useState(null);
 
-  function handleAnswer(questionIndex, answer) {
+  function handleAnswer(questionId, optionId) {
     if (submitted) {
       return;
     }
 
     setAnswers((current) => ({
       ...current,
-      [questionIndex]: answer,
+      [questionId]: optionId,
     }));
   }
 
-  const score = submitted
-    ? reading.questions.filter((question, index) => answers[index] === question.correct).length
-    : null;
+  async function handleSubmit() {
+    setSubmitting(true);
+    setSubmitError('');
+
+    try {
+      const result = await api.completeReading(reading.id, answers);
+      setScoreResult(result);
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Failed to complete reading:', error);
+      setSubmitError('Failed to submit answers. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  const score = scoreResult ? scoreResult.score : null;
+  const totalQuestions = reading.questions ? reading.questions.length : 0;
+
+  const tokens = reading.tokens || [...reading.content].map((char, index) => ({
+    id: `legacy-${index}`,
+    text: char,
+    type: /^[\s，。！？、；：“”"'（）\u3000]$/.test(char) ? 'punctuation' : 'unknown',
+  }));
 
   return (
     <article className="space-y-6">
@@ -39,25 +64,25 @@ export default function ReadingView({ reading }) {
 
       <section className="relative rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
         <p className="text-2xl leading-relaxed">
-          {[...reading.content].map((char, index) => {
-            if (/^[\s，。！？、；：“”"'（）\u3000]$/.test(char)) {
-              return <span key={index}>{char}</span>;
+          {tokens.map((token) => {
+            if (token.type === 'punctuation' || token.type === 'text') {
+              return <span key={token.id}>{token.text}</span>;
             }
 
             return (
               <span
-                key={index}
+                key={token.id}
                 role="button"
                 tabIndex={0}
-                onClick={(event) => setPopup({ char, x: event.clientX, y: event.clientY })}
+                onClick={(event) => setPopup({ token, x: event.clientX, y: event.clientY })}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter') {
-                    setPopup({ char, x: 0, y: 0 });
+                    setPopup({ token, x: 0, y: 0 });
                   }
                 }}
                 className="cursor-pointer rounded hover:bg-[var(--color-gold)]/20"
               >
-                {char}
+                {token.text}
               </span>
             );
           })}
@@ -67,7 +92,7 @@ export default function ReadingView({ reading }) {
         ) : null}
         {popup ? (
           <WordPopup
-            character={popup.char}
+            token={popup.token}
             position={{ x: popup.x, y: popup.y }}
             onClose={() => setPopup(null)}
           />
@@ -77,47 +102,66 @@ export default function ReadingView({ reading }) {
       <section className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
         <h2 className="mb-4 text-xl font-semibold">Comprehension</h2>
         <div className="space-y-4">
-          {reading.questions.map((question, index) => (
-            <div key={`${reading.id}-${index}`} className="rounded-xl bg-[var(--color-bg)] p-4">
-              <p className="mb-3 font-medium">{question.question}</p>
-              <div className="grid gap-2 md:grid-cols-2">
-                {question.options.map((option, optionIndex) => (
-                  <button
-                    key={option}
-                    type="button"
-                    onClick={() => handleAnswer(index, option)}
-                    className={`rounded-lg border px-3 py-2 text-left text-sm ${
-                      submitted && option === question.correct
-                        ? 'border-emerald-500 bg-emerald-50 text-emerald-900'
-                        : submitted && answers[index] === option
-                          ? 'border-red-500 bg-red-50 text-red-900'
-                          : answers[index] === option
-                            ? 'border-[var(--color-vermilion)] bg-[var(--color-surface)]'
-                            : 'border-[var(--color-border)]'
-                    }`}
-                  >
-                    {option}
-                  </button>
-                ))}
+          {reading.questions.map((question, index) => {
+            const qId = question.id || `q${index}`;
+            const options = Array.isArray(question.options) ? question.options : [];
+            const resultForQ = scoreResult?.results?.find((r) => r.question_id === qId);
+            const correctOptId = resultForQ ? resultForQ.correct_option_id : (question.correct_option_id || question.correct);
+
+            return (
+              <div key={qId} className="rounded-xl bg-[var(--color-bg)] p-4">
+                <p className="mb-3 font-medium">{question.question}</p>
+                <div className="grid gap-2 md:grid-cols-2">
+                  {options.map((option, optionIndex) => {
+                    const optId = typeof option === 'object' && option !== null ? option.id : option;
+                    const optText = typeof option === 'object' && option !== null ? option.text : option;
+                    const isSelected = answers[qId] === optId;
+                    const isCorrect = submitted && optId === correctOptId;
+
+                    return (
+                      <button
+                        key={optId || optionIndex}
+                        type="button"
+                        onClick={() => handleAnswer(qId, optId)}
+                        className={`rounded-lg border px-3 py-2 text-left text-sm ${
+                          submitted && isCorrect
+                            ? 'border-emerald-500 bg-emerald-50 text-emerald-900'
+                            : submitted && isSelected
+                              ? 'border-red-500 bg-red-50 text-red-900'
+                              : isSelected
+                                ? 'border-[var(--color-vermilion)] bg-[var(--color-surface)]'
+                                : 'border-[var(--color-border)]'
+                        }`}
+                      >
+                        {optText}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {!submitted && reading.questions.length > 0 ? (
-          <button
-            type="button"
-            onClick={() => setSubmitted(true)}
-            disabled={Object.keys(answers).length < reading.questions.length}
-            className="mt-4 rounded-lg bg-[var(--color-gold)] px-4 py-2 font-medium text-white disabled:opacity-50"
-          >
-            Submit Answers
-          </button>
+        {!submitted && totalQuestions > 0 ? (
+          <div>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitting || Object.keys(answers).length < totalQuestions}
+              className="mt-4 rounded-lg bg-[var(--color-gold)] px-4 py-2 font-medium text-white disabled:opacity-50"
+            >
+              {submitting ? 'Submitting...' : 'Submit Answers'}
+            </button>
+            {submitError ? (
+              <p className="mt-2 text-sm text-red-600">{submitError}</p>
+            ) : null}
+          </div>
         ) : null}
 
-        {score !== null ? (
+        {submitted && score !== null ? (
           <div className="mt-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3 text-center">
-            <p className="text-lg font-semibold">{score} / {reading.questions.length}</p>
+            <p className="text-lg font-semibold">{score} / {totalQuestions}</p>
           </div>
         ) : null}
       </section>

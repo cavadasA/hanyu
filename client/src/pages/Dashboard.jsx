@@ -23,13 +23,18 @@ const STATUS_COLORS = {
 };
 
 export default function Dashboard() {
+  const [today, setToday] = useState(null);
   const [data, setData] = useState(null);
 
   useEffect(() => {
     async function loadDashboard() {
       try {
-        const response = await api.getDashboard();
-        setData(response);
+        const [todayResponse, dashboardResponse] = await Promise.all([
+          api.getToday(),
+          api.getDashboard(),
+        ]);
+        setToday(todayResponse);
+        setData(dashboardResponse);
       } catch (error) {
         console.error('Failed to load dashboard:', error);
       }
@@ -38,7 +43,7 @@ export default function Dashboard() {
     loadDashboard();
   }, []);
 
-  if (!data) {
+  if (!today || !data) {
     return <p>Loading dashboard...</p>;
   }
 
@@ -48,11 +53,23 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-8">
+      <section className="space-y-4">
+        <div>
+          <p className="text-sm uppercase tracking-[0.16em] text-[var(--color-text-muted)]">Today</p>
+          <h1 className="mt-1 text-3xl font-bold">HSK2 consolidation</h1>
+        </div>
+        <div className="grid gap-3 lg:grid-cols-3">
+          <QuickLink to="/flashcards" title={`Review ${today.flashcards.target} cards`} description={`${today.flashcards.due} due now`} />
+          <QuickLink to="/exercises" title="Practice 5 exercises" description={`${today.exercises.completed} completed today`} />
+          <QuickLink to={today.reading.next ? `/readings/${today.reading.next.id}` : '/readings'} title="Read one HSK2 passage" description={today.reading.next?.title || 'Generate a short reading'} />
+        </div>
+      </section>
+
       <section className="rounded-[2rem] bg-[linear-gradient(135deg,_rgba(226,61,40,0.96),_rgba(212,160,23,0.84))] p-8 text-white shadow-lg">
-        <p className="text-sm uppercase tracking-[0.18em] text-white/75">Today</p>
+        <p className="text-sm uppercase tracking-[0.18em] text-white/75">Progress</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-6">
           <div>
-            <h1 className="text-4xl font-bold">{data.streak.current} day streak</h1>
+            <h2 className="text-4xl font-bold">{data.streak.current} day streak</h2>
             <p className="mt-2 max-w-2xl text-white/85">Keep the chain alive with a short flashcard review, an exercise set, or one graded reading.</p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">

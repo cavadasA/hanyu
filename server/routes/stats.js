@@ -122,7 +122,7 @@ function calculateStreak(db) {
   const days = db
     .prepare(`
       SELECT date FROM user_stats
-      WHERE user_id = 1 AND (cards_reviewed > 0 OR exercises_done > 0)
+      WHERE user_id = 1 AND (cards_reviewed > 0 OR exercises_done > 0 OR readings_done > 0)
       ORDER BY date DESC
       LIMIT 365
     `)
