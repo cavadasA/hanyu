@@ -8,6 +8,26 @@ function getStoredTheme() {
   return window.localStorage.getItem('hanyu-theme') || 'light';
 }
 
+function resolveTheme(theme) {
+  if (theme !== 'system') {
+    return theme;
+  }
+
+  if (typeof window !== 'undefined' && window.matchMedia) {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  return 'light';
+}
+
+function applyThemeClass(theme) {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  document.documentElement.classList.toggle('dark', resolveTheme(theme) === 'dark');
+}
+
 export const useAppStore = create((set) => ({
   theme: getStoredTheme(),
   currentLevel: 1,
@@ -19,9 +39,7 @@ export const useAppStore = create((set) => ({
       window.localStorage.setItem('hanyu-theme', theme);
     }
 
-    if (typeof document !== 'undefined') {
-      document.documentElement.classList.toggle('dark', theme === 'dark');
-    }
+    applyThemeClass(theme);
 
     set({ theme });
   },

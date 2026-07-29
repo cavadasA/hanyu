@@ -19,17 +19,32 @@ function linkClass({ isActive }) {
   }`;
 }
 
-export default function Navbar() {
+export default function Navbar({ userEmail, onSignOut }) {
   return (
     <>
       <nav className="hidden min-h-screen w-64 flex-col border-r border-[var(--color-border)] bg-[var(--color-surface)] p-4 md:flex">
         <div className="mb-8 flex items-center gap-3">
           <span className="text-2xl font-bold text-[var(--color-vermilion)]">汉语</span>
           <span className="text-sm uppercase tracking-[0.2em] text-[var(--color-text-muted)]">Hanyu</span>
-          <div className="ml-auto">
+          <div className="ml-auto flex items-center gap-2">
             <ThemeToggle />
+            {onSignOut ? (
+              <button
+                type="button"
+                onClick={() => onSignOut()}
+                className="rounded-lg px-3 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-bg)]"
+              >
+                Sign out
+              </button>
+            ) : null}
           </div>
         </div>
+
+        {userEmail ? (
+          <p className="mb-4 rounded-lg bg-[var(--color-bg)] px-3 py-2 text-xs text-[var(--color-text-muted)]">
+            {userEmail}
+          </p>
+        ) : null}
 
         <div className="flex flex-1 flex-col gap-2">
           {links.map(({ to, label, desc }) => (
@@ -42,6 +57,15 @@ export default function Navbar() {
       </nav>
 
       <nav className="fixed bottom-0 left-0 right-0 z-50 flex gap-1 overflow-x-auto border-t border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-2 md:hidden">
+        {onSignOut ? (
+          <button
+            type="button"
+            onClick={() => onSignOut()}
+            className="shrink-0 rounded-lg px-3 py-2 text-sm font-semibold text-[var(--color-text-muted)]"
+          >
+            Out
+          </button>
+        ) : null}
         {links.map(({ to, mobile }) => (
           <NavLink
             key={to}

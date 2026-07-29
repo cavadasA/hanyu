@@ -3,5 +3,10 @@ dist/
 *.db
 *.db-*
 .env
+.env.local
+.env.*.local
+!.env.example
+.env.hanyu.local
 .superpowers/
+supabase/.temp/
 data/

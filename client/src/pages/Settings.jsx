@@ -67,6 +67,7 @@ export default function Settings() {
             >
               <option value="light">Light</option>
               <option value="dark">Dark</option>
+              <option value="system">System</option>
             </select>
           </Field>
 
@@ -77,7 +78,7 @@ export default function Settings() {
               onChange={(event) => setSettings((current) => ({ ...current, current_level: Number(event.target.value) }))}
               className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2"
             >
-              {[1, 2, 3].map((value) => (
+              {[1, 2, 3, 4, 5, 6].map((value) => (
                 <option key={value} value={value}>
                   HSK {value}
                 </option>
@@ -90,7 +91,7 @@ export default function Settings() {
               aria-label="Cards per day"
               type="number"
               min="1"
-              max="200"
+              max="100"
               value={settings.cards_per_day}
               onChange={(event) => setSettings((current) => ({ ...current, cards_per_day: Number(event.target.value) }))}
               className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2"
@@ -101,8 +102,8 @@ export default function Settings() {
             <input
               aria-label="Max reviews per session"
               type="number"
-              min="10"
-              max="500"
+              min="1"
+              max="300"
               value={settings.max_reviews_per_session || 100}
               onChange={(event) =>
                 setSettings((current) => ({
@@ -117,11 +118,11 @@ export default function Settings() {
           <Field label="Card order">
             <select
               aria-label="Card order"
-              value={settings.card_order || 'hsk_order'}
+              value={settings.card_order || 'due'}
               onChange={(event) => setSettings((current) => ({ ...current, card_order: event.target.value }))}
               className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2"
             >
-              <option value="hsk_order">HSK order (default)</option>
+              <option value="due">Due first</option>
               <option value="frequency">Frequency order</option>
             </select>
           </Field>
@@ -139,24 +140,10 @@ export default function Settings() {
               <option value="deepseek">DeepSeek</option>
               <option value="gemini">Gemini</option>
             </select>
+            <p className="mt-1 text-xs text-[var(--color-text-muted)]">
+              Provider keys are managed in Supabase Edge Function secrets, never in browser settings.
+            </p>
           </Field>
-
-          {settings.ai_provider !== 'none' ? (
-            <Field label="API key">
-              <input
-                aria-label="API key"
-                type="password"
-                value={settings.api_key || ''}
-                onChange={(event) => setSettings((current) => ({ ...current, api_key: event.target.value }))}
-                className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2"
-              />
-              {settings.api_key_configured ? (
-                <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-                  API key saved. Leave blank to keep the current key.
-                </p>
-              ) : null}
-            </Field>
-          ) : null}
 
           <button
             type="submit"

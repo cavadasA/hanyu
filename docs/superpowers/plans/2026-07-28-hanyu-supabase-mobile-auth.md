@@ -6,7 +6,9 @@
 
 **Architecture:** Supabase Auth owns identity, Supabase Postgres owns data, Row Level Security protects user rows, and web/mobile clients access Supabase directly for normal operations. Multi-table learning mutations and secret-backed AI calls move to Postgres RPC or Supabase Edge Functions, while the existing Express server stays as a temporary migration reference until no production flow uses `/api`.
 
-**Tech Stack:** React 18, Vite, Supabase JS, Supabase CLI, Supabase Auth, Postgres, RLS, PL/pgSQL RPC, Supabase Edge Functions with Deno, Vitest, Testing Library.
+**Tech Stack:** React 18, Vite, Supabase JS, Supabase Auth, Postgres, RLS, PL/pgSQL RPC, Supabase Edge Functions with Deno, Vitest, Testing Library.
+
+**Supabase Project:** Remote hosted project `ycchpixzhlsvivzloyvh` (`https://ycchpixzhlsvivzloyvh.supabase.co`). All schema, seeds, and functions are managed through the Supabase Web Dashboard SQL Editor and CLI remote commands. No local Docker stack.
 
 ## Global Constraints
 
@@ -17,12 +19,12 @@
 - Keep Express/SQLite available until the migrated web flow has parity.
 - Preserve existing user-facing flows: dashboard, words, grammar, flashcards, exercises, readings, settings, and stats.
 - Mobile compatibility means stable table names, RPC/function names, and repository signatures before creating the Expo app.
-- Use official Supabase CLI workflow for local migrations and seeds: `supabase init`, `supabase start`, migration files under `supabase/migrations`, and seed files configured through `supabase/config.toml`.
 - Use Supabase Edge Function secrets for AI provider credentials.
-- Do not connect Hanyu to any existing non-Hanyu Supabase project.
-- Default to a separate hosted Supabase project for Hanyu development before using a local Supabase Docker stack.
-- Do not run `supabase link`, `supabase db push`, `supabase db reset`, or `supabase start` until the active project/ref and working directory have been verified.
-- Do not reuse shell-level Supabase environment variables from another project; Hanyu uses repo-local env files only.
+- Hanyu uses a dedicated hosted Supabase project (`ycchpixzhlsvivzloyvh`). Do not connect to any other Supabase project.
+- Apply migrations and seeds via the Supabase Web Dashboard SQL Editor, or via CLI with `npx supabase link --project-ref ycchpixzhlsvivzloyvh` + `npx supabase db push`.
+- Do not run `supabase start`, `supabase stop`, `supabase db reset`, or `supabase test db` — there is no local Docker stack.
+- Deploy Edge Functions with `npx supabase functions deploy` after linking.
+- Hanyu uses repo-local env files only (`.env.local`); do not reuse shell-level Supabase environment variables from another project.
 
 ---
 
@@ -36,24 +38,21 @@ hanyu/
 |-- package.json
 |-- package-lock.json
 |-- supabase/
-|   |-- config.toml
 |   |-- seed.sql
+|   |-- verification-queries.sql
 |   |-- migrations/
 |   |   |-- 202607280001_initial_schema.sql
 |   |   |-- 202607280002_learning_rpc.sql
 |   |   `-- 202607280003_dashboard_rpc.sql
-|   |-- functions/
-|   |   |-- _shared/
-|   |   |   |-- cors.ts
-|   |   |   |-- supabase.ts
-|   |   |   `-- ai.ts
-|   |   |-- generate-exercise/
-|   |   |   `-- index.ts
-|   |   `-- generate-reading/
-|   |       `-- index.ts
-|   `-- tests/
-|       |-- database.test.sql
-|       `-- rls.test.sql
+|   `-- functions/
+|       |-- _shared/
+|       |   |-- cors.ts
+|       |   |-- supabase.ts
+|       |   `-- ai.ts
+|       |-- generate-exercise/
+|       |   `-- index.ts
+|       `-- generate-reading/
+|           `-- index.ts
 |-- scripts/
 |   |-- build-supabase-seed.js
 |   `-- build-supabase-seed.test.js
@@ -106,65 +105,19 @@ Ownership boundaries:
 - `client/src/services/repositories/`: stable client data contract shared later with mobile.
 - `client/src/services/api.js`: temporary compatibility facade; remove only after every page stops using old Express-only behavior.
 
-### Task 0: Supabase Isolation Preflight
+### Task 0: Supabase Environment Setup
 
 **Files:**
-- Create: `.env.hanyu.example`
-- Create: `docs/supabase-isolation.md`
+- Create: `.env.example`
 - Modify: `.gitignore`
 
 **Interfaces:**
-- Produces isolation rule: Hanyu only uses a dedicated Hanyu Supabase project.
-- Produces env convention: Hanyu secrets live in `.env.local` or `.env.hanyu.local`, never in shared shell startup files.
-- Consumes later: every Supabase command in this plan must be run from `/Users/antoniocavadas/Documents/hanyu`.
+- Produces env convention: Hanyu browser env vars live in `.env.local` inside this repo.
+- Produces: `.env.example` with the remote project URL template.
+- Project ref: `ycchpixzhlsvivzloyvh`
+- Project URL: `https://ycchpixzhlsvivzloyvh.supabase.co`
 
-- [ ] **Step 1: Confirm working directory before any Supabase command**
-
-Run:
-
-```bash
-pwd
-git rev-parse --show-toplevel
-```
-
-Expected:
-
-```text
-/Users/antoniocavadas/Documents/hanyu
-/Users/antoniocavadas/Documents/hanyu
-```
-
-If either path points at another project, stop.
-
-- [ ] **Step 2: Check for existing Hanyu Supabase link**
-
-Run:
-
-```bash
-find supabase -maxdepth 3 -type f 2>/dev/null | sort
-find . -maxdepth 3 -type f \( -name "config.toml" -o -name "project-ref" -o -name ".env" -o -name ".env.local" \) -print
-```
-
-Expected:
-
-- No `supabase/.temp/project-ref` exists yet, or it points to a dedicated Hanyu project.
-- No env file contains the Supabase URL or anon key from the user's larger existing project.
-
-- [ ] **Step 3: Create Hanyu-specific env example**
-
-Create `.env.hanyu.example`:
-
-```dotenv
-# Hanyu only. Do not paste credentials from another Supabase project here.
-VITE_SUPABASE_URL=https://your-hanyu-project-ref.supabase.co
-VITE_SUPABASE_ANON_KEY=your-hanyu-anon-key
-
-# Edge Function secrets only. Never expose these to browser or mobile clients.
-DEEPSEEK_API_KEY=
-GEMINI_API_KEY=
-```
-
-- [ ] **Step 4: Ensure local env files are ignored**
+- [ ] **Step 1: Ensure local env files are ignored**
 
 Add these lines to `.gitignore` if missing:
 
@@ -173,60 +126,35 @@ Add these lines to `.gitignore` if missing:
 .env.local
 .env.*.local
 !.env.example
-!.env.hanyu.example
 supabase/.temp/
 ```
 
-- [ ] **Step 5: Document the safe Supabase workflow**
+- [ ] **Step 2: Create env example**
 
-Create `docs/supabase-isolation.md`:
+Create `.env.example`:
 
-```markdown
-# Supabase Isolation for Hanyu
+```dotenv
+# Hanyu Supabase — remote hosted project only, no local Docker stack.
+VITE_SUPABASE_URL=https://ycchpixzhlsvivzloyvh.supabase.co
+VITE_SUPABASE_ANON_KEY=replace-with-anon-key-from-dashboard
 
-Hanyu must not connect to any existing non-Hanyu Supabase project.
+# Edge Function secrets only. Never expose these to browser or mobile clients.
+# Set them via: npx supabase secrets set DEEPSEEK_API_KEY=<value>
+DEEPSEEK_API_KEY=
+GEMINI_API_KEY=
+```
 
-## Safe Default
+- [ ] **Step 3: Create `.env.local` with real credentials**
 
-Use a dedicated hosted Supabase project named something like `hanyu-dev`.
+Copy `.env.example` to `.env.local` and paste the anon key from the Supabase dashboard → Settings → API → `anon` `public` key.
 
-Do not run `supabase start` while another local Supabase project is running unless you intentionally want a Docker-based local Hanyu stack and have checked for port/container conflicts.
-
-## Before Any Supabase CLI Command
+- [ ] **Step 4: Commit**
 
 Run:
 
 ```bash
-pwd
-git rev-parse --show-toplevel
-```
-
-Both commands must point to `/Users/antoniocavadas/Documents/hanyu`.
-
-## Linking Rule
-
-Only run:
-
-```bash
-npx supabase link --project-ref <hanyu-project-ref>
-```
-
-after confirming `<hanyu-project-ref>` belongs to Hanyu, not another product.
-
-## Env Rule
-
-Hanyu browser env vars must live in `.env.local` or `.env.hanyu.local` inside this repo.
-
-Never copy Supabase service-role keys, DeepSeek keys, or Gemini keys into Vite or Expo env vars.
-```
-
-- [ ] **Step 6: Commit**
-
-Run:
-
-```bash
-git add .gitignore .env.hanyu.example docs/supabase-isolation.md
-git commit -m "docs: add supabase isolation preflight"
+git add .gitignore .env.example
+git commit -m "chore: add supabase env setup"
 ```
 
 ### Task 1: Supabase Tooling and Environment Contract
@@ -257,9 +185,9 @@ Expected:
 - `package.json` has `@supabase/supabase-js` in `dependencies`.
 - `package-lock.json` is updated.
 
-- [ ] **Step 2: Optionally install Supabase CLI as a repo-local dev dependency**
+- [ ] **Step 2: Install Supabase CLI as a repo-local dev dependency**
 
-Only do this after Task 0 confirms this repo is isolated from the user's other Supabase project.
+The CLI is used for `link`, `db push`, and `functions deploy` against the remote project. No local Docker stack.
 
 Run:
 
@@ -270,8 +198,7 @@ npm install --save-dev supabase
 Expected:
 
 - `package.json` has `supabase` in `devDependencies`.
-- There is no global Supabase install requirement.
-- No remote project is linked by installing this package.
+- No local Supabase containers are started by installing this package.
 
 - [ ] **Step 3: Add Supabase scripts to `package.json`**
 
@@ -279,27 +206,20 @@ Add these scripts while keeping the existing scripts:
 
 ```json
 {
-  "supabase:init": "npx supabase init",
-  "supabase:start": "npx supabase start",
-  "supabase:stop": "npx supabase stop",
-  "supabase:status": "npx supabase status",
-  "supabase:reset": "npx supabase db reset",
-  "supabase:test": "npx supabase test db",
+  "supabase:link": "npx supabase link --project-ref ycchpixzhlsvivzloyvh",
+  "supabase:push": "npx supabase db push",
+  "supabase:deploy-functions": "npx supabase functions deploy",
   "build:supabase-seed": "node scripts/build-supabase-seed.js"
 }
 ```
 
 - [ ] **Step 4: Create `.env.example`**
 
-Create:
+This was already created in Task 0. Verify it exists with the correct remote URL:
 
 ```dotenv
-VITE_SUPABASE_URL=http://127.0.0.1:54321
-VITE_SUPABASE_ANON_KEY=replace-with-local-or-hosted-anon-key
-
-# Set these only in Supabase Edge Function secrets, not in Vite or Expo.
-DEEPSEEK_API_KEY=
-GEMINI_API_KEY=
+VITE_SUPABASE_URL=https://ycchpixzhlsvivzloyvh.supabase.co
+VITE_SUPABASE_ANON_KEY=replace-with-anon-key-from-dashboard
 ```
 
 - [ ] **Step 5: Write the failing Supabase env test**
@@ -410,7 +330,7 @@ Run:
 npm run build
 ```
 
-Expected: PASS after setting local env values or with Vite test/build env configured by the implementer.
+Expected: PASS with `.env.local` containing the remote project URL and anon key.
 
 - [ ] **Step 10: Commit**
 
@@ -421,88 +341,50 @@ git add package.json package-lock.json .env.example client/src/services/supabase
 git commit -m "chore: add supabase client tooling"
 ```
 
-### Task 2: Supabase Local Project, Schema, RLS, and Auth Bootstrap
+### Task 2: Supabase Remote Schema, RLS, and Auth Bootstrap
 
 **Files:**
-- Create: `supabase/config.toml`
 - Create: `supabase/migrations/202607280001_initial_schema.sql`
-- Create: `supabase/tests/database.test.sql`
-- Create: `supabase/tests/rls.test.sql`
+- Create: `supabase/verification-queries.sql`
 
 **Interfaces:**
 - Produces tables: `profiles`, `user_settings`, `words`, `grammar_points`, `srs_cards`, `review_log`, `user_stats`, `generated_exercises`, `exercise_attempts`, `generated_readings`, `reading_attempts`
 - Produces trigger function: `public.handle_new_user()`
 - Consumes later: repositories and RPC functions rely on these table and column names
 
-- [ ] **Step 1: Initialize Supabase project files**
+- [ ] **Step 1: Create migration directory**
 
-Run:
+Create the `supabase/migrations/` directory to store migration SQL files as version-controlled reference.
 
-```bash
-npm run supabase:init
-```
+- [ ] **Step 2: Create verification queries file**
 
-Expected:
-
-- `supabase/config.toml` exists.
-- `supabase/migrations/` exists.
-
-- [ ] **Step 2: Configure seed path in `supabase/config.toml`**
-
-Ensure the config contains:
-
-```toml
-[db.seed]
-enabled = true
-sql_paths = ["./seed.sql"]
-```
-
-- [ ] **Step 3: Write the database smoke test**
-
-Create `supabase/tests/database.test.sql`:
+Create `supabase/verification-queries.sql` — run these in the Supabase SQL Editor after applying each migration to confirm correctness:
 
 ```sql
-begin;
+-- Verify all tables exist
+SELECT table_name FROM information_schema.tables
+WHERE table_schema = 'public'
+ORDER BY table_name;
 
-select plan(12);
+-- Expected: exercise_attempts, generated_exercises, generated_readings,
+-- grammar_points, profiles, reading_attempts, review_log,
+-- srs_cards, user_settings, user_stats, words
 
-select has_table('public', 'profiles', 'profiles table exists');
-select has_table('public', 'user_settings', 'user_settings table exists');
-select has_table('public', 'words', 'words table exists');
-select has_table('public', 'grammar_points', 'grammar_points table exists');
-select has_table('public', 'srs_cards', 'srs_cards table exists');
-select has_table('public', 'review_log', 'review_log table exists');
-select has_table('public', 'user_stats', 'user_stats table exists');
-select has_table('public', 'generated_exercises', 'generated_exercises table exists');
-select has_table('public', 'exercise_attempts', 'exercise_attempts table exists');
-select has_table('public', 'generated_readings', 'generated_readings table exists');
-select has_table('public', 'reading_attempts', 'reading_attempts table exists');
-select has_function('public', 'handle_new_user', 'handle_new_user trigger function exists');
+-- Verify RLS is enabled on all app tables
+SELECT tablename, rowsecurity FROM pg_tables
+WHERE schemaname = 'public' AND rowsecurity = true
+ORDER BY tablename;
 
-select * from finish();
+-- Verify RLS policies
+SELECT tablename, policyname FROM pg_policies
+WHERE schemaname = 'public'
+ORDER BY tablename, policyname;
 
-rollback;
+-- Verify trigger function
+SELECT proname FROM pg_proc
+WHERE proname IN ('handle_new_user', 'set_updated_at')
+ORDER BY proname;
 ```
-
-- [ ] **Step 4: Choose hosted-dev mode or local-stack mode**
-
-Recommended hosted-dev mode:
-
-- Create a brand-new Supabase hosted project for Hanyu, for example `hanyu-dev`.
-- Do not reuse the existing larger project's project ref, URL, anon key, or service-role key.
-- Keep the migration SQL in this repo, but apply it to `hanyu-dev` only after verifying the project ref.
-- Skip `supabase:start`, `supabase:reset`, and `supabase:test` until local Docker isolation is intentionally approved.
-
-Optional local-stack mode:
-
-```bash
-pwd
-git rev-parse --show-toplevel
-npm run supabase:start
-npm run supabase:test
-```
-
-Expected in local-stack mode: FAIL because the tables do not exist yet.
 
 - [ ] **Step 5: Create initial schema migration**
 
@@ -753,68 +635,31 @@ create policy "reading_attempts_select_own" on public.reading_attempts for selec
 create policy "reading_attempts_insert_own" on public.reading_attempts for insert with check (user_id = auth.uid());
 ```
 
-- [ ] **Step 6: Write RLS test**
+- [ ] **Step 5: Apply schema to the remote project**
 
-Create `supabase/tests/rls.test.sql`:
+Option A — SQL Editor:
 
-```sql
-begin;
+1. Open `https://supabase.com/dashboard/project/ycchpixzhlsvivzloyvh/sql`
+2. Paste the full contents of `supabase/migrations/202607280001_initial_schema.sql`
+3. Run it
+4. Run the queries from `supabase/verification-queries.sql` to confirm all tables, RLS, and triggers are in place
+5. Check the Table Editor to visually confirm the 11 tables exist
 
-select plan(7);
-
-select policies_are(
-  'public',
-  'profiles',
-  array['profiles_insert_own', 'profiles_select_own', 'profiles_update_own']
-);
-
-select policies_are(
-  'public',
-  'user_settings',
-  array['user_settings_insert_own', 'user_settings_select_own', 'user_settings_update_own']
-);
-
-select policies_are('public', 'words', array['words_select_authenticated']);
-select policies_are('public', 'grammar_points', array['grammar_points_select_authenticated']);
-
-select policies_are(
-  'public',
-  'srs_cards',
-  array['srs_cards_insert_own', 'srs_cards_select_own', 'srs_cards_update_own']
-);
-
-select policies_are('public', 'review_log', array['review_log_select_own']);
-select policies_are('public', 'user_stats', array['user_stats_select_own']);
-
-select * from finish();
-
-rollback;
-```
-
-- [ ] **Step 7: Apply schema to an isolated Hanyu database and run checks**
-
-Hosted-dev mode:
-
-- Open the dedicated `hanyu-dev` Supabase project.
-- Apply `supabase/migrations/202607280001_initial_schema.sql` in the SQL editor, or run CLI commands only after `npx supabase link --project-ref <hanyu-dev-project-ref>` has been verified.
-- Confirm the Table Editor shows `profiles`, `user_settings`, `words`, `grammar_points`, `srs_cards`, `review_log`, `user_stats`, `generated_exercises`, `exercise_attempts`, `generated_readings`, and `reading_attempts`.
-- Confirm RLS is enabled on every public app table.
-
-Optional local-stack mode:
+Option B — CLI push:
 
 ```bash
-npm run supabase:reset
-npm run supabase:test
+npm run supabase:link
+npx supabase db push
 ```
 
-Expected in local-stack mode: PASS.
+Then run verification queries in the SQL Editor.
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 6: Commit**
 
 Run:
 
 ```bash
-git add supabase/config.toml supabase/migrations/202607280001_initial_schema.sql supabase/tests/database.test.sql supabase/tests/rls.test.sql
+git add supabase/migrations/202607280001_initial_schema.sql supabase/verification-queries.sql
 git commit -m "feat: add supabase schema and rls"
 ```
 
@@ -968,12 +813,12 @@ Expected:
 - `supabase/seed.sql` exists.
 - It inserts `public.words`, `public.grammar_points`, and `public.generated_exercises`.
 
-- [ ] **Step 6: Apply or verify seeded content in the isolated Hanyu database**
+- [ ] **Step 6: Apply seed to the remote project**
 
-Hosted-dev mode:
-
-- Apply `supabase/seed.sql` only to the dedicated `hanyu-dev` project.
-- Verify row counts in the Supabase SQL editor:
+1. Open `https://supabase.com/dashboard/project/ycchpixzhlsvivzloyvh/sql`
+2. Paste the full contents of `supabase/seed.sql`
+3. Run it
+4. Verify row counts:
 
 ```sql
 select hsk_level, count(*) from public.words group by hsk_level order by hsk_level;
@@ -981,27 +826,12 @@ select count(*) from public.grammar_points;
 select count(*) from public.generated_exercises;
 ```
 
-Optional local-stack mode:
-
-```bash
-npm run supabase:reset
-```
-
-Then run:
-
-```bash
-npx supabase db diff --local --schema public
-```
-
-Expected: no schema drift caused by seed generation.
-
 - [ ] **Step 7: Run full tests**
 
 Run:
 
 ```bash
 npm test
-npm run supabase:test # local-stack mode only
 ```
 
 Expected: PASS.
@@ -1812,12 +1642,12 @@ grant execute on function public.create_starter_deck(text, integer) to authentic
 grant execute on function public.review_flashcard(uuid, integer, integer) to authenticated;
 ```
 
-- [ ] **Step 2: Apply RPC migration to isolated Hanyu database**
+- [ ] **Step 2: Apply RPC migration to the remote project**
 
-Hosted-dev mode:
-
-- Apply `supabase/migrations/202607280002_learning_rpc.sql` only to the dedicated `hanyu-dev` project.
-- Verify both functions exist in the Supabase SQL editor:
+1. Open `https://supabase.com/dashboard/project/ycchpixzhlsvivzloyvh/sql`
+2. Paste the full contents of `supabase/migrations/202607280002_learning_rpc.sql`
+3. Run it
+4. Verify the functions exist:
 
 ```sql
 select proname
@@ -1825,15 +1655,6 @@ from pg_proc
 where proname in ('ensure_today_stats', 'create_starter_deck', 'review_flashcard')
 order by proname;
 ```
-
-Optional local-stack mode:
-
-```bash
-npm run supabase:reset
-npm run supabase:test
-```
-
-Expected in local-stack mode: PASS.
 
 - [ ] **Step 3: Write flashcards repository test**
 
@@ -1983,7 +1804,6 @@ Run:
 
 ```bash
 npx vitest run client/src/services/repositories/flashcards.test.js client/src/pages/Flashcards.test.jsx
-npm run supabase:test # local-stack mode only
 ```
 
 Expected: PASS.
@@ -2116,7 +1936,21 @@ grant execute on function public.log_study_time(integer) to authenticated;
 grant execute on function public.get_dashboard() to authenticated;
 ```
 
-- [ ] **Step 2: Write settings repository test**
+- [ ] **Step 2: Apply dashboard RPC migration to the remote project**
+
+1. Open `https://supabase.com/dashboard/project/ycchpixzhlsvivzloyvh/sql`
+2. Paste the full contents of `supabase/migrations/202607280003_dashboard_rpc.sql`
+3. Run it
+4. Verify the functions exist:
+
+```sql
+select proname
+from pg_proc
+where proname in ('log_study_time', 'get_dashboard')
+order by proname;
+```
+
+- [ ] **Step 3: Write settings repository test**
 
 Create `client/src/services/repositories/settings.test.js`:
 
@@ -2146,7 +1980,7 @@ describe('settings repository', () => {
 });
 ```
 
-- [ ] **Step 3: Implement settings repository**
+- [ ] **Step 4: Implement settings repository**
 
 Create `client/src/services/repositories/settings.js`:
 
@@ -2198,7 +2032,7 @@ export async function updateSettings(data, client = getSupabaseClient()) {
 }
 ```
 
-- [ ] **Step 4: Write stats repository test**
+- [ ] **Step 5: Write stats repository test**
 
 Create `client/src/services/repositories/stats.test.js`:
 
@@ -2223,7 +2057,7 @@ describe('stats repository', () => {
 });
 ```
 
-- [ ] **Step 5: Implement stats repository**
+- [ ] **Step 6: Implement stats repository**
 
 Create `client/src/services/repositories/stats.js`:
 
@@ -2249,7 +2083,7 @@ export async function logTime(ms, client = getSupabaseClient()) {
 }
 ```
 
-- [ ] **Step 6: Update Settings and Dashboard pages**
+- [ ] **Step 7: Update Settings and Dashboard pages**
 
 In `client/src/pages/Settings.jsx`, replace `api.getSettings()` and `api.updateSettings(data)` with repository calls.
 
@@ -2267,18 +2101,17 @@ const dashboard = {
 };
 ```
 
-- [ ] **Step 7: Run tests**
+- [ ] **Step 8: Run tests**
 
 Run:
 
 ```bash
 npx vitest run client/src/services/repositories/settings.test.js client/src/services/repositories/stats.test.js client/src/pages/Settings.test.jsx client/src/pages/Dashboard.test.jsx
-npm run supabase:test # local-stack mode only
 ```
 
 Expected: PASS.
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 9: Commit**
 
 Run:
 
@@ -2624,24 +2457,29 @@ In `client/src/pages/Readings.jsx`, replace reading list/detail/generation calls
 
 Update page tests to mock repository functions.
 
-- [ ] **Step 9: Run local Edge Functions**
+- [ ] **Step 9: Deploy Edge Functions to remote project**
 
-Run:
-
-```bash
-npx supabase functions serve generate-exercise --env-file .env
-```
-
-In another terminal run:
+Ensure the project is linked:
 
 ```bash
-npx supabase functions serve generate-reading --env-file .env
+npm run supabase:link
 ```
 
-Expected:
+Deploy both functions:
 
-- Both functions start.
-- Authenticated calls return fallback content when `ai_provider = 'none'`.
+```bash
+npx supabase functions deploy generate-exercise
+npx supabase functions deploy generate-reading
+```
+
+Set Edge Function secrets if AI providers are enabled:
+
+```bash
+npx supabase secrets set DEEPSEEK_API_KEY=<value>
+npx supabase secrets set GEMINI_API_KEY=<value>
+```
+
+Verify in the Supabase dashboard → Edge Functions that both functions appear and are active.
 
 - [ ] **Step 10: Run tests**
 
@@ -2709,42 +2547,33 @@ Create `docs/deployment-supabase.md`:
 
 ## Required Services
 
-- Supabase hosted project for Auth, Postgres, RLS, and Edge Functions.
+- Supabase hosted project (`ycchpixzhlsvivzloyvh`) for Auth, Postgres, RLS, and Edge Functions.
 - Static web hosting for the React build.
 - Expo/EAS for the later mobile app.
 
-## Safe Setup Without Local Supabase Stack
+## Development Setup
 
-1. Create a dedicated hosted Supabase project for Hanyu, for example `hanyu-dev`.
-2. Copy `.env.hanyu.example` to `.env.local`.
-3. Paste only the `hanyu-dev` project URL and anon key into `.env.local`.
-4. Run `npm install`.
-5. Run `npm run build:supabase-seed`.
-6. Apply migrations and seed SQL to `hanyu-dev` only.
+1. Copy `.env.example` to `.env.local`.
+2. Paste the anon key from the Supabase dashboard (Settings → API) into `.env.local`.
+3. Run `npm install`.
+4. Run `npm run build:supabase-seed`.
+5. Apply migrations in the SQL Editor: `https://supabase.com/dashboard/project/ycchpixzhlsvivzloyvh/sql`
+6. Apply `supabase/seed.sql` in the SQL Editor.
 7. Run `npm run dev`.
 
-## Optional Local Supabase Stack
-
-Only use this if no other Supabase local stack is active or if port/container isolation has been checked.
-
-1. Copy `.env.hanyu.example` to `.env.local`.
-2. Run `npm install`.
-3. Run `npm run build:supabase-seed`.
-4. Run `npm run supabase:start`.
-5. Run `npm run supabase:reset`.
-6. Copy local Supabase URL and anon key from `npm run supabase:status` into `.env.local`.
-7. Run `npm run dev`.
-
-## Hosted Supabase Setup
-
-1. Create a Supabase project.
-2. Link the local repo with `npx supabase link --project-ref <project-ref>`.
-3. Push migrations with `npx supabase db push`.
-4. Seed production content with `psql "$SUPABASE_DB_URL" -f supabase/seed.sql` from a trusted machine, or paste `supabase/seed.sql` into the Supabase SQL editor.
-5. Configure Auth redirect URLs for local and production web domains.
-6. Set Edge Function secrets:
+## Applying Migrations via CLI
 
 ```bash
+npm run supabase:link
+npx supabase db push
+```
+
+## Deploying Edge Functions
+
+```bash
+npm run supabase:link
+npx supabase functions deploy generate-exercise
+npx supabase functions deploy generate-reading
 npx supabase secrets set DEEPSEEK_API_KEY=<value>
 npx supabase secrets set GEMINI_API_KEY=<value>
 ```
@@ -2775,7 +2604,7 @@ Add a "Supabase deployment" section that links to `docs/deployment-supabase.md` 
 ```markdown
 ## Supabase Deployment
 
-The production path is Supabase-first: Auth, Postgres, RLS, and Edge Functions. See `docs/deployment-supabase.md` for local Supabase setup, hosted project setup, required environment variables, and verification steps.
+The production path is Supabase-first: Auth, Postgres, RLS, and Edge Functions. See `docs/deployment-supabase.md` for setup, required environment variables, and verification steps.
 ```
 
 - [ ] **Step 5: Run final verification**
@@ -2786,7 +2615,6 @@ Run:
 rg -n "localhost:3001|/api" client/src
 npm test
 npm run build
-npm run supabase:test # local-stack mode only
 ```
 
 Expected:
@@ -2794,7 +2622,6 @@ Expected:
 - `rg` finds no production client dependency on `/api`.
 - Tests pass.
 - Build passes.
-- Supabase database tests pass.
 
 - [ ] **Step 6: Commit**
 
@@ -2923,24 +2750,29 @@ After all tasks are complete, run:
 npm test
 npm run build
 npm run build:supabase-seed
-npm run supabase:reset # local-stack mode only
-npm run supabase:test # local-stack mode only
 rg -n "from '../services/api'|from \"../services/api\"|api\\.|localhost:3001|better-sqlite3" client/src
 ```
+
+Then verify in the Supabase dashboard (`https://supabase.com/dashboard/project/ycchpixzhlsvivzloyvh`):
+
+- All 11 tables exist in the Table Editor
+- RLS is enabled on all tables
+- RPC functions (`create_starter_deck`, `review_flashcard`, `log_study_time`, `get_dashboard`, `ensure_today_stats`) exist
+- Edge Functions (`generate-exercise`, `generate-reading`) are deployed
+- Seed data is present (words, grammar_points, generated_exercises)
 
 Expected:
 
 - Vitest passes.
 - Vite build passes.
-- Supabase local reset passes.
-- Supabase database tests pass.
-- The final `rg` command finds no production client dependency on Express, SQLite, or `/api`.
+- The `rg` command finds no production client dependency on Express, SQLite, or `/api`.
+- Remote Supabase project has all schema, data, and functions in place.
 
 ## References
 
-- Supabase CLI getting started: https://supabase.com/docs/guides/local-development/cli/getting-started
-- Supabase database migrations: https://supabase.com/docs/guides/local-development/database-migrations
-- Supabase seeding: https://supabase.com/docs/guides/local-development/seeding-your-database
+- Supabase Data APIs: https://supabase.com/docs/guides/api
 - Supabase Auth: https://supabase.com/docs/guides/auth
+- Supabase Row Level Security: https://supabase.com/docs/guides/database/postgres/row-level-security
 - Supabase Edge Functions: https://supabase.com/docs/guides/functions
 - Supabase Edge Function secrets: https://supabase.com/docs/guides/functions/secrets
+- Supabase CLI: https://supabase.com/docs/guides/local-development/cli/getting-started

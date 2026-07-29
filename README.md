@@ -1,10 +1,10 @@
 # Hanyu
 
-Hanyu es una plataforma web para practicar chino mandarin con tarjetas SRS, ejercicios, lecturas graduadas, referencia gramatical y seguimiento de progreso. El proyecto esta pensado como una aplicacion full-stack simple de ejecutar en local: React + Vite en el cliente, Express en el servidor y SQLite como persistencia.
+Hanyu es una plataforma web para practicar chino mandarin con tarjetas SRS, ejercicios, lecturas graduadas, referencia gramatical y seguimiento de progreso. La arquitectura objetivo es Supabase-first: autenticacion real con Supabase Auth, datos en Postgres con RLS, y cliente React consumiendo repositorios basados en Supabase.
 
 ## Alcance actual
 
-- Modo single-user en V1, sin autenticacion
+- Login real con Supabase Auth (email/password)
 - Contenido y filtros HSK 1-3
 - Daily learning loop oriented to HSK2 consolidation
 - Starter deck flow for HSK1 review + HSK2 focus
@@ -16,8 +16,9 @@ Hanyu es una plataforma web para practicar chino mandarin con tarjetas SRS, ejer
 ## Stack
 
 - Frontend: React 18, Vite, React Router 6, Zustand, Tailwind CSS 4, Recharts
-- Backend: Node.js, Express, CORS
-- Base de datos: SQLite con better-sqlite3
+- Data/Auth: Supabase Postgres, Supabase Auth, Row Level Security, Supabase Edge Functions
+- Backend legacy (transitorio): Node.js, Express, CORS
+- Base de datos legacy (transitoria): SQLite con better-sqlite3
 - Tests: Vitest, Testing Library, jsdom
 
 ## Requisitos
@@ -35,28 +36,48 @@ Nota: el proyecto fue validado en este workspace con Node 24 y `better-sqlite3` 
 npm install
 ```
 
-2. Crea el esquema SQLite:
+2. Configura variables de entorno para Supabase:
+
+```bash
+copy .env.example .env.local
+```
+
+3. Pega el valor real de `VITE_SUPABASE_ANON_KEY` en `.env.local`.
+
+4. Inicia en desarrollo:
+
+```bash
+npm run dev
+```
+
+Nota: `npm run dev` mantiene Express encendido para compatibilidad de migracion, pero el cliente ya usa repositorios Supabase.
+
+## Flujo legacy local (Express + SQLite)
+
+Si necesitas validar o mantener rutas legacy de Express durante la migracion:
+
+1. Crea el esquema SQLite:
 
 ```bash
 npm run migrate
 ```
 
-3. Carga los datos base:
+2. Carga los datos base:
 
 ```bash
 npm run seed
-```
-
-4. Inicia cliente y servidor en desarrollo:
-
-```bash
-npm run dev
 ```
 
 URLs por defecto:
 
 - Cliente: http://localhost:5173
 - API: http://localhost:3001
+
+## Supabase deployment
+
+La ruta de produccion es Supabase-first. Consulta:
+
+- `docs/deployment-supabase.md`
 
 ## Flujo de produccion local
 
@@ -127,7 +148,7 @@ npm start
 
 - Referencia gramatical por niveles HSK 1-3
 - Configuracion de tema, nivel actual, cartas por dia y proveedor IA
-- La API key se guarda en SQLite en V1, pero la API no devuelve el valor almacenado al cliente
+- Las API keys de proveedores IA se gestionan en secretos de Supabase Edge Functions, no en cliente
 
 ## Estructura del proyecto
 
@@ -219,6 +240,6 @@ npx vitest run client/src/
 ## Notas de implementacion
 
 - `server/app.js` sirve el frontend compilado para cualquier ruta que no empiece por `/api`
-- El cliente usa `/api` como base para todas las llamadas HTTP
-- La configuracion del usuario vive en la tabla `users` con `id = 1`
+- El cliente usa `client/src/services/api.js` como fachada de compatibilidad, implementada sobre repositorios Supabase
+- La configuracion de usuario vive en `public.user_settings` en Supabase
 - Las fechas en SQLite se guardan como ISO 8601; los campos de revision diaria usan `YYYY-MM-DD`

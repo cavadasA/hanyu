@@ -11,7 +11,7 @@ vi.mock('../services/api', () => ({
       current_level: 2,
       cards_per_day: 30,
       max_reviews_per_session: 100,
-      card_order: 'hsk_order',
+      card_order: 'due',
       ai_provider: 'none',
       api_key: '',
     }),
@@ -48,7 +48,7 @@ describe('Settings page', () => {
     });
   });
 
-  it('shows API key only for configured providers and confirms save', async () => {
+  it('keeps API keys out of client settings and confirms save', async () => {
     render(
       <BrowserRouter>
         <Settings />
@@ -60,12 +60,13 @@ describe('Settings page', () => {
     });
 
     expect(screen.queryByLabelText('API key')).toBeNull();
+    expect(screen.getByText(/Provider keys are managed in Supabase Edge Function secrets/)).toBeDefined();
 
     fireEvent.change(screen.getByLabelText('AI provider'), {
       target: { value: 'deepseek' },
     });
 
-    expect(screen.getByLabelText('API key')).toBeDefined();
+    expect(screen.queryByLabelText('API key')).toBeNull();
 
     fireEvent.click(screen.getByText('Save settings'));
 
