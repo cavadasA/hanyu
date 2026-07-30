@@ -263,8 +263,28 @@ begin
   exception
     when unique_violation then
       -- Concurrent duplicate: the sub-transaction is rolled back automatically.
-      -- Re-derive and return the current authoritative card state, mirroring the
-      -- duplicate branch in step 2 above.
+      -- The concurrent winner may have been for a DIFFERENT card (review_id reuse
+      -- across two distinct cards racing past the step-2 probe before either
+      -- committed).  Re-read the now-committed log row and apply the same
+      -- card_id-match guard that the serial duplicate branch (step 2) performs,
+      -- so both paths stay consistent and neither can silently discard a review.
+      select rl.card_id
+      into v_existing_card_id
+      from public.review_log rl
+      where rl.user_id = v_user_id
+        and rl.client_review_id = review_flashcard.review_id
+      limit 1;
+
+      -- If the committed log row belongs to a different card, this is the same
+      -- client-bug (review_id reused across two cards) as the serial path catches.
+      -- Raise the identical error so the caller is not misled into thinking the
+      -- review was a no-op duplicate of its own earlier submission.
+      if v_existing_card_id <> review_flashcard.card_id then
+        raise exception 'review_id already used for a different card';
+      end if;
+
+      -- True concurrent duplicate for the same card: return the current
+      -- authoritative card state, mirroring the serial duplicate branch in step 2.
       select c.*
       into v_card
       from public.srs_cards c
