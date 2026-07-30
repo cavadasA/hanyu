@@ -9,4 +9,4 @@ dist/
 .env.hanyu.local
 .superpowers/
 supabase/.temp/
-data/
+/data/
