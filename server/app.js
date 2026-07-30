@@ -35,7 +35,7 @@ app.use('/api/settings', createSettingsRouter(db));
 app.use('/api/stats', createStatsRouter(db));
 app.use('/api/today', createTodayRouter(db));
 
-const clientDist = join(__dirname, '..', 'client', 'dist');
+const clientDist = join(__dirname, '..', 'apps', 'web', 'dist');
 app.use(express.static(clientDist));
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api')) {

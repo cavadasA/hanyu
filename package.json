@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "type": "module",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "dev:client": "cd client && npx vite",
+    "dev:client": "npm run dev -w @hanyu/web",
+    "dev:mobile": "npm run start -w @hanyu/mobile",
     "dev:server": "cd server && node --watch app.js",
-    "build": "cd client && npx vite build",
+    "build": "npm run build -w @hanyu/web",
+    "gen:types": "supabase gen types typescript --linked > packages/data/src/database.types.ts",
     "supabase:link": "npx supabase link --project-ref ycchpixzhlsvivzloyvh",
     "supabase:push": "npx supabase db push",
     "supabase:deploy-functions": "npx supabase functions deploy",
@@ -16,7 +22,9 @@
     "seed": "node server/db/seed.js",
     "import-hsk": "node scripts/import-hsk-data.js",
     "start": "node server/app.js",
-    "test": "vitest run",
+    "test": "vitest run && npm run test -w @hanyu/mobile",
+    "test:web": "vitest run",
+    "test:mobile": "npm run test -w @hanyu/mobile",
     "test:watch": "vitest"
   },
   "dependencies": {

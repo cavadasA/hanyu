@@ -21,6 +21,23 @@ Hanyu es una plataforma web para practicar chino mandarin con tarjetas SRS, ejer
 - Base de datos legacy (transitoria): SQLite con better-sqlite3
 - Tests: Vitest, Testing Library, jsdom
 
+## Aplicacion movil
+
+La app movil vive en `apps/mobile` (Expo + Expo Router + TypeScript) y consume
+`packages/data`, el mismo paquete que usa la web.
+
+```bash
+cp apps/mobile/.env.example apps/mobile/.env
+# pega EXPO_PUBLIC_SUPABASE_ANON_KEY
+npm run dev:mobile
+```
+
+En P2 la app cubre login, registro, envio de email de recuperacion, Today,
+Cards, Practice, Library y You. Practice incluye ejercicios nativos y lecturas
+interactivas; Library incluye Words con busqueda/filtro/paginacion y Grammar.
+Los detalles de foundation estan en
+`docs/superpowers/specs/2026-07-29-hanyu-mobile-foundation-design.md`.
+
 ## Requisitos
 
 - Node.js 18 o superior
@@ -87,7 +104,7 @@ Genera el bundle del cliente:
 npm run build
 ```
 
-Inicia Express sirviendo API y `client/dist`:
+Inicia Express sirviendo API y `apps/web/dist`:
 
 ```bash
 npm start
@@ -99,13 +116,17 @@ npm start
 | --- | --- |
 | `npm run dev` | Levanta servidor Express y Vite en paralelo |
 | `npm run dev:server` | Ejecuta `server/app.js` con `node --watch` |
-| `npm run dev:client` | Inicia Vite en `client/` |
-| `npm run build` | Compila el frontend en `client/dist` |
+| `npm run dev:client` | Inicia Vite en apps/web |
+| `npm run dev:mobile` | Inicia Expo en `apps/mobile` |
+| `npm run build` | Compila el frontend en apps/web/dist |
+| `npm run gen:types` | Regenera los tipos de Supabase en packages/data |
 | `npm run migrate` | Ejecuta las migraciones SQLite |
 | `npm run seed` | Inserta palabras y puntos gramaticales base |
 | `npm run import-hsk` | Convierte TSV de HSK a JSON de seeds |
 | `npm start` | Arranca el servidor Express en modo produccion |
-| `npm test` | Ejecuta toda la suite con Vitest |
+| `npm test` | Ejecuta Vitest y despues Jest para la app movil |
+| `npm run test:web` | Ejecuta Vitest (paquetes y web) |
+| `npm run test:mobile` | Ejecuta Jest en `apps/mobile` |
 | `npm run test:watch` | Ejecuta Vitest en watch mode |
 
 ## Funcionalidades principales
@@ -154,26 +175,25 @@ npm start
 
 ```text
 .
-|-- client/
-|   |-- src/
-|   |   |-- components/
-|   |   |-- hooks/
-|   |   |-- pages/
-|   |   |-- services/
-|   |   |-- stores/
-|   |   `-- styles/
-|   |-- index.html
-|   `-- vite.config.js
+|-- apps/
+|   |-- web/
+|   |   |-- src/
+|   |   |   |-- components/
+|   |   |   |-- hooks/
+|   |   |   |-- pages/
+|   |   |   |-- services/
+|   |   |   |-- stores/
+|   |   |   `-- styles/
+|   |   |-- index.html
+|   |   `-- vite.config.js
+|   `-- mobile/
+|-- packages/
+|   `-- data/
 |-- docs/
 |   `-- superpowers/
 |-- scripts/
-|   `-- import-hsk-data.js
 |-- server/
-|   |-- db/
-|   |   |-- migrations/
-|   |   `-- seeds/
-|   |-- routes/
-|   `-- services/
+|-- supabase/
 |-- package.json
 `-- vitest.config.js
 ```
@@ -234,12 +254,12 @@ Ejemplos utiles:
 
 ```bash
 npx vitest run server/
-npx vitest run client/src/
+npx vitest run apps/web/src/
 ```
 
 ## Notas de implementacion
 
 - `server/app.js` sirve el frontend compilado para cualquier ruta que no empiece por `/api`
-- El cliente usa `client/src/services/api.js` como fachada de compatibilidad, implementada sobre repositorios Supabase
+- La web usa `apps/web/src/services/api.js` como fachada de compatibilidad, implementada sobre repositorios Supabase
 - La configuracion de usuario vive en `public.user_settings` en Supabase
 - Las fechas en SQLite se guardan como ISO 8601; los campos de revision diaria usan `YYYY-MM-DD`

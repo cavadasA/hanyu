@@ -1,0 +1,57 @@
+import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import type { ReadingToken } from '@hanyu/data';
+import { ReadingText } from './ReadingText';
+
+const mockAddCard = jest.fn();
+
+jest.mock('../lib/data', () => ({
+  getData: () => ({
+    flashcards: {
+      addCard: (...args: unknown[]) => mockAddCard(...args),
+    },
+  }),
+}));
+
+const tokens: ReadingToken[] = [
+  {
+    id: 't0',
+    text: '你好',
+    type: 'word',
+    word: {
+      id: 1,
+      hanzi: '你好',
+      pinyin: 'ni hao',
+      meaning_en: 'hello',
+      meaning_es: null,
+      hsk_level: 1,
+      pos: 'phrase',
+      frequency: null,
+      in_srs: false,
+    },
+  },
+  { id: 't2', text: '，', type: 'punctuation', word: null },
+  { id: 't3', text: '龘', type: 'unknown', word: null },
+];
+
+describe('ReadingText', () => {
+  beforeEach(() => {
+    mockAddCard.mockReset();
+  });
+
+  it('opens known and unknown word details and adds a known word once', async () => {
+    mockAddCard.mockResolvedValue({ card_id: 'card-1' });
+    const view = await render(<ReadingText tokens={tokens} showPinyin={false} />);
+
+    await fireEvent.press(view.getByRole('button', { name: '你好' }));
+    expect(view.getByText('ni hao')).toBeTruthy();
+    expect(view.getByText('hello')).toBeTruthy();
+
+    await fireEvent.press(view.getByRole('button', { name: 'Add to Cards' }));
+    await waitFor(() => expect(view.getByText('Added')).toBeTruthy());
+    expect(mockAddCard).toHaveBeenCalledWith(1);
+
+    await fireEvent.press(view.getByRole('button', { name: '龘' }));
+    expect(view.getByText('Unknown word')).toBeTruthy();
+    expect(view.queryByRole('button', { name: '，' })).toBeNull();
+  });
+});
