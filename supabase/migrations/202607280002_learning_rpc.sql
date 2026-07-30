@@ -96,8 +96,7 @@ create or replace function public.review_flashcard(
   time_ms integer default null
 )
 returns table(
-  card_id uuid,
-  interval integer,
+  "interval" integer,
   next_review date,
   ease_factor numeric,
   status text
@@ -195,8 +194,7 @@ begin
     cards_new = public.user_stats.cards_new + excluded.cards_new,
     updated_at = now();
 
-  review_flashcard.card_id := review_flashcard.card_id;
-  interval := v_new_interval;
+  "interval" := v_new_interval;
   next_review := v_next_review;
   ease_factor := v_new_ease;
   status := v_new_status;
