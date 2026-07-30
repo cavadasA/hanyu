@@ -1,5 +1,6 @@
 import type { HanyuClient } from '../client';
 import type { Database } from '../database.types';
+import type { ReviewEvent, ReviewSyncResult, VersionedCard } from '../types';
 import { getSettings } from './settings';
 import {
   callRpcVariants,
@@ -10,6 +11,9 @@ import {
 type SrsCardRow = Database['public']['Tables']['srs_cards']['Row'] & {
   words?: Database['public']['Tables']['words']['Row'] | Database['public']['Tables']['words']['Row'][] | null;
 };
+
+const CARD_SELECT =
+  'id, user_id, word_id, ease_factor, interval_days, repetitions, next_review_at, last_reviewed_at, status, version, words:word_id(id, hanzi, pinyin, meaning_en, meaning_es, hsk_level, pos, frequency)';
 
 function mapCardRow(row: SrsCardRow) {
   const word = Array.isArray(row.words) ? row.words[0] : row.words;
@@ -27,6 +31,7 @@ function mapCardRow(row: SrsCardRow) {
     last_review: row.last_reviewed_at,
     last_reviewed_at: row.last_reviewed_at,
     status: row.status,
+    version: row.version,
     hanzi: word?.hanzi,
     pinyin: word?.pinyin,
     meaning_en: word?.meaning_en,
@@ -35,6 +40,39 @@ function mapCardRow(row: SrsCardRow) {
     pos: word?.pos,
     frequency: word?.frequency,
   };
+}
+
+function mapVersionedCardRow(row: SrsCardRow): VersionedCard {
+  const mapped = mapCardRow(row);
+
+  if (mapped.version === undefined || mapped.version === null) {
+    throw createRepositoryError(new Error('Card version is missing'), 'Failed to load card');
+  }
+
+  return mapped as VersionedCard;
+}
+
+type ReviewSyncOutcome = ReviewSyncResult['outcome'];
+
+function normalizeReviewSyncOutcome(data: unknown): ReviewSyncOutcome {
+  const row = Array.isArray(data) ? data[0] : data;
+
+  if (!row || typeof row !== 'object') {
+    throw createRepositoryError(
+      new Error('Failed to sync review'),
+      'Failed to sync review'
+    );
+  }
+
+  const outcome = (row as { outcome?: unknown }).outcome;
+  if (outcome !== 'applied' && outcome !== 'duplicate' && outcome !== 'conflict') {
+    throw createRepositoryError(
+      new Error('Failed to sync review'),
+      'Failed to sync review'
+    );
+  }
+
+  return outcome;
 }
 
 function normalizeReviewResult(payload: any, cardId: string) {
@@ -64,9 +102,7 @@ export async function getDueCards(limit: number = 50, client: HanyuClient) {
 
   let query = client
     .from('srs_cards')
-    .select(
-      'id, user_id, word_id, ease_factor, interval_days, repetitions, next_review_at, last_reviewed_at, status, words:word_id(id, hanzi, pinyin, meaning_en, meaning_es, hsk_level, pos, frequency)'
-    )
+    .select(CARD_SELECT)
     .eq('user_id', userId)
     .lte('next_review_at', nowIso)
     .order('next_review_at', { ascending: true })
@@ -111,6 +147,49 @@ export async function getDueCards(limit: number = 50, client: HanyuClient) {
     total: cards.length,
     deck_size: deckCountResult.count || 0,
   };
+}
+
+export async function getCard(id: string, client: HanyuClient): Promise<VersionedCard> {
+  const userId = await getRequiredUserId(client);
+
+  const { data, error } = await client
+    .from('srs_cards')
+    .select(CARD_SELECT)
+    .eq('id', id)
+    .eq('user_id', userId)
+    .maybeSingle();
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load card');
+  }
+
+  if (!data) {
+    const notFound = new Error('Card not found') as Error & { status?: number };
+    notFound.status = 404;
+    throw notFound;
+  }
+
+  return mapVersionedCardRow(data as SrsCardRow);
+}
+
+export async function reviewCardEvent(event: ReviewEvent, client: HanyuClient): Promise<ReviewSyncResult> {
+  const { data, error } = await client.rpc('review_flashcard', {
+    card_id: event.card_id,
+    quality: event.quality,
+    time_ms: event.time_ms,
+    review_id: event.review_id,
+    reviewed_at: event.reviewed_at,
+    expected_version: event.expected_version,
+  });
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to sync review');
+  }
+
+  const outcome = normalizeReviewSyncOutcome(data);
+  const card = await getCard(event.card_id, client);
+
+  return { outcome, card };
 }
 
 export async function reviewCard(id: string, quality: number, timeMs: number | null, client: HanyuClient) {
@@ -187,7 +266,7 @@ export async function createStarterDeck(input: { strategy?: string; limit?: numb
   const limit = input.limit === undefined ? null : parseInt(String(input.limit), 10);
 
   const result = await callRpcVariants(client, 'create_starter_deck', [
-    { strategy, limit },
+    { strategy, p_limit: limit },
     { p_strategy: strategy, p_limit: limit },
   ]);
 
