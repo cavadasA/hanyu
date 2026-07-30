@@ -52,21 +52,34 @@ security definer
 set search_path = public
 as $$
 declare
-  v_user_id          uuid    := auth.uid();
-  v_card             public.srs_cards;
-  v_review_date      date;
-  v_new_repetitions  integer;
-  v_new_interval     integer;
-  v_new_ease         numeric;
-  v_next_review_ts   timestamptz;
-  v_new_status       text;
-  v_cards_new_inc    integer := 0;
-  v_new_version      bigint;
-  v_snapshot         jsonb;
+  v_user_id           uuid    := auth.uid();
+  v_card              public.srs_cards;
+  v_existing_card_id  uuid;
+  v_review_date       date;
+  v_new_repetitions   integer;
+  v_new_interval      integer;
+  v_new_ease          numeric;
+  v_next_review_ts    timestamptz;
+  v_new_status        text;
+  v_cards_new_inc     integer := 0;
+  v_new_version       bigint;
+  v_snapshot          jsonb;
 begin
   -- 1. Auth and input validation
   if v_user_id is null then
     raise exception 'Authentication required';
+  end if;
+
+  if review_id is null then
+    raise exception 'review_id must not be null';
+  end if;
+
+  if reviewed_at is null then
+    raise exception 'reviewed_at must not be null';
+  end if;
+
+  if expected_version is null then
+    raise exception 'expected_version must not be null';
   end if;
 
   if quality is null or quality < 0 or quality > 5 then
@@ -77,17 +90,31 @@ begin
   --    If this client_review_id was already processed by this user, return
   --    the *current* authoritative card state so a retry cannot regress the
   --    cache after a subsequent review from another device.
-  if exists (
-    select 1
-    from public.review_log rl
-    where rl.user_id = v_user_id
-      and rl.client_review_id = review_flashcard.review_id
-  ) then
+  select rl.card_id
+  into v_existing_card_id
+  from public.review_log rl
+  where rl.user_id = v_user_id
+    and rl.client_review_id = review_flashcard.review_id
+  limit 1;
+
+  if found then
+    -- Guard: if the stored log row belongs to a DIFFERENT card, the client
+    -- reused a review_id across two distinct cards — that is a client bug and
+    -- must not silently discard the second review.
+    if v_existing_card_id <> review_flashcard.card_id then
+      raise exception 'review_id already used for a different card';
+    end if;
+
+    -- True duplicate: return the current authoritative card state.
     select c.*
     into v_card
     from public.srs_cards c
     where c.id = review_flashcard.card_id
       and c.user_id = v_user_id;
+
+    if not found then
+      raise exception 'Card not found';
+    end if;
 
     outcome          := 'duplicate';
     "interval"       := v_card.interval_days;
@@ -169,62 +196,96 @@ begin
 
   v_new_version := v_card.version + 1;
 
-  -- 6. Update card — SM-2 fields plus version bump
-  update public.srs_cards
-  set
-    ease_factor      = v_new_ease,
-    interval_days    = v_new_interval,
-    repetitions      = v_new_repetitions,
-    next_review_at   = v_next_review_ts,
-    last_reviewed_at = review_flashcard.reviewed_at,
-    status           = v_new_status,
-    version          = v_new_version
-  where id = review_flashcard.card_id;
+  -- 6-8. Apply card update, log row, and daily stats atomically.
+  --      The existence probe (step 2) and this insert form a check-then-act gap:
+  --      two concurrent calls with the same review_id can both pass the probe and
+  --      race to insert.  Wrapping all three mutations in a sub-transaction lets
+  --      the loser catch unique_violation and fall through to the duplicate path
+  --      instead of surfacing an opaque error.
+  begin
+    -- 6. Update card — SM-2 fields plus version bump
+    update public.srs_cards
+    set
+      ease_factor      = v_new_ease,
+      interval_days    = v_new_interval,
+      repetitions      = v_new_repetitions,
+      next_review_at   = v_next_review_ts,
+      last_reviewed_at = review_flashcard.reviewed_at,
+      status           = v_new_status,
+      version          = v_new_version
+    where id = review_flashcard.card_id;
 
-  -- 7. Insert review_log with result_snapshot for audit
-  v_snapshot := jsonb_build_object(
-    'outcome',     'applied',
-    'interval',    v_new_interval,
-    'next_review', v_next_review_ts,
-    'ease_factor', v_new_ease,
-    'repetitions', v_new_repetitions,
-    'status',      v_new_status,
-    'version',     v_new_version
-  );
+    -- 7. Insert review_log with result_snapshot for audit
+    v_snapshot := jsonb_build_object(
+      'outcome',     'applied',
+      'interval',    v_new_interval,
+      'next_review', v_next_review_ts,
+      'ease_factor', v_new_ease,
+      'repetitions', v_new_repetitions,
+      'status',      v_new_status,
+      'version',     v_new_version
+    );
 
-  insert into public.review_log (
-    user_id,
-    card_id,
-    reviewed_at,
-    quality,
-    time_ms,
-    client_review_id,
-    client_reviewed_at,
-    result_snapshot
-  ) values (
-    v_user_id,
-    review_flashcard.card_id,
-    review_flashcard.reviewed_at,
-    review_flashcard.quality,
-    review_flashcard.time_ms,
-    review_flashcard.review_id,
-    review_flashcard.reviewed_at,
-    v_snapshot
-  );
+    insert into public.review_log (
+      user_id,
+      card_id,
+      reviewed_at,
+      quality,
+      time_ms,
+      client_review_id,
+      client_reviewed_at,
+      result_snapshot
+    ) values (
+      v_user_id,
+      review_flashcard.card_id,
+      review_flashcard.reviewed_at,
+      review_flashcard.quality,
+      review_flashcard.time_ms,
+      review_flashcard.review_id,
+      review_flashcard.reviewed_at,
+      v_snapshot
+    );
 
-  -- 8. Increment daily stats (keyed to the client's reviewed_at date in UTC)
-  insert into public.user_stats (user_id, date, cards_reviewed, cards_new)
-  values (
-    v_user_id,
-    timezone('utc', review_flashcard.reviewed_at)::date,
-    1,
-    v_cards_new_inc
-  )
-  on conflict (user_id, date)
-  do update set
-    cards_reviewed = public.user_stats.cards_reviewed + 1,
-    cards_new      = public.user_stats.cards_new + excluded.cards_new,
-    updated_at     = now();
+    -- 8. Increment daily stats (keyed to the client's reviewed_at date in UTC)
+    insert into public.user_stats (user_id, date, cards_reviewed, cards_new)
+    values (
+      v_user_id,
+      timezone('utc', review_flashcard.reviewed_at)::date,
+      1,
+      v_cards_new_inc
+    )
+    on conflict (user_id, date)
+    do update set
+      cards_reviewed = public.user_stats.cards_reviewed + 1,
+      cards_new      = public.user_stats.cards_new + excluded.cards_new,
+      updated_at     = now();
+
+  exception
+    when unique_violation then
+      -- Concurrent duplicate: the sub-transaction is rolled back automatically.
+      -- Re-derive and return the current authoritative card state, mirroring the
+      -- duplicate branch in step 2 above.
+      select c.*
+      into v_card
+      from public.srs_cards c
+      where c.id = review_flashcard.card_id
+        and c.user_id = v_user_id;
+
+      if not found then
+        raise exception 'Card not found';
+      end if;
+
+      outcome          := 'duplicate';
+      "interval"       := v_card.interval_days;
+      next_review      := v_card.next_review_at;
+      ease_factor      := v_card.ease_factor;
+      repetitions      := v_card.repetitions;
+      status           := v_card.status;
+      version          := v_card.version;
+      last_reviewed_at := v_card.last_reviewed_at;
+      return next;
+      return;
+  end;
 
   -- 9. Return applied with authoritative card state
   outcome          := 'applied';

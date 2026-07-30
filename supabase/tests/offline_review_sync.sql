@@ -44,14 +44,16 @@ set local "request.jwt.claim.sub" = 'a0000000-0000-0000-0000-000000000001';
 -- ───────────────────────────────────────────────
 do $$
 declare
-  v_outcome text;
-  v_version bigint;
-  v_interval integer;
-  v_status text;
-  v_log_count bigint;
+  v_outcome    text;
+  v_version    bigint;
+  v_interval   integer;
+  v_status     text;
+  v_ease       numeric;
+  v_reps       integer;
+  v_log_count  bigint;
 begin
-  select outcome, version, "interval", status
-  into v_outcome, v_version, v_interval, v_status
+  select outcome, version, "interval", status, ease_factor, repetitions
+  into v_outcome, v_version, v_interval, v_status, v_ease, v_reps
   from public.review_flashcard(
     'b0000000-0000-0000-0000-000000000001'::uuid,  -- card_id
     4,                                               -- quality
@@ -69,12 +71,22 @@ begin
     raise exception 'Case 1 FAILED: expected version=1, got=%', v_version;
   end if;
 
-  if v_interval is null then
-    raise exception 'Case 1 FAILED: interval is null';
+  -- SM-2 for quality=4 from a brand-new card (repetitions=0, interval=0, ease=2.5):
+  --   interval=1, repetitions=1, ease_factor=2.50, status='learning'
+  if v_interval <> 1 then
+    raise exception 'Case 1 FAILED: expected interval=1, got=%', v_interval;
   end if;
 
-  if v_status is null then
-    raise exception 'Case 1 FAILED: status is null';
+  if v_reps <> 1 then
+    raise exception 'Case 1 FAILED: expected repetitions=1, got=%', v_reps;
+  end if;
+
+  if v_ease <> 2.50 then
+    raise exception 'Case 1 FAILED: expected ease_factor=2.50, got=%', v_ease;
+  end if;
+
+  if v_status <> 'learning' then
+    raise exception 'Case 1 FAILED: expected status=learning, got=%', v_status;
   end if;
 
   -- Confirm exactly one review_log row with this client_review_id
@@ -180,7 +192,7 @@ begin
 end $$;
 
 -- ───────────────────────────────────────────────
--- Case 4a: invalid quality (6) → exception
+-- Case 4a: invalid quality (6) → exception with correct message
 -- ───────────────────────────────────────────────
 do $$
 begin
@@ -199,7 +211,10 @@ begin
     if sqlerrm like 'Case 4a FAILED%' then
       raise;  -- propagate the test-failure exception
     end if;
-    -- Any other exception means the RPC correctly rejected the call
+    -- Verify it is the CORRECT validation error, not some unrelated failure
+    if sqlerrm not like '%quality must be between%' then
+      raise exception 'Case 4a FAILED: wrong error message: %', sqlerrm;
+    end if;
   end;
 end $$;
 
@@ -222,6 +237,59 @@ begin
   exception when others then
     if sqlerrm like 'Case 4b FAILED%' then
       raise;
+    end if;
+    -- Verify it is the CORRECT 'Card not found' error, not some unrelated failure
+    if sqlerrm <> 'Card not found' then
+      raise exception 'Case 4b FAILED: wrong error message: %', sqlerrm;
+    end if;
+  end;
+end $$;
+
+-- ───────────────────────────────────────────────
+-- Case 4c: same review_id reused for a DIFFERENT card_id → distinct error
+-- (Finding 1: must not silently no-op the second review)
+-- ───────────────────────────────────────────────
+do $$
+begin
+  begin
+    -- review_id c0...001 was already consumed for card b0...001 in Case 1;
+    -- submitting it again with a different card_id must raise a distinct error.
+    perform public.review_flashcard(
+      'b0000000-0000-0000-0000-000000000099'::uuid,  -- different (non-existent) card_id
+      4,
+      1000,
+      'c0000000-0000-0000-0000-000000000001'::uuid,  -- review_id already used for b0...001
+      now(),
+      0::bigint
+    );
+    raise exception 'Case 4c FAILED: expected exception for review_id reuse on different card, none raised';
+  exception when others then
+    if sqlerrm like 'Case 4c FAILED%' then raise; end if;
+    if sqlerrm <> 'review_id already used for a different card' then
+      raise exception 'Case 4c FAILED: wrong error message: %', sqlerrm;
+    end if;
+  end;
+end $$;
+
+-- ───────────────────────────────────────────────
+-- Case 4d: null expected_version → exception (Finding 2: must not silently bypass OCC)
+-- ───────────────────────────────────────────────
+do $$
+begin
+  begin
+    perform public.review_flashcard(
+      'b0000000-0000-0000-0000-000000000001'::uuid,
+      4,
+      1000,
+      'c0000000-0000-0000-0000-000000000097'::uuid,
+      now(),
+      null::bigint  -- null expected_version must be rejected, not silently accepted
+    );
+    raise exception 'Case 4d FAILED: expected exception for null expected_version, none raised';
+  exception when others then
+    if sqlerrm like 'Case 4d FAILED%' then raise; end if;
+    if sqlerrm not like '%expected_version must not be null%' then
+      raise exception 'Case 4d FAILED: wrong error message: %', sqlerrm;
     end if;
   end;
 end $$;
