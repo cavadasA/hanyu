@@ -266,7 +266,7 @@ export async function createStarterDeck(input: { strategy?: string; limit?: numb
   const limit = input.limit === undefined ? null : parseInt(String(input.limit), 10);
 
   const result = await callRpcVariants(client, 'create_starter_deck', [
-    { strategy, p_limit: limit },
+    { strategy, limit },
     { p_strategy: strategy, p_limit: limit },
   ]);
 
