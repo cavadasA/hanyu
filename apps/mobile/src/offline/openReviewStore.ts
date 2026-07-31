@@ -2,24 +2,18 @@ import * as SQLite from 'expo-sqlite';
 import { applySchema } from './schema';
 import { ReviewStoreImpl } from './ReviewStore';
 import type { ReviewStore } from './ReviewStore';
-
-const PATH_UNSAFE = /[/\\.:]/;
+import { deriveDbName } from './dbName';
 
 /**
  * Opens (or creates) the per-user SQLite review store.
  *
- * userId is validated before being embedded in the filename; it must be a non-empty
- * string that contains no path-unsafe characters (/, \, ., :) to prevent directory
- * traversal or ambiguous filenames.
+ * userId is validated by deriveDbName before being embedded in the filename.
+ * Only this file is permitted to import expo-sqlite; ReviewStore.ts and
+ * schema.ts remain expo-sqlite-free so they can be unit-tested under Jest.
  */
 export async function openReviewStore(userId: string): Promise<ReviewStore> {
-  if (!userId || typeof userId !== 'string' || PATH_UNSAFE.test(userId)) {
-    throw new Error(
-      `Invalid userId "${userId}": must be a non-empty string with no path-unsafe characters (/ \\ . :)`,
-    );
-  }
+  const dbName = deriveDbName(userId); // throws on invalid userId
 
-  const dbName = `hanyu-review-${userId}.db`;
   const db = await SQLite.openDatabaseAsync(dbName);
 
   // Bridge the real SQLiteDatabase to our injectable DbHandle interface.

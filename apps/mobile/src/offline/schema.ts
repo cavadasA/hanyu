@@ -13,7 +13,7 @@ create table if not exists cached_cards (
 create table if not exists pending_reviews (
   review_id text primary key,
   card_id text not null,
-  quality integer not null check (quality between 0 and 5),
+  quality integer not null check (quality in (0,1,2,3,4,5)),
   time_ms integer,
   reviewed_at text not null,
   expected_version integer not null,

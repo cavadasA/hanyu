@@ -98,13 +98,10 @@ const UPSERT_CARD_FULL = `
     updated_at     = excluded.updated_at
 `;
 
-// Projection-only upsert – preserves existing server_json/server_version on conflict.
-const UPSERT_CARD_PROJECTED = `
-  INSERT INTO cached_cards (card_id, server_version, server_json, projected_json, updated_at)
-  VALUES (?, ?, ?, ?, ?)
-  ON CONFLICT(card_id) DO UPDATE SET
-    projected_json = excluded.projected_json,
-    updated_at     = excluded.updated_at
+// Projection-only update – never touches server_json/server_version.
+// Used by enqueueAndProject, which requires the card to already exist in cached_cards.
+const UPDATE_CARD_PROJECTED = `
+  UPDATE cached_cards SET projected_json = ?, updated_at = ? WHERE card_id = ?
 `;
 
 export class ReviewStoreImpl implements ReviewStore {
@@ -121,7 +118,7 @@ export class ReviewStoreImpl implements ReviewStore {
         // If pending events exist for this card, replay them on top of the incoming server
         // card so the user's in-flight local progress isn't silently discarded from the UI.
         const pending = await this.db.getAllAsync<PendingRow>(
-          'SELECT * FROM pending_reviews WHERE card_id = ? ORDER BY queue_sequence ASC',
+          'SELECT * FROM pending_reviews WHERE card_id = ? AND state != \'permanent_error\' ORDER BY queue_sequence ASC',
           [card.id],
         );
         const projected = pending.length > 0 ? replayPendingOnto(card, pending) : card;
@@ -152,14 +149,23 @@ export class ReviewStoreImpl implements ReviewStore {
   async enqueueAndProject(event: ReviewEvent, projected: VersionedCard): Promise<void> {
     await this.db.withTransactionAsync(async () => {
       const now = new Date().toISOString();
-      // Update projection first so the UI sees it immediately, but the transaction
-      // ensures this is rolled back if the pending_reviews insert fails (e.g. bad quality).
-      await this.db.runAsync(UPSERT_CARD_PROJECTED, [
-        projected.id,
-        projected.version,
-        JSON.stringify(projected),
+      // Guard: the card must already have a cached_cards row (created by cacheCards).
+      // Allowing an uncached card here would fabricate server_json/server_version with
+      // purely local data, which later conflict-resolution code reads as ground truth.
+      const exists = await this.db.getFirstAsync<{ card_id: string }>(
+        'SELECT card_id FROM cached_cards WHERE card_id = ?',
+        [projected.id],
+      );
+      if (!exists) {
+        throw new Error(
+          `enqueueAndProject: card "${projected.id}" is not in cache – call cacheCards first`,
+        );
+      }
+      // Update projection only – server_json/server_version are never touched here.
+      await this.db.runAsync(UPDATE_CARD_PROJECTED, [
         JSON.stringify(projected),
         now,
+        projected.id,
       ]);
       // queue_sequence is generated inside the transaction to avoid gaps.
       await this.db.runAsync(
@@ -203,9 +209,9 @@ export class ReviewStoreImpl implements ReviewStore {
     await this.db.withTransactionAsync(async () => {
       await this.db.runAsync('DELETE FROM pending_reviews WHERE review_id = ?', [reviewId]);
 
-      // Replay any remaining events for this card on top of the server state.
+      // Replay any remaining non-permanent events for this card on top of the server state.
       const remaining = await this.db.getAllAsync<PendingRow>(
-        'SELECT * FROM pending_reviews WHERE card_id = ? ORDER BY queue_sequence ASC',
+        'SELECT * FROM pending_reviews WHERE card_id = ? AND state != \'permanent_error\' ORDER BY queue_sequence ASC',
         [serverCard.id],
       );
       const projected =
@@ -236,9 +242,9 @@ export class ReviewStoreImpl implements ReviewStore {
         await this.db.runAsync(
           `UPDATE pending_reviews
            SET quality = ?, time_ms = ?, reviewed_at = ?, expected_version = ?,
-               state = ?, last_error = ?
+               state = ?, last_error = ?, attempt_count = ?
            WHERE review_id = ?`,
-          [ev.quality, ev.time_ms, ev.reviewed_at, ev.expected_version, ev.state, ev.last_error, ev.review_id],
+          [ev.quality, ev.time_ms, ev.reviewed_at, ev.expected_version, ev.state, ev.last_error, ev.attempt_count, ev.review_id],
         );
       }
     });

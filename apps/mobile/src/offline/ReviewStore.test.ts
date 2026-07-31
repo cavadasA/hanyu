@@ -19,6 +19,7 @@ import { applySchema } from './schema';
 import { ReviewStoreImpl } from './ReviewStore';
 import type { DbHandle, ReviewStore } from './ReviewStore';
 import type { VersionedCard, ReviewEvent } from '@hanyu/data';
+import { deriveDbName } from './dbName';
 
 // ---------------------------------------------------------------------------
 // Test adapter: wraps a synchronous node:sqlite DatabaseSync instance
@@ -119,6 +120,31 @@ async function createStore(): Promise<{ store: ReviewStore; handle: DbHandle; de
 // Tests
 // ---------------------------------------------------------------------------
 
+describe('deriveDbName', () => {
+  test('accepts a valid UUID-like userId and produces the expected filename', () => {
+    const id = '550e8400-e29b-41d4-a716-446655440000';
+    expect(deriveDbName(id)).toBe(`hanyu-review-${id}.db`);
+  });
+
+  test('accepts alphanumeric, hyphen, and underscore chars up to 64 chars', () => {
+    expect(deriveDbName('user_123')).toBe('hanyu-review-user_123.db');
+    expect(deriveDbName('abc-XYZ-789')).toBe('hanyu-review-abc-XYZ-789.db');
+    expect(deriveDbName('a'.repeat(64))).toBe(`hanyu-review-${'a'.repeat(64)}.db`);
+  });
+
+  test.each([
+    ['empty string', ''],
+    ['dot-segment', '..'],
+    ['forward slash', 'user/path'],
+    ['backslash', 'user\\path'],
+    ['colon', 'user:name'],
+    ['embedded null byte', 'user\0name'],
+    ['oversized (65 chars)', 'a'.repeat(65)],
+  ])('rejects %s', (_label, id) => {
+    expect(() => deriveDbName(id)).toThrow();
+  });
+});
+
 describe('schema migration', () => {
   test('fresh open sets PRAGMA user_version to 1 and creates all three tables', async () => {
     const nativeDb = new DatabaseSync(':memory:');
@@ -178,7 +204,7 @@ describe('cacheCards', () => {
   });
 
   test('preserves pending-event projection when caching a new server card', async () => {
-    const { store } = await createStore();
+    const { store, handle } = await createStore();
     const card = makeCard({
       next_review_at: '2026-07-30T00:00:00.000Z',
       ease_factor: 2.5,
@@ -209,6 +235,18 @@ describe('cacheCards', () => {
     expect(projectedCard).toBeDefined();
     // The projection must be > serverRefresh.next_review_at (pending event pushed it forward)
     expect(projectedCard!.next_review_at > serverRefresh.next_review_at).toBe(true);
+
+    // server_version and server_json must reflect the NEW server card (version 2),
+    // not the original version 1 or the local projection.
+    const row = await handle.getFirstAsync<{ server_version: number; server_json: string }>(
+      'SELECT server_version, server_json FROM cached_cards WHERE card_id = ?',
+      [card.id],
+    );
+    expect(row?.server_version).toBe(serverRefresh.version); // 2
+    const serverData = JSON.parse(row!.server_json) as VersionedCard;
+    expect(serverData.version).toBe(serverRefresh.version); // 2
+    // server_json must NOT contain the locally-projected next_review_at
+    expect(serverData.next_review_at).toBe(serverRefresh.next_review_at);
   });
 });
 
@@ -225,6 +263,21 @@ describe('enqueueAndProject', () => {
     expect(await store.pendingCount()).toBe(1);
     const due = await store.getDueProjectedCards('2099-01-02T00:00:00.000Z', 10);
     expect(due[0].interval_days).toBe(6);
+  });
+
+  test('throws when the card has not been cached yet (never fabricates server state)', async () => {
+    const { store } = await createStore();
+    const card = makeCard();
+    // Deliberately no cacheCards call
+    const event = makeEvent(card.id, 4);
+    const projected = { ...card, interval_days: 6 };
+
+    await expect(store.enqueueAndProject(event, projected)).rejects.toThrow(
+      /not in cache|cacheCards/i,
+    );
+
+    // Nothing was written to pending_reviews either (transaction rolled back)
+    expect(await store.pendingCount()).toBe(0);
   });
 
   test('rolls back both tables atomically on constraint violation', async () => {
@@ -338,6 +391,11 @@ describe('acknowledge', () => {
     const proj = due.find(c => c.id === card.id);
     expect(proj).toBeDefined();
     expect(proj!.interval_days).toBeGreaterThan(serverCardV2.interval_days);
+
+    // Mirrored field pairs must stay in sync after replay.
+    expect(proj!.interval).toBe(proj!.interval_days);
+    expect(proj!.next_review).toBe(proj!.next_review_at);
+    expect(proj!.last_review).toBe(proj!.last_reviewed_at);
   });
 });
 
@@ -355,6 +413,37 @@ describe('markPermanentError', () => {
     expect(item.state).toBe('permanent_error');
     expect(item.last_error).toBe('version conflict');
     expect(item.attempt_count).toBe(1);
+  });
+
+  test('permanent_error events are excluded from projection replay in cacheCards', async () => {
+    const { store } = await createStore();
+    const card = makeCard({
+      ease_factor: 2.5,
+      interval_days: 1,
+      status: 'new',
+      next_review_at: '2026-01-01T00:00:00.000Z',
+    });
+    await store.cacheCards([card]);
+
+    // Enqueue and mark as permanent_error so it should never affect projection again.
+    const event = makeEvent(card.id, 5);
+    await store.enqueueAndProject(event, {
+      ...card,
+      interval_days: 99,
+      next_review_at: '2099-01-01T00:00:00.000Z',
+    });
+    await store.markPermanentError(event.review_id, 'server rejection');
+
+    // Re-cache the card; the permanent_error event must NOT be replayed.
+    const serverRefresh = { ...card, version: 2 };
+    await store.cacheCards([serverRefresh]);
+
+    const due = await store.getDueProjectedCards('2099-01-01T00:00:00.000Z', 10);
+    const projectedCard = due.find(c => c.id === card.id);
+    expect(projectedCard).toBeDefined();
+    // Projection equals serverRefresh (no SM2 applied from the errored event)
+    expect(projectedCard!.interval_days).toBe(serverRefresh.interval_days);
+    expect(projectedCard!.next_review_at).toBe(serverRefresh.next_review_at);
   });
 });
 
@@ -417,32 +506,35 @@ describe('pendingCount', () => {
   });
 });
 
-describe('destroy', () => {
-  test('calls the destroyDb callback and closes the handle', async () => {
-    const { store, destroyFn } = await createStore();
-    await store.destroy();
-    expect(destroyFn).toHaveBeenCalledTimes(1);
+describe('destroy and close', () => {
+  test('close() genuinely closes the underlying database handle', async () => {
+    // Use a dedicated nativeDb so we can test handle closure directly.
+    const nativeDb = new DatabaseSync(':memory:');
+    const handle = makeTestHandle(nativeDb);
+    await applySchema(handle);
+    const store = new ReviewStoreImpl(handle, jest.fn().mockResolvedValue(undefined));
+
+    await store.close();
+
+    // The underlying handle is genuinely closed – any subsequent DB operation must throw.
+    await expect(store.pendingCount()).rejects.toThrow();
   });
 
-  test('a new store on a fresh adapter starts from a clean state after destroy', async () => {
-    const { store } = await createStore();
-    const card = makeCard();
-    await store.cacheCards([card]);
-    const event = makeEvent(card.id, 4);
-    await store.enqueueAndProject(event, card);
-    expect(await store.pendingCount()).toBe(1);
+  test('destroy() closes the handle then invokes the destroyDb callback', async () => {
+    const nativeDb = new DatabaseSync(':memory:');
+    const handle = makeTestHandle(nativeDb);
+    await applySchema(handle);
+    const destroyFn = jest.fn().mockResolvedValue(undefined);
+    const store = new ReviewStoreImpl(handle, destroyFn);
 
     await store.destroy();
 
-    // Simulate a fresh open for the same user: new in-memory DB = clean slate
-    const { store: freshStore } = await createStore();
-    expect(await freshStore.pendingCount()).toBe(0);
-    await freshStore.close();
+    expect(destroyFn).toHaveBeenCalledTimes(1);
+    // Handle is genuinely closed – subsequent queries must throw.
+    await expect(store.pendingCount()).rejects.toThrow();
   });
 
   test('destroying one store does not affect a different store', async () => {
-    // Each createStore() creates a separate in-memory DB instance (different DatabaseSync object),
-    // so the two stores are fully isolated by construction – mimicking separate per-user DB files.
     const { store: storeA } = await createStore();
     const { store: storeB } = await createStore();
 
@@ -452,7 +544,10 @@ describe('destroy', () => {
 
     await storeA.destroy();
 
-    // storeB must be unaffected
+    // storeA is genuinely closed – its operations now throw.
+    await expect(storeA.pendingCount()).rejects.toThrow();
+
+    // storeB is completely unaffected.
     expect(await storeB.pendingCount()).toBe(1);
     await storeB.close();
   });
