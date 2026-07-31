@@ -24,6 +24,8 @@ import { getData } from '../lib/data';
 import { useSession } from '../session/SessionProvider';
 import { openReviewStore } from './openReviewStore';
 import { OfflineReviewService } from './OfflineReviewService';
+import { ReviewSyncEngine, type SyncSummary } from './ReviewSyncEngine';
+import type { ReviewStore } from './ReviewStore';
 
 // ---------------------------------------------------------------------------
 // Context shape
@@ -34,15 +36,22 @@ interface OfflineReviewValue {
   ready: boolean;
   pendingCount: number;
   refreshPendingCount: () => Promise<void>;
+  sync: () => Promise<SyncSummary | null>;
+  syncing: boolean;
+  lastSummary: SyncSummary | null;
 }
 
 const noop = async () => undefined;
+const noopSync = async () => null;
 
 const OfflineReviewContext = createContext<OfflineReviewValue>({
   service: null,
   ready: false,
   pendingCount: 0,
   refreshPendingCount: noop,
+  sync: noopSync,
+  syncing: false,
+  lastSummary: null,
 });
 
 // ---------------------------------------------------------------------------
@@ -56,10 +65,13 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
   const [service, setService] = useState<OfflineReviewService | null>(null);
   const [ready, setReady] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
+  const [syncing, setSyncing] = useState(false);
+  const [lastSummary, setLastSummary] = useState<SyncSummary | null>(null);
 
   // Live reference to the currently-active service, used by cleanup and callbacks
   // without needing to capture stale closure values.
   const serviceRef = useRef<OfflineReviewService | null>(null);
+  const syncEngineRef = useRef<ReviewSyncEngine | null>(null);
 
   // Set to true by the empty-deps effect's cleanup, which React calls *before*
   // the userId-effect cleanup when the component unmounts.  This lets the
@@ -90,6 +102,9 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
       setService(null);
       setReady(false);
       setPendingCount(0);
+      setSyncing(false);
+      setLastSummary(null);
+      syncEngineRef.current = null;
       return;
     }
 
@@ -108,9 +123,14 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
           now: () => new Date(),
           uuid: () => randomUUID(),
         });
+        syncEngineRef.current = new ReviewSyncEngine({
+          store: store as ReviewStore,
+          reviewCardEvent: (event) => getData().flashcards.reviewCardEvent(event),
+        });
         serviceRef.current = svc;
         setService(svc);
         setReady(true);
+        setLastSummary(null);
       })
       .catch(() => {
         // Opening the store failed — remain not ready.
@@ -125,9 +145,12 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
       // Clear the ref and reset UI state immediately so subsequent renders see
       // no service. The async cleanup below happens in the background.
       serviceRef.current = null;
+      syncEngineRef.current = null;
       setService(null);
       setReady(false);
       setPendingCount(0);
+      setSyncing(false);
+      setLastSummary(null);
 
       if (unmountingRef.current) {
         // Provider is unmounting (e.g. hot reload, app teardown) — always close,
@@ -167,9 +190,24 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
     setPendingCount(count);
   }, []);
 
+  const sync = useCallback(async (): Promise<SyncSummary | null> => {
+    const engine = syncEngineRef.current;
+    if (!engine) return null;
+
+    setSyncing(true);
+    try {
+      const summary = await engine.sync();
+      setLastSummary(summary);
+      await refreshPendingCount();
+      return summary;
+    } finally {
+      setSyncing(false);
+    }
+  }, [refreshPendingCount]);
+
   return (
     <OfflineReviewContext.Provider
-      value={{ service, ready, pendingCount, refreshPendingCount }}
+      value={{ service, ready, pendingCount, refreshPendingCount, sync, syncing, lastSummary }}
     >
       {children}
     </OfflineReviewContext.Provider>

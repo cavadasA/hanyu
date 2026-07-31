@@ -73,7 +73,10 @@ function wrapper({ children }: { children: React.ReactNode }) {
 beforeEach(() => {
   jest.clearAllMocks();
   mockGetData.mockReturnValue({
-    flashcards: { getDueCards: jest.fn().mockResolvedValue({ cards: [] }) },
+    flashcards: {
+      getDueCards: jest.fn().mockResolvedValue({ cards: [] }),
+      reviewCardEvent: jest.fn().mockResolvedValue({ outcome: 'applied', card: {} }),
+    },
   });
 });
 
@@ -270,6 +273,30 @@ describe('OfflineReviewProvider – unmount', () => {
     await unmount();
 
     expect(mockOpenReviewStore).not.toHaveBeenCalled();
+  });
+});
+
+describe('OfflineReviewProvider – sync', () => {
+  test('exposes sync, syncing, and lastSummary defaults before sync', async () => {
+    const mockStore = makeMockStore();
+    mockOpenReviewStore.mockResolvedValue(mockStore);
+    mockUseSession.mockReturnValue(makeSessionValue({ userId: 'user-1' }));
+
+    const { result } = await renderHook(() => useOfflineReview(), { wrapper });
+
+    await waitFor(() => expect(result.current.ready).toBe(true));
+
+    expect(result.current.syncing).toBe(false);
+    expect(result.current.lastSummary).toBeNull();
+    expect(typeof result.current.sync).toBe('function');
+  });
+
+  test('sync returns null when service is not ready', async () => {
+    mockUseSession.mockReturnValue(makeSessionValue({ userId: null }));
+
+    const { result } = await renderHook(() => useOfflineReview(), { wrapper });
+
+    await expect(result.current.sync()).resolves.toBeNull();
   });
 });
 
