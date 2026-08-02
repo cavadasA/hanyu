@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { toUserMessage, type DueCard, type DueCardsPayload, type FlashcardStats } from '@hanyu/data';
@@ -42,6 +42,8 @@ interface SessionStats {
 export default function CardsScreen() {
   const { colors } = useTheme();
   const router = useRouter();
+  const { deckId } = useLocalSearchParams<{ deckId?: string }>();
+  const focusedDeckId = typeof deckId === 'string' && deckId.length > 0 ? deckId : null;
 
   const [phase, setPhase] = useState<ScreenPhase>('pre-session');
   const [allDueCards, setAllDueCards] = useState<DueCard[]>([]);
@@ -74,7 +76,7 @@ export default function CardsScreen() {
 
     try {
       const data = getData();
-      const payload = (await data.flashcards.getDueCards(50)) as DueCardsPayload;
+      const payload = (await data.flashcards.getDueCards(50, focusedDeckId)) as DueCardsPayload;
       setAllDueCards(payload.cards ?? []);
       setDeckSize(payload.deck_size ?? 0);
       setIndex(0);
@@ -100,7 +102,7 @@ export default function CardsScreen() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [focusedDeckId]);
 
   useEffect(() => {
     void load();
@@ -277,6 +279,13 @@ export default function CardsScreen() {
           <View style={styles.completeActions}>
             <Button label="Review again" variant="outline" onPress={load} />
             <Button label="Back to Today" variant="primary" onPress={() => router.push('/today')} />
+            {focusedDeckId ? (
+              <Button
+                label="Back to deck"
+                variant="secondary"
+                onPress={() => router.push(`/library/decks/${focusedDeckId}`)}
+              />
+            ) : null}
           </View>
         </View>
       </Screen>

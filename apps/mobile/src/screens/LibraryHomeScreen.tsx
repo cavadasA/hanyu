@@ -33,6 +33,14 @@ export function LibraryHomeScreen() {
         actionLabel="Grammar"
         onPress={() => router.push('/library/grammar')}
       />
+
+      <HubTile
+        icon="albums-outline"
+        title="Decks"
+        description="Manage your study decks"
+        actionLabel="Decks"
+        onPress={() => router.push('/library/decks')}
+      />
     </Screen>
   );
 }

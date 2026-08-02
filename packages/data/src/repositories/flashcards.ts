@@ -92,39 +92,52 @@ function normalizeReviewResult(payload: any, cardId: string) {
   };
 }
 
-export async function getDueCards(limit: number = 50, client: HanyuClient) {
-  const userId = await getRequiredUserId(client);
+export async function getDueCards(
+  limit: number = 50,
+  client: HanyuClient,
+  deckId: string | null = null,
+) {
   const settings = await getSettings(client);
   const maxFromSettings = settings.max_reviews_per_session || 100;
   const requestedLimit = Math.max(1, parseInt(String(limit), 10) || maxFromSettings);
   const effectiveLimit = Math.min(maxFromSettings, requestedLimit);
-  const nowIso = new Date().toISOString();
 
-  let query = client
-    .from('srs_cards')
-    .select(CARD_SELECT)
-    .eq('user_id', userId)
-    .lte('next_review_at', nowIso)
-    .order('next_review_at', { ascending: true })
-    .limit(effectiveLimit);
-
-  const [{ data, error }, deckCountResult] = await Promise.all([
-    query,
-    client
-      .from('srs_cards')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', userId),
-  ]);
-
+  const { data, error } = await (client.rpc as any)('get_due_cards', {
+    p_limit: effectiveLimit,
+    p_deck_id: deckId,
+  });
   if (error) {
     throw createRepositoryError(error, 'Failed to load due cards');
   }
 
-  if (deckCountResult.error) {
-    throw createRepositoryError(deckCountResult.error, 'Failed to load deck size');
+  // The RPC returns bare srs_cards rows, so attach word details when missing.
+  let rows = (data || []) as any[];
+  if (rows.some((row) => !row.words)) {
+    const wordIds = [...new Set(rows.map((row) => row.word_id))];
+    if (wordIds.length > 0) {
+      const { data: wordRows, error: wordError } = await client
+        .from('words')
+        .select('id, hanzi, pinyin, meaning_en, meaning_es, hsk_level, pos, frequency')
+        .in('id', wordIds);
+      if (wordError) {
+        throw createRepositoryError(wordError, 'Failed to load card words');
+      }
+      const byId = new Map((wordRows || []).map((w: any) => [String(w.id), w as SrsCardRow['words']]));
+      rows = rows.map((row) => ({ ...row, words: byId.get(String(row.word_id)) ?? null }));
+    }
   }
 
-  let cards = (data || []).map((row: any) => mapCardRow(row));
+  // deck_size = distinct words in scope (active decks, or the focused deck).
+  const { data: sizeData, error: sizeError } = await (client.rpc as any)('count_deck_cards', {
+    p_deck_id: deckId,
+    p_due_only: false,
+  });
+  if (sizeError) {
+    throw createRepositoryError(sizeError, 'Failed to load deck size');
+  }
+  const deckSize = Number((Array.isArray(sizeData) ? sizeData[0] : sizeData)?.count || 0);
+
+  let cards = rows.map((row) => mapCardRow(row));
   if (settings.card_order === 'frequency') {
     cards = cards
       .slice()
@@ -145,7 +158,7 @@ export async function getDueCards(limit: number = 50, client: HanyuClient) {
   return {
     cards,
     total: cards.length,
-    deck_size: deckCountResult.count || 0,
+    deck_size: deckSize || 0,
   };
 }
 
@@ -201,64 +214,44 @@ export async function reviewCard(id: string, quality: number, timeMs: number | n
   return normalizeReviewResult(result, id);
 }
 
-export async function addCard(wordId: number | string, client: HanyuClient) {
+export async function addCard(
+  wordId: number | string,
+  client: HanyuClient,
+  deckId?: string,
+) {
   const userId = await getRequiredUserId(client);
+  const numericWordId = Number(wordId);
 
-  const { data: word, error: wordError } = await client
-    .from('words')
-    .select('id')
-    .eq('id', wordId as any)
-    .maybeSingle();
-
-  if (wordError) {
-    throw createRepositoryError(wordError, 'Failed to validate word');
-  }
-
-  if (!word) {
-    const notFound = new Error('Word not found') as Error & { status?: number };
-    notFound.status = 404;
-    throw notFound;
-  }
-
-  const { data: existing, error: existingError } = await client
+  // Ensure the shared SRS card (idempotent; never reset an existing one).
+  const { error: cardError } = await client
     .from('srs_cards')
-    .select('id')
-    .eq('user_id', userId)
-    .eq('word_id', wordId as any)
-    .maybeSingle();
+    .upsert(
+      { user_id: userId, word_id: numericWordId, next_review_at: new Date().toISOString(), status: 'new' } as any,
+      { onConflict: 'user_id,word_id', ignoreDuplicates: true }
+    );
+  if (cardError) throw createRepositoryError(cardError, 'Failed to add card');
 
-  if (existingError) {
-    throw createRepositoryError(existingError, 'Failed to validate existing card');
+  // Resolve target deck (explicit, else the default deck).
+  let targetDeckId = deckId;
+  if (!targetDeckId) {
+    const { data: def } = await client
+      .from('decks')
+      .select('id')
+      .eq('user_id', userId)
+      .eq('is_default', true)
+      .maybeSingle();
+    targetDeckId = (def as any)?.id;
+  }
+  if (targetDeckId) {
+    const { error: memberError } = await client
+      .from('deck_cards')
+      .upsert({ deck_id: targetDeckId, word_id: numericWordId } as any, {
+        onConflict: 'deck_id,word_id',
+      });
+    if (memberError) throw createRepositoryError(memberError, 'Failed to add word to deck');
   }
 
-  if (existing) {
-    const duplicate = new Error('Word already in deck') as Error & { status?: number };
-    duplicate.status = 409;
-    throw duplicate;
-  }
-
-  const { data, error } = await client
-    .from('srs_cards')
-    .insert({
-      user_id: userId,
-      word_id: wordId as any,
-      next_review_at: new Date().toISOString(),
-      status: 'new',
-    } as any)
-    .select('id')
-    .single();
-
-  if (error) {
-    if (error.code === '23505') {
-      const duplicate = new Error('Word already in deck') as Error & { status?: number };
-      duplicate.status = 409;
-      throw duplicate;
-    }
-
-    throw createRepositoryError(error, 'Failed to add card');
-  }
-
-  return { card_id: (data as any).id };
+  return { word_id: numericWordId, deck_id: targetDeckId ?? null };
 }
 
 export async function createStarterDeck(input: { strategy?: string; limit?: number } = {}, client: HanyuClient) {

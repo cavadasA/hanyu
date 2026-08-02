@@ -9,6 +9,17 @@ import {
 } from './auth';
 import { getGrammar, getGrammarPoint } from './repositories/grammar';
 import {
+  addDeckFromTemplate,
+  addWordToDeck,
+  createDeck,
+  deleteDeck,
+  getDeckCards,
+  getDecks,
+  getDeckTemplates,
+  removeWordFromDeck,
+  updateDeck,
+} from './repositories/decks';
+import {
   addCard,
   createStarterDeck,
   getCard,
@@ -50,19 +61,30 @@ export function createHanyuData(config: HanyuDataConfig) {
       getWords: (params: Parameters<typeof getWords>[0] = {}) => getWords(params, client),
       getWord: (id: number | string) => getWord(id, client),
     },
+    decks: {
+      getDecks: () => getDecks(client),
+      getDeckTemplates: () => getDeckTemplates(client),
+      addDeckFromTemplate: (templateId: string) => addDeckFromTemplate(templateId, client),
+      createDeck: (input: { name: string; description?: string }) => createDeck(input, client),
+      updateDeck: (id: string, patch: Parameters<typeof updateDeck>[1]) => updateDeck(id, patch, client),
+      deleteDeck: (id: string) => deleteDeck(id, client),
+      addWordToDeck: (deckId: string, wordId: number | string) => addWordToDeck(deckId, wordId, client),
+      removeWordFromDeck: (deckId: string, wordId: number | string) => removeWordFromDeck(deckId, wordId, client),
+      getDeckCards: (deckId: string) => getDeckCards(deckId, client),
+    },
     grammar: {
       getGrammar: (level: HskLevel) => getGrammar(level, client),
       getGrammarPoint: (level: HskLevel, id: number | string) =>
         getGrammarPoint(level, id, client),
     },
     flashcards: {
-      getDueCards: (limit = 50) => getDueCards(limit, client),
+      getDueCards: (limit = 50, deckId: string | null = null) => getDueCards(limit, client, deckId),
       getCard: (id: string) => getCard(id, client),
       reviewCard: (id: string, quality: number, timeMs: number | null) =>
         reviewCard(id, quality, timeMs, client),
       reviewCardEvent: (event: Parameters<typeof reviewCardEvent>[0]) =>
         reviewCardEvent(event, client),
-      addCard: (wordId: number | string) => addCard(wordId, client),
+      addCard: (wordId: number | string, deckId?: string) => addCard(wordId, client, deckId),
       createStarterDeck: (input: { strategy?: string; limit?: number } = {}) =>
         createStarterDeck(input, client),
       getFlashcardStats: () => getFlashcardStats(client),

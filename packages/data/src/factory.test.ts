@@ -59,7 +59,7 @@ describe('createHanyuData', () => {
     const data = createHanyuData(config);
 
     expect(Object.keys(data).sort()).toEqual(
-      ['auth', 'client', 'exercises', 'flashcards', 'grammar', 'readings', 'settings', 'stats', 'today', 'words'].sort()
+      ['auth', 'client', 'decks', 'exercises', 'flashcards', 'grammar', 'readings', 'settings', 'stats', 'today', 'words'].sort()
     );
   });
 });

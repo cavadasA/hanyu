@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'expo-router';
 import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { toUserMessage, type HskLevel, type Word } from '@hanyu/data';
+import { toUserMessage, type DeckSummary, type HskLevel, type Word } from '@hanyu/data';
 import { getData } from '../lib/data';
 import { useWords } from '../words/useWords';
 import { tokens } from '../theme/tokens';
@@ -21,11 +22,33 @@ const LEVELS: Array<{ label: string; value: HskLevel | undefined }> = [
 
 export function WordsScreen() {
   const { colors } = useTheme();
+  const router = useRouter();
   const words = useWords();
   const flashcards = useRef(getData().flashcards);
   const [added, setAdded] = useState<Record<number, boolean>>({});
   const [adding, setAdding] = useState<Record<number, boolean>>({});
   const [addError, setAddError] = useState<string | null>(null);
+  const [decks, setDecks] = useState<DeckSummary[] | null>(null);
+  const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null);
+
+  useEffect(() => {
+    let disposed = false;
+    getData()
+      .decks.getDecks()
+      .then((list) => {
+        if (disposed) return;
+        setDecks(list);
+        const fallback = list.find((deck) => deck.is_default) ?? list[0] ?? null;
+        setSelectedDeckId(fallback?.id ?? null);
+      })
+      .catch(() => {
+        if (!disposed) setDecks([]);
+      });
+
+    return () => {
+      disposed = true;
+    };
+  }, []);
 
   async function addWord(word: Word) {
     if (added[word.id] || adding[word.id] || word.in_srs) {
@@ -35,7 +58,11 @@ export function WordsScreen() {
     setAdding(current => ({ ...current, [word.id]: true }));
     setAddError(null);
     try {
-      await flashcards.current.addCard(word.id);
+      if (selectedDeckId) {
+        await flashcards.current.addCard(word.id, selectedDeckId);
+      } else {
+        await flashcards.current.addCard(word.id);
+      }
       setAdded(current => ({ ...current, [word.id]: true }));
     } catch (caught) {
       const message = toUserMessage(caught);
@@ -85,6 +112,45 @@ export function WordsScreen() {
           </Pressable>
         ))}
       </View>
+
+      {decks !== null && decks.length > 0 ? (
+        <View style={styles.filters}>
+          {decks.map(deck => {
+            const selected = deck.id === selectedDeckId;
+            return (
+              <Pressable
+                key={deck.id}
+                accessibilityRole="button"
+                accessibilityLabel={`Deck ${deck.name}`}
+                accessibilityState={{ selected }}
+                onPress={() => setSelectedDeckId(deck.id)}
+                style={[
+                  styles.filter,
+                  {
+                    borderColor: selected ? colors.vermilion : colors.border,
+                    backgroundColor: selected ? colors.surface : colors.bg,
+                  },
+                ]}
+              >
+                <Text style={{ color: selected ? colors.text : colors.textMuted }}>{deck.name}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      ) : null}
+
+      {decks !== null && decks.length === 0 ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Add a deck to store words"
+          onPress={() => router.push('/library/decks')}
+          style={[styles.noDeckHint, { borderColor: colors.border }]}
+        >
+          <Text style={[styles.noDeckText, { color: colors.textMuted }]}>
+            No decks yet. Create one to organize these words.
+          </Text>
+        </Pressable>
+      ) : null}
 
       {words.error ? <ErrorBanner message={words.error} onRetry={words.reload} /> : null}
       {addError ? <ErrorBanner message={addError} /> : null}
@@ -182,6 +248,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: tokens.spacing.md,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  noDeckHint: {
+    borderWidth: 1,
+    borderRadius: tokens.radius.md,
+    padding: tokens.spacing.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 44,
+  },
+  noDeckText: {
+    fontSize: tokens.fontSize.sm,
   },
   count: {
     fontSize: tokens.fontSize.sm,

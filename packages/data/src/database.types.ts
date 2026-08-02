@@ -9,6 +9,159 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      deck_cards: {
+        Row: {
+          created_at: string
+          deck_id: string
+          word_id: number
+        }
+        Insert: {
+          created_at?: string
+          deck_id: string
+          word_id: number
+        }
+        Update: {
+          created_at?: string
+          deck_id?: string
+          word_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deck_cards_deck_id_fkey"
+            columns: ["deck_id"]
+            isOneToOne: false
+            referencedRelation: "decks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deck_cards_word_id_fkey"
+            columns: ["word_id"]
+            isOneToOne: false
+            referencedRelation: "words"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      deck_templates: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          hsk_level: number | null
+          id: string
+          name: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          hsk_level?: number | null
+          id?: string
+          name: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          hsk_level?: number | null
+          id?: string
+          name?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      deck_template_words: {
+        Row: {
+          sort_order: number
+          template_id: string
+          word_id: number
+        }
+        Insert: {
+          sort_order?: number
+          template_id: string
+          word_id: number
+        }
+        Update: {
+          sort_order?: number
+          template_id?: string
+          word_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deck_template_words_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "deck_templates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deck_template_words_word_id_fkey"
+            columns: ["word_id"]
+            isOneToOne: false
+            referencedRelation: "words"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      decks: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          is_default: boolean
+          name: string
+          sort_order: number
+          source_template_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          is_default?: boolean
+          name: string
+          sort_order?: number
+          source_template_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          is_default?: boolean
+          name?: string
+          sort_order?: number
+          source_template_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "decks_source_template_id_fkey"
+            columns: ["source_template_id"]
+            isOneToOne: false
+            referencedRelation: "deck_templates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "decks_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       exercise_attempts: {
         Row: {
           created_at: string

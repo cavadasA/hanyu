@@ -1,6 +1,6 @@
 import type { HanyuClient } from '../client';
 import { getSettings } from './settings';
-import { createRepositoryError, getRequiredUserId, toDateString } from './shared';
+import { callRpcVariants, createRepositoryError, getRequiredUserId, toDateString } from './shared';
 
 function defaultTodayStats() {
   return {
@@ -12,19 +12,19 @@ function defaultTodayStats() {
   };
 }
 
+function countFromRpc(payload: unknown) {
+  const row = (Array.isArray(payload) ? payload[0] : payload) as any;
+  return Number(row?.count || 0);
+}
+
 export async function getToday(client: HanyuClient) {
   const [userId, settings] = await Promise.all([getRequiredUserId(client), getSettings(client)]);
   const today = toDateString();
-  const nowIso = new Date().toISOString();
   const currentLevel = Number(settings.current_level || 2);
 
-  const [deckSizeResult, dueResult, statsResult, readingResult] = await Promise.all([
-    client.from('srs_cards').select('*', { head: true, count: 'exact' }).eq('user_id', userId),
-    client
-      .from('srs_cards')
-      .select('*', { head: true, count: 'exact' })
-      .eq('user_id', userId)
-      .lte('next_review_at', nowIso),
+  const [deckSizeRpc, dueRpc, statsResult, readingResult] = await Promise.all([
+    callRpcVariants(client, 'count_deck_cards', [{ p_deck_id: null, p_due_only: false }]),
+    callRpcVariants(client, 'count_deck_cards', [{ p_deck_id: null, p_due_only: true }]),
     client.from('user_stats').select('*').eq('user_id', userId).eq('date', today).maybeSingle(),
     client
       .from('generated_readings')
@@ -34,14 +34,6 @@ export async function getToday(client: HanyuClient) {
       .limit(1)
       .maybeSingle(),
   ]);
-
-  if (deckSizeResult.error) {
-    throw createRepositoryError(deckSizeResult.error, 'Failed to load deck size');
-  }
-
-  if (dueResult.error) {
-    throw createRepositoryError(dueResult.error, 'Failed to load due cards count');
-  }
 
   if (statsResult.error) {
     throw createRepositoryError(statsResult.error, 'Failed to load daily stats');
@@ -68,8 +60,8 @@ export async function getToday(client: HanyuClient) {
       mode: 'hsk2_consolidation',
     },
     flashcards: {
-      deck_size: deckSizeResult.count || 0,
-      due: dueResult.count || 0,
+      deck_size: countFromRpc(deckSizeRpc),
+      due: countFromRpc(dueRpc),
       target: Number(settings.cards_per_day || 20),
       completed: Number((todayStats as any).cards_reviewed || 0),
     },

@@ -15,7 +15,7 @@ const mockPush = jest.fn();
 jest.mock('../lib/data', () => ({
   getData: () => ({
     flashcards: {
-      getDueCards: (limit?: number) => mockGetDueCards(limit),
+      getDueCards: (limit?: number, deckId?: string | null) => mockGetDueCards(limit, deckId),
       reviewCard: (id: string, quality: number, timeMs: number | null) =>
         mockReviewCard(id, quality, timeMs),
       createStarterDeck: (input: unknown) => mockCreateStarterDeck(input),
@@ -35,6 +35,7 @@ jest.mock('expo-router', () => {
       React.useEffect(callback, [callback]);
     },
     useRouter: () => ({ push: mockPush }),
+    useLocalSearchParams: () => ({ deckId: 'd1' }),
   };
 });
 
@@ -207,5 +208,33 @@ describe('CardsScreen', () => {
     await renderCards();
 
     expect(screen.getByText('No cards due right now')).toBeTruthy();
+  });
+
+  it('passes deckId to getDueCards in focus mode', async () => {
+    mockGetDueCards.mockResolvedValue({
+      cards: [card('c1', '你好')],
+      total: 1,
+      deck_size: 1,
+    });
+
+    await renderCards();
+
+    expect(mockGetDueCards).toHaveBeenLastCalledWith(50, 'd1');
+  });
+
+  it('shows a back to deck action on the completion screen in focus mode', async () => {
+    mockGetDueCards.mockResolvedValue({
+      cards: [card('c1', '你好')],
+      total: 1,
+      deck_size: 1,
+    });
+    mockReviewCard.mockResolvedValue({ card_id: 'c1', next_review: '2026-08-02' });
+
+    await renderCards();
+    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Show answer'));
+    await fireEvent.press(screen.getByText('Good'));
+
+    expect(screen.getByText('Back to deck')).toBeTruthy();
   });
 });

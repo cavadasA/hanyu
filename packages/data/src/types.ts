@@ -39,6 +39,32 @@ export interface ExerciseCheckResult {
   correct_answer?: unknown;
 }
 
+export interface Deck {
+  id: string;
+  user_id: string;
+  name: string;
+  description: string | null;
+  is_active: boolean;
+  is_default: boolean;
+  source_template_id: string | null;
+  sort_order: number;
+}
+
+export interface DeckSummary extends Deck {
+  word_count: number;
+  due_count: number;
+}
+
+export interface DeckTemplate {
+  id: string;
+  slug: string;
+  name: string;
+  description: string | null;
+  category: 'hsk' | 'theme';
+  hsk_level: number | null;
+  sort_order: number;
+}
+
 export interface Word {
   id: number;
   hanzi: string;

@@ -1,0 +1,162 @@
+import { describe, expect, it, vi } from 'vitest';
+import { addCard, getDueCards } from './flashcards';
+
+function clientFor(options: { rpcRows?: unknown[]; wordRows?: unknown[]; deckSize?: number } = {}) {
+  const rpc = vi
+    .fn()
+    .mockResolvedValueOnce({ data: options.rpcRows ?? [], error: null })
+    .mockResolvedValue({
+      data: [{ deck_id: null, count: options.deckSize ?? 0 }],
+      error: null,
+    });
+
+  const from = vi.fn((table: string) => {
+    if (table === 'user_settings') {
+      const s = { select: vi.fn() };
+      s.select.mockReturnValue({
+        eq: vi.fn(() => ({
+          maybeSingle: vi.fn().mockResolvedValue({
+            data: { user_id: 'u1', max_reviews_per_session: 100, card_order: 'due', cards_per_day: 20, current_level: 2, theme: 'light', ai_provider: 'none' },
+            error: null,
+          }),
+        })),
+      });
+      return s;
+    }
+
+    if (table === 'words') {
+      return {
+        select: vi.fn(() => ({
+          in: vi.fn(() => ({ data: options.wordRows ?? [], error: null })),
+        })),
+      };
+    }
+
+    return { select: vi.fn(() => ({ data: [], error: null })) };
+  });
+
+  return {
+    rpc,
+    from,
+    auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
+  } as never;
+}
+
+describe('getDueCards', () => {
+  it('calls get_due_cards RPC and maps bare srs rows using fetched words', async () => {
+    const client = clientFor({
+      rpcRows: [
+        {
+          id: 'c1',
+          user_id: 'u1',
+          word_id: 5,
+          ease_factor: 2.5,
+          interval_days: 0,
+          repetitions: 0,
+          next_review_at: '2020-01-01T00:00:00Z',
+          last_reviewed_at: null,
+          status: 'new',
+          version: 1,
+        },
+      ],
+      wordRows: [{ id: 5, hanzi: '你', pinyin: 'nǐ', meaning_en: 'you', hsk_level: 1, pos: null, frequency: null }],
+      deckSize: 2,
+    });
+
+    const result = await getDueCards(50, client as never, null);
+
+    expect((client as any).rpc).toHaveBeenNthCalledWith(1, 'get_due_cards', {
+      p_limit: 50,
+      p_deck_id: null,
+    });
+    expect((client as any).rpc).toHaveBeenNthCalledWith(2, 'count_deck_cards', {
+      p_deck_id: null,
+      p_due_only: false,
+    });
+    expect(result.cards[0].hanzi).toBe('你');
+    expect(result.total).toBe(1);
+    expect(result.deck_size).toBe(2);
+  });
+
+  it('passes the focused deck id to both RPCs', async () => {
+    const client = clientFor({ rpcRows: [], deckSize: 2 });
+
+    await getDueCards(20, client as never, 'd1');
+
+    expect((client as any).rpc).toHaveBeenNthCalledWith(1, 'get_due_cards', {
+      p_limit: 20,
+      p_deck_id: 'd1',
+    });
+    expect((client as any).rpc).toHaveBeenNthCalledWith(2, 'count_deck_cards', {
+      p_deck_id: 'd1',
+      p_due_only: false,
+    });
+  });
+});
+
+describe('addCard', () => {
+  it('inserts deck membership for the target deck and ensures the srs card', async () => {
+    const inserts: Array<{ table: string; row: any; options?: any }> = [];
+    const client = {
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
+      from: vi.fn((table: string) => {
+        const record = { table, row: undefined as any, options: undefined as any };
+        inserts.push(record);
+        return {
+          upsert: vi.fn((row: any, options?: Record<string, unknown>) => {
+            record.row = row;
+            record.options = options;
+            return { error: null };
+          }),
+          select: vi.fn(() => ({ eq: vi.fn(() => ({ maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }) })) })),
+        };
+      }),
+    };
+
+    const result = await addCard(5, client as any, 'd1');
+
+    const deckCard = inserts.find((i) => i.table === 'deck_cards');
+    const srs = inserts.find((i) => i.table === 'srs_cards');
+
+    expect(srs?.row.word_id).toBe(5);
+    expect(srs?.options).toEqual({ onConflict: 'user_id,word_id', ignoreDuplicates: true });
+    expect(deckCard?.row).toEqual({ deck_id: 'd1', word_id: 5 });
+    expect(result).toEqual({ word_id: 5, deck_id: 'd1' });
+  });
+
+  it('resolves the default deck when no deck id is given', async () => {
+    const inserts: Array<{ table: string; row: any }> = [];
+    let deckLookups = 0;
+    const client = {
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
+      from: vi.fn((table: string) => {
+        if (table === 'decks' && deckLookups === 0) {
+          deckLookups += 1;
+          return {
+            upsert: vi.fn(() => ({ error: null })),
+            select: vi.fn(() => ({
+              eq: vi.fn(() => ({
+                eq: vi.fn(() => ({ maybeSingle: vi.fn().mockResolvedValue({ data: { id: 'd-default' }, error: null }) })),
+              })),
+            })),
+          };
+        }
+        const record = { table, row: undefined as any };
+        inserts.push(record);
+        record.row = null;
+        return {
+          upsert: vi.fn((row: any) => {
+            record.row = row;
+            return { error: null };
+          }),
+        };
+      }),
+    };
+
+    const result = await addCard(7, client as any);
+
+    const deckCard = inserts.find((i) => i.table === 'deck_cards');
+    expect(deckCard?.row).toEqual({ deck_id: 'd-default', word_id: 7 });
+    expect(result).toEqual({ word_id: 7, deck_id: 'd-default' });
+  });
+});
