@@ -285,11 +285,11 @@ export default function TodayScreen() {
                 <ProgressRing
                   segments={blocks}
                   completed={blocksDone}
-                  size={130}
-                  strokeWidth={10}
+                  size={150}
+                  strokeWidth={8}
                 >
                   <View style={styles.ringCenter}>
-                    <Ionicons name="flame" size={22} color={colors.gold} />
+                    <Ionicons name="flame" size={24} color={colors.gold} />
                     <Text style={[styles.streakNumber, { color: colors.text }]}>
                       {streak.current}
                     </Text>
@@ -299,7 +299,7 @@ export default function TodayScreen() {
                   </View>
                 </ProgressRing>
                 <Text style={[styles.heroMuted, { color: colors.textMuted }]}>
-                  {`${blocksDone} of ${blocks} blocks · longest ${streak.longest} days`}
+                  {`${blocksDone} of ${blocks} blocks · longest ${streak.longest} ${streak.longest === 1 ? 'day' : 'days'}`}
                 </Text>
               </View>
             </Card>
