@@ -30,7 +30,8 @@ create table if not exists public.words (
   meaning_es text,
   hsk_level integer not null check (hsk_level between 1 and 6),
   pos text,
-  frequency integer
+  frequency integer,
+  unique (hanzi, hsk_level)
 );
 
 create table if not exists public.grammar_points (

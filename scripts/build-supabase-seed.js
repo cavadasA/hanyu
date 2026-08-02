@@ -78,6 +78,7 @@ function buildGrammarRows() {
   return points.map((point) => [
     sqlInteger(point.hsk_level),
     sqlString(point.title),
+    sqlString(point.pattern ?? null),
     sqlString(point.explanation),
     sqlJson(point.examples || []),
     sqlInteger(point.order_idx ?? null),
@@ -112,11 +113,11 @@ export function buildSeedSql() {
       'words',
       ['hanzi', 'pinyin', 'meaning_en', 'meaning_es', 'hsk_level', 'pos', 'frequency'],
       wordsRows,
-      'on conflict (hanzi, pinyin, meaning_en, hsk_level) do nothing'
+      'on conflict (hanzi, hsk_level) do update set pinyin = excluded.pinyin, meaning_en = excluded.meaning_en, meaning_es = excluded.meaning_es, pos = excluded.pos, frequency = excluded.frequency'
     ),
     buildInsert(
       'grammar_points',
-      ['hsk_level', 'title', 'explanation', 'examples', 'order_idx'],
+      ['hsk_level', 'title', 'pattern', 'explanation', 'examples', 'order_idx'],
       grammarRows,
       'on conflict (hsk_level, title) do nothing'
     ),

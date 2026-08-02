@@ -4,6 +4,7 @@ import YouScreen from './YouScreen';
 const mockGetSettings = jest.fn();
 const mockUpdateSettings = jest.fn();
 const mockSignOut = jest.fn();
+const mockGetDashboard = jest.fn();
 
 jest.mock('../lib/data', () => ({
   getData: () => ({
@@ -11,8 +12,12 @@ jest.mock('../lib/data', () => ({
       getSettings: () => mockGetSettings(),
       updateSettings: (input: unknown) => mockUpdateSettings(input as never),
     },
+    stats: {
+      getDashboard: () => mockGetDashboard(),
+    },
   }),
 }));
+
 
 jest.mock('../session/SessionProvider', () => ({
   useSession: () => ({
@@ -64,6 +69,11 @@ describe('YouScreen', () => {
     mockUpdateSettings.mockReset();
     mockSignOut.mockReset();
     mockSetPreference.mockReset();
+    mockGetDashboard.mockReset();
+    mockGetDashboard.mockResolvedValue({
+      cards: { by_status: { mastered: 47 } },
+      exercise_stats: { accuracy: 82 },
+    });
   });
 
   it('shows the signed-in email and the current settings', async () => {
@@ -128,5 +138,41 @@ describe('YouScreen', () => {
     await fireEvent.press(screen.getByText('Sign out'));
 
     expect(mockSignOut).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows hero stats from the dashboard', async () => {
+    mockGetSettings.mockResolvedValue(settings);
+
+    await renderYou();
+
+    expect(screen.getByText('47')).toBeTruthy();
+    expect(screen.getByText('words mastered')).toBeTruthy();
+    expect(screen.getByText('HSK 2 · 82% accuracy')).toBeTruthy();
+  });
+
+  it('shows hero without accuracy when dashboard has no accuracy', async () => {
+    mockGetSettings.mockResolvedValue(settings);
+    mockGetDashboard.mockResolvedValue({
+      cards: { by_status: { mastered: 12 } },
+      exercise_stats: { accuracy: null },
+    });
+
+    await renderYou();
+
+    expect(screen.getByText('12')).toBeTruthy();
+    expect(screen.getByText('HSK 2')).toBeTruthy();
+  });
+
+  it('degrades gracefully when dashboard fetch fails', async () => {
+    mockGetSettings.mockResolvedValue(settings);
+    mockGetDashboard.mockRejectedValue(new Error('Network error'));
+
+    await renderYou();
+
+    // Hero shows fallback dash and level without crashing
+    expect(screen.getByText('—')).toBeTruthy();
+    expect(screen.getByText('HSK 2')).toBeTruthy();
+    // Settings still load fine
+    expect(screen.getByText('Cards per day: 20')).toBeTruthy();
   });
 });

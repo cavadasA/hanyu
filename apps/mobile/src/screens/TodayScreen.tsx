@@ -280,27 +280,36 @@ export default function TodayScreen() {
           />
 
           <Reveal index={0}>
-            <Card style={styles.heroCard}>
-              <View style={styles.heroTopRow}>
-                <View style={[styles.flameIconBox, { backgroundColor: colors.gold + '1F' }]}>
-                  <Ionicons name="flame" size={24} color={colors.gold} />
-                </View>
-                <View style={styles.streakCopy}>
-                  <Text style={[styles.streakNumber, { color: colors.text }]}>
+            <View style={[styles.hero, { backgroundColor: colors.vermilion }]}>
+              <View style={styles.heroTop}>
+                <View style={styles.heroCopy}>
+                  <Text style={[styles.heroLabel, { color: colors.onAccent + 'E6' }]}>
+                    Current streak
+                  </Text>
+                  <Text style={[styles.heroMetric, { color: colors.onAccent }]}>
                     {`${streak.current} day streak`}
                   </Text>
-                  <Text style={[styles.streakMuted, { color: colors.textMuted }]}>
+                  <Text style={[styles.heroMuted, { color: colors.onAccent + 'E6' }]}>
                     {`Longest ${streak.longest} ${streak.longest === 1 ? 'day' : 'days'}`}
                   </Text>
                 </View>
+                <View style={[styles.heroIcon, { backgroundColor: colors.onAccent + '1F' }]}>
+                  <Ionicons name="flame" size={24} color={colors.gold} />
+                </View>
               </View>
 
-              <ProgressRing segments={blocks} completed={blocksDone} />
+              <View style={[styles.heroDivider, { backgroundColor: colors.onAccent + '33' }]} />
 
-              <Text style={[styles.heroMuted, { color: colors.textMuted }]}>
+              <Text style={[styles.heroMuted, { color: colors.onAccent + 'E6' }]}>
                 {`${blocksDone} of ${blocks} blocks completed today`}
               </Text>
-            </Card>
+              <ProgressRing
+                segments={blocks}
+                completed={blocksDone}
+                fillColor={colors.onAccent}
+                trackColor={colors.onAccent + '33'}
+              />
+            </View>
           </Reveal>
 
           <Reveal index={1}>
@@ -366,7 +375,7 @@ export default function TodayScreen() {
                       </View>
 
                       <Button
-                        label={task.done ? 'Done ✓' : task.cta}
+                        label={task.done ? 'Done' : task.cta}
                         variant={task.done ? 'outline' : task.key === nextPendingKey ? 'primary' : 'outline'}
                         onPress={task.go}
                         disabled={task.done}
@@ -400,37 +409,34 @@ const styles = StyleSheet.create({
   headerText: { gap: tokens.spacing.xs },
   heading: { fontSize: tokens.fontSize.xl, fontWeight: '700' },
 
-  heroCard: {
-    padding: tokens.spacing.lg,
-    gap: tokens.spacing.md,
+  hero: {
+    borderRadius: tokens.radius.xl,
+    padding: tokens.spacing.xl,
+    gap: tokens.spacing.sm,
   },
-  heroTopRow: {
+  heroTop: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
     gap: tokens.spacing.md,
   },
-  flameIconBox: {
-    width: 44,
-    height: 44,
+  heroCopy: { gap: tokens.spacing.xs, flexShrink: 1 },
+  heroLabel: {
+    fontSize: tokens.fontSize.xs,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  heroMetric: { fontSize: tokens.fontSize.xl, fontWeight: '700' },
+  heroIcon: {
+    width: 48,
+    height: 48,
     borderRadius: tokens.radius.md,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  streakCopy: {
-    flex: 1,
-    gap: 2,
-  },
-  streakNumber: {
-    fontSize: tokens.fontSize.md,
-    fontWeight: '700',
-  },
-  streakMuted: {
-    fontSize: tokens.fontSize.xs,
-  },
-  heroMuted: {
-    fontSize: tokens.fontSize.xs,
-    textAlign: 'left',
-  },
+  heroMuted: { fontSize: tokens.fontSize.sm },
+  heroDivider: { height: StyleSheet.hairlineWidth, marginVertical: tokens.spacing.sm },
 
   sectionTitle: { fontSize: tokens.fontSize.md, fontWeight: '600' },
 

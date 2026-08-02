@@ -2,6 +2,7 @@
   {
     "hsk_level": 1,
     "title": "Basic word order (SVO)",
+    "pattern": "Subject + Verb + Object",
     "explanation": "Chinese follows a Subject-Verb-Object word order, similar to English. The subject comes first, followed by the verb, and then the object.",
     "examples": [
       {"zh": "我喝茶。", "pinyin": "Wǒ hē chá.", "en": "I drink tea."},
@@ -13,6 +14,7 @@
   {
     "hsk_level": 1,
     "title": "Questions with 吗 (ma)",
+    "pattern": "Statement + 吗?",
     "explanation": "To turn a statement into a yes/no question, add 吗 (ma) at the end. The word order stays the same.",
     "examples": [
       {"zh": "你好吗？", "pinyin": "Nǐ hǎo ma?", "en": "How are you?"},
@@ -24,6 +26,7 @@
   {
     "hsk_level": 1,
     "title": "Negation with 不 (bù)",
+    "pattern": "不 + Verb/Adjective",
     "explanation": "Place 不 (bù) before a verb or adjective to negate it. Note: 有 (yǒu) uses 没 (méi) for negation instead.",
     "examples": [
       {"zh": "我不喝咖啡。", "pinyin": "Wǒ bù hē kāfēi.", "en": "I don't drink coffee."},
@@ -35,6 +38,7 @@
   {
     "hsk_level": 2,
     "title": "了 (le) for completed actions",
+    "pattern": "Verb + 了",
     "explanation": "Place 了 (le) after a verb to indicate a completed action. It does not directly translate to past tense - it marks completion.",
     "examples": [
       {"zh": "我吃了午饭。", "pinyin": "Wǒ chī le wǔfàn.", "en": "I ate lunch."},
@@ -46,6 +50,7 @@
   {
     "hsk_level": 2,
     "title": "因为...所以... (because...therefore...)",
+    "pattern": "因为 + reason，所以 + result",
     "explanation": "Use 因为 (yīnwèi) to state the cause and 所以 (suǒyǐ) to state the result. You can use both together or just one.",
     "examples": [
       {"zh": "因为下雨，所以我没去。", "pinyin": "Yīnwèi xià yǔ, suǒyǐ wǒ méi qù.", "en": "Because it rained, I didn't go."},
@@ -56,6 +61,7 @@
   {
     "hsk_level": 3,
     "title": "把 (bǎ) construction",
+    "pattern": "Subject + 把 + Object + Verb + Complement",
     "explanation": "The 把 (bǎ) structure is used to emphasize the result or effect of an action on a specific object. Pattern: Subject + 把 + Object + Verb + Complement.",
     "examples": [
       {"zh": "请把门关上。", "pinyin": "Qǐng bǎ mén guān shàng.", "en": "Please close the door."},

@@ -1,10 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'expo-router';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { toUserMessage } from '@hanyu/data';
 import { getData } from '../../src/lib/data';
+import { tokens } from '../../src/theme/tokens';
+import { useTheme } from '../../src/theme/ThemeProvider';
+import { AuthScaffold } from '../../src/ui/AuthScaffold';
+import { AuthField } from '../../src/ui/AuthField';
+import { AuthSubmit } from '../../src/ui/AuthSubmit';
+import { ErrorBanner } from '../../src/ui/ErrorBanner';
 
 export default function SignIn() {
+  const { colors } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -24,49 +31,52 @@ export default function SignIn() {
   }
 
   return (
-    <View style={styles.screen}>
-      <Text style={styles.title}>Sign in to Hanyu</Text>
+    <AuthScaffold title="Welcome back">
+      {error ? <ErrorBanner message={error} /> : null}
 
-      <TextInput
-        accessibilityLabel="Email"
-        placeholder="Email"
+      <AuthField
+        label="Email"
+        placeholder="you@example.com"
         autoCapitalize="none"
+        autoComplete="email"
         keyboardType="email-address"
         value={email}
         onChangeText={setEmail}
-        style={styles.input}
       />
-      <TextInput
-        accessibilityLabel="Password"
-        placeholder="Password"
-        secureTextEntry
+
+      <AuthField
+        label="Password"
+        placeholder="••••••••"
+        secure
+        autoComplete="password"
         value={password}
         onChangeText={setPassword}
-        style={styles.input}
+        trailing={
+          <Link href="/forgot-password" style={[styles.inlineLink, { color: colors.vermilion }]}>
+            Forgot?
+          </Link>
+        }
       />
 
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+      <AuthSubmit label="Sign in" busyLabel="Signing in…" busy={busy} onPress={submit} />
 
-      <Pressable accessibilityRole="button" onPress={submit} disabled={busy} style={styles.button}>
-        <Text style={styles.buttonLabel}>{busy ? 'Signing in...' : 'Sign in'}</Text>
-      </Pressable>
-
-      <Link href="/sign-up" style={styles.link}>
-        Create an account
-      </Link>
-      <Link href="/forgot-password" style={styles.link}>
-        Forgot your password?
-      </Link>
-    </View>
+      <View style={styles.footer}>
+        <Text style={{ color: colors.textMuted, fontSize: tokens.fontSize.sm }}>New to Hanyu? </Text>
+        <Link href="/sign-up" style={[styles.footerLink, { color: colors.vermilion }]}>
+          Create an account
+        </Link>
+      </View>
+    </AuthScaffold>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, justifyContent: 'center', padding: 24, gap: 12 },
-  title: { fontSize: 24, fontWeight: '700', marginBottom: 12 },
-  input: { borderWidth: 1, borderColor: '#e5e7eb', borderRadius: 12, padding: 14 },
-  button: { backgroundColor: '#c93624', borderRadius: 12, padding: 14, alignItems: 'center' },
-  buttonLabel: { color: '#ffffff', fontWeight: '600' },
-  error: { color: '#c93624' },
-  link: { paddingVertical: 6, color: '#6b7280' },
+  inlineLink: { fontSize: tokens.fontSize.sm, fontWeight: '600' },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: tokens.spacing.lg,
+  },
+  footerLink: { fontSize: tokens.fontSize.sm, fontWeight: '700' },
 });

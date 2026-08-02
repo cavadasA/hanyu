@@ -150,6 +150,7 @@ export type Database = {
           hsk_level: number
           id: number
           order_idx: number | null
+          pattern: string | null
           title: string
         }
         Insert: {
@@ -159,6 +160,7 @@ export type Database = {
           hsk_level: number
           id?: number
           order_idx?: number | null
+          pattern?: string | null
           title: string
         }
         Update: {
@@ -168,6 +170,7 @@ export type Database = {
           hsk_level?: number
           id?: number
           order_idx?: number | null
+          pattern?: string | null
           title?: string
         }
         Relationships: []
@@ -478,7 +481,26 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      review_flashcard: {
+        Args: {
+          card_id: string
+          expected_version: number
+          quality: number
+          review_id: string
+          reviewed_at: string
+          time_ms: number | null
+        }
+        Returns: {
+          ease_factor: number
+          interval: number
+          last_reviewed_at: string | null
+          next_review: string
+          outcome: string
+          repetitions: number
+          status: string
+          version: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

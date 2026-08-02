@@ -1,5 +1,15 @@
-import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import {
+  AccessibilityInfo,
+  Animated,
+  Easing,
+  PanResponder,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import type { DueCard } from '@hanyu/data';
 import { useSpeech } from '../audio/useSpeech';
 import { tokens } from '../theme/tokens';
@@ -14,95 +24,342 @@ export type ReviewMode = 'recognition' | 'recall' | 'listening';
 interface FlashCardViewProps {
   card: DueCard;
   mode: ReviewMode;
-  revealed: boolean;
-  onReveal: () => void;
-  onRate: (quality: number) => void | Promise<void>;
+  revealed?: boolean;
+  onReveal?: () => void;
+  onRate?: (quality: number) => void | Promise<void>;
   ratingDisabled?: boolean;
+  pendingQuality?: number | null;
+  /** Called while a swipe pan is active (true on grant, false on release/terminate). */
+  onPanActiveChange?: (active: boolean) => void;
+  /** Renders a static, non-interactive card sitting behind the active one in the stack. */
+  preview?: boolean;
 }
 
-const RATINGS = [
-  { label: 'Again', quality: 1 },
-  { label: 'Hard', quality: 3 },
-  { label: 'Good', quality: 4 },
-  { label: 'Easy', quality: 5 },
+const PEEK_SCALE = 0.94;
+const PEEK_OFFSET = 14;
+
+type Variant = 'primary' | 'secondary' | 'outline';
+
+const RATINGS: { label: string; quality: number; variant: Variant }[] = [
+  { label: 'Again', quality: 1, variant: 'outline' },
+  { label: 'Hard', quality: 3, variant: 'secondary' },
+  { label: 'Good', quality: 4, variant: 'secondary' },
+  { label: 'Easy', quality: 5, variant: 'primary' },
 ];
+
+const SWIPE_THRESHOLD = 88;
+const EASE = Easing.out(Easing.cubic);
+const MOTION_DISABLED = process.env.NODE_ENV === 'test';
 
 export function FlashCardView({
   card,
   mode,
-  revealed,
+  revealed = false,
   onReveal,
   onRate,
   ratingDisabled = false,
+  pendingQuality = null,
+  onPanActiveChange,
+  preview = false,
 }: FlashCardViewProps) {
   const { colors } = useTheme();
   const { speak, stop } = useSpeech();
+  const entrance = useRef(new Animated.Value(MOTION_DISABLED ? 1 : 0)).current;
+  const reveal = useRef(new Animated.Value(0)).current;
+  const dragX = useRef(new Animated.Value(0)).current;
+  const reduceMotion = useRef(false);
+  const [motionReady, setMotionReady] = useState(MOTION_DISABLED);
+  const entranceAnim = useRef<Animated.CompositeAnimation | null>(null);
+  const revealAnim = useRef<Animated.CompositeAnimation | null>(null);
+
+  const revealedRef = useRef(revealed);
+  const disabledRef = useRef(ratingDisabled);
+  const onRateRef = useRef(onRate);
+  const onPanActiveChangeRef = useRef(onPanActiveChange);
+  revealedRef.current = revealed;
+  disabledRef.current = ratingDisabled;
+  onRateRef.current = onRate;
+  onPanActiveChangeRef.current = onPanActiveChange;
 
   useEffect(() => {
-    if (mode === 'listening' && !revealed && card.hanzi) {
+    if (MOTION_DISABLED) {
+      return;
+    }
+
+    let mounted = true;
+    AccessibilityInfo.isReduceMotionEnabled()
+      .then((value) => {
+        if (mounted) {
+          reduceMotion.current = value;
+        }
+      })
+      .catch(() => undefined)
+      .finally(() => {
+        if (mounted) {
+          setMotionReady(true);
+        }
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    entranceAnim.current?.stop();
+    entrance.setValue(0);
+    reveal.setValue(0);
+    dragX.setValue(0);
+
+    if (MOTION_DISABLED || reduceMotion.current || !motionReady) {
+      entrance.setValue(1);
+      return;
+    }
+
+    entranceAnim.current = Animated.timing(entrance, {
+      toValue: 1,
+      duration: 200,
+      easing: EASE,
+      useNativeDriver: true,
+    });
+    entranceAnim.current.start();
+
+    return () => {
+      entranceAnim.current?.stop();
+    };
+  }, [card.id, entrance, reveal, dragX, motionReady]);
+
+  useEffect(() => {
+    revealAnim.current?.stop();
+
+    if (!revealed) {
+      reveal.setValue(0);
+      return;
+    }
+
+    if (MOTION_DISABLED || reduceMotion.current) {
+      reveal.setValue(1);
+      return;
+    }
+
+    revealAnim.current = Animated.timing(reveal, {
+      toValue: 1,
+      duration: 180,
+      easing: EASE,
+      useNativeDriver: true,
+    });
+    revealAnim.current.start();
+
+    return () => {
+      revealAnim.current?.stop();
+    };
+  }, [revealed, reveal]);
+
+  useEffect(() => {
+    if (!preview && mode === 'listening' && !revealed && card.hanzi) {
       speak(card.hanzi);
       return stop;
     }
 
     return undefined;
-  }, [card.id, card.hanzi, mode, revealed, speak, stop]);
+  }, [card.id, card.hanzi, mode, revealed, speak, stop, preview]);
+
+  function finishSwipe(direction: -1 | 1, quality: number) {
+    Animated.timing(dragX, {
+      toValue: direction * 420,
+      duration: 160,
+      easing: EASE,
+      useNativeDriver: true,
+    }).start(() => {
+      onRateRef.current?.(quality);
+    });
+  }
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_event, gesture) =>
+        revealedRef.current &&
+        !disabledRef.current &&
+        Math.abs(gesture.dx) > 12 &&
+        Math.abs(gesture.dx) > Math.abs(gesture.dy),
+      onPanResponderGrant: () => {
+        onPanActiveChangeRef.current?.(true);
+      },
+      onPanResponderMove: (_event, gesture) => {
+        dragX.setValue(gesture.dx);
+      },
+      // Once the card owns the swipe, refuse to hand the responder back to the
+      // ScrollView: otherwise a vertical drift mid-swipe makes the screen scroll.
+      onPanResponderTerminationRequest: () => false,
+      onPanResponderRelease: (_event, gesture) => {
+        onPanActiveChangeRef.current?.(false);
+        if (disabledRef.current) {
+          Animated.spring(dragX, { toValue: 0, useNativeDriver: true }).start();
+          return;
+        }
+
+        if (gesture.dx <= -SWIPE_THRESHOLD) {
+          finishSwipe(-1, 1);
+        } else if (gesture.dx >= SWIPE_THRESHOLD) {
+          finishSwipe(1, 4);
+        } else {
+          Animated.spring(dragX, { toValue: 0, useNativeDriver: true }).start();
+        }
+      },
+      onPanResponderTerminate: () => {
+        onPanActiveChangeRef.current?.(false);
+        Animated.spring(dragX, { toValue: 0, useNativeDriver: true }).start();
+      },
+    }),
+  ).current;
+
+  if (preview) {
+    return (
+      <View
+        pointerEvents="none"
+        style={[
+          styles.previewWrap,
+          { transform: [{ translateY: PEEK_OFFSET }, { scale: PEEK_SCALE }] },
+        ]}
+      >
+        <Card
+          style={[
+            styles.card,
+            styles.previewCard,
+            { backgroundColor: colors.bg, shadowColor: colors.vermilion },
+          ]}
+        >
+          <View style={styles.top}>
+            <Badge label={`HSK ${card.hsk_level ?? '-'}`} />
+          </View>
+          <View style={styles.face}>
+            <Text style={[styles.hanzi, { color: colors.text }]}>
+              {mode === 'recall' ? card.meaning_en : card.hanzi}
+            </Text>
+          </View>
+        </Card>
+      </View>
+    );
+  }
+
+  const rotate = dragX.interpolate({
+    inputRange: [-240, 0, 240],
+    outputRange: ['-7deg', '0deg', '7deg'],
+  });
 
   return (
-    <Card>
-      <Badge label={`HSK ${card.hsk_level ?? '-'}`} />
+    <Animated.View
+      testID="flashcard-active"
+      {...panResponder.panHandlers}
+      style={{
+        opacity: entrance.interpolate({ inputRange: [0, 1], outputRange: [0.5, 1] }),
+        transform: [
+          { translateX: dragX },
+          { scale: entrance.interpolate({ inputRange: [0, 1], outputRange: [PEEK_SCALE, 1] }) },
+          {
+            translateY: entrance.interpolate({ inputRange: [0, 1], outputRange: [PEEK_OFFSET, 0] }),
+          },
+          { rotate },
+        ],
+      }}
+    >
+      <Card style={[styles.card, { backgroundColor: colors.bg, shadowColor: colors.vermilion }]}>
+        <View style={styles.top}>
+          <Badge label={`HSK ${card.hsk_level ?? '-'}`} />
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Play audio"
+            onPress={() => speak(card.hanzi ?? '')}
+            style={({ pressed }) => [
+              styles.audio,
+              { backgroundColor: colors.surface, opacity: pressed ? 0.7 : 1 },
+            ]}
+          >
+            <Ionicons name="volume-medium" size={20} color={colors.textMuted} />
+          </Pressable>
+        </View>
 
-      <View style={styles.face}>
-        {mode === 'recognition' && !revealed ? (
-          <Text style={[styles.hanzi, { color: colors.text }]}>{card.hanzi}</Text>
-        ) : null}
+        <View style={styles.face}>
+          {mode === 'recognition' && !revealed ? (
+            <Text style={[styles.hanzi, { color: colors.text }]}>{card.hanzi}</Text>
+          ) : null}
 
-        {mode === 'recall' && !revealed ? (
-          <Text style={[styles.prompt, { color: colors.text }]}>{card.meaning_en}</Text>
-        ) : null}
+          {mode === 'recall' && !revealed ? (
+            <Text style={[styles.prompt, { color: colors.text }]}>{card.meaning_en}</Text>
+          ) : null}
 
-        {mode === 'listening' && !revealed ? (
-          <>
-            <Text style={[styles.prompt, { color: colors.textMuted }]}>
-              Listen and identify the word
-            </Text>
-            <AudioButton text={card.hanzi ?? ''} label="Play again" />
-          </>
-        ) : null}
+          {mode === 'listening' && !revealed ? (
+            <>
+              <Text style={[styles.prompt, { color: colors.textMuted }]}>
+                Listen and identify the word
+              </Text>
+              <AudioButton text={card.hanzi ?? ''} label="Play again" />
+            </>
+          ) : null}
+
+          {revealed ? (
+            <Animated.View
+              style={[
+                styles.answer,
+                {
+                  opacity: reveal,
+                  transform: [
+                    { translateY: reveal.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) },
+                  ],
+                },
+              ]}
+            >
+              <Text style={[styles.hanzi, { color: colors.text }]}>{card.hanzi}</Text>
+              <Text style={[styles.pinyin, { color: colors.gold }]}>{card.pinyin}</Text>
+              <Text style={[styles.meaning, { color: colors.text }]}>{card.meaning_en}</Text>
+            </Animated.View>
+          ) : null}
+        </View>
 
         {revealed ? (
-          <>
-            <Text style={[styles.hanzi, { color: colors.text }]}>{card.hanzi}</Text>
-            <Text style={[styles.pinyin, { color: colors.gold }]}>{card.pinyin}</Text>
-            <Text style={[styles.meaning, { color: colors.text }]}>{card.meaning_en}</Text>
-            <AudioButton text={card.hanzi ?? ''} />
-          </>
-        ) : null}
-      </View>
-
-      {revealed ? (
-        <View style={styles.ratings}>
-          {RATINGS.map((rating) => (
-            <View key={rating.label} style={styles.rating}>
-              <Button
-                label={rating.label}
-                variant={rating.quality >= 4 ? 'primary' : 'secondary'}
-                onPress={() => onRate(rating.quality)}
-                disabled={ratingDisabled}
-              />
-            </View>
-          ))}
-        </View>
-      ) : (
-        <Button label="Show answer" onPress={onReveal} />
-      )}
-    </Card>
+          <View style={styles.ratings}>
+            {RATINGS.map((rating) => (
+              <View key={rating.label} style={styles.rating}>
+                <Button
+                  label={rating.label}
+                  variant={rating.variant}
+                  onPress={() => onRate?.(rating.quality)}
+                  disabled={ratingDisabled}
+                  busy={pendingQuality === rating.quality}
+                />
+              </View>
+            ))}
+          </View>
+        ) : (
+          <Button label="Show answer" onPress={() => onReveal?.()} />
+        )}
+      </Card>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
+  card: {
+    borderRadius: tokens.radius.xl,
+    shadowOpacity: 0.18,
+    shadowRadius: 20,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 4,
+  },
+  previewWrap: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 },
+  previewCard: { flex: 1 },
+  top: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  audio: {
+    width: 38,
+    height: 38,
+    borderRadius: tokens.radius.pill,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   face: { alignItems: 'center', gap: tokens.spacing.sm, paddingVertical: tokens.spacing.xl },
-  hanzi: { fontSize: tokens.fontSize.hanzi, fontWeight: '700' },
-  pinyin: { fontSize: tokens.fontSize.lg },
+  answer: { alignItems: 'center', gap: tokens.spacing.sm },
+  hanzi: { fontSize: 60, lineHeight: 66, fontWeight: '700' },
+  pinyin: { fontSize: tokens.fontSize.lg, fontWeight: '600' },
   meaning: { fontSize: tokens.fontSize.md },
   prompt: { fontSize: tokens.fontSize.lg, textAlign: 'center' },
   ratings: { flexDirection: 'row', flexWrap: 'wrap', gap: tokens.spacing.sm },

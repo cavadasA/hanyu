@@ -1,9 +1,8 @@
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
-import { Button } from '../ui/Button';
-import { Card } from '../ui/Card';
+import { HubTile } from '../ui/HubTile';
 import { Screen } from '../ui/Screen';
 
 export function LibraryHomeScreen() {
@@ -12,22 +11,34 @@ export function LibraryHomeScreen() {
 
   return (
     <Screen>
-      <Text style={[styles.heading, { color: colors.text }]}>Library</Text>
-      <Card>
-        <Text style={[styles.title, { color: colors.text }]}>Words</Text>
-        <Text style={{ color: colors.textMuted }}>Search HSK words</Text>
-        <Button label="Words" onPress={() => router.push('/library/words')} />
-      </Card>
-      <Card>
-        <Text style={[styles.title, { color: colors.text }]}>Grammar</Text>
-        <Text style={{ color: colors.textMuted }}>Browse grammar patterns</Text>
-        <Button label="Grammar" onPress={() => router.push('/library/grammar')} />
-      </Card>
+      <View style={styles.header}>
+        <Text style={[styles.heading, { color: colors.text }]}>Library</Text>
+        <Text style={[styles.subtitle, { color: colors.textMuted }]}>
+          Words and grammar for your level
+        </Text>
+      </View>
+
+      <HubTile
+        icon="book-outline"
+        title="Words"
+        description="Search HSK words"
+        actionLabel="Words"
+        onPress={() => router.push('/library/words')}
+      />
+
+      <HubTile
+        icon="language-outline"
+        title="Grammar"
+        description="Browse grammar patterns"
+        actionLabel="Grammar"
+        onPress={() => router.push('/library/grammar')}
+      />
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  header: { gap: tokens.spacing.xs, marginBottom: tokens.spacing.sm },
   heading: { fontSize: tokens.fontSize.xl, fontWeight: '700' },
-  title: { fontSize: tokens.fontSize.lg, fontWeight: '600' },
+  subtitle: { fontSize: tokens.fontSize.sm },
 });

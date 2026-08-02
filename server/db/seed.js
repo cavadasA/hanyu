@@ -27,13 +27,14 @@ export function seedDatabase(db) {
   const grammarPath = join(seedDir, 'grammar-points.json');
   const grammarPoints = JSON.parse(readFileSync(grammarPath, 'utf-8'));
   const insertGrammar = db.prepare(`
-    INSERT OR IGNORE INTO grammar_points (hsk_level, title, explanation, examples, order_idx)
-    VALUES (@hsk_level, @title, @explanation, @examples, @order_idx)
+    INSERT OR IGNORE INTO grammar_points (hsk_level, title, pattern, explanation, examples, order_idx)
+    VALUES (@hsk_level, @title, @pattern, @explanation, @examples, @order_idx)
   `);
   const insertGrammarMany = db.transaction((items) => {
     for (const point of items) {
       insertGrammar.run({
         ...point,
+        pattern: point.pattern ?? null,
         examples: JSON.stringify(point.examples),
       });
     }

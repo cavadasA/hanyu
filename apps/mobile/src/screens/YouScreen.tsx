@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import {
   toUserMessage,
   type AiProvider,
@@ -12,7 +12,6 @@ import { useSession } from '../session/SessionProvider';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 import { Button } from '../ui/Button';
-import { Card } from '../ui/Card';
 import { ErrorBanner } from '../ui/ErrorBanner';
 import { NumberRow } from '../ui/NumberRow';
 import { OptionRow } from '../ui/OptionRow';
@@ -23,10 +22,16 @@ const ORDERS: readonly CardOrder[] = ['due', 'frequency'];
 const PROVIDERS: readonly AiProvider[] = ['none', 'deepseek', 'gemini'];
 const LEVELS = ['1', '2', '3', '4', '5', '6'] as const;
 
+interface HeroStats {
+  mastered: number;
+  accuracy: number | null;
+}
+
 export default function YouScreen() {
   const { colors, setPreference } = useTheme();
   const { session, signOut } = useSession();
   const [settings, setSettings] = useState<UserSettings | null>(null);
+  const [heroStats, setHeroStats] = useState<HeroStats | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -40,9 +45,25 @@ export default function YouScreen() {
       setSettings(loaded);
     } catch (caught) {
       setError(toUserMessage(caught));
-    } finally {
       setLoading(false);
+      return;
     }
+
+    // Best-effort dashboard stats for the hero
+    try {
+      const dashboard = (await getData().stats.getDashboard()) as {
+        cards: { by_status: Partial<Record<string, number>> };
+        exercise_stats: { accuracy: number | null };
+      };
+      setHeroStats({
+        mastered: dashboard.cards?.by_status?.mastered ?? 0,
+        accuracy: dashboard.exercise_stats?.accuracy ?? null,
+      });
+    } catch {
+      // Dashboard is non-critical — hero degrades gracefully
+    }
+
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -86,30 +107,63 @@ export default function YouScreen() {
     );
   }
 
+  const userEmail = session?.user?.email ?? '-';
+  const userInitials = userEmail !== '-' ? userEmail.slice(0, 2).toUpperCase() : 'HY';
+  const currentLevel = settings?.current_level ?? 2;
+
   return (
     <Screen>
-      <Text style={[styles.heading, { color: colors.text }]}>You</Text>
+      {/* Header */}
+      <View style={styles.headerRow}>
+        <Text style={[styles.heading, { color: colors.text }]}>You</Text>
+        <View style={[styles.sealBadge, { backgroundColor: colors.vermilion }]}>
+          <Text style={[styles.sealText, { color: colors.onAccent }]}>漢</Text>
+        </View>
+      </View>
 
       {error ? <ErrorBanner message={error} onRetry={load} /> : null}
 
-      <Card>
-        <Text style={[styles.label, { color: colors.textMuted }]}>Signed in as</Text>
-        <Text style={[styles.value, { color: colors.text }]}>{session?.user?.email ?? '-'}</Text>
-      </Card>
+      {/* Hero — vermilion achievement card */}
+      <View style={[styles.hero, { backgroundColor: colors.vermilion }]}>
+        <Text style={[styles.heroMetric, { color: colors.onAccent }]}>
+          {heroStats ? String(heroStats.mastered) : '—'}
+        </Text>
+        <Text style={[styles.heroLabel, { color: colors.onAccent + 'E6' }]}>words mastered</Text>
+        <View style={[styles.heroDivider, { backgroundColor: colors.onAccent + '33' }]} />
+        <Text style={[styles.heroMuted, { color: colors.onAccent + 'E6' }]}>
+          {heroStats?.accuracy != null
+            ? `HSK ${currentLevel} · ${Math.round(heroStats.accuracy)}% accuracy`
+            : `HSK ${currentLevel}`}
+        </Text>
+      </View>
+
+      {/* Compact profile row */}
+      <View style={[styles.profileRow, { borderBottomColor: colors.border }]}>
+        <View
+          style={[
+            styles.avatar,
+            { backgroundColor: colors.surface, borderColor: colors.border },
+          ]}
+        >
+          <Text style={[styles.avatarText, { color: colors.vermilion }]}>{userInitials}</Text>
+        </View>
+        <View style={styles.profileDetails}>
+          <Text style={[styles.userEmail, { color: colors.text }]}>{userEmail}</Text>
+          <Text style={[styles.userRole, { color: colors.textMuted }]}>Independent Learner</Text>
+        </View>
+      </View>
 
       {settings ? (
-        <>
-          <Card>
-            <OptionRow
-              label="Theme"
-              value={settings.theme}
-              options={THEMES}
-              onChange={(theme) => save({ theme })}
-              disabled={saving}
-            />
-          </Card>
-
-          <Card>
+        /* Grouped Settings Panel */
+        <View
+          style={[
+            styles.groupedPanel,
+            { backgroundColor: colors.surface, borderColor: colors.border },
+          ]}
+        >
+          {/* Section 1: Study Targets */}
+          <View style={styles.panelSection}>
+            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>STUDY TARGETS</Text>
             <OptionRow
               label="Current level"
               value={String(settings.current_level) as (typeof LEVELS)[number]}
@@ -117,9 +171,7 @@ export default function YouScreen() {
               onChange={(level) => save({ current_level: Number(level) })}
               disabled={saving}
             />
-          </Card>
-
-          <Card>
+            <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <NumberRow
               label="Cards per day"
               value={settings.cards_per_day}
@@ -129,6 +181,7 @@ export default function YouScreen() {
               onChange={(cards_per_day) => save({ cards_per_day })}
               disabled={saving}
             />
+            <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <NumberRow
               label="Max reviews per session"
               value={settings.max_reviews_per_session}
@@ -138,9 +191,13 @@ export default function YouScreen() {
               onChange={(max_reviews_per_session) => save({ max_reviews_per_session })}
               disabled={saving}
             />
-          </Card>
+          </View>
 
-          <Card>
+          <View style={[styles.sectionDivider, { backgroundColor: colors.border }]} />
+
+          {/* Section 2: Algorithm */}
+          <View style={styles.panelSection}>
+            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>DECK ALGORITHM</Text>
             <OptionRow
               label="Card order"
               value={settings.card_order}
@@ -148,9 +205,13 @@ export default function YouScreen() {
               onChange={(card_order) => save({ card_order })}
               disabled={saving}
             />
-          </Card>
+          </View>
 
-          <Card>
+          <View style={[styles.sectionDivider, { backgroundColor: colors.border }]} />
+
+          {/* Section 3: AI Engine */}
+          <View style={styles.panelSection}>
+            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>AI TUTOR ENGINE</Text>
             <OptionRow
               label="AI provider"
               value={settings.ai_provider}
@@ -158,17 +219,133 @@ export default function YouScreen() {
               onChange={(ai_provider) => save({ ai_provider })}
               disabled={saving}
             />
-          </Card>
-        </>
+          </View>
+
+          <View style={[styles.sectionDivider, { backgroundColor: colors.border }]} />
+
+          {/* Section 4: Appearance */}
+          <View style={styles.panelSection}>
+            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>APPEARANCE</Text>
+            <OptionRow
+              label="Theme"
+              value={settings.theme}
+              options={THEMES}
+              onChange={(theme) => save({ theme })}
+              disabled={saving}
+            />
+          </View>
+        </View>
       ) : null}
 
-      <Button label="Sign out" variant="secondary" onPress={signOut} />
+      <View style={styles.actionRow}>
+        <Button label="Sign out" variant="secondary" onPress={signOut} />
+      </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  heading: { fontSize: tokens.fontSize.xl, fontWeight: '700' },
-  label: { fontSize: tokens.fontSize.xs, fontWeight: '600', textTransform: 'uppercase' },
-  value: { fontSize: tokens.fontSize.md },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: tokens.spacing.xs,
+  },
+  heading: {
+    fontSize: tokens.fontSize.xl,
+    fontWeight: '700',
+  },
+  sealBadge: {
+    width: 32,
+    height: 32,
+    borderRadius: tokens.radius.sm,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  sealText: {
+    fontSize: tokens.fontSize.sm,
+    fontWeight: '800',
+  },
+  hero: {
+    borderRadius: tokens.radius.xl,
+    paddingVertical: tokens.spacing.lg,
+    paddingHorizontal: tokens.spacing.xl,
+    gap: tokens.spacing.xs,
+    marginBottom: tokens.spacing.md,
+  },
+  heroMetric: {
+    fontSize: tokens.fontSize.hanzi,
+    fontWeight: '700',
+  },
+  heroLabel: {
+    fontSize: tokens.fontSize.sm,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  heroDivider: {
+    height: StyleSheet.hairlineWidth,
+    marginVertical: tokens.spacing.xs,
+  },
+  heroMuted: {
+    fontSize: tokens.fontSize.sm,
+  },
+  profileRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: tokens.spacing.md,
+    paddingVertical: tokens.spacing.sm,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginBottom: tokens.spacing.md,
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: tokens.radius.pill,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatarText: {
+    fontSize: tokens.fontSize.md,
+    fontWeight: '700',
+  },
+  profileDetails: {
+    flex: 1,
+    gap: 2,
+  },
+  userEmail: {
+    fontSize: tokens.fontSize.sm,
+    fontWeight: '600',
+  },
+  userRole: {
+    fontSize: tokens.fontSize.xs,
+    fontWeight: '500',
+  },
+  groupedPanel: {
+    borderRadius: tokens.radius.lg,
+    borderWidth: 1,
+    padding: tokens.spacing.lg,
+    gap: tokens.spacing.lg,
+  },
+  panelSection: {
+    gap: tokens.spacing.sm,
+  },
+  sectionTitle: {
+    fontSize: tokens.fontSize.xs,
+    fontWeight: '700',
+    letterSpacing: 0.8,
+  },
+  divider: {
+    height: StyleSheet.hairlineWidth,
+    marginVertical: tokens.spacing.xs,
+  },
+  sectionDivider: {
+    height: StyleSheet.hairlineWidth,
+  },
+  actionRow: {
+    marginTop: tokens.spacing.md,
+  },
 });
+
+

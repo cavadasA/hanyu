@@ -50,9 +50,12 @@ export function StatusBarChart({
           }
 
           return (
-            <Text key={status} style={[styles.legendItem, { color: colors.textMuted }]}>
-              {`${status} ${count}`}
-            </Text>
+            <View key={status} style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: palette[status] }]} />
+              <Text style={[styles.legendItemLabel, { color: colors.textMuted }]}>
+                {`${status} ${count}`}
+              </Text>
+            </View>
           );
         })}
       </View>
@@ -69,5 +72,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   legend: { flexDirection: 'row', flexWrap: 'wrap', gap: tokens.spacing.md },
-  legendItem: { fontSize: tokens.fontSize.xs },
+  legendItem: { flexDirection: 'row', alignItems: 'center', gap: tokens.spacing.xs },
+  legendDot: { width: 8, height: 8, borderRadius: tokens.radius.pill },
+  legendItemLabel: { fontSize: tokens.fontSize.xs },
 });

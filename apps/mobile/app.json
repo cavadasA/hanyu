@@ -9,7 +9,8 @@
     "scheme": "hanyu",
     "plugins": [
       "expo-router",
-      "expo-status-bar"
+      "expo-status-bar",
+      "expo-sqlite"
     ],
     "ios": {
       "supportsTablet": true,

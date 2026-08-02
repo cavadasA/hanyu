@@ -22,30 +22,98 @@ const dataDir = join(rootDir, 'data');
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
 
 /**
- * Extract the first set of English meanings from the HTML dictionary column.
- * The HTML contains <li>meaning</li> tags. We grab the first <ul> block's meanings
- * (the primary reading) and join them with "; ".
+ * Extract the best English meanings from the HTML dictionary column.
+ *
+ * CC-CEDICT structures entries with multiple <ul> blocks — one per
+ * reading/pronunciation. The first block is often a surname or rare
+ * reading (e.g. 也 Yě → "surname Ye"), while the second block holds
+ * the common meaning (yě → "also; too"). The old logic blindly took
+ * the first <ul> and produced "surname Bai" instead of "hundred".
+ *
+ * Now we score every <ul> block and pick the best one, penalising
+ * surname-only / used-in / variant-of entries and rewarding blocks
+ * with more detail. "variant of X" entries are stripped before
+ * scoring — they are dictionary metadata, not learner meanings.
  */
 function extractMeanings(html) {
   if (!html) return '';
 
-  // Get the first <ul>...</ul> block (primary reading)
-  const firstUl = html.match(/<ul>([\s\S]*?)<\/ul>/);
-  if (!firstUl) return '';
+  // Patterns that are dictionary metadata, never useful as meanings
+  const isMeta = (s) =>
+    /^variant of /.test(s) ||
+    /^old variant of /.test(s);
 
-  // Extract all <li> contents from that block
-  const meanings = [];
-  const liRegex = /<li>(.*?)<\/li>/g;
-  let match;
-  while ((match = liRegex.exec(firstUl[1])) !== null) {
-    const text = match[1]
-      .replace(/<[^>]*>/g, '') // strip any nested HTML tags
-      .trim();
-    if (text) meanings.push(text);
+  // ── 1. Parse every <ul>…</ul> block, strip meta entries ─────
+  const ulRegex = /<ul>([\s\S]*?)<\/ul>/g;
+  const blocks = [];
+  let ulMatch;
+  while ((ulMatch = ulRegex.exec(html)) !== null) {
+    const meanings = [];
+    const liRegex = /<li>(.*?)<\/li>/g;
+    let liMatch;
+    while ((liMatch = liRegex.exec(ulMatch[1])) !== null) {
+      const text = liMatch[1]
+        .replace(/<[^>]*>/g, '')
+        .trim();
+      if (text && !isMeta(text)) meanings.push(text);
+    }
+    if (meanings.length > 0) blocks.push(meanings);
   }
 
-  // Take up to 3 meanings to keep it concise
-  return meanings.slice(0, 3).join('; ');
+  if (blocks.length === 0) return '';
+
+  // ── 2. Score each block ──────────────────────────────────────
+  function scoreBlock(meanings) {
+    if (meanings.length === 0) return -999;
+
+    let score = meanings.length * 10;        // more entries → primary
+    const first = meanings[0];
+
+    // Heavy penalties — these blocks are almost never what we want
+    if (/^surname [A-Z]/.test(first))       score -= 300;
+    if (/^used in /.test(first))            score -= 300;
+
+    // "abbr. for …" blocks are also wrong (e.g. 新 → "abbr. for Xinjiang")
+    // even when the block has multiple entries; the real meaning block
+    // will have a clean first entry like "new"
+    if (/^abbr\. for/.test(first))          score -= 200;
+
+    // Milder penalty when "surname" appears mixed with real content
+    // (e.g. "China; Chinese; surname Zhong" — still usable but not ideal)
+    if (first.includes('surname') && !/^surname [A-Z]/.test(first))
+      score -= 30;
+
+    return score;
+  }
+
+  // ── 3. Pick the winner ───────────────────────────────────────
+  let best = blocks[0];
+  let bestScore = scoreBlock(best);
+
+  for (let i = 1; i < blocks.length; i++) {
+    const s = scoreBlock(blocks[i]);
+    if (s > bestScore) {
+      bestScore = s;
+      best = blocks[i];
+    }
+  }
+
+  // ── 4. Clean up final output ─────────────────────────────────
+  // If the winning block still starts with a junk entry (can happen
+  // when there's only one block, like 家 where the first entry is
+  // "used in 傢伙"), skip it so we show actual meanings.
+  const final = [];
+  for (const m of best) {
+    // Skip entries that are just cross-references, not meanings
+    if (/^used in /.test(m)) continue;
+    final.push(m);
+    if (final.length >= 3) break;
+  }
+
+  // If filtering removed everything (shouldn't happen), fall back
+  if (final.length === 0) return best.slice(0, 3).join('; ');
+
+  return final.join('; ');
 }
 
 /**

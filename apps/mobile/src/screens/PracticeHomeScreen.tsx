@@ -1,9 +1,8 @@
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
-import { Button } from '../ui/Button';
-import { Card } from '../ui/Card';
+import { HubTile } from '../ui/HubTile';
 import { Screen } from '../ui/Screen';
 
 export function PracticeHomeScreen() {
@@ -12,22 +11,34 @@ export function PracticeHomeScreen() {
 
   return (
     <Screen>
-      <Text style={[styles.heading, { color: colors.text }]}>Practice</Text>
-      <Card>
-        <Text style={[styles.title, { color: colors.text }]}>Exercises</Text>
-        <Text style={{ color: colors.textMuted }}>Five focused exercise types</Text>
-        <Button label="Exercises" onPress={() => router.push('/practice/exercises')} />
-      </Card>
-      <Card>
-        <Text style={[styles.title, { color: colors.text }]}>Readings</Text>
-        <Text style={{ color: colors.textMuted }}>Read and inspect words</Text>
-        <Button label="Readings" onPress={() => router.push('/practice/readings')} />
-      </Card>
+      <View style={styles.header}>
+        <Text style={[styles.heading, { color: colors.text }]}>Practice</Text>
+        <Text style={[styles.subtitle, { color: colors.textMuted }]}>
+          Exercises and graded readings
+        </Text>
+      </View>
+
+      <HubTile
+        icon="create-outline"
+        title="Exercises"
+        description="Five focused exercise types"
+        actionLabel="Exercises"
+        onPress={() => router.push('/practice/exercises')}
+      />
+
+      <HubTile
+        icon="reader-outline"
+        title="Readings"
+        description="Read and inspect words"
+        actionLabel="Readings"
+        onPress={() => router.push('/practice/readings')}
+      />
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  header: { gap: tokens.spacing.xs, marginBottom: tokens.spacing.sm },
   heading: { fontSize: tokens.fontSize.xl, fontWeight: '700' },
-  title: { fontSize: tokens.fontSize.lg, fontWeight: '600' },
+  subtitle: { fontSize: tokens.fontSize.sm },
 });

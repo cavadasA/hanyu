@@ -12,7 +12,15 @@ export function AudioButton({ text, label = 'Play audio' }: { text: string; labe
       accessibilityRole="button"
       accessibilityLabel={label}
       onPress={() => speak(text)}
-      style={[styles.button, { borderColor: colors.border, backgroundColor: colors.surface }]}
+      style={({ pressed }) => [
+        styles.button,
+        {
+          borderColor: colors.border,
+          backgroundColor: colors.surface,
+          opacity: pressed ? 0.7 : 1,
+          ...(pressed ? { transform: [{ scale: 0.98 }] } : {}),
+        },
+      ]}
     >
       <Text style={[styles.label, { color: colors.text }]}>{label}</Text>
     </Pressable>

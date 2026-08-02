@@ -1,13 +1,14 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text } from 'react-native';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 
 interface ButtonProps {
   label: string;
   onPress: () => void;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'outline';
   disabled?: boolean;
   selected?: boolean;
+  busy?: boolean;
 }
 
 export function Button({
@@ -16,28 +17,40 @@ export function Button({
   variant = 'primary',
   disabled = false,
   selected = false,
+  busy = false,
 }: ButtonProps) {
   const { colors } = useTheme();
   const isPrimary = variant === 'primary';
+  const isOutline = variant === 'outline';
+
+  const backgroundColor = isPrimary ? colors.vermilion : isOutline ? 'transparent' : colors.surface;
+  const borderColor = isPrimary || isOutline ? colors.vermilion : colors.border;
+  const spinnerColor = isPrimary ? colors.onAccent : isOutline ? colors.vermilion : colors.text;
+  const labelColor = isPrimary ? colors.onAccent : isOutline ? colors.vermilion : colors.text;
 
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityState={{ disabled, selected }}
+      accessibilityLabel={label}
+      accessibilityState={{ disabled: disabled || busy, selected, busy }}
       onPress={onPress}
-      disabled={disabled}
-      style={[
+      disabled={disabled || busy}
+      style={({ pressed }) => [
         styles.button,
+        isOutline ? styles.outline : null,
         {
-          backgroundColor: isPrimary ? colors.vermilion : colors.surface,
-          borderColor: isPrimary ? colors.vermilion : colors.border,
-          opacity: disabled ? 0.5 : 1,
+          backgroundColor,
+          borderColor,
+          opacity: disabled && !busy ? 0.5 : pressed ? 0.85 : 1,
+          ...(pressed ? { transform: [{ scale: 0.98 }] } : {}),
         },
       ]}
     >
-      <Text style={[styles.label, { color: isPrimary ? colors.onAccent : colors.text }]}>
-        {label}
-      </Text>
+      {busy ? (
+        <ActivityIndicator size="small" color={spinnerColor} />
+      ) : (
+        <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
+      )}
     </Pressable>
   );
 }
@@ -52,5 +65,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: 44,
   },
+  outline: { borderWidth: 1.5 },
   label: { fontSize: tokens.fontSize.md, fontWeight: '600' },
 });

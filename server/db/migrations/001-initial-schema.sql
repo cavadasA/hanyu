@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS grammar_points (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   hsk_level INTEGER NOT NULL CHECK (hsk_level BETWEEN 1 AND 6),
   title TEXT NOT NULL,
+  pattern TEXT,
   explanation TEXT NOT NULL,
   examples TEXT NOT NULL DEFAULT '[]',
   order_idx INTEGER
