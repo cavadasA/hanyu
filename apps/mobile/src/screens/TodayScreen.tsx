@@ -18,8 +18,10 @@ import {
   type TodayPayload,
 } from '@hanyu/data';
 import { getData } from '../lib/data';
+import { getReviewSession, type ReviewSessionSnapshot } from '../lib/reviewSessionStore';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
+import { ActiveSessionBanner } from '../ui/ActiveSessionBanner';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
@@ -139,6 +141,7 @@ export default function TodayScreen() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [sessionSnapshot, setSessionSnapshot] = useState<ReviewSessionSnapshot | null>(null);
 
   const load = useCallback(async () => {
     setError('');
@@ -166,6 +169,7 @@ export default function TodayScreen() {
       setStreak({ current: 0, longest: 0 });
     }
 
+    setSessionSnapshot(getReviewSession());
     setLoading(false);
   }, []);
 
@@ -207,6 +211,7 @@ export default function TodayScreen() {
 
   const blocks = today?.progress.total_blocks ?? 0;
   const blocksDone = today?.progress.completed_blocks ?? 0;
+  const allDone = blocks > 0 && blocksDone >= blocks;
 
   const tasks = today
     ? [
@@ -269,6 +274,11 @@ export default function TodayScreen() {
 
       {today ? (
         <>
+          <ActiveSessionBanner
+            snapshot={sessionSnapshot}
+            onContinue={() => router.push('/cards')}
+          />
+
           <Reveal index={0}>
             <Card style={styles.heroCard}>
               <View style={styles.ringWrapper}>
@@ -296,58 +306,78 @@ export default function TodayScreen() {
           </Reveal>
 
           <Reveal index={1}>
-            <Card>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Your plan for today</Text>
+            {allDone ? (
+              <Card style={styles.completedCard}>
+                <View style={styles.completedHeader}>
+                  <Ionicons name="checkmark-circle" size={44} color={colors.gold} />
+                  <Text style={[styles.completedTitle, { color: colors.text }]}>
+                    Session complete! Well done.
+                  </Text>
+                  <Text style={[styles.completedSub, { color: colors.textMuted }]}>
+                    You fulfilled all daily study goals. Want to do extra practice?
+                  </Text>
+                </View>
+                <View style={styles.extraPracticeRow}>
+                  <Button label="Quick review" variant="outline" onPress={() => router.push('/cards')} />
+                  <Button label="Free reading" variant="outline" onPress={() => router.push('/practice/readings')} />
+                  <Button label="Browse grammar" variant="outline" onPress={() => router.push('/library/grammar')} />
+                </View>
+              </Card>
+            ) : (
+              <Card>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Your plan for today</Text>
 
-              {tasks.map((task, index) => (
-                <View key={task.key}>
-                  {index > 0 ? (
-                    <View style={[styles.taskDivider, { backgroundColor: colors.border }]} />
-                  ) : null}
+                {tasks.map((task, index) => (
+                  <View key={task.key}>
+                    {index > 0 ? (
+                      <View style={[styles.taskDivider, { backgroundColor: colors.border }]} />
+                    ) : null}
 
-                  <View style={styles.task}>
-                    <View style={styles.taskHead}>
-                      <View
-                        style={[
-                          styles.taskIcon,
-                          { backgroundColor: (task.done ? colors.gold : colors.vermilion) + '1A' },
-                        ]}
-                      >
-                        <Ionicons
-                          name={task.icon}
-                          size={20}
-                          color={task.done ? colors.gold : colors.vermilion}
+                    <View style={styles.task}>
+                      <View style={styles.taskHead}>
+                        <View
+                          style={[
+                            styles.taskIcon,
+                            { backgroundColor: (task.done ? colors.gold : colors.vermilion) + '1A' },
+                          ]}
+                        >
+                          <Ionicons
+                            name={task.icon}
+                            size={20}
+                            color={task.done ? colors.gold : colors.vermilion}
+                          />
+                        </View>
+                        <View style={styles.taskText}>
+                          <Text style={[styles.taskPrimary, { color: colors.text }]}>
+                            {task.primary}
+                          </Text>
+                          <Text style={[styles.taskSub, { color: colors.textMuted }]}>{task.sub}</Text>
+                        </View>
+                        {task.done ? (
+                          <Ionicons name="checkmark-circle" size={22} color={colors.gold} />
+                        ) : null}
+                      </View>
+
+                      <View style={[styles.progressTrack, { backgroundColor: colors.border }]}>
+                        <View
+                          style={[
+                            styles.progressFill,
+                            { backgroundColor: colors.vermilion, width: task.width },
+                          ]}
                         />
                       </View>
-                      <View style={styles.taskText}>
-                        <Text style={[styles.taskPrimary, { color: colors.text }]}>
-                          {task.primary}
-                        </Text>
-                        <Text style={[styles.taskSub, { color: colors.textMuted }]}>{task.sub}</Text>
-                      </View>
-                      {task.done ? (
-                        <Ionicons name="checkmark-circle" size={22} color={colors.gold} />
-                      ) : null}
-                    </View>
 
-                    <View style={[styles.progressTrack, { backgroundColor: colors.border }]}>
-                      <View
-                        style={[
-                          styles.progressFill,
-                          { backgroundColor: colors.vermilion, width: task.width },
-                        ]}
+                      <Button
+                        label={task.done ? 'Done ✓' : task.cta}
+                        variant={task.done ? 'outline' : task.key === nextPendingKey ? 'primary' : 'outline'}
+                        onPress={task.go}
+                        disabled={task.done}
                       />
                     </View>
-
-                    <Button
-                      label={task.cta}
-                      variant={task.key === nextPendingKey ? 'primary' : 'outline'}
-                      onPress={task.go}
-                    />
                   </View>
-                </View>
-              ))}
-            </Card>
+                ))}
+              </Card>
+            )}
           </Reveal>
 
           <Reveal index={2}>
@@ -416,6 +446,29 @@ const styles = StyleSheet.create({
 
   progressTrack: { height: 6, borderRadius: 999, overflow: 'hidden' },
   progressFill: { height: '100%', borderRadius: 999 },
+
+  completedCard: {
+    paddingVertical: tokens.spacing.xl,
+    gap: tokens.spacing.lg,
+    alignItems: 'center',
+  },
+  completedHeader: {
+    alignItems: 'center',
+    gap: tokens.spacing.xs,
+  },
+  completedTitle: {
+    fontSize: tokens.fontSize.lg,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  completedSub: {
+    fontSize: tokens.fontSize.sm,
+    textAlign: 'center',
+  },
+  extraPracticeRow: {
+    gap: tokens.spacing.sm,
+    width: '100%',
+  },
 
   skeleton: { borderRadius: tokens.radius.sm },
   skeletonHero: { height: 168, borderRadius: tokens.radius.xl },

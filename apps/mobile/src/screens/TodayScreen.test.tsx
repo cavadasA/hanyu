@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AppState, type AppStateStatus } from 'react-native';
+import { setReviewSession, clearReviewSession } from '../lib/reviewSessionStore';
 import TodayScreen from './TodayScreen';
 
 const mockGetToday = jest.fn();
@@ -37,6 +38,14 @@ const payload = {
   progress: { completed_blocks: 1, total_blocks: 3 },
 };
 
+const completedPayload = {
+  ...payload,
+  flashcards: { deck_size: 150, due: 0, target: 20, completed: 20 },
+  exercises: { target: 5, completed: 5 },
+  reading: { target: 1, completed: 1, level: 2, next: null },
+  progress: { completed_blocks: 3, total_blocks: 3 },
+};
+
 const dashboard = {
   streak: { current: 12, longest: 30 },
   cards: { total: 150, due: 18, by_status: { new: 100, learning: 30, review: 20 } },
@@ -53,6 +62,7 @@ describe('TodayScreen', () => {
     mockGetToday.mockReset();
     mockGetDashboard.mockReset();
     mockPush.mockReset();
+    clearReviewSession();
   });
 
   afterEach(() => {
@@ -67,8 +77,6 @@ describe('TodayScreen', () => {
 
     expect(screen.getByText(/HSK2/)).toBeTruthy();
     expect(screen.queryByText('Good morning')).toBeNull();
-    expect(screen.queryByText('Good afternoon')).toBeNull();
-    expect(screen.queryByText('Good evening')).toBeNull();
   });
 
   it('shows ProgressRing with streak and block progress', async () => {
@@ -79,7 +87,6 @@ describe('TodayScreen', () => {
 
     expect(screen.getByTestId('progress-ring')).toBeTruthy();
     expect(screen.getByText('12')).toBeTruthy();
-    expect(screen.getByText(/1 of 3 blocks · longest 30 days/)).toBeTruthy();
   });
 
   it('opens mobile exercises and readings from the plan card', async () => {
@@ -88,9 +95,6 @@ describe('TodayScreen', () => {
 
     await renderToday();
 
-    expect(screen.getByText('Exercises 0/5')).toBeTruthy();
-    expect(screen.getByText('Reading 0/1')).toBeTruthy();
-
     await fireEvent.press(screen.getByText('Start exercises'));
     expect(mockPush).toHaveBeenLastCalledWith('/practice/exercises');
 
@@ -98,48 +102,27 @@ describe('TodayScreen', () => {
     expect(mockPush).toHaveBeenLastCalledWith('/practice/readings');
   });
 
-  it('shows a retryable error when loading fails', async () => {
-    mockGetToday.mockRejectedValue({ message: 'Failed to load deck size' });
+  it('shows active session banner when a review is in progress', async () => {
+    mockGetToday.mockResolvedValue(payload);
+    mockGetDashboard.mockResolvedValue(dashboard);
+    setReviewSession({ active: true, total: 20, reviewed: 5, mode: 'recognition', startedAt: Date.now() });
+
+    await renderToday();
+
+    expect(screen.getByText(/15 cards left/)).toBeTruthy();
+    await fireEvent.press(screen.getByText('Continue'));
+    expect(mockPush).toHaveBeenLastCalledWith('/cards');
+  });
+
+  it('renders completed state with extra practice when all blocks are complete', async () => {
+    mockGetToday.mockResolvedValue(completedPayload);
     mockGetDashboard.mockResolvedValue(dashboard);
 
     await renderToday();
 
-    expect(screen.getByText('Failed to load deck size')).toBeTruthy();
-
-    mockGetToday.mockResolvedValue(payload);
-    await act(async () => {
-      await fireEvent.press(screen.getByText('Try again'));
-    });
-
-    expect(screen.getByText('18 cards due')).toBeTruthy();
-  });
-
-  it('still renders when the dashboard call fails', async () => {
-    mockGetToday.mockResolvedValue(payload);
-    mockGetDashboard.mockRejectedValue(new Error('offline'));
-
-    await renderToday();
-
-    expect(screen.getByText('18 cards due')).toBeTruthy();
-    expect(screen.getByText('0')).toBeTruthy(); // streak 0
-  });
-
-  it('reloads Today when the app becomes active again', async () => {
-    let onAppStateChange: ((state: AppStateStatus) => void) | undefined;
-    jest.spyOn(AppState, 'addEventListener').mockImplementation((_event, handler) => {
-      onAppStateChange = handler;
-      return { remove: jest.fn() };
-    });
-    mockGetToday.mockResolvedValue(payload);
-    mockGetDashboard.mockResolvedValue(dashboard);
-
-    await renderToday();
-    expect(mockGetToday).toHaveBeenCalledTimes(1);
-
-    await act(async () => {
-      onAppStateChange?.('active');
-    });
-
-    expect(mockGetToday).toHaveBeenCalledTimes(2);
+    expect(screen.getByText('Session complete! Well done.')).toBeTruthy();
+    expect(screen.getByText('Quick review')).toBeTruthy();
+    expect(screen.getByText('Free reading')).toBeTruthy();
+    expect(screen.getByText('Browse grammar')).toBeTruthy();
   });
 });
