@@ -59,18 +59,30 @@ describe('TodayScreen', () => {
     jest.restoreAllMocks();
   });
 
-  it('shows the streak, due count, and block progress', async () => {
+  it('renders date and HSK badge without greeting', async () => {
     mockGetToday.mockResolvedValue(payload);
     mockGetDashboard.mockResolvedValue(dashboard);
 
     await renderToday();
 
-    expect(screen.getByText('12 day streak')).toBeTruthy();
-    expect(screen.getByText('18 cards due')).toBeTruthy();
-    expect(screen.getByText('1 of 3 blocks done')).toBeTruthy();
+    expect(screen.getByText(/HSK2/)).toBeTruthy();
+    expect(screen.queryByText('Good morning')).toBeNull();
+    expect(screen.queryByText('Good afternoon')).toBeNull();
+    expect(screen.queryByText('Good evening')).toBeNull();
   });
 
-  it('opens mobile exercises and readings from the rest of the session card', async () => {
+  it('shows ProgressRing with streak and block progress', async () => {
+    mockGetToday.mockResolvedValue(payload);
+    mockGetDashboard.mockResolvedValue(dashboard);
+
+    await renderToday();
+
+    expect(screen.getByTestId('progress-ring')).toBeTruthy();
+    expect(screen.getByText('12')).toBeTruthy();
+    expect(screen.getByText(/1 of 3 blocks · longest 30 days/)).toBeTruthy();
+  });
+
+  it('opens mobile exercises and readings from the plan card', async () => {
     mockGetToday.mockResolvedValue(payload);
     mockGetDashboard.mockResolvedValue(dashboard);
 
@@ -109,7 +121,7 @@ describe('TodayScreen', () => {
     await renderToday();
 
     expect(screen.getByText('18 cards due')).toBeTruthy();
-    expect(screen.getByText('0 day streak')).toBeTruthy();
+    expect(screen.getByText('0')).toBeTruthy(); // streak 0
   });
 
   it('reloads Today when the app becomes active again', async () => {
