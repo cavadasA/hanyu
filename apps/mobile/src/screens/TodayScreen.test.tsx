@@ -79,14 +79,15 @@ describe('TodayScreen', () => {
     expect(screen.queryByText('Good morning')).toBeNull();
   });
 
-  it('shows ProgressRing with streak and block progress', async () => {
+  it('shows progress card with streak and block progress', async () => {
     mockGetToday.mockResolvedValue(payload);
     mockGetDashboard.mockResolvedValue(dashboard);
 
     await renderToday();
 
     expect(screen.getByTestId('progress-ring')).toBeTruthy();
-    expect(screen.getByText('12')).toBeTruthy();
+    expect(screen.getByText('12 day streak')).toBeTruthy();
+    expect(screen.getByText(/1 of 3 blocks completed today/)).toBeTruthy();
   });
 
   it('opens mobile exercises and readings from the plan card', async () => {

@@ -281,27 +281,25 @@ export default function TodayScreen() {
 
           <Reveal index={0}>
             <Card style={styles.heroCard}>
-              <View style={styles.ringWrapper}>
-                <ProgressRing
-                  segments={blocks}
-                  completed={blocksDone}
-                  size={150}
-                  strokeWidth={8}
-                >
-                  <View style={styles.ringCenter}>
-                    <Ionicons name="flame" size={24} color={colors.gold} />
-                    <Text style={[styles.streakNumber, { color: colors.text }]}>
-                      {streak.current}
-                    </Text>
-                    <Text style={[styles.streakLabel, { color: colors.textMuted }]}>
-                      day streak
-                    </Text>
-                  </View>
-                </ProgressRing>
-                <Text style={[styles.heroMuted, { color: colors.textMuted }]}>
-                  {`${blocksDone} of ${blocks} blocks · longest ${streak.longest} ${streak.longest === 1 ? 'day' : 'days'}`}
-                </Text>
+              <View style={styles.heroTopRow}>
+                <View style={[styles.flameIconBox, { backgroundColor: colors.gold + '1F' }]}>
+                  <Ionicons name="flame" size={24} color={colors.gold} />
+                </View>
+                <View style={styles.streakCopy}>
+                  <Text style={[styles.streakNumber, { color: colors.text }]}>
+                    {`${streak.current} day streak`}
+                  </Text>
+                  <Text style={[styles.streakMuted, { color: colors.textMuted }]}>
+                    {`Longest ${streak.longest} ${streak.longest === 1 ? 'day' : 'days'}`}
+                  </Text>
+                </View>
               </View>
+
+              <ProgressRing segments={blocks} completed={blocksDone} />
+
+              <Text style={[styles.heroMuted, { color: colors.textMuted }]}>
+                {`${blocksDone} of ${blocks} blocks completed today`}
+              </Text>
             </Card>
           </Reveal>
 
@@ -403,29 +401,35 @@ const styles = StyleSheet.create({
   heading: { fontSize: tokens.fontSize.xl, fontWeight: '700' },
 
   heroCard: {
-    paddingVertical: tokens.spacing.xl,
-    alignItems: 'center',
+    padding: tokens.spacing.lg,
+    gap: tokens.spacing.md,
   },
-  ringWrapper: {
+  heroTopRow: {
+    flexDirection: 'row',
     alignItems: 'center',
     gap: tokens.spacing.md,
   },
-  ringCenter: {
+  flameIconBox: {
+    width: 44,
+    height: 44,
+    borderRadius: tokens.radius.md,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  streakCopy: {
+    flex: 1,
+    gap: 2,
+  },
   streakNumber: {
-    fontSize: tokens.fontSize.xl,
+    fontSize: tokens.fontSize.md,
     fontWeight: '700',
   },
-  streakLabel: {
+  streakMuted: {
     fontSize: tokens.fontSize.xs,
-    fontWeight: '600',
-    textTransform: 'uppercase',
   },
   heroMuted: {
-    fontSize: tokens.fontSize.sm,
-    textAlign: 'center',
+    fontSize: tokens.fontSize.xs,
+    textAlign: 'left',
   },
 
   sectionTitle: { fontSize: tokens.fontSize.md, fontWeight: '600' },
