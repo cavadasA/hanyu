@@ -26,6 +26,8 @@ describe('theme tokens', () => {
 
       expect(contrast(colors.vermilion, colors.onAccent)).toBeGreaterThanOrEqual(4.5);
       expect(contrast(colors.gold, colors.surface)).toBeGreaterThanOrEqual(4.5);
+      expect(contrast(colors.info, colors.surface)).toBeGreaterThanOrEqual(4.5);
+      expect(contrast(colors.success, colors.surface)).toBeGreaterThanOrEqual(4.5);
     },
   );
 });

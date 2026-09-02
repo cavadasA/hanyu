@@ -6,6 +6,8 @@ const light = {
   border: '#e5e7eb',
   vermilion: '#c93624',
   gold: '#946d00',
+  info: '#2563eb',
+  success: '#047857',
   onAccent: '#ffffff',
 };
 
@@ -17,6 +19,8 @@ const dark = {
   border: '#334155',
   vermilion: '#ff7664',
   gold: '#e5b93f',
+  info: '#60a5fa',
+  success: '#34d399',
   onAccent: '#0f172a',
 };
 

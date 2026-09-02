@@ -11,7 +11,7 @@ describe('useSessionTimer', () => {
   it('resets timer cleanly', async () => {
     const { result } = await renderHook(() => useSessionTimer());
 
-    act(() => {
+    await act(async () => {
       result.current.reset();
     });
 

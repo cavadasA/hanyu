@@ -9,7 +9,7 @@ interface CardStatusBadgeProps {
 export function CardStatusBadge({ status }: CardStatusBadgeProps) {
   const { colors } = useTheme();
 
-  let color = colors.info ?? '#3b82f6';
+  let color = colors.info;
   let label = 'New';
 
   if (status === 'learning') {
@@ -19,7 +19,7 @@ export function CardStatusBadge({ status }: CardStatusBadgeProps) {
     color = colors.gold;
     label = 'Review';
   } else if (status === 'mastered') {
-    color = '#10b981';
+    color = colors.success;
     label = 'Mastered';
   }
 

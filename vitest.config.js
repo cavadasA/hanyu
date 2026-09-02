@@ -16,7 +16,7 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     environmentMatchGlobs: [['apps/web/src/**/*.test.jsx', 'jsdom']],
-    setupFiles: [],
+    setupFiles: ['./test/setup-web.js'],
     include: ['**/*.test.{js,jsx,ts}'],
     exclude: ['**/node_modules/**', 'apps/mobile/**'],
   },

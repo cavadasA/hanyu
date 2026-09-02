@@ -22,10 +22,11 @@
     "seed": "node server/db/seed.js",
     "import-hsk": "node scripts/import-hsk-data.js",
     "start": "node server/app.js",
-    "test": "vitest run && npm run test -w @hanyu/mobile",
+    "test": "node scripts/verify.js",
     "test:web": "vitest run",
     "test:mobile": "npm run test -w @hanyu/mobile",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "typecheck": "npm run typecheck -w @hanyu/domain && npm run typecheck -w @hanyu/data && npm run typecheck -w @hanyu/mobile"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.111.0",
