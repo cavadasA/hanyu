@@ -114,7 +114,7 @@ Dos matices frente a lo que decía la auditoría:
 
 Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurrió por construir el árbol bajo un major y ejecutarlo bajo otro, y había dos binarios de Node en el PATH sin ninguna versión fijada.
 
-**Hueco conocido que este plan no cerró:** `apps/mobile/src/lib/useSessionTimer.test.ts` solo ejercita `reset()`. La función principal del hook, `start()`, y el avance del temporizador por su `setInterval` no tienen ninguna cobertura. Salió al arreglar el warning de `act()` y no entra en el alcance del Plan 0, que era hacer creíble el comando de verificación, no ampliar la suite. Lo recoge el Plan 4, que reescribe la sesión de estudio.
+**Hueco conocido que este plan no cerró:** `apps/mobile/src/lib/useSessionTimer.test.ts` solo ejercita `reset()`. La función principal del hook, `start()`, y el avance del temporizador por su `setInterval` no tienen ninguna cobertura. Salió al arreglar el warning de `act()` y no entra en el alcance del Plan 0, que era hacer creíble el comando de verificación, no ampliar la suite. Lo recoge el Plan 4A, tarea 5, junto con la cola intradía: ambas cosas tocan la sesión.
 
 ## Plan 1 — Modelo de conocimiento y syllabus oficial
 **Tamaño:** XL · **Depende de:** Plan 0 · **Es la raíz de todo lo demás**
@@ -177,7 +177,18 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 **Cierra:** Crítico 2; Alto 4, Alto 5; §13 cobertura de Undo y offline.
 
 ## Plan 4 — Motor de memoria: FSRS multi-habilidad
-**Tamaño:** XL · **Depende de:** Planes 1, 3
+**Tamaño:** XL · **Depende de:** Planes 1C y 3
+
+> **Se divide en dos documentos ejecutables**, por la misma razón que el Plan 1: son dos subsistemas con criterios de salida distintos.
+>
+> - **4A — El motor FSRS** (`docs/superpowers/plans/2026-09-02-plan-4a-motor-fsrs.md`). Escrito. Qué se muestra mañana y por qué: FSRS con retención configurable, una sola implementación, cola intradía, intervalos visibles, leeches y `mastered` con evidencia. Se mide con retención observada.
+> - **4B — La recuperación activa.** Cómo se pregunta: tarjetas escritas, de audio y cloze contextual, frase de origen, ficha con clasificador y ejemplos, y las cinco habilidades con estado propio. Se mide con evidencia por habilidad.
+>
+> **Hallazgo que cambia el trabajo:** SM-2 no está duplicado, está **triplicado** — en `packages/domain/src/sm2.ts` y dentro de las dos firmas de `review_flashcard`, con el mismo bloque copiado literalmente, comentario incluido. Hay una cuarta copia en `server/services/srs-engine.js`, que queda congelada con el resto del servidor legado.
+>
+> La decisión central de 4A es **TypeScript calcula, el servidor guarda**. No es una concesión: la arquitectura offline exige que el cliente sepa programar sin red, así que dos cálculos que deben coincidir es peor que uno. La RPC pasa a ser `apply_review`, que almacena bajo las mismas garantías de idempotencia y versión que hoy.
+>
+> `ts-fsrs` 5.4.2 (MIT, cero dependencias) aporta más de lo esperado: la retención objetivo es un parámetro, los pasos de reaprendizaje en minutos resuelven el Alto 1 por configuración, y `repeat()` devuelve el intervalo de los cuatro botones con la misma llamada que después los aplica — así que la cifra mostrada no puede divergir de la aplicada. Con eso, **los documentos ejecutables pasan de 12 a 13**.
 
 - FSRS (dificultad, estabilidad, recuperabilidad) con retención objetivo configurable, sustituyendo SM-2. **Una sola implementación** gobernando los flujos online y offline; eliminar la duplicación TS/SQL actual.
 - Cola intradía de aprendizaje/reaprendizaje: Again reaparece en minutos, no al día siguiente. Hoy Again, Hard, Good y Easy programan todos 1 día en la primera revisión.
