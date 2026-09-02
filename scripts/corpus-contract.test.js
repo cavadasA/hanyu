@@ -172,21 +172,21 @@ describe('contrato del corpus', () => {
     expect(problems).toEqual([]);
   });
 
-  it('documenta los sentidos sin fuente y no los emite como otra acepción', () => {
-    expect(unresolved).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ hsk_level: 2, form: '花', sense_index: 2 }),
-      ]),
-    );
+  it('emite los cinco sentidos faltantes y corrige el par de 花', () => {
+    const expected = [
+      { hanzi: '点', hsk_level: 2, sense_index: 2, meaning_en: 'to order; point; dot' },
+      { hanzi: '花', hsk_level: 2, sense_index: 1, meaning_en: 'flower; blossom' },
+      { hanzi: '花', hsk_level: 2, sense_index: 2, meaning_en: 'to spend (money, time)' },
+      { hanzi: '过去', hsk_level: 3, sense_index: 2, meaning_en: 'the past; former times' },
+      { hanzi: '会', hsk_level: 3, sense_index: 2, meaning_en: 'meeting; gathering' },
+      { hanzi: '站', hsk_level: 3, sense_index: 2, meaning_en: 'to stand' },
+    ];
 
-    const emitted = new Set(
-      rows.map((row) => `${row.hanzi}#${row.hsk_level}#${row.sense_index ?? ''}`),
-    );
-    expect(
-      unresolved.every(
-        (term) => !emitted.has(`${term.form}#${term.hsk_level}#${term.sense_index ?? ''}`),
-      ),
-    ).toBe(true);
+    for (const expectedRow of expected) {
+      expect(rows).toContainEqual(expect.objectContaining(expectedRow));
+    }
+
+    expect(unresolved).toEqual([]);
   });
 
   it('reparte las acepciones de 点 según el índice de la fuente', () => {
@@ -196,12 +196,7 @@ describe('contrato del corpus', () => {
       .sort();
 
     // La transcripción fijada en data/sources.json publica 点1 en HSK 3.
-    expect(dian).toEqual(['L1#1', 'L3#1']);
-    expect(unresolved).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ hsk_level: 2, form: '点', sense_index: 2 }),
-      ]),
-    );
+    expect(dian).toEqual(['L1#1', 'L2#2', 'L3#1']);
   });
 
   it('conserva las variantes de las formas con parte opcional', () => {

@@ -2296,6 +2296,20 @@
     "frequency": 205214
   },
   {
+    "hanzi": "过去",
+    "sense_index": 2,
+    "variants": [
+      "过去"
+    ],
+    "traditional": "過",
+    "pinyin": "guòqù",
+    "meaning_en": "the past; former times",
+    "meaning_es": "el pasado; tiempos pasados",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 4956320
+  },
+  {
     "hanzi": "故事",
     "sense_index": null,
     "variants": [
@@ -2588,6 +2602,20 @@
     "classifier": "座",
     "pos": "noun",
     "frequency": 579967
+  },
+  {
+    "hanzi": "会",
+    "sense_index": 2,
+    "variants": [
+      "会"
+    ],
+    "traditional": "會",
+    "pinyin": "huì",
+    "meaning_en": "meeting; gathering",
+    "meaning_es": "reunión; encuentro",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 40026863
   },
   {
     "hanzi": "回答",
@@ -6564,6 +6592,20 @@
     "classifier": null,
     "pos": "pronoun",
     "frequency": 1945502
+  },
+  {
+    "hanzi": "站",
+    "sense_index": 2,
+    "variants": [
+      "站"
+    ],
+    "traditional": null,
+    "pinyin": "zhàn",
+    "meaning_en": "to stand",
+    "meaning_es": "estar de pie; ponerse de pie",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 4876405
   },
   {
     "hanzi": "长",

@@ -1,0 +1,56 @@
+[
+  {
+    "hanzi": "点",
+    "hsk_level": 2,
+    "sense_index": 2,
+    "pinyin": "diǎn",
+    "meaning_en": "to order; point; dot",
+    "meaning_es": "pedir; punto; pequeña cantidad",
+    "pos": "verb"
+  },
+  {
+    "hanzi": "花",
+    "hsk_level": 2,
+    "sense_index": 1,
+    "pinyin": "huā",
+    "meaning_en": "flower; blossom",
+    "meaning_es": "flor; floración",
+    "pos": "noun"
+  },
+  {
+    "hanzi": "花",
+    "hsk_level": 2,
+    "sense_index": 2,
+    "pinyin": "huā",
+    "meaning_en": "to spend (money, time)",
+    "meaning_es": "gastar (dinero o tiempo)",
+    "pos": "verb"
+  },
+  {
+    "hanzi": "过去",
+    "hsk_level": 3,
+    "sense_index": 2,
+    "pinyin": "guòqù",
+    "meaning_en": "the past; former times",
+    "meaning_es": "el pasado; tiempos pasados",
+    "pos": "noun"
+  },
+  {
+    "hanzi": "会",
+    "hsk_level": 3,
+    "sense_index": 2,
+    "pinyin": "huì",
+    "meaning_en": "meeting; gathering",
+    "meaning_es": "reunión; encuentro",
+    "pos": "noun"
+  },
+  {
+    "hanzi": "站",
+    "hsk_level": 3,
+    "sense_index": 2,
+    "pinyin": "zhàn",
+    "meaning_en": "to stand",
+    "meaning_es": "estar de pie; ponerse de pie",
+    "pos": "verb"
+  }
+]

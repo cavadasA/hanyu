@@ -532,6 +532,20 @@
     "frequency": 36263392
   },
   {
+    "hanzi": "点",
+    "sense_index": 2,
+    "variants": [
+      "点"
+    ],
+    "traditional": "點",
+    "pinyin": "diǎn",
+    "meaning_en": "to order; point; dot",
+    "meaning_es": "pedir; punto; pequeña cantidad",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 0
+  },
+  {
     "hanzi": "地铁",
     "sense_index": null,
     "variants": [
@@ -833,10 +847,24 @@
     ],
     "traditional": "蘤",
     "pinyin": "huā",
-    "meaning_en": "flower; blossom; fancy pattern; florid; to spend (money, time)",
-    "meaning_es": null,
+    "meaning_en": "flower; blossom",
+    "meaning_es": "flor; floración",
     "classifier": "朵、支、束、把、盆、簇",
     "pos": "noun",
+    "frequency": 4562491
+  },
+  {
+    "hanzi": "花",
+    "sense_index": 2,
+    "variants": [
+      "花"
+    ],
+    "traditional": "蘤",
+    "pinyin": "huā",
+    "meaning_en": "to spend (money, time)",
+    "meaning_es": "gastar (dinero o tiempo)",
+    "classifier": "朵、支、束、把、盆、簇",
+    "pos": "verb",
     "frequency": 4562491
   },
   {

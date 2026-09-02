@@ -15,7 +15,7 @@
 - **Node 26 según `.nvmrc`.** `scripts/` importa `.ts` de `packages/domain` apoyándose en el type stripping nativo.
 - **Depende del Plan 1A.** Este plan asume `normalizePinyin`, `scripts/lib/cedict-html.js`, `scripts/corpus-contract.test.js` y las columnas `traditional` / `classifier` ya en su sitio.
 - **Prohibido escribir mitigaciones.**
-- **El corpus es un artefacto generado.** Nunca se editan a mano los JSON de `server/db/seeds/`.
+- **El corpus es un artefacto generado.** Nunca se editan a mano los JSON generados de `server/db/seeds/`; las excepciones editoriales viven en `sense-overrides.json`, con clave de sentido y glosas explícitas.
 
 ## Procedencia de los datos
 
@@ -56,6 +56,7 @@ Medido, no supuesto:
 - `scripts/coverage-report.test.js`
 - `server/db/seeds/hsk-characters.json`
 - `server/db/seeds/grammar-points.json` — se regenera por completo desde la fuente oficial.
+- `server/db/seeds/sense-overrides.json` — excepciones editoriales versionadas para sentidos que CC-CEDICT no separa en filas distintas.
 - `supabase/migrations/2026090202_syllabus.sql`
 
 **Se modifican:**
@@ -67,7 +68,7 @@ Medido, no supuesto:
 - `PRODUCT.md`
 
 **Se elimina:**
-- `server/db/seeds/sense-review-queue.json` — la cuarentena del Plan 1A queda resuelta por la lista oficial. Su test en `corpus-contract.test.js` se sustituye por el de conformidad.
+- `server/db/seeds/sense-review-queue.json` — la identidad de cada fila pasa a venir de la lista oficial. Los sentidos que el diccionario no separa se resuelven mediante `sense-overrides.json`, nunca reutilizando otra fila por posición.
 
 ---
 
@@ -601,13 +602,15 @@ Sustituye la construcción de `words` por una que recorra la lista oficial y bus
 
 La clave de las glosas curadas y arrastradas incorpora ahora el índice de sentido. Actualiza también `loadExistingSpanish` y el mapa `curatedSpanish` del Plan 1A para que usen `${hanzi}|${normalizePinyin(pinyin)}|${sense_index ?? ''}`, y añade `"sense_index"` a las entradas de `server/db/seeds/sense-glosses-es.json` que lo necesiten. Las doce entradas existentes son de términos sin índice, así que les corresponde `""`.
 
+Cuando la fila n del diccionario no existe, no se reutiliza la última fila. Añade `server/db/seeds/sense-overrides.json` para los sentidos que el sílabo sí distingue pero CC-CEDICT no entrega por separado. Cada override debe declarar como mínimo `hanzi`, `hsk_level`, `sense_index`, `pinyin`, `meaning_en`, `meaning_es` y `pos`; se aplica por la clave `(hanzi, hsk_level, sense_index)` y queda visible en la matriz de cobertura como contenido editorial.
+
 - [ ] **Step 4: Regenerar y verificar**
 
 ```bash
 node scripts/import-hsk-data.js
 ```
 
-Expected: `HSK 1: 300`, `HSK 2: 204`, `HSK 3: 507`, sin términos sin enriquecer. Si aparecen, míralos uno a uno: cada uno es un término del examen que la app no podrá enseñar.
+Expected: `HSK 1: 300`, `HSK 2: 203`, `HSK 3: 506`, sin términos sin resolver. Las cinco acepciones que el diccionario no separa se cubren con overrides editoriales explícitos; si aparece una nueva, se añade una decisión editorial o se deja documentada, nunca se copia otra acepción por defecto.
 
 ```bash
 rm server/db/seeds/sense-review-queue.json
@@ -1088,10 +1091,15 @@ describe('buildCoverageReport', () => {
     expect(report.sources.every((entry) => entry.status === 'ok')).toBe(true);
   });
 
-  it('cubre el 100 % del vocabulario oficial de los niveles 1 a 3', () => {
+  it('cubre el vocabulario oficial mediante fuente u override editorial', () => {
     for (const level of [1, 2, 3]) {
       expect(report.vocabulary[level].covered).toBe(report.vocabulary[level].official);
     }
+  });
+
+  it('hace visibles los overrides editoriales', () => {
+    expect(report.vocabulary[2].editorial_overrides).toBe(3);
+    expect(report.vocabulary[3].editorial_overrides).toBe(3);
   });
 
   it('cubre el 100 % de los caracteres oficiales', () => {
@@ -1224,7 +1232,7 @@ Añade a `package.json`:
 npm run coverage && npm test
 ```
 
-Expected: tres líneas con el 100 % en vocabulario, caracteres y gramática, y los 5 pasos en PASS.
+Expected: tres líneas con 100 % de vocabulario cubierto, el número de overrides editoriales visible, 100 % de caracteres y gramática, y los 5 pasos en PASS.
 
 - [ ] **Step 4: Commit**
 
@@ -1284,14 +1292,14 @@ git commit -m "docs: el objetivo es preparar HSK 2 3.0, no consolidar un HSK 2 y
 ## Criterio de salida del plan
 
 1. `npm test` en verde.
-2. `npm run coverage` informa 100 % de vocabulario, caracteres y gramática para los niveles 1 a 3, con las doce fuentes coincidiendo con el manifiesto.
+2. `npm run coverage` informa la cobertura real por nivel, con 100 % de caracteres y gramática y con cada excepción de vocabulario resuelta por un override editorial explícito o documentada en el manifiesto de no resueltos. El 100 % automático del diccionario no es un requisito: no se fuerzan acepciones para maquillar una carencia de fuente.
 3. La gramática HSK 2 pasa de 2 puntos a más de 40, incluidas todas las familias que la auditoría daba por ausentes.
-4. `server/db/seeds/sense-review-queue.json` ya no existe: las catorce filas quedaron resueltas por el índice de sentido oficial.
+4. `server/db/seeds/sense-review-queue.json` ya no existe: las filas usan el índice de sentido oficial; los cinco sentidos sin fila distinguible en el diccionario se cubren con `sense-overrides.json` y `unresolved-hsk-terms.json` queda vacío.
 5. Cualquiera puede reproducir el corpus desde cero con `npm run fetch-syllabus && npm run import-hsk && npm run import-syllabus`.
 
 ## Lo que este plan deja explícitamente sin resolver
 
-- **Glosa española del vocabulario nuevo.** El corpus pasa de 1010 a 1011 entradas con índice de sentido, pero las glosas curadas cubren solo lo que ya había. `resolveGloss` cae al inglés donde falte, y el informe de cobertura cuenta cuántas entradas tienen español. Completarlo es contenido editorial, no importación.
+- **Glosa española del vocabulario nuevo.** Las glosas de los cinco sentidos recuperados por override ya están curadas, pero el resto del corpus todavía puede tener entradas sin español. `resolveGloss` cae al inglés donde falte, y el informe de cobertura cuenta cuántas entradas tienen español. Completarlo es contenido editorial, no importación.
 - **Explicaciones y ejemplos de gramática.** El sílabo enumera los puntos; no los explica. `explanation` y `examples` quedan vacíos hasta el Plan 7.
 - **Temas y tareas comunicativas.** El PDF oficial los describe en prosa, no en lista; extraerlos requiere trabajo editorial sobre el documento. La matriz de cobertura cubre por ahora vocabulario, caracteres y gramática.
 - **Niveles 4 a 9.** Fuera del alcance del producto.

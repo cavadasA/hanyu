@@ -24,6 +24,12 @@ export function buildCoverageReport() {
   const characters = readSeed('hsk-characters.json');
   const grammar = readSeed('grammar-points.json');
   const unresolved = readSeed('unresolved-hsk-terms.json');
+  const senseOverrides = readSeed('sense-overrides.json');
+  const editorialOverrideKeys = new Set(
+    senseOverrides.map(
+      (entry) => `${entry.hanzi}#${entry.hsk_level}#${entry.sense_index ?? ''}`,
+    ),
+  );
 
   const vocabulary = {};
   const charactersByLevel = {};
@@ -37,11 +43,16 @@ export function buildCoverageReport() {
     const covered = official.filter((term) =>
       have.has(`${term.form}#${term.sense_index ?? ''}`),
     ).length;
+    const editorialOverrides = official.filter((term) =>
+      editorialOverrideKeys.has(`${term.form}#${level}#${term.sense_index ?? ''}`),
+    ).length;
 
     vocabulary[level] = {
       official: official.length,
       covered,
       unresolved: unresolvedForLevel.length,
+      editorial_overrides: editorialOverrides,
+      dictionary_covered: covered - editorialOverrides,
       with_spanish: corpus.filter((row) => row.meaning_es).length,
       percent: percent(covered, official.length),
     };
@@ -92,6 +103,7 @@ if (process.argv[1] && process.argv[1].endsWith('coverage-report.js')) {
     const g = report.grammar[level];
     console.log(
       `HSK ${level}: vocabulario ${v.covered}/${v.official} (${v.percent} %), ` +
+        `editorial ${v.editorial_overrides}, ` +
         `español ${v.with_spanish}/${v.covered}, ` +
         `caracteres ${c.covered}/${c.official} (${c.percent} %), ` +
         `gramática ${g.covered}/${g.official} (${g.percent} %)`,

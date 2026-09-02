@@ -15,9 +15,14 @@ describe('buildCoverageReport', () => {
     }
   });
 
-  it('expone los sentidos sin fuente de diccionario', () => {
-    expect(report.vocabulary[2].unresolved).toBe(2);
-    expect(report.vocabulary[3].unresolved).toBe(3);
+  it('no deja sentidos sin fuente de diccionario sin resolver', () => {
+    expect(report.vocabulary[2].unresolved).toBe(0);
+    expect(report.vocabulary[3].unresolved).toBe(0);
+  });
+
+  it('separa la cobertura editorial de la cobertura del diccionario', () => {
+    expect(report.vocabulary[2].editorial_overrides).toBe(3);
+    expect(report.vocabulary[3].editorial_overrides).toBe(3);
   });
 
   it('cubre el 100 % de los caracteres oficiales', () => {

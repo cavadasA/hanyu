@@ -17,6 +17,7 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { parseDictionaryEntry, selectReading } from './lib/cedict-html.js';
 import { dedupeOfficialTerms, loadOfficialWords } from './lib/official-terms.js';
+import { selectSenseSource } from './lib/sense-overrides.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
@@ -81,6 +82,16 @@ const curatedSpanish = new Map(
   ]),
 );
 
+// CC-CEDICT no siempre separa en filas distintas los sentidos que el sílabo
+// distingue por índice. Estas excepciones editoriales son explícitas y
+// versionadas: nunca se elige silenciosamente otra acepción del diccionario.
+const senseOverrides = new Map(
+  JSON.parse(readFileSync(join(seedDir, 'sense-overrides.json'), 'utf-8')).map((entry) => [
+    `${entry.hanzi}|${entry.hsk_level}|${entry.sense_index ?? ''}`,
+    entry,
+  ]),
+);
+
 const unresolvedTerms = [];
 
 for (const level of [1, 2, 3]) {
@@ -130,13 +141,17 @@ for (const level of [1, 2, 3]) {
   }
 
   for (const term of official.terms) {
+    const override = senseOverrides.get(
+      `${term.form}|${level}|${term.sense_index ?? ''}`,
+    );
+
     // Se prueban todas las variantes: el mazo puede listar la forma corta
     // (没) donde la lista oficial escribe la larga (没（有）).
     const candidates = term.variants
       .map((variant) => enriched.get(variant))
       .find((found) => found && found.length > 0);
 
-    if (!candidates) {
+    if (!candidates && !override) {
       unresolvedTerms.push({
         hsk_level: level,
         form: term.form,
@@ -150,8 +165,8 @@ for (const level of [1, 2, 3]) {
     // de sentido oficial las ordena: el sentido n usa la fila n si existe.
     // Si el mazo no tiene esa fila, el término queda explícitamente sin
     // resolver; reutilizar la última acepción mezcla sentidos en silencio.
-    const source = candidates[(term.sense_index ?? 1) - 1];
-    if (!source) {
+    const source = selectSenseSource(candidates, term.sense_index, override);
+    if (!source && !override) {
       unresolvedTerms.push({
         hsk_level: level,
         form: term.form,
@@ -162,10 +177,10 @@ for (const level of [1, 2, 3]) {
       continue;
     }
 
-    const entry = parseDictionaryEntry(source.html);
-    const sense = selectReading(entry, source.pinyin);
+    const entry = source ? parseDictionaryEntry(source.html) : null;
+    const sense = source && entry ? selectReading(entry, source.pinyin) : null;
 
-    if (!sense) {
+    if (!sense && !override) {
       unresolvedTerms.push({
         hsk_level: level,
         form: term.form,
@@ -177,20 +192,24 @@ for (const level of [1, 2, 3]) {
     }
 
     const senseKey = `${term.sense_index ?? ''}`;
-    const key = `${term.form}|${normalizeSenseKey(source.pinyin)}|${senseKey}`;
+    const pinyin = override?.pinyin ?? source?.pinyin;
+    const key = `${term.form}|${normalizeSenseKey(pinyin)}|${senseKey}`;
 
     words.push({
       hanzi: term.form,
       sense_index: term.sense_index,
       variants: term.variants,
       traditional:
-        entry.traditional && entry.traditional !== term.form ? entry.traditional : null,
-      pinyin: source.pinyin,
-      meaning_en: sense.meanings.slice(0, 5).join('; '),
-      meaning_es: curatedSpanish.get(key) ?? spanish.get(key) ?? null,
-      classifier: sense.classifiers.length > 0 ? sense.classifiers.join('、') : null,
-      pos: source.pos,
-      frequency: source.frequency,
+        override?.traditional ??
+        (entry?.traditional && entry.traditional !== term.form ? entry.traditional : null),
+      pinyin,
+      meaning_en: override?.meaning_en ?? sense.meanings.slice(0, 5).join('; '),
+      meaning_es: override?.meaning_es ?? curatedSpanish.get(key) ?? spanish.get(key) ?? null,
+      classifier:
+        override?.classifier ??
+        (sense?.classifiers.length > 0 ? sense.classifiers.join('、') : null),
+      pos: override?.pos ?? source?.pos ?? null,
+      frequency: override?.frequency ?? source?.frequency ?? 0,
     });
   }
 
