@@ -42,6 +42,14 @@ describe('parseDictionaryEntry', () => {
     expect(di.classifiers).toEqual(['片']);
     expect(di.meanings).toEqual(['earth', 'ground', 'field']);
   });
+
+  it('saca clasificadores incrustados dentro de una glosa', () => {
+    const inline = `<span class="pinYinWrapper"><span>māo</span></span> <ul> <li>cat (CL:隻|只[zhi1],條|条[tiao2])</li> </ul>`;
+    const entry = parseDictionaryEntry(inline);
+
+    expect(entry.readings[0].classifiers).toEqual(['只', '条']);
+    expect(entry.readings[0].meanings).toEqual(['cat']);
+  });
 });
 
 describe('selectReading', () => {

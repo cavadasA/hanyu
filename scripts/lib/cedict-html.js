@@ -10,7 +10,7 @@ import { normalizePinyin } from '../../packages/domain/src/pinyin.ts';
 const SENSE_BLOCK = /<span class="pinYinWrapper">([\s\S]*?)<\/span>\s*<ul>([\s\S]*?)<\/ul>/g;
 const TRADITIONAL = /<span id="char-trad-id">[\s\S]*?<span[^>]*>([^<]*)<\/span>/;
 const LIST_ITEM = /<li>([\s\S]*?)<\/li>/g;
-const CLASSIFIER_ENTRY = /^CL:(.+)$/;
+const CLASSIFIER = /\bCL:([^);]+?)(?=\)|;|$)/g;
 const CROSS_REFERENCE = /^(old )?variant of |^used in /;
 
 function stripTags(html) {
@@ -25,6 +25,22 @@ function parseClassifiers(raw) {
     .map((entry) => entry.replace(/\[[^\]]*\]/g, '').trim())
     .map((entry) => entry.split('|').pop().trim())
     .filter(Boolean);
+}
+
+function removeClassifiers(text) {
+  const classifiers = [];
+  const cleaned = text
+    .replace(CLASSIFIER, (_, raw) => {
+      classifiers.push(...parseClassifiers(raw));
+      return '';
+    })
+    .replace(/\(\s*\)/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s+([;,])/g, '$1')
+    .replace(/^\s*[;,]\s*/, '')
+    .trim();
+
+  return { cleaned, classifiers };
 }
 
 export function parseDictionaryEntry(html) {
@@ -49,17 +65,18 @@ export function parseDictionaryEntry(html) {
         continue;
       }
 
-      const classifier = CLASSIFIER_ENTRY.exec(text);
-      if (classifier) {
-        classifiers.push(...parseClassifiers(classifier[1]));
+      const withoutClassifiers = removeClassifiers(text);
+      classifiers.push(...withoutClassifiers.classifiers);
+
+      if (!withoutClassifiers.cleaned) {
         continue;
       }
 
-      if (CROSS_REFERENCE.test(text)) {
+      if (CROSS_REFERENCE.test(withoutClassifiers.cleaned)) {
         continue;
       }
 
-      meanings.push(text);
+      meanings.push(withoutClassifiers.cleaned);
     }
 
     if (meanings.length > 0) {
