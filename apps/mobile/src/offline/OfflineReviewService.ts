@@ -22,6 +22,11 @@ export interface OfflineReviewServiceDeps {
   now: () => Date;
   /** Injected id generator – production default: expo-crypto randomUUID. */
   uuid: () => string;
+  /**
+   * Revierte en servidor una valoración ya sincronizada. Inyectada como el
+   * resto de la E/S para que el servicio siga siendo probable en Node puro.
+   */
+  revertReviewOnline: (reviewId: string) => Promise<{ outcome: string; card: VersionedCard }>;
 }
 
 export class OfflineReviewService {
@@ -29,6 +34,9 @@ export class OfflineReviewService {
   private readonly getDueCardsOnlineImpl: (limit: number) => Promise<{ cards: unknown[] }>;
   private readonly now: () => Date;
   private readonly uuid: () => string;
+  private readonly revertReviewOnline: (
+    reviewId: string,
+  ) => Promise<{ outcome: string; card: VersionedCard }>;
   /** Per-card-id synchronous double-tap guard. */
   private readonly inFlight = new Set<string>();
 
@@ -37,6 +45,7 @@ export class OfflineReviewService {
     this.getDueCardsOnlineImpl = deps.getDueCardsOnline;
     this.now = deps.now;
     this.uuid = deps.uuid;
+    this.revertReviewOnline = deps.revertReviewOnline;
   }
 
   /**
@@ -98,7 +107,7 @@ export class OfflineReviewService {
     card: VersionedCard,
     quality: number,
     timeMs: number | null,
-  ): Promise<VersionedCard> {
+  ): Promise<{ card: VersionedCard; reviewId: string }> {
     // Synchronous double-tap guard — checked before any await.
     if (this.inFlight.has(card.id)) {
       throw new Error('A rating for this card is already in progress');
@@ -136,11 +145,44 @@ export class OfflineReviewService {
       // Do not return / mutate screen state until the store write succeeds.
       // If enqueueAndProject throws, we let the error propagate unchanged.
       await this.store.enqueueAndProject(event, projected);
-      return projected;
+      return { card: projected, reviewId: event.review_id };
     } finally {
       // Always release the guard — whether the write succeeded or threw.
       this.inFlight.delete(card.id);
     }
+  }
+
+  /**
+   * Deshace una valoración.
+   *
+   * Si el evento sigue en la cola local, se descarta y la tarjeta se reproyecta
+   * sin él: no hace falta red y el servidor nunca llegó a verlo. Si ya se
+   * sincronizó, hay que revertirlo en el servidor, porque srs_cards, review_log
+   * y user_stats ya lo incorporaron.
+   */
+  async undoRating(reviewId: string): Promise<VersionedCard> {
+    const local = await this.store.discardPending(reviewId);
+    if (local) {
+      return local;
+    }
+
+    let result: { outcome: string; card: VersionedCard };
+    try {
+      result = await this.revertReviewOnline(reviewId);
+    } catch {
+      // Sin conexión no se puede deshacer algo que el servidor ya tiene. Se
+      // dice, en vez de fingir que se ha deshecho.
+      throw new Error(
+        'This rating was already synced and undoing it needs a connection. Try again when you are online.',
+      );
+    }
+
+    if (result.outcome !== 'reverted') {
+      throw new Error('This card was reviewed again after that rating, so it can no longer be undone.');
+    }
+
+    await this.store.cacheCards([result.card]);
+    return result.card;
   }
 
   async pendingCount(): Promise<number> {

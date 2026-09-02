@@ -41,6 +41,7 @@ function makeFakeStore(overrides: Partial<ReviewStore> = {}): jest.Mocked<Review
     acknowledge: jest.fn().mockResolvedValue(undefined),
     rebase: jest.fn().mockResolvedValue(undefined),
     markPermanentError: jest.fn().mockResolvedValue(undefined),
+    discardPending: jest.fn().mockResolvedValue(null),
     pendingCount: jest.fn().mockResolvedValue(0),
     close: jest.fn().mockResolvedValue(undefined),
     destroy: jest.fn().mockResolvedValue(undefined),
@@ -53,6 +54,7 @@ function makeService(overrides: {
   getDueCardsOnline?: jest.Mock;
   now?: jest.Mock;
   uuid?: jest.Mock;
+  revertReviewOnline?: jest.Mock;
 } = {}) {
   return new OfflineReviewService({
     store: overrides.store ?? makeFakeStore(),
@@ -61,6 +63,9 @@ function makeService(overrides: {
     now:
       overrides.now ?? jest.fn().mockReturnValue(new Date('2026-07-31T10:00:00.000Z')),
     uuid: overrides.uuid ?? jest.fn().mockReturnValue('default-uuid'),
+    revertReviewOnline:
+      overrides.revertReviewOnline ??
+      jest.fn().mockResolvedValue({ outcome: 'reverted', card: makeCard() }),
   });
 }
 
@@ -212,15 +217,14 @@ describe('loadDueCards – version-validation gotcha', () => {
 // ---------------------------------------------------------------------------
 
 describe('rateCard – rating while offline', () => {
-  test('succeeds and returns a projected VersionedCard without any online fetch', async () => {
+  test('returns the review id it generated', async () => {
     const card = makeCard();
-    const service = makeService();
+    const service = makeService({ uuid: jest.fn().mockReturnValue('r1') });
 
     const result = await service.rateCard(card, 4, 1500);
 
-    expect(result).toBeDefined();
-    expect(result.id).toBe(card.id);
-    expect(result.interval_days).toBeGreaterThan(0);
+    expect(result.reviewId).toBe('r1');
+    expect(result.card.repetitions).toBe(card.repetitions + 1);
   });
 
   test('does not call getDueCardsOnline during rating', async () => {
@@ -239,9 +243,56 @@ describe('rateCard – rating while offline', () => {
 
     const result = await service.rateCard(card, 4, null);
 
-    expect(result.interval).toBe(result.interval_days);
-    expect(result.next_review).toBe(result.next_review_at);
-    expect(result.last_review).toBe(result.last_reviewed_at);
+    expect(result.card.interval).toBe(result.card.interval_days);
+    expect(result.card.next_review).toBe(result.card.next_review_at);
+    expect(result.card.last_review).toBe(result.card.last_reviewed_at);
+  });
+});
+
+describe('undoRating', () => {
+  test('discards a still-pending review without touching the network', async () => {
+    const card = makeCard();
+    const revertReviewOnline = jest.fn();
+    const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(card) });
+    const service = makeService({ store, uuid: jest.fn().mockReturnValue('r1'), revertReviewOnline });
+
+    const { reviewId } = await service.rateCard(card, 4, 1000);
+    const restored = await service.undoRating(reviewId);
+
+    expect(restored.repetitions).toBe(card.repetitions);
+    expect(revertReviewOnline).not.toHaveBeenCalled();
+  });
+
+  test('reverts on the server when the review was already synced', async () => {
+    const card = makeCard();
+    const reverted = { ...card, version: card.version + 2 };
+    const revertReviewOnline = jest
+      .fn()
+      .mockResolvedValue({ outcome: 'reverted', card: reverted });
+    const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(null) });
+    const service = makeService({ store, revertReviewOnline });
+
+    const restored = await service.undoRating('r1');
+
+    expect(revertReviewOnline).toHaveBeenCalledWith('r1');
+    expect(restored.version).toBe(card.version + 2);
+  });
+
+  test('refuses when the card moved on after the review', async () => {
+    const card = makeCard();
+    const revertReviewOnline = jest.fn().mockResolvedValue({ outcome: 'conflict', card });
+    const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(null) });
+    const service = makeService({ store, revertReviewOnline });
+
+    await expect(service.undoRating('r1')).rejects.toThrow(/reviewed again/i);
+  });
+
+  test('says plainly when an already-synced review has no connection', async () => {
+    const revertReviewOnline = jest.fn().mockRejectedValue(new Error('Network request failed'));
+    const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(null) });
+    const service = makeService({ store, revertReviewOnline });
+
+    await expect(service.undoRating('r1')).rejects.toThrow(/already synced.*connection/i);
   });
 });
 
