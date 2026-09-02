@@ -39,6 +39,8 @@ export type {
   ReadingSummary,
   ReadingToken,
   ReviewEvent,
+  RevertOutcome,
+  RevertReviewResult,
   ReviewResult,
   ReviewSyncResult,
   StarterDeckResult,

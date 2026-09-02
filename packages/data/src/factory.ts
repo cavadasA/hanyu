@@ -25,6 +25,7 @@ import {
   getCard,
   getDueCards,
   getFlashcardStats,
+  revertReview,
   reviewCard,
   reviewCardEvent,
 } from './repositories/flashcards';
@@ -86,6 +87,7 @@ export function createHanyuData(config: HanyuDataConfig) {
         reviewCard(id, quality, timeMs, client),
       reviewCardEvent: (event: Parameters<typeof reviewCardEvent>[0]) =>
         reviewCardEvent(event, client),
+      revertReview: (reviewId: string) => revertReview(reviewId, client),
       addCard: (wordId: number | string, deckId?: string) => addCard(wordId, client, deckId),
       createStarterDeck: (input: { strategy?: string; limit?: number } = {}) =>
         createStarterDeck(input, client),

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { addCard, getDueCards } from './flashcards';
+import { addCard, getDueCards, revertReview } from './flashcards';
 
 function clientFor(options: { rpcRows?: unknown[]; wordRows?: unknown[]; deckSize?: number } = {}) {
   const rpc = vi
@@ -33,6 +33,48 @@ function clientFor(options: { rpcRows?: unknown[]; wordRows?: unknown[]; deckSiz
     }
 
     return { select: vi.fn(() => ({ data: [], error: null })) };
+  });
+
+  return {
+    rpc,
+    from,
+    auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
+  } as never;
+}
+
+const revertCardRow = {
+  id: 'card-1',
+  user_id: 'u1',
+  word_id: 7,
+  ease_factor: 2.5,
+  interval_days: 1,
+  repetitions: 0,
+  next_review_at: '2026-09-02T00:00:00.000Z',
+  last_reviewed_at: null,
+  status: 'new',
+  version: 3,
+};
+
+function revertClient(outcome: string) {
+  const rpc = vi.fn().mockResolvedValue({
+    data: [{ outcome, card_id: revertCardRow.id, version: revertCardRow.version }],
+    error: null,
+  });
+
+  const from = vi.fn((table: string) => {
+    if (table === 'srs_cards') {
+      return {
+        select: vi.fn(() => ({
+          eq: vi.fn(() => ({
+            eq: vi.fn(() => ({
+              maybeSingle: vi.fn().mockResolvedValue({ data: revertCardRow, error: null }),
+            })),
+          })),
+        })),
+      };
+    }
+
+    return { select: vi.fn() };
   });
 
   return {
@@ -91,6 +133,24 @@ describe('getDueCards', () => {
       p_deck_id: 'd1',
       p_due_only: false,
     });
+  });
+});
+
+describe('revertReview', () => {
+  it('returns the outcome and the refreshed card', async () => {
+    const client = revertClient('reverted');
+
+    const result = await revertReview('r1', client);
+
+    expect((client as any).rpc).toHaveBeenCalledWith('revert_review', { p_review_id: 'r1' });
+    expect(result.outcome).toBe('reverted');
+    expect(result.card.id).toBe('card-1');
+  });
+
+  it('surfaces a conflict without pretending it worked', async () => {
+    const result = await revertReview('r1', revertClient('conflict'));
+
+    expect(result.outcome).toBe('conflict');
   });
 });
 

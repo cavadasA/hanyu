@@ -300,6 +300,13 @@ export interface ReviewSyncResult {
   card: VersionedCard;
 }
 
+export type RevertOutcome = 'reverted' | 'conflict' | 'not_found' | 'already_reverted';
+
+export interface RevertReviewResult {
+  outcome: RevertOutcome;
+  card: VersionedCard;
+}
+
 export interface StarterDeckResult {
   inserted?: number;
   deck_size?: number;

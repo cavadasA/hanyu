@@ -122,10 +122,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
           getDueCardsOnline: (limit) => getData().flashcards.getDueCards(limit),
           now: () => new Date(),
           uuid: () => randomUUID(),
-          // Temporary wiring for Task 2; replace with flashcards.revertReview in Task 4.
-          revertReviewOnline: async () => {
-            throw new Error('not implemented');
-          },
+          revertReviewOnline: (reviewId: string) => getData().flashcards.revertReview(reviewId),
         });
         syncEngineRef.current = new ReviewSyncEngine({
           store: store as ReviewStore,

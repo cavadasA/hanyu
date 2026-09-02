@@ -1,6 +1,12 @@
 import type { HanyuClient } from '../client';
 import type { Database } from '../database.types';
-import type { ReviewEvent, ReviewSyncResult, VersionedCard } from '../types';
+import type {
+  RevertReviewResult,
+  RevertOutcome,
+  ReviewEvent,
+  ReviewSyncResult,
+  VersionedCard,
+} from '../types';
 import { getSettings } from './settings';
 import {
   callRpcVariants,
@@ -214,6 +220,32 @@ export async function reviewCard(id: string, quality: number, timeMs: number | n
   ]);
 
   return normalizeReviewResult(result, id);
+}
+
+/**
+ * Revierte en servidor una valoración ya sincronizada.
+ *
+ * Devuelve el resultado en vez de lanzar cuando la reversión no se aplica:
+ * 'conflict' y 'already_reverted' son respuestas legítimas del servidor que la
+ * interfaz tiene que poder explicar, no fallos.
+ */
+export async function revertReview(
+  reviewId: string,
+  client: HanyuClient,
+): Promise<RevertReviewResult> {
+  const { data, error } = await (client.rpc as any)('revert_review', {
+    p_review_id: reviewId,
+  });
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to revert review');
+  }
+
+  const row = Array.isArray(data) ? data[0] : data;
+  const outcome = String((row as any)?.outcome ?? 'not_found') as RevertOutcome;
+  const card = await getCard(String((row as any)?.card_id ?? ''), client);
+
+  return { outcome, card };
 }
 
 export async function addCard(
