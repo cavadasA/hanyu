@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'expo-router';
 import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { toUserMessage, type DeckSummary, type HskLevel, type Word } from '@hanyu/data';
+import { resolveGloss, toUserMessage, type DeckSummary, type HskLevel, type Word } from '@hanyu/data';
 import { getData } from '../lib/data';
+import { useSupportLanguage } from '../lib/useSupportLanguage';
 import { useWords } from '../words/useWords';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
@@ -22,6 +23,7 @@ const LEVELS: Array<{ label: string; value: HskLevel | undefined }> = [
 
 export function WordsScreen() {
   const { colors } = useTheme();
+  const supportLanguage = useSupportLanguage();
   const router = useRouter();
   const words = useWords();
   const flashcards = useRef(getData().flashcards);
@@ -176,7 +178,9 @@ export function WordsScreen() {
               </View>
               <Badge label={`HSK ${word.hsk_level}`} />
             </View>
-            <Text style={[styles.meaning, { color: colors.text }]}>{word.meaning_en}</Text>
+            <Text style={[styles.meaning, { color: colors.text }]}>
+              {resolveGloss(word, supportLanguage)}
+            </Text>
             {word.pos ? <Badge label={word.pos} /> : null}
             <Pressable
               accessibilityRole="button"

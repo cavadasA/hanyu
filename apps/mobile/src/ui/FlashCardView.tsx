@@ -10,8 +10,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import type { DueCard } from '@hanyu/data';
+import { resolveGloss, type DueCard } from '@hanyu/data';
 import { useSpeech } from '../audio/useSpeech';
+import { useSupportLanguage } from '../lib/useSupportLanguage';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 import { AudioButton } from './AudioButton';
@@ -63,6 +64,7 @@ export function FlashCardView({
   preview = false,
 }: FlashCardViewProps) {
   const { colors } = useTheme();
+  const supportLanguage = useSupportLanguage();
   const { speak, stop } = useSpeech();
   const entrance = useRef(new Animated.Value(MOTION_DISABLED ? 1 : 0)).current;
   const reveal = useRef(new Animated.Value(0)).current;
@@ -234,7 +236,7 @@ export function FlashCardView({
           </View>
           <View style={styles.face}>
             <Text style={[styles.hanzi, { color: colors.text }]}>
-              {mode === 'recall' ? card.meaning_en : card.hanzi}
+              {mode === 'recall' ? resolveGloss(card, supportLanguage) : card.hanzi}
             </Text>
           </View>
         </Card>
@@ -285,7 +287,9 @@ export function FlashCardView({
           ) : null}
 
           {mode === 'recall' && !revealed ? (
-            <Text style={[styles.prompt, { color: colors.text }]}>{card.meaning_en}</Text>
+            <Text style={[styles.prompt, { color: colors.text }]}>
+              {resolveGloss(card, supportLanguage)}
+            </Text>
           ) : null}
 
           {mode === 'listening' && !revealed ? (
@@ -311,7 +315,9 @@ export function FlashCardView({
             >
               <Text style={[styles.hanzi, { color: colors.text }]}>{card.hanzi}</Text>
               <Text style={[styles.pinyin, { color: colors.gold }]}>{card.pinyin}</Text>
-              <Text style={[styles.meaning, { color: colors.text }]}>{card.meaning_en}</Text>
+              <Text style={[styles.meaning, { color: colors.text }]}>
+                {resolveGloss(card, supportLanguage)}
+              </Text>
             </Animated.View>
           ) : null}
         </View>

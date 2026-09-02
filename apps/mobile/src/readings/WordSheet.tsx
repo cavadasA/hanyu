@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { toUserMessage, type Word } from '@hanyu/data';
+import { resolveGloss, toUserMessage, type Word } from '@hanyu/data';
 import { getData } from '../lib/data';
+import { useSupportLanguage } from '../lib/useSupportLanguage';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 import { Badge } from '../ui/Badge';
@@ -16,6 +17,7 @@ interface Props {
 
 export function WordSheet({ word, text, onClose }: Props) {
   const { colors } = useTheme();
+  const supportLanguage = useSupportLanguage();
   const flashcards = useRef(getData().flashcards);
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(Boolean(word?.in_srs));
@@ -54,10 +56,14 @@ export function WordSheet({ word, text, onClose }: Props) {
       {word ? (
         <>
           <Text style={[styles.pinyin, { color: colors.text }]}>{word.pinyin}</Text>
-          <Text style={[styles.meaning, { color: colors.textMuted }]}>{word.meaning_en}</Text>
+          <Text style={[styles.meaning, { color: colors.textMuted }]}>
+            {resolveGloss(word, supportLanguage)}
+          </Text>
           <View style={styles.badges}>
             <Badge label={`HSK ${word.hsk_level}`} />
             {word.pos ? <Badge label={word.pos} /> : null}
+            {word.traditional ? <Badge label={`繁 ${word.traditional}`} /> : null}
+            {word.classifier ? <Badge label={`量 ${word.classifier}`} /> : null}
           </View>
           <Button
             label={added ? 'Added' : adding ? 'Adding...' : 'Add to Cards'}

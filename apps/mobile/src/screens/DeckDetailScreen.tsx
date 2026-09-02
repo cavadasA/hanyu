@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { toUserMessage, type Deck } from '@hanyu/data';
+import { resolveGloss, toUserMessage, type Deck } from '@hanyu/data';
 import { getData } from '../lib/data';
+import { useSupportLanguage } from '../lib/useSupportLanguage';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 import { Button } from '../ui/Button';
@@ -14,8 +15,11 @@ import { Screen } from '../ui/Screen';
 interface DeckWord {
   word_id: number;
   hanzi: string;
+  traditional: string | null;
   pinyin: string | null;
   meaning_en: string | null;
+  meaning_es: string | null;
+  classifier: string | null;
   hsk_level: number | null;
 }
 
@@ -23,6 +27,7 @@ export function DeckDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const { colors } = useTheme();
+  const supportLanguage = useSupportLanguage();
   const [deck, setDeck] = useState<Deck | null>(null);
   const [words, setWords] = useState<DeckWord[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -178,7 +183,9 @@ export function DeckDetailScreen() {
                   <View style={styles.wordCopy}>
                     <Text style={[styles.hanzi, { color: colors.text }]}>{word.hanzi}</Text>
                     <Text style={[styles.pinyin, { color: colors.textMuted }]}>{word.pinyin}</Text>
-                    <Text style={[styles.meaning, { color: colors.text }]}>{word.meaning_en}</Text>
+                    <Text style={[styles.meaning, { color: colors.text }]}>
+                      {resolveGloss(word, supportLanguage)}
+                    </Text>
                   </View>
                   <Pressable
                     accessibilityRole="button"
