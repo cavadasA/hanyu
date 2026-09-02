@@ -6,7 +6,6 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { normalizePinyin } from '@hanyu/domain';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
@@ -36,6 +35,10 @@ function groupByHanzi(rows) {
   return groups;
 }
 
+function normalizeReadingIdentity(input) {
+  return input.normalize('NFC').toLowerCase().replace(/[\s'’·-]/g, '');
+}
+
 describe('contrato del corpus', () => {
   const rows = loadCorpus();
 
@@ -52,7 +55,10 @@ describe('contrato del corpus', () => {
           const a = list[i];
           const b = list[j];
 
-          if (normalizePinyin(a.pinyin) === normalizePinyin(b.pinyin)) {
+          if (
+            normalizeReadingIdentity(a.pinyin) ===
+            normalizeReadingIdentity(b.pinyin)
+          ) {
             continue;
           }
 
@@ -86,7 +92,9 @@ describe('contrato del corpus', () => {
     const repeated = [];
 
     for (const [hanzi, list] of groupByHanzi(rows)) {
-      const readings = new Set(list.map((row) => normalizePinyin(row.pinyin)));
+      const readings = new Set(
+        list.map((row) => normalizeReadingIdentity(row.pinyin)),
+      );
       if (list.length > 1 && readings.size === 1) {
         repeated.push(hanzi);
       }
