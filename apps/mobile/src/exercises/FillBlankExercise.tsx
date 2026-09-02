@@ -20,18 +20,21 @@ export function FillBlankExercise({
       <TextInput
         placeholder="Type your answer"
         placeholderTextColor={colors.textMuted}
-        value={typeof value === 'string' ? value : ''}
+        value={value.kind === 'fill_blank' ? value.text : ''}
         editable={!disabled}
-        onChangeText={onChange}
+        onChangeText={(text) => onChange({ kind: 'fill_blank', text })}
         style={[styles.input, { color: colors.text, borderColor: colors.border }]}
       />
       {prompt.options?.map(option => (
         <Pressable
           key={option}
           accessibilityRole="button"
-          accessibilityState={{ selected: value === option, disabled }}
+          accessibilityState={{
+            selected: value.kind === 'fill_blank' && value.text === option,
+            disabled,
+          }}
           disabled={disabled}
-          onPress={() => onChange(option)}
+          onPress={() => onChange({ kind: 'fill_blank', text: option })}
           style={[styles.option, { borderColor: colors.border }]}
         >
           <Text style={{ color: colors.text }}>{option}</Text>

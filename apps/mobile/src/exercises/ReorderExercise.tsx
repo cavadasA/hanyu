@@ -13,7 +13,7 @@ export function ReorderExercise({
   onChange,
 }: ExerciseRendererProps<Prompt>) {
   const { colors } = useTheme();
-  const ordered = Array.isArray(value) ? value.map(String) : [];
+  const ordered = value.kind === 'reorder' ? value.tokens : [];
   const available = prompt.tokens.filter(token => !ordered.includes(token));
 
   return (
@@ -26,7 +26,12 @@ export function ReorderExercise({
             accessibilityRole="button"
             accessibilityLabel={`Remove ${token}`}
             disabled={disabled}
-            onPress={() => onChange(ordered.filter((_, itemIndex) => itemIndex !== index))}
+            onPress={() =>
+              onChange({
+                kind: 'reorder',
+                tokens: ordered.filter((_, itemIndex) => itemIndex !== index),
+              })
+            }
             style={[styles.token, { borderColor: colors.vermilion }]}
           >
             <Text style={{ color: colors.text }}>{token}</Text>
@@ -40,7 +45,7 @@ export function ReorderExercise({
             accessibilityRole="button"
             accessibilityLabel={`Add ${token}`}
             disabled={disabled}
-            onPress={() => onChange([...ordered, token])}
+            onPress={() => onChange({ kind: 'reorder', tokens: [...ordered, token] })}
             style={[styles.token, { borderColor: colors.border }]}
           >
             <Text style={{ color: colors.text }}>{token}</Text>
@@ -51,7 +56,7 @@ export function ReorderExercise({
         accessibilityRole="button"
         accessibilityLabel="Clear order"
         disabled={disabled || ordered.length === 0}
-        onPress={() => onChange([])}
+        onPress={() => onChange({ kind: 'reorder', tokens: [] })}
       >
         <Text style={{ color: colors.vermilion }}>Clear order</Text>
       </Pressable>

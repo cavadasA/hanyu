@@ -21,13 +21,19 @@ export function MultipleChoiceExercise({
         <Pressable
           key={option}
           accessibilityRole="button"
-          accessibilityState={{ selected: value === option, disabled }}
+          accessibilityState={{
+            selected: value.kind === 'multiple_choice' && value.option === option,
+            disabled,
+          }}
           disabled={disabled}
-          onPress={() => onChange(option)}
+          onPress={() => onChange({ kind: 'multiple_choice', option })}
           style={[
             styles.option,
             {
-              borderColor: value === option ? colors.vermilion : colors.border,
+              borderColor:
+                value.kind === 'multiple_choice' && value.option === option
+                  ? colors.vermilion
+                  : colors.border,
               backgroundColor: colors.surface,
             },
           ]}

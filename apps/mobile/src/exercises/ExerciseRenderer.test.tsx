@@ -2,25 +2,7 @@ import { fireEvent, render } from '@testing-library/react-native';
 import type { Exercise } from '@hanyu/data';
 import { ExerciseRenderer } from './ExerciseRenderer';
 
-function exercise(prompt: Exercise['prompt']): Exercise {
-  const solution: Exercise['solution'] = (() => {
-    switch (prompt.kind) {
-      case 'fill_blank':
-        return { kind: 'fill_blank', accept: prompt.options?.slice(0, 1) ?? [] };
-      case 'multiple_choice':
-        return { kind: 'multiple_choice', correct: prompt.options[0] ?? '' };
-      case 'reorder':
-        return { kind: 'reorder', order: prompt.tokens };
-      case 'dictation':
-        return { kind: 'dictation', hanzi: prompt.audio_text, pinyin: null };
-      case 'matching':
-        return {
-          kind: 'matching',
-          pairs: Object.fromEntries(prompt.pairs.map(pair => [pair.left, pair.right])),
-        };
-    }
-  })();
-
+function exercise(prompt: Exercise['prompt'], solution: Exercise['solution']): Exercise {
   return {
     id: 'exercise-1',
     type: prompt.kind,
@@ -31,47 +13,73 @@ function exercise(prompt: Exercise['prompt']): Exercise {
   };
 }
 
+const MATCHING_PAIRS = [
+  { left: '学生', right: 'student' },
+  { left: '老师', right: 'teacher' },
+  { left: '朋友', right: 'friend' },
+  { left: '医生', right: 'doctor' },
+];
+
+function matchingExercise() {
+  return exercise(
+    { kind: 'matching', pairs: MATCHING_PAIRS },
+    {
+      kind: 'matching',
+      pairs: { 学生: 'student', 老师: 'teacher', 朋友: 'friend', 医生: 'doctor' },
+    },
+  );
+}
+
 describe('ExerciseRenderer', () => {
   it('emits a fill-blank draft', async () => {
     const onChange = jest.fn();
     const view = await render(
       <ExerciseRenderer
-        exercise={exercise({ kind: 'fill_blank', sentence: '我___汉语。' })}
-        value=""
+        exercise={exercise(
+          { kind: 'fill_blank', sentence: '我___汉语。' },
+          { kind: 'fill_blank', accept: ['学习'] },
+        )}
+        value={{ kind: 'fill_blank', text: '' }}
         disabled={false}
         onChange={onChange}
       />,
     );
 
     await fireEvent.changeText(view.getByPlaceholderText('Type your answer'), '学习');
-    expect(onChange).toHaveBeenLastCalledWith('学习');
+    expect(onChange).toHaveBeenLastCalledWith({ kind: 'fill_blank', text: '学习' });
   });
 
-  it('selects a multiple-choice answer', async () => {
+  it('emits a multiple-choice draft', async () => {
     const onChange = jest.fn();
     const view = await render(
       <ExerciseRenderer
-        exercise={exercise({
-          kind: 'multiple_choice',
-          question: 'What does 学习 mean?',
-          options: ['to study', 'to sleep'],
-        })}
-        value={null}
+        exercise={exercise(
+          {
+            kind: 'multiple_choice',
+            question: 'What does 学习 mean?',
+            options: ['to study', 'to sleep'],
+          },
+          { kind: 'multiple_choice', correct: 'to study' },
+        )}
+        value={{ kind: 'multiple_choice', option: '' }}
         disabled={false}
         onChange={onChange}
       />,
     );
 
     await fireEvent.press(view.getByRole('button', { name: 'to study' }));
-    expect(onChange).toHaveBeenLastCalledWith('to study');
+    expect(onChange).toHaveBeenLastCalledWith({ kind: 'multiple_choice', option: 'to study' });
   });
 
   it('renders dictation audio and emits typed text', async () => {
     const onChange = jest.fn();
     const view = await render(
       <ExerciseRenderer
-        exercise={exercise({ kind: 'dictation', audio_text: '你好' })}
-        value=""
+        exercise={exercise(
+          { kind: 'dictation', audio_text: '你好' },
+          { kind: 'dictation', hanzi: '你好', pinyin: null },
+        )}
+        value={{ kind: 'dictation', text: '' }}
         disabled={false}
         onChange={onChange}
       />,
@@ -79,47 +87,70 @@ describe('ExerciseRenderer', () => {
 
     expect(view.getByRole('button', { name: 'Play dictation' })).toBeTruthy();
     await fireEvent.changeText(view.getByPlaceholderText('Type what you hear'), '你好');
-    expect(onChange).toHaveBeenLastCalledWith('你好');
+    expect(onChange).toHaveBeenLastCalledWith({ kind: 'dictation', text: '你好' });
   });
 
-  it('builds and clears an accessible sentence order', async () => {
+  it('reorder emits a typed answer with the pieces in order', async () => {
     const onChange = jest.fn();
     const view = await render(
       <ExerciseRenderer
-        exercise={exercise({ kind: 'reorder', tokens: ['我', '学习', '中文'] })}
-        value={['我']}
+        exercise={exercise(
+          { kind: 'reorder', tokens: ['喝', '我', '茶', '喜欢'] },
+          { kind: 'reorder', order: ['我', '喜欢', '喝', '茶'] },
+        )}
+        value={{ kind: 'reorder', tokens: [] }}
         disabled={false}
         onChange={onChange}
       />,
     );
 
-    await fireEvent.press(view.getByRole('button', { name: 'Add 学习' }));
-    expect(onChange).toHaveBeenLastCalledWith(['我', '学习']);
+    await fireEvent.press(view.getByRole('button', { name: 'Add 我' }));
 
-    await fireEvent.press(view.getByRole('button', { name: 'Clear order' }));
-    expect(onChange).toHaveBeenLastCalledWith([]);
+    expect(onChange).toHaveBeenLastCalledWith({ kind: 'reorder', tokens: ['我'] });
   });
 
-  it('matches left and right values without drag-and-drop', async () => {
+  it('matching emits the chosen pair inside the map', async () => {
     const onChange = jest.fn();
     const view = await render(
       <ExerciseRenderer
-        exercise={exercise({
-          kind: 'matching',
-          pairs: [
-            { left: '你', right: 'you' },
-            { left: '好', right: 'good' },
-          ],
-        })}
-        value={{}}
+        exercise={matchingExercise()}
+        value={{ kind: 'matching', pairs: {} }}
         disabled={false}
         onChange={onChange}
       />,
     );
 
-    await fireEvent.press(view.getByRole('button', { name: 'Select 你' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Match you' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Select 学生' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Match student' }));
 
-    expect(onChange).toHaveBeenLastCalledWith({ 你: 'you' });
+    expect(onChange).toHaveBeenLastCalledWith({
+      kind: 'matching',
+      pairs: { 学生: 'student' },
+    });
+  });
+
+  it('matching does not line the right column up with the left one', async () => {
+    // Con las dos columnas en el mismo orden, el ejercicio se resuelve por
+    // posición sin leer nada.
+    const view = await render(
+      <ExerciseRenderer
+        exercise={matchingExercise()}
+        value={{ kind: 'matching', pairs: {} }}
+        disabled={false}
+        onChange={jest.fn()}
+      />,
+    );
+
+    const rendered = view
+      .getAllByRole('button')
+      .map((node) => String(node.props.accessibilityLabel ?? ''))
+      .filter((label) => label.startsWith('Match '))
+      .map((label) => label.slice('Match '.length));
+
+    const original = MATCHING_PAIRS.map((pair) => pair.right);
+
+    expect(rendered).toHaveLength(4);
+    expect(rendered).not.toEqual(original);
+    expect([...rendered].sort()).toEqual([...original].sort());
   });
 });

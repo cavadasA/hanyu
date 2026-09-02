@@ -21,9 +21,9 @@ export function DictationExercise({
       <TextInput
         placeholder="Type what you hear"
         placeholderTextColor={colors.textMuted}
-        value={typeof value === 'string' ? value : ''}
+        value={value.kind === 'dictation' ? value.text : ''}
         editable={!disabled}
-        onChangeText={onChange}
+        onChangeText={(text) => onChange({ kind: 'dictation', text })}
         autoCapitalize="none"
         style={[styles.input, { color: colors.text, borderColor: colors.border }]}
       />

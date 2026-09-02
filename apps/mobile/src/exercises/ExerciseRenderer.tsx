@@ -1,4 +1,4 @@
-import type { Exercise } from '@hanyu/data';
+import type { Exercise, ExerciseAnswer } from '@hanyu/data';
 import { DictationExercise } from './DictationExercise';
 import { FillBlankExercise } from './FillBlankExercise';
 import { MatchingExercise } from './MatchingExercise';
@@ -7,9 +7,9 @@ import { ReorderExercise } from './ReorderExercise';
 
 interface Props {
   exercise: Exercise;
-  value: unknown;
+  value: ExerciseAnswer;
   disabled: boolean;
-  onChange(value: unknown): void;
+  onChange(value: ExerciseAnswer): void;
 }
 
 export function ExerciseRenderer({ exercise, value, disabled, onChange }: Props) {
