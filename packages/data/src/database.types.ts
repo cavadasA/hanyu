@@ -557,6 +557,27 @@ export type Database = {
         }
         Relationships: []
       }
+      grammar_prerequisite: {
+        Row: {
+          code: string
+          hsk_level: number
+          requires_code: string
+          requires_level: number
+        }
+        Insert: {
+          code: string
+          hsk_level: number
+          requires_code: string
+          requires_level: number
+        }
+        Update: {
+          code?: string
+          hsk_level?: number
+          requires_code?: string
+          requires_level?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string

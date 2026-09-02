@@ -7,6 +7,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadOfficialCharacters } from './lib/official-terms.js';
 import { loadOfficialGrammar } from './lib/official-grammar.js';
+import { deriveGrammarPrerequisites } from './lib/grammar-prerequisites.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
@@ -34,3 +35,11 @@ writeFileSync(
   'utf8',
 );
 console.log(`gramática: ${grammar.length} -> grammar-points.json`);
+
+const prerequisites = deriveGrammarPrerequisites(grammar);
+writeFileSync(
+  join(seedDir, 'grammar-prerequisites.json'),
+  JSON.stringify(prerequisites, null, 2),
+  'utf8',
+);
+console.log(`prerrequisitos: ${prerequisites.length} -> grammar-prerequisites.json`);

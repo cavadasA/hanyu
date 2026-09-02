@@ -206,3 +206,17 @@ alter table public.exercise_template enable row level security;
 drop policy if exists exercise_template_select_authenticated on public.exercise_template;
 create policy exercise_template_select_authenticated on public.exercise_template
 for select using (auth.role() = 'authenticated');
+
+create table if not exists public.grammar_prerequisite (
+  hsk_level integer not null,
+  code text not null,
+  requires_level integer not null,
+  requires_code text not null,
+  primary key (hsk_level, code, requires_level, requires_code)
+);
+
+alter table public.grammar_prerequisite enable row level security;
+
+drop policy if exists grammar_prerequisite_select_authenticated on public.grammar_prerequisite;
+create policy grammar_prerequisite_select_authenticated on public.grammar_prerequisite
+for select using (auth.role() = 'authenticated');

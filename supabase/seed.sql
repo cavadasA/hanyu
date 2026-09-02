@@ -1846,6 +1846,22 @@ values
   (3, '7.1', '特殊表达法', '数的表达法', null, '数的表达法', null, null, '[]'::jsonb, array['概数表达法2：（1）用“大概”表示概数', '（2）相邻数词连用表示概数']::text[], 57)
 on conflict (hsk_level, code) do update set "group" = excluded."group", category = excluded.category, detail = excluded.detail, title = excluded.title, pattern = excluded.pattern, explanation = excluded.explanation, examples = excluded.examples, items = excluded.items, order_idx = excluded.order_idx;
 
+insert into public.grammar_prerequisite (hsk_level, code, requires_level, requires_code)
+values
+  (2, '5.4.4', 1, '4.6.1'),
+  (3, '5.3.5', 2, '5.4.4'),
+  (2, '6.3.1', 1, '5.3.1'),
+  (2, '6.3.2', 1, '5.3.2'),
+  (2, '6.3.3', 1, '5.3.3'),
+  (3, '6.2.5', 2, '6.3.3'),
+  (3, '6.2.3', 1, '5.3.4'),
+  (2, '6.3.7', 1, '5.3.5'),
+  (3, '5.3.1', 2, '5.4.1'),
+  (3, '5.3.2', 2, '5.4.2'),
+  (3, '6.2.4', 2, '6.3.4'),
+  (3, '6.2.6', 2, '6.3.5')
+on conflict do nothing;
+
 insert into public.generated_exercises (type, hsk_level, prompt, answer, source_model, created_by)
 values
   ('fill_blank', 1, '{"type":"fill_blank","sentence":"我___喝茶。","options":["喜欢","已经","可能","虽然"],"correct":"喜欢","explanation":"喜欢 (xǐhuān) means ''to like''."}'::jsonb, '"喜欢"'::jsonb, 'seed', null),

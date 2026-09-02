@@ -102,6 +102,17 @@ function buildGrammarRows() {
   ]);
 }
 
+function buildGrammarPrerequisiteRows() {
+  const prerequisites = readJson('grammar-prerequisites.json');
+
+  return prerequisites.map((prerequisite) => [
+    sqlInteger(prerequisite.hsk_level),
+    sqlString(prerequisite.code),
+    sqlInteger(prerequisite.requires_level),
+    sqlString(prerequisite.requires_code),
+  ]);
+}
+
 function buildCharacterRows() {
   return readJson('hsk-characters.json').map((entry) => [
     sqlString(entry.hanzi),
@@ -126,6 +137,7 @@ export function buildSeedSql() {
   const wordsRows = buildWordsRows();
   const characterRows = buildCharacterRows();
   const grammarRows = buildGrammarRows();
+  const grammarPrerequisiteRows = buildGrammarPrerequisiteRows();
   const exerciseRows = buildExerciseRows();
 
   const sql = [
@@ -165,6 +177,12 @@ export function buildSeedSql() {
       'on conflict (hsk_level, code) do update set "group" = excluded."group", category = excluded.category, detail = excluded.detail, title = excluded.title, pattern = excluded.pattern, explanation = excluded.explanation, examples = excluded.examples, items = excluded.items, order_idx = excluded.order_idx',
     ),
     buildInsert(
+      'grammar_prerequisite',
+      ['hsk_level', 'code', 'requires_level', 'requires_code'],
+      grammarPrerequisiteRows,
+      'on conflict do nothing',
+    ),
+    buildInsert(
       'generated_exercises',
       ['type', 'hsk_level', 'prompt', 'answer', 'source_model', 'created_by'],
       exerciseRows,
@@ -180,6 +198,7 @@ export function buildSeedSql() {
       words: wordsRows.length,
       characters: characterRows.length,
       grammar_points: grammarRows.length,
+      grammar_prerequisites: grammarPrerequisiteRows.length,
       generated_exercises: exerciseRows.length,
     },
   };
