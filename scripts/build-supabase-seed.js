@@ -59,9 +59,11 @@ function buildWordsRows() {
     for (const word of words) {
       rows.push([
         sqlString(word.hanzi),
+        sqlString(word.traditional ?? null),
         sqlString(word.pinyin),
         sqlString(word.meaning_en),
         sqlString(word.meaning_es ?? null),
+        sqlString(word.classifier ?? null),
         sqlInteger(level),
         sqlString(word.pos ?? null),
         sqlInteger(word.frequency),
@@ -111,9 +113,19 @@ export function buildSeedSql() {
     '',
     buildInsert(
       'words',
-      ['hanzi', 'pinyin', 'meaning_en', 'meaning_es', 'hsk_level', 'pos', 'frequency'],
+      [
+        'hanzi',
+        'traditional',
+        'pinyin',
+        'meaning_en',
+        'meaning_es',
+        'classifier',
+        'hsk_level',
+        'pos',
+        'frequency',
+      ],
       wordsRows,
-      'on conflict (hanzi, hsk_level) do update set pinyin = excluded.pinyin, meaning_en = excluded.meaning_en, meaning_es = excluded.meaning_es, pos = excluded.pos, frequency = excluded.frequency'
+      'on conflict (hanzi, hsk_level) do update set traditional = excluded.traditional, pinyin = excluded.pinyin, meaning_en = excluded.meaning_en, meaning_es = excluded.meaning_es, classifier = excluded.classifier, pos = excluded.pos, frequency = excluded.frequency',
     ),
     buildInsert(
       'grammar_points',
