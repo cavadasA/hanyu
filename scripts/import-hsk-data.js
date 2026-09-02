@@ -12,109 +12,16 @@
  *   2. Run: node scripts/import-hsk-data.js
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { parseDictionaryEntry, selectReading } from './lib/cedict-html.js';
+import { normalizePinyin } from '../packages/domain/src/pinyin.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
 const dataDir = join(rootDir, 'data');
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
-
-/**
- * Extract the best English meanings from the HTML dictionary column.
- *
- * CC-CEDICT structures entries with multiple <ul> blocks — one per
- * reading/pronunciation. The first block is often a surname or rare
- * reading (e.g. 也 Yě → "surname Ye"), while the second block holds
- * the common meaning (yě → "also; too"). The old logic blindly took
- * the first <ul> and produced "surname Bai" instead of "hundred".
- *
- * Now we score every <ul> block and pick the best one, penalising
- * surname-only / used-in / variant-of entries and rewarding blocks
- * with more detail. "variant of X" entries are stripped before
- * scoring — they are dictionary metadata, not learner meanings.
- */
-function extractMeanings(html) {
-  if (!html) return '';
-
-  // Patterns that are dictionary metadata, never useful as meanings
-  const isMeta = (s) =>
-    /^variant of /.test(s) ||
-    /^old variant of /.test(s);
-
-  // ── 1. Parse every <ul>…</ul> block, strip meta entries ─────
-  const ulRegex = /<ul>([\s\S]*?)<\/ul>/g;
-  const blocks = [];
-  let ulMatch;
-  while ((ulMatch = ulRegex.exec(html)) !== null) {
-    const meanings = [];
-    const liRegex = /<li>(.*?)<\/li>/g;
-    let liMatch;
-    while ((liMatch = liRegex.exec(ulMatch[1])) !== null) {
-      const text = liMatch[1]
-        .replace(/<[^>]*>/g, '')
-        .trim();
-      if (text && !isMeta(text)) meanings.push(text);
-    }
-    if (meanings.length > 0) blocks.push(meanings);
-  }
-
-  if (blocks.length === 0) return '';
-
-  // ── 2. Score each block ──────────────────────────────────────
-  function scoreBlock(meanings) {
-    if (meanings.length === 0) return -999;
-
-    let score = meanings.length * 10;        // more entries → primary
-    const first = meanings[0];
-
-    // Heavy penalties — these blocks are almost never what we want
-    if (/^surname [A-Z]/.test(first))       score -= 300;
-    if (/^used in /.test(first))            score -= 300;
-
-    // "abbr. for …" blocks are also wrong (e.g. 新 → "abbr. for Xinjiang")
-    // even when the block has multiple entries; the real meaning block
-    // will have a clean first entry like "new"
-    if (/^abbr\. for/.test(first))          score -= 200;
-
-    // Milder penalty when "surname" appears mixed with real content
-    // (e.g. "China; Chinese; surname Zhong" — still usable but not ideal)
-    if (first.includes('surname') && !/^surname [A-Z]/.test(first))
-      score -= 30;
-
-    return score;
-  }
-
-  // ── 3. Pick the winner ───────────────────────────────────────
-  let best = blocks[0];
-  let bestScore = scoreBlock(best);
-
-  for (let i = 1; i < blocks.length; i++) {
-    const s = scoreBlock(blocks[i]);
-    if (s > bestScore) {
-      bestScore = s;
-      best = blocks[i];
-    }
-  }
-
-  // ── 4. Clean up final output ─────────────────────────────────
-  // If the winning block still starts with a junk entry (can happen
-  // when there's only one block, like 家 where the first entry is
-  // "used in 傢伙"), skip it so we show actual meanings.
-  const final = [];
-  for (const m of best) {
-    // Skip entries that are just cross-references, not meanings
-    if (/^used in /.test(m)) continue;
-    final.push(m);
-    if (final.length >= 3) break;
-  }
-
-  // If filtering removed everything (shouldn't happen), fall back
-  if (final.length === 0) return best.slice(0, 3).join('; ');
-
-  return final.join('; ');
-}
 
 /**
  * Map Chinese POS abbreviations to English.
@@ -133,6 +40,27 @@ function mapPos(posRaw) {
   return POS_MAP[first] || posRaw;
 }
 
+/**
+ * Las glosas españolas se curan a mano y no vienen del fichero fuente. Al
+ * regenerar hay que arrastrarlas, o cada importación las destruiría. La clave
+ * es (hanzi, lectura normalizada) y no el índice de fila, porque el número y
+ * el orden de las filas puede cambiar entre importaciones.
+ */
+function loadExistingSpanish(outPath) {
+  if (!existsSync(outPath)) {
+    return new Map();
+  }
+
+  const existing = new Map();
+  for (const word of JSON.parse(readFileSync(outPath, 'utf-8'))) {
+    if (word.meaning_es) {
+      existing.set(`${word.hanzi}|${normalizePinyin(word.pinyin)}`, word.meaning_es);
+    }
+  }
+
+  return existing;
+}
+
 for (const level of [1, 2, 3]) {
   const filePath = join(dataDir, `HSK_Level_${level}.txt`);
 
@@ -145,28 +73,50 @@ for (const level of [1, 2, 3]) {
   const content = readFileSync(filePath, 'utf-8');
   const lines = content.trim().split('\n').filter((l) => l.trim());
 
+  const outPath = join(seedDir, `hsk${level}-words.json`);
+  const spanish = loadExistingSpanish(outPath);
+
   const words = [];
+  const unresolved = [];
+
   for (const line of lines) {
     const cols = line.split('\t');
     if (cols.length < 7) continue;
 
-    const [simplified, , pinyin, , , pos, freq, ...htmlParts] = cols;
+    const [simplified, , pinyinRaw, , , pos, freq, ...htmlParts] = cols;
     const html = htmlParts.join('\t'); // rejoin in case HTML had tabs
     const hanzi = simplified?.trim();
     if (!hanzi) continue;
 
+    const pinyin = pinyinRaw?.trim() || '';
+    const entry = parseDictionaryEntry(html);
+    const sense = selectReading(entry, pinyin);
+
+    if (!sense) {
+      // Sin lectura resuelta no podemos afirmar qué sentido es esta fila.
+      // Se registra en vez de inventar una glosa.
+      unresolved.push(`${hanzi} ${pinyin}`);
+      continue;
+    }
+
     words.push({
       hanzi,
-      pinyin: pinyin?.trim() || '',
-      meaning_en: extractMeanings(html),
+      traditional: entry.traditional && entry.traditional !== hanzi ? entry.traditional : null,
+      pinyin,
+      meaning_en: sense.meanings.slice(0, 5).join('; '),
+      meaning_es: spanish.get(`${hanzi}|${normalizePinyin(pinyin)}`) ?? null,
+      classifier: sense.classifiers.length > 0 ? sense.classifiers.join('、') : null,
       pos: mapPos(pos?.trim()),
       frequency: parseInt(freq, 10) || 0,
     });
   }
 
-  const outPath = join(seedDir, `hsk${level}-words.json`);
   writeFileSync(outPath, JSON.stringify(words, null, 2), 'utf-8');
   console.log(`HSK ${level}: ${words.length} words -> ${outPath}`);
+
+  if (unresolved.length > 0) {
+    console.warn(`  ${unresolved.length} filas sin lectura resuelta: ${unresolved.join(', ')}`);
+  }
 }
 
 console.log('Import complete. Run "npm run seed" to populate the database.');

@@ -106,4 +106,29 @@ describe('contrato del corpus', () => {
 
     expect(repeated.sort()).toEqual(queued.sort());
   });
+
+  it('resuelve las cinco colisiones de lectura con sentidos distintos', () => {
+    const find = (hanzi, pinyin) =>
+      rows.find((row) => row.hanzi === hanzi && row.pinyin === pinyin);
+
+    expect(find('还', 'hái').meaning_en).toMatch(/still/);
+    expect(find('还', 'huán').meaning_en).toMatch(/to (pay back|return)/);
+    expect(find('地', 'de').meaning_en).toMatch(/particle/);
+    expect(find('地', 'dì').meaning_en).toMatch(/earth/);
+    expect(find('得', 'děi').meaning_en).toMatch(/to have to|must/);
+    expect(find('长', 'zhǎng').meaning_en).toMatch(/grow|chief|elder/);
+    expect(find('只', 'zhǐ').meaning_en).toMatch(/only|merely/);
+  });
+
+  it('guarda el clasificador en su propio campo', () => {
+    const di = rows.find((row) => row.hanzi === '地' && row.pinyin === 'dì');
+
+    expect(di.classifier).toBe('片');
+  });
+
+  it('guarda la forma tradicional cuando difiere de la simplificada', () => {
+    const hai = rows.find((row) => row.hanzi === '还' && row.pinyin === 'hái');
+
+    expect(hai.traditional).toBe('還');
+  });
 });
