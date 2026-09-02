@@ -9,17 +9,13 @@
 // `items`, separados del título.
 const STAGE_SUFFIX = /^(.*?)([1-9])$/;
 
-// Estas dos familias están numeradas dentro de viñetas y no en el título del
-// epígrafe. Se anotan por el texto oficial de la viñeta para no convertir los
-// índices léxicos (都1, 因为1, 跟2...) en prerrequisitos por accidente.
+// Esta familia está numerada dentro de viñetas y no en el título del epígrafe.
+// Se anota por el texto oficial de la viñeta para no convertir los índices
+// léxicos (都1, 因为1, 跟2...) en prerrequisitos por accidente.
 const BULLET_PREREQUISITES = [
   {
     current: { hsk_level: 2, item: /^主谓句4/ },
     previous: { hsk_level: 1, item: /^主谓句[123]/ },
-  },
-  {
-    current: { hsk_level: 1, item: /了2/ },
-    previous: { hsk_level: 1, item: /了1/ },
   },
 ];
 

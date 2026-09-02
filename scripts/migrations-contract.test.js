@@ -9,16 +9,26 @@ function readMigration(name) {
   return readFileSync(join(migrationDir, name), 'utf8');
 }
 
+function normalizeSql(sql) {
+  return sql.replace(/\s+/g, ' ').trim();
+}
+
+function expectSqlToContain(sql, fragment) {
+  expect(normalizeSql(sql)).toContain(normalizeSql(fragment));
+}
+
 describe('contratos de migraciones', () => {
   it('protege ambos extremos de grammar_prerequisite con claves foráneas', () => {
     const migration = readMigration('2026090203_progress_model.sql');
 
-    expect(migration).toContain(
+    expectSqlToContain(
+      migration,
       'constraint grammar_prerequisite_current_fkey\n' +
         '    foreign key (hsk_level, code)\n' +
         '    references public.grammar_points (hsk_level, code)',
     );
-    expect(migration).toContain(
+    expectSqlToContain(
+      migration,
       'constraint grammar_prerequisite_required_fkey\n' +
         '    foreign key (requires_level, requires_code)\n' +
         '    references public.grammar_points (hsk_level, code)',
@@ -29,8 +39,8 @@ describe('contratos de migraciones', () => {
     const historical = readMigration('2026080202_decks_seed_and_rpc.sql');
     const fix = readMigration('2026080203_fix_decks_rpc.sql');
 
-    expect(historical).toContain('on conflict (deck_id, word_id) do nothing');
-    expect(fix).toContain('on conflict do nothing');
-    expect(fix).toContain('if not exists (select 1 from public.decks');
+    expectSqlToContain(historical, 'on conflict (deck_id, word_id) do nothing');
+    expectSqlToContain(fix, 'on conflict do nothing');
+    expectSqlToContain(fix, 'if not exists (select 1 from public.decks');
   });
 });

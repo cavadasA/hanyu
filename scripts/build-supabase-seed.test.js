@@ -16,7 +16,7 @@ describe('buildSeedSql', () => {
     expect(generated.counts.words).toBeGreaterThan(0);
     expect(generated.counts.characters).toBe(655);
     expect(generated.counts.grammar_points).toBeGreaterThan(0);
-    expect(generated.counts.grammar_prerequisites).toBe(14);
+    expect(generated.counts.grammar_prerequisites).toBe(13);
     expect(generated.counts.generated_exercises).toBeGreaterThan(0);
   });
 

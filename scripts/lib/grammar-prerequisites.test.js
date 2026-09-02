@@ -42,7 +42,7 @@ describe('deriveGrammarPrerequisites', () => {
     expect(deriveGrammarPrerequisites(withItems)).toEqual([]);
   });
 
-  it('aplica las progresiones gramaticales anotadas dentro de viñetas', () => {
+  it('aplica la progresión gramatical segura anotada dentro de una viñeta', () => {
     const bulletStages = [
       { code: '5.1.1', hsk_level: 1, title: '单句', items: ['主谓句1：动词谓语句', '主谓句2：形容词谓语句', '主谓句3：名词谓语句'] },
       { code: '6.1.1', hsk_level: 2, title: '单句', items: ['主谓句4：主谓谓语句'] },
@@ -52,7 +52,6 @@ describe('deriveGrammarPrerequisites', () => {
 
     expect(deriveGrammarPrerequisites(bulletStages)).toEqual([
       { code: '6.1.1', hsk_level: 2, requires_code: '5.1.1', requires_level: 1 },
-      { code: '2.9.3', hsk_level: 1, requires_code: '2.9.2', requires_level: 1 },
     ]);
   });
 });

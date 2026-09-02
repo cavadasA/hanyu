@@ -1853,8 +1853,7 @@ values
   (3, '5.3.2', 2, '5.4.2'),
   (3, '6.2.4', 2, '6.3.4'),
   (3, '6.2.6', 2, '6.3.5'),
-  (2, '6.1.1', 1, '5.1.1'),
-  (1, '2.9.3', 1, '2.9.2')
+  (2, '6.1.1', 1, '5.1.1')
 on conflict do nothing;
 
 insert into public.generated_exercises (type, hsk_level, prompt, answer, source_model, created_by)
