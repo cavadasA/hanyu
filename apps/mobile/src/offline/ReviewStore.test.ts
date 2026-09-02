@@ -43,11 +43,12 @@ function makeTestHandle(nativeDb: any): DbHandle {
       const row: T | undefined = nativeDb.prepare(sql).get(...params);
       return Promise.resolve(row !== undefined ? row : null);
     },
-    withTransactionAsync: async (fn: () => Promise<void>) => {
+    withTransactionAsync: async <T>(fn: () => Promise<T>): Promise<T> => {
       nativeDb.exec('BEGIN');
       try {
-        await fn();
+        const result = await fn();
         nativeDb.exec('COMMIT');
+        return result;
       } catch (err) {
         nativeDb.exec('ROLLBACK');
         throw err;
@@ -444,6 +445,57 @@ describe('markPermanentError', () => {
     // Projection equals serverRefresh (no SM2 applied from the errored event)
     expect(projectedCard!.interval_days).toBe(serverRefresh.interval_days);
     expect(projectedCard!.next_review_at).toBe(serverRefresh.next_review_at);
+  });
+});
+
+describe('discardPending', () => {
+  test('removes the event and re-projects the card without it', async () => {
+    const { store } = await createStore();
+    const card = makeCard();
+    await store.cacheCards([card]);
+
+    const event = makeEvent(card.id, 5, { review_id: 'r1', expected_version: card.version });
+    await store.enqueueAndProject(event, {
+      ...card,
+      repetitions: card.repetitions + 1,
+      interval: 6,
+      interval_days: 6,
+    });
+
+    const restored = await store.discardPending('r1');
+
+    expect(restored).not.toBeNull();
+    expect(restored!.repetitions).toBe(card.repetitions);
+    expect(restored!.interval_days).toBe(card.interval_days);
+    expect(await store.pendingCount()).toBe(0);
+  });
+
+  test('keeps the events queued after the discarded one', async () => {
+    const { store } = await createStore();
+    const first = makeCard();
+    const second = makeCard();
+    await store.cacheCards([first, second]);
+
+    await store.enqueueAndProject(
+      makeEvent(first.id, 5, { review_id: 'r1', expected_version: first.version }),
+      { ...first, repetitions: first.repetitions + 1 },
+    );
+    await store.enqueueAndProject(
+      makeEvent(second.id, 3, { review_id: 'r2', expected_version: second.version }),
+      { ...second, repetitions: second.repetitions + 1 },
+    );
+
+    await store.discardPending('r1');
+
+    const pending = await store.listPending();
+    expect(pending.map((entry) => entry.review_id)).toEqual(['r2']);
+  });
+
+  test('returns null when the event is no longer queued', async () => {
+    const { store } = await createStore();
+    await store.cacheCards([makeCard()]);
+
+    expect(await store.discardPending('never-queued')).toBeNull();
   });
 });
 

@@ -11,7 +11,7 @@ export interface DbHandle {
   runAsync(sql: string, params: unknown[]): Promise<void>;
   getAllAsync<T>(sql: string, params: unknown[]): Promise<T[]>;
   getFirstAsync<T>(sql: string, params: unknown[]): Promise<T | null>;
-  withTransactionAsync(fn: () => Promise<void>): Promise<void>;
+  withTransactionAsync<T>(fn: () => Promise<T>): Promise<T>;
   closeAsync(): Promise<void>;
 }
 
@@ -30,6 +30,7 @@ export interface ReviewStore {
   acknowledge(reviewId: string, serverCard: VersionedCard): Promise<void>;
   rebase(card: VersionedCard, events: QueuedReviewEvent[]): Promise<void>;
   markPermanentError(reviewId: string, message: string): Promise<void>;
+  discardPending(reviewId: string): Promise<VersionedCard | null>;
   pendingCount(): Promise<number>;
   close(): Promise<void>;
   destroy(): Promise<void>;
@@ -259,6 +260,62 @@ export class ReviewStoreImpl implements ReviewStore {
        WHERE review_id = ?`,
       [message, reviewId],
     );
+  }
+
+  /**
+   * Saca de la cola un evento que todavía no se ha sincronizado y devuelve la
+   * tarjeta reproyectada sin él.
+   *
+   * Deshacer una valoración pendiente no necesita servidor: el estado del
+   * servidor sigue guardado en server_json, y la proyección se obtiene
+   * aplicando encima los eventos que queden. Es la misma operación que hace
+   * rebase, con un evento menos.
+   *
+   * Devuelve null si el evento ya no está en la cola. No es un error: el motor
+   * de sincronización puede haberlo enviado entre que el usuario pulsó Undo y
+   * esta llamada llegó, y quien llama debe entonces revertirlo en servidor.
+   */
+  async discardPending(reviewId: string): Promise<VersionedCard | null> {
+    return this.db.withTransactionAsync(async () => {
+      const row = await this.db.getFirstAsync<PendingRow>(
+        `SELECT * FROM pending_reviews WHERE review_id = ? AND state != 'permanent_error'`,
+        [reviewId],
+      );
+
+      if (!row) {
+        return null;
+      }
+
+      await this.db.runAsync('DELETE FROM pending_reviews WHERE review_id = ?', [reviewId]);
+
+      const cached = await this.db.getFirstAsync<CachedCardRow>(
+        'SELECT * FROM cached_cards WHERE card_id = ?',
+        [row.card_id],
+      );
+
+      if (!cached) {
+        // La cola referenciaba una tarjeta que ya no está en caché. El evento
+        // se descarta igualmente: dejarlo encolado enviaría al servidor una
+        // valoración que el usuario acaba de deshacer.
+        return null;
+      }
+
+      const remaining = await this.db.getAllAsync<PendingRow>(
+        `SELECT * FROM pending_reviews WHERE card_id = ? AND state != 'permanent_error' ORDER BY queue_sequence ASC`,
+        [row.card_id],
+      );
+
+      const server = JSON.parse(cached.server_json) as VersionedCard;
+      const projected = replayPendingOnto(server, remaining);
+
+      await this.db.runAsync(UPDATE_CARD_PROJECTED, [
+        JSON.stringify(projected),
+        new Date().toISOString(),
+        row.card_id,
+      ]);
+
+      return projected;
+    });
   }
 
   async pendingCount(): Promise<number> {
