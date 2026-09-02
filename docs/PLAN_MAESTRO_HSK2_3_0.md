@@ -158,7 +158,13 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 **Cierra:** Crítico 3; §7 dictation; §13 cobertura de scoring.
 
 ## Plan 3 — Ciclo de review sobre eventos
-**Tamaño:** L · **Depende de:** Plan 1
+**Tamaño:** L · **Depende de:** Plan 1C
+
+> **Escrito:** `docs/superpowers/plans/2026-09-02-plan-3-ciclo-de-review.md`, 6 tareas.
+>
+> La decisión central es que Undo tiene dos mitades. Si el evento sigue en la cola local sin sincronizar, deshacer es sacarlo de la cola y reproyectar la tarjeta: la maquinaria ya existe en `ReviewStore.replayPendingOnto`, no hace falta red y el servidor nunca lo vio. Si ya se sincronizó, hay que revertirlo en servidor.
+>
+> La reversión en servidor **restaura una instantánea del estado previo, no reproduce el historial**. Reproducir ataría el plan a SM-2 y obligaría a reescribirlo cuando el Plan 4 introduzca FSRS; una instantánea es independiente del algoritmo. La comprobación de versión es lo que la hace segura: si la tarjeta avanzó después, la RPC rechaza en vez de destruir ese avance.
 
 - **Servicio offline como puerto único.** `CardsScreen` deja de llamar a `getData().flashcards.reviewCard`; todo pasa por `useOfflineReview`. El acceso directo al repositorio deja de estar disponible para la pantalla. Se hace ahora, antes de FSRS, para que el motor nuevo escriba por un solo camino.
 - **Undo transaccional** sobre `learning_event`: registrar `review_reverted` y recalcular el estado desde el historial válido. Revierte `srs_cards`, `review_log` y `user_stats`. Sin fallback de "quitar Undo": aquí se hace de verdad.
