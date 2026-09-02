@@ -284,7 +284,7 @@
     "traditional": "還",
     "pinyin": "hái",
     "meaning_en": "still; still in progress; still more; yet; even more",
-    "meaning_es": "todavía; aún; además; también; devolver",
+    "meaning_es": "todavía; aún; además; también; incluso",
     "classifier": null,
     "pos": "adverb",
     "frequency": 37384723
@@ -694,7 +694,7 @@
     "traditional": "隻",
     "pinyin": "zhī",
     "meaning_en": "grain that has begun to ripen; classifier for birds and certain animals, one of a pair, some utensils, vessels etc",
-    "meaning_es": "solo; solamente; únicamente; nada más que; exclusivamente; tan solo",
+    "meaning_es": "clasificador para animales y para objetos de un par",
     "classifier": null,
     "pos": "measure word",
     "frequency": 12513893

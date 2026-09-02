@@ -34,7 +34,7 @@
     "traditional": "還",
     "pinyin": "huán",
     "meaning_en": "to pay back; to return",
-    "meaning_es": "todavía; aún; además; también; devolver",
+    "meaning_es": "devolver; restituir; pagar (una deuda)",
     "classifier": null,
     "pos": "verb",
     "frequency": 37384723
@@ -44,7 +44,7 @@
     "traditional": null,
     "pinyin": "dì",
     "meaning_en": "earth; ground; field; place; land",
-    "meaning_es": "de (partícula adverbial)",
+    "meaning_es": "tierra; suelo; terreno; lugar",
     "classifier": "片",
     "pos": "noun",
     "frequency": 35624818
@@ -84,7 +84,7 @@
     "traditional": null,
     "pinyin": "děi",
     "meaning_en": "to have to; must; ought to; to need to",
-    "meaning_es": "tener que; necesitar; obtener; conseguir",
+    "meaning_es": "tener que; deber; necesitar",
     "classifier": null,
     "pos": "verb",
     "frequency": 22420955
@@ -204,7 +204,7 @@
     "traditional": "隻",
     "pinyin": "zhǐ",
     "meaning_en": "only; merely; just",
-    "meaning_es": "solo; solamente; únicamente; nada más que; exclusivamente; tan solo",
+    "meaning_es": "solo; solamente; únicamente",
     "classifier": null,
     "pos": "adverb",
     "frequency": 12513893
@@ -344,7 +344,7 @@
     "traditional": "長",
     "pinyin": "zhǎng",
     "meaning_en": "chief; head; elder; to grow; to develop",
-    "meaning_es": "largo; longitud; duración; crecer; desarrollarse; jefe; mayor; especialidad; fuerte",
+    "meaning_es": "crecer; desarrollarse; mayor; jefe",
     "classifier": null,
     "pos": "verb",
     "frequency": 8800220

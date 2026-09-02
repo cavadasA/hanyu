@@ -16,12 +16,15 @@ import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { parseDictionaryEntry, selectReading } from './lib/cedict-html.js';
-import { normalizePinyin } from '../packages/domain/src/pinyin.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
 const dataDir = join(rootDir, 'data');
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
+
+function normalizeReadingKey(input) {
+  return String(input).normalize('NFC').toLowerCase().replace(/[\s'’·-]/g, '');
+}
 
 /**
  * Map Chinese POS abbreviations to English.
@@ -44,7 +47,9 @@ function mapPos(posRaw) {
  * Las glosas españolas se curan a mano y no vienen del fichero fuente. Al
  * regenerar hay que arrastrarlas, o cada importación las destruiría. La clave
  * es (hanzi, lectura normalizada) y no el índice de fila, porque el número y
- * el orden de las filas puede cambiar entre importaciones.
+ * el orden de las filas puede cambiar entre importaciones. El tono se
+ * conserva: 只 zhī y 只 zhǐ son sentidos distintos aunque normalizePinyin los
+ * reduzca a la misma forma para comparaciones de formato.
  */
 function loadExistingSpanish(outPath) {
   if (!existsSync(outPath)) {
@@ -54,12 +59,24 @@ function loadExistingSpanish(outPath) {
   const existing = new Map();
   for (const word of JSON.parse(readFileSync(outPath, 'utf-8'))) {
     if (word.meaning_es) {
-      existing.set(`${word.hanzi}|${normalizePinyin(word.pinyin)}`, word.meaning_es);
+      existing.set(`${word.hanzi}|${normalizeReadingKey(word.pinyin)}`, word.meaning_es);
     }
   }
 
   return existing;
 }
+
+/**
+ * Glosas españolas curadas por sentido. Se aplican después de arrastrar las
+ * existentes, así que ganan sobre lo que hubiera en el JSON anterior: son la
+ * corrección deliberada de una mezcla de sentidos.
+ */
+const curatedSpanish = new Map(
+  JSON.parse(readFileSync(join(seedDir, 'sense-glosses-es.json'), 'utf-8')).map((entry) => [
+    `${entry.hanzi}|${normalizeReadingKey(entry.pinyin)}`,
+    entry.meaning_es,
+  ]),
+);
 
 for (const level of [1, 2, 3]) {
   const filePath = join(dataDir, `HSK_Level_${level}.txt`);
@@ -104,7 +121,10 @@ for (const level of [1, 2, 3]) {
       traditional: entry.traditional && entry.traditional !== hanzi ? entry.traditional : null,
       pinyin,
       meaning_en: sense.meanings.slice(0, 5).join('; '),
-      meaning_es: spanish.get(`${hanzi}|${normalizePinyin(pinyin)}`) ?? null,
+      meaning_es:
+        curatedSpanish.get(`${hanzi}|${normalizeReadingKey(pinyin)}`) ??
+        spanish.get(`${hanzi}|${normalizeReadingKey(pinyin)}`) ??
+        null,
       classifier: sense.classifiers.length > 0 ? sense.classifiers.join('、') : null,
       pos: mapPos(pos?.trim()),
       frequency: parseInt(freq, 10) || 0,

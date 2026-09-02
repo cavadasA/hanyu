@@ -14,7 +14,7 @@
     "traditional": "著",
     "pinyin": "zhe",
     "meaning_en": "aspect particle indicating action in progress or ongoing state",
-    "meaning_es": "zhe (partícula aspectual: indica acción en curso o estado resultante); llevar puesto; encendido; prendido",
+    "meaning_es": "zhe (partícula aspectual: acción en curso o estado resultante)",
     "classifier": null,
     "pos": "particle",
     "frequency": 45143802
@@ -44,7 +44,7 @@
     "traditional": null,
     "pinyin": "de",
     "meaning_en": "-ly; structural particle: used before a verb or adjective, linking it to preceding modifying adverbial adjunct",
-    "meaning_es": "de (partícula adverbial)",
+    "meaning_es": "de (partícula que une un adverbio al verbo)",
     "classifier": null,
     "pos": "particle",
     "frequency": 35624818
@@ -124,7 +124,7 @@
     "traditional": null,
     "pinyin": "de",
     "meaning_en": "structural particle: used after a verb (or adjective as main verb), linking it to following phrase indicating effect, degree, possibility etc",
-    "meaning_es": "tener que; necesitar; obtener; conseguir",
+    "meaning_es": "de (partícula que une el verbo con su complemento)",
     "classifier": null,
     "pos": "particle",
     "frequency": 22420955
@@ -154,7 +154,7 @@
     "traditional": "過",
     "pinyin": "guò",
     "meaning_en": "to cross; to go over; to pass (time); to celebrate (a holiday); to live",
-    "meaning_es": "guo (experiencia pasada)",
+    "meaning_es": "pasar; cruzar; atravesar; transcurrir; celebrar",
     "classifier": null,
     "pos": "verb",
     "frequency": 21257943
@@ -334,7 +334,7 @@
     "traditional": "長",
     "pinyin": "cháng",
     "meaning_en": "long; (bound form) length; (bound form) strong point; forte; (bound form) to be good at",
-    "meaning_es": "largo; longitud; duración; crecer; desarrollarse; jefe; mayor; especialidad; fuerte",
+    "meaning_es": "largo; longitud; duración",
     "classifier": null,
     "pos": "adjective",
     "frequency": 8800220

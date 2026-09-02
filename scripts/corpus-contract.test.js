@@ -131,4 +131,48 @@ describe('contrato del corpus', () => {
 
     expect(hai.traditional).toBe('還');
   });
+
+  it('nunca da la misma glosa española a dos lecturas distintas del mismo hanzi', () => {
+    const offenders = [];
+
+    for (const [hanzi, list] of groupByHanzi(rows)) {
+      for (let i = 0; i < list.length; i += 1) {
+        for (let j = i + 1; j < list.length; j += 1) {
+          const a = list[i];
+          const b = list[j];
+
+          if (
+            normalizeReadingIdentity(a.pinyin) ===
+            normalizeReadingIdentity(b.pinyin)
+          ) {
+            continue;
+          }
+
+          if (a.meaning_es === b.meaning_es) {
+            offenders.push(`${hanzi} ${a.pinyin}/${b.pinyin}: "${a.meaning_es}"`);
+          }
+        }
+      }
+    }
+
+    expect(offenders).toEqual([]);
+  });
+
+  it('aplica todas las glosas curadas', () => {
+    const curated = JSON.parse(
+      readFileSync(join(seedDir, 'sense-glosses-es.json'), 'utf8'),
+    );
+
+    const missing = curated.filter((entry) => {
+      const row = rows.find(
+        (candidate) =>
+          candidate.hanzi === entry.hanzi &&
+          normalizeReadingIdentity(candidate.pinyin) ===
+            normalizeReadingIdentity(entry.pinyin),
+      );
+      return !row || row.meaning_es !== entry.meaning_es;
+    });
+
+    expect(missing).toEqual([]);
+  });
 });
