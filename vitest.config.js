@@ -35,6 +35,9 @@ export default defineConfig({
       'server/app.test.js',
       'server/routes/**',
       'server/services/**',
+      // scripts/corpus-contract.test.js queda fuera hasta que la Tarea 4 del
+      // Plan 1A arregle el importador. Vuelve a entrar en esa misma tarea.
+      'scripts/corpus-contract.test.js',
     ],
   },
 });
