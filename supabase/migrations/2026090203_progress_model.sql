@@ -181,3 +181,28 @@ for select using (auth.role() = 'authenticated');
 drop policy if exists content_teaches_select_authenticated on public.content_teaches;
 create policy content_teaches_select_authenticated on public.content_teaches
 for select using (auth.role() = 'authenticated');
+
+create table if not exists public.exercise_template (
+  type text primary key,
+  skill public.learning_skill not null,
+  description text not null
+);
+
+-- La habilidad es la que el ejercicio *demuestra*, no la que parece.
+-- multiple_choice enseña a discriminar entre opciones, que es reconocimiento;
+-- fill_blank exige recuperar la palabra desde el contexto de la frase, que es
+-- lectura; dictation parte de audio; reorder produce lengua a partir de piezas.
+insert into public.exercise_template (type, skill, description) values
+  ('multiple_choice', 'recognition', 'Elegir el significado o la forma correcta entre varias opciones.'),
+  ('matching',        'recognition', 'Emparejar formas escritas con sus significados.'),
+  ('fill_blank',      'reading',     'Recuperar la palabra que falta a partir del contexto de la frase.'),
+  ('reorder',         'production',  'Construir una frase correcta ordenando sus piezas.'),
+  ('dictation',       'listening',   'Escribir lo que se oye, en hanzi o en pinyin.')
+on conflict (type) do update
+  set skill = excluded.skill, description = excluded.description;
+
+alter table public.exercise_template enable row level security;
+
+drop policy if exists exercise_template_select_authenticated on public.exercise_template;
+create policy exercise_template_select_authenticated on public.exercise_template
+for select using (auth.role() = 'authenticated');
