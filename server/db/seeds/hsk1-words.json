@@ -1,656 +1,10 @@
 [
   {
-    "hanzi": "的",
-    "traditional": null,
-    "pinyin": "de",
-    "meaning_en": "of; ~'s (possessive particle); (used after an attribute when it modifies a noun); (used at the end of a declarative sentence for emphasis); (used after a noun, verb or adjective to form a nominal expression, as in 皮革的[pi2 ge2 de5] 'one made of leather' or 跑堂兒的|跑堂儿的[pao3 tang2 r5 de5] 'a waiter (literally, one who runs back and forth in a restaurant)' or 新的[xin1 de5] 'new one')",
-    "meaning_es": "de (partícula posesiva)",
-    "classifier": null,
-    "pos": "particle",
-    "frequency": 943370349
-  },
-  {
-    "hanzi": "了",
-    "traditional": "瞭",
-    "pinyin": "le",
-    "meaning_en": "(completed action marker); (modal particle indicating change of state, situation now); (modal particle intensifying preceding clause)",
-    "meaning_es": "le (acción completada o cambio)",
-    "classifier": null,
-    "pos": "particle",
-    "frequency": 255733044
-  },
-  {
-    "hanzi": "在",
-    "traditional": null,
-    "pinyin": "zài",
-    "meaning_en": "to exist; to be alive; (of sb or sth) to be (located) at; (used before a verb to indicate an action in progress)",
-    "meaning_es": "estar en; encontrarse en; existir; estar (gerundio); en; durante",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 197672850
-  },
-  {
-    "hanzi": "是",
-    "traditional": "昰",
-    "pinyin": "shì",
-    "meaning_en": "to be (followed by substantives only); correct; right; true; (respectful acknowledgement of a command) very well",
-    "meaning_es": "ser",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 171296602
-  },
-  {
-    "hanzi": "我",
-    "traditional": null,
-    "pinyin": "wǒ",
-    "meaning_en": "I; me; my",
-    "meaning_es": "yo; mi",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 169391220
-  },
-  {
-    "hanzi": "和",
-    "traditional": "龢",
-    "pinyin": "hé",
-    "meaning_en": "(joining two nouns) and; together with; with (Taiwan pr. [han4]); (math.) sum; to make peace",
-    "meaning_es": "y; con; armonía; paz",
-    "classifier": null,
-    "pos": "preposition",
-    "frequency": 118878434
-  },
-  {
-    "hanzi": "有",
-    "traditional": null,
-    "pinyin": "yǒu",
-    "meaning_en": "to have; there is; (bound form) having; with; -ful",
-    "meaning_es": "tener; haber; existir; poseer; contener; haber (experiencia)",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 94271573
-  },
-  {
-    "hanzi": "你",
-    "traditional": "妳",
-    "pinyin": "nǐ",
-    "meaning_en": "you (informal, as opposed to courteous 您[nin2]); you (Note: In Taiwan, 妳 is used to address females, but in mainland China, it is not commonly used. Instead, 你 is used to address both males and females.)",
-    "meaning_es": "tú",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 88487705
-  },
-  {
-    "hanzi": "个",
-    "traditional": "箇",
-    "pinyin": "gè",
-    "meaning_en": "(classifier used before a noun that has no specific classifier); (bound form) individual",
-    "meaning_es": "clasificador general; individuo; uno (coloquial)",
-    "classifier": null,
-    "pos": "measure word",
-    "frequency": 87859759
-  },
-  {
-    "hanzi": "也",
-    "traditional": null,
-    "pinyin": "yě",
-    "meaning_en": "also; too; as well; (not ...) either; (used after a verbal or nominal expression X to indicate that X is an extreme or unexpected case) even (X)",
-    "meaning_es": "también; tampoco; incluso; además; aun; y",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 77259249
-  },
-  {
-    "hanzi": "这",
-    "traditional": "這",
-    "pinyin": "zhè",
-    "meaning_en": "(pronoun) this; these; (bound form) this; the (followed by a noun); (bound form) this",
-    "meaning_es": "este; esta; esto; este momento; ahora; aquí",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 73252887
-  },
-  {
-    "hanzi": "不",
-    "traditional": null,
-    "pinyin": "bù",
-    "meaning_en": "no; not so; (bound form) not; un-",
-    "meaning_es": "no (negación general)",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 70153387
-  },
-  {
-    "hanzi": "他",
-    "traditional": null,
-    "pinyin": "tā",
-    "meaning_en": "(third-person singular) (since the early 20th century, usu. male) he; him; his; (bound form) other; another",
-    "meaning_es": "él",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 67051085
-  },
-  {
-    "hanzi": "上",
-    "traditional": null,
-    "pinyin": "shàng",
-    "meaning_en": "(bound form) up; upper; above; previous; first (of multiple parts)",
-    "meaning_es": "arriba; sobre; encima; subir; anterior",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 66509925
-  },
-  {
-    "hanzi": "人",
-    "traditional": null,
-    "pinyin": "rén",
-    "meaning_en": "person; people",
-    "meaning_es": "persona; gente; ser humano",
-    "classifier": "个、位",
-    "pos": "noun",
-    "frequency": 65506298
-  },
-  {
-    "hanzi": "年",
-    "traditional": "秊",
-    "pinyin": "nián",
-    "meaning_en": "year; grain; harvest (old)",
-    "meaning_es": "año; edad; período anual",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 59830333
-  },
-  {
-    "hanzi": "对",
-    "traditional": "對",
-    "pinyin": "duì",
-    "meaning_en": "right; correct; towards; at; for",
-    "meaning_es": "correcto; hacia; sí; contestar",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 56546971
-  },
-  {
-    "hanzi": "说",
-    "traditional": "説",
-    "pinyin": "shuō",
-    "meaning_en": "to speak; to talk; to say; to explain; to comment",
-    "meaning_es": "hablar; decir",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 52966771
-  },
-  {
-    "hanzi": "都",
-    "traditional": null,
-    "pinyin": "dōu",
-    "meaning_en": "all; both; entirely; (used for emphasis) even; already",
-    "meaning_es": "todo(s); ambos; ya; incluso",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 52527496
-  },
-  {
-    "hanzi": "要",
-    "traditional": null,
-    "pinyin": "yào",
-    "meaning_en": "to want; to need; to ask for; will; shall",
-    "meaning_es": "querer; necesitar; ir a",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 50753034
-  },
-  {
-    "hanzi": "到",
-    "traditional": null,
-    "pinyin": "dào",
-    "meaning_en": "to reach; to arrive; to leave for; to go to; to (a place)",
-    "meaning_es": "llegar; hasta",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 50645570
-  },
-  {
-    "hanzi": "日",
-    "traditional": null,
-    "pinyin": "rì",
-    "meaning_en": "sun; day; date, day of the month",
-    "meaning_es": "día; sol; fecha; jornada",
-    "classifier": null,
-    "pos": "measure word",
-    "frequency": 42260866
-  },
-  {
-    "hanzi": "我们",
-    "traditional": "我",
-    "pinyin": "wǒmen",
-    "meaning_en": "we; us; ourselves; our",
-    "meaning_es": "nosotros",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 41787606
-  },
-  {
-    "hanzi": "好",
-    "traditional": null,
-    "pinyin": "hǎo",
-    "meaning_en": "good; appropriate; proper; all right!; (before a verb) easy to",
-    "meaning_es": "bueno; bien; muy",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 41528330
-  },
-  {
-    "hanzi": "月",
-    "traditional": null,
-    "pinyin": "yuè",
-    "meaning_en": "moon; month; monthly",
-    "meaning_es": "luna; mes; mensual",
-    "classifier": "个、轮",
-    "pos": "noun",
-    "frequency": 40981378
-  },
-  {
-    "hanzi": "会",
-    "traditional": "會",
-    "pinyin": "huì",
-    "meaning_en": "can; to have the skill; to know how to; to be likely to; to be sure to",
-    "meaning_es": "saber (habilidad); poder; reunión",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 40026863
-  },
-  {
-    "hanzi": "大",
-    "traditional": null,
-    "pinyin": "dà",
-    "meaning_en": "big; large; great; older (than another person); eldest (as in 大姐[da4 jie3])",
-    "meaning_es": "grande",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 38361973
-  },
-  {
-    "hanzi": "来",
-    "traditional": "來",
-    "pinyin": "lái",
-    "meaning_en": "to come; (used as a substitute for a more specific verb); hither (directional complement for motion toward the speaker, as in 回來|回来[hui2 lai5]); ever since (as in 自古以來|自古以来[zi4 gu3 yi3 lai2]); for the past (amount of time)",
-    "meaning_es": "venir",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 37970033
-  },
-  {
-    "hanzi": "还",
-    "traditional": "還",
-    "pinyin": "hái",
-    "meaning_en": "still; still in progress; still more; yet; even more",
-    "meaning_es": "todavía; aún; además; también; incluso",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 37384723
-  },
-  {
-    "hanzi": "后",
-    "traditional": "後",
-    "pinyin": "hòu",
-    "meaning_en": "empress; queen; (archaic) monarch; ruler; back",
-    "meaning_es": "después; detrás; atrás; luego",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 33767571
-  },
-  {
-    "hanzi": "两",
-    "traditional": "兩",
-    "pinyin": "liǎng",
-    "meaning_en": "two; both; some; a few; tael, unit of weight equal to 50 grams (modern) or 1⁄16 of a catty 斤[jin1] (old)",
-    "meaning_es": "dos (unidades); ambos",
-    "classifier": null,
-    "pos": "numeral",
-    "frequency": 32745515
-  },
-  {
-    "hanzi": "没有",
-    "traditional": "沒",
-    "pinyin": "méiyǒu",
-    "meaning_en": "haven't; hasn't; doesn't exist; to not have; to not be",
-    "meaning_es": "no tener; no haber; no (con pasado); carecer de",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 30405623
-  },
-  {
-    "hanzi": "去",
-    "traditional": null,
-    "pinyin": "qù",
-    "meaning_en": "to go; to go to (a place); (of a time etc) last; just passed; to send",
-    "meaning_es": "ir",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 30059353
-  },
-  {
-    "hanzi": "很",
-    "traditional": null,
-    "pinyin": "hěn",
-    "meaning_en": "very; quite; (also, often used before an adjective without intensifying its meaning, i.e. as a meaningless syntactic element)",
-    "meaning_es": "muy; bastante; mucho",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 29046232
-  },
-  {
-    "hanzi": "给",
-    "traditional": "給",
-    "pinyin": "gěi",
-    "meaning_en": "to; for; for the benefit of; to give; to allow",
-    "meaning_es": "dar; para; a (beneficiario)",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 28952371
-  },
-  {
-    "hanzi": "中国",
-    "traditional": "中",
-    "pinyin": "Zhōngguó",
-    "meaning_en": "China",
-    "meaning_es": "China",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 27811293
-  },
-  {
-    "hanzi": "元",
-    "traditional": null,
-    "pinyin": "yuán",
-    "meaning_en": "currency unit (esp. Chinese yuan); (bound form) first; original; primary; (bound form) basic",
-    "meaning_es": "yuan (moneda china ¥); primero; original; principal; unidad",
-    "classifier": null,
-    "pos": "measure word",
-    "frequency": 27576670
-  },
-  {
-    "hanzi": "看",
-    "traditional": null,
-    "pinyin": "kàn",
-    "meaning_en": "to see; to look at; to read; to watch; to visit",
-    "meaning_es": "ver; mirar; leer; visitar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 27275620
-  },
-  {
-    "hanzi": "下",
-    "traditional": null,
-    "pinyin": "xià",
-    "meaning_en": "down; downwards; below; lower; later",
-    "meaning_es": "abajo; debajo; bajar; descender; siguiente; próximo",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 26737542
-  },
-  {
-    "hanzi": "她",
-    "traditional": null,
-    "pinyin": "tā",
-    "meaning_en": "she",
-    "meaning_es": "ella",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 26689468
-  },
-  {
-    "hanzi": "可以",
-    "traditional": null,
-    "pinyin": "kěyǐ",
-    "meaning_en": "can; may; possible; able to; not bad",
-    "meaning_es": "poder; estar permitido",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 25881411
-  },
-  {
-    "hanzi": "这个",
-    "traditional": "這",
-    "pinyin": "zhège",
-    "meaning_en": "(pronoun) this; (adjective) this",
-    "meaning_es": "este; esta; esto",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 24376948
-  },
-  {
-    "hanzi": "能",
-    "traditional": null,
-    "pinyin": "néng",
-    "meaning_en": "can; to be able to; might possibly; ability; (physics) energy",
-    "meaning_es": "poder (capacidad)",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 23909882
-  },
-  {
-    "hanzi": "他们",
-    "traditional": "他",
-    "pinyin": "tāmen",
-    "meaning_en": "they; them",
-    "meaning_es": "ellos",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 23760910
-  },
-  {
-    "hanzi": "做",
-    "traditional": null,
-    "pinyin": "zuò",
-    "meaning_en": "to make; to produce; to write; to compose; to do",
-    "meaning_es": "hacer; realizar; elaborar; fabricar; ser; actuar como; dedicarse a; escribir; componer",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 23494662
-  },
-  {
-    "hanzi": "想",
-    "traditional": null,
-    "pinyin": "xiǎng",
-    "meaning_en": "to think (about); to think of; to devise; to think (that); to believe (that)",
-    "meaning_es": "pensar; querer; echar de menos",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 21944953
-  },
-  {
-    "hanzi": "那",
-    "traditional": null,
-    "pinyin": "nà",
-    "meaning_en": "(specifier) that; the; those (colloquial pr. [nei4]); (pronoun) that (referring to persons, things or situations); then (in that case)",
-    "meaning_es": "ese; aquel",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 21808185
-  },
-  {
-    "hanzi": "新",
-    "traditional": null,
-    "pinyin": "xīn",
-    "meaning_en": "new; newly; meso- (chemistry)",
-    "meaning_es": "nuevo; recién; fresco; novedoso; moderno; renovado",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 21776749
-  },
-  {
-    "hanzi": "小",
-    "traditional": null,
-    "pinyin": "xiǎo",
-    "meaning_en": "small; tiny; few; young",
-    "meaning_es": "pequeño",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 20674943
-  },
-  {
-    "hanzi": "天",
-    "traditional": null,
-    "pinyin": "tiān",
-    "meaning_en": "day; sky; heaven",
-    "meaning_es": "día; cielo; firmamento; tiempo (atmósfera)",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 20457907
-  },
-  {
-    "hanzi": "工作",
-    "traditional": null,
-    "pinyin": "gōngzuò",
-    "meaning_en": "to work; (of a machine) to operate; job; work; task",
-    "meaning_es": "trabajar; trabajo; empleo; funcionar (máquina)",
-    "classifier": "个、份、项",
-    "pos": "verb",
-    "frequency": 19699227
-  },
-  {
-    "hanzi": "里",
-    "traditional": null,
-    "pinyin": "lǐ",
-    "meaning_en": "lining; interior; inside; internal; also written 裏|里[li3]",
-    "meaning_es": "dentro; interior; en",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 19397088
-  },
-  {
-    "hanzi": "前",
-    "traditional": null,
-    "pinyin": "qián",
-    "meaning_en": "front; forward; ahead; first; top (followed by a number)",
-    "meaning_es": "delante; antes; anterior; frente",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 18590729
-  },
-  {
-    "hanzi": "公司",
-    "traditional": null,
-    "pinyin": "gōngsī",
-    "meaning_en": "company; firm; corporation",
-    "meaning_es": "empresa; compañía; corporación",
-    "classifier": "家",
-    "pos": "noun",
-    "frequency": 18463472
-  },
-  {
-    "hanzi": "问题",
-    "traditional": "問",
-    "pinyin": "wèntí",
-    "meaning_en": "question; problem; issue; topic",
-    "meaning_es": "problema; pregunta; cuestión; asunto; tema",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 18326876
-  },
-  {
-    "hanzi": "家",
-    "traditional": null,
-    "pinyin": "jiā",
-    "meaning_en": "home; family; (polite) my (sister, uncle etc); classifier for families or businesses; refers to the philosophical schools of pre-Han China",
-    "meaning_es": "casa; hogar; familia; especialista",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 17971399
-  },
-  {
-    "hanzi": "吧",
-    "traditional": null,
-    "pinyin": "ba",
-    "meaning_en": "(modal particle indicating suggestion or surmise); ...right?; ...OK?; ...I presume.",
-    "meaning_es": "ba (sugerencia); bar",
-    "classifier": null,
-    "pos": "particle",
-    "frequency": 17812571
-  },
-  {
-    "hanzi": "什么",
-    "traditional": "什",
-    "pinyin": "shénme",
-    "meaning_en": "what?; something; anything",
-    "meaning_es": "qué",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 17796936
-  },
-  {
-    "hanzi": "没",
-    "traditional": "沒",
-    "pinyin": "méi",
-    "meaning_en": "(negative prefix for verbs) have not; not",
-    "meaning_es": "no (con 有); sin; no haber",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 17613557
-  },
-  {
-    "hanzi": "现在",
-    "traditional": "現",
-    "pinyin": "xiànzài",
-    "meaning_en": "now; at present; currently",
-    "meaning_es": "ahora; actualmente; en este momento; hoy en día; ya",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 16365880
-  },
-  {
-    "hanzi": "真",
-    "traditional": null,
-    "pinyin": "zhēn",
-    "meaning_en": "really; truly; indeed; real; true",
-    "meaning_es": "realmente; de verdad; verdaderamente; auténtico; genuino; verdadero; claro; nítido",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 16020066
-  },
-  {
-    "hanzi": "本",
-    "traditional": null,
-    "pinyin": "běn",
-    "meaning_en": "(bound form) root; stem; (bound form) origin; source; (bound form) one's own",
-    "meaning_es": "cuaderno; libro; raíz; origen; clasificador para libros",
-    "classifier": null,
-    "pos": "measure word",
-    "frequency": 15546838
-  },
-  {
-    "hanzi": "太",
-    "traditional": null,
-    "pinyin": "tài",
-    "meaning_en": "highest; greatest; too (much); very; extremely",
-    "meaning_es": "demasiado; muy; en extremo",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 15451106
-  },
-  {
-    "hanzi": "再",
-    "traditional": null,
-    "pinyin": "zài",
-    "meaning_en": "again; once more; re-; further; beyond this point of time",
-    "meaning_es": "otra vez (futuro); más; luego; entonces",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 15399566
-  },
-  {
-    "hanzi": "时间",
-    "traditional": "時",
-    "pinyin": "shíjiān",
-    "meaning_en": "(concept of) time; (duration of) time; (point in) time",
-    "meaning_es": "tiempo; duración; hora",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 14785440
-  },
-  {
     "hanzi": "爱",
+    "sense_index": null,
+    "variants": [
+      "爱"
+    ],
     "traditional": "愛",
     "pinyin": "ài",
     "meaning_en": "to love; to be fond of; to like; affection; to be inclined (to do sth)",
@@ -660,2177 +14,25 @@
     "frequency": 13772657
   },
   {
-    "hanzi": "吃",
-    "traditional": "喫",
-    "pinyin": "chī",
-    "meaning_en": "to eat; to consume; to eat at (a cafeteria etc); to eradicate; to destroy",
-    "meaning_es": "comer",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 12987492
-  },
-  {
-    "hanzi": "时候",
-    "traditional": "時",
-    "pinyin": "shíhou",
-    "meaning_en": "time; length of time; moment; period",
-    "meaning_es": "momento; cuando; durante",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 12888353
-  },
-  {
-    "hanzi": "呢",
+    "hanzi": "吧",
+    "sense_index": null,
+    "variants": [
+      "吧"
+    ],
     "traditional": null,
-    "pinyin": "ne",
-    "meaning_en": "particle indicating that a previously asked question is to be applied to the preceding word ('What about ...?', 'And ...?'); particle for inquiring about location ('Where is ...?'); particle signaling a pause, to emphasize the preceding words and allow the listener time to take them on board ('ok?', 'are you with me?'); (at the end of a declarative sentence) particle indicating continuation of a state or action; particle indicating strong affirmation",
-    "meaning_es": "ne (¿y...?; énfasis)",
+    "pinyin": "ba",
+    "meaning_en": "(modal particle indicating suggestion or surmise); ...right?; ...OK?; ...I presume.",
+    "meaning_es": "ba (sugerencia); bar",
     "classifier": null,
     "pos": "particle",
-    "frequency": 12641044
-  },
-  {
-    "hanzi": "只",
-    "traditional": "隻",
-    "pinyin": "zhī",
-    "meaning_en": "grain that has begun to ripen; classifier for birds and certain animals, one of a pair, some utensils, vessels etc",
-    "meaning_es": "clasificador para animales y para objetos de un par",
-    "classifier": null,
-    "pos": "measure word",
-    "frequency": 12513893
-  },
-  {
-    "hanzi": "今天",
-    "traditional": null,
-    "pinyin": "jīntiān",
-    "meaning_en": "today; the present time; now",
-    "meaning_es": "hoy; hoy en día; el día de hoy; actualmente",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 12378709
-  },
-  {
-    "hanzi": "它",
-    "traditional": "牠",
-    "pinyin": "tā",
-    "meaning_en": "it; it (pronoun for an animal)",
-    "meaning_es": "ello (animal/cosa)",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 12176287
-  },
-  {
-    "hanzi": "分",
-    "traditional": null,
-    "pinyin": "fēn",
-    "meaning_en": "to divide; to separate; to distribute; to allocate; to distinguish (good and bad)",
-    "meaning_es": "centavo (0.01 yuan); dividir; minuto; punto",
-    "classifier": null,
-    "pos": "measure word",
-    "frequency": 11826179
-  },
-  {
-    "hanzi": "一些",
-    "traditional": null,
-    "pinyin": "yìxiē",
-    "meaning_en": "some; a few; a little; (following an adjective) slightly ...er",
-    "meaning_es": "algunos; unos cuantos; un poco de",
-    "classifier": null,
-    "pos": "数量",
-    "frequency": 11583138
-  },
-  {
-    "hanzi": "这些",
-    "traditional": "這",
-    "pinyin": "zhèxiē",
-    "meaning_en": "these",
-    "meaning_es": "estos; estas; estos/as",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 11378382
-  },
-  {
-    "hanzi": "大家",
-    "traditional": null,
-    "pinyin": "dàjiā",
-    "meaning_en": "everyone; influential family; great expert",
-    "meaning_es": "todos; todo el mundo",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 11129890
-  },
-  {
-    "hanzi": "吗",
-    "traditional": "嗎",
-    "pinyin": "ma",
-    "meaning_en": "(question particle for 'yes-no' questions)",
-    "meaning_es": "ma (¿sí/no?)",
-    "classifier": null,
-    "pos": "particle",
-    "frequency": 10975592
-  },
-  {
-    "hanzi": "几",
-    "traditional": "幾",
-    "pinyin": "jǐ",
-    "meaning_en": "how much; how many; several; a few",
-    "meaning_es": "cuántos; varios; unos pocos; algunos",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 10023845
-  },
-  {
-    "hanzi": "事",
-    "traditional": null,
-    "pinyin": "shì",
-    "meaning_en": "matter; thing; item; work; affair",
-    "meaning_es": "asunto; cosa; tema; ocupación",
-    "classifier": "件、桩、回",
-    "pos": "noun",
-    "frequency": 9941650
-  },
-  {
-    "hanzi": "今年",
-    "traditional": null,
-    "pinyin": "jīnnián",
-    "meaning_en": "this year",
-    "meaning_es": "este año",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 9714475
-  },
-  {
-    "hanzi": "喜欢",
-    "traditional": "喜",
-    "pinyin": "xǐhuan",
-    "meaning_en": "to like; to be fond of",
-    "meaning_es": "gustar; querer; aficionarse a; ser aficionado a; preferir",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 9589721
-  },
-  {
-    "hanzi": "知道",
-    "traditional": null,
-    "pinyin": "zhīdào",
-    "meaning_en": "to know; to become aware of; also pr. [zhi1dao5]",
-    "meaning_es": "saber; conocer; enterarse de; estar al tanto de; darse cuenta de",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 9354835
-  },
-  {
-    "hanzi": "车",
-    "traditional": "車",
-    "pinyin": "chē",
-    "meaning_en": "car; vehicle; machine; to shape with a lathe; Kangxi radical 159",
-    "meaning_es": "coche; vehículo; vagón",
-    "classifier": "辆",
-    "pos": "noun",
-    "frequency": 9131035
-  },
-  {
-    "hanzi": "怎么",
-    "traditional": "怎",
-    "pinyin": "zěnme",
-    "meaning_en": "how?; what?; why?",
-    "meaning_es": "cómo; de qué manera; qué; por qué (sorpresa); ¿cómo es que...?",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 8708842
-  },
-  {
-    "hanzi": "外",
-    "traditional": null,
-    "pinyin": "wài",
-    "meaning_en": "outside; in addition; foreign; external",
-    "meaning_es": "fuera; exterior; externo; extranjero; además de",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 8587903
-  },
-  {
-    "hanzi": "谁",
-    "traditional": "誰",
-    "pinyin": "shéi/shuí",
-    "meaning_en": "who; also pr. [shui2]",
-    "meaning_es": "quién",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 8548190
-  },
-  {
-    "hanzi": "你们",
-    "traditional": "你",
-    "pinyin": "nǐmen",
-    "meaning_en": "you (plural)",
-    "meaning_es": "vosotros/ustedes",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 8527633
-  },
-  {
-    "hanzi": "见",
-    "traditional": "見",
-    "pinyin": "jiàn",
-    "meaning_en": "to see; to meet; to appear (to be sth); to interview; opinion",
-    "meaning_es": "ver; encontrarse con; aparecer; opinar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 8490843
-  },
-  {
-    "hanzi": "找",
-    "traditional": null,
-    "pinyin": "zhǎo",
-    "meaning_en": "to try to find; to look for; to call on sb; to find; to seek",
-    "meaning_es": "buscar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 8427695
-  },
-  {
-    "hanzi": "岁",
-    "traditional": "歲",
-    "pinyin": "suì",
-    "meaning_en": "years old; classifier for years (of age); year; year (of crop harvests)",
-    "meaning_es": "años (de edad); año de vida",
-    "classifier": null,
-    "pos": "measure word",
-    "frequency": 8215534
-  },
-  {
-    "hanzi": "水",
-    "traditional": null,
-    "pinyin": "shuǐ",
-    "meaning_en": "water; (after a name) ... River; to swim (used mostly in 會水|会水[hui4 shui3] and 水性[shui3 xing4]); (coll.) lacking in substance; shoddy",
-    "meaning_es": "agua; líquido; río; curso de agua",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 8153040
-  },
-  {
-    "hanzi": "非常",
-    "traditional": null,
-    "pinyin": "fēicháng",
-    "meaning_en": "very; really; unusual; extraordinary",
-    "meaning_es": "muy; extremadamente; extraordinario",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 8056541
-  },
-  {
-    "hanzi": "买",
-    "traditional": "買",
-    "pinyin": "mǎi",
-    "meaning_en": "to buy; to purchase",
-    "meaning_es": "comprar; adquirir",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 7979402
-  },
-  {
-    "hanzi": "开",
-    "traditional": "開",
-    "pinyin": "kāi",
-    "meaning_en": "to open (transitive or intransitive); (of ships, vehicles, troops etc) to start; to turn on; to put in operation; to operate",
-    "meaning_es": "abrir; encender; conducir; empezar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 7960803
-  },
-  {
-    "hanzi": "觉得",
-    "traditional": "覺",
-    "pinyin": "juéde",
-    "meaning_en": "to think that ...; to feel that ...; to feel (uncomfortable etc)",
-    "meaning_es": "pensar que; sentir que; encontrar que",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 7959167
-  },
-  {
-    "hanzi": "不要",
-    "traditional": null,
-    "pinyin": "búyào",
-    "meaning_en": "don't!; must not",
-    "meaning_es": "no (imperativo); ¡no hagas...!; no querer; no necesitar",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 7793782
-  },
-  {
-    "hanzi": "号",
-    "traditional": "號",
-    "pinyin": "hào",
-    "meaning_en": "ordinal number; day of a month; mark; sign; business establishment",
-    "meaning_es": "número; fecha (día del mes); talla; marca",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 7363824
-  },
-  {
-    "hanzi": "叫",
-    "traditional": "呌",
-    "pinyin": "jiào",
-    "meaning_en": "to shout; to call; to order; to ask; to be called",
-    "meaning_es": "llamar(se); gritar; pedir (comida/taxi)",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 7079928
-  },
-  {
-    "hanzi": "学生",
-    "traditional": "學",
-    "pinyin": "xuéshēng",
-    "meaning_en": "student; schoolchild",
-    "meaning_es": "estudiante; alumno; discípulo; escolar",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 6886521
-  },
-  {
-    "hanzi": "钱",
-    "traditional": "錢",
-    "pinyin": "qián",
-    "meaning_en": "coin; money; unit of weight, one tenth of a tael 兩|两[liang3]",
-    "meaning_es": "dinero; moneda",
-    "classifier": "笔",
-    "pos": "noun",
-    "frequency": 6768858
-  },
-  {
-    "hanzi": "请",
-    "traditional": "請",
-    "pinyin": "qǐng",
-    "meaning_en": "to ask; to invite; please (do sth); to treat (to a meal etc); to request",
-    "meaning_es": "por favor; invitar; pedir (cortésmente); contratar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 6760332
-  },
-  {
-    "hanzi": "问",
-    "traditional": "問",
-    "pinyin": "wèn",
-    "meaning_en": "to ask; to inquire",
-    "meaning_es": "preguntar; interrogar; preguntar por; cuestionar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 6740338
-  },
-  {
-    "hanzi": "孩子",
-    "traditional": null,
-    "pinyin": "háizi",
-    "meaning_en": "child",
-    "meaning_es": "niño/a; hijo/a; crío",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 6681697
-  },
-  {
-    "hanzi": "听",
-    "traditional": "聽",
-    "pinyin": "tīng",
-    "meaning_en": "to listen to; to hear; to heed; to obey; a can (loanword from English 'tin')",
-    "meaning_es": "oír; escuchar; atender; prestar oído; obedecer; hacer caso a; seguir (consejo); percibir (sonido)",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 6519997
-  },
-  {
-    "hanzi": "回",
-    "traditional": "逥",
-    "pinyin": "huí",
-    "meaning_en": "to circle; to go back; to turn around; to answer; to return",
-    "meaning_es": "volver; regresar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 6341453
-  },
-  {
-    "hanzi": "女",
-    "traditional": null,
-    "pinyin": "nǚ",
-    "meaning_en": "female; woman; daughter",
-    "meaning_es": "mujer; femenino; hija; muchacha",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 5946513
-  },
-  {
-    "hanzi": "一下",
-    "traditional": null,
-    "pinyin": "yíxià",
-    "meaning_en": "(after a verb) a bit; a little (indicating brief duration, or softening the tone, or suggesting giving sth a try); all at once; suddenly",
-    "meaning_es": "un poco; un momento; brevemente (después del verbo: suaviza o indica intento rápido)",
-    "classifier": null,
-    "pos": "数量、（副）",
-    "frequency": 5932374
-  },
-  {
-    "hanzi": "东西",
-    "traditional": "東",
-    "pinyin": "dōngxi",
-    "meaning_en": "east and west",
-    "meaning_es": "cosa; objeto; cacharro; este/oeste",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 5827002
-  },
-  {
-    "hanzi": "正在",
-    "traditional": null,
-    "pinyin": "zhèngzài",
-    "meaning_en": "to be in the process of (doing sth); to be currently ...-ing",
-    "meaning_es": "estar (gerundio); justo ahora; en este momento; en proceso de",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 5824702
-  },
-  {
-    "hanzi": "这里",
-    "traditional": "這",
-    "pinyin": "zhèlǐ",
-    "meaning_en": "here",
-    "meaning_es": "aquí; acá; este lugar",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 5812931
-  },
-  {
-    "hanzi": "住",
-    "traditional": null,
-    "pinyin": "zhù",
-    "meaning_en": "to live; to dwell; to stay; to reside; to stop",
-    "meaning_es": "vivir; residir; alojarse; habitar; parar(se); detenerse; cesar; fijar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 5674865
-  },
-  {
-    "hanzi": "学习",
-    "traditional": "學",
-    "pinyin": "xuéxí",
-    "meaning_en": "to learn; to study",
-    "meaning_es": "estudiar; aprender; formación; aprendizaje",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 5570557
-  },
-  {
-    "hanzi": "件",
-    "traditional": null,
-    "pinyin": "jiàn",
-    "meaning_en": "item; component; classifier for events, things, clothes etc",
-    "meaning_es": "clasificador para ropa, asuntos, equipaje; artículo; documento",
-    "classifier": null,
-    "pos": "measure word",
-    "frequency": 5517461
-  },
-  {
-    "hanzi": "朋友",
-    "traditional": null,
-    "pinyin": "péngyou",
-    "meaning_en": "friend",
-    "meaning_es": "amigo/a; compañero/a",
-    "classifier": "个、位",
-    "pos": "noun",
-    "frequency": 5331707
-  },
-  {
-    "hanzi": "去年",
-    "traditional": null,
-    "pinyin": "qùnián",
-    "meaning_en": "last year",
-    "meaning_es": "el año pasado",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 5301941
-  },
-  {
-    "hanzi": "那个",
-    "traditional": "那",
-    "pinyin": "nàge",
-    "meaning_en": "that one; that thing; that (as opposed to this); (used before a verb or adjective for emphasis); (used to humorously or indirectly refer to sth embarrassing, funny etc, or when one can't think of the right word)",
-    "meaning_es": "ese; aquel; esa cosa; aquello",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 5296183
-  },
-  {
-    "hanzi": "有些",
-    "traditional": null,
-    "pinyin": "yǒuxiē",
-    "meaning_en": "some; somewhat",
-    "meaning_es": "algunos; unos cuantos; hay quienes; algo; un poco; bastante; tener un poco de",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 5287025
-  },
-  {
-    "hanzi": "昨天",
-    "traditional": null,
-    "pinyin": "zuótiān",
-    "meaning_en": "yesterday",
-    "meaning_es": "ayer",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 5187383
-  },
-  {
-    "hanzi": "学校",
-    "traditional": "學",
-    "pinyin": "xuéxiào",
-    "meaning_en": "school",
-    "meaning_es": "escuela; colegio; centro educativo; institución educativa",
-    "classifier": "所",
-    "pos": "noun",
-    "frequency": 5160143
-  },
-  {
-    "hanzi": "写",
-    "traditional": "寫",
-    "pinyin": "xiě",
-    "meaning_en": "to write",
-    "meaning_es": "escribir; redactar; componer; describir; pintar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 4943588
-  },
-  {
-    "hanzi": "少",
-    "traditional": null,
-    "pinyin": "shǎo",
-    "meaning_en": "few; less; to lack; to be missing; to stop (doing sth)",
-    "meaning_es": "poco; escaso; menos; insuficiente; faltar; carecer; perder; extraviar; joven; corta edad",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 4710056
-  },
-  {
-    "hanzi": "国",
-    "traditional": "國",
-    "pinyin": "guó",
-    "meaning_en": "country; nation; state; (bound form) national",
-    "meaning_es": "país; nación; estado; nacional",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 4684995
-  },
-  {
-    "hanzi": "小时",
-    "traditional": "小",
-    "pinyin": "xiǎoshí",
-    "meaning_en": "hour",
-    "meaning_es": "hora",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 4629165
-  },
-  {
-    "hanzi": "您",
-    "traditional": null,
-    "pinyin": "nín",
-    "meaning_en": "you (courteous, as opposed to informal 你[ni3])",
-    "meaning_es": "usted (cortés)",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 4560428
-  },
-  {
-    "hanzi": "那些",
-    "traditional": null,
-    "pinyin": "nàxiē",
-    "meaning_en": "those",
-    "meaning_es": "esos; aquellos; esas cosas",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 4520517
-  },
-  {
-    "hanzi": "电话",
-    "traditional": "電",
-    "pinyin": "diànhuà",
-    "meaning_en": "telephone; phone call; phone number",
-    "meaning_es": "teléfono; llamada telefónica",
-    "classifier": "部、通",
-    "pos": "noun",
-    "frequency": 4470310
-  },
-  {
-    "hanzi": "睡",
-    "traditional": null,
-    "pinyin": "shuì",
-    "meaning_en": "to sleep; to lie down",
-    "meaning_es": "dormir",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 4464165
-  },
-  {
-    "hanzi": "学",
-    "traditional": "學",
-    "pinyin": "xué",
-    "meaning_en": "to learn; to study; to imitate; science; -ology",
-    "meaning_es": "estudiar; aprender",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 4458826
-  },
-  {
-    "hanzi": "口",
-    "traditional": null,
-    "pinyin": "kǒu",
-    "meaning_en": "mouth; classifier for things with mouths (people, domestic animals, cannons, wells etc); classifier for bites or mouthfuls",
-    "meaning_es": "boca; entrada; abertura; clasificador para bocados/personas (familia)/pozos",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 4395540
-  },
-  {
-    "hanzi": "下午",
-    "traditional": null,
-    "pinyin": "xiàwǔ",
-    "meaning_en": "afternoon; p.m.",
-    "meaning_es": "por la tarde; durante la tarde",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 4251438
-  },
-  {
-    "hanzi": "玩",
-    "traditional": "翫",
-    "pinyin": "wán",
-    "meaning_en": "to play; to have fun; to trifle with; toy; sth used for amusement",
-    "meaning_es": "jugar; divertirse; pasarlo bien; entretenerse; usar; manejar; bromear; tomar a la ligera",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 4207147
-  },
-  {
-    "hanzi": "明天",
-    "traditional": null,
-    "pinyin": "míngtiān",
-    "meaning_en": "tomorrow",
-    "meaning_es": "mañana (día siguiente)",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 3889610
-  },
-  {
-    "hanzi": "穿",
-    "traditional": null,
-    "pinyin": "chuān",
-    "meaning_en": "to wear; to put on; to dress; to bore through; to pierce",
-    "meaning_es": "vestir; ponerse (ropa); atravesar; cruzar; pasar por; penetrar; ensartar; enhebrar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 3884646
-  },
-  {
-    "hanzi": "喝",
-    "traditional": null,
-    "pinyin": "hē",
-    "meaning_en": "to drink",
-    "meaning_es": "beber; tomar (líquidos); ingerir (bebidas); beberse",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 3881270
-  },
-  {
-    "hanzi": "块",
-    "traditional": "塊",
-    "pinyin": "kuài",
-    "meaning_en": "lump; chunk; piece; classifier for pieces of cloth, cake, soap etc; (coll.) classifier for money and currency units",
-    "meaning_es": "trozo; pedazo; bloque; terrón; tableta; kuai (yuan, coloquial); clasificador para dinero (1 yuan), jabón, carne, etc.",
-    "classifier": null,
-    "pos": "measure word",
-    "frequency": 3871951
-  },
-  {
-    "hanzi": "早",
-    "traditional": null,
-    "pinyin": "zǎo",
-    "meaning_en": "early; morning; Good morning!; long ago; prematurely",
-    "meaning_es": "temprano; por la mañana; buenos días; hace tiempo; tempranero",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 3857863
-  },
-  {
-    "hanzi": "男",
-    "traditional": null,
-    "pinyin": "nán",
-    "meaning_en": "(bound form) male; baron, the lowest of the five ranks of nobility 五等爵位[wu3 deng3 jue2 wei4]",
-    "meaning_es": "hombre; varón; masculino; macho; hijo; barón (título nobiliario)",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 3847599
-  },
-  {
-    "hanzi": "医院",
-    "traditional": "醫",
-    "pinyin": "yīyuàn",
-    "meaning_en": "hospital",
-    "meaning_es": "hospital; clínica; centro médico; sanatorio",
-    "classifier": "所、家、座",
-    "pos": "noun",
-    "frequency": 3813656
-  },
-  {
-    "hanzi": "分钟",
-    "traditional": "分",
-    "pinyin": "fēnzhōng",
-    "meaning_en": "minute",
-    "meaning_es": "minuto; momento; instante; unidad de tiempo (60 segundos)",
-    "classifier": null,
-    "pos": "measure word",
-    "frequency": 3812320
-  },
-  {
-    "hanzi": "坐",
-    "traditional": null,
-    "pinyin": "zuò",
-    "meaning_en": "to sit; to take a seat; to take (a bus, airplane etc); to bear fruit",
-    "meaning_es": "sentarse; tomar asiento; permanecer sentado; viajar en; tomar (transporte)",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 3800762
-  },
-  {
-    "hanzi": "电影",
-    "traditional": "電",
-    "pinyin": "diànyǐng",
-    "meaning_en": "movie; film",
-    "meaning_es": "película; filme; cine; producción cinematográfica; largometraje; metraje",
-    "classifier": "部、片、场",
-    "pos": "noun",
-    "frequency": 3689714
-  },
-  {
-    "hanzi": "晚上",
-    "traditional": null,
-    "pinyin": "wǎnshang",
-    "meaning_en": "evening; night; in the evening",
-    "meaning_es": "por la noche; noche; velada; tarde-noche; anochecer; al anochecer",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 3682819
-  },
-  {
-    "hanzi": "书",
-    "traditional": "書",
-    "pinyin": "shū",
-    "meaning_en": "book; letter; document; to write",
-    "meaning_es": "libro; volumen; obra escrita; documento; carta; caligrafía; escritura; estilo de escribir",
-    "classifier": "本、册、部",
-    "pos": "noun",
-    "frequency": 3571022
-  },
-  {
-    "hanzi": "认识",
-    "traditional": "認",
-    "pinyin": "rènshi",
-    "meaning_en": "to know; to recognize; to be familiar with; to get acquainted with sb; knowledge",
-    "meaning_es": "conocer (a alguien); saber; reconocer; identificar; estar familiarizado con; tener trato con",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 3502311
-  },
-  {
-    "hanzi": "晚",
-    "traditional": null,
-    "pinyin": "wǎn",
-    "meaning_en": "evening; night; late",
-    "meaning_es": "tarde; noche; avanzada la hora; crepúsculo; retrasado; tardío; posterior; joven; juvenil",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 3391123
-  },
-  {
-    "hanzi": "字",
-    "traditional": null,
-    "pinyin": "zì",
-    "meaning_en": "letter; symbol; character; word; courtesy or style name traditionally given to males aged 20 in dynastic China",
-    "meaning_es": "carácter chino; letra; signo escrito; caligrafía; palabra; término; escritura",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 3389991
-  },
-  {
-    "hanzi": "边",
-    "traditional": "邊",
-    "pinyin": "biān",
-    "meaning_en": "side; edge; margin; border; boundary",
-    "meaning_es": "lado; borde; margen; orilla; extremo; límite; frontera; costado; al mismo tiempo que",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 3385425
-  },
-  {
-    "hanzi": "多少",
-    "traditional": null,
-    "pinyin": "duōshao",
-    "meaning_en": "number; amount; somewhat",
-    "meaning_es": "cuánto(s)",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 3379566
-  },
-  {
-    "hanzi": "店",
-    "traditional": null,
-    "pinyin": "diàn",
-    "meaning_en": "inn; old-style hotel; (bound form) shop; store",
-    "meaning_es": "tienda; comercio; negocio; establecimiento comercial; posada; hostal; fonda",
-    "classifier": "家",
-    "pos": "noun",
-    "frequency": 3193100
-  },
-  {
-    "hanzi": "卖",
-    "traditional": "賣",
-    "pinyin": "mài",
-    "meaning_en": "to sell; to betray; to spare no effort; to show off or flaunt",
-    "meaning_es": "vender; comerciar; expender; traspasar; traicionar; revelar (un secreto)",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 3193070
-  },
-  {
-    "hanzi": "有的",
-    "traditional": null,
-    "pinyin": "yǒude",
-    "meaning_en": "(there are) some (who are...); some (exist)",
-    "meaning_es": "algunos; hay quienes; una parte; ciertos; determinadas personas/cosas; existen... que",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 3183017
-  },
-  {
-    "hanzi": "老师",
-    "traditional": "老",
-    "pinyin": "lǎoshī",
-    "meaning_en": "teacher",
-    "meaning_es": "profesor/a; maestro/a; educador/a; docente; instructor/a; tutor/a",
-    "classifier": "个、位",
-    "pos": "noun",
-    "frequency": 2997668
-  },
-  {
-    "hanzi": "们",
-    "traditional": "們",
-    "pinyin": "men",
-    "meaning_en": "plural marker for pronouns, and nouns referring to individuals",
-    "meaning_es": "sufijo de plural para pronombres y sustantivos referidos a personas",
-    "classifier": null,
-    "pos": "suffix",
-    "frequency": 2962827
-  },
-  {
-    "hanzi": "冷",
-    "traditional": null,
-    "pinyin": "lěng",
-    "meaning_en": "cold",
-    "meaning_es": "frío; fresco; gélido; indiferente; distante; poco amistoso; solitario; desierto; repentino; súbito",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 2914595
-  },
-  {
-    "hanzi": "病",
-    "traditional": null,
-    "pinyin": "bìng",
-    "meaning_en": "illness; disease; to fall ill; defect",
-    "meaning_es": "enfermedad; dolencia; mal; afección; padecimiento; defecto; vicio; enfermar(se); caer enfermo",
-    "classifier": "场",
-    "pos": "noun",
-    "frequency": 2893603
-  },
-  {
-    "hanzi": "上午",
-    "traditional": null,
-    "pinyin": "shàngwǔ",
-    "meaning_en": "morning",
-    "meaning_es": "por la mañana; durante la mañana",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 2861780
-  },
-  {
-    "hanzi": "半",
-    "traditional": null,
-    "pinyin": "bàn",
-    "meaning_en": "half; semi-; incomplete; (after a number) and a half",
-    "meaning_es": "mitad; medio; semi-; incompleto; parcial; a medias; en parte",
-    "classifier": null,
-    "pos": "numeral",
-    "frequency": 2854116
-  },
-  {
-    "hanzi": "歌",
-    "traditional": "謌",
-    "pinyin": "gē",
-    "meaning_en": "song; (bound form) to sing",
-    "meaning_es": "canción; canto; melodía vocal; composición musical cantada; cantar; entonar; alabar en verso",
-    "classifier": "首、支",
-    "pos": "noun",
-    "frequency": 2763966
-  },
-  {
-    "hanzi": "热",
-    "traditional": "熱",
-    "pinyin": "rè",
-    "meaning_en": "to warm up; to heat up; hot (of weather); heat; fervent",
-    "meaning_es": "caliente; calor; temperatura elevada; calentar; popular; de moda; ferviente; entusiasta; fervoroso",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 2750130
-  },
-  {
-    "hanzi": "妈妈",
-    "traditional": "媽",
-    "pinyin": "māma",
-    "meaning_en": "mama; mommy; mother",
-    "meaning_es": "mamá; madre; mamaíta (forma cariñosa)",
-    "classifier": "个、位",
-    "pos": "noun",
-    "frequency": 2733513
-  },
-  {
-    "hanzi": "电视",
-    "traditional": "電",
-    "pinyin": "diànshì",
-    "meaning_en": "television; TV",
-    "meaning_es": "televisión; tele; TV; televisor; aparato de TV; programa televisivo; emisión televisiva",
-    "classifier": "台、部",
-    "pos": "noun",
-    "frequency": 2728539
-  },
-  {
-    "hanzi": "大学",
-    "traditional": "大",
-    "pinyin": "dàxué",
-    "meaning_en": "university; college",
-    "meaning_es": "universidad; facultad; centro de estudios superiores; carrera universitaria",
-    "classifier": "所",
-    "pos": "noun",
-    "frequency": 2616716
-  },
-  {
-    "hanzi": "哪",
-    "traditional": null,
-    "pinyin": "nǎ",
-    "meaning_en": "how; which",
-    "meaning_es": "cuál; qué; dónde (forma abreviada de 哪儿); alguno; cualquier",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 2578497
-  },
-  {
-    "hanzi": "电脑",
-    "traditional": "電",
-    "pinyin": "diànnǎo",
-    "meaning_en": "computer",
-    "meaning_es": "ordenador; computadora; PC; equipo informático; cerebro electrónico; máquina de procesamiento de datos",
-    "classifier": "台",
-    "pos": "noun",
-    "frequency": 2576740
-  },
-  {
-    "hanzi": "狗",
-    "traditional": null,
-    "pinyin": "gǒu",
-    "meaning_en": "dog",
-    "meaning_es": "perro; can; chucho; sabueso",
-    "classifier": "只、条",
-    "pos": "noun",
-    "frequency": 2568477
-  },
-  {
-    "hanzi": "谢谢",
-    "traditional": "謝",
-    "pinyin": "xièxie",
-    "meaning_en": "to thank; thanks; thank you",
-    "meaning_es": "gracias; agradecer; dar las gracias; muchas gracias; te lo agradezco",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 2528380
-  },
-  {
-    "hanzi": "儿子",
-    "traditional": "兒",
-    "pinyin": "érzi",
-    "meaning_en": "son",
-    "meaning_es": "hijo; niño; muchacho; chaval; descendiente varón",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 2389621
-  },
-  {
-    "hanzi": "些",
-    "traditional": null,
-    "pinyin": "xiē",
-    "meaning_en": "classifier indicating a small amount or small number greater than 1: some, a few, several",
-    "meaning_es": "algunos; unos cuantos; varios; algo de; un poco de; cantidad pequeña",
-    "classifier": null,
-    "pos": "measure word",
-    "frequency": 2344133
-  },
-  {
-    "hanzi": "先生",
-    "traditional": null,
-    "pinyin": "xiānsheng",
-    "meaning_en": "teacher; gentleman; sir; mister (Mr.); husband",
-    "meaning_es": "señor; caballero; profesor; maestro; marido; esposo; doctor",
-    "classifier": "位",
-    "pos": "noun",
-    "frequency": 2248041
-  },
-  {
-    "hanzi": "唱",
-    "traditional": null,
-    "pinyin": "chàng",
-    "meaning_en": "to sing; to call loudly; to chant",
-    "meaning_es": "cantar; entonar; vocalizar; recitar cantando; gorjear; cacarear; llamar en voz alta; proclamar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 2235244
-  },
-  {
-    "hanzi": "睡觉",
-    "traditional": "睡",
-    "pinyin": "shuìjiào",
-    "meaning_en": "to go to bed; to sleep",
-    "meaning_es": "dormir; acostarse; irse a la cama; echarse a dormir",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 2202995
-  },
-  {
-    "hanzi": "它们",
-    "traditional": "它",
-    "pinyin": "tāmen",
-    "meaning_en": "they; them",
-    "meaning_es": "ellos/ellas (para animales y objetos); les (a animales y objetos)",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 2024150
-  },
-  {
-    "hanzi": "哪里",
-    "traditional": "哪",
-    "pinyin": "nǎlǐ",
-    "meaning_en": "where?; somewhere; anywhere; wherever; nowhere (negative answer to question)",
-    "meaning_es": "dónde; en qué lugar; algún sitio; cualquier lugar; ¡qué va! (modestia); ¡de nada!",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 2017051
-  },
-  {
-    "hanzi": "同学",
-    "traditional": "同",
-    "pinyin": "tóngxué",
-    "meaning_en": "to study at the same school; fellow student; classmate",
-    "meaning_es": "compañero de clase; condiscípulo; estudiante; camarada de estudios",
-    "classifier": "位、个",
-    "pos": "noun",
-    "frequency": 1955697
-  },
-  {
-    "hanzi": "她们",
-    "traditional": "她",
-    "pinyin": "tāmen",
-    "meaning_en": "they; them (females)",
-    "meaning_es": "ellas (femenino); les (a ellas)",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 1938149
-  },
-  {
-    "hanzi": "忙",
-    "traditional": null,
-    "pinyin": "máng",
-    "meaning_en": "busy; hurriedly; to hurry; to rush",
-    "meaning_es": "ocupado; atareado; ajetreado; tener prisa; apresurarse; darse prisa",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 1911546
-  },
-  {
-    "hanzi": "那里",
-    "traditional": "那",
-    "pinyin": "nàlǐ",
-    "meaning_en": "there; that place; there; that place",
-    "meaning_es": "allí; allá; ese lugar; aquel sitio; entonces; en ese punto",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 1905367
-  },
-  {
-    "hanzi": "天气",
-    "traditional": "天",
-    "pinyin": "tiānqì",
-    "meaning_en": "weather",
-    "meaning_es": "tiempo (clima); meteorología; estado del tiempo; condiciones atmosféricas",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 1855577
-  },
-  {
-    "hanzi": "读",
-    "traditional": "讀",
-    "pinyin": "dú",
-    "meaning_en": "to read out; to read aloud; to read; to attend (school); to study (a subject in school)",
-    "meaning_es": "leer; estudiar; recitar; leer en voz alta; pronunciar; asistir a (escuela)",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 1849464
-  },
-  {
-    "hanzi": "女儿",
-    "traditional": "女",
-    "pinyin": "nǚ'ér",
-    "meaning_en": "daughter",
-    "meaning_es": "hija; niña; muchacha; descendiente femenina",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 1835470
-  },
-  {
-    "hanzi": "说话",
-    "traditional": "說",
-    "pinyin": "shuōhuà",
-    "meaning_en": "to speak; to say; to talk; to gossip; to tell stories",
-    "meaning_es": "hablar; conversar; charlar; platicar; decir; expresarse; comunicarse verbalmente",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 1801458
-  },
-  {
-    "hanzi": "名字",
-    "traditional": null,
-    "pinyin": "míngzi",
-    "meaning_en": "name (of a person or thing)",
-    "meaning_es": "nombre; denominación; apelativo; título; reputación; fama; renombre",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 1765890
-  },
-  {
-    "hanzi": "医生",
-    "traditional": "醫",
-    "pinyin": "yīshēng",
-    "meaning_en": "doctor",
-    "meaning_es": "médico; doctor; facultativo; galeno; profesional de la medicina",
-    "classifier": "个、位、名",
-    "pos": "noun",
-    "frequency": 1758616
-  },
-  {
-    "hanzi": "猫",
-    "traditional": "貓",
-    "pinyin": "māo",
-    "meaning_en": "cat; (dialect) to hide oneself; (loanword) (coll.) modem",
-    "meaning_es": "gato; felino doméstico; minino; micho",
-    "classifier": "只",
-    "pos": "noun",
-    "frequency": 1748687
-  },
-  {
-    "hanzi": "看见",
-    "traditional": "看",
-    "pinyin": "kànjiàn",
-    "meaning_en": "to see; to catch sight of",
-    "meaning_es": "ver; percibir visualmente; avistar; alcanzar a ver con los ojos; notar; darse cuenta de; descubrir",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 1739832
-  },
-  {
-    "hanzi": "第",
-    "traditional": null,
-    "pinyin": "dì",
-    "meaning_en": "(prefix indicating ordinal number, as in 第六[di4 liu4] 'sixth'); (literary) grades in which successful candidates in the imperial examinations were placed; (old) residence of a high official; (literary) but; however",
-    "meaning_es": "prefijo de número ordinal (primero, segundo...)",
-    "classifier": null,
-    "pos": "prefix",
-    "frequency": 1732367
-  },
-  {
-    "hanzi": "雪",
-    "traditional": null,
-    "pinyin": "xuě",
-    "meaning_en": "snow; (literary) to wipe away (a humiliation etc)",
-    "meaning_es": "nieve; nevar; nevada; blanco como la nieve; limpiar (una afrenta); vengar",
-    "classifier": "场",
-    "pos": "noun",
-    "frequency": 1707566
-  },
-  {
-    "hanzi": "菜",
-    "traditional": null,
-    "pinyin": "cài",
-    "meaning_en": "vegetable; greens; dish (of food); (of one's skills etc) weak; poor",
-    "meaning_es": "verdura; hortaliza; plato (de comida); cocina (estilo culinario); comida; menú; plato preparado",
-    "classifier": "棵、样、道、盘",
-    "pos": "noun",
-    "frequency": 1686135
-  },
-  {
-    "hanzi": "飞机",
-    "traditional": "飛",
-    "pinyin": "fēijī",
-    "meaning_en": "airplane",
-    "meaning_es": "avión; aeroplano; aeronave; aparato volador; nave aérea; transporte aéreo",
-    "classifier": "架",
-    "pos": "noun",
-    "frequency": 1674767
-  },
-  {
-    "hanzi": "漂亮",
-    "traditional": null,
-    "pinyin": "piàoliang",
-    "meaning_en": "pretty; beautiful",
-    "meaning_es": "guapo; bonito; hermoso; bello; lindo; espléndido; magnífico; brillante; excelente",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 1660274
-  },
-  {
-    "hanzi": "早上",
-    "traditional": null,
-    "pinyin": "zǎoshang",
-    "meaning_en": "early morning",
-    "meaning_es": "por la mañana; primeras horas del día; madrugada; temprano; primera hora",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 1636879
-  },
-  {
-    "hanzi": "饭",
-    "traditional": "飯",
-    "pinyin": "fàn",
-    "meaning_en": "cooked rice; meal; (loanword) fan; devotee",
-    "meaning_es": "comida; alimento; arroz cocido; sustento; vianda; manutención",
-    "classifier": "碗、顿",
-    "pos": "noun",
-    "frequency": 1618796
-  },
-  {
-    "hanzi": "明年",
-    "traditional": null,
-    "pinyin": "míngnián",
-    "meaning_en": "next year",
-    "meaning_es": "el año que viene; el próximo año; el año entrante; el año siguiente",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 1578089
-  },
-  {
-    "hanzi": "高兴",
-    "traditional": "高",
-    "pinyin": "gāoxìng",
-    "meaning_en": "happy; glad; willing (to do sth); in a cheerful mood",
-    "meaning_es": "feliz; contento; alegre; satisfecho; complacido; estar dispuesto a; tener ganas de",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 1554692
-  },
-  {
-    "hanzi": "爸爸",
-    "traditional": null,
-    "pinyin": "bàba",
-    "meaning_en": "(coll.) father; dad",
-    "meaning_es": "papá; padre; progenitor varón; papi (forma cariñosa)",
-    "classifier": "个、位",
-    "pos": "noun",
-    "frequency": 1539349
-  },
-  {
-    "hanzi": "休息",
-    "traditional": null,
-    "pinyin": "xiūxi",
-    "meaning_en": "rest; to rest",
-    "meaning_es": "descansar; reposar; hacer una pausa; tomarse un descanso; relajarse; dormir",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 1474359
-  },
-  {
-    "hanzi": "上班",
-    "traditional": null,
-    "pinyin": "shàngbān",
-    "meaning_en": "to go to work; to be on duty; to start work; to go to the office",
-    "meaning_es": "ir al trabajo; trabajar; estar de servicio; comenzar el turno; entrar a trabajar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 1465310
-  },
-  {
-    "hanzi": "课",
-    "traditional": "課",
-    "pinyin": "kè",
-    "meaning_en": "subject; course; class; lesson; to levy",
-    "meaning_es": "clase; lección; asignatura; materia; curso; unidad didáctica; período lectivo",
-    "classifier": "门、堂、节",
-    "pos": "noun",
-    "frequency": 1435527
-  },
-  {
-    "hanzi": "好看",
-    "traditional": null,
-    "pinyin": "hǎokàn",
-    "meaning_en": "good-looking; nice-looking; (of a movie, book, TV show etc) good; in an embarrassing situation",
-    "meaning_es": "bonito; atractivo; de buena apariencia; agradable a la vista; bueno (película/libro); interesante",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 1414439
-  },
-  {
-    "hanzi": "茶",
-    "traditional": null,
-    "pinyin": "chá",
-    "meaning_en": "tea; tea plant",
-    "meaning_es": "té; infusión; bebida de hojas de té; planta del té; Camellia sinensis",
-    "classifier": "杯、壶",
-    "pos": "noun",
-    "frequency": 1384389
-  },
-  {
-    "hanzi": "中午",
-    "traditional": null,
-    "pinyin": "zhōngwǔ",
-    "meaning_en": "noon; midday",
-    "meaning_es": "mediodía; las doce del día; hora de la comida; media jornada; al mediodía",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 1346954
-  },
-  {
-    "hanzi": "雨",
-    "traditional": null,
-    "pinyin": "yǔ",
-    "meaning_en": "rain",
-    "meaning_es": "lluvia; precipitación; agua de lluvia; llover; caer lluvia; época de lluvias",
-    "classifier": "阵、场",
-    "pos": "noun",
-    "frequency": 1306669
-  },
-  {
-    "hanzi": "姐姐",
-    "traditional": null,
-    "pinyin": "jiějie",
-    "meaning_en": "older sister",
-    "meaning_es": "hermana mayor; señorita (tratamiento para mujer joven); hermana (en general, cariñoso)",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 1279753
-  },
-  {
-    "hanzi": "贵",
-    "traditional": "貴",
-    "pinyin": "guì",
-    "meaning_en": "expensive; (bound form) highly valued; precious; (bound form) noble; of high rank",
-    "meaning_es": "caro; costoso; valioso; precioso; noble; distinguido; honorable; su (cortés)",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 1228605
-  },
-  {
-    "hanzi": "一半",
-    "traditional": null,
-    "pinyin": "yíbàn",
-    "meaning_en": "half",
-    "meaning_es": "la mitad; medio; media parte; un 50%; a medias; parcialmente",
-    "classifier": null,
-    "pos": "numeral",
-    "frequency": 1227406
-  },
-  {
-    "hanzi": "家人",
-    "traditional": null,
-    "pinyin": "jiārén",
-    "meaning_en": "family member; (old) servant",
-    "meaning_es": "familiares; miembros de la familia; los de casa; parientes; gente de la familia",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 1165923
-  },
-  {
-    "hanzi": "打电话",
-    "traditional": "打",
-    "pinyin": "dǎ diànhuà",
-    "meaning_en": "to make a telephone call",
-    "meaning_es": "llamar por teléfono; hacer una llamada telefónica; telefonear; marcar",
-    "classifier": null,
-    "pos": "",
-    "frequency": 1138572
-  },
-  {
-    "hanzi": "苹果",
-    "traditional": "蘋",
-    "pinyin": "píngguǒ",
-    "meaning_en": "apple",
-    "meaning_es": "manzana; fruto del manzano; Malus domestica",
-    "classifier": "个、颗",
-    "pos": "noun",
-    "frequency": 1102063
-  },
-  {
-    "hanzi": "大学生",
-    "traditional": "大",
-    "pinyin": "dàxuéshēng",
-    "meaning_en": "university student; college student",
-    "meaning_es": "estudiante universitario; alumno de universidad; universitario",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 1078582
-  },
-  {
-    "hanzi": "房间",
-    "traditional": "房",
-    "pinyin": "fángjiān",
-    "meaning_en": "room",
-    "meaning_es": "habitación; cuarto; dormitorio; pieza; sala; estancia; aposento",
-    "classifier": "间、个",
-    "pos": "noun",
-    "frequency": 1060503
-  },
-  {
-    "hanzi": "喂",
-    "traditional": "餵",
-    "pinyin": "wèi",
-    "meaning_en": "hey; to feed (an animal, baby, invalid etc); to feed",
-    "meaning_es": "hola (al teléfono); oye; dar de comer (a un animal/bebé); alimentar",
-    "classifier": null,
-    "pos": "interjection",
-    "frequency": 1042918
-  },
-  {
-    "hanzi": "小学",
-    "traditional": "小",
-    "pinyin": "xiǎoxué",
-    "meaning_en": "elementary school; primary school",
-    "meaning_es": "escuela primaria; colegio",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 1000714
-  },
-  {
-    "hanzi": "哪个",
-    "traditional": "哪",
-    "pinyin": "nǎge",
-    "meaning_en": "which; who",
-    "meaning_es": "cuál; qué (entre opciones)",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 986728
-  },
-  {
-    "hanzi": "起床",
-    "traditional": null,
-    "pinyin": "qǐchuáng",
-    "meaning_en": "to get out of bed; to get up",
-    "meaning_es": "levantarse (de la cama)",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 971659
-  },
-  {
-    "hanzi": "哥哥",
-    "traditional": null,
-    "pinyin": "gēge",
-    "meaning_en": "older brother",
-    "meaning_es": "hermano mayor",
-    "classifier": "个、位",
-    "pos": "noun",
-    "frequency": 957711
-  },
-  {
-    "hanzi": "衣服",
-    "traditional": null,
-    "pinyin": "yīfu",
-    "meaning_en": "clothes",
-    "meaning_es": "ropa; vestimenta; indumentaria; prenda; vestido",
-    "classifier": "件、套",
-    "pos": "noun",
-    "frequency": 932764
-  },
-  {
-    "hanzi": "怎么样",
-    "traditional": "怎",
-    "pinyin": "zěnmeyàng",
-    "meaning_en": "how?; how about?; how was it?; how are things?",
-    "meaning_es": "¿qué tal?; ¿cómo es?; ¿cómo te va?; ¿qué te parece?",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 927693
-  },
-  {
-    "hanzi": "好吃",
-    "traditional": null,
-    "pinyin": "hǎochī",
-    "meaning_en": "tasty; delicious",
-    "meaning_es": "delicioso; rico; sabroso",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 819558
-  },
-  {
-    "hanzi": "便宜",
-    "traditional": null,
-    "pinyin": "piányi",
-    "meaning_en": "cheap; inexpensive; a petty advantage; to let sb off lightly",
-    "meaning_es": "barato; económico; ventajoso; ganga",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 812874
-  },
-  {
-    "hanzi": "对不起",
-    "traditional": "對",
-    "pinyin": "duìbuqǐ",
-    "meaning_en": "I'm sorry; excuse me; I beg your pardon; to let (sb) down; to disappoint",
-    "meaning_es": "lo siento; perdón; disculpa",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 800251
-  },
-  {
-    "hanzi": "水果",
-    "traditional": null,
-    "pinyin": "shuǐguǒ",
-    "meaning_en": "fruit",
-    "meaning_es": "fruta; fruto",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 792023
-  },
-  {
-    "hanzi": "星期",
-    "traditional": null,
-    "pinyin": "xīngqī",
-    "meaning_en": "week; day of the week; Sunday",
-    "meaning_es": "semana; día de la semana",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 755765
-  },
-  {
-    "hanzi": "读书",
-    "traditional": "讀",
-    "pinyin": "dúshū",
-    "meaning_en": "to read a book; to study; to attend school",
-    "meaning_es": "leer libros; estudiar; asistir a la escuela",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 735952
-  },
-  {
-    "hanzi": "妹妹",
-    "traditional": null,
-    "pinyin": "mèimei",
-    "meaning_en": "younger sister; young woman",
-    "meaning_es": "hermana menor",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 714797
-  },
-  {
-    "hanzi": "中学",
-    "traditional": "中",
-    "pinyin": "zhōngxué",
-    "meaning_en": "middle school",
-    "meaning_es": "instituto; escuela secundaria",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 710971
-  },
-  {
-    "hanzi": "上课",
-    "traditional": "上",
-    "pinyin": "shàngkè",
-    "meaning_en": "to go to class; to attend class; to go to teach a class",
-    "meaning_es": "ir a clase; asistir a clase",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 703933
-  },
-  {
-    "hanzi": "牛奶",
-    "traditional": null,
-    "pinyin": "niúnǎi",
-    "meaning_en": "cow's milk",
-    "meaning_es": "leche (de vaca)",
-    "classifier": "瓶、杯",
-    "pos": "noun",
-    "frequency": 686739
-  },
-  {
-    "hanzi": "没事",
-    "traditional": "沒",
-    "pinyin": "méishì",
-    "meaning_en": "it's not important; it's nothing; never mind; to have nothing to do; to be free",
-    "meaning_es": "no importa; no pasa nada; no es grave; estoy libre/desocupado",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 667817
-  },
-  {
-    "hanzi": "你好",
-    "traditional": null,
-    "pinyin": "nǐ hǎo",
-    "meaning_en": "hello; hi",
-    "meaning_es": "hola; ¿qué tal?; buenos días/tardes",
-    "classifier": null,
-    "pos": "",
-    "frequency": 659697
-  },
-  {
-    "hanzi": "中文",
-    "traditional": null,
-    "pinyin": "Zhōngwén",
-    "meaning_en": "Chinese language",
-    "meaning_es": "idioma chino; lengua china; chino mandarín; escritura china",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 654899
-  },
-  {
-    "hanzi": "哪些",
-    "traditional": null,
-    "pinyin": "nǎxiē",
-    "meaning_en": "which ones?; who?; what?",
-    "meaning_es": "cuáles; qué (plural); quiénes",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 648251
-  },
-  {
-    "hanzi": "出租车",
-    "traditional": "出",
-    "pinyin": "chūzūchē",
-    "meaning_en": "taxi; (Tw) rental car",
-    "meaning_es": "taxi; vehículo de alquiler con conductor; coche de plaza; libre; radio-taxi",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 627350
-  },
-  {
-    "hanzi": "下班",
-    "traditional": null,
-    "pinyin": "xiàbān",
-    "meaning_en": "to finish work; to get off work; next service (train, bus etc)",
-    "meaning_es": "salir del trabajo; terminar turno",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 620525
-  },
-  {
-    "hanzi": "白天",
-    "traditional": null,
-    "pinyin": "báitiān",
-    "meaning_en": "daytime; during the day; day",
-    "meaning_es": "durante el día; de día; día",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 606766
-  },
-  {
-    "hanzi": "火车",
-    "traditional": "火",
-    "pinyin": "huǒchē",
-    "meaning_en": "train",
-    "meaning_es": "tren; ferrocarril; convoy ferroviario; locomotora con vagones",
-    "classifier": "列、节、班、趟",
-    "pos": "noun",
-    "frequency": 575333
-  },
-  {
-    "hanzi": "开车",
-    "traditional": "開",
-    "pinyin": "kāichē",
-    "meaning_en": "to drive a car (or train etc); (slang) to post sexual content online; to make a sexual joke",
-    "meaning_es": "conducir (un vehículo); manejar; pilotar; arrancar el coche; poner en marcha; (argot) publicar contenido sexual",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 571486
-  },
-  {
-    "hanzi": "上学",
-    "traditional": "上",
-    "pinyin": "shàngxué",
-    "meaning_en": "to go to school; to attend school",
-    "meaning_es": "ir a la escuela; asistir a clase",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 567120
-  },
-  {
-    "hanzi": "鸡蛋",
-    "traditional": "雞",
-    "pinyin": "jīdàn",
-    "meaning_en": "(chicken) egg; hen's egg",
-    "meaning_es": "huevo (de gallina)",
-    "classifier": "个、打",
-    "pos": "noun",
-    "frequency": 562123
-  },
-  {
-    "hanzi": "弟弟",
-    "traditional": null,
-    "pinyin": "dìdi",
-    "meaning_en": "younger brother",
-    "meaning_es": "hermano menor",
-    "classifier": "个、位",
-    "pos": "noun",
-    "frequency": 561912
-  },
-  {
-    "hanzi": "女士",
-    "traditional": null,
-    "pinyin": "nǚshì",
-    "meaning_en": "lady; madam; Miss; Ms",
-    "meaning_es": "señora; dama; Sra. (tratamiento formal)",
-    "classifier": "个、位",
-    "pos": "noun",
-    "frequency": 554862
-  },
-  {
-    "hanzi": "好听",
-    "traditional": "好",
-    "pinyin": "hǎotīng",
-    "meaning_en": "pleasant to hear",
-    "meaning_es": "agradable al oído; bonito (sonido); melodioso; que suena bien",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 535740
-  },
-  {
-    "hanzi": "那边",
-    "traditional": "那",
-    "pinyin": "nàbiān",
-    "meaning_en": "over there; yonder",
-    "meaning_es": "allí; al otro lado; en aquella dirección",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 498433
-  },
-  {
-    "hanzi": "再见",
-    "traditional": "再",
-    "pinyin": "zàijiàn",
-    "meaning_en": "goodbye; see you again later",
-    "meaning_es": "adiós; hasta luego; hasta la vista",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 457344
-  },
-  {
-    "hanzi": "饭店",
-    "traditional": "飯",
-    "pinyin": "fàndiàn",
-    "meaning_en": "restaurant; hotel",
-    "meaning_es": "restaurante; hotel",
-    "classifier": "家、个",
-    "pos": "noun",
-    "frequency": 455311
-  },
-  {
-    "hanzi": "小朋友",
-    "traditional": null,
-    "pinyin": "xiǎopéngyǒu",
-    "meaning_en": "child; kid (used to refer to a child, or by an adult to address a child, or, in Taiwan, to refer to sb's own child)",
-    "meaning_es": "niño/a; pequeño/a; chaval/a (forma cariñosa de dirigirse a un niño)",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 441938
-  },
-  {
-    "hanzi": "下雨",
-    "traditional": null,
-    "pinyin": "xià yǔ",
-    "meaning_en": "to rain",
-    "meaning_es": "llover; está lloviendo",
-    "classifier": null,
-    "pos": "",
-    "frequency": 438477
-  },
-  {
-    "hanzi": "哪儿",
-    "traditional": "哪",
-    "pinyin": "nǎr",
-    "meaning_en": "where?; wherever; anywhere; somewhere; (used in rhetorical questions) how can ...?",
-    "meaning_es": "dónde; en algún sitio",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 435352
-  },
-  {
-    "hanzi": "这边",
-    "traditional": "這",
-    "pinyin": "zhèbiān",
-    "meaning_en": "this side; here",
-    "meaning_es": "aquí; este lado; por aquí; de este lado",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 429528
-  },
-  {
-    "hanzi": "这儿",
-    "traditional": "這",
-    "pinyin": "zhèr",
-    "meaning_en": "here",
-    "meaning_es": "aquí; acá (coloquial, forma con erhua)",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 428939
-  },
-  {
-    "hanzi": "女朋友",
-    "traditional": null,
-    "pinyin": "nǚpéngyou",
-    "meaning_en": "girlfriend",
-    "meaning_es": "novia; pareja (mujer)",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 426753
-  },
-  {
-    "hanzi": "商店",
-    "traditional": null,
-    "pinyin": "shāngdiàn",
-    "meaning_en": "store; shop",
-    "meaning_es": "tienda; comercio; establecimiento",
-    "classifier": "家、个",
-    "pos": "noun",
-    "frequency": 425332
-  },
-  {
-    "hanzi": "请问",
-    "traditional": "請",
-    "pinyin": "qǐngwèn",
-    "meaning_en": "Excuse me, may I ask...?",
-    "meaning_es": "disculpe; ¿podría preguntar...?; por favor, ¿me podría decir...?",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 418626
-  },
-  {
-    "hanzi": "听见",
-    "traditional": "聽",
-    "pinyin": "tīngjiàn",
-    "meaning_en": "to hear",
-    "meaning_es": "oír (percibir sonido); alcanzar a oír; llegar a oídos; enterarse por el oído; escuchar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 401801
-  },
-  {
-    "hanzi": "男朋友",
-    "traditional": null,
-    "pinyin": "nánpéngyou",
-    "meaning_en": "boyfriend",
-    "meaning_es": "novio; pareja (hombre)",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 394072
-  },
-  {
-    "hanzi": "汉语",
-    "traditional": "漢",
-    "pinyin": "Hànyǔ",
-    "meaning_en": "Chinese language",
-    "meaning_es": "idioma chino; chino mandarín; lengua china",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 376386
-  },
-  {
-    "hanzi": "桌子",
-    "traditional": null,
-    "pinyin": "zhuōzi",
-    "meaning_en": "table; desk",
-    "meaning_es": "mesa; escritorio; pupitre; tablero; superficie de trabajo",
-    "classifier": "张、套",
-    "pos": "noun",
-    "frequency": 350339
-  },
-  {
-    "hanzi": "晚饭",
-    "traditional": "晚",
-    "pinyin": "wǎnfàn",
-    "meaning_en": "evening meal; dinner; supper",
-    "meaning_es": "cena",
-    "classifier": "份、顿、次、餐",
-    "pos": "noun",
-    "frequency": 327530
-  },
-  {
-    "hanzi": "生病",
-    "traditional": null,
-    "pinyin": "shēngbìng",
-    "meaning_en": "to fall ill",
-    "meaning_es": "enfermar; ponerse enfermo; caer enfermo",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 311706
-  },
-  {
-    "hanzi": "面包",
-    "traditional": "麵",
-    "pinyin": "miànbāo",
-    "meaning_en": "bread",
-    "meaning_es": "pan",
-    "classifier": "片、块",
-    "pos": "noun",
-    "frequency": 308255
-  },
-  {
-    "hanzi": "看病",
-    "traditional": null,
-    "pinyin": "kànbìng",
-    "meaning_en": "to visit a doctor; to see a patient",
-    "meaning_es": "ir al médico; consultar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 292655
-  },
-  {
-    "hanzi": "没关系",
-    "traditional": "沒",
-    "pinyin": "méi guānxi",
-    "meaning_en": "it doesn't matter",
-    "meaning_es": "no importa; no pasa nada; da igual",
-    "classifier": null,
-    "pos": "",
-    "frequency": 289385
-  },
-  {
-    "hanzi": "那儿",
-    "traditional": "那",
-    "pinyin": "nàr",
-    "meaning_en": "there",
-    "meaning_es": "allí; allá (coloquial, forma con erhua)",
-    "classifier": null,
-    "pos": "pronoun",
-    "frequency": 287368
-  },
-  {
-    "hanzi": "椅子",
-    "traditional": null,
-    "pinyin": "yǐzi",
-    "meaning_en": "chair",
-    "meaning_es": "silla; asiento; sillón; taburete",
-    "classifier": "把、张",
-    "pos": "noun",
-    "frequency": 268369
-  },
-  {
-    "hanzi": "做饭",
-    "traditional": "做",
-    "pinyin": "zuò fàn",
-    "meaning_en": "to prepare a meal; to cook",
-    "meaning_es": "cocinar; preparar la comida; hacer de comer",
-    "classifier": null,
-    "pos": "",
-    "frequency": 247090
-  },
-  {
-    "hanzi": "饺子",
-    "traditional": "餃",
-    "pinyin": "jiǎozi",
-    "meaning_en": "dumpling; pot-sticker",
-    "meaning_es": "empanadillas chinas; jiaozi; dumplings",
-    "classifier": "个、只",
-    "pos": "noun",
-    "frequency": 244324
-  },
-  {
-    "hanzi": "小学生",
-    "traditional": "小",
-    "pinyin": "xiǎoxuéshēng",
-    "meaning_en": "primary school student; schoolchild; (fig.) beginner",
-    "meaning_es": "alumno/a de primaria",
-    "classifier": "个、名",
-    "pos": "noun",
-    "frequency": 240070
-  },
-  {
-    "hanzi": "书店",
-    "traditional": "書",
-    "pinyin": "shūdiàn",
-    "meaning_en": "bookstore",
-    "meaning_es": "librería",
-    "classifier": "家",
-    "pos": "noun",
-    "frequency": 213352
-  },
-  {
-    "hanzi": "中学生",
-    "traditional": "中",
-    "pinyin": "zhōngxuéshēng",
-    "meaning_en": "middle-school student; high school student",
-    "meaning_es": "alumno/a de secundaria",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 208792
-  },
-  {
-    "hanzi": "午饭",
-    "traditional": "午",
-    "pinyin": "wǔfàn",
-    "meaning_en": "lunch",
-    "meaning_es": "almuerzo; comida del mediodía",
-    "classifier": "份、顿、次、餐",
-    "pos": "noun",
-    "frequency": 207337
-  },
-  {
-    "hanzi": "杯子",
-    "traditional": null,
-    "pinyin": "bēizi",
-    "meaning_en": "cup; glass",
-    "meaning_es": "vaso; taza; copa",
-    "classifier": "个、只",
-    "pos": "noun",
-    "frequency": 195418
-  },
-  {
-    "hanzi": "下课",
-    "traditional": "下",
-    "pinyin": "xiàkè",
-    "meaning_en": "to finish class; to get out of class; (fig.) (esp. of a sports coach) to be dismissed; to be fired",
-    "meaning_es": "terminar la clase; salir de clase; finalizar la lección; acabar las clases; (entrenador) ser despedido",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 183572
-  },
-  {
-    "hanzi": "电影院",
-    "traditional": "電",
-    "pinyin": "diànyǐngyuàn",
-    "meaning_en": "cinema; movie theater",
-    "meaning_es": "cine; sala de cine",
-    "classifier": "家、座",
-    "pos": "noun",
-    "frequency": 180523
-  },
-  {
-    "hanzi": "包子",
-    "traditional": null,
-    "pinyin": "bāozi",
-    "meaning_en": "baozi; bao (steamed stuffed bun)",
-    "meaning_es": "bollo relleno al vapor; baozi",
-    "classifier": "个",
-    "pos": "noun",
-    "frequency": 180316
-  },
-  {
-    "hanzi": "早饭",
-    "traditional": "早",
-    "pinyin": "zǎofàn",
-    "meaning_en": "breakfast",
-    "meaning_es": "desayuno; comida de la mañana; primera comida del día",
-    "classifier": "份、顿、次、餐",
-    "pos": "noun",
-    "frequency": 171028
-  },
-  {
-    "hanzi": "汉字",
-    "traditional": "漢",
-    "pinyin": "Hànzì",
-    "meaning_en": "Chinese character(s)",
-    "meaning_es": "carácter chino; sinograma; escritura china",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 159378
-  },
-  {
-    "hanzi": "星期天",
-    "traditional": null,
-    "pinyin": "xīngqītiān",
-    "meaning_en": "Sunday",
-    "meaning_es": "domingo",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 136670
-  },
-  {
-    "hanzi": "有点儿",
-    "traditional": "有",
-    "pinyin": "yǒudiǎnr",
-    "meaning_en": "slightly; a little; somewhat",
-    "meaning_es": "un poco; algo; ligeramente; un tanto",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 131863
-  },
-  {
-    "hanzi": "米饭",
-    "traditional": "米",
-    "pinyin": "mǐfàn",
-    "meaning_en": "(cooked) rice",
-    "meaning_es": "arroz cocido",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 129974
-  },
-  {
-    "hanzi": "一点儿",
-    "traditional": "一",
-    "pinyin": "yìdiǎnr",
-    "meaning_en": "erhua variant of 一點|一点[yi1 dian3]",
-    "meaning_es": "un poquito; un pelín; una pizca; muy poco",
-    "classifier": null,
-    "pos": "adverb",
-    "frequency": 129371
-  },
-  {
-    "hanzi": "星期日",
-    "traditional": null,
-    "pinyin": "xīngqīrì",
-    "meaning_en": "Sunday",
-    "meaning_es": "domingo",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 101243
-  },
-  {
-    "hanzi": "外边",
-    "traditional": "外",
-    "pinyin": "wàibian",
-    "meaning_en": "outside; outer surface; abroad; place other than one's home",
-    "meaning_es": "fuera; exterior; afuera",
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 74404
-  },
-  {
-    "hanzi": "不客气",
-    "traditional": "不",
-    "pinyin": "bú kèqi",
-    "meaning_en": "you're welcome; don't mention it; impolite; rude; blunt",
-    "meaning_es": "de nada; no hay de qué",
-    "classifier": null,
-    "pos": "",
-    "frequency": 71459
-  },
-  {
-    "hanzi": "好玩儿",
-    "traditional": "好",
-    "pinyin": "hǎowánr",
-    "meaning_en": "erhua variant of 好玩[hao3 wan2]",
-    "meaning_es": "divertido; entretenido; gracioso; que mola (coloquial, con erhua)",
-    "classifier": null,
-    "pos": "adjective",
-    "frequency": 21352
+    "frequency": 17812571
   },
   {
     "hanzi": "八",
+    "sense_index": null,
+    "variants": [
+      "八"
+    ],
     "traditional": null,
     "pinyin": "bā",
     "meaning_en": "eight",
@@ -2840,7 +42,25 @@
     "frequency": 0
   },
   {
+    "hanzi": "爸爸",
+    "sense_index": null,
+    "variants": [
+      "爸爸"
+    ],
+    "traditional": null,
+    "pinyin": "bàba",
+    "meaning_en": "(coll.) father; dad",
+    "meaning_es": "papá; padre; progenitor varón; papi (forma cariñosa)",
+    "classifier": "个、位",
+    "pos": "noun",
+    "frequency": 1539349
+  },
+  {
     "hanzi": "百",
+    "sense_index": null,
+    "variants": [
+      "百"
+    ],
     "traditional": null,
     "pinyin": "bǎi",
     "meaning_en": "hundred; numerous; all kinds of",
@@ -2850,7 +70,193 @@
     "frequency": 0
   },
   {
+    "hanzi": "白天",
+    "sense_index": null,
+    "variants": [
+      "白天"
+    ],
+    "traditional": null,
+    "pinyin": "báitiān",
+    "meaning_en": "daytime; during the day; day",
+    "meaning_es": "durante el día; de día; día",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 606766
+  },
+  {
+    "hanzi": "半",
+    "sense_index": null,
+    "variants": [
+      "半"
+    ],
+    "traditional": null,
+    "pinyin": "bàn",
+    "meaning_en": "half; semi-; incomplete; (after a number) and a half",
+    "meaning_es": "mitad; medio; semi-; incompleto; parcial; a medias; en parte",
+    "classifier": null,
+    "pos": "numeral",
+    "frequency": 2854116
+  },
+  {
+    "hanzi": "包子",
+    "sense_index": null,
+    "variants": [
+      "包子"
+    ],
+    "traditional": null,
+    "pinyin": "bāozi",
+    "meaning_en": "baozi; bao (steamed stuffed bun)",
+    "meaning_es": "bollo relleno al vapor; baozi",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 180316
+  },
+  {
+    "hanzi": "杯子",
+    "sense_index": null,
+    "variants": [
+      "杯子"
+    ],
+    "traditional": null,
+    "pinyin": "bēizi",
+    "meaning_en": "cup; glass",
+    "meaning_es": "vaso; taza; copa",
+    "classifier": "个、只",
+    "pos": "noun",
+    "frequency": 195418
+  },
+  {
+    "hanzi": "本",
+    "sense_index": 1,
+    "variants": [
+      "本"
+    ],
+    "traditional": null,
+    "pinyin": "běn",
+    "meaning_en": "(bound form) root; stem; (bound form) origin; source; (bound form) one's own",
+    "meaning_es": null,
+    "classifier": null,
+    "pos": "measure word",
+    "frequency": 15546838
+  },
+  {
+    "hanzi": "边",
+    "sense_index": null,
+    "variants": [
+      "边"
+    ],
+    "traditional": "邊",
+    "pinyin": "biān",
+    "meaning_en": "side; edge; margin; border; boundary",
+    "meaning_es": "lado; borde; margen; orilla; extremo; límite; frontera; costado; al mismo tiempo que",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 3385425
+  },
+  {
+    "hanzi": "病",
+    "sense_index": null,
+    "variants": [
+      "病"
+    ],
+    "traditional": null,
+    "pinyin": "bìng",
+    "meaning_en": "illness; disease; to fall ill; defect",
+    "meaning_es": "enfermedad; dolencia; mal; afección; padecimiento; defecto; vicio; enfermar(se); caer enfermo",
+    "classifier": "场",
+    "pos": "noun",
+    "frequency": 2893603
+  },
+  {
+    "hanzi": "不",
+    "sense_index": null,
+    "variants": [
+      "不"
+    ],
+    "traditional": null,
+    "pinyin": "bù",
+    "meaning_en": "no; not so; (bound form) not; un-",
+    "meaning_es": "no (negación general)",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 70153387
+  },
+  {
+    "hanzi": "不客气",
+    "sense_index": null,
+    "variants": [
+      "不客气"
+    ],
+    "traditional": "不",
+    "pinyin": "bú kèqi",
+    "meaning_en": "you're welcome; don't mention it; impolite; rude; blunt",
+    "meaning_es": "de nada; no hay de qué",
+    "classifier": null,
+    "pos": "",
+    "frequency": 71459
+  },
+  {
+    "hanzi": "不要",
+    "sense_index": null,
+    "variants": [
+      "不要"
+    ],
+    "traditional": null,
+    "pinyin": "búyào",
+    "meaning_en": "don't!; must not",
+    "meaning_es": "no (imperativo); ¡no hagas...!; no querer; no necesitar",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 7793782
+  },
+  {
+    "hanzi": "菜",
+    "sense_index": null,
+    "variants": [
+      "菜"
+    ],
+    "traditional": null,
+    "pinyin": "cài",
+    "meaning_en": "vegetable; greens; dish (of food); (of one's skills etc) weak; poor",
+    "meaning_es": "verdura; hortaliza; plato (de comida); cocina (estilo culinario); comida; menú; plato preparado",
+    "classifier": "棵、样、道、盘",
+    "pos": "noun",
+    "frequency": 1686135
+  },
+  {
+    "hanzi": "茶",
+    "sense_index": null,
+    "variants": [
+      "茶"
+    ],
+    "traditional": null,
+    "pinyin": "chá",
+    "meaning_en": "tea; tea plant",
+    "meaning_es": "té; infusión; bebida de hojas de té; planta del té; Camellia sinensis",
+    "classifier": "杯、壶",
+    "pos": "noun",
+    "frequency": 1384389
+  },
+  {
+    "hanzi": "唱",
+    "sense_index": null,
+    "variants": [
+      "唱"
+    ],
+    "traditional": null,
+    "pinyin": "chàng",
+    "meaning_en": "to sing; to call loudly; to chant",
+    "meaning_es": "cantar; entonar; vocalizar; recitar cantando; gorjear; cacarear; llamar en voz alta; proclamar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 2235244
+  },
+  {
     "hanzi": "超市",
+    "sense_index": null,
+    "variants": [
+      "超市"
+    ],
     "traditional": null,
     "pinyin": "chāoshì",
     "meaning_en": "supermarket (abbr. for 超級市場|超级市场[chao1 ji2 shi4 chang3])",
@@ -2860,17 +266,361 @@
     "frequency": 0
   },
   {
+    "hanzi": "车",
+    "sense_index": null,
+    "variants": [
+      "车"
+    ],
+    "traditional": "車",
+    "pinyin": "chē",
+    "meaning_en": "car; vehicle; machine; to shape with a lathe; Kangxi radical 159",
+    "meaning_es": "coche; vehículo; vagón",
+    "classifier": "辆",
+    "pos": "noun",
+    "frequency": 9131035
+  },
+  {
+    "hanzi": "吃",
+    "sense_index": null,
+    "variants": [
+      "吃"
+    ],
+    "traditional": "喫",
+    "pinyin": "chī",
+    "meaning_en": "to eat; to consume; to eat at (a cafeteria etc); to eradicate; to destroy",
+    "meaning_es": "comer",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 12987492
+  },
+  {
+    "hanzi": "穿",
+    "sense_index": null,
+    "variants": [
+      "穿"
+    ],
+    "traditional": null,
+    "pinyin": "chuān",
+    "meaning_en": "to wear; to put on; to dress; to bore through; to pierce",
+    "meaning_es": "vestir; ponerse (ropa); atravesar; cruzar; pasar por; penetrar; ensartar; enhebrar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 3884646
+  },
+  {
+    "hanzi": "出租车",
+    "sense_index": null,
+    "variants": [
+      "出租车"
+    ],
+    "traditional": "出",
+    "pinyin": "chūzūchē",
+    "meaning_en": "taxi; (Tw) rental car",
+    "meaning_es": "taxi; vehículo de alquiler con conductor; coche de plaza; libre; radio-taxi",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 627350
+  },
+  {
+    "hanzi": "大",
+    "sense_index": null,
+    "variants": [
+      "大"
+    ],
+    "traditional": null,
+    "pinyin": "dà",
+    "meaning_en": "big; large; great; older (than another person); eldest (as in 大姐[da4 jie3])",
+    "meaning_es": "grande",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 38361973
+  },
+  {
+    "hanzi": "打电话",
+    "sense_index": null,
+    "variants": [
+      "打电话"
+    ],
+    "traditional": "打",
+    "pinyin": "dǎ diànhuà",
+    "meaning_en": "to make a telephone call",
+    "meaning_es": "llamar por teléfono; hacer una llamada telefónica; telefonear; marcar",
+    "classifier": null,
+    "pos": "",
+    "frequency": 1138572
+  },
+  {
+    "hanzi": "大家",
+    "sense_index": null,
+    "variants": [
+      "大家"
+    ],
+    "traditional": null,
+    "pinyin": "dàjiā",
+    "meaning_en": "everyone; influential family; great expert",
+    "meaning_es": "todos; todo el mundo",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 11129890
+  },
+  {
+    "hanzi": "到",
+    "sense_index": null,
+    "variants": [
+      "到"
+    ],
+    "traditional": null,
+    "pinyin": "dào",
+    "meaning_en": "to reach; to arrive; to leave for; to go to; to (a place)",
+    "meaning_es": "llegar; hasta",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 50645570
+  },
+  {
+    "hanzi": "大学",
+    "sense_index": null,
+    "variants": [
+      "大学"
+    ],
+    "traditional": "大",
+    "pinyin": "dàxué",
+    "meaning_en": "university; college",
+    "meaning_es": "universidad; facultad; centro de estudios superiores; carrera universitaria",
+    "classifier": "所",
+    "pos": "noun",
+    "frequency": 2616716
+  },
+  {
+    "hanzi": "大学生",
+    "sense_index": null,
+    "variants": [
+      "大学生"
+    ],
+    "traditional": "大",
+    "pinyin": "dàxuéshēng",
+    "meaning_en": "university student; college student",
+    "meaning_es": "estudiante universitario; alumno de universidad; universitario",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 1078582
+  },
+  {
+    "hanzi": "的",
+    "sense_index": null,
+    "variants": [
+      "的"
+    ],
+    "traditional": null,
+    "pinyin": "de",
+    "meaning_en": "of; ~'s (possessive particle); (used after an attribute when it modifies a noun); (used at the end of a declarative sentence for emphasis); (used after a noun, verb or adjective to form a nominal expression, as in 皮革的[pi2 ge2 de5] 'one made of leather' or 跑堂兒的|跑堂儿的[pao3 tang2 r5 de5] 'a waiter (literally, one who runs back and forth in a restaurant)' or 新的[xin1 de5] 'new one')",
+    "meaning_es": "de (partícula posesiva)",
+    "classifier": null,
+    "pos": "particle",
+    "frequency": 943370349
+  },
+  {
+    "hanzi": "第",
+    "sense_index": null,
+    "variants": [
+      "第"
+    ],
+    "traditional": null,
+    "pinyin": "dì",
+    "meaning_en": "(prefix indicating ordinal number, as in 第六[di4 liu4] 'sixth'); (literary) grades in which successful candidates in the imperial examinations were placed; (old) residence of a high official; (literary) but; however",
+    "meaning_es": "prefijo de número ordinal (primero, segundo...)",
+    "classifier": null,
+    "pos": "prefix",
+    "frequency": 1732367
+  },
+  {
+    "hanzi": "店",
+    "sense_index": null,
+    "variants": [
+      "店"
+    ],
+    "traditional": null,
+    "pinyin": "diàn",
+    "meaning_en": "inn; old-style hotel; (bound form) shop; store",
+    "meaning_es": "tienda; comercio; negocio; establecimiento comercial; posada; hostal; fonda",
+    "classifier": "家",
+    "pos": "noun",
+    "frequency": 3193100
+  },
+  {
     "hanzi": "点",
+    "sense_index": 1,
+    "variants": [
+      "点"
+    ],
     "traditional": "點",
     "pinyin": "diǎn",
     "meaning_en": "to touch briefly; to tap; to mark with a dot; to check off (on a list); to order (food etc)",
-    "meaning_es": "punto; hora en punto; pedir (comida); gota; aspecto; encender; seleccionar",
+    "meaning_es": null,
     "classifier": null,
     "pos": "measure word",
     "frequency": 0
   },
   {
+    "hanzi": "电话",
+    "sense_index": null,
+    "variants": [
+      "电话"
+    ],
+    "traditional": "電",
+    "pinyin": "diànhuà",
+    "meaning_en": "telephone; phone call; phone number",
+    "meaning_es": "teléfono; llamada telefónica",
+    "classifier": "部、通",
+    "pos": "noun",
+    "frequency": 4470310
+  },
+  {
+    "hanzi": "电脑",
+    "sense_index": null,
+    "variants": [
+      "电脑"
+    ],
+    "traditional": "電",
+    "pinyin": "diànnǎo",
+    "meaning_en": "computer",
+    "meaning_es": "ordenador; computadora; PC; equipo informático; cerebro electrónico; máquina de procesamiento de datos",
+    "classifier": "台",
+    "pos": "noun",
+    "frequency": 2576740
+  },
+  {
+    "hanzi": "电视",
+    "sense_index": null,
+    "variants": [
+      "电视"
+    ],
+    "traditional": "電",
+    "pinyin": "diànshì",
+    "meaning_en": "television; TV",
+    "meaning_es": "televisión; tele; TV; televisor; aparato de TV; programa televisivo; emisión televisiva",
+    "classifier": "台、部",
+    "pos": "noun",
+    "frequency": 2728539
+  },
+  {
+    "hanzi": "电影",
+    "sense_index": null,
+    "variants": [
+      "电影"
+    ],
+    "traditional": "電",
+    "pinyin": "diànyǐng",
+    "meaning_en": "movie; film",
+    "meaning_es": "película; filme; cine; producción cinematográfica; largometraje; metraje",
+    "classifier": "部、片、场",
+    "pos": "noun",
+    "frequency": 3689714
+  },
+  {
+    "hanzi": "电影院",
+    "sense_index": null,
+    "variants": [
+      "电影院"
+    ],
+    "traditional": "電",
+    "pinyin": "diànyǐngyuàn",
+    "meaning_en": "cinema; movie theater",
+    "meaning_es": "cine; sala de cine",
+    "classifier": "家、座",
+    "pos": "noun",
+    "frequency": 180523
+  },
+  {
+    "hanzi": "弟弟",
+    "sense_index": null,
+    "variants": [
+      "弟弟"
+    ],
+    "traditional": null,
+    "pinyin": "dìdi",
+    "meaning_en": "younger brother",
+    "meaning_es": "hermano menor",
+    "classifier": "个、位",
+    "pos": "noun",
+    "frequency": 561912
+  },
+  {
+    "hanzi": "东西",
+    "sense_index": null,
+    "variants": [
+      "东西"
+    ],
+    "traditional": "東",
+    "pinyin": "dōngxi",
+    "meaning_en": "east and west",
+    "meaning_es": "cosa; objeto; cacharro; este/oeste",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 5827002
+  },
+  {
+    "hanzi": "都",
+    "sense_index": null,
+    "variants": [
+      "都"
+    ],
+    "traditional": null,
+    "pinyin": "dōu",
+    "meaning_en": "all; both; entirely; (used for emphasis) even; already",
+    "meaning_es": "todo(s); ambos; ya; incluso",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 52527496
+  },
+  {
+    "hanzi": "读",
+    "sense_index": null,
+    "variants": [
+      "读"
+    ],
+    "traditional": "讀",
+    "pinyin": "dú",
+    "meaning_en": "to read out; to read aloud; to read; to attend (school); to study (a subject in school)",
+    "meaning_es": "leer; estudiar; recitar; leer en voz alta; pronunciar; asistir a (escuela)",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 1849464
+  },
+  {
+    "hanzi": "对",
+    "sense_index": null,
+    "variants": [
+      "对"
+    ],
+    "traditional": "對",
+    "pinyin": "duì",
+    "meaning_en": "right; correct; towards; at; for",
+    "meaning_es": "correcto; hacia; sí; contestar",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 56546971
+  },
+  {
+    "hanzi": "对不起",
+    "sense_index": null,
+    "variants": [
+      "对不起"
+    ],
+    "traditional": "對",
+    "pinyin": "duìbuqǐ",
+    "meaning_en": "I'm sorry; excuse me; I beg your pardon; to let (sb) down; to disappoint",
+    "meaning_es": "lo siento; perdón; disculpa",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 800251
+  },
+  {
     "hanzi": "多",
+    "sense_index": null,
+    "variants": [
+      "多"
+    ],
     "traditional": null,
     "pinyin": "duō",
     "meaning_en": "many; much; more; a lot of; too many",
@@ -2880,7 +630,39 @@
     "frequency": 0
   },
   {
+    "hanzi": "多少",
+    "sense_index": null,
+    "variants": [
+      "多少"
+    ],
+    "traditional": null,
+    "pinyin": "duōshao",
+    "meaning_en": "number; amount; somewhat",
+    "meaning_es": "cuánto(s)",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 3379566
+  },
+  {
+    "hanzi": "读书",
+    "sense_index": null,
+    "variants": [
+      "读书"
+    ],
+    "traditional": "讀",
+    "pinyin": "dúshū",
+    "meaning_en": "to read a book; to study; to attend school",
+    "meaning_es": "leer libros; estudiar; asistir a la escuela",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 735952
+  },
+  {
     "hanzi": "二",
+    "sense_index": null,
+    "variants": [
+      "二"
+    ],
     "traditional": null,
     "pinyin": "èr",
     "meaning_en": "two; 2; (Beijing dialect) stupid",
@@ -2890,7 +672,655 @@
     "frequency": 0
   },
   {
+    "hanzi": "儿子",
+    "sense_index": null,
+    "variants": [
+      "儿子"
+    ],
+    "traditional": "兒",
+    "pinyin": "érzi",
+    "meaning_en": "son",
+    "meaning_es": "hijo; niño; muchacho; chaval; descendiente varón",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 2389621
+  },
+  {
+    "hanzi": "饭",
+    "sense_index": null,
+    "variants": [
+      "饭"
+    ],
+    "traditional": "飯",
+    "pinyin": "fàn",
+    "meaning_en": "cooked rice; meal; (loanword) fan; devotee",
+    "meaning_es": "comida; alimento; arroz cocido; sustento; vianda; manutención",
+    "classifier": "碗、顿",
+    "pos": "noun",
+    "frequency": 1618796
+  },
+  {
+    "hanzi": "饭店",
+    "sense_index": null,
+    "variants": [
+      "饭店"
+    ],
+    "traditional": "飯",
+    "pinyin": "fàndiàn",
+    "meaning_en": "restaurant; hotel",
+    "meaning_es": "restaurante; hotel",
+    "classifier": "家、个",
+    "pos": "noun",
+    "frequency": 455311
+  },
+  {
+    "hanzi": "房间",
+    "sense_index": null,
+    "variants": [
+      "房间"
+    ],
+    "traditional": "房",
+    "pinyin": "fángjiān",
+    "meaning_en": "room",
+    "meaning_es": "habitación; cuarto; dormitorio; pieza; sala; estancia; aposento",
+    "classifier": "间、个",
+    "pos": "noun",
+    "frequency": 1060503
+  },
+  {
+    "hanzi": "非常",
+    "sense_index": null,
+    "variants": [
+      "非常"
+    ],
+    "traditional": null,
+    "pinyin": "fēicháng",
+    "meaning_en": "very; really; unusual; extraordinary",
+    "meaning_es": "muy; extremadamente; extraordinario",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 8056541
+  },
+  {
+    "hanzi": "飞机",
+    "sense_index": null,
+    "variants": [
+      "飞机"
+    ],
+    "traditional": "飛",
+    "pinyin": "fēijī",
+    "meaning_en": "airplane",
+    "meaning_es": "avión; aeroplano; aeronave; aparato volador; nave aérea; transporte aéreo",
+    "classifier": "架",
+    "pos": "noun",
+    "frequency": 1674767
+  },
+  {
+    "hanzi": "分",
+    "sense_index": null,
+    "variants": [
+      "分"
+    ],
+    "traditional": null,
+    "pinyin": "fēn",
+    "meaning_en": "to divide; to separate; to distribute; to allocate; to distinguish (good and bad)",
+    "meaning_es": "centavo (0.01 yuan); dividir; minuto; punto",
+    "classifier": null,
+    "pos": "measure word",
+    "frequency": 11826179
+  },
+  {
+    "hanzi": "分钟",
+    "sense_index": null,
+    "variants": [
+      "分钟"
+    ],
+    "traditional": "分",
+    "pinyin": "fēnzhōng",
+    "meaning_en": "minute",
+    "meaning_es": "minuto; momento; instante; unidad de tiempo (60 segundos)",
+    "classifier": null,
+    "pos": "measure word",
+    "frequency": 3812320
+  },
+  {
+    "hanzi": "高兴",
+    "sense_index": null,
+    "variants": [
+      "高兴"
+    ],
+    "traditional": "高",
+    "pinyin": "gāoxìng",
+    "meaning_en": "happy; glad; willing (to do sth); in a cheerful mood",
+    "meaning_es": "feliz; contento; alegre; satisfecho; complacido; estar dispuesto a; tener ganas de",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 1554692
+  },
+  {
+    "hanzi": "个",
+    "sense_index": null,
+    "variants": [
+      "个"
+    ],
+    "traditional": "箇",
+    "pinyin": "gè",
+    "meaning_en": "(classifier used before a noun that has no specific classifier); (bound form) individual",
+    "meaning_es": "clasificador general; individuo; uno (coloquial)",
+    "classifier": null,
+    "pos": "measure word",
+    "frequency": 87859759
+  },
+  {
+    "hanzi": "歌",
+    "sense_index": null,
+    "variants": [
+      "歌"
+    ],
+    "traditional": "謌",
+    "pinyin": "gē",
+    "meaning_en": "song; (bound form) to sing",
+    "meaning_es": "canción; canto; melodía vocal; composición musical cantada; cantar; entonar; alabar en verso",
+    "classifier": "首、支",
+    "pos": "noun",
+    "frequency": 2763966
+  },
+  {
+    "hanzi": "哥哥",
+    "sense_index": null,
+    "variants": [
+      "哥哥"
+    ],
+    "traditional": null,
+    "pinyin": "gēge",
+    "meaning_en": "older brother",
+    "meaning_es": "hermano mayor",
+    "classifier": "个、位",
+    "pos": "noun",
+    "frequency": 957711
+  },
+  {
+    "hanzi": "给",
+    "sense_index": null,
+    "variants": [
+      "给"
+    ],
+    "traditional": "給",
+    "pinyin": "gěi",
+    "meaning_en": "to; for; for the benefit of; to give; to allow",
+    "meaning_es": "dar; para; a (beneficiario)",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 28952371
+  },
+  {
+    "hanzi": "公司",
+    "sense_index": null,
+    "variants": [
+      "公司"
+    ],
+    "traditional": null,
+    "pinyin": "gōngsī",
+    "meaning_en": "company; firm; corporation",
+    "meaning_es": "empresa; compañía; corporación",
+    "classifier": "家",
+    "pos": "noun",
+    "frequency": 18463472
+  },
+  {
+    "hanzi": "工作",
+    "sense_index": null,
+    "variants": [
+      "工作"
+    ],
+    "traditional": null,
+    "pinyin": "gōngzuò",
+    "meaning_en": "to work; (of a machine) to operate; job; work; task",
+    "meaning_es": "trabajar; trabajo; empleo; funcionar (máquina)",
+    "classifier": "个、份、项",
+    "pos": "verb",
+    "frequency": 19699227
+  },
+  {
+    "hanzi": "狗",
+    "sense_index": null,
+    "variants": [
+      "狗"
+    ],
+    "traditional": null,
+    "pinyin": "gǒu",
+    "meaning_en": "dog",
+    "meaning_es": "perro; can; chucho; sabueso",
+    "classifier": "只、条",
+    "pos": "noun",
+    "frequency": 2568477
+  },
+  {
+    "hanzi": "贵",
+    "sense_index": null,
+    "variants": [
+      "贵"
+    ],
+    "traditional": "貴",
+    "pinyin": "guì",
+    "meaning_en": "expensive; (bound form) highly valued; precious; (bound form) noble; of high rank",
+    "meaning_es": "caro; costoso; valioso; precioso; noble; distinguido; honorable; su (cortés)",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 1228605
+  },
+  {
+    "hanzi": "国",
+    "sense_index": null,
+    "variants": [
+      "国"
+    ],
+    "traditional": "國",
+    "pinyin": "guó",
+    "meaning_en": "country; nation; state; (bound form) national",
+    "meaning_es": "país; nación; estado; nacional",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 4684995
+  },
+  {
+    "hanzi": "还",
+    "sense_index": null,
+    "variants": [
+      "还"
+    ],
+    "traditional": "還",
+    "pinyin": "hái",
+    "meaning_en": "still; still in progress; still more; yet; even more",
+    "meaning_es": "todavía; aún; además; también; incluso",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 37384723
+  },
+  {
+    "hanzi": "孩子",
+    "sense_index": null,
+    "variants": [
+      "孩子"
+    ],
+    "traditional": null,
+    "pinyin": "háizi",
+    "meaning_en": "child",
+    "meaning_es": "niño/a; hijo/a; crío",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 6681697
+  },
+  {
+    "hanzi": "汉语",
+    "sense_index": null,
+    "variants": [
+      "汉语"
+    ],
+    "traditional": "漢",
+    "pinyin": "Hànyǔ",
+    "meaning_en": "Chinese language",
+    "meaning_es": "idioma chino; chino mandarín; lengua china",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 376386
+  },
+  {
+    "hanzi": "汉字",
+    "sense_index": null,
+    "variants": [
+      "汉字"
+    ],
+    "traditional": "漢",
+    "pinyin": "Hànzì",
+    "meaning_en": "Chinese character(s)",
+    "meaning_es": "carácter chino; sinograma; escritura china",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 159378
+  },
+  {
+    "hanzi": "号",
+    "sense_index": null,
+    "variants": [
+      "号"
+    ],
+    "traditional": "號",
+    "pinyin": "hào",
+    "meaning_en": "ordinal number; day of a month; mark; sign; business establishment",
+    "meaning_es": "número; fecha (día del mes); talla; marca",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 7363824
+  },
+  {
+    "hanzi": "好",
+    "sense_index": null,
+    "variants": [
+      "好"
+    ],
+    "traditional": null,
+    "pinyin": "hǎo",
+    "meaning_en": "good; appropriate; proper; all right!; (before a verb) easy to",
+    "meaning_es": "bueno; bien; muy",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 41528330
+  },
+  {
+    "hanzi": "好吃",
+    "sense_index": null,
+    "variants": [
+      "好吃"
+    ],
+    "traditional": null,
+    "pinyin": "hǎochī",
+    "meaning_en": "tasty; delicious",
+    "meaning_es": "delicioso; rico; sabroso",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 819558
+  },
+  {
+    "hanzi": "好看",
+    "sense_index": null,
+    "variants": [
+      "好看"
+    ],
+    "traditional": null,
+    "pinyin": "hǎokàn",
+    "meaning_en": "good-looking; nice-looking; (of a movie, book, TV show etc) good; in an embarrassing situation",
+    "meaning_es": "bonito; atractivo; de buena apariencia; agradable a la vista; bueno (película/libro); interesante",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 1414439
+  },
+  {
+    "hanzi": "好听",
+    "sense_index": null,
+    "variants": [
+      "好听"
+    ],
+    "traditional": "好",
+    "pinyin": "hǎotīng",
+    "meaning_en": "pleasant to hear",
+    "meaning_es": "agradable al oído; bonito (sonido); melodioso; que suena bien",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 535740
+  },
+  {
+    "hanzi": "好玩儿",
+    "sense_index": null,
+    "variants": [
+      "好玩儿"
+    ],
+    "traditional": "好",
+    "pinyin": "hǎowánr",
+    "meaning_en": "erhua variant of 好玩[hao3 wan2]",
+    "meaning_es": "divertido; entretenido; gracioso; que mola (coloquial, con erhua)",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 21352
+  },
+  {
+    "hanzi": "和",
+    "sense_index": 1,
+    "variants": [
+      "和"
+    ],
+    "traditional": "龢",
+    "pinyin": "hé",
+    "meaning_en": "(joining two nouns) and; together with; with (Taiwan pr. [han4]); (math.) sum; to make peace",
+    "meaning_es": null,
+    "classifier": null,
+    "pos": "preposition",
+    "frequency": 118878434
+  },
+  {
+    "hanzi": "喝",
+    "sense_index": null,
+    "variants": [
+      "喝"
+    ],
+    "traditional": null,
+    "pinyin": "hē",
+    "meaning_en": "to drink",
+    "meaning_es": "beber; tomar (líquidos); ingerir (bebidas); beberse",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 3881270
+  },
+  {
+    "hanzi": "很",
+    "sense_index": null,
+    "variants": [
+      "很"
+    ],
+    "traditional": null,
+    "pinyin": "hěn",
+    "meaning_en": "very; quite; (also, often used before an adjective without intensifying its meaning, i.e. as a meaningless syntactic element)",
+    "meaning_es": "muy; bastante; mucho",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 29046232
+  },
+  {
+    "hanzi": "后",
+    "sense_index": null,
+    "variants": [
+      "后"
+    ],
+    "traditional": "後",
+    "pinyin": "hòu",
+    "meaning_en": "empress; queen; (archaic) monarch; ruler; back",
+    "meaning_es": "después; detrás; atrás; luego",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 33767571
+  },
+  {
+    "hanzi": "回",
+    "sense_index": null,
+    "variants": [
+      "回"
+    ],
+    "traditional": "逥",
+    "pinyin": "huí",
+    "meaning_en": "to circle; to go back; to turn around; to answer; to return",
+    "meaning_es": "volver; regresar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 6341453
+  },
+  {
+    "hanzi": "会",
+    "sense_index": 1,
+    "variants": [
+      "会"
+    ],
+    "traditional": "會",
+    "pinyin": "huì",
+    "meaning_en": "can; to have the skill; to know how to; to be likely to; to be sure to",
+    "meaning_es": null,
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 40026863
+  },
+  {
+    "hanzi": "火车",
+    "sense_index": null,
+    "variants": [
+      "火车"
+    ],
+    "traditional": "火",
+    "pinyin": "huǒchē",
+    "meaning_en": "train",
+    "meaning_es": "tren; ferrocarril; convoy ferroviario; locomotora con vagones",
+    "classifier": "列、节、班、趟",
+    "pos": "noun",
+    "frequency": 575333
+  },
+  {
+    "hanzi": "几",
+    "sense_index": null,
+    "variants": [
+      "几"
+    ],
+    "traditional": "幾",
+    "pinyin": "jǐ",
+    "meaning_en": "how much; how many; several; a few",
+    "meaning_es": "cuántos; varios; unos pocos; algunos",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 10023845
+  },
+  {
+    "hanzi": "家",
+    "sense_index": null,
+    "variants": [
+      "家"
+    ],
+    "traditional": null,
+    "pinyin": "jiā",
+    "meaning_en": "home; family; (polite) my (sister, uncle etc); classifier for families or businesses; refers to the philosophical schools of pre-Han China",
+    "meaning_es": "casa; hogar; familia; especialista",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 17971399
+  },
+  {
+    "hanzi": "见",
+    "sense_index": null,
+    "variants": [
+      "见"
+    ],
+    "traditional": "見",
+    "pinyin": "jiàn",
+    "meaning_en": "to see; to meet; to appear (to be sth); to interview; opinion",
+    "meaning_es": "ver; encontrarse con; aparecer; opinar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 8490843
+  },
+  {
+    "hanzi": "件",
+    "sense_index": null,
+    "variants": [
+      "件"
+    ],
+    "traditional": null,
+    "pinyin": "jiàn",
+    "meaning_en": "item; component; classifier for events, things, clothes etc",
+    "meaning_es": "clasificador para ropa, asuntos, equipaje; artículo; documento",
+    "classifier": null,
+    "pos": "measure word",
+    "frequency": 5517461
+  },
+  {
+    "hanzi": "叫",
+    "sense_index": null,
+    "variants": [
+      "叫"
+    ],
+    "traditional": "呌",
+    "pinyin": "jiào",
+    "meaning_en": "to shout; to call; to order; to ask; to be called",
+    "meaning_es": "llamar(se); gritar; pedir (comida/taxi)",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 7079928
+  },
+  {
+    "hanzi": "饺子",
+    "sense_index": null,
+    "variants": [
+      "饺子"
+    ],
+    "traditional": "餃",
+    "pinyin": "jiǎozi",
+    "meaning_en": "dumpling; pot-sticker",
+    "meaning_es": "empanadillas chinas; jiaozi; dumplings",
+    "classifier": "个、只",
+    "pos": "noun",
+    "frequency": 244324
+  },
+  {
+    "hanzi": "家人",
+    "sense_index": null,
+    "variants": [
+      "家人"
+    ],
+    "traditional": null,
+    "pinyin": "jiārén",
+    "meaning_en": "family member; (old) servant",
+    "meaning_es": "familiares; miembros de la familia; los de casa; parientes; gente de la familia",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 1165923
+  },
+  {
+    "hanzi": "鸡蛋",
+    "sense_index": null,
+    "variants": [
+      "鸡蛋"
+    ],
+    "traditional": "雞",
+    "pinyin": "jīdàn",
+    "meaning_en": "(chicken) egg; hen's egg",
+    "meaning_es": "huevo (de gallina)",
+    "classifier": "个、打",
+    "pos": "noun",
+    "frequency": 562123
+  },
+  {
+    "hanzi": "姐姐",
+    "sense_index": null,
+    "variants": [
+      "姐姐"
+    ],
+    "traditional": null,
+    "pinyin": "jiějie",
+    "meaning_en": "older sister",
+    "meaning_es": "hermana mayor; señorita (tratamiento para mujer joven); hermana (en general, cariñoso)",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 1279753
+  },
+  {
+    "hanzi": "今年",
+    "sense_index": null,
+    "variants": [
+      "今年"
+    ],
+    "traditional": null,
+    "pinyin": "jīnnián",
+    "meaning_en": "this year",
+    "meaning_es": "este año",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 9714475
+  },
+  {
+    "hanzi": "今天",
+    "sense_index": null,
+    "variants": [
+      "今天"
+    ],
+    "traditional": null,
+    "pinyin": "jīntiān",
+    "meaning_en": "today; the present time; now",
+    "meaning_es": "hoy; hoy en día; el día de hoy; actualmente",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 12378709
+  },
+  {
     "hanzi": "九",
+    "sense_index": null,
+    "variants": [
+      "九"
+    ],
     "traditional": null,
     "pinyin": "jiǔ",
     "meaning_en": "nine; 9",
@@ -2900,7 +1330,235 @@
     "frequency": 0
   },
   {
+    "hanzi": "觉得",
+    "sense_index": null,
+    "variants": [
+      "觉得"
+    ],
+    "traditional": "覺",
+    "pinyin": "juéde",
+    "meaning_en": "to think that ...; to feel that ...; to feel (uncomfortable etc)",
+    "meaning_es": "pensar que; sentir que; encontrar que",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 7959167
+  },
+  {
+    "hanzi": "开",
+    "sense_index": null,
+    "variants": [
+      "开"
+    ],
+    "traditional": "開",
+    "pinyin": "kāi",
+    "meaning_en": "to open (transitive or intransitive); (of ships, vehicles, troops etc) to start; to turn on; to put in operation; to operate",
+    "meaning_es": "abrir; encender; conducir; empezar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 7960803
+  },
+  {
+    "hanzi": "开车",
+    "sense_index": null,
+    "variants": [
+      "开车"
+    ],
+    "traditional": "開",
+    "pinyin": "kāichē",
+    "meaning_en": "to drive a car (or train etc); (slang) to post sexual content online; to make a sexual joke",
+    "meaning_es": "conducir (un vehículo); manejar; pilotar; arrancar el coche; poner en marcha; (argot) publicar contenido sexual",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 571486
+  },
+  {
+    "hanzi": "看",
+    "sense_index": null,
+    "variants": [
+      "看"
+    ],
+    "traditional": null,
+    "pinyin": "kàn",
+    "meaning_en": "to see; to look at; to read; to watch; to visit",
+    "meaning_es": "ver; mirar; leer; visitar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 27275620
+  },
+  {
+    "hanzi": "看病",
+    "sense_index": null,
+    "variants": [
+      "看病"
+    ],
+    "traditional": null,
+    "pinyin": "kànbìng",
+    "meaning_en": "to visit a doctor; to see a patient",
+    "meaning_es": "ir al médico; consultar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 292655
+  },
+  {
+    "hanzi": "看见",
+    "sense_index": null,
+    "variants": [
+      "看见"
+    ],
+    "traditional": "看",
+    "pinyin": "kànjiàn",
+    "meaning_en": "to see; to catch sight of",
+    "meaning_es": "ver; percibir visualmente; avistar; alcanzar a ver con los ojos; notar; darse cuenta de; descubrir",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 1739832
+  },
+  {
+    "hanzi": "课",
+    "sense_index": null,
+    "variants": [
+      "课"
+    ],
+    "traditional": "課",
+    "pinyin": "kè",
+    "meaning_en": "subject; course; class; lesson; to levy",
+    "meaning_es": "clase; lección; asignatura; materia; curso; unidad didáctica; período lectivo",
+    "classifier": "门、堂、节",
+    "pos": "noun",
+    "frequency": 1435527
+  },
+  {
+    "hanzi": "可以",
+    "sense_index": null,
+    "variants": [
+      "可以"
+    ],
+    "traditional": null,
+    "pinyin": "kěyǐ",
+    "meaning_en": "can; may; possible; able to; not bad",
+    "meaning_es": "poder; estar permitido",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 25881411
+  },
+  {
+    "hanzi": "口",
+    "sense_index": null,
+    "variants": [
+      "口"
+    ],
+    "traditional": null,
+    "pinyin": "kǒu",
+    "meaning_en": "mouth; classifier for things with mouths (people, domestic animals, cannons, wells etc); classifier for bites or mouthfuls",
+    "meaning_es": "boca; entrada; abertura; clasificador para bocados/personas (familia)/pozos",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 4395540
+  },
+  {
+    "hanzi": "块",
+    "sense_index": null,
+    "variants": [
+      "块"
+    ],
+    "traditional": "塊",
+    "pinyin": "kuài",
+    "meaning_en": "lump; chunk; piece; classifier for pieces of cloth, cake, soap etc; (coll.) classifier for money and currency units",
+    "meaning_es": "trozo; pedazo; bloque; terrón; tableta; kuai (yuan, coloquial); clasificador para dinero (1 yuan), jabón, carne, etc.",
+    "classifier": null,
+    "pos": "measure word",
+    "frequency": 3871951
+  },
+  {
+    "hanzi": "来",
+    "sense_index": null,
+    "variants": [
+      "来"
+    ],
+    "traditional": "來",
+    "pinyin": "lái",
+    "meaning_en": "to come; (used as a substitute for a more specific verb); hither (directional complement for motion toward the speaker, as in 回來|回来[hui2 lai5]); ever since (as in 自古以來|自古以来[zi4 gu3 yi3 lai2]); for the past (amount of time)",
+    "meaning_es": "venir",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 37970033
+  },
+  {
+    "hanzi": "老师",
+    "sense_index": null,
+    "variants": [
+      "老师"
+    ],
+    "traditional": "老",
+    "pinyin": "lǎoshī",
+    "meaning_en": "teacher",
+    "meaning_es": "profesor/a; maestro/a; educador/a; docente; instructor/a; tutor/a",
+    "classifier": "个、位",
+    "pos": "noun",
+    "frequency": 2997668
+  },
+  {
+    "hanzi": "了",
+    "sense_index": null,
+    "variants": [
+      "了"
+    ],
+    "traditional": "瞭",
+    "pinyin": "le",
+    "meaning_en": "(completed action marker); (modal particle indicating change of state, situation now); (modal particle intensifying preceding clause)",
+    "meaning_es": "le (acción completada o cambio)",
+    "classifier": null,
+    "pos": "particle",
+    "frequency": 255733044
+  },
+  {
+    "hanzi": "冷",
+    "sense_index": null,
+    "variants": [
+      "冷"
+    ],
+    "traditional": null,
+    "pinyin": "lěng",
+    "meaning_en": "cold",
+    "meaning_es": "frío; fresco; gélido; indiferente; distante; poco amistoso; solitario; desierto; repentino; súbito",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 2914595
+  },
+  {
+    "hanzi": "里",
+    "sense_index": null,
+    "variants": [
+      "里"
+    ],
+    "traditional": null,
+    "pinyin": "lǐ",
+    "meaning_en": "lining; interior; inside; internal; also written 裏|里[li3]",
+    "meaning_es": "dentro; interior; en",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 19397088
+  },
+  {
+    "hanzi": "两",
+    "sense_index": 1,
+    "variants": [
+      "两"
+    ],
+    "traditional": "兩",
+    "pinyin": "liǎng",
+    "meaning_en": "two; both; some; a few; tael, unit of weight equal to 50 grams (modern) or 1⁄16 of a catty 斤[jin1] (old)",
+    "meaning_es": null,
+    "classifier": null,
+    "pos": "numeral",
+    "frequency": 32745515
+  },
+  {
     "hanzi": "零",
+    "sense_index": null,
+    "variants": [
+      "零"
+    ],
     "traditional": null,
     "pinyin": "líng",
     "meaning_en": "zero; nought; zero sign; fractional; fragmentary",
@@ -2911,6 +1569,10 @@
   },
   {
     "hanzi": "六",
+    "sense_index": null,
+    "variants": [
+      "六"
+    ],
     "traditional": null,
     "pinyin": "liù",
     "meaning_en": "six; 6",
@@ -2920,7 +1582,180 @@
     "frequency": 0
   },
   {
+    "hanzi": "吗",
+    "sense_index": null,
+    "variants": [
+      "吗"
+    ],
+    "traditional": "嗎",
+    "pinyin": "ma",
+    "meaning_en": "(question particle for 'yes-no' questions)",
+    "meaning_es": "ma (¿sí/no?)",
+    "classifier": null,
+    "pos": "particle",
+    "frequency": 10975592
+  },
+  {
+    "hanzi": "卖",
+    "sense_index": null,
+    "variants": [
+      "卖"
+    ],
+    "traditional": "賣",
+    "pinyin": "mài",
+    "meaning_en": "to sell; to betray; to spare no effort; to show off or flaunt",
+    "meaning_es": "vender; comerciar; expender; traspasar; traicionar; revelar (un secreto)",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 3193070
+  },
+  {
+    "hanzi": "买",
+    "sense_index": null,
+    "variants": [
+      "买"
+    ],
+    "traditional": "買",
+    "pinyin": "mǎi",
+    "meaning_en": "to buy; to purchase",
+    "meaning_es": "comprar; adquirir",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 7979402
+  },
+  {
+    "hanzi": "妈妈",
+    "sense_index": null,
+    "variants": [
+      "妈妈"
+    ],
+    "traditional": "媽",
+    "pinyin": "māma",
+    "meaning_en": "mama; mommy; mother",
+    "meaning_es": "mamá; madre; mamaíta (forma cariñosa)",
+    "classifier": "个、位",
+    "pos": "noun",
+    "frequency": 2733513
+  },
+  {
+    "hanzi": "忙",
+    "sense_index": null,
+    "variants": [
+      "忙"
+    ],
+    "traditional": null,
+    "pinyin": "máng",
+    "meaning_en": "busy; hurriedly; to hurry; to rush",
+    "meaning_es": "ocupado; atareado; ajetreado; tener prisa; apresurarse; darse prisa",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 1911546
+  },
+  {
+    "hanzi": "猫",
+    "sense_index": null,
+    "variants": [
+      "猫"
+    ],
+    "traditional": "貓",
+    "pinyin": "māo",
+    "meaning_en": "cat; (dialect) to hide oneself; (loanword) (coll.) modem",
+    "meaning_es": "gato; felino doméstico; minino; micho",
+    "classifier": "只",
+    "pos": "noun",
+    "frequency": 1748687
+  },
+  {
+    "hanzi": "没关系",
+    "sense_index": null,
+    "variants": [
+      "没关系"
+    ],
+    "traditional": "沒",
+    "pinyin": "méi guānxi",
+    "meaning_en": "it doesn't matter",
+    "meaning_es": "no importa; no pasa nada; da igual",
+    "classifier": null,
+    "pos": "",
+    "frequency": 289385
+  },
+  {
+    "hanzi": "妹妹",
+    "sense_index": null,
+    "variants": [
+      "妹妹"
+    ],
+    "traditional": null,
+    "pinyin": "mèimei",
+    "meaning_en": "younger sister; young woman",
+    "meaning_es": "hermana menor",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 714797
+  },
+  {
+    "hanzi": "没事",
+    "sense_index": null,
+    "variants": [
+      "没事"
+    ],
+    "traditional": "沒",
+    "pinyin": "méishì",
+    "meaning_en": "it's not important; it's nothing; never mind; to have nothing to do; to be free",
+    "meaning_es": "no importa; no pasa nada; no es grave; estoy libre/desocupado",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 667817
+  },
+  {
+    "hanzi": "没有",
+    "sense_index": null,
+    "variants": [
+      "没有",
+      "没"
+    ],
+    "traditional": "沒",
+    "pinyin": "méiyǒu",
+    "meaning_en": "haven't; hasn't; doesn't exist; to not have; to not be",
+    "meaning_es": "no tener; no haber; no (con pasado); carecer de",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 30405623
+  },
+  {
+    "hanzi": "们",
+    "sense_index": null,
+    "variants": [
+      "们"
+    ],
+    "traditional": "們",
+    "pinyin": "men",
+    "meaning_en": "plural marker for pronouns, and nouns referring to individuals",
+    "meaning_es": "sufijo de plural para pronombres y sustantivos referidos a personas",
+    "classifier": null,
+    "pos": "suffix",
+    "frequency": 2962827
+  },
+  {
+    "hanzi": "面包",
+    "sense_index": null,
+    "variants": [
+      "面包"
+    ],
+    "traditional": "麵",
+    "pinyin": "miànbāo",
+    "meaning_en": "bread",
+    "meaning_es": "pan",
+    "classifier": "片、块",
+    "pos": "noun",
+    "frequency": 308255
+  },
+  {
     "hanzi": "面条儿",
+    "sense_index": null,
+    "variants": [
+      "面条儿"
+    ],
     "traditional": "麵",
     "pinyin": "miàntiáor",
     "meaning_en": "erhua variant of 麵條|面条[mian4 tiao2]",
@@ -2930,7 +1765,473 @@
     "frequency": 0
   },
   {
+    "hanzi": "米饭",
+    "sense_index": null,
+    "variants": [
+      "米饭"
+    ],
+    "traditional": "米",
+    "pinyin": "mǐfàn",
+    "meaning_en": "(cooked) rice",
+    "meaning_es": "arroz cocido",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 129974
+  },
+  {
+    "hanzi": "明年",
+    "sense_index": null,
+    "variants": [
+      "明年"
+    ],
+    "traditional": null,
+    "pinyin": "míngnián",
+    "meaning_en": "next year",
+    "meaning_es": "el año que viene; el próximo año; el año entrante; el año siguiente",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 1578089
+  },
+  {
+    "hanzi": "明天",
+    "sense_index": null,
+    "variants": [
+      "明天"
+    ],
+    "traditional": null,
+    "pinyin": "míngtiān",
+    "meaning_en": "tomorrow",
+    "meaning_es": "mañana (día siguiente)",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 3889610
+  },
+  {
+    "hanzi": "名字",
+    "sense_index": null,
+    "variants": [
+      "名字"
+    ],
+    "traditional": null,
+    "pinyin": "míngzi",
+    "meaning_en": "name (of a person or thing)",
+    "meaning_es": "nombre; denominación; apelativo; título; reputación; fama; renombre",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 1765890
+  },
+  {
+    "hanzi": "那",
+    "sense_index": null,
+    "variants": [
+      "那"
+    ],
+    "traditional": null,
+    "pinyin": "nà",
+    "meaning_en": "(specifier) that; the; those (colloquial pr. [nei4]); (pronoun) that (referring to persons, things or situations); then (in that case)",
+    "meaning_es": "ese; aquel",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 21808185
+  },
+  {
+    "hanzi": "哪",
+    "sense_index": null,
+    "variants": [
+      "哪"
+    ],
+    "traditional": null,
+    "pinyin": "nǎ",
+    "meaning_en": "how; which",
+    "meaning_es": "cuál; qué; dónde (forma abreviada de 哪儿); alguno; cualquier",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 2578497
+  },
+  {
+    "hanzi": "那边",
+    "sense_index": null,
+    "variants": [
+      "那边"
+    ],
+    "traditional": "那",
+    "pinyin": "nàbiān",
+    "meaning_en": "over there; yonder",
+    "meaning_es": "allí; al otro lado; en aquella dirección",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 498433
+  },
+  {
+    "hanzi": "那个",
+    "sense_index": null,
+    "variants": [
+      "那个"
+    ],
+    "traditional": "那",
+    "pinyin": "nàge",
+    "meaning_en": "that one; that thing; that (as opposed to this); (used before a verb or adjective for emphasis); (used to humorously or indirectly refer to sth embarrassing, funny etc, or when one can't think of the right word)",
+    "meaning_es": "ese; aquel; esa cosa; aquello",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 5296183
+  },
+  {
+    "hanzi": "哪个",
+    "sense_index": null,
+    "variants": [
+      "哪个"
+    ],
+    "traditional": "哪",
+    "pinyin": "nǎge",
+    "meaning_en": "which; who",
+    "meaning_es": "cuál; qué (entre opciones)",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 986728
+  },
+  {
+    "hanzi": "那里",
+    "sense_index": null,
+    "variants": [
+      "那里"
+    ],
+    "traditional": "那",
+    "pinyin": "nàlǐ",
+    "meaning_en": "there; that place; there; that place",
+    "meaning_es": "allí; allá; ese lugar; aquel sitio; entonces; en ese punto",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 1905367
+  },
+  {
+    "hanzi": "哪里",
+    "sense_index": null,
+    "variants": [
+      "哪里"
+    ],
+    "traditional": "哪",
+    "pinyin": "nǎlǐ",
+    "meaning_en": "where?; somewhere; anywhere; wherever; nowhere (negative answer to question)",
+    "meaning_es": "dónde; en qué lugar; algún sitio; cualquier lugar; ¡qué va! (modestia); ¡de nada!",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 2017051
+  },
+  {
+    "hanzi": "男",
+    "sense_index": null,
+    "variants": [
+      "男"
+    ],
+    "traditional": null,
+    "pinyin": "nán",
+    "meaning_en": "(bound form) male; baron, the lowest of the five ranks of nobility 五等爵位[wu3 deng3 jue2 wei4]",
+    "meaning_es": "hombre; varón; masculino; macho; hijo; barón (título nobiliario)",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 3847599
+  },
+  {
+    "hanzi": "男朋友",
+    "sense_index": null,
+    "variants": [
+      "男朋友"
+    ],
+    "traditional": null,
+    "pinyin": "nánpéngyou",
+    "meaning_en": "boyfriend",
+    "meaning_es": "novio; pareja (hombre)",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 394072
+  },
+  {
+    "hanzi": "那儿",
+    "sense_index": null,
+    "variants": [
+      "那儿"
+    ],
+    "traditional": "那",
+    "pinyin": "nàr",
+    "meaning_en": "there",
+    "meaning_es": "allí; allá (coloquial, forma con erhua)",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 287368
+  },
+  {
+    "hanzi": "哪儿",
+    "sense_index": null,
+    "variants": [
+      "哪儿"
+    ],
+    "traditional": "哪",
+    "pinyin": "nǎr",
+    "meaning_en": "where?; wherever; anywhere; somewhere; (used in rhetorical questions) how can ...?",
+    "meaning_es": "dónde; en algún sitio",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 435352
+  },
+  {
+    "hanzi": "那些",
+    "sense_index": null,
+    "variants": [
+      "那些"
+    ],
+    "traditional": null,
+    "pinyin": "nàxiē",
+    "meaning_en": "those",
+    "meaning_es": "esos; aquellos; esas cosas",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 4520517
+  },
+  {
+    "hanzi": "哪些",
+    "sense_index": null,
+    "variants": [
+      "哪些"
+    ],
+    "traditional": null,
+    "pinyin": "nǎxiē",
+    "meaning_en": "which ones?; who?; what?",
+    "meaning_es": "cuáles; qué (plural); quiénes",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 648251
+  },
+  {
+    "hanzi": "呢",
+    "sense_index": null,
+    "variants": [
+      "呢"
+    ],
+    "traditional": null,
+    "pinyin": "ne",
+    "meaning_en": "particle indicating that a previously asked question is to be applied to the preceding word ('What about ...?', 'And ...?'); particle for inquiring about location ('Where is ...?'); particle signaling a pause, to emphasize the preceding words and allow the listener time to take them on board ('ok?', 'are you with me?'); (at the end of a declarative sentence) particle indicating continuation of a state or action; particle indicating strong affirmation",
+    "meaning_es": "ne (¿y...?; énfasis)",
+    "classifier": null,
+    "pos": "particle",
+    "frequency": 12641044
+  },
+  {
+    "hanzi": "能",
+    "sense_index": null,
+    "variants": [
+      "能"
+    ],
+    "traditional": null,
+    "pinyin": "néng",
+    "meaning_en": "can; to be able to; might possibly; ability; (physics) energy",
+    "meaning_es": "poder (capacidad)",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 23909882
+  },
+  {
+    "hanzi": "你",
+    "sense_index": null,
+    "variants": [
+      "你"
+    ],
+    "traditional": "妳",
+    "pinyin": "nǐ",
+    "meaning_en": "you (informal, as opposed to courteous 您[nin2]); you (Note: In Taiwan, 妳 is used to address females, but in mainland China, it is not commonly used. Instead, 你 is used to address both males and females.)",
+    "meaning_es": "tú",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 88487705
+  },
+  {
+    "hanzi": "你好",
+    "sense_index": null,
+    "variants": [
+      "你好"
+    ],
+    "traditional": null,
+    "pinyin": "nǐ hǎo",
+    "meaning_en": "hello; hi",
+    "meaning_es": "hola; ¿qué tal?; buenos días/tardes",
+    "classifier": null,
+    "pos": "",
+    "frequency": 659697
+  },
+  {
+    "hanzi": "年",
+    "sense_index": null,
+    "variants": [
+      "年"
+    ],
+    "traditional": "秊",
+    "pinyin": "nián",
+    "meaning_en": "year; grain; harvest (old)",
+    "meaning_es": "año; edad; período anual",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 59830333
+  },
+  {
+    "hanzi": "你们",
+    "sense_index": null,
+    "variants": [
+      "你们"
+    ],
+    "traditional": "你",
+    "pinyin": "nǐmen",
+    "meaning_en": "you (plural)",
+    "meaning_es": "vosotros/ustedes",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 8527633
+  },
+  {
+    "hanzi": "您",
+    "sense_index": null,
+    "variants": [
+      "您"
+    ],
+    "traditional": null,
+    "pinyin": "nín",
+    "meaning_en": "you (courteous, as opposed to informal 你[ni3])",
+    "meaning_es": "usted (cortés)",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 4560428
+  },
+  {
+    "hanzi": "牛奶",
+    "sense_index": null,
+    "variants": [
+      "牛奶"
+    ],
+    "traditional": null,
+    "pinyin": "niúnǎi",
+    "meaning_en": "cow's milk",
+    "meaning_es": "leche (de vaca)",
+    "classifier": "瓶、杯",
+    "pos": "noun",
+    "frequency": 686739
+  },
+  {
+    "hanzi": "女",
+    "sense_index": null,
+    "variants": [
+      "女"
+    ],
+    "traditional": null,
+    "pinyin": "nǚ",
+    "meaning_en": "female; woman; daughter",
+    "meaning_es": "mujer; femenino; hija; muchacha",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 5946513
+  },
+  {
+    "hanzi": "女儿",
+    "sense_index": null,
+    "variants": [
+      "女儿"
+    ],
+    "traditional": "女",
+    "pinyin": "nǚ'ér",
+    "meaning_en": "daughter",
+    "meaning_es": "hija; niña; muchacha; descendiente femenina",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 1835470
+  },
+  {
+    "hanzi": "女朋友",
+    "sense_index": null,
+    "variants": [
+      "女朋友"
+    ],
+    "traditional": null,
+    "pinyin": "nǚpéngyou",
+    "meaning_en": "girlfriend",
+    "meaning_es": "novia; pareja (mujer)",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 426753
+  },
+  {
+    "hanzi": "女士",
+    "sense_index": null,
+    "variants": [
+      "女士"
+    ],
+    "traditional": null,
+    "pinyin": "nǚshì",
+    "meaning_en": "lady; madam; Miss; Ms",
+    "meaning_es": "señora; dama; Sra. (tratamiento formal)",
+    "classifier": "个、位",
+    "pos": "noun",
+    "frequency": 554862
+  },
+  {
+    "hanzi": "朋友",
+    "sense_index": null,
+    "variants": [
+      "朋友"
+    ],
+    "traditional": null,
+    "pinyin": "péngyou",
+    "meaning_en": "friend",
+    "meaning_es": "amigo/a; compañero/a",
+    "classifier": "个、位",
+    "pos": "noun",
+    "frequency": 5331707
+  },
+  {
+    "hanzi": "便宜",
+    "sense_index": null,
+    "variants": [
+      "便宜"
+    ],
+    "traditional": null,
+    "pinyin": "piányi",
+    "meaning_en": "cheap; inexpensive; a petty advantage; to let sb off lightly",
+    "meaning_es": "barato; económico; ventajoso; ganga",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 812874
+  },
+  {
+    "hanzi": "漂亮",
+    "sense_index": null,
+    "variants": [
+      "漂亮"
+    ],
+    "traditional": null,
+    "pinyin": "piàoliang",
+    "meaning_en": "pretty; beautiful",
+    "meaning_es": "guapo; bonito; hermoso; bello; lindo; espléndido; magnífico; brillante; excelente",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 1660274
+  },
+  {
+    "hanzi": "苹果",
+    "sense_index": null,
+    "variants": [
+      "苹果"
+    ],
+    "traditional": "蘋",
+    "pinyin": "píngguǒ",
+    "meaning_en": "apple",
+    "meaning_es": "manzana; fruto del manzano; Malus domestica",
+    "classifier": "个、颗",
+    "pos": "noun",
+    "frequency": 1102063
+  },
+  {
     "hanzi": "七",
+    "sense_index": null,
+    "variants": [
+      "七"
+    ],
     "traditional": null,
     "pinyin": "qī",
     "meaning_en": "seven; 7",
@@ -2940,7 +2241,39 @@
     "frequency": 0
   },
   {
+    "hanzi": "前",
+    "sense_index": null,
+    "variants": [
+      "前"
+    ],
+    "traditional": null,
+    "pinyin": "qián",
+    "meaning_en": "front; forward; ahead; first; top (followed by a number)",
+    "meaning_es": "delante; antes; anterior; frente",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 18590729
+  },
+  {
+    "hanzi": "钱",
+    "sense_index": null,
+    "variants": [
+      "钱"
+    ],
+    "traditional": "錢",
+    "pinyin": "qián",
+    "meaning_en": "coin; money; unit of weight, one tenth of a tael 兩|两[liang3]",
+    "meaning_es": "dinero; moneda",
+    "classifier": "笔",
+    "pos": "noun",
+    "frequency": 6768858
+  },
+  {
     "hanzi": "千",
+    "sense_index": null,
+    "variants": [
+      "千"
+    ],
     "traditional": "韆",
     "pinyin": "qiān",
     "meaning_en": "thousand",
@@ -2950,7 +2283,137 @@
     "frequency": 0
   },
   {
+    "hanzi": "起床",
+    "sense_index": null,
+    "variants": [
+      "起床"
+    ],
+    "traditional": null,
+    "pinyin": "qǐchuáng",
+    "meaning_en": "to get out of bed; to get up",
+    "meaning_es": "levantarse (de la cama)",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 971659
+  },
+  {
+    "hanzi": "请",
+    "sense_index": null,
+    "variants": [
+      "请"
+    ],
+    "traditional": "請",
+    "pinyin": "qǐng",
+    "meaning_en": "to ask; to invite; please (do sth); to treat (to a meal etc); to request",
+    "meaning_es": "por favor; invitar; pedir (cortésmente); contratar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 6760332
+  },
+  {
+    "hanzi": "请问",
+    "sense_index": null,
+    "variants": [
+      "请问"
+    ],
+    "traditional": "請",
+    "pinyin": "qǐngwèn",
+    "meaning_en": "Excuse me, may I ask...?",
+    "meaning_es": "disculpe; ¿podría preguntar...?; por favor, ¿me podría decir...?",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 418626
+  },
+  {
+    "hanzi": "去",
+    "sense_index": null,
+    "variants": [
+      "去"
+    ],
+    "traditional": null,
+    "pinyin": "qù",
+    "meaning_en": "to go; to go to (a place); (of a time etc) last; just passed; to send",
+    "meaning_es": "ir",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 30059353
+  },
+  {
+    "hanzi": "去年",
+    "sense_index": null,
+    "variants": [
+      "去年"
+    ],
+    "traditional": null,
+    "pinyin": "qùnián",
+    "meaning_en": "last year",
+    "meaning_es": "el año pasado",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 5301941
+  },
+  {
+    "hanzi": "热",
+    "sense_index": null,
+    "variants": [
+      "热"
+    ],
+    "traditional": "熱",
+    "pinyin": "rè",
+    "meaning_en": "to warm up; to heat up; hot (of weather); heat; fervent",
+    "meaning_es": "caliente; calor; temperatura elevada; calentar; popular; de moda; ferviente; entusiasta; fervoroso",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 2750130
+  },
+  {
+    "hanzi": "人",
+    "sense_index": null,
+    "variants": [
+      "人"
+    ],
+    "traditional": null,
+    "pinyin": "rén",
+    "meaning_en": "person; people",
+    "meaning_es": "persona; gente; ser humano",
+    "classifier": "个、位",
+    "pos": "noun",
+    "frequency": 65506298
+  },
+  {
+    "hanzi": "认识",
+    "sense_index": null,
+    "variants": [
+      "认识"
+    ],
+    "traditional": "認",
+    "pinyin": "rènshi",
+    "meaning_en": "to know; to recognize; to be familiar with; to get acquainted with sb; knowledge",
+    "meaning_es": "conocer (a alguien); saber; reconocer; identificar; estar familiarizado con; tener trato con",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 3502311
+  },
+  {
+    "hanzi": "日",
+    "sense_index": null,
+    "variants": [
+      "日"
+    ],
+    "traditional": null,
+    "pinyin": "rì",
+    "meaning_en": "sun; day; date, day of the month",
+    "meaning_es": "día; sol; fecha; jornada",
+    "classifier": null,
+    "pos": "measure word",
+    "frequency": 42260866
+  },
+  {
     "hanzi": "三",
+    "sense_index": null,
+    "variants": [
+      "三"
+    ],
     "traditional": null,
     "pinyin": "sān",
     "meaning_en": "three; 3",
@@ -2960,7 +2423,151 @@
     "frequency": 0
   },
   {
+    "hanzi": "上",
+    "sense_index": null,
+    "variants": [
+      "上"
+    ],
+    "traditional": null,
+    "pinyin": "shàng",
+    "meaning_en": "(bound form) up; upper; above; previous; first (of multiple parts)",
+    "meaning_es": "arriba; sobre; encima; subir; anterior",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 66509925
+  },
+  {
+    "hanzi": "上班",
+    "sense_index": null,
+    "variants": [
+      "上班"
+    ],
+    "traditional": null,
+    "pinyin": "shàngbān",
+    "meaning_en": "to go to work; to be on duty; to start work; to go to the office",
+    "meaning_es": "ir al trabajo; trabajar; estar de servicio; comenzar el turno; entrar a trabajar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 1465310
+  },
+  {
+    "hanzi": "商店",
+    "sense_index": null,
+    "variants": [
+      "商店"
+    ],
+    "traditional": null,
+    "pinyin": "shāngdiàn",
+    "meaning_en": "store; shop",
+    "meaning_es": "tienda; comercio; establecimiento",
+    "classifier": "家、个",
+    "pos": "noun",
+    "frequency": 425332
+  },
+  {
+    "hanzi": "上课",
+    "sense_index": null,
+    "variants": [
+      "上课"
+    ],
+    "traditional": "上",
+    "pinyin": "shàngkè",
+    "meaning_en": "to go to class; to attend class; to go to teach a class",
+    "meaning_es": "ir a clase; asistir a clase",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 703933
+  },
+  {
+    "hanzi": "上午",
+    "sense_index": null,
+    "variants": [
+      "上午"
+    ],
+    "traditional": null,
+    "pinyin": "shàngwǔ",
+    "meaning_en": "morning",
+    "meaning_es": "por la mañana; durante la mañana",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 2861780
+  },
+  {
+    "hanzi": "上学",
+    "sense_index": null,
+    "variants": [
+      "上学"
+    ],
+    "traditional": "上",
+    "pinyin": "shàngxué",
+    "meaning_en": "to go to school; to attend school",
+    "meaning_es": "ir a la escuela; asistir a clase",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 567120
+  },
+  {
+    "hanzi": "少",
+    "sense_index": null,
+    "variants": [
+      "少"
+    ],
+    "traditional": null,
+    "pinyin": "shǎo",
+    "meaning_en": "few; less; to lack; to be missing; to stop (doing sth)",
+    "meaning_es": "poco; escaso; menos; insuficiente; faltar; carecer; perder; extraviar; joven; corta edad",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 4710056
+  },
+  {
+    "hanzi": "谁",
+    "sense_index": null,
+    "variants": [
+      "谁"
+    ],
+    "traditional": "誰",
+    "pinyin": "shéi/shuí",
+    "meaning_en": "who; also pr. [shui2]",
+    "meaning_es": "quién",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 8548190
+  },
+  {
+    "hanzi": "生病",
+    "sense_index": null,
+    "variants": [
+      "生病"
+    ],
+    "traditional": null,
+    "pinyin": "shēngbìng",
+    "meaning_en": "to fall ill",
+    "meaning_es": "enfermar; ponerse enfermo; caer enfermo",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 311706
+  },
+  {
+    "hanzi": "什么",
+    "sense_index": null,
+    "variants": [
+      "什么"
+    ],
+    "traditional": "什",
+    "pinyin": "shénme",
+    "meaning_en": "what?; something; anything",
+    "meaning_es": "qué",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 17796936
+  },
+  {
     "hanzi": "十",
+    "sense_index": null,
+    "variants": [
+      "十"
+    ],
     "traditional": null,
     "pinyin": "shí",
     "meaning_en": "ten; 10",
@@ -2970,7 +2577,67 @@
     "frequency": 0
   },
   {
+    "hanzi": "事",
+    "sense_index": null,
+    "variants": [
+      "事"
+    ],
+    "traditional": null,
+    "pinyin": "shì",
+    "meaning_en": "matter; thing; item; work; affair",
+    "meaning_es": "asunto; cosa; tema; ocupación",
+    "classifier": "件、桩、回",
+    "pos": "noun",
+    "frequency": 9941650
+  },
+  {
+    "hanzi": "是",
+    "sense_index": null,
+    "variants": [
+      "是"
+    ],
+    "traditional": "昰",
+    "pinyin": "shì",
+    "meaning_en": "to be (followed by substantives only); correct; right; true; (respectful acknowledgement of a command) very well",
+    "meaning_es": "ser",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 171296602
+  },
+  {
+    "hanzi": "时候",
+    "sense_index": null,
+    "variants": [
+      "时候"
+    ],
+    "traditional": "時",
+    "pinyin": "shíhou",
+    "meaning_en": "time; length of time; moment; period",
+    "meaning_es": "momento; cuando; durante",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 12888353
+  },
+  {
+    "hanzi": "时间",
+    "sense_index": null,
+    "variants": [
+      "时间"
+    ],
+    "traditional": "時",
+    "pinyin": "shíjiān",
+    "meaning_en": "(concept of) time; (duration of) time; (point in) time",
+    "meaning_es": "tiempo; duración; hora",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 14785440
+  },
+  {
     "hanzi": "手机",
+    "sense_index": null,
+    "variants": [
+      "手机"
+    ],
     "traditional": "手",
     "pinyin": "shǒujī",
     "meaning_en": "cell phone; mobile phone",
@@ -2980,7 +2647,123 @@
     "frequency": 0
   },
   {
+    "hanzi": "书",
+    "sense_index": null,
+    "variants": [
+      "书"
+    ],
+    "traditional": "書",
+    "pinyin": "shū",
+    "meaning_en": "book; letter; document; to write",
+    "meaning_es": "libro; volumen; obra escrita; documento; carta; caligrafía; escritura; estilo de escribir",
+    "classifier": "本、册、部",
+    "pos": "noun",
+    "frequency": 3571022
+  },
+  {
+    "hanzi": "书店",
+    "sense_index": null,
+    "variants": [
+      "书店"
+    ],
+    "traditional": "書",
+    "pinyin": "shūdiàn",
+    "meaning_en": "bookstore",
+    "meaning_es": "librería",
+    "classifier": "家",
+    "pos": "noun",
+    "frequency": 213352
+  },
+  {
+    "hanzi": "睡",
+    "sense_index": null,
+    "variants": [
+      "睡"
+    ],
+    "traditional": null,
+    "pinyin": "shuì",
+    "meaning_en": "to sleep; to lie down",
+    "meaning_es": "dormir",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 4464165
+  },
+  {
+    "hanzi": "水",
+    "sense_index": null,
+    "variants": [
+      "水"
+    ],
+    "traditional": null,
+    "pinyin": "shuǐ",
+    "meaning_en": "water; (after a name) ... River; to swim (used mostly in 會水|会水[hui4 shui3] and 水性[shui3 xing4]); (coll.) lacking in substance; shoddy",
+    "meaning_es": "agua; líquido; río; curso de agua",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 8153040
+  },
+  {
+    "hanzi": "水果",
+    "sense_index": null,
+    "variants": [
+      "水果"
+    ],
+    "traditional": null,
+    "pinyin": "shuǐguǒ",
+    "meaning_en": "fruit",
+    "meaning_es": "fruta; fruto",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 792023
+  },
+  {
+    "hanzi": "睡觉",
+    "sense_index": null,
+    "variants": [
+      "睡觉"
+    ],
+    "traditional": "睡",
+    "pinyin": "shuìjiào",
+    "meaning_en": "to go to bed; to sleep",
+    "meaning_es": "dormir; acostarse; irse a la cama; echarse a dormir",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 2202995
+  },
+  {
+    "hanzi": "说",
+    "sense_index": null,
+    "variants": [
+      "说"
+    ],
+    "traditional": "説",
+    "pinyin": "shuō",
+    "meaning_en": "to speak; to talk; to say; to explain; to comment",
+    "meaning_es": "hablar; decir",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 52966771
+  },
+  {
+    "hanzi": "说话",
+    "sense_index": null,
+    "variants": [
+      "说话"
+    ],
+    "traditional": "說",
+    "pinyin": "shuōhuà",
+    "meaning_en": "to speak; to say; to talk; to gossip; to tell stories",
+    "meaning_es": "hablar; conversar; charlar; platicar; decir; expresarse; comunicarse verbalmente",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 1801458
+  },
+  {
     "hanzi": "四",
+    "sense_index": null,
+    "variants": [
+      "四"
+    ],
     "traditional": null,
     "pinyin": "sì",
     "meaning_en": "four; 4",
@@ -2990,7 +2773,347 @@
     "frequency": 0
   },
   {
+    "hanzi": "岁",
+    "sense_index": null,
+    "variants": [
+      "岁"
+    ],
+    "traditional": "歲",
+    "pinyin": "suì",
+    "meaning_en": "years old; classifier for years (of age); year; year (of crop harvests)",
+    "meaning_es": "años (de edad); año de vida",
+    "classifier": null,
+    "pos": "measure word",
+    "frequency": 8215534
+  },
+  {
+    "hanzi": "他",
+    "sense_index": null,
+    "variants": [
+      "他"
+    ],
+    "traditional": null,
+    "pinyin": "tā",
+    "meaning_en": "(third-person singular) (since the early 20th century, usu. male) he; him; his; (bound form) other; another",
+    "meaning_es": "él",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 67051085
+  },
+  {
+    "hanzi": "它",
+    "sense_index": null,
+    "variants": [
+      "它"
+    ],
+    "traditional": "牠",
+    "pinyin": "tā",
+    "meaning_en": "it; it (pronoun for an animal)",
+    "meaning_es": "ello (animal/cosa)",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 12176287
+  },
+  {
+    "hanzi": "她",
+    "sense_index": null,
+    "variants": [
+      "她"
+    ],
+    "traditional": null,
+    "pinyin": "tā",
+    "meaning_en": "she",
+    "meaning_es": "ella",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 26689468
+  },
+  {
+    "hanzi": "太",
+    "sense_index": null,
+    "variants": [
+      "太"
+    ],
+    "traditional": null,
+    "pinyin": "tài",
+    "meaning_en": "highest; greatest; too (much); very; extremely",
+    "meaning_es": "demasiado; muy; en extremo",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 15451106
+  },
+  {
+    "hanzi": "他们",
+    "sense_index": null,
+    "variants": [
+      "他们"
+    ],
+    "traditional": "他",
+    "pinyin": "tāmen",
+    "meaning_en": "they; them",
+    "meaning_es": "ellos",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 23760910
+  },
+  {
+    "hanzi": "它们",
+    "sense_index": null,
+    "variants": [
+      "它们"
+    ],
+    "traditional": "它",
+    "pinyin": "tāmen",
+    "meaning_en": "they; them",
+    "meaning_es": "ellos/ellas (para animales y objetos); les (a animales y objetos)",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 2024150
+  },
+  {
+    "hanzi": "她们",
+    "sense_index": null,
+    "variants": [
+      "她们"
+    ],
+    "traditional": "她",
+    "pinyin": "tāmen",
+    "meaning_en": "they; them (females)",
+    "meaning_es": "ellas (femenino); les (a ellas)",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 1938149
+  },
+  {
+    "hanzi": "天",
+    "sense_index": null,
+    "variants": [
+      "天"
+    ],
+    "traditional": null,
+    "pinyin": "tiān",
+    "meaning_en": "day; sky; heaven",
+    "meaning_es": "día; cielo; firmamento; tiempo (atmósfera)",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 20457907
+  },
+  {
+    "hanzi": "天气",
+    "sense_index": null,
+    "variants": [
+      "天气"
+    ],
+    "traditional": "天",
+    "pinyin": "tiānqì",
+    "meaning_en": "weather",
+    "meaning_es": "tiempo (clima); meteorología; estado del tiempo; condiciones atmosféricas",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 1855577
+  },
+  {
+    "hanzi": "听",
+    "sense_index": null,
+    "variants": [
+      "听"
+    ],
+    "traditional": "聽",
+    "pinyin": "tīng",
+    "meaning_en": "to listen to; to hear; to heed; to obey; a can (loanword from English 'tin')",
+    "meaning_es": "oír; escuchar; atender; prestar oído; obedecer; hacer caso a; seguir (consejo); percibir (sonido)",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 6519997
+  },
+  {
+    "hanzi": "听见",
+    "sense_index": null,
+    "variants": [
+      "听见"
+    ],
+    "traditional": "聽",
+    "pinyin": "tīngjiàn",
+    "meaning_en": "to hear",
+    "meaning_es": "oír (percibir sonido); alcanzar a oír; llegar a oídos; enterarse por el oído; escuchar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 401801
+  },
+  {
+    "hanzi": "同学",
+    "sense_index": null,
+    "variants": [
+      "同学"
+    ],
+    "traditional": "同",
+    "pinyin": "tóngxué",
+    "meaning_en": "to study at the same school; fellow student; classmate",
+    "meaning_es": "compañero de clase; condiscípulo; estudiante; camarada de estudios",
+    "classifier": "位、个",
+    "pos": "noun",
+    "frequency": 1955697
+  },
+  {
+    "hanzi": "外",
+    "sense_index": null,
+    "variants": [
+      "外"
+    ],
+    "traditional": null,
+    "pinyin": "wài",
+    "meaning_en": "outside; in addition; foreign; external",
+    "meaning_es": "fuera; exterior; externo; extranjero; además de",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 8587903
+  },
+  {
+    "hanzi": "外边",
+    "sense_index": null,
+    "variants": [
+      "外边"
+    ],
+    "traditional": "外",
+    "pinyin": "wàibian",
+    "meaning_en": "outside; outer surface; abroad; place other than one's home",
+    "meaning_es": "fuera; exterior; afuera",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 74404
+  },
+  {
+    "hanzi": "玩",
+    "sense_index": null,
+    "variants": [
+      "玩"
+    ],
+    "traditional": "翫",
+    "pinyin": "wán",
+    "meaning_en": "to play; to have fun; to trifle with; toy; sth used for amusement",
+    "meaning_es": "jugar; divertirse; pasarlo bien; entretenerse; usar; manejar; bromear; tomar a la ligera",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 4207147
+  },
+  {
+    "hanzi": "晚",
+    "sense_index": null,
+    "variants": [
+      "晚"
+    ],
+    "traditional": null,
+    "pinyin": "wǎn",
+    "meaning_en": "evening; night; late",
+    "meaning_es": "tarde; noche; avanzada la hora; crepúsculo; retrasado; tardío; posterior; joven; juvenil",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 3391123
+  },
+  {
+    "hanzi": "晚饭",
+    "sense_index": null,
+    "variants": [
+      "晚饭"
+    ],
+    "traditional": "晚",
+    "pinyin": "wǎnfàn",
+    "meaning_en": "evening meal; dinner; supper",
+    "meaning_es": "cena",
+    "classifier": "份、顿、次、餐",
+    "pos": "noun",
+    "frequency": 327530
+  },
+  {
+    "hanzi": "晚上",
+    "sense_index": null,
+    "variants": [
+      "晚上"
+    ],
+    "traditional": null,
+    "pinyin": "wǎnshang",
+    "meaning_en": "evening; night; in the evening",
+    "meaning_es": "por la noche; noche; velada; tarde-noche; anochecer; al anochecer",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 3682819
+  },
+  {
+    "hanzi": "喂",
+    "sense_index": 1,
+    "variants": [
+      "喂"
+    ],
+    "traditional": "餵",
+    "pinyin": "wèi",
+    "meaning_en": "hey; to feed (an animal, baby, invalid etc); to feed",
+    "meaning_es": null,
+    "classifier": null,
+    "pos": "interjection",
+    "frequency": 1042918
+  },
+  {
+    "hanzi": "问",
+    "sense_index": null,
+    "variants": [
+      "问"
+    ],
+    "traditional": "問",
+    "pinyin": "wèn",
+    "meaning_en": "to ask; to inquire",
+    "meaning_es": "preguntar; interrogar; preguntar por; cuestionar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 6740338
+  },
+  {
+    "hanzi": "问题",
+    "sense_index": null,
+    "variants": [
+      "问题"
+    ],
+    "traditional": "問",
+    "pinyin": "wèntí",
+    "meaning_en": "question; problem; issue; topic",
+    "meaning_es": "problema; pregunta; cuestión; asunto; tema",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 18326876
+  },
+  {
+    "hanzi": "我",
+    "sense_index": null,
+    "variants": [
+      "我"
+    ],
+    "traditional": null,
+    "pinyin": "wǒ",
+    "meaning_en": "I; me; my",
+    "meaning_es": "yo; mi",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 169391220
+  },
+  {
+    "hanzi": "我们",
+    "sense_index": null,
+    "variants": [
+      "我们"
+    ],
+    "traditional": "我",
+    "pinyin": "wǒmen",
+    "meaning_en": "we; us; ourselves; our",
+    "meaning_es": "nosotros",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 41787606
+  },
+  {
     "hanzi": "五",
+    "sense_index": null,
+    "variants": [
+      "五"
+    ],
     "traditional": null,
     "pinyin": "wǔ",
     "meaning_en": "five; 5",
@@ -3000,7 +3123,431 @@
     "frequency": 0
   },
   {
+    "hanzi": "午饭",
+    "sense_index": null,
+    "variants": [
+      "午饭"
+    ],
+    "traditional": "午",
+    "pinyin": "wǔfàn",
+    "meaning_en": "lunch",
+    "meaning_es": "almuerzo; comida del mediodía",
+    "classifier": "份、顿、次、餐",
+    "pos": "noun",
+    "frequency": 207337
+  },
+  {
+    "hanzi": "下",
+    "sense_index": null,
+    "variants": [
+      "下"
+    ],
+    "traditional": null,
+    "pinyin": "xià",
+    "meaning_en": "down; downwards; below; lower; later",
+    "meaning_es": "abajo; debajo; bajar; descender; siguiente; próximo",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 26737542
+  },
+  {
+    "hanzi": "下雨",
+    "sense_index": null,
+    "variants": [
+      "下雨"
+    ],
+    "traditional": null,
+    "pinyin": "xià yǔ",
+    "meaning_en": "to rain",
+    "meaning_es": "llover; está lloviendo",
+    "classifier": null,
+    "pos": "",
+    "frequency": 438477
+  },
+  {
+    "hanzi": "下班",
+    "sense_index": null,
+    "variants": [
+      "下班"
+    ],
+    "traditional": null,
+    "pinyin": "xiàbān",
+    "meaning_en": "to finish work; to get off work; next service (train, bus etc)",
+    "meaning_es": "salir del trabajo; terminar turno",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 620525
+  },
+  {
+    "hanzi": "下课",
+    "sense_index": null,
+    "variants": [
+      "下课"
+    ],
+    "traditional": "下",
+    "pinyin": "xiàkè",
+    "meaning_en": "to finish class; to get out of class; (fig.) (esp. of a sports coach) to be dismissed; to be fired",
+    "meaning_es": "terminar la clase; salir de clase; finalizar la lección; acabar las clases; (entrenador) ser despedido",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 183572
+  },
+  {
+    "hanzi": "想",
+    "sense_index": null,
+    "variants": [
+      "想"
+    ],
+    "traditional": null,
+    "pinyin": "xiǎng",
+    "meaning_en": "to think (about); to think of; to devise; to think (that); to believe (that)",
+    "meaning_es": "pensar; querer; echar de menos",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 21944953
+  },
+  {
+    "hanzi": "先生",
+    "sense_index": null,
+    "variants": [
+      "先生"
+    ],
+    "traditional": null,
+    "pinyin": "xiānsheng",
+    "meaning_en": "teacher; gentleman; sir; mister (Mr.); husband",
+    "meaning_es": "señor; caballero; profesor; maestro; marido; esposo; doctor",
+    "classifier": "位",
+    "pos": "noun",
+    "frequency": 2248041
+  },
+  {
+    "hanzi": "现在",
+    "sense_index": null,
+    "variants": [
+      "现在"
+    ],
+    "traditional": "現",
+    "pinyin": "xiànzài",
+    "meaning_en": "now; at present; currently",
+    "meaning_es": "ahora; actualmente; en este momento; hoy en día; ya",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 16365880
+  },
+  {
+    "hanzi": "小",
+    "sense_index": null,
+    "variants": [
+      "小"
+    ],
+    "traditional": null,
+    "pinyin": "xiǎo",
+    "meaning_en": "small; tiny; few; young",
+    "meaning_es": "pequeño",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 20674943
+  },
+  {
+    "hanzi": "小朋友",
+    "sense_index": null,
+    "variants": [
+      "小朋友"
+    ],
+    "traditional": null,
+    "pinyin": "xiǎopéngyǒu",
+    "meaning_en": "child; kid (used to refer to a child, or by an adult to address a child, or, in Taiwan, to refer to sb's own child)",
+    "meaning_es": "niño/a; pequeño/a; chaval/a (forma cariñosa de dirigirse a un niño)",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 441938
+  },
+  {
+    "hanzi": "小时",
+    "sense_index": null,
+    "variants": [
+      "小时"
+    ],
+    "traditional": "小",
+    "pinyin": "xiǎoshí",
+    "meaning_en": "hour",
+    "meaning_es": "hora",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 4629165
+  },
+  {
+    "hanzi": "小学",
+    "sense_index": null,
+    "variants": [
+      "小学"
+    ],
+    "traditional": "小",
+    "pinyin": "xiǎoxué",
+    "meaning_en": "elementary school; primary school",
+    "meaning_es": "escuela primaria; colegio",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 1000714
+  },
+  {
+    "hanzi": "小学生",
+    "sense_index": null,
+    "variants": [
+      "小学生"
+    ],
+    "traditional": "小",
+    "pinyin": "xiǎoxuéshēng",
+    "meaning_en": "primary school student; schoolchild; (fig.) beginner",
+    "meaning_es": "alumno/a de primaria",
+    "classifier": "个、名",
+    "pos": "noun",
+    "frequency": 240070
+  },
+  {
+    "hanzi": "下午",
+    "sense_index": null,
+    "variants": [
+      "下午"
+    ],
+    "traditional": null,
+    "pinyin": "xiàwǔ",
+    "meaning_en": "afternoon; p.m.",
+    "meaning_es": "por la tarde; durante la tarde",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 4251438
+  },
+  {
+    "hanzi": "写",
+    "sense_index": null,
+    "variants": [
+      "写"
+    ],
+    "traditional": "寫",
+    "pinyin": "xiě",
+    "meaning_en": "to write",
+    "meaning_es": "escribir; redactar; componer; describir; pintar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 4943588
+  },
+  {
+    "hanzi": "些",
+    "sense_index": null,
+    "variants": [
+      "些"
+    ],
+    "traditional": null,
+    "pinyin": "xiē",
+    "meaning_en": "classifier indicating a small amount or small number greater than 1: some, a few, several",
+    "meaning_es": "algunos; unos cuantos; varios; algo de; un poco de; cantidad pequeña",
+    "classifier": null,
+    "pos": "measure word",
+    "frequency": 2344133
+  },
+  {
+    "hanzi": "谢谢",
+    "sense_index": null,
+    "variants": [
+      "谢谢"
+    ],
+    "traditional": "謝",
+    "pinyin": "xièxie",
+    "meaning_en": "to thank; thanks; thank you",
+    "meaning_es": "gracias; agradecer; dar las gracias; muchas gracias; te lo agradezco",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 2528380
+  },
+  {
+    "hanzi": "喜欢",
+    "sense_index": null,
+    "variants": [
+      "喜欢"
+    ],
+    "traditional": "喜",
+    "pinyin": "xǐhuan",
+    "meaning_en": "to like; to be fond of",
+    "meaning_es": "gustar; querer; aficionarse a; ser aficionado a; preferir",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 9589721
+  },
+  {
+    "hanzi": "新",
+    "sense_index": null,
+    "variants": [
+      "新"
+    ],
+    "traditional": null,
+    "pinyin": "xīn",
+    "meaning_en": "new; newly; meso- (chemistry)",
+    "meaning_es": "nuevo; recién; fresco; novedoso; moderno; renovado",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 21776749
+  },
+  {
+    "hanzi": "星期",
+    "sense_index": null,
+    "variants": [
+      "星期"
+    ],
+    "traditional": null,
+    "pinyin": "xīngqī",
+    "meaning_en": "week; day of the week; Sunday",
+    "meaning_es": "semana; día de la semana",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 755765
+  },
+  {
+    "hanzi": "星期日",
+    "sense_index": null,
+    "variants": [
+      "星期日"
+    ],
+    "traditional": null,
+    "pinyin": "xīngqīrì",
+    "meaning_en": "Sunday",
+    "meaning_es": "domingo",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 101243
+  },
+  {
+    "hanzi": "星期天",
+    "sense_index": null,
+    "variants": [
+      "星期天"
+    ],
+    "traditional": null,
+    "pinyin": "xīngqītiān",
+    "meaning_en": "Sunday",
+    "meaning_es": "domingo",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 136670
+  },
+  {
+    "hanzi": "休息",
+    "sense_index": null,
+    "variants": [
+      "休息"
+    ],
+    "traditional": null,
+    "pinyin": "xiūxi",
+    "meaning_en": "rest; to rest",
+    "meaning_es": "descansar; reposar; hacer una pausa; tomarse un descanso; relajarse; dormir",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 1474359
+  },
+  {
+    "hanzi": "学",
+    "sense_index": null,
+    "variants": [
+      "学"
+    ],
+    "traditional": "學",
+    "pinyin": "xué",
+    "meaning_en": "to learn; to study; to imitate; science; -ology",
+    "meaning_es": "estudiar; aprender",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 4458826
+  },
+  {
+    "hanzi": "雪",
+    "sense_index": null,
+    "variants": [
+      "雪"
+    ],
+    "traditional": null,
+    "pinyin": "xuě",
+    "meaning_en": "snow; (literary) to wipe away (a humiliation etc)",
+    "meaning_es": "nieve; nevar; nevada; blanco como la nieve; limpiar (una afrenta); vengar",
+    "classifier": "场",
+    "pos": "noun",
+    "frequency": 1707566
+  },
+  {
+    "hanzi": "学生",
+    "sense_index": null,
+    "variants": [
+      "学生"
+    ],
+    "traditional": "學",
+    "pinyin": "xuéshēng",
+    "meaning_en": "student; schoolchild",
+    "meaning_es": "estudiante; alumno; discípulo; escolar",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 6886521
+  },
+  {
+    "hanzi": "学习",
+    "sense_index": null,
+    "variants": [
+      "学习"
+    ],
+    "traditional": "學",
+    "pinyin": "xuéxí",
+    "meaning_en": "to learn; to study",
+    "meaning_es": "estudiar; aprender; formación; aprendizaje",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 5570557
+  },
+  {
+    "hanzi": "学校",
+    "sense_index": null,
+    "variants": [
+      "学校"
+    ],
+    "traditional": "學",
+    "pinyin": "xuéxiào",
+    "meaning_en": "school",
+    "meaning_es": "escuela; colegio; centro educativo; institución educativa",
+    "classifier": "所",
+    "pos": "noun",
+    "frequency": 5160143
+  },
+  {
+    "hanzi": "要",
+    "sense_index": null,
+    "variants": [
+      "要"
+    ],
+    "traditional": null,
+    "pinyin": "yào",
+    "meaning_en": "to want; to need; to ask for; will; shall",
+    "meaning_es": "querer; necesitar; ir a",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 50753034
+  },
+  {
+    "hanzi": "也",
+    "sense_index": null,
+    "variants": [
+      "也"
+    ],
+    "traditional": null,
+    "pinyin": "yě",
+    "meaning_en": "also; too; as well; (not ...) either; (used after a verbal or nominal expression X to indicate that X is an extreme or unexpected case) even (X)",
+    "meaning_es": "también; tampoco; incluso; además; aun; y",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 77259249
+  },
+  {
     "hanzi": "一",
+    "sense_index": null,
+    "variants": [
+      "一"
+    ],
     "traditional": null,
     "pinyin": "yī",
     "meaning_en": "one; single; a (article); as soon as; entire",
@@ -3008,5 +3555,650 @@
     "classifier": null,
     "pos": "numeral",
     "frequency": 0
+  },
+  {
+    "hanzi": "一半",
+    "sense_index": null,
+    "variants": [
+      "一半"
+    ],
+    "traditional": null,
+    "pinyin": "yíbàn",
+    "meaning_en": "half",
+    "meaning_es": "la mitad; medio; media parte; un 50%; a medias; parcialmente",
+    "classifier": null,
+    "pos": "numeral",
+    "frequency": 1227406
+  },
+  {
+    "hanzi": "一点儿",
+    "sense_index": null,
+    "variants": [
+      "一点儿"
+    ],
+    "traditional": "一",
+    "pinyin": "yìdiǎnr",
+    "meaning_en": "erhua variant of 一點|一点[yi1 dian3]",
+    "meaning_es": "un poquito; un pelín; una pizca; muy poco",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 129371
+  },
+  {
+    "hanzi": "衣服",
+    "sense_index": null,
+    "variants": [
+      "衣服"
+    ],
+    "traditional": null,
+    "pinyin": "yīfu",
+    "meaning_en": "clothes",
+    "meaning_es": "ropa; vestimenta; indumentaria; prenda; vestido",
+    "classifier": "件、套",
+    "pos": "noun",
+    "frequency": 932764
+  },
+  {
+    "hanzi": "医生",
+    "sense_index": null,
+    "variants": [
+      "医生"
+    ],
+    "traditional": "醫",
+    "pinyin": "yīshēng",
+    "meaning_en": "doctor",
+    "meaning_es": "médico; doctor; facultativo; galeno; profesional de la medicina",
+    "classifier": "个、位、名",
+    "pos": "noun",
+    "frequency": 1758616
+  },
+  {
+    "hanzi": "一下",
+    "sense_index": null,
+    "variants": [
+      "一下"
+    ],
+    "traditional": null,
+    "pinyin": "yíxià",
+    "meaning_en": "(after a verb) a bit; a little (indicating brief duration, or softening the tone, or suggesting giving sth a try); all at once; suddenly",
+    "meaning_es": "un poco; un momento; brevemente (después del verbo: suaviza o indica intento rápido)",
+    "classifier": null,
+    "pos": "数量、（副）",
+    "frequency": 5932374
+  },
+  {
+    "hanzi": "一些",
+    "sense_index": null,
+    "variants": [
+      "一些"
+    ],
+    "traditional": null,
+    "pinyin": "yìxiē",
+    "meaning_en": "some; a few; a little; (following an adjective) slightly ...er",
+    "meaning_es": "algunos; unos cuantos; un poco de",
+    "classifier": null,
+    "pos": "数量",
+    "frequency": 11583138
+  },
+  {
+    "hanzi": "医院",
+    "sense_index": null,
+    "variants": [
+      "医院"
+    ],
+    "traditional": "醫",
+    "pinyin": "yīyuàn",
+    "meaning_en": "hospital",
+    "meaning_es": "hospital; clínica; centro médico; sanatorio",
+    "classifier": "所、家、座",
+    "pos": "noun",
+    "frequency": 3813656
+  },
+  {
+    "hanzi": "椅子",
+    "sense_index": null,
+    "variants": [
+      "椅子"
+    ],
+    "traditional": null,
+    "pinyin": "yǐzi",
+    "meaning_en": "chair",
+    "meaning_es": "silla; asiento; sillón; taburete",
+    "classifier": "把、张",
+    "pos": "noun",
+    "frequency": 268369
+  },
+  {
+    "hanzi": "有",
+    "sense_index": null,
+    "variants": [
+      "有"
+    ],
+    "traditional": null,
+    "pinyin": "yǒu",
+    "meaning_en": "to have; there is; (bound form) having; with; -ful",
+    "meaning_es": "tener; haber; existir; poseer; contener; haber (experiencia)",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 94271573
+  },
+  {
+    "hanzi": "有的",
+    "sense_index": null,
+    "variants": [
+      "有的"
+    ],
+    "traditional": null,
+    "pinyin": "yǒude",
+    "meaning_en": "(there are) some (who are...); some (exist)",
+    "meaning_es": "algunos; hay quienes; una parte; ciertos; determinadas personas/cosas; existen... que",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 3183017
+  },
+  {
+    "hanzi": "有些",
+    "sense_index": null,
+    "variants": [
+      "有些"
+    ],
+    "traditional": null,
+    "pinyin": "yǒuxiē",
+    "meaning_en": "some; somewhat",
+    "meaning_es": "algunos; unos cuantos; hay quienes; algo; un poco; bastante; tener un poco de",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 5287025
+  },
+  {
+    "hanzi": "有一点儿",
+    "sense_index": null,
+    "variants": [
+      "有一点儿",
+      "有点儿"
+    ],
+    "traditional": "有",
+    "pinyin": "yǒudiǎnr",
+    "meaning_en": "slightly; a little; somewhat",
+    "meaning_es": null,
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 131863
+  },
+  {
+    "hanzi": "雨",
+    "sense_index": null,
+    "variants": [
+      "雨"
+    ],
+    "traditional": null,
+    "pinyin": "yǔ",
+    "meaning_en": "rain",
+    "meaning_es": "lluvia; precipitación; agua de lluvia; llover; caer lluvia; época de lluvias",
+    "classifier": "阵、场",
+    "pos": "noun",
+    "frequency": 1306669
+  },
+  {
+    "hanzi": "元",
+    "sense_index": null,
+    "variants": [
+      "元"
+    ],
+    "traditional": null,
+    "pinyin": "yuán",
+    "meaning_en": "currency unit (esp. Chinese yuan); (bound form) first; original; primary; (bound form) basic",
+    "meaning_es": "yuan (moneda china ¥); primero; original; principal; unidad",
+    "classifier": null,
+    "pos": "measure word",
+    "frequency": 27576670
+  },
+  {
+    "hanzi": "月",
+    "sense_index": null,
+    "variants": [
+      "月"
+    ],
+    "traditional": null,
+    "pinyin": "yuè",
+    "meaning_en": "moon; month; monthly",
+    "meaning_es": "luna; mes; mensual",
+    "classifier": "个、轮",
+    "pos": "noun",
+    "frequency": 40981378
+  },
+  {
+    "hanzi": "再",
+    "sense_index": null,
+    "variants": [
+      "再"
+    ],
+    "traditional": null,
+    "pinyin": "zài",
+    "meaning_en": "again; once more; re-; further; beyond this point of time",
+    "meaning_es": "otra vez (futuro); más; luego; entonces",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 15399566
+  },
+  {
+    "hanzi": "在",
+    "sense_index": null,
+    "variants": [
+      "在"
+    ],
+    "traditional": null,
+    "pinyin": "zài",
+    "meaning_en": "to exist; to be alive; (of sb or sth) to be (located) at; (used before a verb to indicate an action in progress)",
+    "meaning_es": "estar en; encontrarse en; existir; estar (gerundio); en; durante",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 197672850
+  },
+  {
+    "hanzi": "再见",
+    "sense_index": null,
+    "variants": [
+      "再见"
+    ],
+    "traditional": "再",
+    "pinyin": "zàijiàn",
+    "meaning_en": "goodbye; see you again later",
+    "meaning_es": "adiós; hasta luego; hasta la vista",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 457344
+  },
+  {
+    "hanzi": "早",
+    "sense_index": null,
+    "variants": [
+      "早"
+    ],
+    "traditional": null,
+    "pinyin": "zǎo",
+    "meaning_en": "early; morning; Good morning!; long ago; prematurely",
+    "meaning_es": "temprano; por la mañana; buenos días; hace tiempo; tempranero",
+    "classifier": null,
+    "pos": "adjective",
+    "frequency": 3857863
+  },
+  {
+    "hanzi": "早饭",
+    "sense_index": null,
+    "variants": [
+      "早饭"
+    ],
+    "traditional": "早",
+    "pinyin": "zǎofàn",
+    "meaning_en": "breakfast",
+    "meaning_es": "desayuno; comida de la mañana; primera comida del día",
+    "classifier": "份、顿、次、餐",
+    "pos": "noun",
+    "frequency": 171028
+  },
+  {
+    "hanzi": "早上",
+    "sense_index": null,
+    "variants": [
+      "早上"
+    ],
+    "traditional": null,
+    "pinyin": "zǎoshang",
+    "meaning_en": "early morning",
+    "meaning_es": "por la mañana; primeras horas del día; madrugada; temprano; primera hora",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 1636879
+  },
+  {
+    "hanzi": "怎么",
+    "sense_index": null,
+    "variants": [
+      "怎么"
+    ],
+    "traditional": "怎",
+    "pinyin": "zěnme",
+    "meaning_en": "how?; what?; why?",
+    "meaning_es": "cómo; de qué manera; qué; por qué (sorpresa); ¿cómo es que...?",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 8708842
+  },
+  {
+    "hanzi": "怎么样",
+    "sense_index": null,
+    "variants": [
+      "怎么样"
+    ],
+    "traditional": "怎",
+    "pinyin": "zěnmeyàng",
+    "meaning_en": "how?; how about?; how was it?; how are things?",
+    "meaning_es": "¿qué tal?; ¿cómo es?; ¿cómo te va?; ¿qué te parece?",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 927693
+  },
+  {
+    "hanzi": "找",
+    "sense_index": null,
+    "variants": [
+      "找"
+    ],
+    "traditional": null,
+    "pinyin": "zhǎo",
+    "meaning_en": "to try to find; to look for; to call on sb; to find; to seek",
+    "meaning_es": "buscar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 8427695
+  },
+  {
+    "hanzi": "这",
+    "sense_index": null,
+    "variants": [
+      "这"
+    ],
+    "traditional": "這",
+    "pinyin": "zhè",
+    "meaning_en": "(pronoun) this; these; (bound form) this; the (followed by a noun); (bound form) this",
+    "meaning_es": "este; esta; esto; este momento; ahora; aquí",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 73252887
+  },
+  {
+    "hanzi": "这边",
+    "sense_index": null,
+    "variants": [
+      "这边"
+    ],
+    "traditional": "這",
+    "pinyin": "zhèbiān",
+    "meaning_en": "this side; here",
+    "meaning_es": "aquí; este lado; por aquí; de este lado",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 429528
+  },
+  {
+    "hanzi": "这个",
+    "sense_index": null,
+    "variants": [
+      "这个"
+    ],
+    "traditional": "這",
+    "pinyin": "zhège",
+    "meaning_en": "(pronoun) this; (adjective) this",
+    "meaning_es": "este; esta; esto",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 24376948
+  },
+  {
+    "hanzi": "这里",
+    "sense_index": null,
+    "variants": [
+      "这里"
+    ],
+    "traditional": "這",
+    "pinyin": "zhèlǐ",
+    "meaning_en": "here",
+    "meaning_es": "aquí; acá; este lugar",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 5812931
+  },
+  {
+    "hanzi": "真",
+    "sense_index": null,
+    "variants": [
+      "真"
+    ],
+    "traditional": null,
+    "pinyin": "zhēn",
+    "meaning_en": "really; truly; indeed; real; true",
+    "meaning_es": "realmente; de verdad; verdaderamente; auténtico; genuino; verdadero; claro; nítido",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 16020066
+  },
+  {
+    "hanzi": "正在",
+    "sense_index": null,
+    "variants": [
+      "正在"
+    ],
+    "traditional": null,
+    "pinyin": "zhèngzài",
+    "meaning_en": "to be in the process of (doing sth); to be currently ...-ing",
+    "meaning_es": "estar (gerundio); justo ahora; en este momento; en proceso de",
+    "classifier": null,
+    "pos": "adverb",
+    "frequency": 5824702
+  },
+  {
+    "hanzi": "这儿",
+    "sense_index": null,
+    "variants": [
+      "这儿"
+    ],
+    "traditional": "這",
+    "pinyin": "zhèr",
+    "meaning_en": "here",
+    "meaning_es": "aquí; acá (coloquial, forma con erhua)",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 428939
+  },
+  {
+    "hanzi": "这些",
+    "sense_index": null,
+    "variants": [
+      "这些"
+    ],
+    "traditional": "這",
+    "pinyin": "zhèxiē",
+    "meaning_en": "these",
+    "meaning_es": "estos; estas; estos/as",
+    "classifier": null,
+    "pos": "pronoun",
+    "frequency": 11378382
+  },
+  {
+    "hanzi": "只",
+    "sense_index": null,
+    "variants": [
+      "只"
+    ],
+    "traditional": "隻",
+    "pinyin": "zhī",
+    "meaning_en": "grain that has begun to ripen; classifier for birds and certain animals, one of a pair, some utensils, vessels etc",
+    "meaning_es": "clasificador para animales y para objetos de un par",
+    "classifier": null,
+    "pos": "measure word",
+    "frequency": 12513893
+  },
+  {
+    "hanzi": "知道",
+    "sense_index": null,
+    "variants": [
+      "知道"
+    ],
+    "traditional": null,
+    "pinyin": "zhīdào",
+    "meaning_en": "to know; to become aware of; also pr. [zhi1dao5]",
+    "meaning_es": "saber; conocer; enterarse de; estar al tanto de; darse cuenta de",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 9354835
+  },
+  {
+    "hanzi": "中国",
+    "sense_index": null,
+    "variants": [
+      "中国"
+    ],
+    "traditional": "中",
+    "pinyin": "Zhōngguó",
+    "meaning_en": "China",
+    "meaning_es": "China",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 27811293
+  },
+  {
+    "hanzi": "中文",
+    "sense_index": null,
+    "variants": [
+      "中文"
+    ],
+    "traditional": null,
+    "pinyin": "Zhōngwén",
+    "meaning_en": "Chinese language",
+    "meaning_es": "idioma chino; lengua china; chino mandarín; escritura china",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 654899
+  },
+  {
+    "hanzi": "中午",
+    "sense_index": null,
+    "variants": [
+      "中午"
+    ],
+    "traditional": null,
+    "pinyin": "zhōngwǔ",
+    "meaning_en": "noon; midday",
+    "meaning_es": "mediodía; las doce del día; hora de la comida; media jornada; al mediodía",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 1346954
+  },
+  {
+    "hanzi": "中学",
+    "sense_index": null,
+    "variants": [
+      "中学"
+    ],
+    "traditional": "中",
+    "pinyin": "zhōngxué",
+    "meaning_en": "middle school",
+    "meaning_es": "instituto; escuela secundaria",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 710971
+  },
+  {
+    "hanzi": "中学生",
+    "sense_index": null,
+    "variants": [
+      "中学生"
+    ],
+    "traditional": "中",
+    "pinyin": "zhōngxuéshēng",
+    "meaning_en": "middle-school student; high school student",
+    "meaning_es": "alumno/a de secundaria",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 208792
+  },
+  {
+    "hanzi": "住",
+    "sense_index": null,
+    "variants": [
+      "住"
+    ],
+    "traditional": null,
+    "pinyin": "zhù",
+    "meaning_en": "to live; to dwell; to stay; to reside; to stop",
+    "meaning_es": "vivir; residir; alojarse; habitar; parar(se); detenerse; cesar; fijar",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 5674865
+  },
+  {
+    "hanzi": "桌子",
+    "sense_index": null,
+    "variants": [
+      "桌子"
+    ],
+    "traditional": null,
+    "pinyin": "zhuōzi",
+    "meaning_en": "table; desk",
+    "meaning_es": "mesa; escritorio; pupitre; tablero; superficie de trabajo",
+    "classifier": "张、套",
+    "pos": "noun",
+    "frequency": 350339
+  },
+  {
+    "hanzi": "字",
+    "sense_index": null,
+    "variants": [
+      "字"
+    ],
+    "traditional": null,
+    "pinyin": "zì",
+    "meaning_en": "letter; symbol; character; word; courtesy or style name traditionally given to males aged 20 in dynastic China",
+    "meaning_es": "carácter chino; letra; signo escrito; caligrafía; palabra; término; escritura",
+    "classifier": "个",
+    "pos": "noun",
+    "frequency": 3389991
+  },
+  {
+    "hanzi": "坐",
+    "sense_index": null,
+    "variants": [
+      "坐"
+    ],
+    "traditional": null,
+    "pinyin": "zuò",
+    "meaning_en": "to sit; to take a seat; to take (a bus, airplane etc); to bear fruit",
+    "meaning_es": "sentarse; tomar asiento; permanecer sentado; viajar en; tomar (transporte)",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 3800762
+  },
+  {
+    "hanzi": "做",
+    "sense_index": null,
+    "variants": [
+      "做"
+    ],
+    "traditional": null,
+    "pinyin": "zuò",
+    "meaning_en": "to make; to produce; to write; to compose; to do",
+    "meaning_es": "hacer; realizar; elaborar; fabricar; ser; actuar como; dedicarse a; escribir; componer",
+    "classifier": null,
+    "pos": "verb",
+    "frequency": 23494662
+  },
+  {
+    "hanzi": "做饭",
+    "sense_index": null,
+    "variants": [
+      "做饭"
+    ],
+    "traditional": "做",
+    "pinyin": "zuò fàn",
+    "meaning_en": "to prepare a meal; to cook",
+    "meaning_es": "cocinar; preparar la comida; hacer de comer",
+    "classifier": null,
+    "pos": "",
+    "frequency": 247090
+  },
+  {
+    "hanzi": "昨天",
+    "sense_index": null,
+    "variants": [
+      "昨天"
+    ],
+    "traditional": null,
+    "pinyin": "zuótiān",
+    "meaning_en": "yesterday",
+    "meaning_es": "ayer",
+    "classifier": null,
+    "pos": "noun",
+    "frequency": 5187383
   }
 ]

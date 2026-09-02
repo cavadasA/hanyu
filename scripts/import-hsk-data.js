@@ -16,13 +16,16 @@ import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { parseDictionaryEntry, selectReading } from './lib/cedict-html.js';
+import { loadOfficialWords } from './lib/official-terms.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
 const dataDir = join(rootDir, 'data');
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
 
-function normalizeReadingKey(input) {
+function normalizeSenseKey(input) {
+  // La normalización del dominio quita los tonos para comparar formato. Una
+  // glosa curada no puede hacer eso: 只 zhī y 只 zhǐ son sentidos distintos.
   return String(input).normalize('NFC').toLowerCase().replace(/[\s'’·-]/g, '');
 }
 
@@ -46,7 +49,7 @@ function mapPos(posRaw) {
 /**
  * Las glosas españolas se curan a mano y no vienen del fichero fuente. Al
  * regenerar hay que arrastrarlas, o cada importación las destruiría. La clave
- * es (hanzi, lectura normalizada) y no el índice de fila, porque el número y
+ * es (hanzi, lectura con tono, sentido) y no el índice de fila, porque el número y
  * el orden de las filas puede cambiar entre importaciones. El tono se
  * conserva: 只 zhī y 只 zhǐ son sentidos distintos aunque normalizePinyin los
  * reduzca a la misma forma para comparaciones de formato.
@@ -59,7 +62,7 @@ function loadExistingSpanish(outPath) {
   const existing = new Map();
   for (const word of JSON.parse(readFileSync(outPath, 'utf-8'))) {
     if (word.meaning_es) {
-      existing.set(`${word.hanzi}|${normalizeReadingKey(word.pinyin)}`, word.meaning_es);
+      existing.set(`${word.hanzi}|${normalizeSenseKey(word.pinyin)}|${word.sense_index ?? ''}`, word.meaning_es);
     }
   }
 
@@ -73,7 +76,7 @@ function loadExistingSpanish(outPath) {
  */
 const curatedSpanish = new Map(
   JSON.parse(readFileSync(join(seedDir, 'sense-glosses-es.json'), 'utf-8')).map((entry) => [
-    `${entry.hanzi}|${normalizeReadingKey(entry.pinyin)}`,
+    `${entry.hanzi}|${normalizeSenseKey(entry.pinyin)}|${entry.sense_index ?? ''}`,
     entry.meaning_es,
   ]),
 );
@@ -90,52 +93,79 @@ for (const level of [1, 2, 3]) {
   const content = readFileSync(filePath, 'utf-8');
   const lines = content.trim().split('\n').filter((l) => l.trim());
 
-  const outPath = join(seedDir, `hsk${level}-words.json`);
-  const spanish = loadExistingSpanish(outPath);
-
-  const words = [];
-  const unresolved = [];
-
+  // El mazo Anki se indexa por forma escrita, que es la única clave que
+  // comparte con la lista oficial: el mazo ha perdido el índice de sentido.
+  const enriched = new Map();
   for (const line of lines) {
     const cols = line.split('\t');
     if (cols.length < 7) continue;
 
     const [simplified, , pinyinRaw, , , pos, freq, ...htmlParts] = cols;
-    const html = htmlParts.join('\t'); // rejoin in case HTML had tabs
     const hanzi = simplified?.trim();
     if (!hanzi) continue;
 
-    const pinyin = pinyinRaw?.trim() || '';
-    const entry = parseDictionaryEntry(html);
-    const sense = selectReading(entry, pinyin);
+    const list = enriched.get(hanzi) ?? [];
+    list.push({
+      pinyin: pinyinRaw?.trim() || '',
+      pos: mapPos(pos?.trim()),
+      frequency: parseInt(freq, 10) || 0,
+      html: htmlParts.join('\t'),
+    });
+    enriched.set(hanzi, list);
+  }
 
-    if (!sense) {
-      // Sin lectura resuelta no podemos afirmar qué sentido es esta fila.
-      // Se registra en vez de inventar una glosa.
-      unresolved.push(`${hanzi} ${pinyin}`);
+  const outPath = join(seedDir, `hsk${level}-words.json`);
+  const spanish = loadExistingSpanish(outPath);
+
+  const words = [];
+  const unmatched = [];
+
+  for (const term of loadOfficialWords(level)) {
+    // Se prueban todas las variantes: el mazo puede listar la forma corta
+    // (没) donde la lista oficial escribe la larga (没（有）).
+    const candidates = term.variants
+      .map((variant) => enriched.get(variant))
+      .find((found) => found && found.length > 0);
+
+    if (!candidates) {
+      unmatched.push(`${term.form}${term.sense_index ?? ''}`);
       continue;
     }
 
+    // Cuando el mazo trae varias filas para la misma forma escrita, el índice
+    // de sentido oficial las ordena: el sentido n usa la fila n si existe.
+    const source = candidates[Math.min((term.sense_index ?? 1) - 1, candidates.length - 1)];
+    const entry = parseDictionaryEntry(source.html);
+    const sense = selectReading(entry, source.pinyin);
+
+    if (!sense) {
+      unmatched.push(`${term.form} (${source.pinyin}: lectura sin resolver)`);
+      continue;
+    }
+
+    const senseKey = `${term.sense_index ?? ''}`;
+    const key = `${term.form}|${normalizeSenseKey(source.pinyin)}|${senseKey}`;
+
     words.push({
-      hanzi,
-      traditional: entry.traditional && entry.traditional !== hanzi ? entry.traditional : null,
-      pinyin,
+      hanzi: term.form,
+      sense_index: term.sense_index,
+      variants: term.variants,
+      traditional:
+        entry.traditional && entry.traditional !== term.form ? entry.traditional : null,
+      pinyin: source.pinyin,
       meaning_en: sense.meanings.slice(0, 5).join('; '),
-      meaning_es:
-        curatedSpanish.get(`${hanzi}|${normalizeReadingKey(pinyin)}`) ??
-        spanish.get(`${hanzi}|${normalizeReadingKey(pinyin)}`) ??
-        null,
+      meaning_es: curatedSpanish.get(key) ?? spanish.get(key) ?? null,
       classifier: sense.classifiers.length > 0 ? sense.classifiers.join('、') : null,
-      pos: mapPos(pos?.trim()),
-      frequency: parseInt(freq, 10) || 0,
+      pos: source.pos,
+      frequency: source.frequency,
     });
   }
 
   writeFileSync(outPath, JSON.stringify(words, null, 2), 'utf-8');
   console.log(`HSK ${level}: ${words.length} words -> ${outPath}`);
 
-  if (unresolved.length > 0) {
-    console.warn(`  ${unresolved.length} filas sin lectura resuelta: ${unresolved.join(', ')}`);
+  if (unmatched.length > 0) {
+    console.warn(`  ${unmatched.length} términos oficiales sin enriquecer: ${unmatched.join(', ')}`);
   }
 }
 

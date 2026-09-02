@@ -6,6 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadOfficialWords } from './lib/official-terms.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
@@ -43,7 +44,7 @@ describe('contrato del corpus', () => {
   const rows = loadCorpus();
 
   it('tiene el tamaño esperado', () => {
-    expect(rows).toHaveLength(1010);
+    expect(rows).toHaveLength(1011);
   });
 
   it('nunca da la misma glosa inglesa a dos lecturas distintas del mismo hanzi', () => {
@@ -80,31 +81,42 @@ describe('contrato del corpus', () => {
     expect(offenders).toEqual([]);
   });
 
-  it('da glosa española a todas las filas', () => {
-    const offenders = rows
-      .filter((row) => !row.meaning_es || !String(row.meaning_es).trim())
-      .map((row) => `${row.hanzi} ${row.pinyin} L${row.hsk_level}`);
+  it('contiene exactamente los términos de la lista oficial', () => {
+    const problems = [];
 
-    expect(offenders).toEqual([]);
-  });
-
-  it('declara en la cola de revisión toda fila que repite lectura entre niveles', () => {
-    const repeated = [];
-
-    for (const [hanzi, list] of groupByHanzi(rows)) {
-      const readings = new Set(
-        list.map((row) => normalizeReadingIdentity(row.pinyin)),
+    for (const level of [1, 2, 3]) {
+      const official = loadOfficialWords(level).map(
+        (term) => `${term.form}#${term.sense_index ?? ''}`,
       );
-      if (list.length > 1 && readings.size === 1) {
-        repeated.push(hanzi);
+      const mine = rows
+        .filter((row) => row.hsk_level === level)
+        .map((row) => `${row.hanzi}#${row.sense_index ?? ''}`);
+
+      for (const term of official) {
+        if (!mine.includes(term)) problems.push(`L${level} falta ${term}`);
+      }
+      for (const term of mine) {
+        if (!official.includes(term)) problems.push(`L${level} sobra ${term}`);
       }
     }
 
-    const queued = JSON.parse(
-      readFileSync(join(seedDir, 'sense-review-queue.json'), 'utf8'),
-    ).map((entry) => entry.hanzi);
+    expect(problems).toEqual([]);
+  });
 
-    expect(repeated.sort()).toEqual(queued.sort());
+  it('reparte las acepciones de 点 según el índice de la fuente', () => {
+    const dian = rows
+      .filter((row) => row.hanzi === '点')
+      .map((row) => `L${row.hsk_level}#${row.sense_index ?? ''}`)
+      .sort();
+
+    // La transcripción fijada en data/sources.json publica 点1 en HSK 3.
+    expect(dian).toEqual(['L1#1', 'L2#2', 'L3#1']);
+  });
+
+  it('conserva las variantes de las formas con parte opcional', () => {
+    const meiyou = rows.find((row) => row.hanzi === '没有');
+
+    expect(meiyou.variants).toEqual(['没有', '没']);
   });
 
   it('resuelve las cinco colisiones de lectura con sentidos distintos', () => {

@@ -32,6 +32,6 @@ describe('buildSeedSql', () => {
   });
 
   it('lleva el corpus completo', () => {
-    expect(counts.words).toBe(1010);
+    expect(counts.words).toBe(1011);
   });
 });
