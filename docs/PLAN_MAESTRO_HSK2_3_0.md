@@ -139,7 +139,13 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 **Cierra:** Alto 7, Alto 8; §3; §5 corpus y diseño de nota; §6.11; §7 familias gramaticales; §8 modelo mínimo; §10 P1.1–P1.3, P1.5, P1.6; §11 (como validación del esquema).
 
 ## Plan 2 — Contrato único de evaluación
-**Tamaño:** M · **Depende de:** Plan 0 · **Paralelo al Plan 1**
+**Tamaño:** M · **Depende de:** Plan 0 y la Tarea 1 del Plan 1A · **Paralelo al resto del Plan 1**
+
+> **Escrito:** `docs/superpowers/plans/2026-09-02-plan-2-contrato-de-evaluacion.md`, 6 tareas.
+>
+> Al aterrizarlo aparecieron tres defectos más de los cuatro que recogía la auditoría: la columna derecha de `matching` se pinta en el mismo orden que la izquierda, así que el ejercicio se resuelve emparejando fila con fila sin leer nada; cada comprobación hace cuatro viajes de red fallidos, porque `checkExercise` prueba la RPC `check_exercise` con tres firmas y luego la Edge Function `check-exercise`, y **ninguna de las dos existe**; y el ejercicio viaja al cliente con `correct` como campo suelto, filtrado por un `...payload`.
+>
+> Ese último defecto zanja la pregunta de dónde vive la verdad: hoy no hay ninguna autoridad de servidor que proteger. La evaluación pasa a ser local y explícita, en `packages/domain` sin dependencias, lista para ejecutarse en una Edge Function el día que haga falta.
 
 - Contrato discriminado por tipo (`fill_blank | multiple_choice | reorder | dictation | matching`) con forma de respuesta tipada.
 - Normalización y evaluación en **un solo módulo** compartido cliente/servidor. `reorder` compara arrays (hoy compara array contra string concatenado); `matching` compara el mapa completo palabra→significado (hoy compara contra el literal `'matched'`).
