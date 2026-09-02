@@ -44,7 +44,7 @@ describe('useExerciseSession', () => {
     expect(hook.result.current.exercise?.id).toBe('exercise-1');
 
     await act(async () => {
-      hook.result.current.setDraft('你好');
+      hook.result.current.setDraft({ kind: 'dictation', text: '你好' });
     });
     await act(async () => {
       await Promise.all([
@@ -61,7 +61,7 @@ describe('useExerciseSession', () => {
       await hook.result.current.next();
     });
     expect(hook.result.current.exercise?.id).toBe('exercise-2');
-    expect(hook.result.current.draft).toBeNull();
+    expect(hook.result.current.draft).toEqual({ kind: 'dictation', text: '' });
   });
 
   it('preserves the draft and selection when checking fails', async () => {
@@ -75,7 +75,7 @@ describe('useExerciseSession', () => {
       hook.result.current.setLevel(3);
       hook.result.current.setType('dictation');
       await hook.result.current.load();
-      hook.result.current.setDraft('nǐ hǎo');
+      hook.result.current.setDraft({ kind: 'dictation', text: 'nǐ hǎo' });
     });
     await act(async () => {
       await hook.result.current.check();
@@ -84,7 +84,7 @@ describe('useExerciseSession', () => {
     expect(hook.result.current.status).toBe('answering');
     expect(hook.result.current.level).toBe(3);
     expect(hook.result.current.type).toBe('dictation');
-    expect(hook.result.current.draft).toBe('nǐ hǎo');
+    expect(hook.result.current.draft).toEqual({ kind: 'dictation', text: 'nǐ hǎo' });
     expect(hook.result.current.error).toBe('No connection');
   });
 });

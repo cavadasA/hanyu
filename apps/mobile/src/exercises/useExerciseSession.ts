@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
+import { emptyAnswer, isAnswerComplete, type ExerciseAnswer } from '@hanyu/domain';
 import {
   toUserMessage,
   type Exercise,
@@ -12,7 +13,7 @@ type Status = 'idle' | 'loading' | 'answering' | 'checking' | 'checked' | 'error
 
 interface ExerciseApi {
   generateExercise(type: ExerciseType, level: HskLevel): Promise<Exercise>;
-  checkExercise(id: string, answer: unknown): Promise<ExerciseCheckResult>;
+  checkExercise(id: string, answer: ExerciseAnswer): Promise<ExerciseCheckResult>;
 }
 
 export interface ExerciseSession {
@@ -20,12 +21,13 @@ export interface ExerciseSession {
   type: ExerciseType;
   level: HskLevel;
   exercise: Exercise | null;
-  draft: unknown;
+  draft: ExerciseAnswer;
+  complete: boolean;
   result: ExerciseCheckResult | null;
   error: string | null;
   setType(type: ExerciseType): void;
   setLevel(level: HskLevel): void;
-  setDraft(value: unknown): void;
+  setDraft(value: ExerciseAnswer): void;
   load(): Promise<void>;
   check(): Promise<void>;
   next(): Promise<void>;
@@ -38,7 +40,7 @@ export function useExerciseSession(
   const [type, setType] = useState<ExerciseType>('fill_blank');
   const [level, setLevel] = useState<HskLevel>(2);
   const [exercise, setExercise] = useState<Exercise | null>(null);
-  const [draft, setDraft] = useState<unknown>(null);
+  const [draft, setDraft] = useState<ExerciseAnswer>(emptyAnswer('fill_blank'));
   const [result, setResult] = useState<ExerciseCheckResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const checking = useRef(false);
@@ -50,7 +52,7 @@ export function useExerciseSession(
     try {
       const nextExercise = await api.generateExercise(type, level);
       setExercise(nextExercise);
-      setDraft(null);
+      setDraft(emptyAnswer(nextExercise.type));
       setResult(null);
       setStatus('answering');
     } catch (caught) {
@@ -60,7 +62,12 @@ export function useExerciseSession(
   }, [api, level, type]);
 
   const check = useCallback(async () => {
-    if (checking.current || status !== 'answering' || !exercise || draft === null) {
+    if (
+      checking.current ||
+      status !== 'answering' ||
+      !exercise ||
+      !isAnswerComplete(exercise.solution, draft)
+    ) {
       return;
     }
 
@@ -80,6 +87,8 @@ export function useExerciseSession(
     }
   }, [api, draft, exercise, status]);
 
+  const complete = exercise ? isAnswerComplete(exercise.solution, draft) : false;
+
   const next = useCallback(async () => {
     await load();
   }, [load]);
@@ -90,6 +99,7 @@ export function useExerciseSession(
     level,
     exercise,
     draft,
+    complete,
     result,
     error,
     setType,

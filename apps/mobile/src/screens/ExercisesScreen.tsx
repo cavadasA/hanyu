@@ -19,24 +19,11 @@ const TYPES: Array<{ type: ExerciseType; label: string }> = [
   { type: 'matching', label: 'Matching' },
 ];
 
-function hasAnswer(value: unknown) {
-  if (typeof value === 'string') {
-    return value.trim().length > 0;
-  }
-  if (Array.isArray(value)) {
-    return value.length > 0;
-  }
-  if (value && typeof value === 'object') {
-    return Object.keys(value).length > 0;
-  }
-  return value !== null && value !== undefined;
-}
-
 export function ExercisesScreen() {
   const { colors } = useTheme();
   const session = useExerciseSession();
   const busy = session.status === 'loading' || session.status === 'checking';
-  const canCheck = session.status === 'answering' && hasAnswer(session.draft);
+  const canCheck = session.status === 'answering' && session.complete;
   const explanation =
     session.result?.explanation ??
     session.exercise?.explanation ??
@@ -119,6 +106,17 @@ export function ExercisesScreen() {
               {explanation ? (
                 <Text style={[styles.explanation, { color: colors.textMuted }]}>{explanation}</Text>
               ) : null}
+              {session.result.detail.kind === 'matching' && session.result.detail.wrong.length > 0 ? (
+                <Text style={[styles.detail, { color: colors.vermilion }]}>
+                  {`Wrong: ${session.result.detail.wrong.join('、')}`}
+                </Text>
+              ) : null}
+              {session.result.detail.kind === 'reorder' &&
+              session.result.detail.first_wrong_index !== null ? (
+                <Text style={[styles.detail, { color: colors.vermilion }]}>
+                  {`First wrong position: ${session.result.detail.first_wrong_index + 1}`}
+                </Text>
+              ) : null}
             </View>
           ) : null}
 
@@ -183,5 +181,9 @@ const styles = StyleSheet.create({
   explanation: {
     fontSize: tokens.fontSize.sm,
     lineHeight: 20,
+  },
+  detail: {
+    fontSize: tokens.fontSize.sm,
+    fontWeight: '700',
   },
 });
