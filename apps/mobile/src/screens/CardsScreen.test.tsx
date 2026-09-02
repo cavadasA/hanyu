@@ -7,10 +7,19 @@ import CardsScreen from './CardsScreen';
 
 const mockGetDueCards = jest.fn();
 const mockReviewCard = jest.fn();
+const mockRateCard = jest.fn();
+const mockUndoRating = jest.fn();
+const mockLoadDueCards = jest.fn();
 const mockLogTime = jest.fn();
 const mockCreateStarterDeck = jest.fn();
 const mockGetDashboard = jest.fn();
 const mockPush = jest.fn();
+const mockOfflineService = {
+  loadDueCards: (limit: number) => mockLoadDueCards(limit),
+  rateCard: (card: unknown, quality: number, timeMs: number | null) =>
+    mockRateCard(card, quality, timeMs),
+  undoRating: (reviewId: string) => mockUndoRating(reviewId),
+};
 
 jest.mock('../lib/data', () => ({
   getData: () => ({
@@ -24,6 +33,18 @@ jest.mock('../lib/data', () => ({
       logTime: (ms: number) => mockLogTime(ms),
       getDashboard: () => mockGetDashboard(),
     },
+  }),
+}));
+
+jest.mock('../offline/OfflineReviewProvider', () => ({
+  useOfflineReview: () => ({
+    service: mockOfflineService,
+    ready: true,
+    pendingCount: 0,
+    refreshPendingCount: jest.fn(),
+    sync: jest.fn(),
+    syncing: false,
+    lastSummary: null,
   }),
 }));
 
@@ -87,6 +108,9 @@ describe('CardsScreen', () => {
   beforeEach(() => {
     mockGetDueCards.mockReset();
     mockReviewCard.mockReset();
+    mockRateCard.mockReset();
+    mockUndoRating.mockReset();
+    mockLoadDueCards.mockReset();
     mockLogTime.mockReset();
     mockCreateStarterDeck.mockReset();
     mockPush.mockReset();
@@ -96,11 +120,7 @@ describe('CardsScreen', () => {
   });
 
   it('renders pre-session view with Reviews heading and Start review button', async () => {
-    mockGetDueCards.mockResolvedValue({
-      cards: [card('c1', '你好'), card('c2', '谢谢')],
-      total: 2,
-      deck_size: 2,
-    });
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
 
     await renderCards();
 
@@ -109,12 +129,8 @@ describe('CardsScreen', () => {
   });
 
   it('reveals the answer and advances to the next card after rating during active review', async () => {
-    mockGetDueCards.mockResolvedValue({
-      cards: [card('c1', '你好'), card('c2', '谢谢')],
-      total: 2,
-      deck_size: 2,
-    });
-    mockReviewCard.mockResolvedValue({ card_id: 'c1', next_review: '2026-08-02' });
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
 
     await renderCards();
 
@@ -130,17 +146,13 @@ describe('CardsScreen', () => {
     await fireEvent.press(screen.getByText('Good'));
 
     expect(screen.getByText('谢谢')).toBeTruthy();
-    expect(mockReviewCard).toHaveBeenCalledWith('c1', 4, expect.any(Number));
+    expect(mockRateCard).toHaveBeenCalledWith(expect.objectContaining({ id: 'c1' }), 4, expect.any(Number));
     expect(screen.getByText('2/2')).toBeTruthy();
   });
 
   it('logs study time and shows summary stats when the session ends', async () => {
-    mockGetDueCards.mockResolvedValue({
-      cards: [card('c1', '你好')],
-      total: 1,
-      deck_size: 1,
-    });
-    mockReviewCard.mockResolvedValue({ card_id: 'c1', next_review: '2026-08-02' });
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+    mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
     mockLogTime.mockResolvedValue(undefined);
 
     await renderCards();
@@ -157,13 +169,24 @@ describe('CardsScreen', () => {
     expect(mockLogTime).toHaveBeenCalledTimes(1);
   });
 
-  it('allows undoing the previous rating', async () => {
-    mockGetDueCards.mockResolvedValue({
-      cards: [card('c1', '你好'), card('c2', '谢谢')],
-      total: 2,
-      deck_size: 2,
-    });
-    mockReviewCard.mockResolvedValue({ card_id: 'c1', next_review: '2026-08-02' });
+  it('rates through the offline service and never through the repository', async () => {
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
+
+    await renderCards();
+
+    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Show answer'));
+    await fireEvent.press(screen.getByText('Good'));
+
+    expect(mockRateCard).toHaveBeenCalledTimes(1);
+    expect(mockReviewCard).not.toHaveBeenCalled();
+  });
+
+  it('undoes the rating that was actually written', async () => {
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
+    mockUndoRating.mockResolvedValue(card('c1', '你好'));
 
     await renderCards();
 
@@ -177,18 +200,32 @@ describe('CardsScreen', () => {
     const undoButton = screen.getByLabelText('Undo last rating');
     await fireEvent.press(undoButton);
 
+    expect(mockUndoRating).toHaveBeenCalledWith('r1');
     expect(screen.getByText('你好')).toBeTruthy();
     expect(screen.getByText('1/2')).toBeTruthy();
   });
 
+  it('does not roll back the screen when the undo fails', async () => {
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
+    mockUndoRating.mockRejectedValue(new Error('This rating was already synced'));
+
+    await renderCards();
+
+    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Show answer'));
+    await fireEvent.press(screen.getByText('Good'));
+    await fireEvent.press(screen.getByLabelText('Undo last rating'));
+
+    expect(screen.getByText('This rating was already synced')).toBeTruthy();
+    expect(screen.getByText('谢谢')).toBeTruthy();
+  });
+
   it('creates the starter deck from the empty state', async () => {
-    mockGetDueCards
-      .mockResolvedValueOnce({ cards: [], total: 0, deck_size: 0 })
-      .mockResolvedValueOnce({
-        cards: [card('c1', '你好')],
-        total: 1,
-        deck_size: 150,
-      });
+    mockGetDashboard.mockResolvedValueOnce({ cards: { total: 0, due: 0, by_status: {} } });
+    mockLoadDueCards
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce([card('c1', '你好')]);
     mockCreateStarterDeck.mockResolvedValue({ inserted: 150 });
 
     await renderCards();
@@ -203,7 +240,7 @@ describe('CardsScreen', () => {
   });
 
   it('shows no cards due state when deck exists but no cards are due', async () => {
-    mockGetDueCards.mockResolvedValue({ cards: [], total: 0, deck_size: 150 });
+    mockLoadDueCards.mockResolvedValue([]);
 
     await renderCards();
 
@@ -211,24 +248,16 @@ describe('CardsScreen', () => {
   });
 
   it('passes deckId to getDueCards in focus mode', async () => {
-    mockGetDueCards.mockResolvedValue({
-      cards: [card('c1', '你好')],
-      total: 1,
-      deck_size: 1,
-    });
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
 
     await renderCards();
 
-    expect(mockGetDueCards).toHaveBeenLastCalledWith(50, 'd1');
+    expect(mockLoadDueCards).toHaveBeenLastCalledWith(50);
   });
 
   it('shows a back to deck action on the completion screen in focus mode', async () => {
-    mockGetDueCards.mockResolvedValue({
-      cards: [card('c1', '你好')],
-      total: 1,
-      deck_size: 1,
-    });
-    mockReviewCard.mockResolvedValue({ card_id: 'c1', next_review: '2026-08-02' });
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+    mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
 
     await renderCards();
     await fireEvent.press(screen.getByText('Start review'));

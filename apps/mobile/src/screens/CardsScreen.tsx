@@ -2,10 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
-import { toUserMessage, type DueCard, type DueCardsPayload, type FlashcardStats } from '@hanyu/data';
+import { toUserMessage, type DueCard, type FlashcardStats } from '@hanyu/data';
 import { getData } from '../lib/data';
 import { clearReviewSession, setReviewSession } from '../lib/reviewSessionStore';
 import { useSessionTimer } from '../lib/useSessionTimer';
+import { useOfflineReview } from '../offline/OfflineReviewProvider';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 import { Button } from '../ui/Button';
@@ -31,6 +32,7 @@ interface UndoEntry {
   card: DueCard;
   previousIndex: number;
   quality: number;
+  reviewId: string;
 }
 
 interface SessionStats {
@@ -41,6 +43,7 @@ interface SessionStats {
 
 export default function CardsScreen() {
   const { colors } = useTheme();
+  const { service, ready } = useOfflineReview();
   const router = useRouter();
   const { deckId } = useLocalSearchParams<{ deckId?: string }>();
   const focusedDeckId = typeof deckId === 'string' && deckId.length > 0 ? deckId : null;
@@ -75,10 +78,16 @@ export default function CardsScreen() {
     setError('');
 
     try {
-      const data = getData();
-      const payload = (await data.flashcards.getDueCards(50, focusedDeckId)) as DueCardsPayload;
-      setAllDueCards(payload.cards ?? []);
-      setDeckSize(payload.deck_size ?? 0);
+      // El servicio offline es el único puerto de lectura y de escritura de
+      // tarjetas. Si no está listo, se espera: caer al repositorio directo
+      // recrearía los dos caminos con semánticas distintas que este plan
+      // elimina.
+      if (!service || !ready) {
+        return;
+      }
+
+      const cards = await service.loadDueCards(50);
+      setAllDueCards(cards);
       setIndex(0);
       setReviewed(0);
       setRevealed(false);
@@ -88,11 +97,12 @@ export default function CardsScreen() {
       setSwiping(false);
       setUndoStack([]);
       setStats({ reviewed: 0, correct: 0, again: 0 });
-      clearReviewSession();
 
+      const data = getData();
       try {
         const dashboard = await data.stats.getDashboard();
         setByStatus(dashboard.cards?.by_status ?? {});
+        setDeckSize(dashboard.cards?.total ?? 0);
         setDeckTotal(dashboard.cards?.total ?? 0);
       } catch {
         // non-blocking for cards load
@@ -102,7 +112,7 @@ export default function CardsScreen() {
     } finally {
       setLoading(false);
     }
-  }, [focusedDeckId]);
+  }, [focusedDeckId, ready, service]);
 
   useEffect(() => {
     void load();
@@ -130,10 +140,24 @@ export default function CardsScreen() {
     });
   }
 
-  function undoLastRating() {
+  async function undoLastRating() {
     const lastEntry = undoStack[undoStack.length - 1];
-    if (!lastEntry || reviewing) return;
+    if (!lastEntry || reviewing || !service) return;
 
+    setReviewing(true);
+    setError('');
+
+    try {
+      await service.undoRating(lastEntry.reviewId);
+    } catch (caught) {
+      // La valoración sigue escrita, así que la pantalla no se mueve. Mostrar
+      // la tarjeta anterior aquí sería exactamente la mentira que se corrige.
+      setError(toUserMessage(caught));
+      setReviewing(false);
+      return;
+    }
+
+    setReviewing(false);
     setUndoStack((prev) => prev.slice(0, -1));
     setActiveCards((prev) => {
       const updated = [...prev];
@@ -153,7 +177,7 @@ export default function CardsScreen() {
 
   async function rate(quality: number) {
     const current = activeCards[index];
-    if (!current || reviewing) {
+    if (!current || reviewing || !service) {
       return;
     }
 
@@ -161,12 +185,14 @@ export default function CardsScreen() {
     setPendingQuality(quality);
     setError('');
 
+    let reviewId: string;
     try {
-      await getData().flashcards.reviewCard(
-        current.id,
+      const result = await service.rateCard(
+        current as never,
         quality,
         Date.now() - cardStartedAt.current,
       );
+      reviewId = result.reviewId;
     } catch (caught) {
       setError(toUserMessage(caught));
       setRetryQuality(quality);
@@ -181,7 +207,10 @@ export default function CardsScreen() {
 
     const nextReviewed = reviewed + 1;
     setReviewed(nextReviewed);
-    setUndoStack((prev) => [...prev.slice(-4), { card: current, previousIndex: index, quality }]);
+    setUndoStack((prev) => [
+      ...prev.slice(-4),
+      { card: current, previousIndex: index, quality, reviewId },
+    ]);
     setStats((prev) => ({
       reviewed: prev.reviewed + 1,
       correct: prev.correct + (quality >= 3 ? 1 : 0),
@@ -403,7 +432,9 @@ export default function CardsScreen() {
               accessibilityRole="button"
               accessibilityLabel="Undo last rating"
               hitSlop={8}
-              onPress={undoLastRating}
+              onPress={() => {
+                void undoLastRating();
+              }}
             >
               <Ionicons name="arrow-undo" size={20} color={colors.vermilion} />
             </Pressable>
