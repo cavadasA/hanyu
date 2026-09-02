@@ -129,3 +129,55 @@ select
   c.next_review_at
 from public.srs_cards c
 on conflict (user_id, target_kind, target_id, skill) do nothing;
+
+-- Registro común de contenido. Una lectura, un diálogo, una microlección o un
+-- ejercicio son la misma cosa desde el punto de vista del planificador: algo
+-- que se le puede proponer al usuario y que enseña elementos concretos.
+create type public.content_kind as enum (
+  'reading',
+  'dialogue',
+  'lesson',
+  'exercise'
+);
+
+create table if not exists public.content_item (
+  id uuid primary key default gen_random_uuid(),
+  kind public.content_kind not null,
+  hsk_level integer not null check (hsk_level between 1 and 3),
+  title text not null,
+  -- Puntero a la fila concreta de generated_readings o generated_exercises.
+  -- Es texto y no una clave foránea porque apunta a tablas distintas según kind.
+  source_table text,
+  source_id text,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists idx_content_item_kind_level
+  on public.content_item(kind, hsk_level);
+
+-- Un contenido enseña elementos concretos. `role` distingue lo que introduce
+-- de lo que da por sabido: una lectura de nivel adecuado repasa mucho e
+-- introduce poco, y esa proporción es justo lo que el planificador necesita.
+create type public.teaches_role as enum ('target', 'reinforces', 'assumes');
+
+create table if not exists public.content_teaches (
+  content_id uuid not null references public.content_item(id) on delete cascade,
+  target_kind public.learning_target_kind not null,
+  target_id bigint not null,
+  role public.teaches_role not null default 'reinforces',
+  primary key (content_id, target_kind, target_id)
+);
+
+create index if not exists idx_content_teaches_target
+  on public.content_teaches(target_kind, target_id, role);
+
+alter table public.content_item enable row level security;
+alter table public.content_teaches enable row level security;
+
+drop policy if exists content_item_select_authenticated on public.content_item;
+create policy content_item_select_authenticated on public.content_item
+for select using (auth.role() = 'authenticated');
+
+drop policy if exists content_teaches_select_authenticated on public.content_teaches;
+create policy content_teaches_select_authenticated on public.content_teaches
+for select using (auth.role() = 'authenticated');

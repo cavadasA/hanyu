@@ -310,6 +310,65 @@ export type Database = {
         }
         Relationships: []
       }
+      content_item: {
+        Row: {
+          created_at: string
+          hsk_level: number
+          id: string
+          kind: string
+          source_id: string | null
+          source_table: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          hsk_level: number
+          id?: string
+          kind: string
+          source_id?: string | null
+          source_table?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          hsk_level?: number
+          id?: string
+          kind?: string
+          source_id?: string | null
+          source_table?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      content_teaches: {
+        Row: {
+          content_id: string
+          role: string
+          target_id: number
+          target_kind: string
+        }
+        Insert: {
+          content_id: string
+          role?: string
+          target_id: number
+          target_kind: string
+        }
+        Update: {
+          content_id?: string
+          role?: string
+          target_id?: number
+          target_kind?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_teaches_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "content_item"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       learning_event: {
         Row: {
           client_event_id: string | null
@@ -366,6 +425,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      exercise_template: {
+        Row: {
+          description: string
+          skill: string
+          type: string
+        }
+        Insert: {
+          description: string
+          skill: string
+          type: string
+        }
+        Update: {
+          description?: string
+          skill?: string
+          type?: string
+        }
+        Relationships: []
       }
       learner_skill_state: {
         Row: {

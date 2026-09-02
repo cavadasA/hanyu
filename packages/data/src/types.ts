@@ -60,6 +60,25 @@ export interface LearnerSkillState {
   version: number;
 }
 
+export type ContentKind = 'reading' | 'dialogue' | 'lesson' | 'exercise';
+export type TeachesRole = 'target' | 'reinforces' | 'assumes';
+
+export interface ContentItem {
+  id: string;
+  kind: ContentKind;
+  hsk_level: HskLevel;
+  title: string;
+  source_table: string | null;
+  source_id: string | null;
+}
+
+export interface ContentTeaches {
+  content_id: string;
+  target_kind: LearningTargetKind;
+  target_id: number;
+  role: TeachesRole;
+}
+
 export type ExercisePrompt =
   | { kind: 'fill_blank'; sentence: string; options?: string[] }
   | { kind: 'multiple_choice'; question: string; options: string[] }
