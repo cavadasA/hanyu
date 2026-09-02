@@ -3,4 +3,5 @@ export type { CardStatus, ReviewInput, ReviewOutcome, ReviewState } from './sm2'
 export { SM2_FIXTURES } from './fixtures';
 export { normalizePinyin } from './pinyin';
 export * from './exercises/contract';
+export * from './exercises/evaluate';
 export { normalizeHanzi, normalizePinyinInput, normalizeText } from './exercises/normalize';
