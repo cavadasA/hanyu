@@ -20,6 +20,8 @@ const tokens: ReadingToken[] = [
     word: {
       id: 1,
       hanzi: '你好',
+      sense_index: null,
+      variants: ['你好'],
       traditional: null,
       pinyin: 'ni hao',
       meaning_en: 'hello',

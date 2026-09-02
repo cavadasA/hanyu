@@ -6,6 +6,7 @@ function normalizeGrammarPoint(point: any): GrammarPoint {
   return {
     ...point,
     pattern: point.pattern ?? null,
+    items: point.items ?? [],
     examples: parseJsonField(point.examples, []),
   };
 }
@@ -18,7 +19,7 @@ export async function getGrammar(level: HskLevel | string, client: HanyuClient):
 
   const { data, error } = await client
     .from('grammar_points')
-    .select('id, hsk_level, title, pattern, explanation, examples, order_idx')
+    .select('id, hsk_level, code, "group", category, detail, title, pattern, explanation, items, examples, order_idx')
     .eq('hsk_level', numericLevel)
     .order('order_idx', { ascending: true, nullsFirst: false });
 
@@ -42,7 +43,7 @@ export async function getGrammarPoint(
 
   const { data, error } = await client
     .from('grammar_points')
-    .select('id, hsk_level, title, pattern, explanation, examples, order_idx')
+    .select('id, hsk_level, code, "group", category, detail, title, pattern, explanation, items, examples, order_idx')
     .eq('id', numericId)
     .eq('hsk_level', numericLevel)
     .single();

@@ -26,7 +26,7 @@ export async function getWords(
   let countQuery = client.from('words').select('*', { count: 'exact', head: true });
   let dataQuery = client
     .from('words')
-    .select('id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency')
+    .select('id, hanzi, sense_index, variants, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency')
     .order('hsk_level', { ascending: true })
     .order('frequency', { ascending: true, nullsFirst: false })
     .range(offset, offset + limitNum - 1);
@@ -59,6 +59,8 @@ export async function getWords(
 
   const items = (dataResult.data || []).map((row: any): Word => ({
     ...row,
+    sense_index: row.sense_index ?? null,
+    variants: row.variants ?? [],
     in_srs: Boolean(row.in_srs),
   }));
 
@@ -75,7 +77,7 @@ export async function getWords(
 export async function getWord(id: number | string, client: HanyuClient) {
   const { data, error } = await client
     .from('words')
-    .select('id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency')
+    .select('id, hanzi, sense_index, variants, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency')
     .eq('id', id as any)
     .single();
 
@@ -83,5 +85,9 @@ export async function getWord(id: number | string, client: HanyuClient) {
     throw createRepositoryError(error, 'Failed to load word');
   }
 
-  return data;
+  return {
+    ...data,
+    sense_index: data.sense_index ?? null,
+    variants: data.variants ?? [],
+  };
 }

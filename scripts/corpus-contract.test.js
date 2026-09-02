@@ -119,6 +119,27 @@ describe('contrato del corpus', () => {
     expect(meiyou.variants).toEqual(['没有', '没']);
   });
 
+  it('importa la lista oficial de caracteres', () => {
+    const characters = JSON.parse(
+      readFileSync(join(seedDir, 'hsk-characters.json'), 'utf8'),
+    );
+    const perLevel = {};
+    for (const entry of characters) {
+      perLevel[entry.hsk_level] = (perLevel[entry.hsk_level] ?? 0) + 1;
+    }
+
+    expect(perLevel).toEqual({ 1: 246, 2: 125, 3: 284 });
+  });
+
+  it('cada carácter oficial es un único carácter', () => {
+    const characters = JSON.parse(
+      readFileSync(join(seedDir, 'hsk-characters.json'), 'utf8'),
+    );
+    const bad = characters.filter((entry) => [...entry.hanzi].length !== 1);
+
+    expect(bad).toEqual([]);
+  });
+
   it('resuelve las cinco colisiones de lectura con sentidos distintos', () => {
     const find = (hanzi, pinyin) =>
       rows.find((row) => row.hanzi === hanzi && row.pinyin === pinyin);

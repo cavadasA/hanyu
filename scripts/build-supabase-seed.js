@@ -37,6 +37,14 @@ function sqlJson(value) {
   return `${sqlString(JSON.stringify(value ?? null))}::jsonb`;
 }
 
+function sqlTextArray(value) {
+  if (!Array.isArray(value) || value.length === 0) {
+    return 'null';
+  }
+
+  return `array[${value.map(sqlString).join(', ')}]::text[]`;
+}
+
 function buildInsert(tableName, columns, rows, onConflict = '') {
   if (!rows.length) {
     return `-- ${tableName}: no rows\n`;
@@ -67,6 +75,8 @@ function buildWordsRows() {
         sqlInteger(level),
         sqlString(word.pos ?? null),
         sqlInteger(word.frequency),
+        sqlInteger(word.sense_index),
+        sqlTextArray(word.variants),
       ]);
     }
   }
@@ -79,11 +89,23 @@ function buildGrammarRows() {
 
   return points.map((point) => [
     sqlInteger(point.hsk_level),
+    sqlString(point.code),
+    sqlString(point.group),
+    sqlString(point.category),
+    sqlString(point.detail),
     sqlString(point.title),
     sqlString(point.pattern ?? null),
-    sqlString(point.explanation),
+    sqlString(point.explanation ?? null),
     sqlJson(point.examples || []),
+    sqlTextArray(point.items),
     sqlInteger(point.order_idx ?? null),
+  ]);
+}
+
+function buildCharacterRows() {
+  return readJson('hsk-characters.json').map((entry) => [
+    sqlString(entry.hanzi),
+    sqlInteger(entry.hsk_level),
   ]);
 }
 
@@ -102,6 +124,7 @@ function buildExerciseRows() {
 
 export function buildSeedSql() {
   const wordsRows = buildWordsRows();
+  const characterRows = buildCharacterRows();
   const grammarRows = buildGrammarRows();
   const exerciseRows = buildExerciseRows();
 
@@ -111,6 +134,12 @@ export function buildSeedSql() {
     '',
     'begin;',
     '',
+    buildInsert(
+      'hsk_characters',
+      ['hanzi', 'hsk_level'],
+      characterRows,
+      'on conflict (hanzi) do update set hsk_level = excluded.hsk_level',
+    ),
     buildInsert(
       'words',
       [
@@ -123,15 +152,17 @@ export function buildSeedSql() {
         'hsk_level',
         'pos',
         'frequency',
+        'sense_index',
+        'variants',
       ],
       wordsRows,
-      'on conflict (hanzi, hsk_level) do update set traditional = excluded.traditional, pinyin = excluded.pinyin, meaning_en = excluded.meaning_en, meaning_es = excluded.meaning_es, classifier = excluded.classifier, pos = excluded.pos, frequency = excluded.frequency',
+      'on conflict (hanzi, hsk_level, coalesce(sense_index, 0)) do update set traditional = excluded.traditional, pinyin = excluded.pinyin, meaning_en = excluded.meaning_en, meaning_es = excluded.meaning_es, classifier = excluded.classifier, pos = excluded.pos, frequency = excluded.frequency, sense_index = excluded.sense_index, variants = excluded.variants',
     ),
     buildInsert(
       'grammar_points',
-      ['hsk_level', 'title', 'pattern', 'explanation', 'examples', 'order_idx'],
+      ['hsk_level', 'code', '"group"', 'category', 'detail', 'title', 'pattern', 'explanation', 'examples', 'items', 'order_idx'],
       grammarRows,
-      'on conflict (hsk_level, title) do nothing'
+      'on conflict (hsk_level, code) do update set "group" = excluded."group", category = excluded.category, detail = excluded.detail, title = excluded.title, pattern = excluded.pattern, explanation = excluded.explanation, examples = excluded.examples, items = excluded.items, order_idx = excluded.order_idx',
     ),
     buildInsert(
       'generated_exercises',
@@ -147,6 +178,7 @@ export function buildSeedSql() {
     sql,
     counts: {
       words: wordsRows.length,
+      characters: characterRows.length,
       grammar_points: grammarRows.length,
       generated_exercises: exerciseRows.length,
     },

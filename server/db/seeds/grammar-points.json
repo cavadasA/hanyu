@@ -1,73 +1,2047 @@
 [
   {
+    "code": "1.1",
     "hsk_level": 1,
-    "title": "Basic word order (SVO)",
-    "pattern": "Subject + Verb + Object",
-    "explanation": "Chinese follows a Subject-Verb-Object word order, similar to English. The subject comes first, followed by the verb, and then the object.",
-    "examples": [
-      {"zh": "我喝茶。", "pinyin": "Wǒ hē chá.", "en": "I drink tea."},
-      {"zh": "她看书。", "pinyin": "Tā kàn shū.", "en": "She reads books."},
-      {"zh": "他吃饭。", "pinyin": "Tā chī fàn.", "en": "He eats food."}
+    "group": "语素",
+    "category": "前缀",
+    "detail": null,
+    "title": "前缀",
+    "items": [
+      "小—、第—"
     ],
     "order_idx": 1
   },
   {
+    "code": "1.2",
     "hsk_level": 1,
-    "title": "Questions with 吗 (ma)",
-    "pattern": "Statement + 吗?",
-    "explanation": "To turn a statement into a yes/no question, add 吗 (ma) at the end. The word order stays the same.",
-    "examples": [
-      {"zh": "你好吗？", "pinyin": "Nǐ hǎo ma?", "en": "How are you?"},
-      {"zh": "你是学生吗？", "pinyin": "Nǐ shì xuéshēng ma?", "en": "Are you a student?"},
-      {"zh": "他喜欢中国吗？", "pinyin": "Tā xǐhuān Zhōngguó ma?", "en": "Does he like China?"}
+    "group": "语素",
+    "category": "后缀",
+    "detail": null,
+    "title": "后缀",
+    "items": [
+      "—们、—边"
     ],
     "order_idx": 2
   },
   {
+    "code": "2.1.1",
     "hsk_level": 1,
-    "title": "Negation with 不 (bù)",
-    "pattern": "不 + Verb/Adjective",
-    "explanation": "Place 不 (bù) before a verb or adjective to negate it. Note: 有 (yǒu) uses 没 (méi) for negation instead.",
-    "examples": [
-      {"zh": "我不喝咖啡。", "pinyin": "Wǒ bù hē kāfēi.", "en": "I don't drink coffee."},
-      {"zh": "她不是老师。", "pinyin": "Tā bú shì lǎoshī.", "en": "She is not a teacher."},
-      {"zh": "我没有钱。", "pinyin": "Wǒ méiyǒu qián.", "en": "I don't have money."}
+    "group": "词类",
+    "category": "名词",
+    "detail": "方位名词",
+    "title": "方位名词",
+    "items": [
+      "上、下、里、外、前、后"
     ],
     "order_idx": 3
   },
   {
+    "code": "2.2.1",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "动词",
+    "detail": "能愿动词",
+    "title": "能愿动词",
+    "items": [
+      "会、能",
+      "想、要",
+      "可以"
+    ],
+    "order_idx": 4
+  },
+  {
+    "code": "2.2.2",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "动词",
+    "detail": "离合词",
+    "title": "离合词",
+    "items": [
+      "看病、睡觉、说话、上课、下课、上班、下班、生病"
+    ],
+    "order_idx": 5
+  },
+  {
+    "code": "2.3.1",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "代词",
+    "detail": "疑问代词",
+    "title": "疑问代词",
+    "items": [
+      "多、多少、几、哪、哪儿、哪里、哪些、什么、谁、怎么、怎么样"
+    ],
+    "order_idx": 6
+  },
+  {
+    "code": "2.3.2",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "代词",
+    "detail": "人称代词",
+    "title": "人称代词",
+    "items": [
+      "我、你、您、他、她、我们、你们、他们、她们、它、它们、大家"
+    ],
+    "order_idx": 7
+  },
+  {
+    "code": "2.3.3",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "代词",
+    "detail": "指示代词",
+    "title": "指示代词",
+    "items": [
+      "这、那、这儿、那儿、这里、那里、这些、那些、有的、这个、那个、有些"
+    ],
+    "order_idx": 8
+  },
+  {
+    "code": "2.4",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "数词",
+    "detail": null,
+    "title": "数词",
+    "items": [
+      "一、二/两、三、四、五、六、七、八、九、零、十、百、半、千"
+    ],
+    "order_idx": 9
+  },
+  {
+    "code": "2.5.1",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "量词",
+    "detail": "名量词",
+    "title": "名量词",
+    "items": [
+      "（1）专用名量词：本、个、家、口、块、件、只、元",
+      "（2）借用名量词：杯"
+    ],
+    "order_idx": 10
+  },
+  {
+    "code": "2.5.2",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "量词",
+    "detail": "时量词",
+    "title": "时量词",
+    "items": [
+      "日、号、岁、点、分、年、天"
+    ],
+    "order_idx": 11
+  },
+  {
+    "code": "2.6.1",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "副词",
+    "detail": "程度副词",
+    "title": "程度副词",
+    "items": [
+      "非常、很、太、真、有（一）点儿"
+    ],
+    "order_idx": 12
+  },
+  {
+    "code": "2.6.2",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "副词",
+    "detail": "范围副词",
+    "title": "范围副词",
+    "items": [
+      "都1"
+    ],
+    "order_idx": 13
+  },
+  {
+    "code": "2.6.3",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "副词",
+    "detail": "时间副词",
+    "title": "时间副词",
+    "items": [
+      "在、正在"
+    ],
+    "order_idx": 14
+  },
+  {
+    "code": "2.6.4",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "副词",
+    "detail": "频率副词",
+    "title": "频率副词",
+    "items": [
+      "再1"
+    ],
+    "order_idx": 15
+  },
+  {
+    "code": "2.6.5",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "副词",
+    "detail": "关联副词",
+    "title": "关联副词",
+    "items": [
+      "还1、也"
+    ],
+    "order_idx": 16
+  },
+  {
+    "code": "2.6.6",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "副词",
+    "detail": "否定副词",
+    "title": "否定副词",
+    "items": [
+      "不、没（有）、不要"
+    ],
+    "order_idx": 17
+  },
+  {
+    "code": "2.7.1",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "介词",
+    "detail": "引出时间、处所",
+    "title": "引出时间、处所",
+    "items": [
+      "在"
+    ],
+    "order_idx": 18
+  },
+  {
+    "code": "2.7.2",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "介词",
+    "detail": "引出对象",
+    "title": "引出对象",
+    "items": [
+      "和1、对"
+    ],
+    "order_idx": 19
+  },
+  {
+    "code": "2.8.1",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "连词",
+    "detail": "连接词语或短语",
+    "title": "连接词语或短语",
+    "items": [
+      "和2"
+    ],
+    "order_idx": 20
+  },
+  {
+    "code": "2.9.1",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "助词",
+    "detail": "结构助词",
+    "title": "结构助词",
+    "items": [
+      "的1"
+    ],
+    "order_idx": 21
+  },
+  {
+    "code": "2.9.2",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "助词",
+    "detail": "动态助词",
+    "title": "动态助词",
+    "items": [
+      "了1"
+    ],
+    "order_idx": 22
+  },
+  {
+    "code": "2.9.3",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "助词",
+    "detail": "语气助词",
+    "title": "语气助词",
+    "items": [
+      "吧1、了2 、吗、呢1、呢2、呢3"
+    ],
+    "order_idx": 23
+  },
+  {
+    "code": "2.10",
+    "hsk_level": 1,
+    "group": "词类",
+    "category": "叹词",
+    "detail": null,
+    "title": "叹词",
+    "items": [
+      "喂"
+    ],
+    "order_idx": 24
+  },
+  {
+    "code": "3.1.1",
+    "hsk_level": 1,
+    "group": "短语",
+    "category": "结构类型",
+    "detail": "基本结构类型",
+    "title": "基本结构类型",
+    "items": [
+      "（1）联合短语",
+      "（2）偏正短语",
+      "（3）动宾短语",
+      "（4）主谓短语"
+    ],
+    "order_idx": 25
+  },
+  {
+    "code": "3.1.2",
+    "hsk_level": 1,
+    "group": "短语",
+    "category": "结构类型",
+    "detail": "其他结构类型",
+    "title": "其他结构类型",
+    "items": [
+      "（1）数量短语",
+      "（2）介宾短语",
+      "（3）方位短语"
+    ],
+    "order_idx": 26
+  },
+  {
+    "code": "4.1",
+    "hsk_level": 1,
+    "group": "句子成分",
+    "category": "主语",
+    "detail": null,
+    "title": "主语",
+    "items": [
+      "名词、代词或名词性短语作主语"
+    ],
+    "order_idx": 27
+  },
+  {
+    "code": "4.2",
+    "hsk_level": 1,
+    "group": "句子成分",
+    "category": "谓语",
+    "detail": null,
+    "title": "谓语",
+    "items": [
+      "名词、代词、数词或数量短语作谓语",
+      "动词或动词性短语、形容词或形容词性短语作谓语"
+    ],
+    "order_idx": 28
+  },
+  {
+    "code": "4.3",
+    "hsk_level": 1,
+    "group": "句子成分",
+    "category": "宾语",
+    "detail": null,
+    "title": "宾语",
+    "items": [
+      "名词、代词或名词性短语作宾语"
+    ],
+    "order_idx": 29
+  },
+  {
+    "code": "4.4",
+    "hsk_level": 1,
+    "group": "句子成分",
+    "category": "定语",
+    "detail": null,
+    "title": "定语",
+    "items": [
+      "名词性词语、形容词性短语、数量短语作定语"
+    ],
+    "order_idx": 30
+  },
+  {
+    "code": "4.5",
+    "hsk_level": 1,
+    "group": "句子成分",
+    "category": "状语",
+    "detail": null,
+    "title": "状语",
+    "items": [
+      "副词、形容词作状语表示时间、处所的词语作状语"
+    ],
+    "order_idx": 31
+  },
+  {
+    "code": "4.6.1",
+    "hsk_level": 1,
+    "group": "句子成分",
+    "category": "补语",
+    "detail": "数量补语1",
+    "title": "数量补语1",
+    "items": [
+      "动词+动量补语"
+    ],
+    "order_idx": 32
+  },
+  {
+    "code": "5.1.1",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "句型",
+    "detail": "单句",
+    "title": "单句",
+    "items": [
+      "主谓句1：动词谓语句",
+      "主谓句2：形容词谓语句",
+      "主谓句3：名词谓语句",
+      "非主谓句"
+    ],
+    "order_idx": 33
+  },
+  {
+    "code": "5.2.1",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "句类",
+    "detail": "陈述句",
+    "title": "陈述句",
+    "items": [],
+    "order_idx": 34
+  },
+  {
+    "code": "5.2.2",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "句类",
+    "detail": "疑问句",
+    "title": "疑问句",
+    "items": [
+      "（1）是非问句",
+      "（2）特指问句",
+      "（3）正反问句"
+    ],
+    "order_idx": 35
+  },
+  {
+    "code": "5.2.3",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "句类",
+    "detail": "祈使句",
+    "title": "祈使句",
+    "items": [],
+    "order_idx": 36
+  },
+  {
+    "code": "5.2.4",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "句类",
+    "detail": "感叹句",
+    "title": "感叹句",
+    "items": [],
+    "order_idx": 37
+  },
+  {
+    "code": "5.3.1",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "“是”字句1",
+    "title": "“是”字句1",
+    "items": [
+      "表示等同或类属"
+    ],
+    "order_idx": 38
+  },
+  {
+    "code": "5.3.2",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "“有”字句1",
+    "title": "“有”字句1",
+    "items": [
+      "表示领有"
+    ],
+    "order_idx": 39
+  },
+  {
+    "code": "5.3.3",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "存现句1",
+    "title": "存现句1",
+    "items": [
+      "（1）所处+是+名词",
+      "（2）处所+有+数量短语+名词"
+    ],
+    "order_idx": 40
+  },
+  {
+    "code": "5.3.4",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "连动句1",
+    "title": "连动句1",
+    "items": [
+      "（1）前后动作先后发生，后一动作是前一动作的目的",
+      "（2）前一动作是后一动作的方式"
+    ],
+    "order_idx": 41
+  },
+  {
+    "code": "5.3.5",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "双宾语句1",
+    "title": "双宾语句1",
+    "items": [
+      "主语+动词+宾语1+宾语2"
+    ],
+    "order_idx": 42
+  },
+  {
+    "code": "5.4.1",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "不用关联词语的复句",
+    "title": "不用关联词语的复句",
+    "items": [],
+    "order_idx": 43
+  },
+  {
+    "code": "5.4.2",
+    "hsk_level": 1,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "并列复句",
+    "title": "并列复句",
+    "items": [
+      "……，也……",
+      "……，还……"
+    ],
+    "order_idx": 44
+  },
+  {
+    "code": "6.1.1",
+    "hsk_level": 1,
+    "group": "动作的态",
+    "category": "",
+    "detail": "完成态",
+    "title": "完成态",
+    "items": [
+      "用动态助词“了1”表示"
+    ],
+    "order_idx": 45
+  },
+  {
+    "code": "6.1.2",
+    "hsk_level": 1,
+    "group": "动作的态",
+    "category": "",
+    "detail": "变化态",
+    "title": "变化态",
+    "items": [
+      "用动态助词“了2”表示"
+    ],
+    "order_idx": 46
+  },
+  {
+    "code": "6.1.3",
+    "hsk_level": 1,
+    "group": "动作的态",
+    "category": "",
+    "detail": "进行态",
+    "title": "进行态",
+    "items": [
+      "（1）……在/正在+动词",
+      "（2）……在/正在+动词……+呢",
+      "（3）……呢"
+    ],
+    "order_idx": 47
+  },
+  {
+    "code": "7.1",
+    "hsk_level": 1,
+    "group": "特殊表达法",
+    "category": "数的表达法",
+    "detail": null,
+    "title": "数的表达法",
+    "items": [
+      "钱数表示法",
+      "序数表达法1：第+数词"
+    ],
+    "order_idx": 48
+  },
+  {
+    "code": "7.2",
+    "hsk_level": 1,
+    "group": "特殊表达法",
+    "category": "时间表示法",
+    "detail": null,
+    "title": "时间表示法",
+    "items": [
+      "（1）年、月、日、星期表示法",
+      "（2）钟点表示法"
+    ],
+    "order_idx": 49
+  },
+  {
+    "code": "1.1",
     "hsk_level": 2,
-    "title": "了 (le) for completed actions",
-    "pattern": "Verb + 了",
-    "explanation": "Place 了 (le) after a verb to indicate a completed action. It does not directly translate to past tense - it marks completion.",
-    "examples": [
-      {"zh": "我吃了午饭。", "pinyin": "Wǒ chī le wǔfàn.", "en": "I ate lunch."},
-      {"zh": "她买了一本书。", "pinyin": "Tā mǎi le yì běn shū.", "en": "She bought a book."},
-      {"zh": "我们看了电影。", "pinyin": "Wǒmen kàn le diànyǐng.", "en": "We watched a movie."}
+    "group": "语素",
+    "category": "后缀",
+    "detail": null,
+    "title": "后缀",
+    "items": [
+      "面"
     ],
     "order_idx": 1
   },
   {
+    "code": "2.1.1",
     "hsk_level": 2,
-    "title": "因为...所以... (because...therefore...)",
-    "pattern": "因为 + reason，所以 + result",
-    "explanation": "Use 因为 (yīnwèi) to state the cause and 所以 (suǒyǐ) to state the result. You can use both together or just one.",
-    "examples": [
-      {"zh": "因为下雨，所以我没去。", "pinyin": "Yīnwèi xià yǔ, suǒyǐ wǒ méi qù.", "en": "Because it rained, I didn't go."},
-      {"zh": "因为他生病了，所以没来上课。", "pinyin": "Yīnwèi tā shēngbìng le, suǒyǐ méi lái shàngkè.", "en": "Because he was sick, he didn't come to class."}
+    "group": "词类",
+    "category": "名词",
+    "detail": "方位名词",
+    "title": "方位名词",
+    "items": [
+      "左、右"
     ],
     "order_idx": 2
   },
   {
+    "code": "2.2.1",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "动词",
+    "detail": "动词重叠",
+    "title": "动词重叠",
+    "items": [
+      "AA、A一A、A了A、ABAB"
+    ],
+    "order_idx": 3
+  },
+  {
+    "code": "2.2.2",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "动词",
+    "detail": "能愿动词",
+    "title": "能愿动词",
+    "items": [
+      "可能"
+    ],
+    "order_idx": 4
+  },
+  {
+    "code": "2.2.3",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "动词",
+    "detail": "离合词",
+    "title": "离合词",
+    "items": [
+      "帮忙、游泳、跳舞、跑步"
+    ],
+    "order_idx": 5
+  },
+  {
+    "code": "2.3.1",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "代词",
+    "detail": "疑问代词",
+    "title": "疑问代词",
+    "items": [
+      "为什么"
+    ],
+    "order_idx": 6
+  },
+  {
+    "code": "2.3.2",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "代词",
+    "detail": "人称代词",
+    "title": "人称代词",
+    "items": [
+      "自己"
+    ],
+    "order_idx": 7
+  },
+  {
+    "code": "2.3.3",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "代词",
+    "detail": "指示代词",
+    "title": "指示代词",
+    "items": [
+      "那么、那样、这么、这样、每"
+    ],
+    "order_idx": 8
+  },
+  {
+    "code": "2.4.1",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "形容词",
+    "detail": "形容词重叠",
+    "title": "形容词重叠",
+    "items": [
+      "AA、AABB"
+    ],
+    "order_idx": 9
+  },
+  {
+    "code": "2.5",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "数词",
+    "detail": null,
+    "title": "数词",
+    "items": [
+      "万、好多、多"
+    ],
+    "order_idx": 10
+  },
+  {
+    "code": "2.6.1",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "量词",
+    "detail": "名量词",
+    "title": "名量词",
+    "items": [
+      "（1）专用名量词：条、位、间、名",
+      "（2）借用名量词：包"
+    ],
+    "order_idx": 11
+  },
+  {
+    "code": "2.6.2",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "量词",
+    "detail": "动量词",
+    "title": "动量词",
+    "items": [
+      "次"
+    ],
+    "order_idx": 12
+  },
+  {
+    "code": "2.7.1",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "副词",
+    "detail": "程度副词",
+    "title": "程度副词",
+    "items": [
+      "多、好、最"
+    ],
+    "order_idx": 13
+  },
+  {
+    "code": "2.7.2",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "副词",
+    "detail": "范围副词",
+    "title": "范围副词",
+    "items": [
+      "一起"
+    ],
+    "order_idx": 14
+  },
+  {
+    "code": "2.7.3",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "副词",
+    "detail": "时间副词",
+    "title": "时间副词",
+    "items": [
+      "还2、已经、有时（候）、快、快要、正"
+    ],
+    "order_idx": 15
+  },
+  {
+    "code": "2.7.4",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "副词",
+    "detail": "频率副词",
+    "title": "频率副词",
+    "items": [
+      "常、经常"
+    ],
+    "order_idx": 16
+  },
+  {
+    "code": "2.7.5",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "副词",
+    "detail": "否定副词",
+    "title": "否定副词",
+    "items": [
+      "别"
+    ],
+    "order_idx": 17
+  },
+  {
+    "code": "2.7.6",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "副词",
+    "detail": "关联副词",
+    "title": "关联副词",
+    "items": [
+      "再2、就1"
+    ],
+    "order_idx": 18
+  },
+  {
+    "code": "2.7.7",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "副词",
+    "detail": "语气副词",
+    "title": "语气副词",
+    "items": [
+      "都2、就2、还是1"
+    ],
+    "order_idx": 19
+  },
+  {
+    "code": "2.8.1",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "介词",
+    "detail": "引出时间、处所",
+    "title": "引出时间、处所",
+    "items": [
+      "从1"
+    ],
+    "order_idx": 20
+  },
+  {
+    "code": "2.8.2",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "介词",
+    "detail": "引出方向、路径",
+    "title": "引出方向、路径",
+    "items": [
+      "往",
+      "从2"
+    ],
+    "order_idx": 21
+  },
+  {
+    "code": "2.8.3",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "介词",
+    "detail": "引出对象",
+    "title": "引出对象",
+    "items": [
+      "给",
+      "比",
+      "跟1"
+    ],
+    "order_idx": 22
+  },
+  {
+    "code": "2.8.4",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "介词",
+    "detail": "引出原因",
+    "title": "引出原因",
+    "items": [
+      "因为1"
+    ],
+    "order_idx": 23
+  },
+  {
+    "code": "2.9.1",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "连词",
+    "detail": "连接词或短语",
+    "title": "连接词或短语",
+    "items": [
+      "跟2"
+    ],
+    "order_idx": 24
+  },
+  {
+    "code": "2.9.2",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "连词",
+    "detail": "连接分句或者句子",
+    "title": "连接分句或者句子",
+    "items": [
+      "但、但是、那、虽然、还是2、因为2、所以"
+    ],
+    "order_idx": 25
+  },
+  {
+    "code": "2.10.1",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "助词",
+    "detail": "结构助词",
+    "title": "结构助词",
+    "items": [
+      "得、地"
+    ],
+    "order_idx": 26
+  },
+  {
+    "code": "2.10.2",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "助词",
+    "detail": "动态助词",
+    "title": "动态助词",
+    "items": [
+      "过",
+      "着"
+    ],
+    "order_idx": 27
+  },
+  {
+    "code": "2.10.3",
+    "hsk_level": 2,
+    "group": "词类",
+    "category": "助词",
+    "detail": "语气助词",
+    "title": "语气助词",
+    "items": [
+      "呢4、吧2、的2、啊1"
+    ],
+    "order_idx": 28
+  },
+  {
+    "code": "3.1.1",
+    "hsk_level": 2,
+    "group": "短语",
+    "category": "结构类型",
+    "detail": "基本结构类型",
+    "title": "基本结构类型",
+    "items": [
+      "动补短语1"
+    ],
+    "order_idx": 29
+  },
+  {
+    "code": "3.1.2",
+    "hsk_level": 2,
+    "group": "短语",
+    "category": "结构类型",
+    "detail": "其他结构类型",
+    "title": "其他结构类型",
+    "items": [
+      "（1）“的”字短语",
+      "（2）连谓短语",
+      "（3）兼语短语"
+    ],
+    "order_idx": 30
+  },
+  {
+    "code": "3.2.1",
+    "hsk_level": 2,
+    "group": "短语",
+    "category": "功能类型",
+    "detail": "名词性短语",
+    "title": "名词性短语",
+    "items": [],
+    "order_idx": 31
+  },
+  {
+    "code": "3.2.2",
+    "hsk_level": 2,
+    "group": "短语",
+    "category": "功能类型",
+    "detail": "动词性短语",
+    "title": "动词性短语",
+    "items": [],
+    "order_idx": 32
+  },
+  {
+    "code": "3.2.3",
+    "hsk_level": 2,
+    "group": "短语",
+    "category": "功能类型",
+    "detail": "形容词性短语",
+    "title": "形容词性短语",
+    "items": [],
+    "order_idx": 33
+  },
+  {
+    "code": "3.3.1",
+    "hsk_level": 2,
+    "group": "短语",
+    "category": "固定短语",
+    "detail": "其他",
+    "title": "其他",
+    "items": [
+      "什么的"
+    ],
+    "order_idx": 34
+  },
+  {
+    "code": "4.1",
+    "hsk_level": 2,
+    "group": "固定格式",
+    "category": "",
+    "detail": null,
+    "title": "",
+    "items": [
+      "还是……吧",
+      "要/快要/就要……了",
+      "都……了"
+    ],
+    "order_idx": 35
+  },
+  {
+    "code": "5.1",
+    "hsk_level": 2,
+    "group": "句子成分",
+    "category": "主语",
+    "detail": null,
+    "title": "主语",
+    "items": [
+      "受事主语"
+    ],
+    "order_idx": 36
+  },
+  {
+    "code": "5.2",
+    "hsk_level": 2,
+    "group": "句子成分",
+    "category": "谓语",
+    "detail": null,
+    "title": "谓语",
+    "items": [
+      "名词性短语作谓语"
+    ],
+    "order_idx": 37
+  },
+  {
+    "code": "5.3",
+    "hsk_level": 2,
+    "group": "句子成分",
+    "category": "定语",
+    "detail": null,
+    "title": "定语",
+    "items": [
+      "动词或动词性短语、主谓短语作定语"
+    ],
+    "order_idx": 38
+  },
+  {
+    "code": "5.4.1",
+    "hsk_level": 2,
+    "group": "句子成分",
+    "category": "补语",
+    "detail": "结果补语1",
+    "title": "结果补语1",
+    "items": [
+      "动词+错/懂/好/会/完"
+    ],
+    "order_idx": 39
+  },
+  {
+    "code": "5.4.2",
+    "hsk_level": 2,
+    "group": "句子成分",
+    "category": "补语",
+    "detail": "趋向补语1",
+    "title": "趋向补语1",
+    "items": [
+      "简单趋向补语的趋向意义用法：（1）动词+来/去",
+      "（2）动词+上/下/进/出/过/回",
+      "复合趋向补语的趋向意义用法：动词+出来/出去/过来/过去/回来/回去/进来/进去/起来/上来/上去/下来/下去"
+    ],
+    "order_idx": 40
+  },
+  {
+    "code": "5.4.3",
+    "hsk_level": 2,
+    "group": "句子成分",
+    "category": "补语",
+    "detail": "状态补语1",
+    "title": "状态补语1",
+    "items": [
+      "动词+得+形容词性短语"
+    ],
+    "order_idx": 41
+  },
+  {
+    "code": "5.4.4",
+    "hsk_level": 2,
+    "group": "句子成分",
+    "category": "补语",
+    "detail": "数量补语2",
+    "title": "数量补语2",
+    "items": [
+      "（1）表示动作持续的时间",
+      "（2）形容词+数量补语"
+    ],
+    "order_idx": 42
+  },
+  {
+    "code": "6.1.1",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "句型",
+    "detail": "单句",
+    "title": "单句",
+    "items": [
+      "主谓句4：主谓谓语句"
+    ],
+    "order_idx": 43
+  },
+  {
+    "code": "6.2.1",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "句类",
+    "detail": "疑问句",
+    "title": "疑问句",
+    "items": [
+      "用“还是”连接的选择问句"
+    ],
+    "order_idx": 44
+  },
+  {
+    "code": "6.2.2",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "句类",
+    "detail": "祈使句",
+    "title": "祈使句",
+    "items": [
+      "用“别”的祈使句"
+    ],
+    "order_idx": 45
+  },
+  {
+    "code": "6.3.1",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "特殊句式",
+    "detail": "“是”字句2",
+    "title": "“是”字句2",
+    "items": [
+      "表示说明或特征"
+    ],
+    "order_idx": 46
+  },
+  {
+    "code": "6.3.2",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "特殊句式",
+    "detail": "“有”字句2",
+    "title": "“有”字句2",
+    "items": [
+      "表示达到"
+    ],
+    "order_idx": 47
+  },
+  {
+    "code": "6.3.3",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "特殊句式",
+    "detail": "存现句2",
+    "title": "存现句2",
+    "items": [
+      "处所+动词+着(+数量短语)+名词"
+    ],
+    "order_idx": 48
+  },
+  {
+    "code": "6.3.4",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "特殊句式",
+    "detail": "比较句1",
+    "title": "比较句1",
+    "items": [
+      "（1）A比B+形容词",
+      "（2）A比B+形容词+数量补语/程度补语",
+      "（3）A有/没有B（+这么/那么）+形容词",
+      "（4）A比B+动词+得+形容词/A+动词+得+比+B+形容词"
+    ],
+    "order_idx": 49
+  },
+  {
+    "code": "6.3.5",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "特殊句式",
+    "detail": "“是……的”句1",
+    "title": "“是……的”句1",
+    "items": [
+      "强调时间、地点、方式、动作者"
+    ],
+    "order_idx": 50
+  },
+  {
+    "code": "6.3.6",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "特殊句式",
+    "detail": "兼语句1",
+    "title": "兼语句1",
+    "items": [
+      "表使令：主语+请/叫/让……+宾语1+动词+宾语2"
+    ],
+    "order_idx": 51
+  },
+  {
+    "code": "6.3.7",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "特殊句式",
+    "detail": "双宾语句2",
+    "title": "双宾语句2",
+    "items": [
+      "主语+动词+给+宾语1+宾语2"
+    ],
+    "order_idx": 52
+  },
+  {
+    "code": "6.4.1",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "选择复句",
+    "title": "选择复句",
+    "items": [
+      "（是）……，还是……"
+    ],
+    "order_idx": 53
+  },
+  {
+    "code": "6.4.2",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "转折复句",
+    "title": "转折复句",
+    "items": [
+      "虽然……，但是……"
+    ],
+    "order_idx": 54
+  },
+  {
+    "code": "6.4.3",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "因果复句",
+    "title": "因果复句",
+    "items": [
+      "因为……，所以……"
+    ],
+    "order_idx": 55
+  },
+  {
+    "code": "6.4.4",
+    "hsk_level": 2,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "紧缩复句",
+    "title": "紧缩复句",
+    "items": [
+      "一……就……"
+    ],
+    "order_idx": 56
+  },
+  {
+    "code": "7.1.1",
+    "hsk_level": 2,
+    "group": "动作的态",
+    "category": "",
+    "detail": "持续态",
+    "title": "持续态",
+    "items": [
+      "动词+着：（1）表示状态的持续",
+      "（2）表示动作的持续"
+    ],
+    "order_idx": 57
+  },
+  {
+    "code": "7.1.2",
+    "hsk_level": 2,
+    "group": "动作的态",
+    "category": "",
+    "detail": "经历态",
+    "title": "经历态",
+    "items": [
+      "用动态助词“过”表示"
+    ],
+    "order_idx": 58
+  },
+  {
+    "code": "8.1",
+    "hsk_level": 2,
+    "group": "特殊表达法",
+    "category": "数的表达法",
+    "detail": null,
+    "title": "数的表达法",
+    "items": [
+      "序数表示法2：数词+量词",
+      "概数表达法1：（1）用“几”表示概数",
+      "（2）数词+多+量词",
+      "（3）数词+量词+多"
+    ],
+    "order_idx": 59
+  },
+  {
+    "code": "1.1",
     "hsk_level": 3,
-    "title": "把 (bǎ) construction",
-    "pattern": "Subject + 把 + Object + Verb + Complement",
-    "explanation": "The 把 (bǎ) structure is used to emphasize the result or effect of an action on a specific object. Pattern: Subject + 把 + Object + Verb + Complement.",
-    "examples": [
-      {"zh": "请把门关上。", "pinyin": "Qǐng bǎ mén guān shàng.", "en": "Please close the door."},
-      {"zh": "他把作业做完了。", "pinyin": "Tā bǎ zuòyè zuò wán le.", "en": "He finished his homework."},
-      {"zh": "我把书放在桌子上了。", "pinyin": "Wǒ bǎ shū fàng zài zhuōzi shàng le.", "en": "I put the book on the table."}
+    "group": "语素",
+    "category": "前缀",
+    "detail": null,
+    "title": "前缀",
+    "items": [
+      "老—"
     ],
     "order_idx": 1
+  },
+  {
+    "code": "1.2",
+    "hsk_level": 3,
+    "group": "语素",
+    "category": "后缀",
+    "detail": null,
+    "title": "后缀",
+    "items": [
+      "—家、—子、—员"
+    ],
+    "order_idx": 2
+  },
+  {
+    "code": "2.1.1",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "名词",
+    "detail": "方位名词",
+    "title": "方位名词",
+    "items": [
+      "东、南、西、北、北方、东方、南方、西方、中间"
+    ],
+    "order_idx": 3
+  },
+  {
+    "code": "2.2.1",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "动词",
+    "detail": "能愿动词",
+    "title": "能愿动词",
+    "items": [
+      "需要、该、应该、愿意、得"
+    ],
+    "order_idx": 4
+  },
+  {
+    "code": "2.2.2",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "动词",
+    "detail": "离合词",
+    "title": "离合词",
+    "items": [
+      "动宾式离合词：放假、见面、结婚、洗澡",
+      "动补式离合词：离开、完成、分开"
+    ],
+    "order_idx": 5
+  },
+  {
+    "code": "2.3.1",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "代词",
+    "detail": "疑问代词",
+    "title": "疑问代词",
+    "items": [
+      "怎样",
+      "疑问代词的非疑问用法：（1）任指用法：①疑问代词+都……②疑问代词+疑问代词",
+      "（2）不定指用法"
+    ],
+    "order_idx": 6
+  },
+  {
+    "code": "2.3.2",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "代词",
+    "detail": "人称代词",
+    "title": "人称代词",
+    "items": [
+      "别人、咱们"
+    ],
+    "order_idx": 7
+  },
+  {
+    "code": "2.3.3",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "代词",
+    "detail": "指示代词",
+    "title": "指示代词",
+    "items": [
+      "别的、其他"
+    ],
+    "order_idx": 8
+  },
+  {
+    "code": "2.4.1",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "量词",
+    "detail": "名量词",
+    "title": "名量词",
+    "items": [
+      "（1）专用名量词：把、双、张、种、层、封、页、辆、节、所、班、段、头、句公斤、斤、角、毛、刻、米",
+      "（2）借用名量词：碗、盘"
+    ],
+    "order_idx": 9
+  },
+  {
+    "code": "2.4.2",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "量词",
+    "detail": "动量词",
+    "title": "动量词",
+    "items": [
+      "口、回、遍、声"
+    ],
+    "order_idx": 10
+  },
+  {
+    "code": "2.4.3",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "量词",
+    "detail": "量词重叠",
+    "title": "量词重叠",
+    "items": [
+      "个个、张张"
+    ],
+    "order_idx": 11
+  },
+  {
+    "code": "2.5.1",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "副词",
+    "detail": "程度副词",
+    "title": "程度副词",
+    "items": [
+      "比较、还3、更、特别、挺、有些、越、极"
+    ],
+    "order_idx": 12
+  },
+  {
+    "code": "2.5.2",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "副词",
+    "detail": "范围副词",
+    "title": "范围副词",
+    "items": [
+      "就3、一块儿、一共、只、到处、只是"
+    ],
+    "order_idx": 13
+  },
+  {
+    "code": "2.5.3",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "副词",
+    "detail": "时间副词",
+    "title": "时间副词",
+    "items": [
+      "才1、马上、先、一会儿、刚、刚刚、一直"
+    ],
+    "order_idx": 14
+  },
+  {
+    "code": "2.5.4",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "副词",
+    "detail": "频率副词",
+    "title": "频率副词",
+    "items": [
+      "总、总是、又、常常"
+    ],
+    "order_idx": 15
+  },
+  {
+    "code": "2.5.5",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "副词",
+    "detail": "关联副词",
+    "title": "关联副词",
+    "items": [
+      "一边"
+    ],
+    "order_idx": 16
+  },
+  {
+    "code": "2.5.6",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "副词",
+    "detail": "情态副词",
+    "title": "情态副词",
+    "items": [
+      "大概、必须、差不多、一定、好像、几乎"
+    ],
+    "order_idx": 17
+  },
+  {
+    "code": "2.5.7",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "副词",
+    "detail": "语气副词",
+    "title": "语气副词",
+    "items": [
+      "当然、其实、终于、才2、才3、就4"
+    ],
+    "order_idx": 18
+  },
+  {
+    "code": "2.5.8",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "副词",
+    "detail": "否定副词",
+    "title": "否定副词",
+    "items": [
+      "不必、不用"
+    ],
+    "order_idx": 19
+  },
+  {
+    "code": "2.6.1",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "介词",
+    "detail": "引出对象",
+    "title": "引出对象",
+    "items": [
+      "为1、向1、关于"
+    ],
+    "order_idx": 20
+  },
+  {
+    "code": "2.6.2",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "介词",
+    "detail": "引出方向、路径",
+    "title": "引出方向、路径",
+    "items": [
+      "向2"
+    ],
+    "order_idx": 21
+  },
+  {
+    "code": "2.6.3",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "介词",
+    "detail": "引出目的、原因",
+    "title": "引出目的、原因",
+    "items": [
+      "为了、为2"
+    ],
+    "order_idx": 22
+  },
+  {
+    "code": "2.6.4",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "介词",
+    "detail": "引出施事、受事",
+    "title": "引出施事、受事",
+    "items": [
+      "把、被"
+    ],
+    "order_idx": 23
+  },
+  {
+    "code": "2.6.5",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "介词",
+    "detail": "引出凭借、依据",
+    "title": "引出凭借、依据",
+    "items": [
+      "根据"
+    ],
+    "order_idx": 24
+  },
+  {
+    "code": "2.7.1",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "连词",
+    "detail": "连接词或者短语",
+    "title": "连接词或者短语",
+    "items": [
+      "或、或者"
+    ],
+    "order_idx": 25
+  },
+  {
+    "code": "2.7.2",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "连词",
+    "detail": "连接分句或句子",
+    "title": "连接分句或句子",
+    "items": [
+      "只有、只要、不但、而且、如果、可1、可是、然后"
+    ],
+    "order_idx": 26
+  },
+  {
+    "code": "2.8.1",
+    "hsk_level": 3,
+    "group": "词类",
+    "category": "助词",
+    "detail": "其他助词",
+    "title": "其他助词",
+    "items": [
+      "的话"
+    ],
+    "order_idx": 27
+  },
+  {
+    "code": "3.1.1",
+    "hsk_level": 3,
+    "group": "短语",
+    "category": "结构类型",
+    "detail": "其他结构类型",
+    "title": "其他结构类型",
+    "items": [
+      "同位短语",
+      "动补短语2",
+      "数量重叠：数词+量词+数词+量词"
+    ],
+    "order_idx": 28
+  },
+  {
+    "code": "3.2.1",
+    "hsk_level": 3,
+    "group": "短语",
+    "category": "固定短语",
+    "detail": "四字格",
+    "title": "四字格",
+    "items": [
+      "不A 不 B"
+    ],
+    "order_idx": 29
+  },
+  {
+    "code": "3.2.2",
+    "hsk_level": 3,
+    "group": "短语",
+    "category": "固定短语",
+    "detail": "其 他",
+    "title": "其 他",
+    "items": [
+      "不一会儿",
+      "看来",
+      "在……看来",
+      "越来越",
+      "看起来",
+      "看上去",
+      "一般来说",
+      "不怎么样"
+    ],
+    "order_idx": 30
+  },
+  {
+    "code": "4.1",
+    "hsk_level": 3,
+    "group": "固定格式",
+    "category": "",
+    "detail": null,
+    "title": "",
+    "items": [
+      "除了 ……（以外），……还/也/都……",
+      "从……起",
+      "对……来说",
+      "一……也/都+不/没……",
+      "一点儿也不",
+      "越……越……",
+      "（在）……以前/以后/前/后",
+      "X什么（啊）",
+      "该……了",
+      "在……上/下/中"
+    ],
+    "order_idx": 31
+  },
+  {
+    "code": "5.1",
+    "hsk_level": 3,
+    "group": "句子成分",
+    "category": "主语",
+    "detail": null,
+    "title": "主语",
+    "items": [
+      "动词或动词性短语、形容词或形容词性短语作主语",
+      "主谓短语作主语"
+    ],
+    "order_idx": 32
+  },
+  {
+    "code": "5.2",
+    "hsk_level": 3,
+    "group": "句子成分",
+    "category": "定语",
+    "detail": null,
+    "title": "定语",
+    "items": [
+      "多项定语"
+    ],
+    "order_idx": 33
+  },
+  {
+    "code": "5.3.1",
+    "hsk_level": 3,
+    "group": "句子成分",
+    "category": "补语",
+    "detail": "结果补语2",
+    "title": "结果补语2",
+    "items": [
+      "动词+到/住/走/上"
+    ],
+    "order_idx": 34
+  },
+  {
+    "code": "5.3.2",
+    "hsk_level": 3,
+    "group": "句子成分",
+    "category": "补语",
+    "detail": "趋向补语2",
+    "title": "趋向补语2",
+    "items": [
+      "趋向补语的引申用法：（1）表示结果意义：动词+出/起/下",
+      "（2）表示动作行为的开始：动词+上/起来",
+      "（3）表示动作行为的持续：动词+下去/下来"
+    ],
+    "order_idx": 35
+  },
+  {
+    "code": "5.3.3",
+    "hsk_level": 3,
+    "group": "句子成分",
+    "category": "补语",
+    "detail": "可能补语1",
+    "title": "可能补语1",
+    "items": [
+      "动词+得/不+动词/形容词"
+    ],
+    "order_idx": 36
+  },
+  {
+    "code": "5.3.4",
+    "hsk_level": 3,
+    "group": "句子成分",
+    "category": "补语",
+    "detail": "程度补语1",
+    "title": "程度补语1",
+    "items": [
+      "（1）形容词+得很",
+      "（2）形容词/动词+极了/坏了"
+    ],
+    "order_idx": 37
+  },
+  {
+    "code": "5.3.5",
+    "hsk_level": 3,
+    "group": "句子成分",
+    "category": "补语",
+    "detail": "数量补语3",
+    "title": "数量补语3",
+    "items": [
+      "表示动作结束到某个时间点的间隔时间"
+    ],
+    "order_idx": 38
+  },
+  {
+    "code": "6.1.1",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "句类",
+    "detail": "疑问句",
+    "title": "疑问句",
+    "items": [
+      "“怎样+动词”的特指问句"
+    ],
+    "order_idx": 39
+  },
+  {
+    "code": "6.1.2",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "句类",
+    "detail": "反问句1",
+    "title": "反问句1",
+    "items": [
+      "用反问句表示强调：不是……吗？"
+    ],
+    "order_idx": 40
+  },
+  {
+    "code": "6.2.1",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "“把”字句1",
+    "title": "“把”字句1",
+    "items": [
+      "（1）主语+把+宾语+动词+在/到+处所",
+      "（2）主语+把+宾语1+动词（+给）+宾语2",
+      "（3）主语+把+宾语+动词+结果补语/趋向补语/状态补语"
+    ],
+    "order_idx": 41
+  },
+  {
+    "code": "6.2.2",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "被动句1",
+    "title": "被动句1",
+    "items": [
+      "（1）主语+被+宾语+动词+其他成分",
+      "（2）主语+被+动词+其他成分"
+    ],
+    "order_idx": 42
+  },
+  {
+    "code": "6.2.3",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "连动句2",
+    "title": "连动句2",
+    "items": [
+      "“着”表示动作的伴随：动词1+着+动词2"
+    ],
+    "order_idx": 43
+  },
+  {
+    "code": "6.2.4",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "比较句2",
+    "title": "比较句2",
+    "items": [
+      "（1）A比B+更/还+形容词",
+      "（2）A跟B一样",
+      "（3）A跟B一样+形容词",
+      "（4）A不比B+形容词",
+      "（5）A比B+多/少/早/晚+动词+数量短语"
+    ],
+    "order_idx": 44
+  },
+  {
+    "code": "6.2.5",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "存现句3",
+    "title": "存现句3",
+    "items": [
+      "（1）表示出现：处所词+动词+趋向补语/结果补语+动态助词（了）+数量短语+人/物",
+      "（2）表示消失：处所词+动词+结果补语+动态助词（了）+数量短语+人/物"
+    ],
+    "order_idx": 45
+  },
+  {
+    "code": "6.2.6",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "“是……的”句2",
+    "title": "“是……的”句2",
+    "items": [
+      "强调说话人的看法或态度"
+    ],
+    "order_idx": 46
+  },
+  {
+    "code": "6.2.7",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "特殊句型",
+    "detail": "重动句",
+    "title": "重动句",
+    "items": [
+      "主语+动词+宾语+动词+补语"
+    ],
+    "order_idx": 47
+  },
+  {
+    "code": "6.3.1",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "承接复句",
+    "title": "承接复句",
+    "items": [
+      "先……，再/然后……"
+    ],
+    "order_idx": 48
+  },
+  {
+    "code": "6.3.2",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "选择复句",
+    "title": "选择复句",
+    "items": [
+      "或者……，或者……"
+    ],
+    "order_idx": 49
+  },
+  {
+    "code": "6.3.3",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "并列复句",
+    "title": "并列复句",
+    "items": [
+      "一会儿……，一会儿……",
+      "又……，又……",
+      "一边……，一边……"
+    ],
+    "order_idx": 50
+  },
+  {
+    "code": "6.3.4",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "递进复句",
+    "title": "递进复句",
+    "items": [
+      "不但……，而且……"
+    ],
+    "order_idx": 51
+  },
+  {
+    "code": "6.3.5",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "转折复句",
+    "title": "转折复句",
+    "items": [
+      "虽然……，可是……"
+    ],
+    "order_idx": 52
+  },
+  {
+    "code": "6.3.6",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "假设复句",
+    "title": "假设复句",
+    "items": [
+      "如果……，就……",
+      "……的话，就……"
+    ],
+    "order_idx": 53
+  },
+  {
+    "code": "6.3.7",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "条件复句",
+    "title": "条件复句",
+    "items": [
+      "只有……，才……",
+      "只要……，就……"
+    ],
+    "order_idx": 54
+  },
+  {
+    "code": "6.3.8",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "目的复句",
+    "title": "目的复句",
+    "items": [
+      "为了……，……"
+    ],
+    "order_idx": 55
+  },
+  {
+    "code": "6.3.9",
+    "hsk_level": 3,
+    "group": "句子的类型",
+    "category": "复句",
+    "detail": "紧缩复句",
+    "title": "紧缩复句",
+    "items": [
+      "……了……（就）……"
+    ],
+    "order_idx": 56
+  },
+  {
+    "code": "7.1",
+    "hsk_level": 3,
+    "group": "特殊表达法",
+    "category": "数的表达法",
+    "detail": null,
+    "title": "数的表达法",
+    "items": [
+      "概数表达法2：（1）用“大概”表示概数",
+      "（2）相邻数词连用表示概数"
+    ],
+    "order_idx": 57
   }
 ]

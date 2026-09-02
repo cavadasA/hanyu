@@ -295,33 +295,63 @@ export type Database = {
           },
         ]
       }
+      hsk_characters: {
+        Row: {
+          hanzi: string
+          hsk_level: number
+        }
+        Insert: {
+          hanzi: string
+          hsk_level: number
+        }
+        Update: {
+          hanzi?: string
+          hsk_level?: number
+        }
+        Relationships: []
+      }
       grammar_points: {
         Row: {
+          category: string | null
+          code: string | null
           created_at: string
+          detail: string | null
           examples: Json
-          explanation: string
+          explanation: string | null
+          group: string | null
           hsk_level: number
           id: number
+          items: string[] | null
           order_idx: number | null
           pattern: string | null
           title: string
         }
         Insert: {
+          category?: string | null
+          code?: string | null
           created_at?: string
+          detail?: string | null
           examples?: Json
-          explanation: string
+          explanation?: string | null
+          group?: string | null
           hsk_level: number
           id?: number
+          items?: string[] | null
           order_idx?: number | null
           pattern?: string | null
           title: string
         }
         Update: {
+          category?: string | null
+          code?: string | null
           created_at?: string
+          detail?: string | null
           examples?: Json
-          explanation?: string
+          explanation?: string | null
+          group?: string | null
           hsk_level?: number
           id?: number
+          items?: string[] | null
           order_idx?: number | null
           pattern?: string | null
           title?: string
@@ -611,7 +641,9 @@ export type Database = {
           pinyin_normalized: string | null
           pinyin: string
           pos: string | null
+          sense_index: number | null
           traditional: string | null
+          variants: string[] | null
         }
         Insert: {
           classifier?: string | null
@@ -624,7 +656,9 @@ export type Database = {
           pinyin_normalized?: string | null
           pinyin: string
           pos?: string | null
+          sense_index?: number | null
           traditional?: string | null
+          variants?: string[] | null
         }
         Update: {
           classifier?: string | null
@@ -637,7 +671,9 @@ export type Database = {
           pinyin_normalized?: string | null
           pinyin?: string
           pos?: string | null
+          sense_index?: number | null
           traditional?: string | null
+          variants?: string[] | null
         }
         Relationships: []
       }

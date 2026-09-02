@@ -19,6 +19,8 @@ jest.mock('../lib/data', () => ({
 const huan: Word = {
   id: 1,
   hanzi: '还',
+  sense_index: null,
+  variants: ['还'],
   traditional: '還',
   pinyin: 'huán',
   meaning_en: 'to pay back; to return',

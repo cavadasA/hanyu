@@ -69,6 +69,8 @@ export interface DeckTemplate {
 export interface Word {
   id: number;
   hanzi: string;
+  sense_index: number | null;
+  variants: string[];
   traditional: string | null;
   pinyin: string;
   meaning_en: string;
@@ -132,9 +134,14 @@ export interface ReadingResult {
 export interface GrammarPoint {
   id: number;
   hsk_level: HskLevel;
+  code: string;
+  group: string | null;
+  category: string | null;
+  detail: string | null;
   title: string;
   pattern: string | null;
   explanation: string | null;
+  items: string[];
   examples: Array<{ chinese: string; pinyin?: string; english?: string }>;
   order_idx?: number | null;
 }

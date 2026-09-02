@@ -35,7 +35,8 @@ export function seedDatabase(db) {
       insertGrammar.run({
         ...point,
         pattern: point.pattern ?? null,
-        examples: JSON.stringify(point.examples),
+        explanation: point.explanation ?? '',
+        examples: JSON.stringify(point.examples ?? []),
       });
     }
   });
