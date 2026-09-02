@@ -8,6 +8,7 @@ const DEFAULT_SETTINGS = {
   current_level: 2,
   cards_per_day: 20,
   max_reviews_per_session: 100,
+  request_retention: 0.9,
   card_order: 'due',
   ai_provider: 'none',
 };
@@ -40,6 +41,7 @@ function normalizeSettings(row: any) {
       300,
       DEFAULT_SETTINGS.max_reviews_per_session
     ),
+    request_retention: clampDecimal(row?.request_retention, 0.7, 0.97, DEFAULT_SETTINGS.request_retention),
     card_order: normalizeCardOrder(row?.card_order),
     ai_provider: ALLOWED_AI_PROVIDERS.has(row?.ai_provider) ? row.ai_provider : DEFAULT_SETTINGS.ai_provider,
     api_key: '',
@@ -56,6 +58,15 @@ function clampNumber(value: any, min: number, max: number, fallback: number) {
   }
 
   return Math.min(max, Math.max(min, Math.trunc(numeric)));
+}
+
+function clampDecimal(value: any, min: number, max: number, fallback: number) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) {
+    return fallback;
+  }
+
+  return Math.min(max, Math.max(min, numeric));
 }
 
 function sanitizeUpdates(data: Record<string, unknown>) {
@@ -88,6 +99,10 @@ function sanitizeUpdates(data: Record<string, unknown>) {
     );
   }
 
+  if (data.request_retention !== undefined) {
+    updates.request_retention = clampDecimal(data.request_retention, 0.7, 0.97, DEFAULT_SETTINGS.request_retention);
+  }
+
   if (data.card_order !== undefined) {
     updates.card_order = normalizeCardOrder(data.card_order);
   }
@@ -105,7 +120,7 @@ async function readSettingsRow(userId: string, client: HanyuClient) {
   const { data, error } = await client
     .from('user_settings')
     .select(
-      'user_id, theme, support_language, current_level, cards_per_day, max_reviews_per_session, card_order, ai_provider, created_at, updated_at'
+      'user_id, theme, support_language, current_level, cards_per_day, max_reviews_per_session, request_retention, card_order, ai_provider, created_at, updated_at'
     )
     .eq('user_id', userId)
     .maybeSingle();
@@ -122,7 +137,7 @@ async function ensureSettingsRow(userId: string, client: HanyuClient) {
     .from('user_settings')
     .upsert({ user_id: userId, ...DEFAULT_SETTINGS } as any, { onConflict: 'user_id' })
     .select(
-      'user_id, theme, support_language, current_level, cards_per_day, max_reviews_per_session, card_order, ai_provider, created_at, updated_at'
+      'user_id, theme, support_language, current_level, cards_per_day, max_reviews_per_session, request_retention, card_order, ai_provider, created_at, updated_at'
     )
     .single();
 
@@ -153,7 +168,7 @@ export async function updateSettings(input: Record<string, unknown>, client: Han
     .from('user_settings')
     .upsert(payload as any, { onConflict: 'user_id' })
     .select(
-      'user_id, theme, support_language, current_level, cards_per_day, max_reviews_per_session, card_order, ai_provider, created_at, updated_at'
+      'user_id, theme, support_language, current_level, cards_per_day, max_reviews_per_session, request_retention, card_order, ai_provider, created_at, updated_at'
     )
     .single();
 

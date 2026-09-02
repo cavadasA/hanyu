@@ -4,6 +4,7 @@ import {
   toUserMessage,
   type AiProvider,
   type CardOrder,
+  type LearnerSkillState,
   type ThemePreference,
   type UserSettings,
 } from '@hanyu/data';
@@ -22,6 +23,11 @@ const ORDERS: readonly CardOrder[] = ['due', 'frequency'];
 const PROVIDERS: readonly AiProvider[] = ['none', 'deepseek', 'gemini'];
 const LEVELS = ['1', '2', '3', '4', '5', '6'] as const;
 const SUPPORT_LANGUAGES = ['es', 'en'] as const;
+const RETENTION_OPTIONS = [
+  { value: 0.85, label: 'Relajado (0,85)' },
+  { value: 0.9, label: 'Equilibrado (0,90)' },
+  { value: 0.95, label: 'Exigente (0,95)' },
+] as const;
 
 interface HeroStats {
   mastered: number;
@@ -36,6 +42,7 @@ export default function YouScreen() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [leeches, setLeeches] = useState<LearnerSkillState[]>([]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -62,6 +69,15 @@ export default function YouScreen() {
       });
     } catch {
       // Dashboard is non-critical — hero degrades gracefully
+    }
+
+    try {
+      const skills = getData().skills;
+      if (typeof skills?.getLeechStates === 'function') {
+        setLeeches(await skills.getLeechStates('recognition'));
+      }
+    } catch {
+      // Leech management is non-critical — settings remain usable offline.
     }
 
     setLoading(false);
@@ -97,6 +113,22 @@ export default function YouScreen() {
       setError(toUserMessage(caught));
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function reactivate(state: LearnerSkillState) {
+    try {
+      const skills = getData().skills;
+      if (typeof skills?.setSkillSuspended !== 'function') return;
+      await skills.setSkillSuspended({
+        target_kind: state.target_kind,
+        target_id: state.target_id,
+        skill: state.skill,
+        suspended: false,
+      });
+      setLeeches((current) => current.filter((entry) => entry.id !== state.id));
+    } catch (caught) {
+      setError(toUserMessage(caught));
     }
   }
 
@@ -208,6 +240,20 @@ export default function YouScreen() {
           <View style={styles.panelSection}>
             <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>DECK ALGORITHM</Text>
             <OptionRow
+              label="Target retention"
+              value={
+                RETENTION_OPTIONS.find((option) => option.value === settings.request_retention)?.label
+                  ?? RETENTION_OPTIONS[1].label
+              }
+              options={RETENTION_OPTIONS.map((option) => option.label)}
+              onChange={(label) => {
+                const option = RETENTION_OPTIONS.find((entry) => entry.label === label);
+                if (option) void save({ request_retention: option.value });
+              }}
+              disabled={saving}
+            />
+            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <OptionRow
               label="Card order"
               value={settings.card_order}
               options={ORDERS}
@@ -242,6 +288,26 @@ export default function YouScreen() {
               onChange={(theme) => save({ theme })}
               disabled={saving}
             />
+          </View>
+        </View>
+      ) : null}
+
+      {leeches.length > 0 ? (
+        <View
+          style={[
+            styles.groupedPanel,
+            { backgroundColor: colors.surface, borderColor: colors.border },
+          ]}
+        >
+          <View style={styles.panelSection}>
+            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>NEEDS ATTENTION</Text>
+            <Text style={[styles.leechBody, { color: colors.textMuted }]}>These cards were difficult repeatedly.</Text>
+            {leeches.map((state) => (
+              <View key={state.id} style={styles.leechRow}>
+                <Text style={[styles.leechLabel, { color: colors.text }]}>Word {state.target_id} · {state.lapses} lapses</Text>
+                <Button label="Reactivate" variant="outline" onPress={() => void reactivate(state)} />
+              </View>
+            ))}
           </View>
         </View>
       ) : null}
@@ -355,5 +421,12 @@ const styles = StyleSheet.create({
   actionRow: {
     marginTop: tokens.spacing.md,
   },
+  leechBody: { fontSize: tokens.fontSize.sm },
+  leechRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: tokens.spacing.sm,
+  },
+  leechLabel: { flex: 1, fontSize: tokens.fontSize.sm },
 });
-

@@ -10,6 +10,8 @@ where table_schema = 'public'
     'words',
     'grammar_points',
     'srs_cards',
+    'learner_skill_state',
+    'learning_event',
     'review_log',
     'user_stats',
     'generated_exercises',
@@ -29,6 +31,8 @@ where schemaname = 'public'
     'words',
     'grammar_points',
     'srs_cards',
+    'learner_skill_state',
+    'learning_event',
     'review_log',
     'user_stats',
     'generated_exercises',
@@ -52,7 +56,7 @@ where proname in (
   'handle_new_user',
   'ensure_today_stats',
   'create_starter_deck',
-  'review_flashcard',
+  'apply_review',
   'log_study_time',
   'get_dashboard'
 )

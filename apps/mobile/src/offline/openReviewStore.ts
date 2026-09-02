@@ -3,6 +3,7 @@ import { applySchema } from './schema';
 import { ReviewStoreImpl } from './ReviewStore';
 import type { ReviewStore } from './ReviewStore';
 import { deriveDbName } from './dbName';
+import type { FSRSParameters } from 'ts-fsrs';
 
 /**
  * Opens (or creates) the per-user SQLite review store.
@@ -11,7 +12,10 @@ import { deriveDbName } from './dbName';
  * Only this file is permitted to import expo-sqlite; ReviewStore.ts and
  * schema.ts remain expo-sqlite-free so they can be unit-tested under Jest.
  */
-export async function openReviewStore(userId: string): Promise<ReviewStore> {
+export async function openReviewStore(
+  userId: string,
+  params?: FSRSParameters,
+): Promise<ReviewStore> {
   const dbName = deriveDbName(userId); // throws on invalid userId
 
   const db = await SQLite.openDatabaseAsync(dbName);
@@ -27,5 +31,5 @@ export async function openReviewStore(userId: string): Promise<ReviewStore> {
     await SQLite.deleteDatabaseAsync(dbName);
   };
 
-  return new ReviewStoreImpl(handle, destroyDb);
+  return new ReviewStoreImpl(handle, destroyDb, params);
 }

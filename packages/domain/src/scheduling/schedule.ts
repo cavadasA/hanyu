@@ -118,3 +118,18 @@ export function retrievability(
 ): number {
   return fsrs(params).get_retrievability(toCard(state), now, false);
 }
+
+const LEECH_LAPSES = 8;
+const MASTERED_STABILITY_DAYS = 180;
+
+export function isLeech(state: SchedulingState): boolean {
+  return state.lapses >= LEECH_LAPSES;
+}
+
+export function cardPhase(
+  state: SchedulingState,
+): 'new' | 'learning' | 'review' | 'mastered' {
+  if (state.state === 'new') return 'new';
+  if (state.state === 'learning' || state.state === 'relearning') return 'learning';
+  return state.stability >= MASTERED_STABILITY_DAYS ? 'mastered' : 'review';
+}

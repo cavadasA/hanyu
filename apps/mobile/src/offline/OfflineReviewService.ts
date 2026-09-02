@@ -1,14 +1,22 @@
 /**
  * OfflineReviewService – pure TypeScript, zero React/Expo-native imports.
  *
- * Wraps a ReviewStore with a cache-first load strategy and local SM-2 rating.
+ * Wraps a ReviewStore with a cache-first load strategy and local FSRS rating.
  * All I/O dependencies (store, clock, uuid, online fetch) are constructor-injected
  * so that the class can be tested in plain Node/Jest without any native modules.
  */
 
 import type { VersionedCard, ReviewEvent } from '@hanyu/data';
-import { applySm2 } from '@hanyu/domain';
+import { applyReview, type Grade } from '@hanyu/domain';
+import type { FSRSParameters } from 'ts-fsrs';
 import type { ReviewStore } from './ReviewStore';
+
+const GRADE_NUMBER: Record<Grade, 1 | 2 | 3 | 4> = {
+  again: 1,
+  hard: 2,
+  good: 3,
+  easy: 4,
+};
 
 export interface OfflineReviewServiceDeps {
   store: ReviewStore;
@@ -22,6 +30,8 @@ export interface OfflineReviewServiceDeps {
   now: () => Date;
   /** Injected id generator – production default: expo-crypto randomUUID. */
   uuid: () => string;
+  /** Scheduling parameters, re-read when the user changes settings. */
+  params: () => FSRSParameters;
   /**
    * Revierte en servidor una valoración ya sincronizada. Inyectada como el
    * resto de la E/S para que el servicio siga siendo probable en Node puro.
@@ -34,6 +44,7 @@ export class OfflineReviewService {
   private readonly getDueCardsOnlineImpl: (limit: number) => Promise<{ cards: unknown[] }>;
   private readonly now: () => Date;
   private readonly uuid: () => string;
+  private readonly params: () => FSRSParameters;
   private readonly revertReviewOnline: (
     reviewId: string,
   ) => Promise<{ outcome: string; card: VersionedCard }>;
@@ -45,6 +56,7 @@ export class OfflineReviewService {
     this.getDueCardsOnlineImpl = deps.getDueCardsOnline;
     this.now = deps.now;
     this.uuid = deps.uuid;
+    this.params = deps.params;
     this.revertReviewOnline = deps.revertReviewOnline;
   }
 
@@ -94,7 +106,7 @@ export class OfflineReviewService {
   }
 
   /**
-   * Locally rate a card using SM-2 and enqueue the event for later sync.
+   * Locally rate a card using FSRS and enqueue the event for later sync.
    *
    * The in-flight guard at the very top is intentionally synchronous (before any
    * await) so that firing two concurrent calls back-to-back without awaiting the
@@ -105,7 +117,7 @@ export class OfflineReviewService {
    */
   async rateCard(
     card: VersionedCard,
-    quality: number,
+    grade: Grade,
     timeMs: number | null,
   ): Promise<{ card: VersionedCard; reviewId: string }> {
     // Synchronous double-tap guard — checked before any await.
@@ -115,31 +127,24 @@ export class OfflineReviewService {
     this.inFlight.add(card.id);
 
     try {
-      const reviewedAt = this.now().toISOString();
-      const outcome = applySm2({ state: card, quality, reviewed_at: reviewedAt });
+      const reviewedAt = this.now();
+      const outcome = applyReview(card.scheduling, grade, reviewedAt, this.params());
 
       const event: ReviewEvent = {
         card_id: card.id,
-        quality,
+        grade: GRADE_NUMBER[grade],
+        skill: card.skill,
         time_ms: timeMs,
         review_id: this.uuid(),
-        reviewed_at: reviewedAt,
+        reviewed_at: reviewedAt.toISOString(),
         expected_version: card.version,
+        state: outcome.state,
+        prior: card.scheduling,
       };
 
-      // Keep all aliased field pairs (interval/interval_days etc.) in sync,
-      // following the same pattern as ReviewStore.ts's replayPendingOnto().
       const projected: VersionedCard = {
         ...card,
-        ease_factor: outcome.ease_factor,
-        interval: outcome.interval_days,
-        interval_days: outcome.interval_days,
-        repetitions: outcome.repetitions,
-        status: outcome.status,
-        next_review: outcome.next_review_at,
-        next_review_at: outcome.next_review_at,
-        last_review: outcome.last_reviewed_at,
-        last_reviewed_at: outcome.last_reviewed_at,
+        scheduling: outcome.state,
       };
 
       // Do not return / mutate screen state until the store write succeeds.

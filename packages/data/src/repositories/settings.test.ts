@@ -10,6 +10,7 @@ describe('getSettings', () => {
       current_level: 4,
       cards_per_day: 25,
       max_reviews_per_session: 120,
+      request_retention: 0.85,
       card_order: 'frequency',
       ai_provider: 'gemini',
       created_at: '2026-07-01T00:00:00.000Z',

@@ -4,6 +4,8 @@ import type {
   ExerciseSolution,
   Evaluation,
   EvaluationDetail,
+  SchedulingPhase,
+  SchedulingState,
 } from '@hanyu/domain';
 
 export type {
@@ -11,6 +13,8 @@ export type {
   ExerciseSolution,
   Evaluation,
   EvaluationDetail,
+  SchedulingPhase,
+  SchedulingState,
 } from '@hanyu/domain';
 
 export type ThemePreference = 'light' | 'dark' | 'system';
@@ -62,11 +66,16 @@ export interface LearnerSkillState {
   difficulty: number | null;
   stability: number | null;
   retrievability: number | null;
+  fsrs_state: SchedulingPhase;
+  learning_steps: number;
+  scheduled_days: number;
+  elapsed_days: number;
   reps: number;
   lapses: number;
   last_reviewed_at: string | null;
   next_review_at: string | null;
   suspended: boolean;
+  leech: boolean;
   version: number;
 }
 
@@ -231,6 +240,7 @@ export interface UserSettings {
   current_level: number;
   cards_per_day: number;
   max_reviews_per_session: number;
+  request_retention: number;
   card_order: CardOrder;
   ai_provider: AiProvider;
   api_key: string;
@@ -243,15 +253,9 @@ export interface DueCard {
   id: string;
   user_id: string;
   word_id: number;
-  ease_factor: number;
-  interval: number;
-  interval_days: number;
-  repetitions: number;
-  next_review: string;
-  next_review_at: string;
-  last_review: string | null;
-  last_reviewed_at: string | null;
-  status: CardStatus;
+  skill: LearningSkill;
+  scheduling: SchedulingState;
+  version: number;
   hanzi?: string;
   traditional?: string | null;
   pinyin?: string;
@@ -269,30 +273,23 @@ export interface DueCardsPayload {
   deck_size: number;
 }
 
-export interface ReviewResult {
-  card_id: string;
-  interval: number;
-  next_review: string | null;
-  ease_factor: number | null;
-  status: CardStatus | null;
-}
-
 export interface ReviewEvent {
   card_id: string;
-  quality: number;
+  /** Escala de FSRS: 1 Again, 2 Hard, 3 Good, 4 Easy. */
+  grade: 1 | 2 | 3 | 4;
+  skill: LearningSkill;
   time_ms: number | null;
   review_id: string;
   reviewed_at: string;
   expected_version: number;
+  /** Estado que el cliente calculó. El servidor lo guarda, no lo recalcula. */
+  state: SchedulingState;
+  /** Estado anterior, que revert_review restaura. */
+  prior: SchedulingState;
 }
 
 export interface VersionedCard extends DueCard {
   version: number;
-  repetitions: number;
-  interval_days: number;
-  ease_factor: number;
-  next_review_at: string;
-  last_reviewed_at: string | null;
 }
 
 export interface ReviewSyncResult {

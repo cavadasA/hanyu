@@ -72,11 +72,14 @@ function errorMessage(error: unknown): string {
 function toReviewEvent(ev: QueuedReviewEvent): ReviewEvent {
   return {
     card_id: ev.card_id,
-    quality: ev.quality,
+    grade: ev.grade,
+    skill: ev.skill,
     time_ms: ev.time_ms,
     review_id: ev.review_id,
     reviewed_at: ev.reviewed_at,
     expected_version: ev.expected_version,
+    state: ev.state,
+    prior: ev.prior,
   };
 }
 
@@ -111,7 +114,7 @@ export class ReviewSyncEngine {
     };
 
     const allPending = await this.store.listPending();
-    const pending = allPending.filter((ev) => ev.state === 'pending');
+    const pending = allPending.filter((ev) => ev.queue_state === 'pending');
     let remaining = pending.length;
     // Skip remaining events for a card after a conflict this run — expected_versions
     // are stale until Task 7 rebase rewrites them.

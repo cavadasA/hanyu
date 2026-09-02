@@ -8,6 +8,7 @@
 import { OfflineReviewService } from './OfflineReviewService';
 import type { ReviewStore } from './ReviewStore';
 import type { VersionedCard } from '@hanyu/data';
+import { emptyState, schedulingParams } from '@hanyu/domain';
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -18,15 +19,8 @@ function makeCard(overrides: Partial<VersionedCard> = {}): VersionedCard {
     id: 'card-1',
     user_id: 'user-test',
     word_id: 1,
-    ease_factor: 2.5,
-    interval: 1,
-    interval_days: 1,
-    repetitions: 0,
-    next_review: '2026-01-01T00:00:00.000Z',
-    next_review_at: '2026-01-01T00:00:00.000Z',
-    last_review: null,
-    last_reviewed_at: null,
-    status: 'new',
+    skill: 'recognition',
+    scheduling: emptyState(new Date('2026-07-31T10:00:00.000Z')),
     version: 1,
     ...overrides,
   };
@@ -54,6 +48,7 @@ function makeService(overrides: {
   getDueCardsOnline?: jest.Mock;
   now?: jest.Mock;
   uuid?: jest.Mock;
+  params?: jest.Mock;
   revertReviewOnline?: jest.Mock;
 } = {}) {
   return new OfflineReviewService({
@@ -63,6 +58,7 @@ function makeService(overrides: {
     now:
       overrides.now ?? jest.fn().mockReturnValue(new Date('2026-07-31T10:00:00.000Z')),
     uuid: overrides.uuid ?? jest.fn().mockReturnValue('default-uuid'),
+    params: overrides.params ?? jest.fn().mockReturnValue(schedulingParams({})),
     revertReviewOnline:
       overrides.revertReviewOnline ??
       jest.fn().mockResolvedValue({ outcome: 'reverted', card: makeCard() }),
@@ -119,7 +115,7 @@ describe('loadDueCards – cache-first load', () => {
 describe('loadDueCards – online refresh merge', () => {
   test('caches online cards and returns freshly-projected cards on success', async () => {
     const onlineCard = makeCard({ id: 'online-1', version: 3 });
-    const freshProjected = [makeCard({ id: 'online-1', version: 3, interval_days: 7 })];
+    const freshProjected = [makeCard({ id: 'online-1', version: 3 })];
     const store = makeFakeStore({
       getDueProjectedCards: jest
         .fn()
@@ -221,10 +217,10 @@ describe('rateCard – rating while offline', () => {
     const card = makeCard();
     const service = makeService({ uuid: jest.fn().mockReturnValue('r1') });
 
-    const result = await service.rateCard(card, 4, 1500);
+    const result = await service.rateCard(card, 'easy', 1500);
 
     expect(result.reviewId).toBe('r1');
-    expect(result.card.repetitions).toBe(card.repetitions + 1);
+    expect(result.card.scheduling.reps).toBe(card.scheduling.reps + 1);
   });
 
   test('does not call getDueCardsOnline during rating', async () => {
@@ -232,20 +228,42 @@ describe('rateCard – rating while offline', () => {
     const getDueCardsOnline = jest.fn();
     const service = makeService({ getDueCardsOnline });
 
-    await service.rateCard(card, 3, null);
+    await service.rateCard(card, 'hard', null);
 
     expect(getDueCardsOnline).not.toHaveBeenCalled();
   });
 
-  test('mirrors aliased field pairs (interval/interval_days, next_review/next_review_at, etc.)', async () => {
+  test('stores the calculated state as one scheduling object', async () => {
     const card = makeCard();
     const service = makeService();
 
-    const result = await service.rateCard(card, 4, null);
+    const result = await service.rateCard(card, 'easy', null);
 
-    expect(result.card.interval).toBe(result.card.interval_days);
-    expect(result.card.next_review).toBe(result.card.next_review_at);
-    expect(result.card.last_review).toBe(result.card.last_reviewed_at);
+    expect(result.card.scheduling).toBeDefined();
+    expect(result.card).not.toHaveProperty('interval');
+    expect(result.card).not.toHaveProperty('next_review_at');
+  });
+
+  it('un Again devuelve la tarjeta dentro de la sesión', async () => {
+    const service = makeService({ uuid: jest.fn().mockReturnValue('r1') });
+
+    const { card: rated } = await service.rateCard(makeCard(), 'again', 1000);
+
+    const minutes =
+      (new Date(rated.scheduling.due).getTime() - Date.parse('2026-07-31T10:00:00.000Z')) / 60000;
+    expect(minutes).toBeLessThan(60);
+  });
+
+  it('encola la valoración con la escala de FSRS, no con quality', async () => {
+    const store = makeFakeStore();
+    const service = makeService({ store, uuid: jest.fn().mockReturnValue('r1') });
+
+    await service.rateCard(makeCard(), 'good', 1000);
+
+    expect(store.enqueueAndProject).toHaveBeenCalledWith(
+      expect.objectContaining({ grade: 3, skill: 'recognition' }),
+      expect.anything(),
+    );
   });
 });
 
@@ -256,10 +274,10 @@ describe('undoRating', () => {
     const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(card) });
     const service = makeService({ store, uuid: jest.fn().mockReturnValue('r1'), revertReviewOnline });
 
-    const { reviewId } = await service.rateCard(card, 4, 1000);
+    const { reviewId } = await service.rateCard(card, 'easy', 1000);
     const restored = await service.undoRating(reviewId);
 
-    expect(restored.repetitions).toBe(card.repetitions);
+    expect(restored.scheduling.reps).toBe(card.scheduling.reps);
     expect(revertReviewOnline).not.toHaveBeenCalled();
   });
 
@@ -304,7 +322,7 @@ describe('rateCard – UUID/time injection', () => {
     const service = makeService({ store, now });
     const card = makeCard();
 
-    await service.rateCard(card, 5, 800);
+    await service.rateCard(card, 'easy', 800);
 
     expect(store.enqueueAndProject).toHaveBeenCalledWith(
       expect.objectContaining({ reviewed_at: fixedDate.toISOString() }),
@@ -318,7 +336,7 @@ describe('rateCard – UUID/time injection', () => {
     const service = makeService({ store, uuid });
     const card = makeCard();
 
-    await service.rateCard(card, 3, null);
+    await service.rateCard(card, 'hard', null);
 
     expect(store.enqueueAndProject).toHaveBeenCalledWith(
       expect.objectContaining({ review_id: 'injected-uuid-99' }),
@@ -331,7 +349,7 @@ describe('rateCard – UUID/time injection', () => {
     const store = makeFakeStore();
     const service = makeService({ store });
 
-    await service.rateCard(card, 4, null);
+    await service.rateCard(card, 'easy', null);
 
     expect(store.enqueueAndProject).toHaveBeenCalledWith(
       expect.objectContaining({ expected_version: 42, card_id: card.id }),
@@ -339,15 +357,15 @@ describe('rateCard – UUID/time injection', () => {
     );
   });
 
-  test('passes quality and time_ms through to the ReviewEvent unchanged', async () => {
+  test('passes the FSRS grade and time_ms through to the ReviewEvent', async () => {
     const card = makeCard();
     const store = makeFakeStore();
     const service = makeService({ store });
 
-    await service.rateCard(card, 2, 3000);
+    await service.rateCard(card, 'hard', 3000);
 
     expect(store.enqueueAndProject).toHaveBeenCalledWith(
-      expect.objectContaining({ quality: 2, time_ms: 3000 }),
+      expect.objectContaining({ grade: 2, skill: 'recognition', time_ms: 3000 }),
       expect.any(Object),
     );
   });
@@ -362,7 +380,7 @@ describe('rateCard – store failure before advance', () => {
     const service = makeService({ store });
     const card = makeCard();
 
-    await expect(service.rateCard(card, 4, null)).rejects.toThrow(
+    await expect(service.rateCard(card, 'easy', null)).rejects.toThrow(
       'DB write failed – disk full',
     );
   });
@@ -379,7 +397,7 @@ describe('rateCard – store failure before advance', () => {
     const card = makeCard();
 
     let resolved = false;
-    const ratePromise = service.rateCard(card, 4, null).then((r) => {
+    const ratePromise = service.rateCard(card, 'easy', null).then((r) => {
       resolved = true;
       return r;
     });
@@ -402,8 +420,8 @@ describe('rateCard – synchronous double-tap guard', () => {
     const card = makeCard();
 
     // Fire both without awaiting the first — the guard must fire synchronously
-    const promise1 = service.rateCard(card, 4, null);
-    const promise2 = service.rateCard(card, 5, null);
+    const promise1 = service.rateCard(card, 'easy', null);
+    const promise2 = service.rateCard(card, 'good', null);
 
     await expect(promise2).rejects.toThrow(
       'A rating for this card is already in progress',
@@ -416,8 +434,8 @@ describe('rateCard – synchronous double-tap guard', () => {
     const service = makeService();
     const card = makeCard();
 
-    await service.rateCard(card, 4, null);
-    await expect(service.rateCard(card, 3, null)).resolves.toBeDefined();
+    await service.rateCard(card, 'easy', null);
+    await expect(service.rateCard(card, 'good', null)).resolves.toBeDefined();
   });
 
   test('releases the guard in the finally block even when the store throws', async () => {
@@ -430,9 +448,9 @@ describe('rateCard – synchronous double-tap guard', () => {
     const service = makeService({ store });
     const card = makeCard();
 
-    await expect(service.rateCard(card, 4, null)).rejects.toThrow('DB error');
+    await expect(service.rateCard(card, 'easy', null)).rejects.toThrow('DB error');
     // Guard must be released — the next call for the same card should not hit the guard
-    await expect(service.rateCard(card, 4, null)).resolves.toBeDefined();
+    await expect(service.rateCard(card, 'easy', null)).resolves.toBeDefined();
   });
 
   test('guard is per-card-id: concurrent calls for different cards both proceed', async () => {
@@ -441,8 +459,8 @@ describe('rateCard – synchronous double-tap guard', () => {
     const cardA = makeCard({ id: 'card-A' });
     const cardB = makeCard({ id: 'card-B' });
 
-    const promiseA = service.rateCard(cardA, 4, null);
-    const promiseB = service.rateCard(cardB, 3, null); // different id — no guard
+    const promiseA = service.rateCard(cardA, 'easy', null);
+    const promiseB = service.rateCard(cardB, 'good', null); // different id — no guard
 
     await expect(promiseA).resolves.toBeDefined();
     await expect(promiseB).resolves.toBeDefined();

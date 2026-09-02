@@ -126,7 +126,7 @@ describe('OfflineReviewProvider – store open on user available', () => {
     await waitFor(() => expect(result.current.ready).toBe(true));
 
     expect(result.current.service).not.toBeNull();
-    expect(mockOpenReviewStore).toHaveBeenCalledWith('user-abc');
+    expect(mockOpenReviewStore).toHaveBeenCalledWith('user-abc', expect.objectContaining({ request_retention: 0.9 }));
   });
 
   test('does not open the store twice for the same userId', async () => {
@@ -235,7 +235,7 @@ describe('OfflineReviewProvider – account switch', () => {
     const { result, rerender } = await renderHook(() => useOfflineReview(), { wrapper });
 
     await waitFor(() => expect(result.current.ready).toBe(true));
-    expect(mockOpenReviewStore).toHaveBeenCalledWith('user-A');
+    expect(mockOpenReviewStore).toHaveBeenCalledWith('user-A', expect.objectContaining({ request_retention: 0.9 }));
 
     // Switch to user-B directly (no intermediate null)
     await act(async () => {
@@ -243,7 +243,7 @@ describe('OfflineReviewProvider – account switch', () => {
       await rerender({});
     });
 
-    await waitFor(() => expect(mockOpenReviewStore).toHaveBeenCalledWith('user-B'));
+    await waitFor(() => expect(mockOpenReviewStore).toHaveBeenCalledWith('user-B', expect.objectContaining({ request_retention: 0.9 })));
     await waitFor(() => expect(storeA.destroy).toHaveBeenCalledTimes(1));
   });
 });
@@ -261,7 +261,7 @@ describe('OfflineReviewProvider – unmount', () => {
     await unmount();
 
     // On unmount: always close, never destroy
-    expect(mockStore.close).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(mockStore.close).toHaveBeenCalledTimes(1));
     expect(mockStore.destroy).not.toHaveBeenCalled();
   });
 

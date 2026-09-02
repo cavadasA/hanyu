@@ -49,13 +49,16 @@ export async function getDecks(client: HanyuClient): Promise<DeckSummary[]> {
   if (memberError) throw createRepositoryError(memberError, 'Failed to load deck membership');
 
   const { data: due, error: dueError } = await client
-    .from('srs_cards')
-    .select('word_id')
+    .from('learner_skill_state')
+    .select('target_id, next_review_at')
     .eq('user_id', userId)
+    .eq('target_kind', 'word')
+    .eq('skill', 'recognition')
+    .eq('suspended', false)
     .lte('next_review_at', nowIso);
   if (dueError) throw createRepositoryError(dueError, 'Failed to load due words');
 
-  const dueWords = new Set((due || []).map((r: any) => String(r.word_id)));
+  const dueWords = new Set((due || []).map((r: any) => String(r.target_id)));
   const byDeck: Record<string, { total: number; dueCount: number }> = {};
   for (const m of (members || []) as any[]) {
     const bucket = byDeck[m.deck_id] || (byDeck[m.deck_id] = { total: 0, dueCount: 0 });
@@ -142,10 +145,23 @@ export async function addWordToDeck(
   const { error: cardError } = await client
     .from('srs_cards')
     .upsert(
-      { user_id: userId, word_id: numericWordId, next_review_at: new Date().toISOString(), status: 'new' } as any,
+      { user_id: userId, word_id: numericWordId } as any,
       { onConflict: 'user_id,word_id', ignoreDuplicates: true }
     );
   if (cardError) throw createRepositoryError(cardError, 'Failed to ensure card');
+
+  const { error: stateError } = await client
+    .from('learner_skill_state')
+    .upsert(
+      {
+        user_id: userId,
+        target_kind: 'word',
+        target_id: numericWordId,
+        skill: 'recognition',
+      } as any,
+      { onConflict: 'user_id,target_kind,target_id,skill', ignoreDuplicates: true },
+    );
+  if (stateError) throw createRepositoryError(stateError, 'Failed to initialize card scheduling state');
 
   return { deck_id: deckId, word_id: numericWordId };
 }

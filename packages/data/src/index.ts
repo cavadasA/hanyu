@@ -41,7 +41,6 @@ export type {
   ReviewEvent,
   RevertOutcome,
   RevertReviewResult,
-  ReviewResult,
   ReviewSyncResult,
   StarterDeckResult,
   SupportLanguage,

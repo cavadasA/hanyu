@@ -1,12 +1,11 @@
 //
-// Un estado por (usuario, objetivo, habilidad). El Plan 4 sustituirá SM-2 por
-// FSRS sobre esta tabla; aquí solo se lee y se escribe.
+// Un estado por (usuario, objetivo, habilidad), gobernado por FSRS.
 import type { HanyuClient } from '../client';
 import type { LearnerSkillState, LearningSkill, LearningTargetKind } from '../types';
 import { createRepositoryError, getRequiredUserId } from './shared';
 
 const COLUMNS =
-  'id, user_id, target_kind, target_id, skill, difficulty, stability, retrievability, reps, lapses, last_reviewed_at, next_review_at, suspended, version';
+  'id, user_id, target_kind, target_id, skill, difficulty, stability, retrievability, fsrs_state, learning_steps, scheduled_days, elapsed_days, reps, lapses, last_reviewed_at, next_review_at, suspended, leech, version';
 
 export interface GetSkillStatesInput {
   target_kind: LearningTargetKind;
@@ -64,8 +63,8 @@ export async function upsertSkillState(
 ): Promise<LearnerSkillState> {
   const userId = await getRequiredUserId(client);
 
-  const { data, error } = await client
-    .from('learner_skill_state')
+  const { data, error } = await (client
+    .from('learner_skill_state') as any)
     .upsert(
       { user_id: userId, updated_at: new Date().toISOString(), ...input } as any,
       { onConflict: 'user_id,target_kind,target_id,skill' },
@@ -78,4 +77,31 @@ export async function upsertSkillState(
   }
 
   return data as unknown as LearnerSkillState;
+}
+
+export async function getLeechStates(
+  skill: LearningSkill = 'recognition',
+  client: HanyuClient,
+): Promise<LearnerSkillState[]> {
+  const userId = await getRequiredUserId(client);
+  const { data, error } = await (client
+    .from('learner_skill_state') as any)
+    .select(COLUMNS)
+    .eq('user_id', userId)
+    .eq('skill', skill)
+    .eq('leech', true)
+    .order('lapses', { ascending: false });
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load leeches');
+  }
+
+  return (data ?? []) as unknown as LearnerSkillState[];
+}
+
+export async function setSkillSuspended(
+  input: Pick<UpsertSkillStateInput, 'target_kind' | 'target_id' | 'skill'> & { suspended: boolean },
+  client: HanyuClient,
+): Promise<LearnerSkillState> {
+  return upsertSkillState(input, client);
 }

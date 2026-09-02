@@ -1,5 +1,12 @@
 import type { ReviewEvent, VersionedCard } from '@hanyu/data';
-import { applySm2 } from '@hanyu/domain';
+import {
+  applyReview,
+  emptyState,
+  schedulingParams,
+  type Grade,
+  type SchedulingState,
+} from '@hanyu/domain';
+import type { FSRSParameters } from 'ts-fsrs';
 
 /**
  * Minimal async DB handle interface – a structural subset of expo-sqlite's SQLiteDatabase.
@@ -17,7 +24,7 @@ export interface DbHandle {
 
 export type QueuedReviewEvent = ReviewEvent & {
   queue_sequence: number;
-  state: 'pending' | 'syncing' | 'permanent_error';
+  queue_state: 'pending' | 'syncing' | 'permanent_error';
   attempt_count: number;
   last_error: string | null;
 };
@@ -39,8 +46,11 @@ export interface ReviewStore {
 interface PendingRow {
   review_id: string;
   card_id: string;
-  quality: number;
+  grade: 1 | 2 | 3 | 4;
   time_ms: number | null;
+  skill: ReviewEvent['skill'];
+  state_json: string;
+  prior_json: string;
   reviewed_at: string;
   expected_version: number;
   queue_sequence: number;
@@ -57,32 +67,59 @@ interface CachedCardRow {
   updated_at: string;
 }
 
-function replayPendingOnto(base: VersionedCard, events: PendingRow[]): VersionedCard {
+const GRADE_NAME: Record<1 | 2 | 3 | 4, Grade> = {
+  1: 'again',
+  2: 'hard',
+  3: 'good',
+  4: 'easy',
+};
+
+function readSchedulingState(value: string | null | undefined): SchedulingState | null {
+  if (!value) return null;
+  try {
+    const parsed = JSON.parse(value) as Partial<SchedulingState>;
+    if (
+      typeof parsed.due === 'string' &&
+      typeof parsed.state === 'string' &&
+      typeof parsed.reps === 'number' &&
+      typeof parsed.lapses === 'number'
+    ) {
+      return parsed as SchedulingState;
+    }
+  } catch {
+    // A v1 queue row has no FSRS snapshot. It is reconstructed below.
+  }
+  return null;
+}
+
+function parseSchedulingState(
+  stateJson: string,
+  priorJson: string,
+  grade: 1 | 2 | 3 | 4,
+  reviewedAt: string,
+  params: FSRSParameters,
+  wantedState: boolean,
+): SchedulingState {
+  const storedState = readSchedulingState(wantedState ? stateJson : priorJson);
+  if (storedState) return storedState;
+
+  const prior = readSchedulingState(priorJson) ?? emptyState(new Date(reviewedAt));
+  return wantedState
+    ? applyReview(prior, GRADE_NAME[grade], new Date(reviewedAt), params).state
+    : prior;
+}
+
+function replayPendingOnto(
+  base: VersionedCard,
+  events: PendingRow[],
+  params: FSRSParameters,
+): VersionedCard {
   let card = base;
   for (const ev of events) {
-    const outcome = applySm2({
-      state: {
-        ease_factor: card.ease_factor,
-        interval_days: card.interval_days,
-        repetitions: card.repetitions,
-        status: card.status,
-        next_review_at: card.next_review_at,
-      },
-      quality: ev.quality,
-      reviewed_at: ev.reviewed_at,
-    });
-    // Keep both mirrored field pairs in sync (interval/interval_days, next_review/next_review_at, etc.)
+    const outcome = applyReview(card.scheduling, GRADE_NAME[ev.grade], new Date(ev.reviewed_at), params);
     card = {
       ...card,
-      ease_factor: outcome.ease_factor,
-      interval: outcome.interval_days,
-      interval_days: outcome.interval_days,
-      repetitions: outcome.repetitions,
-      status: outcome.status,
-      next_review: outcome.next_review_at,
-      next_review_at: outcome.next_review_at,
-      last_review: outcome.last_reviewed_at,
-      last_reviewed_at: outcome.last_reviewed_at,
+      scheduling: outcome.state,
     };
   }
   return card;
@@ -110,6 +147,7 @@ export class ReviewStoreImpl implements ReviewStore {
     private readonly db: DbHandle,
     // Injected by openReviewStore.ts; called by destroy() to delete the on-disk file.
     private readonly destroyDb: () => Promise<void>,
+    private readonly params: FSRSParameters = schedulingParams({}),
   ) {}
 
   async cacheCards(cards: VersionedCard[]): Promise<void> {
@@ -122,7 +160,7 @@ export class ReviewStoreImpl implements ReviewStore {
           'SELECT * FROM pending_reviews WHERE card_id = ? AND state != \'permanent_error\' ORDER BY queue_sequence ASC',
           [card.id],
         );
-        const projected = pending.length > 0 ? replayPendingOnto(card, pending) : card;
+        const projected = pending.length > 0 ? replayPendingOnto(card, pending, this.params) : card;
         await this.db.runAsync(UPSERT_CARD_FULL, [
           card.id,
           card.version,
@@ -142,8 +180,8 @@ export class ReviewStoreImpl implements ReviewStore {
     );
     const due: VersionedCard[] = rows
       .map(r => JSON.parse(r.projected_json) as VersionedCard)
-      .filter(c => c.next_review_at <= now);
-    due.sort((a, b) => a.next_review_at.localeCompare(b.next_review_at));
+      .filter(c => c.scheduling.due <= now);
+    due.sort((a, b) => a.scheduling.due.localeCompare(b.scheduling.due));
     return due.slice(0, limit);
   }
 
@@ -171,15 +209,19 @@ export class ReviewStoreImpl implements ReviewStore {
       // queue_sequence is generated inside the transaction to avoid gaps.
       await this.db.runAsync(
         `INSERT INTO pending_reviews
-           (review_id, card_id, quality, time_ms, reviewed_at, expected_version, queue_sequence, state)
-         VALUES (?, ?, ?, ?, ?, ?,
+           (review_id, card_id, grade, time_ms, skill, state_json, prior_json,
+            reviewed_at, expected_version, queue_sequence, state)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,
            coalesce((select max(queue_sequence) from pending_reviews), 0) + 1,
            'pending')`,
         [
           event.review_id,
           event.card_id,
-          event.quality,
+          event.grade,
           event.time_ms,
+          event.skill,
+          JSON.stringify(event.state),
+          JSON.stringify(event.prior),
           event.reviewed_at,
           event.expected_version,
         ],
@@ -194,13 +236,16 @@ export class ReviewStoreImpl implements ReviewStore {
     );
     return rows.map(r => ({
       card_id: r.card_id,
-      quality: r.quality,
+      grade: r.grade,
+      skill: r.skill,
       time_ms: r.time_ms,
       review_id: r.review_id,
       reviewed_at: r.reviewed_at,
       expected_version: r.expected_version,
+      state: parseSchedulingState(r.state_json, r.prior_json, r.grade, r.reviewed_at, this.params, true),
+      prior: parseSchedulingState(r.prior_json, r.prior_json, r.grade, r.reviewed_at, this.params, false),
       queue_sequence: r.queue_sequence,
-      state: r.state,
+      queue_state: r.state,
       attempt_count: r.attempt_count,
       last_error: r.last_error,
     }));
@@ -216,7 +261,7 @@ export class ReviewStoreImpl implements ReviewStore {
         [serverCard.id],
       );
       const projected =
-        remaining.length > 0 ? replayPendingOnto(serverCard, remaining) : serverCard;
+        remaining.length > 0 ? replayPendingOnto(serverCard, remaining, this.params) : serverCard;
 
       await this.db.runAsync(UPSERT_CARD_FULL, [
         serverCard.id,
@@ -242,10 +287,11 @@ export class ReviewStoreImpl implements ReviewStore {
       for (const ev of events) {
         await this.db.runAsync(
           `UPDATE pending_reviews
-           SET quality = ?, time_ms = ?, reviewed_at = ?, expected_version = ?,
+           SET grade = ?, skill = ?, state_json = ?, prior_json = ?, time_ms = ?, reviewed_at = ?, expected_version = ?,
                state = ?, last_error = ?, attempt_count = ?
            WHERE review_id = ?`,
-          [ev.quality, ev.time_ms, ev.reviewed_at, ev.expected_version, ev.state, ev.last_error, ev.attempt_count, ev.review_id],
+          [ev.grade, ev.skill, JSON.stringify(ev.state), JSON.stringify(ev.prior), ev.time_ms, ev.reviewed_at,
+            ev.expected_version, ev.queue_state, ev.last_error, ev.attempt_count, ev.review_id],
         );
       }
     });
@@ -306,7 +352,7 @@ export class ReviewStoreImpl implements ReviewStore {
       );
 
       const server = JSON.parse(cached.server_json) as VersionedCard;
-      const projected = replayPendingOnto(server, remaining);
+      const projected = replayPendingOnto(server, remaining, this.params);
 
       await this.db.runAsync(UPDATE_CARD_PROJECTED, [
         JSON.stringify(projected),

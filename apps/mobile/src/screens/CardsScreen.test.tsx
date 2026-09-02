@@ -4,6 +4,7 @@ import {
   buildResponderReleaseEvent,
 } from '@testing-library/react-native/dist/event-builder';
 import CardsScreen from './CardsScreen';
+import { emptyState } from '@hanyu/domain';
 
 const mockGetDueCards = jest.fn();
 const mockReviewCard = jest.fn();
@@ -16,8 +17,8 @@ const mockGetDashboard = jest.fn();
 const mockPush = jest.fn();
 const mockOfflineService = {
   loadDueCards: (limit: number) => mockLoadDueCards(limit),
-  rateCard: (card: unknown, quality: number, timeMs: number | null) =>
-    mockRateCard(card, quality, timeMs),
+  rateCard: (card: unknown, grade: string, timeMs: number | null) =>
+    mockRateCard(card, grade, timeMs),
   undoRating: (reviewId: string) => mockUndoRating(reviewId),
 };
 
@@ -65,11 +66,15 @@ jest.mock('expo-speech', () => ({ speak: jest.fn(), stop: jest.fn() }));
 function card(id: string, hanzi: string) {
   return {
     id,
+    user_id: 'user-test',
+    word_id: id === 'c1' ? 1 : 2,
+    skill: 'recognition' as const,
     hanzi,
     pinyin: 'nǐ hǎo',
     meaning_en: 'hello',
     hsk_level: 1,
-    status: 'review',
+    scheduling: emptyState(new Date('2099-01-01T00:00:00.000Z')),
+    version: 1,
   };
 }
 
@@ -146,7 +151,7 @@ describe('CardsScreen', () => {
     await fireEvent.press(screen.getByText('Good'));
 
     expect(screen.getByText('谢谢')).toBeTruthy();
-    expect(mockRateCard).toHaveBeenCalledWith(expect.objectContaining({ id: 'c1' }), 4, expect.any(Number));
+    expect(mockRateCard).toHaveBeenCalledWith(expect.objectContaining({ id: 'c1' }), 'good', expect.any(Number));
     expect(screen.getByText('2/2')).toBeTruthy();
   });
 
@@ -265,5 +270,32 @@ describe('CardsScreen', () => {
     await fireEvent.press(screen.getByText('Good'));
 
     expect(screen.getByText('Back to deck')).toBeTruthy();
+  });
+
+  it('vuelve a presentar dentro de la sesión una tarjeta fallada', async () => {
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockRateCard.mockImplementation(async (input: any, grade: string) => ({
+      card: {
+        ...input,
+        scheduling: {
+          ...input.scheduling,
+          due: grade === 'again'
+            ? new Date(Date.now() + 60_000).toISOString()
+            : new Date(Date.now() + 86_400_000).toISOString(),
+        },
+      },
+      reviewId: `r-${grade}`,
+    }));
+
+    await renderCards();
+    await fireEvent.press(screen.getByText('Start review'));
+
+    await fireEvent.press(screen.getByText('Show answer'));
+    await fireEvent.press(screen.getByText('Again'));
+    await fireEvent.press(screen.getByText('Show answer'));
+    await fireEvent.press(screen.getByText('Good'));
+
+    expect(screen.queryByText('Session complete')).toBeNull();
+    expect(screen.getByText('你好')).toBeTruthy();
   });
 });

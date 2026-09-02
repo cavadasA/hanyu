@@ -4,6 +4,7 @@ import { useTheme } from '../theme/ThemeProvider';
 
 interface ButtonProps {
   label: string;
+  sublabel?: string;
   onPress: () => void;
   variant?: 'primary' | 'secondary' | 'outline';
   disabled?: boolean;
@@ -13,6 +14,7 @@ interface ButtonProps {
 
 export function Button({
   label,
+  sublabel,
   onPress,
   variant = 'primary',
   disabled = false,
@@ -49,7 +51,10 @@ export function Button({
       {busy ? (
         <ActivityIndicator size="small" color={spinnerColor} />
       ) : (
-        <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
+        <>
+          <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
+          {sublabel ? <Text style={[styles.sublabel, { color: colors.textMuted }]}>{sublabel}</Text> : null}
+        </>
       )}
     </Pressable>
   );
@@ -67,4 +72,5 @@ const styles = StyleSheet.create({
   },
   outline: { borderWidth: 1.5 },
   label: { fontSize: tokens.fontSize.md, fontWeight: '600' },
+  sublabel: { fontSize: tokens.fontSize.xs, marginTop: 2 },
 });

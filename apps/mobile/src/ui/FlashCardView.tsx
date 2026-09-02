@@ -11,6 +11,8 @@ import {
   View,
 } from 'react-native';
 import { resolveGloss, type DueCard } from '@hanyu/data';
+import type { Grade } from '@hanyu/domain';
+import { formatInterval } from '../lib/formatInterval';
 import { useSpeech } from '../audio/useSpeech';
 import { useSupportLanguage } from '../lib/useSupportLanguage';
 import { tokens } from '../theme/tokens';
@@ -27,9 +29,10 @@ interface FlashCardViewProps {
   mode: ReviewMode;
   revealed?: boolean;
   onReveal?: () => void;
-  onRate?: (quality: number) => void | Promise<void>;
+  onRate?: (grade: Grade) => void | Promise<void>;
+  intervals?: Record<Grade, number>;
   ratingDisabled?: boolean;
-  pendingQuality?: number | null;
+  pendingGrade?: Grade | null;
   /** Called while a swipe pan is active (true on grant, false on release/terminate). */
   onPanActiveChange?: (active: boolean) => void;
   /** Renders a static, non-interactive card sitting behind the active one in the stack. */
@@ -41,11 +44,11 @@ const PEEK_OFFSET = 14;
 
 type Variant = 'primary' | 'secondary' | 'outline';
 
-const RATINGS: { label: string; quality: number; variant: Variant }[] = [
-  { label: 'Again', quality: 1, variant: 'outline' },
-  { label: 'Hard', quality: 3, variant: 'secondary' },
-  { label: 'Good', quality: 4, variant: 'secondary' },
-  { label: 'Easy', quality: 5, variant: 'primary' },
+const RATINGS: { label: string; grade: Grade; variant: Variant }[] = [
+  { label: 'Again', grade: 'again', variant: 'outline' },
+  { label: 'Hard', grade: 'hard', variant: 'secondary' },
+  { label: 'Good', grade: 'good', variant: 'secondary' },
+  { label: 'Easy', grade: 'easy', variant: 'primary' },
 ];
 
 const SWIPE_THRESHOLD = 88;
@@ -58,8 +61,9 @@ export function FlashCardView({
   revealed = false,
   onReveal,
   onRate,
+  intervals,
   ratingDisabled = false,
-  pendingQuality = null,
+  pendingGrade = null,
   onPanActiveChange,
   preview = false,
 }: FlashCardViewProps) {
@@ -166,14 +170,14 @@ export function FlashCardView({
     return undefined;
   }, [card.id, card.hanzi, mode, revealed, speak, stop, preview]);
 
-  function finishSwipe(direction: -1 | 1, quality: number) {
+  function finishSwipe(direction: -1 | 1, grade: Grade) {
     Animated.timing(dragX, {
       toValue: direction * 420,
       duration: 160,
       easing: EASE,
       useNativeDriver: true,
     }).start(() => {
-      onRateRef.current?.(quality);
+      onRateRef.current?.(grade);
     });
   }
 
@@ -201,9 +205,9 @@ export function FlashCardView({
         }
 
         if (gesture.dx <= -SWIPE_THRESHOLD) {
-          finishSwipe(-1, 1);
+          finishSwipe(-1, 'again');
         } else if (gesture.dx >= SWIPE_THRESHOLD) {
-          finishSwipe(1, 4);
+          finishSwipe(1, 'good');
         } else {
           Animated.spring(dragX, { toValue: 0, useNativeDriver: true }).start();
         }
@@ -328,10 +332,11 @@ export function FlashCardView({
               <View key={rating.label} style={styles.rating}>
                 <Button
                   label={rating.label}
+                  sublabel={intervals ? formatInterval(intervals[rating.grade]) : undefined}
                   variant={rating.variant}
-                  onPress={() => onRate?.(rating.quality)}
+                  onPress={() => onRate?.(rating.grade)}
                   disabled={ratingDisabled}
-                  busy={pendingQuality === rating.quality}
+                  busy={pendingGrade === rating.grade}
                 />
               </View>
             ))}

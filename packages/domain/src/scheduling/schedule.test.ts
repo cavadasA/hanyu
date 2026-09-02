@@ -1,4 +1,11 @@
-import { applyReview, emptyState, previewIntervals, retrievability } from './schedule';
+import {
+  applyReview,
+  cardPhase,
+  emptyState,
+  isLeech,
+  previewIntervals,
+  retrievability,
+} from './schedule';
 import { schedulingParams } from './params';
 
 const params = schedulingParams({});
@@ -76,5 +83,30 @@ describe('retrievability', () => {
     expect(soon).toBeGreaterThan(later);
     expect(soon).toBeLessThanOrEqual(1);
     expect(later).toBeGreaterThanOrEqual(0);
+  });
+});
+
+describe('cardPhase', () => {
+  it('llama mastered a lo que se recuerda con holgura, no a lo repetido muchas veces', () => {
+    const solid = {
+      ...emptyState(now),
+      stability: 200,
+      difficulty: 3,
+      reps: 6,
+      state: 'review' as const,
+      last_review: now.toISOString(),
+      due: new Date('2027-01-01T00:00:00.000Z').toISOString(),
+    };
+    const shaky = { ...solid, stability: 5 };
+
+    expect(cardPhase(solid)).toBe('mastered');
+    expect(cardPhase(shaky)).toBe('review');
+  });
+});
+
+describe('isLeech', () => {
+  it('marca la tarjeta que se ha fallado una y otra vez', () => {
+    expect(isLeech({ ...emptyState(now), lapses: 8 })).toBe(true);
+    expect(isLeech({ ...emptyState(now), lapses: 3 })).toBe(false);
   });
 });

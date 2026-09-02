@@ -6,6 +6,7 @@
  */
 
 import type { ReviewEvent, ReviewSyncResult, VersionedCard } from '@hanyu/data';
+import { emptyState } from '@hanyu/domain';
 import { SYNC_BACKOFF_DELAYS_MS } from './backoff';
 import { ReviewSyncEngine } from './ReviewSyncEngine';
 import type { QueuedReviewEvent, ReviewStore } from './ReviewStore';
@@ -19,15 +20,8 @@ function makeCard(overrides: Partial<VersionedCard> = {}): VersionedCard {
     id: 'card-1',
     user_id: 'user-test',
     word_id: 1,
-    ease_factor: 2.5,
-    interval: 1,
-    interval_days: 1,
-    repetitions: 0,
-    next_review: '2026-01-01T00:00:00.000Z',
-    next_review_at: '2026-01-01T00:00:00.000Z',
-    last_review: null,
-    last_reviewed_at: null,
-    status: 'new',
+    skill: 'recognition',
+    scheduling: emptyState(new Date('2026-07-31T10:00:00.000Z')),
     version: 1,
     ...overrides,
   };
@@ -36,18 +30,21 @@ function makeCard(overrides: Partial<VersionedCard> = {}): VersionedCard {
 let reviewSeq = 0;
 
 function makeQueuedEvent(
-  overrides: Partial<ReviewEvent> & { queue_sequence?: number; state?: QueuedReviewEvent['state'] } = {},
+  overrides: Partial<ReviewEvent> & { queue_sequence?: number; queue_state?: QueuedReviewEvent['queue_state'] } = {},
 ): QueuedReviewEvent {
   reviewSeq += 1;
   return {
     review_id: overrides.review_id ?? `rev-${reviewSeq}`,
     card_id: overrides.card_id ?? 'card-1',
-    quality: overrides.quality ?? 4,
+    grade: overrides.grade ?? 4,
+    skill: overrides.skill ?? 'recognition',
     time_ms: overrides.time_ms ?? 1000,
     reviewed_at: overrides.reviewed_at ?? '2026-07-31T10:00:00.000Z',
     expected_version: overrides.expected_version ?? 1,
+    state: overrides.state ?? emptyState(new Date('2026-07-31T10:00:00.000Z')),
+    prior: overrides.prior ?? emptyState(new Date('2026-07-31T10:00:00.000Z')),
     queue_sequence: overrides.queue_sequence ?? reviewSeq,
-    state: overrides.state ?? 'pending',
+    queue_state: overrides.queue_state ?? 'pending',
     attempt_count: 0,
     last_error: null,
   };
@@ -56,11 +53,14 @@ function makeQueuedEvent(
 function toReviewEvent(ev: QueuedReviewEvent): ReviewEvent {
   return {
     card_id: ev.card_id,
-    quality: ev.quality,
+    grade: ev.grade,
+    skill: ev.skill,
     time_ms: ev.time_ms,
     review_id: ev.review_id,
     reviewed_at: ev.reviewed_at,
     expected_version: ev.expected_version,
+    state: ev.state,
+    prior: ev.prior,
   };
 }
 
@@ -401,7 +401,7 @@ describe('ReviewSyncEngine – conflict', () => {
 
 describe('ReviewSyncEngine – skips non-pending', () => {
   test('does not submit permanent_error events', async () => {
-    const ev = makeQueuedEvent({ state: 'permanent_error' });
+    const ev = makeQueuedEvent({ queue_state: 'permanent_error' });
     const store = makeFakeStore({
       listPending: jest.fn().mockResolvedValue([ev]),
       pendingCount: jest.fn().mockResolvedValue(1),

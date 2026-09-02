@@ -26,7 +26,6 @@ import {
   getDueCards,
   getFlashcardStats,
   revertReview,
-  reviewCard,
   reviewCardEvent,
 } from './repositories/flashcards';
 import { checkExercise, generateExercise, getExerciseHistory } from './repositories/exercises';
@@ -38,7 +37,7 @@ import {
   getReadings,
 } from './repositories/readings';
 import { getSettings, updateSettings } from './repositories/settings';
-import { getSkillStates, upsertSkillState } from './repositories/skills';
+import { getLeechStates, getSkillStates, setSkillSuspended, upsertSkillState } from './repositories/skills';
 import { getDashboard, getStreak, logTime } from './repositories/stats';
 import { getToday } from './repositories/today';
 import { getWord, getWords } from './repositories/words';
@@ -83,8 +82,6 @@ export function createHanyuData(config: HanyuDataConfig) {
     flashcards: {
       getDueCards: (limit = 50, deckId: string | null = null) => getDueCards(limit, client, deckId),
       getCard: (id: string) => getCard(id, client),
-      reviewCard: (id: string, quality: number, timeMs: number | null) =>
-        reviewCard(id, quality, timeMs, client),
       reviewCardEvent: (event: Parameters<typeof reviewCardEvent>[0]) =>
         reviewCardEvent(event, client),
       revertReview: (reviewId: string) => revertReview(reviewId, client),
@@ -106,8 +103,12 @@ export function createHanyuData(config: HanyuDataConfig) {
     skills: {
       getSkillStates: (params: Parameters<typeof getSkillStates>[0]) =>
         getSkillStates(params, client),
+      getLeechStates: (skill?: Parameters<typeof getLeechStates>[0]) =>
+        getLeechStates(skill, client),
       upsertSkillState: (input: Parameters<typeof upsertSkillState>[0]) =>
         upsertSkillState(input, client),
+      setSkillSuspended: (input: Parameters<typeof setSkillSuspended>[0]) =>
+        setSkillSuspended(input, client),
     },
     readings: {
       getReadings: (params: Parameters<typeof getReadings>[0] = {}) => getReadings(params, client),

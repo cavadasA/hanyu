@@ -20,6 +20,7 @@ import { ReviewStoreImpl } from './ReviewStore';
 import type { DbHandle, ReviewStore } from './ReviewStore';
 import type { VersionedCard, ReviewEvent } from '@hanyu/data';
 import { deriveDbName } from './dbName';
+import { emptyState, type Grade } from '@hanyu/domain';
 
 // ---------------------------------------------------------------------------
 // Test adapter: wraps a synchronous node:sqlite DatabaseSync instance
@@ -74,15 +75,8 @@ function makeCard(overrides: Partial<VersionedCard> = {}): VersionedCard {
     id,
     user_id: 'user-test',
     word_id: cardSeq,
-    ease_factor: 2.5,
-    interval: 1,
-    interval_days: 1,
-    repetitions: 0,
-    next_review: '2026-01-01T00:00:00.000Z',
-    next_review_at: '2026-01-01T00:00:00.000Z',
-    last_review: null,
-    last_reviewed_at: null,
-    status: 'new',
+    skill: 'recognition',
+    scheduling: emptyState(new Date('2026-07-31T10:00:00.000Z')),
     version: 1,
     ...overrides,
   };
@@ -90,17 +84,23 @@ function makeCard(overrides: Partial<VersionedCard> = {}): VersionedCard {
 
 function makeEvent(
   cardId: string,
-  quality: number,
+  grade: Grade | number,
   overrides: Partial<ReviewEvent> = {},
 ): ReviewEvent {
   reviewSeq += 1;
   return {
     review_id: `rev-${reviewSeq}`,
     card_id: cardId,
-    quality,
+    grade:
+      typeof grade === 'number'
+        ? (grade as 1 | 2 | 3 | 4)
+        : ({ again: 1, hard: 2, good: 3, easy: 4 }[grade] as 1 | 2 | 3 | 4),
+    skill: 'recognition',
     time_ms: 1000,
     reviewed_at: '2026-07-31T10:00:00.000Z',
     expected_version: 1,
+    state: emptyState(new Date('2026-07-31T10:00:00.000Z')),
+    prior: emptyState(new Date('2026-07-31T10:00:00.000Z')),
     ...overrides,
   };
 }
@@ -147,7 +147,7 @@ describe('deriveDbName', () => {
 });
 
 describe('schema migration', () => {
-  test('fresh open sets PRAGMA user_version to 1 and creates all three tables', async () => {
+  test('fresh open sets PRAGMA user_version to 2 and creates all three tables', async () => {
     const nativeDb = new DatabaseSync(':memory:');
     const handle = makeTestHandle(nativeDb);
 
@@ -159,7 +159,7 @@ describe('schema migration', () => {
 
     // After migration
     const after = await handle.getFirstAsync<{ user_version: number }>('PRAGMA user_version', []);
-    expect(after?.user_version).toBe(1);
+    expect(after?.user_version).toBe(2);
 
     // All three tables exist
     const tables = await handle.getAllAsync<{ name: string }>(
@@ -176,14 +176,47 @@ describe('schema migration', () => {
     await applySchema(handle);
     await expect(applySchema(handle)).resolves.not.toThrow();
     const row = await handle.getFirstAsync<{ user_version: number }>('PRAGMA user_version', []);
-    expect(row?.user_version).toBe(1);
+    expect(row?.user_version).toBe(2);
+  });
+
+  test('migrates a v1 queue from quality to FSRS grade', async () => {
+    const nativeDb = new DatabaseSync(':memory:');
+    const handle = makeTestHandle(nativeDb);
+    await handle.execAsync(`
+      create table pending_reviews (
+        review_id text primary key,
+        card_id text not null,
+        quality integer not null,
+        time_ms integer,
+        reviewed_at text not null,
+        expected_version integer not null,
+        queue_sequence integer not null unique,
+        state text not null,
+        attempt_count integer not null default 0,
+        last_error text
+      );
+      insert into pending_reviews values
+        ('r-v1', 'card-1', 5, 1000, '2026-07-31T10:00:00.000Z', 1, 1, 'pending', 0, null);
+      pragma user_version = 1;
+    `);
+
+    await applySchema(handle);
+
+    const columns = await handle.getAllAsync<{ name: string }>('pragma table_info(pending_reviews)', []);
+    expect(columns.map(column => column.name)).toContain('grade');
+    expect(columns.map(column => column.name)).not.toContain('quality');
+    const row = await handle.getFirstAsync<{ grade: number; skill: string }>(
+      'select grade, skill from pending_reviews where review_id = ?',
+      ['r-v1'],
+    );
+    expect(row).toEqual({ grade: 4, skill: 'recognition' });
   });
 });
 
 describe('cacheCards', () => {
   test('upserts cards into cached_cards', async () => {
     const { store } = await createStore();
-    const card = makeCard({ next_review_at: '2026-08-01T00:00:00.000Z' });
+    const card = makeCard({ scheduling: { ...makeCard().scheduling, due: '2026-08-01T00:00:00.000Z' } });
     await store.cacheCards([card]);
 
     const due = await store.getDueProjectedCards('2026-08-02T00:00:00.000Z', 10);
@@ -193,35 +226,31 @@ describe('cacheCards', () => {
 
   test('updates an existing card on second cacheCards call', async () => {
     const { store } = await createStore();
-    const card = makeCard({ next_review_at: '2026-08-01T00:00:00.000Z' });
+    const card = makeCard({ scheduling: { ...makeCard().scheduling, due: '2026-08-01T00:00:00.000Z' } });
     await store.cacheCards([card]);
 
-    const updated = { ...card, version: 2, interval_days: 7 };
+    const updated = { ...card, version: 2, scheduling: { ...card.scheduling, scheduled_days: 7 } };
     await store.cacheCards([updated]);
 
     const due = await store.getDueProjectedCards('2026-08-02T00:00:00.000Z', 10);
     expect(due).toHaveLength(1);
-    expect(due[0].interval_days).toBe(7);
+    expect(due[0].scheduling.scheduled_days).toBe(7);
   });
 
   test('preserves pending-event projection when caching a new server card', async () => {
     const { store, handle } = await createStore();
     const card = makeCard({
-      next_review_at: '2026-07-30T00:00:00.000Z',
-      ease_factor: 2.5,
-      interval_days: 1,
-      repetitions: 0,
-      status: 'new',
+      scheduling: { ...makeCard().scheduling, due: '2026-07-30T00:00:00.000Z' },
     });
 
     // Cache the initial server card
     await store.cacheCards([card]);
 
-    // Enqueue a quality-5 review so there is a pending event
-    const event = makeEvent(card.id, 5);
+    // Enqueue an Easy review so there is a pending event
+    const event = makeEvent(card.id, 'easy');
     const projectedAfterReview = makeCard({
       id: card.id,
-      next_review_at: '2099-12-31T00:00:00.000Z', // far future after SM2
+      scheduling: { ...card.scheduling, due: '2099-12-31T00:00:00.000Z' },
     });
     await store.enqueueAndProject(event, projectedAfterReview);
 
@@ -234,8 +263,8 @@ describe('cacheCards', () => {
     const due = await store.getDueProjectedCards('2099-12-31T00:00:00.000Z', 10);
     const projectedCard = due.find(c => c.id === card.id);
     expect(projectedCard).toBeDefined();
-    // The projection must be > serverRefresh.next_review_at (pending event pushed it forward)
-    expect(projectedCard!.next_review_at > serverRefresh.next_review_at).toBe(true);
+    // The projection must be > serverRefresh.scheduling.due (pending event pushed it forward)
+    expect(projectedCard!.scheduling.due > serverRefresh.scheduling.due).toBe(true);
 
     // server_version and server_json must reflect the NEW server card (version 2),
     // not the original version 1 or the local projection.
@@ -246,8 +275,8 @@ describe('cacheCards', () => {
     expect(row?.server_version).toBe(serverRefresh.version); // 2
     const serverData = JSON.parse(row!.server_json) as VersionedCard;
     expect(serverData.version).toBe(serverRefresh.version); // 2
-    // server_json must NOT contain the locally-projected next_review_at
-    expect(serverData.next_review_at).toBe(serverRefresh.next_review_at);
+    // server_json must NOT contain the locally-projected due time
+    expect(serverData.scheduling.due).toBe(serverRefresh.scheduling.due);
   });
 });
 
@@ -257,21 +286,21 @@ describe('enqueueAndProject', () => {
     const card = makeCard();
     await store.cacheCards([card]);
 
-    const event = makeEvent(card.id, 4);
-    const projected = { ...card, interval_days: 6, next_review_at: '2099-01-01T00:00:00.000Z' };
+    const event = makeEvent(card.id, 'hard');
+    const projected = { ...card, scheduling: { ...card.scheduling, due: '2099-01-01T00:00:00.000Z' } };
     await store.enqueueAndProject(event, projected);
 
     expect(await store.pendingCount()).toBe(1);
     const due = await store.getDueProjectedCards('2099-01-02T00:00:00.000Z', 10);
-    expect(due[0].interval_days).toBe(6);
+    expect(due[0].scheduling.due).toBe('2099-01-01T00:00:00.000Z');
   });
 
   test('throws when the card has not been cached yet (never fabricates server state)', async () => {
     const { store } = await createStore();
     const card = makeCard();
     // Deliberately no cacheCards call
-    const event = makeEvent(card.id, 4);
-    const projected = { ...card, interval_days: 6 };
+    const event = makeEvent(card.id, 'hard');
+    const projected = { ...card, scheduling: { ...card.scheduling, scheduled_days: 6 } };
 
     await expect(store.enqueueAndProject(event, projected)).rejects.toThrow(
       /not in cache|cacheCards/i,
@@ -283,21 +312,21 @@ describe('enqueueAndProject', () => {
 
   test('rolls back both tables atomically on constraint violation', async () => {
     const { store } = await createStore();
-    const card = makeCard({ next_review_at: '2026-07-30T00:00:00.000Z', interval_days: 1 });
+    const card = makeCard({ scheduling: { ...makeCard().scheduling, due: '2026-07-30T00:00:00.000Z' } });
     await store.cacheCards([card]);
 
-    // quality = 10 violates the CHECK constraint (quality between 0 and 5)
+    // grade = 10 violates the CHECK constraint (grade between 1 and 4)
     const badEvent = makeEvent(card.id, 10);
-    const projected = { ...card, interval_days: 99 };
+    const projected = { ...card, scheduling: { ...card.scheduling, scheduled_days: 99 } };
 
     await expect(store.enqueueAndProject(badEvent, projected)).rejects.toThrow();
 
     // pending_reviews must be empty (no partial insert)
     expect(await store.pendingCount()).toBe(0);
 
-    // cached_cards projection must not have been updated to interval_days=99
+    // cached_cards projection must not have been updated to scheduled_days=99
     const due = await store.getDueProjectedCards('2099-01-01T00:00:00.000Z', 10);
-    expect(due[0].interval_days).toBe(1);
+    expect(due[0].scheduling.scheduled_days).toBe(0);
   });
 });
 
@@ -307,12 +336,12 @@ describe('listPending', () => {
     const card = makeCard();
     await store.cacheCards([card]);
 
-    const e1 = makeEvent(card.id, 3);
-    const p1 = { ...card, interval_days: 1 };
+    const e1 = makeEvent(card.id, 'good');
+    const p1 = { ...card, scheduling: { ...card.scheduling, scheduled_days: 1 } };
     await store.enqueueAndProject(e1, p1);
 
-    const e2 = makeEvent(card.id, 5);
-    const p2 = { ...card, interval_days: 6 };
+    const e2 = makeEvent(card.id, 'easy');
+    const p2 = { ...card, scheduling: { ...card.scheduling, scheduled_days: 6 } };
     await store.enqueueAndProject(e2, p2);
 
     const pending = await store.listPending();
@@ -326,62 +355,101 @@ describe('listPending', () => {
     const { store } = await createStore();
     const card = makeCard();
     await store.cacheCards([card]);
-    const event = makeEvent(card.id, 4);
+    const event = makeEvent(card.id, 'hard');
     await store.enqueueAndProject(event, card);
 
     const [item] = await store.listPending();
-    expect(item.state).toBe('pending');
+    expect(item.queue_state).toBe('pending');
     expect(item.attempt_count).toBe(0);
     expect(item.last_error).toBeNull();
   });
 });
 
 describe('acknowledge', () => {
-  test('removes acknowledged event and updates cached card to server state', async () => {
+  test('reprojects consecutive failed reviews with FSRS without losing the lapse', async () => {
     const { store } = await createStore();
-    const card = makeCard({ interval_days: 1 });
+    const card = makeCard({
+      scheduling: {
+        ...makeCard().scheduling,
+        difficulty: 5,
+        stability: 30,
+        reps: 8,
+        scheduled_days: 30,
+        elapsed_days: 30,
+        state: 'review',
+        due: '2026-01-01T00:00:00.000Z',
+        last_review: '2025-12-01T00:00:00.000Z',
+      },
+    });
     await store.cacheCards([card]);
 
-    const event = makeEvent(card.id, 5);
-    const projected = { ...card, interval_days: 6 };
+    await store.enqueueAndProject(
+      makeEvent(card.id, 'again', { review_id: 'again-1', reviewed_at: '2026-07-31T10:00:00.000Z' }),
+      card,
+    );
+    await store.enqueueAndProject(
+      makeEvent(card.id, 'again', { review_id: 'again-2', reviewed_at: '2026-07-31T10:01:00.000Z' }),
+      card,
+    );
+
+    await store.cacheCards([{ ...card, version: 2 }]);
+
+    const projected = await store.getDueProjectedCards('2099-01-01T00:00:00.000Z', 10);
+    // FSRS counts the transition from Review to Relearning as a lapse; a
+    // second Again while already relearning keeps that count at one.
+    expect(projected[0].scheduling.lapses).toBe(1);
+  });
+
+  test('removes acknowledged event and updates cached card to server state', async () => {
+    const { store } = await createStore();
+    const card = makeCard();
+    await store.cacheCards([card]);
+
+    const event = makeEvent(card.id, 'easy');
+    const projected = { ...card, scheduling: { ...card.scheduling, scheduled_days: 6 } };
     await store.enqueueAndProject(event, projected);
 
-    const serverCard = { ...card, version: 2, interval_days: 6 };
+    const serverCard = { ...card, version: 2, scheduling: { ...card.scheduling, scheduled_days: 6 } };
     await store.acknowledge(event.review_id, serverCard);
 
     expect(await store.pendingCount()).toBe(0);
     const due = await store.getDueProjectedCards('2099-01-01T00:00:00.000Z', 10);
-    expect(due[0].interval_days).toBe(6);
+    expect(due[0].scheduling.scheduled_days).toBe(6);
     expect(due[0].version).toBe(2);
   });
 
   test('replays remaining pending events on top of server card (no regression)', async () => {
     const { store } = await createStore();
     const card = makeCard({
-      next_review_at: '2026-01-01T00:00:00.000Z',
-      ease_factor: 2.5,
-      interval_days: 1,
-      repetitions: 0,
-      status: 'new',
+      scheduling: { ...makeCard().scheduling, due: '2026-01-01T00:00:00.000Z' },
     });
     await store.cacheCards([card]);
 
     // Two back-to-back reviews
-    const e1 = makeEvent(card.id, 5, { reviewed_at: '2026-07-31T10:00:00.000Z' });
-    const p1 = { ...card, interval_days: 1 }; // interim projection
+    const e1 = makeEvent(card.id, 'easy', { reviewed_at: '2026-07-31T10:00:00.000Z' });
+    const p1 = { ...card, scheduling: { ...card.scheduling, due: '2026-08-08T10:00:00.000Z' } }; // interim projection
     await store.enqueueAndProject(e1, p1);
 
-    const e2 = makeEvent(card.id, 4, { reviewed_at: '2026-07-31T11:00:00.000Z', expected_version: 2 });
-    const p2 = { ...card, interval_days: 6 }; // interim projection
+    const e2 = makeEvent(card.id, 'hard', { reviewed_at: '2026-07-31T11:00:00.000Z', expected_version: 2 });
+    const p2 = { ...card, scheduling: { ...card.scheduling, due: '2026-08-01T11:00:00.000Z' } }; // interim projection
     await store.enqueueAndProject(e2, p2);
 
     expect(await store.pendingCount()).toBe(2);
 
     // Server acknowledges e1 with version 2
-    const serverCardV2 = { ...card, version: 2, interval_days: 1, repetitions: 1, status: 'learning' as const };
+    const serverCardV2 = {
+      ...card,
+      version: 2,
+      scheduling: {
+        ...card.scheduling,
+        reps: 1,
+        state: 'learning' as const,
+        due: '2026-07-31T10:00:00.000Z',
+      },
+    };
     await store.acknowledge(e1.review_id, serverCardV2);
 
-    // e2 must still be pending; projection = applySm2(serverCardV2, e2)
+    // e2 must still be pending; projection = applyReview(serverCardV2, e2)
     expect(await store.pendingCount()).toBe(1);
     const remaining = await store.listPending();
     expect(remaining[0].review_id).toBe(e2.review_id);
@@ -391,12 +459,8 @@ describe('acknowledge', () => {
     const due = await store.getDueProjectedCards('2099-01-01T00:00:00.000Z', 10);
     const proj = due.find(c => c.id === card.id);
     expect(proj).toBeDefined();
-    expect(proj!.interval_days).toBeGreaterThan(serverCardV2.interval_days);
-
-    // Mirrored field pairs must stay in sync after replay.
-    expect(proj!.interval).toBe(proj!.interval_days);
-    expect(proj!.next_review).toBe(proj!.next_review_at);
-    expect(proj!.last_review).toBe(proj!.last_reviewed_at);
+    expect(proj!.scheduling.due > serverCardV2.scheduling.due).toBe(true);
+    expect(proj!.scheduling.lapses).toBe(0);
   });
 });
 
@@ -411,7 +475,7 @@ describe('markPermanentError', () => {
     await store.markPermanentError(event.review_id, 'version conflict');
 
     const [item] = await store.listPending();
-    expect(item.state).toBe('permanent_error');
+    expect(item.queue_state).toBe('permanent_error');
     expect(item.last_error).toBe('version conflict');
     expect(item.attempt_count).toBe(1);
   });
@@ -419,19 +483,15 @@ describe('markPermanentError', () => {
   test('permanent_error events are excluded from projection replay in cacheCards', async () => {
     const { store } = await createStore();
     const card = makeCard({
-      ease_factor: 2.5,
-      interval_days: 1,
-      status: 'new',
-      next_review_at: '2026-01-01T00:00:00.000Z',
+      scheduling: { ...makeCard().scheduling, due: '2026-01-01T00:00:00.000Z' },
     });
     await store.cacheCards([card]);
 
     // Enqueue and mark as permanent_error so it should never affect projection again.
-    const event = makeEvent(card.id, 5);
+    const event = makeEvent(card.id, 'easy');
     await store.enqueueAndProject(event, {
       ...card,
-      interval_days: 99,
-      next_review_at: '2099-01-01T00:00:00.000Z',
+      scheduling: { ...card.scheduling, scheduled_days: 99, due: '2099-01-01T00:00:00.000Z' },
     });
     await store.markPermanentError(event.review_id, 'server rejection');
 
@@ -442,9 +502,8 @@ describe('markPermanentError', () => {
     const due = await store.getDueProjectedCards('2099-01-01T00:00:00.000Z', 10);
     const projectedCard = due.find(c => c.id === card.id);
     expect(projectedCard).toBeDefined();
-    // Projection equals serverRefresh (no SM2 applied from the errored event)
-    expect(projectedCard!.interval_days).toBe(serverRefresh.interval_days);
-    expect(projectedCard!.next_review_at).toBe(serverRefresh.next_review_at);
+    // Projection equals serverRefresh (no FSRS applied from the errored event)
+    expect(projectedCard!.scheduling).toEqual(serverRefresh.scheduling);
   });
 });
 
@@ -454,19 +513,17 @@ describe('discardPending', () => {
     const card = makeCard();
     await store.cacheCards([card]);
 
-    const event = makeEvent(card.id, 5, { review_id: 'r1', expected_version: card.version });
+    const event = makeEvent(card.id, 'easy', { review_id: 'r1', expected_version: card.version });
     await store.enqueueAndProject(event, {
       ...card,
-      repetitions: card.repetitions + 1,
-      interval: 6,
-      interval_days: 6,
+      scheduling: { ...card.scheduling, reps: card.scheduling.reps + 1, scheduled_days: 6 },
     });
 
     const restored = await store.discardPending('r1');
 
     expect(restored).not.toBeNull();
-    expect(restored!.repetitions).toBe(card.repetitions);
-    expect(restored!.interval_days).toBe(card.interval_days);
+    expect(restored!.scheduling.reps).toBe(card.scheduling.reps);
+    expect(restored!.scheduling.scheduled_days).toBe(card.scheduling.scheduled_days);
     expect(await store.pendingCount()).toBe(0);
   });
 
@@ -477,12 +534,12 @@ describe('discardPending', () => {
     await store.cacheCards([first, second]);
 
     await store.enqueueAndProject(
-      makeEvent(first.id, 5, { review_id: 'r1', expected_version: first.version }),
-      { ...first, repetitions: first.repetitions + 1 },
+      makeEvent(first.id, 'easy', { review_id: 'r1', expected_version: first.version }),
+      { ...first, scheduling: { ...first.scheduling, reps: first.scheduling.reps + 1 } },
     );
     await store.enqueueAndProject(
-      makeEvent(second.id, 3, { review_id: 'r2', expected_version: second.version }),
-      { ...second, repetitions: second.repetitions + 1 },
+      makeEvent(second.id, 'good', { review_id: 'r2', expected_version: second.version }),
+      { ...second, scheduling: { ...second.scheduling, reps: second.scheduling.reps + 1 } },
     );
 
     await store.discardPending('r1');
@@ -502,13 +559,23 @@ describe('discardPending', () => {
 describe('rebase', () => {
   test('updates cached card and rewrites expected_version on pending events', async () => {
     const { store } = await createStore();
-    const card = makeCard({ version: 1, interval_days: 1 });
+    const card = makeCard({
+      version: 1,
+      scheduling: { ...makeCard().scheduling, scheduled_days: 1 },
+    });
     await store.cacheCards([card]);
 
-    const event = makeEvent(card.id, 5, { expected_version: 1 });
-    await store.enqueueAndProject(event, { ...card, interval_days: 6 });
+    const event = makeEvent(card.id, 'easy', { expected_version: 1 });
+    await store.enqueueAndProject(event, {
+      ...card,
+      scheduling: { ...card.scheduling, scheduled_days: 6 },
+    });
 
-    const rebasedCard = { ...card, version: 3, interval_days: 10 };
+    const rebasedCard = {
+      ...card,
+      version: 3,
+      scheduling: { ...card.scheduling, scheduled_days: 10 },
+    };
     const pending = await store.listPending();
     const rebasedEvents = pending.map(e => ({ ...e, expected_version: 3 }));
 
@@ -517,7 +584,7 @@ describe('rebase', () => {
     // cached_cards must reflect the rebased card
     const due = await store.getDueProjectedCards('2099-01-01T00:00:00.000Z', 10);
     expect(due[0].version).toBe(3);
-    expect(due[0].interval_days).toBe(10);
+    expect(due[0].scheduling.scheduled_days).toBe(10);
 
     // pending_reviews must have updated expected_version
     const afterRebase = await store.listPending();

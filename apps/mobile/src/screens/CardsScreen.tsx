@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { randomUUID } from 'expo-crypto';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { toUserMessage, type DueCard, type FlashcardStats } from '@hanyu/data';
+import { cardPhase, previewIntervals, schedulingParams, type Grade } from '@hanyu/domain';
 import { getData } from '../lib/data';
 import {
   clearReviewSession,
@@ -32,13 +33,15 @@ const MODE_OPTIONS: SegmentedOption<ReviewMode>[] = MODES.map((value) => ({
   label: value[0].toUpperCase() + value.slice(1),
 }));
 
+const INTRA_SESSION_HORIZON_MS = 30 * 60 * 1000;
+
 type ScreenPhase = 'pre-session' | 'reviewing' | 'complete';
 type SessionSize = 'quick' | 'all';
 
 interface UndoEntry {
   card: DueCard;
   previousIndex: number;
-  quality: number;
+  grade: Grade;
   reviewId: string;
 }
 
@@ -69,13 +72,14 @@ export default function CardsScreen() {
   const [reviewed, setReviewed] = useState(0);
   const [loading, setLoading] = useState(true);
   const [reviewing, setReviewing] = useState(false);
-  const [pendingQuality, setPendingQuality] = useState<number | null>(null);
-  const [retryQuality, setRetryQuality] = useState<number | null>(null);
+  const [pendingGrade, setPendingGrade] = useState<Grade | null>(null);
+  const [retryGrade, setRetryGrade] = useState<Grade | null>(null);
   const [error, setError] = useState('');
   const [swiping, setSwiping] = useState(false);
   const [undoStack, setUndoStack] = useState<UndoEntry[]>([]);
   const [stats, setStats] = useState<SessionStats>({ reviewed: 0, correct: 0, again: 0 });
   const [resumable, setResumable] = useState<ReviewSessionSnapshot | null>(null);
+  const [requestRetention, setRequestRetention] = useState(0.9);
 
   const timer = useSessionTimer();
   const sessionId = useRef<string | null>(null);
@@ -101,13 +105,19 @@ export default function CardsScreen() {
       setReviewed(0);
       setRevealed(false);
       setPhase('pre-session');
-      setRetryQuality(null);
-      setPendingQuality(null);
+      setRetryGrade(null);
+      setPendingGrade(null);
       setSwiping(false);
       setUndoStack([]);
       setStats({ reviewed: 0, correct: 0, again: 0 });
 
       const data = getData();
+      try {
+        const settings = await data.settings.getSettings();
+        setRequestRetention(Number(settings.request_retention ?? 0.9));
+      } catch {
+        // Scheduling previews use the default when settings are unavailable.
+      }
       try {
         const dashboard = await data.stats.getDashboard();
         setByStatus(dashboard.cards?.by_status ?? {});
@@ -214,57 +224,67 @@ export default function CardsScreen() {
     setReviewed((prev) => Math.max(0, prev - 1));
     setStats((prev) => ({
       reviewed: Math.max(0, prev.reviewed - 1),
-      correct: lastEntry.quality >= 3 ? Math.max(0, prev.correct - 1) : prev.correct,
-      again: lastEntry.quality < 3 ? Math.max(0, prev.again - 1) : prev.again,
+      correct: lastEntry.grade === 'good' || lastEntry.grade === 'easy'
+        ? Math.max(0, prev.correct - 1)
+        : prev.correct,
+      again: lastEntry.grade === 'again'
+        ? Math.max(0, prev.again - 1)
+        : prev.again,
     }));
     setRevealed(false);
     cardStartedAt.current = Date.now();
   }
 
-  async function rate(quality: number) {
+  async function rate(grade: Grade) {
     const current = activeCards[index];
     if (!current || reviewing || !service) {
       return;
     }
 
     setReviewing(true);
-    setPendingQuality(quality);
+    setPendingGrade(grade);
     setError('');
 
     let reviewId: string;
+    let ratedCard: DueCard;
     try {
       const result = await service.rateCard(
-        current as never,
-        quality,
+        current,
+        grade,
         Date.now() - cardStartedAt.current,
       );
       reviewId = result.reviewId;
+      ratedCard = result.card;
     } catch (caught) {
       setError(toUserMessage(caught));
-      setRetryQuality(quality);
+      setRetryGrade(grade);
       setReviewing(false);
-      setPendingQuality(null);
+      setPendingGrade(null);
       return;
     }
 
-    setRetryQuality(null);
+    setRetryGrade(null);
     setReviewing(false);
-    setPendingQuality(null);
+    setPendingGrade(null);
 
     const nextReviewed = reviewed + 1;
     setReviewed(nextReviewed);
     setUndoStack((prev) => [
       ...prev.slice(-4),
-      { card: current, previousIndex: index, quality, reviewId },
+      { card: current, previousIndex: index, grade, reviewId },
     ]);
     const nextStats = {
       reviewed: stats.reviewed + 1,
-      correct: stats.correct + (quality >= 3 ? 1 : 0),
-      again: stats.again + (quality < 3 ? 1 : 0),
+      correct: stats.correct + (grade === 'good' || grade === 'easy' ? 1 : 0),
+      again: stats.again + (grade === 'again' ? 1 : 0),
     };
     setStats(nextStats);
 
-    if (index + 1 >= activeCards.length) {
+    const dueAt = Date.parse(ratedCard.scheduling.due);
+    const requeueIntraday = Number.isFinite(dueAt) && dueAt - Date.now() < INTRA_SESSION_HORIZON_MS;
+    const nextCards = requeueIntraday ? [...activeCards, ratedCard] : activeCards;
+
+    if (index + 1 >= nextCards.length) {
       timer.stop();
       void clearReviewSession();
       setPhase('complete');
@@ -279,6 +299,7 @@ export default function CardsScreen() {
     }
 
     const nextIndex = index + 1;
+    setActiveCards(nextCards);
     setIndex(nextIndex);
     setRevealed(false);
     cardStartedAt.current = Date.now();
@@ -286,7 +307,7 @@ export default function CardsScreen() {
     void saveReviewSession({
       session_id: sessionId.current ?? randomUUID(),
       deck_id: focusedDeckId,
-      card_ids: activeCards.map((card) => card.id),
+      card_ids: nextCards.map((card) => card.id),
       index: nextIndex,
       mode,
       started_at: sessionStartedAt.current,
@@ -506,25 +527,26 @@ export default function CardsScreen() {
       {error ? (
         <ErrorBanner
           message={error}
-          onRetry={retryQuality === null ? load : () => rate(retryQuality)}
+          onRetry={retryGrade === null ? load : () => rate(retryGrade)}
         />
       ) : null}
 
       {current ? (
         <>
           <View style={styles.cardHeaderRow}>
-            <CardStatusBadge status={current.status} />
+            <CardStatusBadge status={cardPhase(current.scheduling)} />
           </View>
           <View style={styles.stack}>
             {next ? <FlashCardView key={next.id} preview card={next} mode={mode} /> : null}
             <FlashCardView
               card={current}
               mode={mode}
+              intervals={previewIntervals(current.scheduling, new Date(), schedulingParams({ request_retention: requestRetention }))}
               revealed={revealed}
               onReveal={() => setRevealed(true)}
               onRate={rate}
               ratingDisabled={reviewing}
-              pendingQuality={pendingQuality}
+              pendingGrade={pendingGrade}
               onPanActiveChange={setSwiping}
             />
           </View>

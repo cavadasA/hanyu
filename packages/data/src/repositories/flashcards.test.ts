@@ -46,12 +46,21 @@ const revertCardRow = {
   id: 'card-1',
   user_id: 'u1',
   word_id: 7,
-  ease_factor: 2.5,
-  interval_days: 1,
-  repetitions: 0,
+  version: 3,
+};
+
+const revertStateRow = {
+  skill: 'recognition',
+  difficulty: 2.5,
+  stability: 1,
+  reps: 0,
+  lapses: 0,
+  learning_steps: 0,
+  scheduled_days: 0,
+  elapsed_days: 0,
+  fsrs_state: 'new',
   next_review_at: '2026-09-02T00:00:00.000Z',
   last_reviewed_at: null,
-  status: 'new',
   version: 3,
 };
 
@@ -74,6 +83,22 @@ function revertClient(outcome: string) {
       };
     }
 
+    if (table === 'learner_skill_state') {
+      return {
+        select: vi.fn(() => ({
+          eq: vi.fn(() => ({
+            eq: vi.fn(() => ({
+              eq: vi.fn(() => ({
+                eq: vi.fn(() => ({
+                  maybeSingle: vi.fn().mockResolvedValue({ data: revertStateRow, error: null }),
+                })),
+              })),
+            })),
+          })),
+        })),
+      };
+    }
+
     return { select: vi.fn() };
   });
 
@@ -85,19 +110,70 @@ function revertClient(outcome: string) {
 }
 
 describe('getDueCards', () => {
+  it('maps the skill-state scheduling fields into one scheduling object', async () => {
+    const client = clientFor({
+      rpcRows: [
+        {
+          card_id: 'c-fsrs',
+          user_id: 'u1',
+          word_id: 5,
+          skill: 'recognition',
+          difficulty: 4.2,
+          stability: 8.5,
+          reps: 3,
+          lapses: 1,
+          learning_steps: 0,
+          scheduled_days: 8,
+          elapsed_days: 3,
+          fsrs_state: 'review',
+          next_review_at: '2026-09-02T09:00:00.000Z',
+          last_reviewed_at: '2026-08-30T09:00:00.000Z',
+          version: 4,
+        },
+      ],
+      wordRows: [{ id: 5, hanzi: '你', pinyin: 'nǐ', meaning_en: 'you', hsk_level: 1 }],
+      deckSize: 1,
+    });
+
+    const result = await getDueCards(50, client as never, null);
+
+    expect(result.cards[0]).toMatchObject({
+      id: 'c-fsrs',
+      skill: 'recognition',
+      version: 4,
+      scheduling: {
+        difficulty: 4.2,
+        stability: 8.5,
+        reps: 3,
+        lapses: 1,
+        learning_steps: 0,
+        scheduled_days: 8,
+        elapsed_days: 3,
+        state: 'review',
+        due: '2026-09-02T09:00:00.000Z',
+        last_review: '2026-08-30T09:00:00.000Z',
+      },
+    });
+  });
+
   it('calls get_due_cards RPC and maps bare srs rows using fetched words', async () => {
     const client = clientFor({
       rpcRows: [
         {
-          id: 'c1',
+          card_id: 'c1',
           user_id: 'u1',
           word_id: 5,
-          ease_factor: 2.5,
-          interval_days: 0,
-          repetitions: 0,
+          skill: 'recognition',
+          difficulty: 0,
+          stability: 0,
+          reps: 0,
+          lapses: 0,
+          learning_steps: 0,
+          scheduled_days: 0,
+          elapsed_days: 0,
+          fsrs_state: 'new',
           next_review_at: '2020-01-01T00:00:00Z',
           last_reviewed_at: null,
-          status: 'new',
           version: 1,
         },
       ],
@@ -110,6 +186,7 @@ describe('getDueCards', () => {
     expect((client as any).rpc).toHaveBeenNthCalledWith(1, 'get_due_cards', {
       p_limit: 50,
       p_deck_id: null,
+      p_skill: 'recognition',
     });
     expect((client as any).rpc).toHaveBeenNthCalledWith(2, 'count_deck_cards', {
       p_deck_id: null,
@@ -128,6 +205,7 @@ describe('getDueCards', () => {
     expect((client as any).rpc).toHaveBeenNthCalledWith(1, 'get_due_cards', {
       p_limit: 20,
       p_deck_id: 'd1',
+      p_skill: 'recognition',
     });
     expect((client as any).rpc).toHaveBeenNthCalledWith(2, 'count_deck_cards', {
       p_deck_id: 'd1',

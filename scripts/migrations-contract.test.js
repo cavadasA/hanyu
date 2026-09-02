@@ -43,4 +43,21 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(fix, 'on conflict do nothing');
     expectSqlToContain(fix, 'if not exists (select 1 from public.decks');
   });
+
+  it('mueve la programación de tarjetas a learner_skill_state', () => {
+    const migration = readMigration('2026090205_fsrs.sql');
+
+    expectSqlToContain(migration, "add column if not exists fsrs_state text not null default 'new'");
+    expectSqlToContain(migration, 'create index if not exists idx_skill_state_due_by_skill');
+    expectSqlToContain(migration, "p_skill public.learning_skill default 'recognition'");
+  });
+
+  it('deja al servidor guardando el estado calculado por el cliente', () => {
+    const migration = readMigration('2026090205_fsrs.sql');
+
+    expectSqlToContain(migration, 'create or replace function public.apply_review(');
+    expectSqlToContain(migration, 'p_state jsonb');
+    expectSqlToContain(migration, 'drop function if exists public.review_flashcard(uuid, integer, integer);');
+    expectSqlToContain(migration, 'drop column if exists ease_factor');
+  });
 });

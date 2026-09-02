@@ -18,4 +18,48 @@ describe('useSessionTimer', () => {
     expect(result.current.elapsed).toBe(0);
     expect(result.current.formatted).toBe('0:00');
   });
+
+  it('cuenta los segundos transcurridos desde start', async () => {
+    jest.useFakeTimers();
+    const { result } = await renderHook(() => useSessionTimer());
+
+    await act(async () => {
+      result.current.start();
+      jest.advanceTimersByTime(65_000);
+    });
+
+    expect(result.current.elapsed).toBe(65);
+    expect(result.current.formatted).toBe('1:05');
+    jest.useRealTimers();
+  });
+
+  it('deja de contar tras stop', async () => {
+    jest.useFakeTimers();
+    const { result } = await renderHook(() => useSessionTimer());
+
+    await act(async () => {
+      result.current.start();
+      jest.advanceTimersByTime(3000);
+      result.current.stop();
+      jest.advanceTimersByTime(10_000);
+    });
+
+    expect(result.current.elapsed).toBe(3);
+    jest.useRealTimers();
+  });
+
+  it('start reinicia el contador de una sesión anterior', async () => {
+    jest.useFakeTimers();
+    const { result } = await renderHook(() => useSessionTimer());
+
+    await act(async () => {
+      result.current.start();
+      jest.advanceTimersByTime(5000);
+      result.current.start();
+      jest.advanceTimersByTime(2000);
+    });
+
+    expect(result.current.elapsed).toBe(2);
+    jest.useRealTimers();
+  });
 });

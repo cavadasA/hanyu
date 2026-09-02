@@ -54,6 +54,7 @@ const settings = {
   current_level: 2,
   cards_per_day: 20,
   max_reviews_per_session: 100,
+  request_retention: 0.9,
   card_order: 'due',
   ai_provider: 'none',
 };
@@ -128,6 +129,16 @@ describe('YouScreen', () => {
     await fireEvent.press(screen.getByText('en'));
 
     expect(mockUpdateSettings).toHaveBeenCalledWith({ support_language: 'en' });
+  });
+
+  it('persists the target retention setting', async () => {
+    mockGetSettings.mockResolvedValue(settings);
+    mockUpdateSettings.mockResolvedValue({ ...settings, request_retention: 0.85 });
+
+    await renderYou();
+    await fireEvent.press(screen.getByText('Relajado (0,85)'));
+
+    expect(mockUpdateSettings).toHaveBeenCalledWith({ request_retention: 0.85 });
   });
 
   it('shows a retryable error and rolls back when saving fails', async () => {

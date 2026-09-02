@@ -21,6 +21,7 @@ import {
 } from 'react';
 import { randomUUID } from 'expo-crypto';
 import { getData } from '../lib/data';
+import { schedulingParams } from '@hanyu/domain';
 import { useSession } from '../session/SessionProvider';
 import { openReviewStore } from './openReviewStore';
 import { OfflineReviewService } from './OfflineReviewService';
@@ -108,32 +109,40 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // Open a new store for this userId.
-    openReviewStore(userId)
-      .then((store) => {
-        if (cancelled) {
-          // Provider re-rendered (or unmounted) while we were awaiting — just
-          // close the freshly-opened store and discard it.
-          store.close().catch(() => undefined);
-          return;
-        }
-        const svc = new OfflineReviewService({
-          store,
-          getDueCardsOnline: (limit) => getData().flashcards.getDueCards(limit),
-          now: () => new Date(),
-          uuid: () => randomUUID(),
-          revertReviewOnline: (reviewId: string) => getData().flashcards.revertReview(reviewId),
-        });
-        syncEngineRef.current = new ReviewSyncEngine({
-          store: store as ReviewStore,
-          reviewCardEvent: (event) => getData().flashcards.reviewCardEvent(event),
-        });
-        serviceRef.current = svc;
-        setService(svc);
-        setReady(true);
-        setLastSummary(null);
-      })
-      .catch(() => {
+    // Load the scheduling preference before opening the store. The same
+    // parameter object is used by local replay and by new ratings.
+    void (async () => {
+      let params = schedulingParams({});
+      try {
+        const settings = await getData().settings.getSettings();
+        params = schedulingParams({ request_retention: settings.request_retention });
+      } catch {
+        // The default retention is safe when settings are unavailable.
+      }
+
+      const store = await openReviewStore(userId, params);
+      if (cancelled) {
+        store.close().catch(() => undefined);
+        return;
+      }
+
+      const svc = new OfflineReviewService({
+        store,
+        getDueCardsOnline: (limit) => getData().flashcards.getDueCards(limit),
+        now: () => new Date(),
+        uuid: () => randomUUID(),
+        params: () => params,
+        revertReviewOnline: (reviewId: string) => getData().flashcards.revertReview(reviewId),
+      });
+      syncEngineRef.current = new ReviewSyncEngine({
+        store: store as ReviewStore,
+        reviewCardEvent: (event) => getData().flashcards.reviewCardEvent(event),
+      });
+      serviceRef.current = svc;
+      setService(svc);
+      setReady(true);
+      setLastSummary(null);
+    })().catch(() => {
         // Opening the store failed — remain not ready.
       });
 
