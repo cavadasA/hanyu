@@ -21,6 +21,7 @@
     "migrate": "node server/db/migrate.js",
     "seed": "node server/db/seed.js",
     "import-hsk": "node scripts/import-hsk-data.js",
+    "fetch-syllabus": "node scripts/fetch-syllabus.js",
     "start": "node server/app.js",
     "test": "node scripts/verify.js",
     "test:web": "vitest run",

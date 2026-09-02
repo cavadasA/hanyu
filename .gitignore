@@ -9,4 +9,5 @@ dist/
 .env.hanyu.local
 .superpowers/
 supabase/.temp/
-/data/
+/data/*
+!/data/sources.json

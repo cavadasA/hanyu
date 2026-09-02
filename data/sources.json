@@ -1,0 +1,22 @@
+{
+  "syllabus": "HSK 3.0",
+  "revision": "2025-11",
+  "official_pdf": "https://hsk.cn-bj.ufileos.com/3.0/新版HSK考试大纲（词汇、汉字、语法）.pdf",
+  "transcription_repo": "https://github.com/krmanik/HSK-3.0",
+  "transcription_ref": "main",
+  "note": "El organismo publica el sílabo solo como PDF y sistema de consulta web. Estas son transcripciones por OCR de ese PDF. Las sumas fijan exactamente qué bytes produjeron el corpus del repositorio.",
+  "files": [
+    { "id": "words-1", "path": "data/HSK_Level_1_words.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/HSK%20Words/HSK_Level_1_words.txt", "sha256": "e87632c25ce5bbe467cfceaebfc7cf5cd128f0e068a03bce74d30f700b240efd" },
+    { "id": "words-2", "path": "data/HSK_Level_2_words.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/HSK%20Words/HSK_Level_2_words.txt", "sha256": "541f5cc1398655746b762188d846dd0da91d7ebd265d61260dc5a0f51a06f180" },
+    { "id": "words-3", "path": "data/HSK_Level_3_words.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/HSK%20Words/HSK_Level_3_words.txt", "sha256": "0b4fb242100d34f15a86aab27b6febe9cee4be87f0875f546893b4a2205a60a2" },
+    { "id": "hanzi-1", "path": "data/HSK_Level_1_hanzi.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/HSK%20Hanzi/HSK_Level_1_hanzi.txt", "sha256": "ced676f85a85d026b45acc7508cc7a717c32a5f1a51d6d45fbf4fcc2a27baa47" },
+    { "id": "hanzi-2", "path": "data/HSK_Level_2_hanzi.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/HSK%20Hanzi/HSK_Level_2_hanzi.txt", "sha256": "14890e2a1a08bf4da45bbd9bd49989b280c8e67c7f60aaa44fce77b0bf3cf30c" },
+    { "id": "hanzi-3", "path": "data/HSK_Level_3_hanzi.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/HSK%20Hanzi/HSK_Level_3_hanzi.txt", "sha256": "ccb8bf9730d863571339276f58bc13507490c90308042b12de364960a252dcb1" },
+    { "id": "grammar-1", "path": "data/HSK_Grammar_1.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/HSK%20Grammar/HSK%201.txt", "sha256": "a934a6e5fcfb9c9adf952ee86334284268979d453f63bf505c90a956952bd584" },
+    { "id": "grammar-2", "path": "data/HSK_Grammar_2.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/HSK%20Grammar/HSK%202.txt", "sha256": "c4c217519d3eea4eb0cf359fc9b466adb3ce5bf3c45b1d47dd8b1b7bec48ffc6" },
+    { "id": "grammar-3", "path": "data/HSK_Grammar_3.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/HSK%20Grammar/HSK%203.txt", "sha256": "676b2ad4a4747c768d3c316a5405475f7f131f675612765b55145574d60a7d70" },
+    { "id": "xiehanzi-1", "path": "data/HSK_Level_1.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/Anki%20xiehanzi/HSK_Level_1.txt", "sha256": "d7808dbd8ce6f083faae57970d94fc6458154a7e8636e6f123525f27b51bbc1f" },
+    { "id": "xiehanzi-2", "path": "data/HSK_Level_2.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/Anki%20xiehanzi/HSK_Level_2.txt", "sha256": "b03dd8524c7b96dfa6e9c7c9d2d28f071e823853326d5221ac14212fb01e3414" },
+    { "id": "xiehanzi-3", "path": "data/HSK_Level_3.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/Anki%20xiehanzi/HSK_Level_3.txt", "sha256": "172a276d3bdee7223d7ed42360bfdbab378ba1100655b3f0ee703001cd145475" }
+  ]
+}
