@@ -114,6 +114,8 @@ Dos matices frente a lo que decía la auditoría:
 
 Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurrió por construir el árbol bajo un major y ejecutarlo bajo otro, y había dos binarios de Node en el PATH sin ninguna versión fijada.
 
+**Hueco conocido que este plan no cerró:** `apps/mobile/src/lib/useSessionTimer.test.ts` solo ejercita `reset()`. La función principal del hook, `start()`, y el avance del temporizador por su `setInterval` no tienen ninguna cobertura. Salió al arreglar el warning de `act()` y no entra en el alcance del Plan 0, que era hacer creíble el comando de verificación, no ampliar la suite. Lo recoge el Plan 4, que reescribe la sesión de estudio.
+
 ## Plan 1 — Modelo de conocimiento y syllabus oficial
 **Tamaño:** XL · **Depende de:** Plan 0 · **Es la raíz de todo lo demás**
 
@@ -193,6 +195,8 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 
 ## Plan 5 — Planificador, diagnóstico, unidades y modos
 **Tamaño:** L · **Depende de:** Planes 1, 4
+
+> **Antes de escribirlo, sobre el Crítico 1:** en el árbol de trabajo hay una migración sin commitear, `supabase/migrations/2026080203_fix_decks_rpc.sql`, cuyo nombre invita a pensar que ya corrige el mazo inicial. **No lo hace.** Corrige un `column reference deck_id is ambiguous` en `add_deck_from_template`, que es un problema distinto. `create_starter_deck` sigue con `order by w.hsk_level, coalesce(w.frequency, ...) limit 150` sobre 301 palabras de HSK 1, así que el mazo "HSK2 consolidation" sigue conteniendo cero palabras de HSK 2.
 
 - **Diagnóstico inicial**, que sustituye al mazo inicial fijo: suspender lo ya demostrado en vez de crear 150 tarjetas vencidas de golpe.
 - Unidades HSK 2 con prerrequisitos y ruta curricular.
