@@ -18,7 +18,11 @@ import {
   type TodayPayload,
 } from '@hanyu/data';
 import { getData } from '../lib/data';
-import { getReviewSession, type ReviewSessionSnapshot } from '../lib/reviewSessionStore';
+import {
+  clearReviewSession,
+  loadReviewSession,
+  type ReviewSessionSnapshot,
+} from '../lib/reviewSessionStore';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 import { ActiveSessionBanner } from '../ui/ActiveSessionBanner';
@@ -169,7 +173,7 @@ export default function TodayScreen() {
       setStreak({ current: 0, longest: 0 });
     }
 
-    setSessionSnapshot(getReviewSession());
+    setSessionSnapshot(await loadReviewSession());
     setLoading(false);
   }, []);
 
@@ -277,6 +281,9 @@ export default function TodayScreen() {
           <ActiveSessionBanner
             snapshot={sessionSnapshot}
             onContinue={() => router.push('/cards')}
+            onDiscard={() => {
+              void clearReviewSession().then(() => setSessionSnapshot(null));
+            }}
           />
 
           <Reveal index={0}>

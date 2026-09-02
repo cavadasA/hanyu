@@ -1,10 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { randomUUID } from 'expo-crypto';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { toUserMessage, type DueCard, type FlashcardStats } from '@hanyu/data';
 import { getData } from '../lib/data';
-import { clearReviewSession, setReviewSession } from '../lib/reviewSessionStore';
+import {
+  clearReviewSession,
+  loadReviewSession,
+  saveReviewSession,
+  type ReviewSessionSnapshot,
+} from '../lib/reviewSessionStore';
 import { useSessionTimer } from '../lib/useSessionTimer';
 import { useOfflineReview } from '../offline/OfflineReviewProvider';
 import { tokens } from '../theme/tokens';
@@ -15,6 +21,7 @@ import { CardStatusBadge } from '../ui/CardStatusBadge';
 import { EmptyState } from '../ui/EmptyState';
 import { ErrorBanner } from '../ui/ErrorBanner';
 import { FlashCardView, type ReviewMode } from '../ui/FlashCardView';
+import { ActiveSessionBanner } from '../ui/ActiveSessionBanner';
 import { Screen } from '../ui/Screen';
 import { Segmented, type SegmentedOption } from '../ui/Segmented';
 import { StatusBarChart } from '../ui/StatusBarChart';
@@ -68,8 +75,10 @@ export default function CardsScreen() {
   const [swiping, setSwiping] = useState(false);
   const [undoStack, setUndoStack] = useState<UndoEntry[]>([]);
   const [stats, setStats] = useState<SessionStats>({ reviewed: 0, correct: 0, again: 0 });
+  const [resumable, setResumable] = useState<ReviewSessionSnapshot | null>(null);
 
   const timer = useSessionTimer();
+  const sessionId = useRef<string | null>(null);
   const sessionStartedAt = useRef(Date.now());
   const cardStartedAt = useRef(Date.now());
 
@@ -118,6 +127,10 @@ export default function CardsScreen() {
     void load();
   }, [load]);
 
+  useEffect(() => {
+    void loadReviewSession().then(setResumable);
+  }, []);
+
   function startReview() {
     const limit = sessionSize === 'quick' ? 10 : allDueCards.length;
     const sessionCards = allDueCards.slice(0, limit);
@@ -129,15 +142,48 @@ export default function CardsScreen() {
     setStats({ reviewed: 0, correct: 0, again: 0 });
     sessionStartedAt.current = Date.now();
     cardStartedAt.current = Date.now();
+    sessionId.current = randomUUID();
     timer.start();
     setPhase('reviewing');
-    setReviewSession({
-      active: true,
-      total: sessionCards.length,
-      reviewed: 0,
+    void saveReviewSession({
+      session_id: sessionId.current,
+      deck_id: focusedDeckId,
+      card_ids: sessionCards.map((card) => card.id),
+      index: 0,
       mode,
-      startedAt: sessionStartedAt.current,
+      started_at: sessionStartedAt.current,
+      reviewed: 0,
+      stats: { reviewed: 0, correct: 0, again: 0 },
     });
+  }
+
+  function resumeSession(snapshot: ReviewSessionSnapshot) {
+    const byId = new Map(allDueCards.map((entry) => [entry.id, entry]));
+    const queue = snapshot.card_ids
+      .map((id) => byId.get(id))
+      .filter((entry): entry is DueCard => Boolean(entry));
+
+    if (queue.length === 0) {
+      // Ninguna tarjeta de aquella cola sigue vencida: la sesión terminó por
+      // otro camino y reanudarla no tiene sentido.
+      void clearReviewSession();
+      setResumable(null);
+      return;
+    }
+
+    setActiveCards(queue);
+    setIndex(Math.min(snapshot.index, queue.length - 1));
+    setReviewed(snapshot.reviewed);
+    setStats(snapshot.stats);
+    setMode(snapshot.mode);
+    setUndoStack([]);
+    setRevealed(false);
+    sessionId.current = snapshot.session_id;
+    sessionStartedAt.current = snapshot.started_at;
+    cardStartedAt.current = Date.now();
+    timer.start();
+    setPhase('reviewing');
+    setResumable(null);
   }
 
   async function undoLastRating() {
@@ -211,15 +257,16 @@ export default function CardsScreen() {
       ...prev.slice(-4),
       { card: current, previousIndex: index, quality, reviewId },
     ]);
-    setStats((prev) => ({
-      reviewed: prev.reviewed + 1,
-      correct: prev.correct + (quality >= 3 ? 1 : 0),
-      again: prev.again + (quality < 3 ? 1 : 0),
-    }));
+    const nextStats = {
+      reviewed: stats.reviewed + 1,
+      correct: stats.correct + (quality >= 3 ? 1 : 0),
+      again: stats.again + (quality < 3 ? 1 : 0),
+    };
+    setStats(nextStats);
 
     if (index + 1 >= activeCards.length) {
       timer.stop();
-      clearReviewSession();
+      void clearReviewSession();
       setPhase('complete');
 
       try {
@@ -236,12 +283,15 @@ export default function CardsScreen() {
     setRevealed(false);
     cardStartedAt.current = Date.now();
 
-    setReviewSession({
-      active: true,
-      total: activeCards.length,
-      reviewed: nextReviewed,
+    void saveReviewSession({
+      session_id: sessionId.current ?? randomUUID(),
+      deck_id: focusedDeckId,
+      card_ids: activeCards.map((card) => card.id),
+      index: nextIndex,
       mode,
-      startedAt: sessionStartedAt.current,
+      started_at: sessionStartedAt.current,
+      reviewed: nextReviewed,
+      stats: nextStats,
     });
   }
 
@@ -341,6 +391,17 @@ export default function CardsScreen() {
           <ErrorBanner message={error} onRetry={load} />
         ) : null}
 
+        {resumable ? (
+          <ActiveSessionBanner
+            snapshot={resumable}
+            onContinue={() => resumeSession(resumable)}
+            onDiscard={() => {
+              void clearReviewSession();
+              setResumable(null);
+            }}
+          />
+        ) : null}
+
         {dueCount === 0 ? (
           deckSize === 0 ? (
             <EmptyState
@@ -409,7 +470,7 @@ export default function CardsScreen() {
           accessibilityLabel="Close review session"
           hitSlop={8}
           onPress={() => {
-            clearReviewSession();
+            void clearReviewSession();
             setPhase('pre-session');
           }}
         >

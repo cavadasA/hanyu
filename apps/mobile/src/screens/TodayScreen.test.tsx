@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AppState, type AppStateStatus } from 'react-native';
-import { setReviewSession, clearReviewSession } from '../lib/reviewSessionStore';
+import { clearReviewSession, saveReviewSession } from '../lib/reviewSessionStore';
 import TodayScreen from './TodayScreen';
 
 const mockGetToday = jest.fn();
@@ -58,11 +58,11 @@ async function renderToday() {
 }
 
 describe('TodayScreen', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     mockGetToday.mockReset();
     mockGetDashboard.mockReset();
     mockPush.mockReset();
-    clearReviewSession();
+    await clearReviewSession();
   });
 
   afterEach(() => {
@@ -106,7 +106,16 @@ describe('TodayScreen', () => {
   it('shows active session banner when a review is in progress', async () => {
     mockGetToday.mockResolvedValue(payload);
     mockGetDashboard.mockResolvedValue(dashboard);
-    setReviewSession({ active: true, total: 20, reviewed: 5, mode: 'recognition', startedAt: Date.now() });
+    await saveReviewSession({
+      session_id: 's1',
+      deck_id: null,
+      card_ids: Array.from({ length: 20 }, (_, index) => `card-${index}`),
+      index: 5,
+      mode: 'recognition',
+      started_at: Date.now(),
+      reviewed: 5,
+      stats: { reviewed: 5, correct: 5, again: 0 },
+    });
 
     await renderToday();
 

@@ -9,16 +9,17 @@ import { Card } from './Card';
 interface ActiveSessionBannerProps {
   snapshot: ReviewSessionSnapshot | null;
   onContinue: () => void;
+  onDiscard: () => void;
 }
 
-export function ActiveSessionBanner({ snapshot, onContinue }: ActiveSessionBannerProps) {
+export function ActiveSessionBanner({ snapshot, onContinue, onDiscard }: ActiveSessionBannerProps) {
   const { colors } = useTheme();
 
-  if (!snapshot || !snapshot.active) {
+  if (!snapshot) {
     return null;
   }
 
-  const remaining = Math.max(0, snapshot.total - snapshot.reviewed);
+  const remaining = Math.max(0, snapshot.card_ids.length - snapshot.reviewed);
   if (remaining <= 0) {
     return null;
   }
@@ -35,7 +36,10 @@ export function ActiveSessionBanner({ snapshot, onContinue }: ActiveSessionBanne
             </Text>
           </View>
         </View>
-        <Button label="Continue" variant="primary" onPress={onContinue} />
+        <View style={styles.actions}>
+          <Button label="Continue" variant="primary" onPress={onContinue} />
+          <Button label="Discard" variant="outline" onPress={onDiscard} />
+        </View>
       </View>
     </Card>
   );
@@ -50,6 +54,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: tokens.spacing.md,
+  },
+  actions: {
+    gap: tokens.spacing.xs,
   },
   left: {
     flexDirection: 'row',
