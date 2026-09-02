@@ -96,6 +96,14 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 ## Plan 1 — Modelo de conocimiento y syllabus oficial
 **Tamaño:** XL · **Depende de:** Plan 0 · **Es la raíz de todo lo demás**
 
+> **Se divide en tres documentos ejecutables.** Al escribirlo como plan de implementación se vio que cubre tres subsistemas independientes, cada uno con su propio criterio de salida verificable. Un único documento habría sido imposible de revisar y de revertir por partes.
+>
+> - **1A — Sentidos léxicos** (`docs/superpowers/plans/2026-09-02-plan-1a-sentidos-lexicos.md`). El corpus deja de ser hanzi+nivel: selección de sentido por lectura, clasificador y forma tradicional, glosas españolas por sentido, idioma de apoyo en la app. No depende de ninguna fuente externa: todo el material ya está en el repositorio.
+> - **1B — Syllabus oficial versionado y matrices de cobertura.** Importar y versionar el sílabo HSK 3.0, comparación reproducible contra el corpus, matrices de vocabulario, caracteres, gramática, temas y tareas; alcance de niveles y `PRODUCT.md`. **Bloqueado hasta decidir la fuente:** el sílabo oficial no está en el repositorio y no se puede fabricar. Resuelve también las 14 filas que 1A deja en cuarentena.
+> - **1C — Modelo de progreso.** `competency`, prerrequisitos de `grammar_point` y ampliación de la gramática HSK 2, `content_item`, `exercise_template`, `learner_skill_state`, `learning_event`. Es el prerrequisito duro del Plan 3 (Undo transaccional necesita el log de eventos).
+>
+> Con esta división, los documentos ejecutables pasan de 10 a 12.
+
 - Importar y **versionar** el syllabus oficial HSK 3.0 (nov 2025, vigente jul 2026): vocabulario, caracteres, gramática, temas y tareas. Comparación reproducible contra el corpus comunitario actual.
 - Entidades: `competency`, `lexeme_sense`, `grammar_point` (+ prerrequisitos), `content_item`, `exercise_template`, `learner_skill_state`, `learning_event`.
 - **Migrar de `hanzi + nivel` a lexema/sentido.** Casos confirmados: `地 dì` con glosa española de partícula adverbial, `还 huán` mezclando "todavía"/"devolver", `长 cháng` y `长 zhǎng` compartiendo traducción.
