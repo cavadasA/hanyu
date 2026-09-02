@@ -62,7 +62,10 @@ begin
   ), membership as (
     insert into public.deck_cards (deck_id, word_id)
     select v_deck_id, sw.word_id from source_words sw
-    on conflict (deck_id, word_id) do nothing
+    -- No explicit target: the PK (deck_id, word_id) is the only unique
+    -- constraint, and naming deck_id here would collide with the OUT
+    -- parameter (error 42702 "column reference deck_id is ambiguous").
+    on conflict do nothing
     returning word_id
   )
   select count(*) into v_inserted from membership;
@@ -147,7 +150,7 @@ begin
   ), _membership as (
     insert into public.deck_cards (deck_id, word_id)
     select v_deck_id, c.id from candidates c
-    on conflict (deck_id, word_id) do nothing
+    on conflict do nothing
     returning word_id
   )
   select count(*) into v_inserted from inserted_cards;
@@ -214,18 +217,21 @@ grant execute on function public.count_deck_cards(uuid, boolean) to authenticate
 grant execute on function public.get_deck_stats() to authenticated;
 
 -- Backfill: existing users' loose cards go into a default deck so the active-deck
--- due query keeps returning them.
+-- due query keeps returning them. Idempotent: skips users that already have a
+-- default deck so the migration can be re-applied safely.
 do $$
 declare r record;
 declare v_deck_id uuid;
 begin
   for r in select distinct user_id from public.srs_cards loop
-    insert into public.decks (user_id, name, description, is_default)
-    values (r.user_id, 'My deck', 'Migrated from your existing cards.', true)
-    returning id into v_deck_id;
+    if not exists (select 1 from public.decks where user_id = r.user_id and is_default) then
+      insert into public.decks (user_id, name, description, is_default)
+      values (r.user_id, 'My deck', 'Migrated from your existing cards.', true)
+      returning id into v_deck_id;
 
-    insert into public.deck_cards (deck_id, word_id)
-    select v_deck_id, sc.word_id from public.srs_cards sc where sc.user_id = r.user_id
-    on conflict (deck_id, word_id) do nothing;
+      insert into public.deck_cards (deck_id, word_id)
+      select v_deck_id, sc.word_id from public.srs_cards sc where sc.user_id = r.user_id
+      on conflict do nothing;
+    end if;
   end loop;
 end $$;
