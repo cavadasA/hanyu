@@ -4,6 +4,7 @@ import { createRepositoryError, getRequiredUserId } from './shared';
 
 const DEFAULT_SETTINGS = {
   theme: 'light',
+  support_language: 'es',
   current_level: 2,
   cards_per_day: 20,
   max_reviews_per_session: 100,
@@ -14,6 +15,7 @@ const DEFAULT_SETTINGS = {
 const ALLOWED_THEMES = new Set(['light', 'dark', 'system']);
 const ALLOWED_CARD_ORDER = new Set(['due', 'frequency']);
 const ALLOWED_AI_PROVIDERS = new Set(['none', 'deepseek', 'gemini']);
+const ALLOWED_SUPPORT_LANGUAGES = new Set(['es', 'en']);
 
 function normalizeCardOrder(value: any) {
   if (value === 'hsk_order') {
@@ -27,6 +29,9 @@ function normalizeSettings(row: any) {
   return {
     user_id: String(row?.user_id ?? ''),
     theme: ALLOWED_THEMES.has(row?.theme) ? row.theme : DEFAULT_SETTINGS.theme,
+    support_language: ALLOWED_SUPPORT_LANGUAGES.has(row?.support_language)
+      ? row.support_language
+      : DEFAULT_SETTINGS.support_language,
     current_level: clampNumber(row?.current_level, 1, 6, DEFAULT_SETTINGS.current_level),
     cards_per_day: clampNumber(row?.cards_per_day, 1, 100, DEFAULT_SETTINGS.cards_per_day),
     max_reviews_per_session: clampNumber(
@@ -58,6 +63,12 @@ function sanitizeUpdates(data: Record<string, unknown>) {
 
   if (data.theme !== undefined) {
     updates.theme = ALLOWED_THEMES.has(data.theme as string) ? data.theme : DEFAULT_SETTINGS.theme;
+  }
+
+  if (data.support_language !== undefined) {
+    updates.support_language = ALLOWED_SUPPORT_LANGUAGES.has(data.support_language as string)
+      ? data.support_language
+      : DEFAULT_SETTINGS.support_language;
   }
 
   if (data.current_level !== undefined) {
@@ -94,7 +105,7 @@ async function readSettingsRow(userId: string, client: HanyuClient) {
   const { data, error } = await client
     .from('user_settings')
     .select(
-      'user_id, theme, current_level, cards_per_day, max_reviews_per_session, card_order, ai_provider, created_at, updated_at'
+      'user_id, theme, support_language, current_level, cards_per_day, max_reviews_per_session, card_order, ai_provider, created_at, updated_at'
     )
     .eq('user_id', userId)
     .maybeSingle();
@@ -111,7 +122,7 @@ async function ensureSettingsRow(userId: string, client: HanyuClient) {
     .from('user_settings')
     .upsert({ user_id: userId, ...DEFAULT_SETTINGS } as any, { onConflict: 'user_id' })
     .select(
-      'user_id, theme, current_level, cards_per_day, max_reviews_per_session, card_order, ai_provider, created_at, updated_at'
+      'user_id, theme, support_language, current_level, cards_per_day, max_reviews_per_session, card_order, ai_provider, created_at, updated_at'
     )
     .single();
 
@@ -142,7 +153,7 @@ export async function updateSettings(input: Record<string, unknown>, client: Han
     .from('user_settings')
     .upsert(payload as any, { onConflict: 'user_id' })
     .select(
-      'user_id, theme, current_level, cards_per_day, max_reviews_per_session, card_order, ai_provider, created_at, updated_at'
+      'user_id, theme, support_language, current_level, cards_per_day, max_reviews_per_session, card_order, ai_provider, created_at, updated_at'
     )
     .single();
 

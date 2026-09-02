@@ -21,6 +21,7 @@ const THEMES: readonly ThemePreference[] = ['light', 'dark', 'system'];
 const ORDERS: readonly CardOrder[] = ['due', 'frequency'];
 const PROVIDERS: readonly AiProvider[] = ['none', 'deepseek', 'gemini'];
 const LEVELS = ['1', '2', '3', '4', '5', '6'] as const;
+const SUPPORT_LANGUAGES = ['es', 'en'] as const;
 
 interface HeroStats {
   mastered: number;
@@ -169,6 +170,14 @@ export default function YouScreen() {
               value={String(settings.current_level) as (typeof LEVELS)[number]}
               options={LEVELS}
               onChange={(level) => save({ current_level: Number(level) })}
+              disabled={saving}
+            />
+            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <OptionRow
+              label="Support language"
+              value={settings.support_language}
+              options={SUPPORT_LANGUAGES}
+              onChange={(support_language) => save({ support_language })}
               disabled={saving}
             />
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
@@ -347,5 +356,4 @@ const styles = StyleSheet.create({
     marginTop: tokens.spacing.md,
   },
 });
-
 

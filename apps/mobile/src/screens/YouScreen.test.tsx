@@ -50,6 +50,7 @@ jest.mock('../theme/ThemeProvider', () => ({
 const settings = {
   user_id: 'user-1',
   theme: 'light',
+  support_language: 'es',
   current_level: 2,
   cards_per_day: 20,
   max_reviews_per_session: 100,
@@ -117,6 +118,16 @@ describe('YouScreen', () => {
     await fireEvent.press(screen.getByLabelText('Increase cards per day'));
 
     expect(mockUpdateSettings).toHaveBeenCalledWith({ cards_per_day: 25 });
+  });
+
+  it('persists a support-language change', async () => {
+    mockGetSettings.mockResolvedValue(settings);
+    mockUpdateSettings.mockResolvedValue({ ...settings, support_language: 'en' });
+
+    await renderYou();
+    await fireEvent.press(screen.getByText('en'));
+
+    expect(mockUpdateSettings).toHaveBeenCalledWith({ support_language: 'en' });
   });
 
   it('shows a retryable error and rolls back when saving fails', async () => {

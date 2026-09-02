@@ -6,6 +6,7 @@ describe('getSettings', () => {
     const row = {
       user_id: 'user-1',
       theme: 'dark',
+      support_language: 'es',
       current_level: 4,
       cards_per_day: 25,
       max_reviews_per_session: 120,
