@@ -29,6 +29,7 @@ import {
   reviewCardEvent,
 } from './repositories/flashcards';
 import { checkExercise, generateExercise, getExerciseHistory } from './repositories/exercises';
+import { getEvents, recordEvent } from './repositories/events';
 import {
   completeReading,
   generateReading,
@@ -36,6 +37,7 @@ import {
   getReadings,
 } from './repositories/readings';
 import { getSettings, updateSettings } from './repositories/settings';
+import { getSkillStates, upsertSkillState } from './repositories/skills';
 import { getDashboard, getStreak, logTime } from './repositories/stats';
 import { getToday } from './repositories/today';
 import { getWord, getWords } from './repositories/words';
@@ -94,6 +96,16 @@ export function createHanyuData(config: HanyuDataConfig) {
         generateExercise(type, level, client),
       checkExercise: (id: string, answer: unknown) => checkExercise(id, answer, client),
       getExerciseHistory: (limit = 20) => getExerciseHistory(limit, client),
+    },
+    events: {
+      recordEvent: (input: Parameters<typeof recordEvent>[0]) => recordEvent(input, client),
+      getEvents: (params: Parameters<typeof getEvents>[0] = {}) => getEvents(params, client),
+    },
+    skills: {
+      getSkillStates: (params: Parameters<typeof getSkillStates>[0]) =>
+        getSkillStates(params, client),
+      upsertSkillState: (input: Parameters<typeof upsertSkillState>[0]) =>
+        upsertSkillState(input, client),
     },
     readings: {
       getReadings: (params: Parameters<typeof getReadings>[0] = {}) => getReadings(params, client),

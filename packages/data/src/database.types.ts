@@ -310,6 +310,128 @@ export type Database = {
         }
         Relationships: []
       }
+      learning_event: {
+        Row: {
+          client_event_id: string | null
+          id: string
+          kind: string
+          occurred_at: string
+          payload: Json
+          recorded_at: string
+          reverts_event_id: string | null
+          skill: string | null
+          target_id: number | null
+          target_kind: string | null
+          user_id: string
+        }
+        Insert: {
+          client_event_id?: string | null
+          id?: string
+          kind: string
+          occurred_at?: string
+          payload?: Json
+          recorded_at?: string
+          reverts_event_id?: string | null
+          skill?: string | null
+          target_id?: number | null
+          target_kind?: string | null
+          user_id: string
+        }
+        Update: {
+          client_event_id?: string | null
+          id?: string
+          kind?: string
+          occurred_at?: string
+          payload?: Json
+          recorded_at?: string
+          reverts_event_id?: string | null
+          skill?: string | null
+          target_id?: number | null
+          target_kind?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_event_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "learning_event_reverts_event_id_fkey"
+            columns: ["reverts_event_id"]
+            isOneToOne: false
+            referencedRelation: "learning_event"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      learner_skill_state: {
+        Row: {
+          created_at: string
+          difficulty: number | null
+          id: string
+          lapses: number
+          last_reviewed_at: string | null
+          next_review_at: string | null
+          reps: number
+          retrievability: number | null
+          skill: string
+          stability: number | null
+          suspended: boolean
+          target_id: number
+          target_kind: string
+          updated_at: string
+          user_id: string
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          difficulty?: number | null
+          id?: string
+          lapses?: number
+          last_reviewed_at?: string | null
+          next_review_at?: string | null
+          reps?: number
+          retrievability?: number | null
+          skill: string
+          stability?: number | null
+          suspended?: boolean
+          target_id: number
+          target_kind: string
+          updated_at?: string
+          user_id: string
+          version?: number
+        }
+        Update: {
+          created_at?: string
+          difficulty?: number | null
+          id?: string
+          lapses?: number
+          last_reviewed_at?: string | null
+          next_review_at?: string | null
+          reps?: number
+          retrievability?: number | null
+          skill?: string
+          stability?: number | null
+          suspended?: boolean
+          target_id?: number
+          target_kind?: string
+          updated_at?: string
+          user_id?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learner_skill_state_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       grammar_points: {
         Row: {
           category: string | null

@@ -12,6 +12,54 @@ export type ExerciseType =
   | 'matching';
 export type ReadingFormat = 'short_text' | 'story' | 'dialogue';
 
+export type LearningSkill =
+  | 'recognition'
+  | 'recall'
+  | 'listening'
+  | 'reading'
+  | 'production';
+
+export type LearningTargetKind = 'word' | 'grammar' | 'character';
+
+export type LearningEventKind =
+  | 'review_rated'
+  | 'review_reverted'
+  | 'exercise_attempted'
+  | 'word_looked_up'
+  | 'reading_completed'
+  | 'hint_used';
+
+export interface LearningEvent {
+  id: string;
+  user_id: string;
+  occurred_at: string;
+  recorded_at: string;
+  kind: LearningEventKind;
+  target_kind: LearningTargetKind | null;
+  target_id: number | null;
+  skill: LearningSkill | null;
+  payload: Record<string, unknown>;
+  client_event_id: string | null;
+  reverts_event_id: string | null;
+}
+
+export interface LearnerSkillState {
+  id: string;
+  user_id: string;
+  target_kind: LearningTargetKind;
+  target_id: number;
+  skill: LearningSkill;
+  difficulty: number | null;
+  stability: number | null;
+  retrievability: number | null;
+  reps: number;
+  lapses: number;
+  last_reviewed_at: string | null;
+  next_review_at: string | null;
+  suspended: boolean;
+  version: number;
+}
+
 export type ExercisePrompt =
   | { kind: 'fill_blank'; sentence: string; options?: string[] }
   | { kind: 'multiple_choice'; question: string; options: string[] }
