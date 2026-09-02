@@ -13,5 +13,8 @@
   },
   "devDependencies": {
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "ts-fsrs": "^5.4.2"
   }
 }
