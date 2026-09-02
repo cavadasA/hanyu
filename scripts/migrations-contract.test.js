@@ -1,0 +1,36 @@
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
+const migrationDir = join(rootDir, 'supabase', 'migrations');
+
+function readMigration(name) {
+  return readFileSync(join(migrationDir, name), 'utf8');
+}
+
+describe('contratos de migraciones', () => {
+  it('protege ambos extremos de grammar_prerequisite con claves foráneas', () => {
+    const migration = readMigration('2026090203_progress_model.sql');
+
+    expect(migration).toContain(
+      'constraint grammar_prerequisite_current_fkey\n' +
+        '    foreign key (hsk_level, code)\n' +
+        '    references public.grammar_points (hsk_level, code)',
+    );
+    expect(migration).toContain(
+      'constraint grammar_prerequisite_required_fkey\n' +
+        '    foreign key (requires_level, requires_code)\n' +
+        '    references public.grammar_points (hsk_level, code)',
+    );
+  });
+
+  it('deja la corrección de decks solo en la migración posterior', () => {
+    const historical = readMigration('2026080202_decks_seed_and_rpc.sql');
+    const fix = readMigration('2026080203_fix_decks_rpc.sql');
+
+    expect(historical).toContain('on conflict (deck_id, word_id) do nothing');
+    expect(fix).toContain('on conflict do nothing');
+    expect(fix).toContain('if not exists (select 1 from public.decks');
+  });
+});

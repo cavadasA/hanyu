@@ -212,7 +212,13 @@ create table if not exists public.grammar_prerequisite (
   code text not null,
   requires_level integer not null,
   requires_code text not null,
-  primary key (hsk_level, code, requires_level, requires_code)
+  primary key (hsk_level, code, requires_level, requires_code),
+  constraint grammar_prerequisite_current_fkey
+    foreign key (hsk_level, code)
+    references public.grammar_points (hsk_level, code),
+  constraint grammar_prerequisite_required_fkey
+    foreign key (requires_level, requires_code)
+    references public.grammar_points (hsk_level, code)
 );
 
 alter table public.grammar_prerequisite enable row level security;

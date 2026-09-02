@@ -1,4 +1,4 @@
-import { parseOfficialTerm, loadOfficialWords } from './official-terms.js';
+import { dedupeOfficialTerms, parseOfficialTerm, loadOfficialWords } from './official-terms.js';
 
 describe('parseOfficialTerm', () => {
   it('separa el índice de sentido del hanzi', () => {
@@ -59,5 +59,14 @@ describe('loadOfficialWords', () => {
     const hua = loadOfficialWords(2).filter((term) => term.form === '花');
 
     expect(hua.map((term) => term.sense_index)).toEqual([1, 2]);
+  });
+
+  it('fusiona líneas oficiales repetidas sin perder las que sí son sentidos distintos', () => {
+    const result = dedupeOfficialTerms(loadOfficialWords(2), 2);
+    const forms = result.terms.map((term) => `${term.form}#${term.sense_index ?? ''}`);
+
+    expect(result.duplicates).toHaveLength(1);
+    expect(forms.filter((key) => key === '过#')).toHaveLength(1);
+    expect(forms.filter((key) => key.startsWith('花#'))).toHaveLength(2);
   });
 });

@@ -8,10 +8,16 @@ describe('buildCoverageReport', () => {
     expect(report.sources.every((entry) => entry.status === 'ok')).toBe(true);
   });
 
-  it('cubre el 100 % del vocabulario oficial de los niveles 1 a 3', () => {
+  it('contabiliza los sentidos cubiertos y los no resueltos', () => {
     for (const level of [1, 2, 3]) {
-      expect(report.vocabulary[level].covered).toBe(report.vocabulary[level].official);
+      expect(report.vocabulary[level].covered + report.vocabulary[level].unresolved)
+        .toBe(report.vocabulary[level].official);
     }
+  });
+
+  it('expone los sentidos sin fuente de diccionario', () => {
+    expect(report.vocabulary[2].unresolved).toBe(2);
+    expect(report.vocabulary[3].unresolved).toBe(3);
   });
 
   it('cubre el 100 % de los caracteres oficiales', () => {

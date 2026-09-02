@@ -47,6 +47,33 @@ export function loadOfficialWords(level) {
     .map(parseOfficialTerm);
 }
 
+export function dedupeOfficialTerms(terms, level) {
+  const byKey = new Map();
+  const duplicates = [];
+
+  for (const term of terms) {
+    const key = `${term.form}|${level}|${term.sense_index ?? ''}`;
+    const existing = byKey.get(key);
+
+    if (!existing) {
+      byKey.set(key, { ...term, variants: [...term.variants] });
+      continue;
+    }
+
+    existing.variants = [...new Set([...existing.variants, ...term.variants])];
+    duplicates.push({
+      level,
+      form: term.form,
+      sense_index: term.sense_index,
+    });
+  }
+
+  return {
+    terms: [...byKey.values()],
+    duplicates,
+  };
+}
+
 export function loadOfficialCharacters(level) {
   const file = join(dataDir, `HSK_Level_${level}_hanzi.txt`);
 

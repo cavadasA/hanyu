@@ -70,5 +70,17 @@
     "hsk_level": 3,
     "requires_code": "6.3.5",
     "requires_level": 2
+  },
+  {
+    "code": "6.1.1",
+    "hsk_level": 2,
+    "requires_code": "5.1.1",
+    "requires_level": 1
+  },
+  {
+    "code": "2.9.3",
+    "hsk_level": 1,
+    "requires_code": "2.9.2",
+    "requires_level": 1
   }
 ]

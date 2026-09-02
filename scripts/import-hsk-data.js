@@ -16,7 +16,7 @@ import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { parseDictionaryEntry, selectReading } from './lib/cedict-html.js';
-import { loadOfficialWords } from './lib/official-terms.js';
+import { dedupeOfficialTerms, loadOfficialWords } from './lib/official-terms.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
@@ -81,6 +81,8 @@ const curatedSpanish = new Map(
   ]),
 );
 
+const unresolvedTerms = [];
+
 for (const level of [1, 2, 3]) {
   const filePath = join(dataDir, `HSK_Level_${level}.txt`);
 
@@ -118,9 +120,16 @@ for (const level of [1, 2, 3]) {
   const spanish = loadExistingSpanish(outPath);
 
   const words = [];
-  const unmatched = [];
+  const official = dedupeOfficialTerms(loadOfficialWords(level), level);
 
-  for (const term of loadOfficialWords(level)) {
+  if (official.duplicates.length > 0) {
+    console.warn(
+      `  ${official.duplicates.length} líneas oficiales repetidas fusionadas en HSK ${level}: ` +
+        official.duplicates.map((term) => `${term.form}${term.sense_index ?? ''}`).join(', '),
+    );
+  }
+
+  for (const term of official.terms) {
     // Se prueban todas las variantes: el mazo puede listar la forma corta
     // (没) donde la lista oficial escribe la larga (没（有）).
     const candidates = term.variants
@@ -128,18 +137,42 @@ for (const level of [1, 2, 3]) {
       .find((found) => found && found.length > 0);
 
     if (!candidates) {
-      unmatched.push(`${term.form}${term.sense_index ?? ''}`);
+      unresolvedTerms.push({
+        hsk_level: level,
+        form: term.form,
+        sense_index: term.sense_index,
+        reason: 'missing_dictionary_entry',
+      });
       continue;
     }
 
     // Cuando el mazo trae varias filas para la misma forma escrita, el índice
     // de sentido oficial las ordena: el sentido n usa la fila n si existe.
-    const source = candidates[Math.min((term.sense_index ?? 1) - 1, candidates.length - 1)];
+    // Si el mazo no tiene esa fila, el término queda explícitamente sin
+    // resolver; reutilizar la última acepción mezcla sentidos en silencio.
+    const source = candidates[(term.sense_index ?? 1) - 1];
+    if (!source) {
+      unresolvedTerms.push({
+        hsk_level: level,
+        form: term.form,
+        sense_index: term.sense_index,
+        reason: 'missing_dictionary_sense',
+        available_readings: candidates.map((candidate) => candidate.pinyin),
+      });
+      continue;
+    }
+
     const entry = parseDictionaryEntry(source.html);
     const sense = selectReading(entry, source.pinyin);
 
     if (!sense) {
-      unmatched.push(`${term.form} (${source.pinyin}: lectura sin resolver)`);
+      unresolvedTerms.push({
+        hsk_level: level,
+        form: term.form,
+        sense_index: term.sense_index,
+        reason: 'missing_dictionary_reading',
+        pinyin: source.pinyin,
+      });
       continue;
     }
 
@@ -164,9 +197,17 @@ for (const level of [1, 2, 3]) {
   writeFileSync(outPath, JSON.stringify(words, null, 2), 'utf-8');
   console.log(`HSK ${level}: ${words.length} words -> ${outPath}`);
 
-  if (unmatched.length > 0) {
-    console.warn(`  ${unmatched.length} términos oficiales sin enriquecer: ${unmatched.join(', ')}`);
-  }
+}
+
+writeFileSync(
+  join(seedDir, 'unresolved-hsk-terms.json'),
+  JSON.stringify(unresolvedTerms, null, 2),
+  'utf-8',
+);
+if (unresolvedTerms.length > 0) {
+  console.warn(
+    `Términos oficiales sin resolver: ${unresolvedTerms.length} -> unresolved-hsk-terms.json`,
+  );
 }
 
 console.log('Import complete. Run "npm run seed" to populate the database.');

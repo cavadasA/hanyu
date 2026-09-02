@@ -10,11 +10,13 @@ describe('buildSeedSql', () => {
     expect(generated.sql).toContain('insert into public.words');
     expect(generated.sql).toContain('insert into public.hsk_characters');
     expect(generated.sql).toContain('insert into public.grammar_points');
+    expect(generated.sql).toContain('insert into public.grammar_prerequisite');
     expect(generated.sql).toContain('insert into public.generated_exercises');
 
     expect(generated.counts.words).toBeGreaterThan(0);
     expect(generated.counts.characters).toBe(655);
     expect(generated.counts.grammar_points).toBeGreaterThan(0);
+    expect(generated.counts.grammar_prerequisites).toBe(14);
     expect(generated.counts.generated_exercises).toBeGreaterThan(0);
   });
 
@@ -42,6 +44,6 @@ describe('buildSeedSql', () => {
   });
 
   it('lleva el corpus completo', () => {
-    expect(counts.words).toBe(1011);
+    expect(counts.words).toBe(1004);
   });
 });

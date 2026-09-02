@@ -1302,20 +1302,6 @@
     "frequency": 0
   },
   {
-    "hanzi": "得",
-    "sense_index": null,
-    "variants": [
-      "得"
-    ],
-    "traditional": null,
-    "pinyin": "děi",
-    "meaning_en": "to have to; must; ought to; to need to",
-    "meaning_es": "tener que; deber; necesitar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 22420955
-  },
-  {
     "hanzi": "灯",
     "sense_index": null,
     "variants": [
@@ -2310,20 +2296,6 @@
     "frequency": 205214
   },
   {
-    "hanzi": "过去",
-    "sense_index": 2,
-    "variants": [
-      "过去"
-    ],
-    "traditional": "過",
-    "pinyin": "guòqù",
-    "meaning_en": "(in the) past; former; previous; to go over; to pass by",
-    "meaning_es": null,
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 4956320
-  },
-  {
     "hanzi": "故事",
     "sense_index": null,
     "variants": [
@@ -2616,20 +2588,6 @@
     "classifier": "座",
     "pos": "noun",
     "frequency": 579967
-  },
-  {
-    "hanzi": "会",
-    "sense_index": 2,
-    "variants": [
-      "会"
-    ],
-    "traditional": "會",
-    "pinyin": "huì",
-    "meaning_en": "can; to have the skill; to know how to; to be likely to; to be sure to",
-    "meaning_es": null,
-    "classifier": null,
-    "pos": "noun",
-    "frequency": 40026863
   },
   {
     "hanzi": "回答",
@@ -6606,20 +6564,6 @@
     "classifier": null,
     "pos": "pronoun",
     "frequency": 1945502
-  },
-  {
-    "hanzi": "站",
-    "sense_index": 2,
-    "variants": [
-      "站"
-    ],
-    "traditional": null,
-    "pinyin": "zhàn",
-    "meaning_en": "station; to stand; to halt; to stop; branch of a company or organization",
-    "meaning_es": null,
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 4876405
   },
   {
     "hanzi": "长",

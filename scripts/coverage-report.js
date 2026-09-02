@@ -5,7 +5,11 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadOfficialWords, loadOfficialCharacters } from './lib/official-terms.js';
+import {
+  dedupeOfficialTerms,
+  loadOfficialWords,
+  loadOfficialCharacters,
+} from './lib/official-terms.js';
 import { loadOfficialGrammar } from './lib/official-grammar.js';
 import { verifyLocalSources } from './fetch-syllabus.js';
 
@@ -19,6 +23,7 @@ export function buildCoverageReport() {
   const manifest = JSON.parse(readFileSync(join(rootDir, 'data', 'sources.json'), 'utf8'));
   const characters = readSeed('hsk-characters.json');
   const grammar = readSeed('grammar-points.json');
+  const unresolved = readSeed('unresolved-hsk-terms.json');
 
   const vocabulary = {};
   const charactersByLevel = {};
@@ -26,7 +31,8 @@ export function buildCoverageReport() {
 
   for (const level of [1, 2, 3]) {
     const corpus = readSeed(`hsk${level}-words.json`);
-    const official = loadOfficialWords(level);
+    const official = dedupeOfficialTerms(loadOfficialWords(level), level).terms;
+    const unresolvedForLevel = unresolved.filter((term) => term.hsk_level === level);
     const have = new Set(corpus.map((row) => `${row.hanzi}#${row.sense_index ?? ''}`));
     const covered = official.filter((term) =>
       have.has(`${term.form}#${term.sense_index ?? ''}`),
@@ -35,6 +41,7 @@ export function buildCoverageReport() {
     vocabulary[level] = {
       official: official.length,
       covered,
+      unresolved: unresolvedForLevel.length,
       with_spanish: corpus.filter((row) => row.meaning_es).length,
       percent: percent(covered, official.length),
     };

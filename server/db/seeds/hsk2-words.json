@@ -532,20 +532,6 @@
     "frequency": 36263392
   },
   {
-    "hanzi": "点",
-    "sense_index": 2,
-    "variants": [
-      "点"
-    ],
-    "traditional": "點",
-    "pinyin": "diǎn",
-    "meaning_en": "to touch briefly; to tap; to mark with a dot; to check off (on a list); to order (food etc)",
-    "meaning_es": null,
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 0
-  },
-  {
     "hanzi": "地铁",
     "sense_index": null,
     "variants": [
@@ -714,20 +700,6 @@
     "frequency": 21257943
   },
   {
-    "hanzi": "过",
-    "sense_index": null,
-    "variants": [
-      "过"
-    ],
-    "traditional": "過",
-    "pinyin": "guò",
-    "meaning_en": "to cross; to go over; to pass (time); to celebrate (a holiday); to live",
-    "meaning_es": "pasar; cruzar; atravesar; transcurrir; celebrar",
-    "classifier": null,
-    "pos": "verb",
-    "frequency": 21257943
-  },
-  {
     "hanzi": "过来",
     "sense_index": null,
     "variants": [
@@ -856,20 +828,6 @@
   {
     "hanzi": "花",
     "sense_index": 1,
-    "variants": [
-      "花"
-    ],
-    "traditional": "蘤",
-    "pinyin": "huā",
-    "meaning_en": "flower; blossom; fancy pattern; florid; to spend (money, time)",
-    "meaning_es": null,
-    "classifier": "朵、支、束、把、盆、簇",
-    "pos": "noun",
-    "frequency": 4562491
-  },
-  {
-    "hanzi": "花",
-    "sense_index": 2,
     "variants": [
       "花"
     ],

@@ -24,6 +24,12 @@ export function loadCorpus() {
   return rows;
 }
 
+function loadUnresolvedTerms() {
+  return JSON.parse(
+    readFileSync(join(seedDir, 'unresolved-hsk-terms.json'), 'utf8'),
+  );
+}
+
 function groupByHanzi(rows) {
   const groups = new Map();
 
@@ -42,9 +48,29 @@ function normalizeReadingIdentity(input) {
 
 describe('contrato del corpus', () => {
   const rows = loadCorpus();
+  const unresolved = loadUnresolvedTerms();
 
   it('tiene el tamaño esperado', () => {
-    expect(rows).toHaveLength(1011);
+    const officialKeys = new Set();
+    for (const level of [1, 2, 3]) {
+      for (const term of loadOfficialWords(level)) {
+        officialKeys.add(`${term.form}#${level}#${term.sense_index ?? ''}`);
+      }
+    }
+    const unresolvedKeys = new Set(
+      unresolved.map((term) => `${term.form}#${term.hsk_level}#${term.sense_index ?? ''}`),
+    );
+
+    expect(rows).toHaveLength(
+      [...officialKeys].filter((key) => !unresolvedKeys.has(key)).length,
+    );
+  });
+
+  it('no repite ninguna clave (hanzi, nivel, sentido)', () => {
+    const keys = rows.map((row) => `${row.hanzi}#${row.hsk_level}#${row.sense_index ?? ''}`);
+    const duplicates = keys.filter((key, index) => keys.indexOf(key) !== index);
+
+    expect(duplicates).toEqual([]);
   });
 
   it('nunca da la misma glosa inglesa a dos lecturas distintas del mismo hanzi', () => {
@@ -73,6 +99,43 @@ describe('contrato del corpus', () => {
     expect(offenders).toEqual([]);
   });
 
+  it('no comparte glosa entre dos sentidos explícitos del mismo hanzi y nivel', () => {
+    const offenders = [];
+    const groups = new Map();
+
+    for (const row of rows) {
+      const key = `${row.hanzi}#${row.hsk_level}`;
+      const list = groups.get(key) ?? [];
+      list.push(row);
+      groups.set(key, list);
+    }
+
+    for (const [key, list] of groups) {
+      for (let i = 0; i < list.length; i += 1) {
+        for (let j = i + 1; j < list.length; j += 1) {
+          const a = list[i];
+          const b = list[j];
+
+          if (
+            a.sense_index === null ||
+            b.sense_index === null ||
+            a.sense_index === b.sense_index
+          ) {
+            continue;
+          }
+
+          for (const field of ['meaning_en', 'meaning_es']) {
+            if (a[field] && b[field] && a[field] === b[field]) {
+              offenders.push(`${key}#${field}: "${a[field]}"`);
+            }
+          }
+        }
+      }
+    }
+
+    expect(offenders).toEqual([]);
+  });
+
   it('no deja el clasificador incrustado dentro de la glosa inglesa', () => {
     const offenders = rows
       .filter((row) => /CL:/.test(row.meaning_en))
@@ -86,13 +149,19 @@ describe('contrato del corpus', () => {
 
     for (const level of [1, 2, 3]) {
       const official = loadOfficialWords(level).map(
-        (term) => `${term.form}#${term.sense_index ?? ''}`,
+        (term) => `${term.form}#${level}#${term.sense_index ?? ''}`,
       );
       const mine = rows
         .filter((row) => row.hsk_level === level)
-        .map((row) => `${row.hanzi}#${row.sense_index ?? ''}`);
+        .map((row) => `${row.hanzi}#${level}#${row.sense_index ?? ''}`);
+      const unresolvedKeys = new Set(
+        unresolved
+          .filter((term) => term.hsk_level === level)
+          .map((term) => `${term.form}#${level}#${term.sense_index ?? ''}`),
+      );
+      const expected = [...new Set(official)].filter((key) => !unresolvedKeys.has(key));
 
-      for (const term of official) {
+      for (const term of expected) {
         if (!mine.includes(term)) problems.push(`L${level} falta ${term}`);
       }
       for (const term of mine) {
@@ -103,6 +172,23 @@ describe('contrato del corpus', () => {
     expect(problems).toEqual([]);
   });
 
+  it('documenta los sentidos sin fuente y no los emite como otra acepción', () => {
+    expect(unresolved).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ hsk_level: 2, form: '花', sense_index: 2 }),
+      ]),
+    );
+
+    const emitted = new Set(
+      rows.map((row) => `${row.hanzi}#${row.hsk_level}#${row.sense_index ?? ''}`),
+    );
+    expect(
+      unresolved.every(
+        (term) => !emitted.has(`${term.form}#${term.hsk_level}#${term.sense_index ?? ''}`),
+      ),
+    ).toBe(true);
+  });
+
   it('reparte las acepciones de 点 según el índice de la fuente', () => {
     const dian = rows
       .filter((row) => row.hanzi === '点')
@@ -110,7 +196,12 @@ describe('contrato del corpus', () => {
       .sort();
 
     // La transcripción fijada en data/sources.json publica 点1 en HSK 3.
-    expect(dian).toEqual(['L1#1', 'L2#2', 'L3#1']);
+    expect(dian).toEqual(['L1#1', 'L3#1']);
+    expect(unresolved).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ hsk_level: 2, form: '点', sense_index: 2 }),
+      ]),
+    );
   });
 
   it('conserva las variantes de las formas con parte opcional', () => {
@@ -207,5 +298,14 @@ describe('contrato del corpus', () => {
     });
 
     expect(missing).toEqual([]);
+  });
+
+  it('mantiene un suelo de glosas españolas por nivel', () => {
+    const minimumByLevel = { 1: 293, 2: 194, 3: 500 };
+
+    for (const level of [1, 2, 3]) {
+      expect(rows.filter((row) => row.hsk_level === level && row.meaning_es).length)
+        .toBeGreaterThanOrEqual(minimumByLevel[level]);
+    }
   });
 });

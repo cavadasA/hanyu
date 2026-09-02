@@ -9,6 +9,20 @@
 // `items`, separados del título.
 const STAGE_SUFFIX = /^(.*?)([1-9])$/;
 
+// Estas dos familias están numeradas dentro de viñetas y no en el título del
+// epígrafe. Se anotan por el texto oficial de la viñeta para no convertir los
+// índices léxicos (都1, 因为1, 跟2...) en prerrequisitos por accidente.
+const BULLET_PREREQUISITES = [
+  {
+    current: { hsk_level: 2, item: /^主谓句4/ },
+    previous: { hsk_level: 1, item: /^主谓句[123]/ },
+  },
+  {
+    current: { hsk_level: 1, item: /了2/ },
+    previous: { hsk_level: 1, item: /了1/ },
+  },
+];
+
 export function splitStageIndex(title) {
   const match = STAGE_SUFFIX.exec(String(title).trim());
 
@@ -51,6 +65,39 @@ export function deriveGrammarPrerequisites(points) {
         requires_level: previous.hsk_level,
       });
     }
+  }
+
+  for (const annotation of BULLET_PREREQUISITES) {
+    const current = points.find(
+      (point) =>
+        point.hsk_level === annotation.current.hsk_level &&
+        Array.isArray(point.items) &&
+        point.items.some((item) => annotation.current.item.test(item)),
+    );
+    const previous = points.find(
+      (point) =>
+        point.hsk_level === annotation.previous.hsk_level &&
+        Array.isArray(point.items) &&
+        point.items.some((item) => annotation.previous.item.test(item)),
+    );
+
+    if (!current || !previous) continue;
+
+    const duplicate = prerequisites.some(
+      (prerequisite) =>
+        prerequisite.code === current.code &&
+        prerequisite.hsk_level === current.hsk_level &&
+        prerequisite.requires_code === previous.code &&
+        prerequisite.requires_level === previous.hsk_level,
+    );
+    if (duplicate) continue;
+
+    prerequisites.push({
+      code: current.code,
+      hsk_level: current.hsk_level,
+      requires_code: previous.code,
+      requires_level: previous.hsk_level,
+    });
   }
 
   return prerequisites;

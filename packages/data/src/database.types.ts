@@ -576,7 +576,22 @@ export type Database = {
           requires_code?: string
           requires_level?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "grammar_prerequisite_current_fkey"
+            columns: ["hsk_level", "code"]
+            isOneToOne: false
+            referencedRelation: "grammar_points"
+            referencedColumns: ["hsk_level", "code"]
+          },
+          {
+            foreignKeyName: "grammar_prerequisite_required_fkey"
+            columns: ["requires_level", "requires_code"]
+            isOneToOne: false
+            referencedRelation: "grammar_points"
+            referencedColumns: ["hsk_level", "code"]
+          },
+        ]
       }
       profiles: {
         Row: {

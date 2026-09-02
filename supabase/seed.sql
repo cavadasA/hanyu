@@ -1002,7 +1002,6 @@ values
   ('得', null, 'de', 'structural particle: used after a verb (or adjective as main verb), linking it to following phrase indicating effect, degree, possibility etc', 'de (partícula que une el verbo con su complemento)', null, 2, 'particle', 22420955, null, array['得']::text[]),
   ('地', null, 'de', '-ly; structural particle: used before a verb or adjective, linking it to preceding modifying adverbial adjunct', 'de (partícula que une un adverbio al verbo)', null, 2, 'particle', 35624818, null, array['地']::text[]),
   ('等', null, 'děng', 'to wait for; to await; by the time; when; till', null, null, 2, 'verb', 36263392, 1, array['等']::text[]),
-  ('点', '點', 'diǎn', 'to touch briefly; to tap; to mark with a dot; to check off (on a list); to order (food etc)', null, null, 2, 'verb', 0, 2, array['点']::text[]),
   ('地铁', '地', 'dìtiě', 'underground railway; subway; subway train', 'metro (ferrocarril subterráneo); tren metropolitano; suburbano; transporte subterráneo', null, 2, 'noun', 878737, null, array['地铁']::text[]),
   ('动', '動', 'dòng', '(of sth) to move; to set in movement; to displace; to touch; to make use of', 'moverse; mover; actuar; tocar; usar; poner en movimiento; emocionar; conmover; animar', null, 2, 'verb', 3047197, null, array['动']::text[]),
   ('懂', null, 'dǒng', 'to understand; to comprehend', 'entender; comprender', null, 2, 'verb', 2817020, null, array['懂']::text[]),
@@ -1015,7 +1014,6 @@ values
   ('个子', '個', 'gèzi', 'stature; height; size (of a person or object); (agriculture) bundle of cereal stalks tied together', 'estatura; altura; talla (de una persona); complexión; tamaño corporal', null, 2, 'noun', 88665, null, array['个子']::text[]),
   ('公交车', '公', 'gōngjiāochē', 'public transport vehicle; town bus', 'autobús urbano; bus de transporte público; ómnibus municipal', '辆', 2, 'noun', 0, null, array['公交车']::text[]),
   ('过', '過', 'guò', 'to cross; to go over; to pass (time); to celebrate (a holiday); to live', 'pasar; cruzar; atravesar; transcurrir; celebrar', null, 2, 'verb', 21257943, null, array['过']::text[]),
-  ('过', '過', 'guò', 'to cross; to go over; to pass (time); to celebrate (a holiday); to live', 'pasar; cruzar; atravesar; transcurrir; celebrar', null, 2, 'verb', 21257943, null, array['过']::text[]),
   ('过来', '過', 'guòlái', 'to come over; to manage; to handle; to be able to take care of', 'venir (hacia aquí); acercarse; (complemento: cambio de estado, capacidad de abarcar, acción dirigida hacia el sujeto)', null, 2, 'verb', 2150245, null, array['过来']::text[]),
   ('过年', '過', 'guònián', 'to celebrate the Chinese New Year', 'celebrar el Año Nuevo (Chino); pasar la fiesta de Año Nuevo; festejar el cambio de año', null, 2, 'verb', 919755, null, array['过年']::text[]),
   ('过去', '過', 'guòqù', '(in the) past; former; previous; to go over; to pass by', null, null, 2, 'verb', 4956320, 1, array['过去']::text[]),
@@ -1026,7 +1024,6 @@ values
   ('后面', '後', 'hòumiàn', 'the back; the rear; the last bit; behind; near the end', 'detrás; parte trasera; posterior; atrás; después; más tarde; el último tramo; la retaguardia', null, 2, 'noun', 1294860, null, array['后面']::text[]),
   ('画', '畫', 'huà', 'to draw; to paint; picture; painting; to draw (a line) (variant of 劃|划[hua4])', 'dibujar; pintar; cuadro; pintura; ilustración; trazo (de carácter chino); delinear; describir', '幅、张', 2, 'verb', 1754654, null, array['画']::text[]),
   ('花', '蘤', 'huā', 'flower; blossom; fancy pattern; florid; to spend (money, time)', null, '朵、支、束、把、盆、簇', 2, 'noun', 4562491, 1, array['花']::text[]),
-  ('花', '蘤', 'huā', 'flower; blossom; fancy pattern; florid; to spend (money, time)', null, '朵、支、束、把、盆、簇', 2, 'noun', 4562491, 2, array['花']::text[]),
   ('坏', '壞', 'huài', 'bad; spoiled; broken; to break down; (suffix) to the utmost', 'malo; estropeado; roto; dañado; podrido; averiado; malvado; arruinar; estropear; extremadamente (coloquial)', null, 2, 'adjective', 1197540, null, array['坏']::text[]),
   ('回来', '回', 'huílái', 'to return; to come back', 'volver; regresar (hacia aquí); retornar; venir de vuelta', null, 2, 'verb', 3024352, null, array['回来']::text[]),
   ('回去', null, 'huíqù', 'to return; to go back', 'volver; regresar (allí, al punto de origen); irse de vuelta', null, 2, 'verb', 1302474, null, array['回去']::text[]),
@@ -1261,7 +1258,6 @@ values
   ('得到', null, 'dédào', 'to get; to obtain; to receive', 'obtener; conseguir; lograr; alcanzar; recibir; ganar; adquirir; llegar a tener; resultar en; dar como resultado', null, 3, 'verb', 6635451, null, array['得到']::text[]),
   ('得分', null, 'défēn', 'to score a point (in a competition, test etc); score; rating; grade', 'marcar (un punto, un gol); anotar; puntuar; conseguir puntos; obtener una puntuación; puntuación; tanteo; marcador; resultado; nota (de un examen); calificación; puntos obtenidos; score; tanto', null, 3, 'verb', 547351, null, array['得分']::text[]),
   ('的话', '的', 'dehuà', 'if (coming after a conditional clause)', 'si (pospuesto a una oración o frase condicional); en caso de que; en el supuesto de que; siempre que; con la condición de que; suponiendo que; si es que; de darse el caso; si se diera la circunstancia (partícula final que marca condición, siempre después de la cláusula condicional)', null, 3, 'particle', 0, null, array['的话']::text[]),
-  ('得', null, 'děi', 'to have to; must; ought to; to need to', 'tener que; deber; necesitar', null, 3, 'verb', 22420955, null, array['得']::text[]),
   ('灯', '燈', 'dēng', 'lamp; light; lantern', 'lámpara; luz; farol; linterna; iluminación; lámpara eléctrica; luz artificial; aparato de iluminación; quemador (de cocina); mechero Bunsen; válvula (de radio); tubo electrónico', '盏', 3, 'noun', 1010975, null, array['灯']::text[]),
   ('地', null, 'dì', 'earth; ground; field; place; land', 'tierra; suelo; terreno; lugar', '片', 3, 'noun', 35624818, null, array['地']::text[]),
   ('电', '電', 'diàn', 'lightning; electricity; electric (bound form); to get (or give) an electric shock; phone call or telegram etc', 'electricidad; relámpago; rayo; corriente eléctrica; telecomunicación; electrificar; electrocutar; dar calambre; telegrama; teléfono', null, 3, 'noun', 5915529, null, array['电']::text[]),
@@ -1333,7 +1329,6 @@ values
   ('关注', '關', 'guānzhù', 'to pay attention to; to follow sth closely; to follow (on social media); concern; interest', 'prestar atención (a); seguir de cerca; interesarse por; seguir (en redes sociales); atención; interés; seguimiento; preocupación', null, 3, 'verb', 5652031, null, array['关注']::text[]),
   ('国家', '國', 'guójiā', 'country; nation; state', 'país; nación; estado', '个', 3, 'noun', 13546984, null, array['国家']::text[]),
   ('过节', '過', 'guòjié', 'to celebrate a festival; after the celebrations (i.e. once the festival is over)', 'celebrar una fiesta; pasar un día festivo; festejar; conmemorar una festividad; disfrutar de las fiestas; guardar las fiestas; después de que pase la fiesta; una vez terminadas las celebraciones; (coloquial) tener rencillas; guardar resentimiento; haber roce o malentendido entre dos personas; tener diferencias personales', null, 3, 'verb', 205214, null, array['过节']::text[]),
-  ('过去', '過', 'guòqù', '(in the) past; former; previous; to go over; to pass by', null, null, 3, 'noun', 4956320, 2, array['过去']::text[]),
   ('故事', null, 'gùshi', 'old practice', 'historia; cuento; relato; narración; fábula; argumento; trama; anécdota; incidente; leyenda', null, 3, 'noun', 2328736, null, array['故事']::text[]),
   ('海', null, 'hǎi', 'ocean; sea; great number of people or things; (dialect) numerous', 'mar; océano', '个、片', 3, 'noun', 3771897, null, array['海']::text[]),
   ('害怕', null, 'hàipà', 'to be afraid; to be scared', 'tener miedo; asustarse', null, 3, 'verb', 924978, null, array['害怕']::text[]),
@@ -1355,7 +1350,6 @@ values
   ('环境', '環', 'huánjìng', 'environment; circumstances; surroundings; ambient', 'entorno; medio ambiente; ambiente; circunstancias', '个', 3, 'noun', 5471225, null, array['环境']::text[]),
   ('欢迎', '歡', 'huānyíng', 'to welcome; welcome', 'bienvenido; dar la bienvenida; acoger', null, 3, 'verb', 2065915, null, array['欢迎']::text[]),
   ('花园', '花', 'huāyuán', 'garden (for flowers, ornamental plants etc); (landscaped) park; yard with decorative plants', 'jardín; parque floral', '座', 3, 'noun', 579967, null, array['花园']::text[]),
-  ('会', '會', 'huì', 'can; to have the skill; to know how to; to be likely to; to be sure to', null, null, 3, 'noun', 40026863, 2, array['会']::text[]),
   ('回答', null, 'huídá', 'to reply; to answer; reply; answer', 'responder', null, 3, 'verb', 1736380, null, array['回答']::text[]),
   ('会议', '會', 'huìyì', 'meeting; conference', 'reunión; conferencia; congreso; asamblea; sesión; junta; consejo; cita; encuentro formal', '场、届', 3, 'noun', 5237094, null, array['会议']::text[]),
   ('或', null, 'huò', 'maybe; perhaps; might; possibly; or', 'o; quizás; tal vez; posiblemente; algunos; unos; un poco; ligeramente; o bien; ya sea', null, 3, 'conjunction', 13198499, null, array['或']::text[]),
@@ -1640,7 +1634,6 @@ values
   ('咱们', '咱', 'zánmen', 'we or us (including both the speaker and the person(s) spoken to); (dialect) I or me; (dialect) (in a coaxing or familiar way) you; also pr. [za2 men5]', 'nosotros (inclusivo: tú y yo); nosotros (dialectal); nuestro grupo', null, 3, 'pronoun', 1039072, null, array['咱们']::text[]),
   ('怎么办', '怎', 'zěnmebàn', 'what''s to be done', '¿qué hacer?; ¿cómo resolverlo?; ¿cómo se arregla?; ¿qué se puede hacer?; ¿ahora qué?; ¿y ahora cómo actuamos?; ¿cuál es la solución?', null, 3, '', 1008212, null, array['怎么办']::text[]),
   ('怎样', '怎', 'zěnyàng', 'how; what kind', 'cómo; de qué manera; qué tal; cómo es; cómo está; qué; ¡qué...!; de todos modos; en cualquier caso; pase lo que pase; da igual cómo', null, 3, 'pronoun', 1945502, null, array['怎样']::text[]),
-  ('站', null, 'zhàn', 'station; to stand; to halt; to stop; branch of a company or organization', null, null, 3, 'verb', 4876405, 2, array['站']::text[]),
   ('长', '長', 'zhǎng', 'chief; head; elder; to grow; to develop', 'crecer; desarrollarse; mayor; jefe', null, 3, 'verb', 8800220, null, array['长']::text[]),
   ('张', '張', 'zhāng', 'to open up; to spread; sheet of paper; classifier for flat objects, sheet; classifier for votes', 'abrir; extender; desplegar; exagerar; clasificador para superficies planas (mesa, papel, cama, mapa), bocas y caras', null, 3, 'verb', 6157733, null, array['张']::text[]),
   ('照', null, 'zhào', 'to shine; to illuminate; according to; in accordance with; to shine', 'iluminar; alumbrar; brillar; reflejar; reflejarse (en espejo, agua); mirarse al espejo; fotografiar; sacar una foto; según; conforme a; de acuerdo con; licencia; permiso; cuidar de; atender a; avisar; notificar; contrastar; comparar; comprender; entender', null, 3, 'verb', 1700910, null, array['照']::text[]),
@@ -1859,7 +1852,9 @@ values
   (3, '5.3.1', 2, '5.4.1'),
   (3, '5.3.2', 2, '5.4.2'),
   (3, '6.2.4', 2, '6.3.4'),
-  (3, '6.2.6', 2, '6.3.5')
+  (3, '6.2.6', 2, '6.3.5'),
+  (2, '6.1.1', 1, '5.1.1'),
+  (1, '2.9.3', 1, '2.9.2')
 on conflict do nothing;
 
 insert into public.generated_exercises (type, hsk_level, prompt, answer, source_model, created_by)
