@@ -1,37 +1,19 @@
 import type { HanyuClient } from '../client';
+import { evaluateAnswer, toSolution } from '@hanyu/domain';
 import type {
   Exercise,
+  ExerciseAnswer,
   ExerciseCheckResult,
   ExercisePrompt,
   ExerciseType,
   HskLevel,
 } from '../types';
 import {
-  callRpcVariants,
   createRepositoryError,
   getRequiredUserId,
   parseJsonField,
   toDateString,
 } from './shared';
-
-function normalizeCheckResult(payload: any, submittedAnswer?: unknown): ExerciseCheckResult {
-  const data = Array.isArray(payload) ? payload[0] : payload;
-  const correct = Boolean(data?.correct ?? data?.is_correct ?? false);
-  const correctAnswer =
-    data?.correct_answer ??
-    data?.answer ??
-    data?.canonical_answer ??
-    null;
-
-  return {
-    ...data,
-    correct,
-    correct_answer: correctAnswer,
-    expected_answer: correctAnswer,
-    submitted_answer: data?.submitted_answer ?? submittedAnswer ?? null,
-    explanation: data?.explanation ?? data?.feedback?.explanation ?? null,
-  };
-}
 
 function toExercisePrompt(type: ExerciseType, payload: any): ExercisePrompt {
   switch (type) {
@@ -72,14 +54,22 @@ function toExercisePrompt(type: ExerciseType, payload: any): ExercisePrompt {
   }
 }
 
-function normalizeExercise(payload: any): Exercise & Record<string, unknown> {
+/**
+ * Devuelve exactamente los campos del contrato. La versión anterior hacía
+ * `...payload`, así que el cliente recibía `correct`, `sentence` y
+ * `source_model` como campos sueltos junto al prompt ya normalizado: la
+ * respuesta viajaba por accidente. Ahora viaja a propósito, en `solution`,
+ * porque los ejercicios tienen que poder resolverse sin conexión.
+ */
+function normalizeExercise(payload: any): Exercise {
   const type = String(payload.type || 'fill_blank') as ExerciseType;
+
   return {
-    ...payload,
     id: String(payload.id),
     type,
     hsk_level: Number(payload.hsk_level) as HskLevel,
     prompt: toExercisePrompt(type, payload),
+    solution: toSolution(type, payload, payload.answer ?? null),
     explanation: payload.explanation ?? null,
   };
 }
@@ -92,7 +82,8 @@ function normalizeGeneratedExerciseRow(row: any) {
     ...prompt,
     type: prompt.type || row.type,
     hsk_level: row.hsk_level,
-    source_model: row.source_model,
+    answer: parseJsonField(row.answer, row.answer),
+    explanation: prompt.explanation ?? null,
   });
 }
 
@@ -133,46 +124,11 @@ async function incrementExerciseDone(client: HanyuClient, userId: string) {
   }
 }
 
-function evaluateExercise(exerciseType: string, prompt: any, answerValue: any, submittedAnswer: any) {
-  switch (exerciseType) {
-    case 'reorder': {
-      const expected = Array.isArray(prompt?.correct_order)
-        ? prompt.correct_order.join('')
-        : String(answerValue || '');
-      return {
-        correct: submittedAnswer === expected,
-        correct_answer: expected,
-      };
-    }
-    case 'matching':
-      return {
-        correct: submittedAnswer === 'matched',
-        correct_answer: 'matched',
-      };
-    case 'dictation': {
-      const normalized = String(submittedAnswer ?? '').trim().toLowerCase();
-      const expected = String(prompt?.audio_text || answerValue || '').trim().toLowerCase();
-      const pinyin = String(prompt?.pinyin || '').trim().toLowerCase();
-      const correct = normalized === expected || (prompt?.accept_pinyin && normalized === pinyin);
-
-      return {
-        correct,
-        correct_answer: prompt?.audio_text || answerValue || null,
-      };
-    }
-    default:
-      return {
-        correct: answerValue === submittedAnswer,
-        correct_answer: answerValue,
-      };
-  }
-}
-
 export async function generateExercise(
   type: ExerciseType,
   level: HskLevel,
   client: HanyuClient,
-): Promise<Exercise & Record<string, unknown>> {
+): Promise<Exercise> {
   try {
     const { data, error } = await client.functions.invoke('generate-exercise', {
       body: { type, level },
@@ -211,28 +167,17 @@ export async function generateExercise(
 
 export async function checkExercise(
   id: string,
-  answer: unknown,
+  answer: ExerciseAnswer,
   client: HanyuClient,
 ): Promise<ExerciseCheckResult> {
-  try {
-    const rpcData = await callRpcVariants(client, 'check_exercise', [
-      { exercise_id: id, submitted_answer: answer },
-      { p_exercise_id: id, p_submitted_answer: answer },
-      { id, answer },
-    ]);
-
-    return normalizeCheckResult(rpcData, answer);
-  } catch {
-    const { data, error } = await client.functions.invoke('check-exercise', {
-      body: { id, answer },
-    });
-
-    if (!error) {
-      return normalizeCheckResult(data, answer);
-    }
-  }
-
+  // No hay comprobación de servidor. La versión anterior intentaba una RPC
+  // `check_exercise` con tres firmas distintas y después una Edge Function
+  // `check-exercise`: cuatro viajes de red que siempre fallaban, porque
+  // ninguna de las dos existe. La evaluación es local a propósito y la regla
+  // vive en @hanyu/domain, lista para ejecutarse en servidor si algún día se
+  // necesita autoridad.
   const userId = await getRequiredUserId(client);
+
   const { data: exerciseRow, error: exerciseError } = await client
     .from('generated_exercises')
     .select('id, type, prompt, answer')
@@ -243,18 +188,17 @@ export async function checkExercise(
     throw createRepositoryError(exerciseError, 'Failed to load exercise for local scoring');
   }
 
-  const prompt = parseJsonField((exerciseRow as any).prompt, {});
-  const answerValue = parseJsonField((exerciseRow as any).answer, (exerciseRow as any).answer);
-  const evaluation = evaluateExercise((exerciseRow as any).type, prompt, answerValue, answer);
+  const row = exerciseRow as any;
+  const prompt = parseJsonField(row.prompt, {});
+  const storedAnswer = parseJsonField(row.answer, row.answer);
+  const solution = toSolution(row.type, prompt, storedAnswer);
+  const evaluation = evaluateAnswer(solution, answer);
 
   const { error: attemptError } = await client.from('exercise_attempts').insert({
     user_id: userId,
-    exercise_id: (exerciseRow as any).id,
+    exercise_id: id,
+    correct: evaluation.correct,
     submitted_answer: answer,
-    is_correct: Boolean(evaluation.correct),
-    feedback: {
-      correct_answer: evaluation.correct_answer,
-    },
   } as any);
 
   if (attemptError) {
@@ -264,11 +208,11 @@ export async function checkExercise(
   await incrementExerciseDone(client, userId);
 
   return {
-    correct: Boolean(evaluation.correct),
-    correct_answer: evaluation.correct_answer,
-    expected_answer: evaluation.correct_answer,
-    submitted_answer: answer,
-    explanation: null,
+    correct: evaluation.correct,
+    expected_answer: evaluation.solution,
+    submitted_answer: evaluation.answer,
+    detail: evaluation.detail,
+    explanation: prompt?.explanation ?? null,
   };
 }
 

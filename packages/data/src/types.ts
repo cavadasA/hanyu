@@ -1,15 +1,25 @@
+import type {
+  ExerciseAnswer,
+  ExerciseKind,
+  ExerciseSolution,
+  Evaluation,
+  EvaluationDetail,
+} from '@hanyu/domain';
+
+export type {
+  ExerciseAnswer,
+  ExerciseSolution,
+  Evaluation,
+  EvaluationDetail,
+} from '@hanyu/domain';
+
 export type ThemePreference = 'light' | 'dark' | 'system';
 export type SupportLanguage = 'es' | 'en';
 export type CardOrder = 'due' | 'frequency';
 export type AiProvider = 'none' | 'deepseek' | 'gemini';
 export type CardStatus = 'new' | 'learning' | 'review' | 'mastered';
 export type HskLevel = 1 | 2 | 3;
-export type ExerciseType =
-  | 'fill_blank'
-  | 'multiple_choice'
-  | 'reorder'
-  | 'dictation'
-  | 'matching';
+export type ExerciseType = ExerciseKind;
 export type ReadingFormat = 'short_text' | 'story' | 'dialogue';
 
 export type LearningSkill =
@@ -96,15 +106,16 @@ export interface Exercise {
   type: ExerciseType;
   hsk_level: HskLevel;
   prompt: ExercisePrompt;
+  solution: ExerciseSolution;
   explanation: string | null;
 }
 
 export interface ExerciseCheckResult {
   correct: boolean;
-  expected_answer: unknown;
-  submitted_answer: unknown;
+  expected_answer: ExerciseSolution;
+  submitted_answer: ExerciseAnswer;
+  detail: EvaluationDetail;
   explanation: string | null;
-  correct_answer?: unknown;
 }
 
 export interface Deck {

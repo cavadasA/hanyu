@@ -3,11 +3,30 @@ import type { Exercise } from '@hanyu/data';
 import { ExerciseRenderer } from './ExerciseRenderer';
 
 function exercise(prompt: Exercise['prompt']): Exercise {
+  const solution: Exercise['solution'] = (() => {
+    switch (prompt.kind) {
+      case 'fill_blank':
+        return { kind: 'fill_blank', accept: prompt.options?.slice(0, 1) ?? [] };
+      case 'multiple_choice':
+        return { kind: 'multiple_choice', correct: prompt.options[0] ?? '' };
+      case 'reorder':
+        return { kind: 'reorder', order: prompt.tokens };
+      case 'dictation':
+        return { kind: 'dictation', hanzi: prompt.audio_text, pinyin: null };
+      case 'matching':
+        return {
+          kind: 'matching',
+          pairs: Object.fromEntries(prompt.pairs.map(pair => [pair.left, pair.right])),
+        };
+    }
+  })();
+
   return {
     id: 'exercise-1',
     type: prompt.kind,
     hsk_level: 2,
     prompt,
+    solution,
     explanation: null,
   };
 }

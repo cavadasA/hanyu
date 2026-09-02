@@ -41,7 +41,7 @@ import { getSkillStates, upsertSkillState } from './repositories/skills';
 import { getDashboard, getStreak, logTime } from './repositories/stats';
 import { getToday } from './repositories/today';
 import { getWord, getWords } from './repositories/words';
-import type { ExerciseType, HskLevel, ReadingFormat } from './types';
+import type { ExerciseAnswer, ExerciseType, HskLevel, ReadingFormat } from './types';
 
 export function createHanyuData(config: HanyuDataConfig) {
   const client = createSupabaseClient(config);
@@ -94,7 +94,7 @@ export function createHanyuData(config: HanyuDataConfig) {
     exercises: {
       generateExercise: (type: ExerciseType, level: HskLevel) =>
         generateExercise(type, level, client),
-      checkExercise: (id: string, answer: unknown) => checkExercise(id, answer, client),
+      checkExercise: (id: string, answer: ExerciseAnswer) => checkExercise(id, answer, client),
       getExerciseHistory: (limit = 20) => getExerciseHistory(limit, client),
     },
     events: {

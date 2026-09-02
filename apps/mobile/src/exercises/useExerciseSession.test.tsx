@@ -12,6 +12,11 @@ const exercise: Exercise = {
     pinyin: 'nǐ hǎo',
     accept_pinyin: true,
   },
+  solution: {
+    kind: 'dictation',
+    hanzi: '你好',
+    pinyin: 'nǐ hǎo',
+  },
   explanation: 'A greeting.',
 };
 
@@ -24,8 +29,9 @@ describe('useExerciseSession', () => {
         .mockResolvedValueOnce(nextExercise),
       checkExercise: jest.fn().mockResolvedValue({
         correct: true,
-        expected_answer: '你好',
-        submitted_answer: '你好',
+        expected_answer: exercise.solution,
+        submitted_answer: { kind: 'dictation', text: '你好' },
+        detail: { kind: 'simple' },
         explanation: 'Correct.',
       } satisfies ExerciseCheckResult),
     };
