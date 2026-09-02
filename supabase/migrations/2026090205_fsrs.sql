@@ -610,6 +610,17 @@ declare
   v_today_exercises_done integer := 0;
   v_today_readings_done integer := 0;
   v_today_time_spent_ms integer := 0;
+  v_heatmap jsonb := '[]'::jsonb;
+  v_exercise_by_type jsonb := '{}'::jsonb;
+  v_reading_total integer := 0;
+  v_week_ms integer := 0;
+  v_all_time_ms integer := 0;
+  v_active_dates date[];
+  v_current_streak integer := 0;
+  v_longest_streak integer := 0;
+  v_run integer := 1;
+  v_count integer := 0;
+  i integer;
 begin
   if v_user_id is null then
     raise exception 'Authentication required';
@@ -643,6 +654,72 @@ begin
        v_today_readings_done, v_today_time_spent_ms
   from public.user_stats where user_id = v_user_id and date = v_today;
 
+  select coalesce(
+    jsonb_agg(
+      jsonb_build_object(
+        'date', day.date::text,
+        'activity', day.cards_reviewed + day.exercises_done + day.readings_done
+      ) order by day.date
+    ), '[]'::jsonb
+  ) into v_heatmap
+  from (
+    select date, cards_reviewed, exercises_done, readings_done
+    from public.user_stats
+    where user_id = v_user_id and date >= (v_today - 90)
+    order by date
+  ) day;
+
+  select coalesce(sum(time_spent_ms), 0)::integer into v_week_ms
+  from public.user_stats
+  where user_id = v_user_id and date >= (v_today - 7);
+
+  select coalesce(sum(time_spent_ms), 0)::integer into v_all_time_ms
+  from public.user_stats where user_id = v_user_id;
+
+  select coalesce(jsonb_object_agg(type, count_value), '{}'::jsonb)
+  into v_exercise_by_type
+  from (
+    select type, count(*)::integer as count_value
+    from public.generated_exercises group by type
+  ) grouped;
+
+  select count(*)::integer into v_reading_total from public.generated_readings;
+
+  select array_agg(stats.date order by stats.date desc) into v_active_dates
+  from (
+    select date from public.user_stats
+    where user_id = v_user_id
+      and (cards_reviewed > 0 or exercises_done > 0 or readings_done > 0)
+    order by date desc limit 365
+  ) stats;
+
+  v_count := coalesce(array_length(v_active_dates, 1), 0);
+  if v_count > 0 then
+    v_longest_streak := 1;
+    if v_active_dates[1] = v_today or v_active_dates[1] = v_today - 1 then
+      v_current_streak := 1;
+      if v_count > 1 then
+        for i in 2..v_count loop
+          if v_active_dates[i - 1] - v_active_dates[i] = 1 then
+            v_current_streak := v_current_streak + 1;
+          else
+            exit;
+          end if;
+        end loop;
+      end if;
+    end if;
+    if v_count > 1 then
+      for i in 2..v_count loop
+        if v_active_dates[i - 1] - v_active_dates[i] = 1 then
+          v_run := v_run + 1;
+          v_longest_streak := greatest(v_longest_streak, v_run);
+        else
+          v_run := 1;
+        end if;
+      end loop;
+    end if;
+  end if;
+
   return jsonb_build_object(
     'cards', jsonb_build_object('total', v_cards_total, 'due', v_cards_due, 'by_status', v_cards_by_status),
     'today', jsonb_build_object(
@@ -652,15 +729,15 @@ begin
       'readings_done', coalesce(v_today_readings_done, 0),
       'time_spent_ms', coalesce(v_today_time_spent_ms, 0)
     ),
-    'heatmap', '[]'::jsonb,
-    'streak', jsonb_build_object('current', 0, 'longest', 0),
+    'heatmap', v_heatmap,
+    'streak', jsonb_build_object('current', v_current_streak, 'longest', v_longest_streak),
     'learning_curve', '[]'::jsonb,
-    'exercise_stats', jsonb_build_object('by_type', '{}'::jsonb, 'accuracy', null),
-    'reading_stats', jsonb_build_object('total', 0, 'avg_score', null),
+    'exercise_stats', jsonb_build_object('by_type', v_exercise_by_type, 'accuracy', null),
+    'reading_stats', jsonb_build_object('total', v_reading_total, 'avg_score', null),
     'time', jsonb_build_object(
       'today_ms', coalesce(v_today_time_spent_ms, 0),
-      'week_ms', 0,
-      'all_time_ms', 0
+      'week_ms', v_week_ms,
+      'all_time_ms', v_all_time_ms
     )
   );
 end;
