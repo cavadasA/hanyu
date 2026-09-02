@@ -3,8 +3,8 @@
 // de una Edge Function de Deno el día que la comprobación necesite autoridad
 // de servidor. Hoy corre en el cliente, a propósito: los ejercicios tienen que
 // funcionar sin conexión.
-import type { ExerciseAnswer, ExerciseSolution } from './contract';
-import { normalizeHanzi, normalizePinyinInput, normalizeText } from './normalize';
+import type { ExerciseAnswer, ExerciseSolution } from './contract.ts';
+import { normalizeHanzi, normalizePinyinInput, normalizeText } from './normalize.ts';
 
 export type EvaluationDetail =
   | { kind: 'matching'; wrong: string[]; missing: string[] }

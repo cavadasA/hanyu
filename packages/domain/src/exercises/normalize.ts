@@ -1,7 +1,7 @@
 // Tres normalizaciones y no una, porque las tres comparaciones son distintas.
 // Un espacio en "ni hao" es una separación de sílabas y sobra; un espacio en
 // "to pay back" separa palabras y cambia el significado.
-import { normalizePinyin } from '../pinyin';
+import { normalizePinyin } from '../pinyin.ts';
 
 // Puntuación latina y china de anchura completa. Se quita en todos los casos:
 // nadie falla un ejercicio por olvidar un punto final.

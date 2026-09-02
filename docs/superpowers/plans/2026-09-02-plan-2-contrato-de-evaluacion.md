@@ -1473,7 +1473,7 @@ git commit -m "feat(mobile): exigir respuesta completa y mostrar qué falló al 
 2. Los cinco tipos aceptan una respuesta correcta. Comprobable a mano en la app: resolver uno de cada tipo y ver que ninguno se marca mal.
 3. `matching` no se puede enviar hasta emparejar todos los pares, y su columna derecha no coincide con la izquierda.
 4. `dictation` acepta `你好`, `你好。`, `nǐ hǎo`, `ni hao`, `ni3 hao3` y `nihao`.
-5. Comprobar una respuesta hace **una** consulta de lectura y dos escrituras, ninguna RPC y ninguna invocación de Edge Function.
+5. Comprobar una respuesta hace **dos** consultas de lectura y dos escrituras, ninguna RPC y ninguna invocación de Edge Function.
 6. El objeto `Exercise` que llega al cliente tiene exactamente seis claves: `id`, `type`, `hsk_level`, `prompt`, `solution`, `explanation`.
 
 ## Lo que este plan deja explícitamente sin resolver

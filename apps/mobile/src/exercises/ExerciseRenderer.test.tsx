@@ -151,6 +151,7 @@ describe('ExerciseRenderer', () => {
 
     expect(rendered).toHaveLength(4);
     expect(rendered).not.toEqual(original);
+    expect(rendered.every((right, index) => right !== original[index])).toBe(true);
     expect([...rendered].sort()).toEqual([...original].sort());
   });
 });

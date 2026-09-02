@@ -28,19 +28,16 @@ export function MatchingExercise({
   // La columna derecha se pintaba en el mismo orden que la izquierda, así que
   // el ejercicio se resolvía emparejando fila con fila sin leer nada. Se baraja
   // de forma determinista a partir del propio contenido —el orden no cambia
-  // entre renderizados— y se garantiza que el resultado no coincida con el
-  // original: un barajado que a veces devuelve la identidad deja el ejercicio
-  // trivial justo esas veces, y además haría inestable el test.
+  // entre renderizados— y se fuerza un desarreglo: ningún significado queda
+  // en la posición original cuando las etiquetas son distintas.
   const rightColumn = useMemo(() => {
     const rights = prompt.pairs.map((pair) => pair.right);
     if (rights.length < 2) {
       return rights;
     }
 
-    const shuffled = [...rights].sort((a, b) => hashString(a) - hashString(b));
-    const unchanged = shuffled.every((right, index) => right === rights[index]);
-
-    return unchanged ? [...shuffled.slice(1), shuffled[0]] : shuffled;
+    const offset = (hashString(rights.join('\u0000')) >>> 0) % (rights.length - 1) + 1;
+    return rights.map((_, index) => rights[(index + offset) % rights.length]);
   }, [prompt.pairs]);
 
   return (
