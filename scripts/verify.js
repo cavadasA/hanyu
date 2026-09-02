@@ -11,7 +11,7 @@ const steps = [
   ['typecheck @hanyu/domain', 'npm', ['run', 'typecheck', '-w', '@hanyu/domain']],
   ['typecheck @hanyu/data', 'npm', ['run', 'typecheck', '-w', '@hanyu/data']],
   ['typecheck @hanyu/mobile', 'npm', ['run', 'typecheck', '-w', '@hanyu/mobile']],
-  ['tests web + server + domain (vitest)', 'npx', ['vitest', 'run']],
+  ['tests corpus + data + domain + functions (vitest)', 'npx', ['vitest', 'run']],
   ['tests mobile (jest)', 'npm', ['run', 'test', '-w', '@hanyu/mobile']],
 ];
 

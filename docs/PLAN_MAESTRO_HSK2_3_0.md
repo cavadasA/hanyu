@@ -4,6 +4,27 @@ Documento de referencia: `docs/AUDITORIA_CORE_MOVIL_HSK2_3_0.md`
 Contexto de ejecución: **producto sin usuarios, desarrollo continuo de todas las olas en una sola pasada.**
 Objetivo: cerrar **todos** los hallazgos de la auditoría, sin excepción.
 
+## Alcance: solo la app móvil
+
+Decidido el 2 de septiembre de 2026. Vale para los doce documentos.
+
+| Área | Estado | Se verifica |
+|---|---|---|
+| `apps/mobile` | Activa | Sí (Jest) |
+| `packages/data`, `packages/domain` | Activas | Sí (typecheck + vitest) |
+| `supabase/` (migraciones, funciones, seed) | Activa | Sí |
+| `server/db` (corpus + su seeder) | Se conserva: es la fuente del corpus | Sí |
+| `apps/web` | **Congelada** | No |
+| `server/app.js`, `server/routes`, `server/services` | **Congelados** | No |
+
+Congelada significa que sigue en el repositorio, no se borra y no se toca. `apps/web` no está deprecada —esa decisión no se ha tomado— pero mantener verdes sus diez suites obligaría a arreglarla cada vez que cambia `packages/data`, y ése es el esfuerzo que no queremos gastar. Si un cambio la rompe, se deja rota.
+
+`server/db` es la excepción dentro de `server/`: `server/db/seeds/*.json` es el corpus que alimenta `supabase/seed.sql` y con él la app móvil, así que sus dos suites siguen ejecutándose.
+
+Efecto en la verificación: `npx vitest run` pasa de 41 ficheros y 189 tests a 16 y 71.
+
+**Si algún día se retoma la web**, el arreglo que la hacía cargar bajo Node ≥22 está en el commit `55cf2cf` (`test/setup-web.js`): Node expone un `localStorage` global inerte que impide al entorno jsdom de Vitest 2.1 instalar el suyo, y `apps/web/src/stores/appStore.js` lo lee al importarse. El fichero se eliminó al congelar la web; recuperarlo de ese commit basta.
+
 ## Respuesta corta
 
 **10 planes, en secuencia, con dos ramas paralelas.**

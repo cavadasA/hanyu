@@ -16,8 +16,25 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     environmentMatchGlobs: [['apps/web/src/**/*.test.jsx', 'jsdom']],
-    setupFiles: ['./test/setup-web.js'],
     include: ['**/*.test.{js,jsx,ts}'],
-    exclude: ['**/node_modules/**', 'apps/mobile/**'],
+    // Alcance: solo lo que sostiene la app móvil.
+    //
+    // apps/mobile corre en Jest, no aquí. apps/web está congelada — sigue en el
+    // repositorio pero no se verifica, porque mantener verdes sus 10 suites
+    // obligaría a arreglarla cada vez que cambia packages/data, y ese es
+    // esfuerzo que no queremos gastar mientras no se decida su futuro.
+    //
+    // De server/ se conserva únicamente server/db: ahí vive el corpus
+    // (server/db/seeds/*.json) que alimenta supabase/seed.sql y, con él, la app
+    // móvil. El servidor Express, sus rutas y sus servicios están congelados
+    // por el mismo motivo que la web.
+    exclude: [
+      '**/node_modules/**',
+      'apps/mobile/**',
+      'apps/web/**',
+      'server/app.test.js',
+      'server/routes/**',
+      'server/services/**',
+    ],
   },
 });

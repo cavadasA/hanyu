@@ -10,7 +10,13 @@
 
 ## Global Constraints
 
-- **Foco móvil.** Los entregables son `apps/mobile`, `packages/data`, `packages/domain`, `supabase/` y el corpus en `server/db/seeds/*.json`. `apps/web` y el servidor Express en `server/` son legado: no se les añaden funcionalidades, pero **no pueden romperse** — `npm test` debe seguir en verde.
+- **Foco móvil, y la web está congelada.** Los entregables son `apps/mobile`, `packages/data`, `packages/domain`, `supabase/` y el corpus en `server/db/seeds/*.json`.
+
+  `apps/web` sigue en el repositorio pero **no se verifica y no se toca**: está fuera de `vitest.config.js`. Si un cambio en `packages/data` la rompe, se deja rota. No inviertas ni un minuto en arreglarla, ni siquiera cuando el fallo sea evidente y la corrección de una línea.
+
+  De `server/` solo vive `server/db`, porque ahí está el corpus que alimenta `supabase/seed.sql` y con él la app móvil. El servidor Express, sus rutas y sus servicios están congelados igual que la web.
+
+  Consecuencia práctica: en `packages/data` no hace falta preservar los alias de compatibilidad que existen para la web (`WordPage.words`, `WordPage.limit`). No los quites en este plan —no es su cometido— pero tampoco añadas ninguno nuevo.
 - **`npm test` debe pasar al final de cada tarea.** Ejecuta los 5 pasos (3 typechecks + vitest + jest) e informa de todos aunque uno falle.
 - **Node 26 según `.nvmrc`.** Los scripts en `scripts/` importan directamente ficheros `.ts` de `packages/domain` apoyándose en el type stripping nativo de Node ≥23. Si el intérprete es anterior, `npm run import-hsk` fallará con un error de sintaxis: ése es el síntoma, y la solución es usar la versión de `.nvmrc`, no duplicar el módulo.
 - **Prohibido escribir mitigaciones.** Si algo está mal y su arreglo pertenece a un plan posterior, se deja roto y se anota en `server/db/seeds/sense-review-queue.json`. No se tapa.
@@ -879,6 +885,7 @@ git commit -m "fix(corpus): glosas españolas por sentido para las lecturas que 
 **Files:**
 - Create: `supabase/migrations/2026090201_word_senses.sql`
 - Modify: `scripts/build-supabase-seed.js`
+- Modify: `scripts/build-supabase-seed.test.js` (ya existe, con un test de humo)
 - Regenerate: `supabase/seed.sql`
 
 **Interfaces:**
@@ -946,15 +953,9 @@ y quita `pinyin_normalized` de la Tarea 7. Anota el cambio en el plan.
 
 - [ ] **Step 2: Write the failing test**
 
-`scripts/build-supabase-seed.js` exporta `buildSeedSql()`, así que se puede probar sin base de datos. Crea `scripts/build-supabase-seed.test.js`:
+`scripts/build-supabase-seed.js` exporta `buildSeedSql()`, así que se puede probar sin base de datos. `scripts/build-supabase-seed.test.js` ya existe con un test de humo; añade estos tres al `describe` que hay, y `const { sql, counts } = buildSeedSql();` justo debajo de su primera línea:
 
 ```js
-// scripts/build-supabase-seed.test.js
-import { buildSeedSql } from './build-supabase-seed.js';
-
-describe('buildSeedSql', () => {
-  const { sql, counts } = buildSeedSql();
-
   it('inserta las columnas de sentido', () => {
     expect(sql).toContain(
       'insert into public.words (hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency)',
@@ -973,7 +974,6 @@ describe('buildSeedSql', () => {
   it('lleva el corpus completo', () => {
     expect(counts.words).toBe(1010);
   });
-});
 ```
 
 Run: `npx vitest run scripts/build-supabase-seed.test.js`
