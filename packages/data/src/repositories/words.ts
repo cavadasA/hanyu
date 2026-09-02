@@ -26,7 +26,7 @@ export async function getWords(
   let countQuery = client.from('words').select('*', { count: 'exact', head: true });
   let dataQuery = client
     .from('words')
-    .select('id, hanzi, pinyin, meaning_en, meaning_es, hsk_level, pos, frequency')
+    .select('id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency')
     .order('hsk_level', { ascending: true })
     .order('frequency', { ascending: true, nullsFirst: false })
     .range(offset, offset + limitNum - 1);
@@ -75,7 +75,7 @@ export async function getWords(
 export async function getWord(id: number | string, client: HanyuClient) {
   const { data, error } = await client
     .from('words')
-    .select('id, hanzi, pinyin, meaning_en, meaning_es, hsk_level, pos, frequency')
+    .select('id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency')
     .eq('id', id as any)
     .single();
 

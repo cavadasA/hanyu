@@ -13,7 +13,7 @@ type SrsCardRow = Database['public']['Tables']['srs_cards']['Row'] & {
 };
 
 const CARD_SELECT =
-  'id, user_id, word_id, ease_factor, interval_days, repetitions, next_review_at, last_reviewed_at, status, version, words:word_id(id, hanzi, pinyin, meaning_en, meaning_es, hsk_level, pos, frequency)';
+  'id, user_id, word_id, ease_factor, interval_days, repetitions, next_review_at, last_reviewed_at, status, version, words:word_id(id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency)';
 
 function mapCardRow(row: SrsCardRow) {
   const word = Array.isArray(row.words) ? row.words[0] : row.words;
@@ -33,9 +33,11 @@ function mapCardRow(row: SrsCardRow) {
     status: row.status,
     version: row.version,
     hanzi: word?.hanzi,
+    traditional: word?.traditional,
     pinyin: word?.pinyin,
     meaning_en: word?.meaning_en,
     meaning_es: word?.meaning_es,
+    classifier: word?.classifier,
     hsk_level: word?.hsk_level,
     pos: word?.pos,
     frequency: word?.frequency,
@@ -117,7 +119,7 @@ export async function getDueCards(
     if (wordIds.length > 0) {
       const { data: wordRows, error: wordError } = await client
         .from('words')
-        .select('id, hanzi, pinyin, meaning_en, meaning_es, hsk_level, pos, frequency')
+        .select('id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency')
         .in('id', wordIds);
       if (wordError) {
         throw createRepositoryError(wordError, 'Failed to load card words');

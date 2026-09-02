@@ -206,7 +206,16 @@ describe('decks repository', () => {
     const cards = await getDeckCards('d1', client);
 
     expect(cards).toEqual([
-      { word_id: 5, hanzi: '你好', pinyin: 'nǐ hǎo', meaning_en: 'hello', hsk_level: 1 },
+      {
+        word_id: 5,
+        hanzi: '你好',
+        traditional: null,
+        pinyin: 'nǐ hǎo',
+        meaning_en: 'hello',
+        meaning_es: null,
+        classifier: null,
+        hsk_level: 1,
+      },
     ]);
   });
 });

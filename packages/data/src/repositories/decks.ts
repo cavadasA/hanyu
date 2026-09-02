@@ -169,7 +169,7 @@ export async function getDeckCards(deckId: string, client: HanyuClient) {
   const { data, error } = await client
     .from('deck_cards')
     .select(
-      'word_id, words:word_id(id, hanzi, pinyin, meaning_en, meaning_es, hsk_level)'
+      'word_id, words:word_id(id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level)'
     )
     .eq('deck_id', deckId);
   if (error) throw createRepositoryError(error, 'Failed to load deck cards');
@@ -178,8 +178,11 @@ export async function getDeckCards(deckId: string, client: HanyuClient) {
     return {
       word_id: row.word_id,
       hanzi: w?.hanzi,
+      traditional: w?.traditional ?? null,
       pinyin: w?.pinyin,
       meaning_en: w?.meaning_en,
+      meaning_es: w?.meaning_es ?? null,
+      classifier: w?.classifier ?? null,
       hsk_level: w?.hsk_level,
     };
   });

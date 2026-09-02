@@ -2,6 +2,7 @@ export { createSupabaseClient } from './client';
 export type { HanyuDataConfig, SessionStorage } from './client';
 export { createHanyuData } from './factory';
 export type { HanyuData } from './factory';
+export { resolveGloss } from './gloss';
 export { toUserMessage } from './errors';
 export type {
   AiProvider,
@@ -29,6 +30,7 @@ export type {
   ReviewResult,
   ReviewSyncResult,
   StarterDeckResult,
+  SupportLanguage,
   StreakPayload,
   ThemePreference,
   TodayPayload,

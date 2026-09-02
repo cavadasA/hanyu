@@ -513,6 +513,7 @@ export type Database = {
           created_at: string
           current_level: number
           max_reviews_per_session: number
+          support_language: string
           theme: string
           updated_at: string
           user_id: string
@@ -524,6 +525,7 @@ export type Database = {
           created_at?: string
           current_level?: number
           max_reviews_per_session?: number
+          support_language?: string
           theme?: string
           updated_at?: string
           user_id: string
@@ -535,6 +537,7 @@ export type Database = {
           created_at?: string
           current_level?: number
           max_reviews_per_session?: number
+          support_language?: string
           theme?: string
           updated_at?: string
           user_id?: string
@@ -598,34 +601,43 @@ export type Database = {
       }
       words: {
         Row: {
+          classifier: string | null
           frequency: number | null
           hanzi: string
           hsk_level: number
           id: number
           meaning_en: string
           meaning_es: string | null
+          pinyin_normalized: string | null
           pinyin: string
           pos: string | null
+          traditional: string | null
         }
         Insert: {
+          classifier?: string | null
           frequency?: number | null
           hanzi: string
           hsk_level: number
           id?: number
           meaning_en: string
           meaning_es?: string | null
+          pinyin_normalized?: string | null
           pinyin: string
           pos?: string | null
+          traditional?: string | null
         }
         Update: {
+          classifier?: string | null
           frequency?: number | null
           hanzi?: string
           hsk_level?: number
           id?: number
           meaning_en?: string
           meaning_es?: string | null
+          pinyin_normalized?: string | null
           pinyin?: string
           pos?: string | null
+          traditional?: string | null
         }
         Relationships: []
       }

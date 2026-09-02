@@ -1,4 +1,5 @@
 export type ThemePreference = 'light' | 'dark' | 'system';
+export type SupportLanguage = 'es' | 'en';
 export type CardOrder = 'due' | 'frequency';
 export type AiProvider = 'none' | 'deepseek' | 'gemini';
 export type CardStatus = 'new' | 'learning' | 'review' | 'mastered';
@@ -68,9 +69,11 @@ export interface DeckTemplate {
 export interface Word {
   id: number;
   hanzi: string;
+  traditional: string | null;
   pinyin: string;
   meaning_en: string;
   meaning_es: string | null;
+  classifier: string | null;
   hsk_level: HskLevel;
   pos: string | null;
   frequency: number | null;
@@ -139,6 +142,7 @@ export interface GrammarPoint {
 export interface UserSettings {
   user_id: string;
   theme: ThemePreference;
+  support_language: SupportLanguage;
   current_level: number;
   cards_per_day: number;
   max_reviews_per_session: number;
@@ -164,9 +168,11 @@ export interface DueCard {
   last_reviewed_at: string | null;
   status: CardStatus;
   hanzi?: string;
+  traditional?: string | null;
   pinyin?: string;
   meaning_en?: string;
   meaning_es?: string | null;
+  classifier?: string | null;
   hsk_level?: number;
   pos?: string | null;
   frequency?: number | null;
