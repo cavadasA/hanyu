@@ -87,7 +87,7 @@ export default function CardsScreen() {
   const sessionStartedAt = useRef(Date.now());
   const cardStartedAt = useRef(Date.now());
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (selectedSkill: ReviewMode = mode) => {
     setLoading(true);
     setError('');
 
@@ -100,7 +100,9 @@ export default function CardsScreen() {
         return;
       }
 
-      const cards = await service.loadDueCards(50, focusedDeckId);
+      const cards = selectedSkill === 'recognition'
+        ? await service.loadDueCards(50, focusedDeckId)
+        : await service.loadDueCards(50, focusedDeckId, selectedSkill);
       setAllDueCards(cards);
       setDeckSize(focusedDeckId ? service.lastDeckSize : null);
       setIndex(0);
@@ -482,7 +484,10 @@ export default function CardsScreen() {
               <Segmented
                 options={MODE_OPTIONS}
                 value={mode}
-                onChange={setMode}
+                onChange={(selectedSkill) => {
+                  setMode(selectedSkill);
+                  void load(selectedSkill);
+                }}
               />
             </Card>
 

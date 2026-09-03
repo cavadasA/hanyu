@@ -6,7 +6,7 @@
  * so that the class can be tested in plain Node/Jest without any native modules.
  */
 
-import type { RevertOutcome, VersionedCard, ReviewEvent } from '@hanyu/data';
+import type { LearningSkill, RevertOutcome, VersionedCard, ReviewEvent } from '@hanyu/data';
 import { applyReview, type Grade } from '@hanyu/domain';
 import type { FSRSParameters } from 'ts-fsrs';
 import type { ReviewStore } from './ReviewStore';
@@ -28,6 +28,7 @@ export interface OfflineReviewServiceDeps {
   getDueCardsOnline: (
     limit: number,
     deckId: string | null,
+    skill?: LearningSkill,
   ) => Promise<{ cards: unknown[]; deck_size?: number }>;
   /** Injected clock – production default: `() => new Date()`. */
   now: () => Date;
@@ -47,6 +48,7 @@ export class OfflineReviewService {
   private readonly getDueCardsOnlineImpl: (
     limit: number,
     deckId: string | null,
+    skill?: LearningSkill,
   ) => Promise<{ cards: unknown[]; deck_size?: number }>;
   private readonly now: () => Date;
   private readonly uuid: () => string;
@@ -85,12 +87,18 @@ export class OfflineReviewService {
    *       the cached cards from step 1. loadDueCards never throws due to network
    *       failure — offline-first means the local store is always the fallback.
    */
-  async loadDueCards(limit = 50, deckId: string | null = null): Promise<VersionedCard[]> {
+  async loadDueCards(
+    limit = 50,
+    deckId: string | null = null,
+    skill: LearningSkill = 'recognition',
+  ): Promise<VersionedCard[]> {
     const nowIso = this.now().toISOString();
     const cached = await this.store.getDueProjectedCards(nowIso, limit);
 
     try {
-      const online = await this.getDueCardsOnlineImpl(limit, deckId);
+      const online = skill === 'recognition'
+        ? await this.getDueCardsOnlineImpl(limit, deckId)
+        : await this.getDueCardsOnlineImpl(limit, deckId, skill);
       const freshCards: VersionedCard[] = [];
 
       for (const raw of online.cards) {

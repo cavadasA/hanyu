@@ -8,6 +8,7 @@ import type {
   SchedulingPhase,
   SchedulingState,
   VersionedCard,
+  LearningSkill,
   WordContext,
 } from '../types';
 import { getSettings } from './settings';
@@ -19,6 +20,22 @@ import {
 
 const WORD_SELECT =
   'id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency';
+
+/**
+ * Las habilidades que una palabra puede ejercitar hoy dependen del material
+ * que exista para ella, no de un catálogo fijo. `production` está declarada en
+ * el enum desde el Plan 1C pero no se genera: sin evaluación de voz sería una
+ * tarjeta imposible de aprobar.
+ */
+export function availableSkills(input: { hasContext: boolean }): LearningSkill[] {
+  const skills: LearningSkill[] = ['recognition', 'recall', 'listening'];
+
+  if (input.hasContext) {
+    skills.push('reading');
+  }
+
+  return skills;
+}
 
 function mapVersionedCardRow(row: any, word?: any): VersionedCard {
   if (row.version === undefined || row.version === null) {
@@ -84,6 +101,7 @@ export async function getDueCards(
   limit: number = 50,
   client: HanyuClient,
   deckId: string | null = null,
+  skill: LearningSkill = 'recognition',
 ) {
   const settings = await getSettings(client);
   const maxFromSettings = settings.max_reviews_per_session || 100;
@@ -93,7 +111,7 @@ export async function getDueCards(
   const { data, error } = await (client.rpc as any)('get_due_cards', {
     p_limit: effectiveLimit,
     p_deck_id: deckId,
-    p_skill: 'recognition',
+    p_skill: skill,
   });
   if (error) {
     throw createRepositoryError(error, 'Failed to load due cards');
@@ -285,18 +303,21 @@ export async function addCard(
     );
   if (cardError) throw createRepositoryError(cardError, 'Failed to add card');
 
-  const { error: stateError } = await client
-    .from('learner_skill_state')
-    .upsert(
-      {
-        user_id: userId,
-        target_kind: 'word',
-        target_id: numericWordId,
-        skill: 'recognition',
-      } as any,
-      { onConflict: 'user_id,target_kind,target_id,skill', ignoreDuplicates: true },
-    );
-  if (stateError) throw createRepositoryError(stateError, 'Failed to initialize card scheduling state');
+  for (const skill of availableSkills({ hasContext: Boolean(options.context) })) {
+    const { error: stateError } = await client
+      .from('learner_skill_state')
+      .upsert(
+        {
+          user_id: userId,
+          target_kind: 'word',
+          target_id: numericWordId,
+          skill,
+          suspended: skill !== 'recognition',
+        } as any,
+        { onConflict: 'user_id,target_kind,target_id,skill', ignoreDuplicates: true },
+      );
+    if (stateError) throw createRepositoryError(stateError, 'Failed to initialize card scheduling state');
+  }
 
   if (options.context) {
     const { error: contextError } = await client

@@ -173,6 +173,15 @@ describe('loadDueCards – online refresh merge', () => {
     expect(result).toEqual([focusedCard]);
     expect(service.lastDeckSize).toBe(7);
   });
+
+  test('passes a non-recognition skill to the online loader', async () => {
+    const getDueCardsOnline = jest.fn().mockResolvedValue({ cards: [] });
+    const service = makeService({ getDueCardsOnline });
+
+    await service.loadDueCards(50, 'deck-1', 'recall');
+
+    expect(getDueCardsOnline).toHaveBeenCalledWith(50, 'deck-1', 'recall');
+  });
 });
 
 describe('loadDueCards – version-validation gotcha', () => {

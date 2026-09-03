@@ -21,7 +21,10 @@ const mockCreateStarterDeck = jest.fn();
 const mockGetDashboard = jest.fn();
 const mockPush = jest.fn();
 const mockOfflineService = {
-  loadDueCards: (limit: number, deckId?: string | null) => mockLoadDueCards(limit, deckId),
+  loadDueCards: (limit: number, deckId?: string | null, skill?: string) =>
+    skill === undefined
+      ? mockLoadDueCards(limit, deckId)
+      : mockLoadDueCards(limit, deckId, skill),
   lastDeckSize: null as number | null,
   rateCard: (card: unknown, grade: string, timeMs: number | null) =>
     mockRateCard(card, grade, timeMs),
@@ -272,6 +275,15 @@ describe('CardsScreen', () => {
     await renderCards();
 
     expect(mockLoadDueCards).toHaveBeenLastCalledWith(50, 'd1');
+  });
+
+  it('pide la cola de la habilidad seleccionada', async () => {
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+
+    await renderCards();
+    await fireEvent.press(screen.getByRole('button', { name: 'Recall' }));
+
+    await waitFor(() => expect(mockLoadDueCards).toHaveBeenLastCalledWith(50, 'd1', 'recall'));
   });
 
   it('shows a back to deck action on the completion screen in focus mode', async () => {

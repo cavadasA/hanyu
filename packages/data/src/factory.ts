@@ -46,6 +46,7 @@ import type {
   ExerciseType,
   HskLevel,
   ReadingFormat,
+  LearningSkill,
   WordContext,
 } from './types';
 
@@ -86,7 +87,11 @@ export function createHanyuData(config: HanyuDataConfig) {
         getGrammarPoint(level, id, client),
     },
     flashcards: {
-      getDueCards: (limit = 50, deckId: string | null = null) => getDueCards(limit, client, deckId),
+      getDueCards: (
+        limit = 50,
+        deckId: string | null = null,
+        skill: LearningSkill = 'recognition',
+      ) => getDueCards(limit, client, deckId, skill),
       getCard: (id: string) => getCard(id, client),
       reviewCardEvent: (event: Parameters<typeof reviewCardEvent>[0]) =>
         reviewCardEvent(event, client),

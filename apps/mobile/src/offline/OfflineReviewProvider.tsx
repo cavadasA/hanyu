@@ -128,7 +128,8 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
 
       const svc = new OfflineReviewService({
         store,
-        getDueCardsOnline: (limit, deckId) => getData().flashcards.getDueCards(limit, deckId),
+        getDueCardsOnline: (limit, deckId, skill) =>
+          getData().flashcards.getDueCards(limit, deckId, skill),
         now: () => new Date(),
         uuid: () => randomUUID(),
         params: () => params,

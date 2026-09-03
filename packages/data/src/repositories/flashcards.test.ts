@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { addCard, getDueCards, revertReview } from './flashcards';
+import { addCard, availableSkills, getDueCards, revertReview } from './flashcards';
 
 function clientFor(options: { rpcRows?: unknown[]; wordRows?: unknown[]; deckSize?: number } = {}) {
   const rpc = vi
@@ -211,6 +211,63 @@ describe('getDueCards', () => {
       p_deck_id: 'd1',
       p_due_only: false,
     });
+  });
+
+  it('passes the selected skill to the due-card RPC', async () => {
+    const client = clientFor({ rpcRows: [], deckSize: 0 });
+
+    await getDueCards(20, client as never, null, 'recall');
+
+    expect((client as any).rpc).toHaveBeenNthCalledWith(1, 'get_due_cards', {
+      p_limit: 20,
+      p_deck_id: null,
+      p_skill: 'recall',
+    });
+  });
+});
+
+describe('availableSkills', () => {
+  it('siempre ofrece reconocimiento, recuerdo y escucha', () => {
+    expect(availableSkills({ hasContext: false })).toEqual([
+      'recognition',
+      'recall',
+      'listening',
+    ]);
+  });
+
+  it('añade lectura en contexto solo cuando hay una frase guardada', () => {
+    expect(availableSkills({ hasContext: true })).toContain('reading');
+  });
+
+  it('nunca ofrece producción: no hay evaluación de voz', () => {
+    // Declararla sin poder evaluarla daría una tarjeta que el usuario no puede
+    // aprobar nunca.
+    expect(availableSkills({ hasContext: true })).not.toContain('production');
+  });
+});
+
+describe('skill state initialization', () => {
+  it('crea estados suspendidos para las habilidades derivadas', async () => {
+    const rows: any[] = [];
+    const client = {
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
+      from: vi.fn((table: string) => ({
+        upsert: vi.fn((row: any) => {
+          rows.push({ table, ...row });
+          return { error: null };
+        }),
+      })),
+    };
+
+    await addCard(5, client as any, { deckId: 'd1' });
+
+    expect(rows.filter((row) => row.table === 'learner_skill_state')).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ skill: 'recognition', suspended: false }),
+        expect.objectContaining({ skill: 'recall', suspended: true }),
+        expect.objectContaining({ skill: 'listening', suspended: true }),
+      ]),
+    );
   });
 });
 

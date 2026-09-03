@@ -60,4 +60,13 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'drop function if exists public.review_flashcard(uuid, integer, integer);');
     expectSqlToContain(migration, 'drop column if exists ease_factor');
   });
+
+  it('crea las habilidades derivadas y las desbloquea desde reconocimiento', () => {
+    const migration = readMigration('2026090206_word_context.sql');
+
+    expectSqlToContain(migration, 'create or replace function public.unlock_derived_skills(');
+    expectSqlToContain(migration, "s.skill <> 'recognition'");
+    expectSqlToContain(migration, "base.skill = 'recognition'");
+    expectSqlToContain(migration, 'coalesce(base.stability, 0) >= p_min_stability');
+  });
 });
