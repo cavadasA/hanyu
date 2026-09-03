@@ -320,11 +320,13 @@ export class ReviewStoreImpl implements ReviewStore {
    * Devuelve null si el evento ya no está en la cola. No es un error: el motor
    * de sincronización puede haberlo enviado entre que el usuario pulsó Undo y
    * esta llamada llegó, y quien llama debe entonces revertirlo en servidor.
-   */
+  */
   async discardPending(reviewId: string): Promise<VersionedCard | null> {
-    return this.db.withTransactionAsync(async () => {
+    let restored: VersionedCard | null = null;
+
+    await this.db.withTransactionAsync(async () => {
       const row = await this.db.getFirstAsync<PendingRow>(
-        `SELECT * FROM pending_reviews WHERE review_id = ? AND state != 'permanent_error'`,
+        `SELECT * FROM pending_reviews WHERE review_id = ? AND state = 'pending'`,
         [reviewId],
       );
 
@@ -360,8 +362,10 @@ export class ReviewStoreImpl implements ReviewStore {
         row.card_id,
       ]);
 
-      return projected;
+      restored = projected;
     });
+
+    return restored;
   }
 
   async pendingCount(): Promise<number> {

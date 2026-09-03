@@ -508,6 +508,27 @@ describe('markPermanentError', () => {
 });
 
 describe('discardPending', () => {
+  test('returns the reprojected card even when the database transaction does not return the callback value', async () => {
+    const { store, handle } = await createStore();
+    const card = makeCard();
+    await store.cacheCards([card]);
+
+    const event = makeEvent(card.id, 'easy', { review_id: 'r-transaction', expected_version: card.version });
+    await store.enqueueAndProject(event, {
+      ...card,
+      scheduling: { ...card.scheduling, reps: card.scheduling.reps + 1 },
+    });
+
+    handle.withTransactionAsync = async (fn) => {
+      await fn();
+    };
+
+    const restored = await store.discardPending(event.review_id);
+
+    expect(restored).not.toBeNull();
+    expect(restored!.scheduling.reps).toBe(card.scheduling.reps);
+  });
+
   test('removes the event and re-projects the card without it', async () => {
     const { store } = await createStore();
     const card = makeCard();
@@ -553,6 +574,30 @@ describe('discardPending', () => {
     await store.cacheCards([makeCard()]);
 
     expect(await store.discardPending('never-queued')).toBeNull();
+  });
+
+  test('does not discard a permanent_error event', async () => {
+    const { store } = await createStore();
+    const card = makeCard();
+    await store.cacheCards([card]);
+    const event = makeEvent(card.id, 'easy');
+    await store.enqueueAndProject(event, card);
+    await store.markPermanentError(event.review_id, 'server rejected it');
+
+    expect(await store.discardPending(event.review_id)).toBeNull();
+    expect(await store.pendingCount()).toBe(1);
+  });
+
+  test('removes a queued event even when its cached card is missing', async () => {
+    const { store, handle } = await createStore();
+    const card = makeCard();
+    await store.cacheCards([card]);
+    const event = makeEvent(card.id, 'easy');
+    await store.enqueueAndProject(event, card);
+    await handle.runAsync('DELETE FROM cached_cards WHERE card_id = ?', [card.id]);
+
+    expect(await store.discardPending(event.review_id)).toBeNull();
+    expect(await store.pendingCount()).toBe(0);
   });
 });
 
