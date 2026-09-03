@@ -36,8 +36,6 @@ const MODE_OPTIONS: SegmentedOption<ReviewMode>[] = MODES.map((value) => ({
 const INTRA_SESSION_HORIZON_MS = 30 * 60 * 1000;
 
 type ScreenPhase = 'pre-session' | 'reviewing' | 'complete';
-type SessionSize = 'quick' | 'all';
-
 interface UndoEntry {
   card: VersionedCard;
   previousIndex: number;
@@ -68,7 +66,6 @@ export default function CardsScreen() {
 
   const [index, setIndex] = useState(0);
   const [mode, setMode] = useState<ReviewMode>('recognition');
-  const [sessionSize, setSessionSize] = useState<SessionSize>('all');
   const [revealed, setRevealed] = useState(false);
   const [reviewed, setReviewed] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -112,9 +109,7 @@ export default function CardsScreen() {
         return;
       }
 
-      const cards = selectedSkill === 'recognition'
-        ? await service.loadDueCards(50, focusedDeckId)
-        : await service.loadDueCards(50, focusedDeckId, selectedSkill);
+      const cards = await service.loadQueue(selectedSkill, focusedDeckId);
       setAllDueCards(cards);
       setDeckSize(focusedDeckId ? service.lastDeckSize : null);
       setIndex(0);
@@ -154,8 +149,7 @@ export default function CardsScreen() {
   }, []);
 
   function startReview() {
-    const limit = sessionSize === 'quick' ? 10 : allDueCards.length;
-    const sessionCards = allDueCards.slice(0, limit);
+    const sessionCards = allDueCards;
     setActiveCards(sessionCards);
     setIndex(0);
     setReviewed(0);
@@ -478,18 +472,6 @@ export default function CardsScreen() {
                   setMode(selectedSkill);
                   void load(selectedSkill);
                 }}
-              />
-            </Card>
-
-            <Card>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Session Size</Text>
-              <Segmented
-                options={[
-                  { value: 'quick', label: `Quick (${Math.min(10, dueCount)})` },
-                  { value: 'all', label: `All due (${dueCount})` },
-                ]}
-                value={sessionSize}
-                onChange={setSessionSize}
               />
             </Card>
 

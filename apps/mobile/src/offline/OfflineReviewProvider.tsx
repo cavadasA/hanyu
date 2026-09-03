@@ -82,6 +82,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
   const serviceRef = useRef<OfflineReviewService | null>(null);
   const reviewStoreRef = useRef<ReviewStore | null>(null);
   const paramsRef = useRef(schedulingParams({}));
+  const cardOrderRef = useRef<'due' | 'frequency'>('due');
   const syncEngineRef = useRef<ReviewSyncEngine | null>(null);
 
   // Set to true by the empty-deps effect's cleanup, which React calls *before*
@@ -118,17 +119,20 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
       setLastSummary(null);
       reviewStoreRef.current = null;
       paramsRef.current = schedulingParams({});
+      cardOrderRef.current = 'due';
       syncEngineRef.current = null;
       return;
     }
 
     // Load the scheduling preference before opening the store. The same
     // parameter object is used by local replay and by new ratings.
+    cardOrderRef.current = 'due';
     void (async () => {
       let params = schedulingParams({});
       try {
         const settings = await getData().settings.getSettings();
         params = schedulingParams({ request_retention: settings.request_retention });
+        cardOrderRef.current = settings.card_order === 'frequency' ? 'frequency' : 'due';
       } catch {
         // The default retention is safe when settings are unavailable.
       }
@@ -144,8 +148,9 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
 
       const svc = new OfflineReviewService({
         store,
-        getDueCardsOnline: (limit, deckId, skill) =>
-          getData().flashcards.getDueCards(limit, deckId, skill),
+        buildQueueOnline: ({ skill, deckId }) =>
+          getData().flashcards.buildQueue({ skill, deckId }),
+        cardOrder: () => cardOrderRef.current,
         now: () => new Date(),
         uuid: () => randomUUID(),
         params: () => paramsRef.current,

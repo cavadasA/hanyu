@@ -7,7 +7,7 @@
  */
 
 import type { LearningSkill, RevertOutcome, VersionedCard, ReviewEvent } from '@hanyu/data';
-import { applyReview, type Grade } from '@hanyu/domain';
+import { applyReview, orderQueue, type Grade, type QueueStrategy } from '@hanyu/domain';
 import type { FSRSParameters } from 'ts-fsrs';
 import type { ReviewStore } from './ReviewStore';
 
@@ -21,15 +21,16 @@ const GRADE_NUMBER: Record<Grade, 1 | 2 | 3 | 4> = {
 export interface OfflineReviewServiceDeps {
   store: ReviewStore;
   /**
-   * Narrow shape needed from HanyuData['flashcards']['getDueCards'].
+   * Narrow shape needed from HanyuData['flashcards']['buildQueue'].
    * Kept this way intentionally: we only need cards, and we need the return
    * typed as unknown[] so we can do our own runtime version validation.
    */
-  getDueCardsOnline: (
-    limit: number,
-    deckId: string | null,
-    skill?: LearningSkill,
-  ) => Promise<{ cards: unknown[]; deck_size?: number }>;
+  buildQueueOnline: (input: {
+    skill: LearningSkill;
+    deckId: string | null;
+  }) => Promise<{ cards: unknown[]; deck_size?: number }>;
+  /** The server selects the queue; this strategy orders that selected set. */
+  cardOrder: () => QueueStrategy;
   /** Injected clock – production default: `() => new Date()`. */
   now: () => Date;
   /** Injected id generator – production default: expo-crypto randomUUID. */
@@ -45,11 +46,11 @@ export interface OfflineReviewServiceDeps {
 
 export class OfflineReviewService {
   private readonly store: ReviewStore;
-  private readonly getDueCardsOnlineImpl: (
-    limit: number,
-    deckId: string | null,
-    skill?: LearningSkill,
-  ) => Promise<{ cards: unknown[]; deck_size?: number }>;
+  private readonly buildQueueOnlineImpl: (input: {
+    skill: LearningSkill;
+    deckId: string | null;
+  }) => Promise<{ cards: unknown[]; deck_size?: number }>;
+  private readonly cardOrder: () => QueueStrategy;
   private readonly now: () => Date;
   private readonly uuid: () => string;
   private readonly params: () => FSRSParameters;
@@ -66,7 +67,8 @@ export class OfflineReviewService {
 
   constructor(deps: OfflineReviewServiceDeps) {
     this.store = deps.store;
-    this.getDueCardsOnlineImpl = deps.getDueCardsOnline;
+    this.buildQueueOnlineImpl = deps.buildQueueOnline;
+    this.cardOrder = deps.cardOrder;
     this.now = deps.now;
     this.uuid = deps.uuid;
     this.params = deps.params;
@@ -74,31 +76,20 @@ export class OfflineReviewService {
   }
 
   /**
-   * Cache-first load with optional online refresh.
-   *
-   * Algorithm:
-   * 1. Read projected due cards from the local store (the "cached" baseline).
-   * 2. Attempt an online fetch.
-   *    a. On success: validate that every returned card carries a non-null version
-   *       (mirrors `mapVersionedCardRow`'s defensive throw). Write valid cards into
-   *       the store (preserving any in-flight pending projections), then return the
-   *       freshly-merged read.
-   *    b. On any error (network, auth, validation): swallow the error and return
-   *       the cached cards from step 1. loadDueCards never throws due to network
-   *       failure — offline-first means the local store is always the fallback.
+   * La cola la decide el servidor; aquí solo se ordena lo que llega y se cae a
+   * la caché local si no hay red. Sin conexión no se puede aplicar la política
+   * de cupos —requiere el conjunto completo— así que se estudia lo que hay
+   * cacheado y los cupos vuelven a aplicarse en cuanto haya red.
    */
-  async loadDueCards(
-    limit = 50,
-    deckId: string | null = null,
+  async loadQueue(
     skill: LearningSkill = 'recognition',
+    deckId: string | null = null,
   ): Promise<VersionedCard[]> {
     const nowIso = this.now().toISOString();
-    const cached = await this.store.getDueProjectedCards(nowIso, limit);
+    const cached = await this.store.getDueProjectedCards(nowIso, 200);
 
     try {
-      const online = skill === 'recognition'
-        ? await this.getDueCardsOnlineImpl(limit, deckId)
-        : await this.getDueCardsOnlineImpl(limit, deckId, skill);
+      const online = await this.buildQueueOnlineImpl({ skill, deckId });
       const freshCards: VersionedCard[] = [];
 
       for (const raw of online.cards) {
@@ -110,7 +101,7 @@ export class OfflineReviewService {
           // Mirrors mapVersionedCardRow's defensive throw — a card without a
           // version cannot be tracked for conflict detection.
           throw new Error(
-            `Card "${String(c.id)}" returned by getDueCards is missing the version field`,
+            `Card "${String(c.id)}" returned by buildQueue is missing the version field`,
           );
         }
         freshCards.push(c as unknown as VersionedCard);
@@ -119,19 +110,14 @@ export class OfflineReviewService {
       this._lastDeckSize =
         typeof online.deck_size === 'number' && Number.isFinite(online.deck_size)
           ? online.deck_size
-          : null;
+          : freshCards.length;
 
       await this.store.cacheCards(freshCards);
-      const refreshed = await this.store.getDueProjectedCards(this.now().toISOString(), limit);
-      if (deckId !== null) {
-        const focusedIds = new Set(freshCards.map((card) => card.id));
-        return refreshed.filter((card) => focusedIds.has(card.id));
-      }
-      return refreshed;
+      return orderQueue(freshCards, this.now(), this.params(), this.cardOrder());
     } catch {
       // Any error (network, auth, validation) falls back to the cached baseline.
       this._lastDeckSize = null;
-      return cached;
+      return orderQueue(cached, this.now(), this.params(), this.cardOrder());
     }
   }
 

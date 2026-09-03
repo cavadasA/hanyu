@@ -30,6 +30,7 @@ create or replace function public.build_review_queue(
 )
 returns table(
   card_id uuid,
+  user_id uuid,
   word_id bigint,
   skill public.learning_skill,
   is_new boolean,
@@ -94,7 +95,7 @@ begin
   ),
   due_reviews as (
     select
-      sc.id as card_id, s.target_id as word_id, s.skill, false as is_new,
+      sc.id as card_id, sc.user_id, s.target_id as word_id, s.skill, false as is_new,
       s.difficulty, s.stability, s.reps, s.lapses, s.learning_steps,
       s.scheduled_days, s.elapsed_days, s.fsrs_state,
       s.next_review_at, s.last_reviewed_at, s.version
@@ -113,7 +114,7 @@ begin
   ),
   new_cards as (
     select
-      sc.id as card_id, w.id as word_id, p_skill as skill, true as is_new,
+      sc.id as card_id, sc.user_id, w.id as word_id, p_skill as skill, true as is_new,
       s.difficulty, s.stability, s.reps, s.lapses, s.learning_steps,
       s.scheduled_days, s.elapsed_days, coalesce(s.fsrs_state, 'new') as fsrs_state,
       s.next_review_at, s.last_reviewed_at, coalesce(s.version, 0) as version

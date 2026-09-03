@@ -49,20 +49,22 @@ function makeFakeStore(overrides: Partial<ReviewStore> = {}): jest.Mocked<Review
 
 function makeService(overrides: {
   store?: ReviewStore;
-  getDueCardsOnline?: jest.Mock;
+  buildQueueOnline?: jest.Mock;
   now?: jest.Mock;
   uuid?: jest.Mock;
   params?: jest.Mock;
+  cardOrder?: jest.Mock;
   revertReviewOnline?: jest.Mock;
 } = {}) {
   return new OfflineReviewService({
     store: overrides.store ?? makeFakeStore(),
-    getDueCardsOnline:
-      overrides.getDueCardsOnline ?? jest.fn().mockResolvedValue({ cards: [] }),
+    buildQueueOnline:
+      overrides.buildQueueOnline ?? jest.fn().mockResolvedValue({ cards: [] }),
     now:
       overrides.now ?? jest.fn().mockReturnValue(new Date('2026-07-31T10:00:00.000Z')),
     uuid: overrides.uuid ?? jest.fn().mockReturnValue('default-uuid'),
     params: overrides.params ?? jest.fn().mockReturnValue(schedulingParams({})),
+    cardOrder: overrides.cardOrder ?? jest.fn().mockReturnValue('due'),
     revertReviewOnline:
       overrides.revertReviewOnline ??
       jest.fn().mockResolvedValue({ outcome: 'reverted', card: makeCard() }),
@@ -70,10 +72,10 @@ function makeService(overrides: {
 }
 
 // ---------------------------------------------------------------------------
-// loadDueCards
+// loadQueue
 // ---------------------------------------------------------------------------
 
-describe('loadDueCards – cache-first load', () => {
+describe('loadQueue – cache-first load', () => {
   test('returns cached cards when online fetch throws (offline scenario)', async () => {
     const cachedCards = [makeCard({ id: 'cached-1' })];
     const store = makeFakeStore({
@@ -81,10 +83,10 @@ describe('loadDueCards – cache-first load', () => {
     });
     const service = makeService({
       store,
-      getDueCardsOnline: jest.fn().mockRejectedValue(new Error('Network error')),
+      buildQueueOnline: jest.fn().mockRejectedValue(new Error('Network error')),
     });
 
-    const result = await service.loadDueCards();
+    const result = await service.loadQueue();
 
     expect(result).toEqual(cachedCards);
     expect(store.cacheCards).not.toHaveBeenCalled();
@@ -92,10 +94,10 @@ describe('loadDueCards – cache-first load', () => {
 
   test('never throws even when the online fetch rejects', async () => {
     const service = makeService({
-      getDueCardsOnline: jest.fn().mockRejectedValue(new Error('Offline')),
+      buildQueueOnline: jest.fn().mockRejectedValue(new Error('Offline')),
     });
 
-    await expect(service.loadDueCards()).resolves.toBeDefined();
+    await expect(service.loadQueue()).resolves.toBeDefined();
   });
 
   test('reads cached cards with the injected clock timestamp', async () => {
@@ -107,86 +109,79 @@ describe('loadDueCards – cache-first load', () => {
     const service = makeService({
       store,
       now,
-      getDueCardsOnline: jest.fn().mockRejectedValue(new Error('offline')),
+      buildQueueOnline: jest.fn().mockRejectedValue(new Error('offline')),
     });
 
-    await service.loadDueCards(25);
+    await service.loadQueue();
 
-    expect(store.getDueProjectedCards).toHaveBeenCalledWith(fixedNow.toISOString(), 25);
+    expect(store.getDueProjectedCards).toHaveBeenCalledWith(fixedNow.toISOString(), 200);
   });
 });
 
-describe('loadDueCards – online refresh merge', () => {
-  test('caches online cards and returns freshly-projected cards on success', async () => {
+describe('loadQueue – online refresh', () => {
+  test('caches online cards and returns the ordered server queue on success', async () => {
     const onlineCard = makeCard({ id: 'online-1', version: 3 });
-    const freshProjected = [makeCard({ id: 'online-1', version: 3 })];
-    const store = makeFakeStore({
-      getDueProjectedCards: jest
-        .fn()
-        .mockResolvedValueOnce([]) // step 1: cache read before online
-        .mockResolvedValueOnce(freshProjected), // step 3: read after merge
-    });
-    const service = makeService({
-      store,
-      getDueCardsOnline: jest.fn().mockResolvedValue({ cards: [onlineCard] }),
-    });
-
-    const result = await service.loadDueCards();
-
-    expect(store.cacheCards).toHaveBeenCalledWith([onlineCard]);
-    expect(store.getDueProjectedCards).toHaveBeenCalledTimes(2);
-    expect(result).toEqual(freshProjected);
-  });
-
-  test('calls getDueProjectedCards twice (before and after merge)', async () => {
     const store = makeFakeStore({
       getDueProjectedCards: jest.fn().mockResolvedValue([]),
     });
     const service = makeService({
       store,
-      getDueCardsOnline: jest
-        .fn()
-        .mockResolvedValue({ cards: [makeCard({ version: 1 })] }),
+      buildQueueOnline: jest.fn().mockResolvedValue({ cards: [onlineCard] }),
     });
 
-    await service.loadDueCards();
+    const result = await service.loadQueue();
 
-    expect(store.getDueProjectedCards).toHaveBeenCalledTimes(2);
+    expect(store.cacheCards).toHaveBeenCalledWith([onlineCard]);
+    expect(store.getDueProjectedCards).toHaveBeenCalledTimes(1);
+    expect(result).toEqual([onlineCard]);
   });
 
-  test('passes the focused deck and excludes cached cards outside it from the refreshed result', async () => {
-    const focusedCard = makeCard({ id: 'focused-card', version: 2 });
-    const cachedOtherDeckCard = makeCard({ id: 'other-deck-card', version: 1 });
-    const store = makeFakeStore({
-      getDueProjectedCards: jest
-        .fn()
-        .mockResolvedValueOnce([])
-        .mockResolvedValueOnce([focusedCard, cachedOtherDeckCard]),
-    });
-    const getDueCardsOnline = jest.fn().mockResolvedValue({
-      cards: [focusedCard],
+  test('passes the focused deck to the server queue', async () => {
+    const buildQueueOnline = jest.fn().mockResolvedValue({
+      cards: [makeCard({ id: 'focused-card', version: 2 })],
       deck_size: 7,
     });
-    const service = makeService({ store, getDueCardsOnline });
+    const service = makeService({ buildQueueOnline });
 
-    const result = await service.loadDueCards(50, 'deck-1');
+    const result = await service.loadQueue('recognition', 'deck-1');
 
-    expect(getDueCardsOnline).toHaveBeenCalledWith(50, 'deck-1');
-    expect(result).toEqual([focusedCard]);
+    expect(buildQueueOnline).toHaveBeenCalledWith({ skill: 'recognition', deckId: 'deck-1' });
+    expect(result).toHaveLength(1);
     expect(service.lastDeckSize).toBe(7);
   });
 
   test('passes a non-recognition skill to the online loader', async () => {
-    const getDueCardsOnline = jest.fn().mockResolvedValue({ cards: [] });
-    const service = makeService({ getDueCardsOnline });
+    const buildQueueOnline = jest.fn().mockResolvedValue({ cards: [] });
+    const service = makeService({ buildQueueOnline });
 
-    await service.loadDueCards(50, 'deck-1', 'recall');
+    await service.loadQueue('recall', 'deck-1');
 
-    expect(getDueCardsOnline).toHaveBeenCalledWith(50, 'deck-1', 'recall');
+    expect(buildQueueOnline).toHaveBeenCalledWith({ skill: 'recall', deckId: 'deck-1' });
   });
 });
 
-describe('loadDueCards – version-validation gotcha', () => {
+describe('loadQueue – ordering', () => {
+  test('uses the injected card-order strategy', async () => {
+    const onlineCards = [
+      makeCard({ id: 'rare', is_new: true, frequency: 900 }),
+      makeCard({ id: 'common', is_new: true, frequency: 5 }),
+    ];
+    const store = makeFakeStore({
+      getDueProjectedCards: jest.fn().mockResolvedValue([]),
+    });
+    const service = makeService({
+      store,
+      buildQueueOnline: jest.fn().mockResolvedValue({ cards: onlineCards }),
+      cardOrder: jest.fn().mockReturnValue('frequency'),
+    });
+
+    const result = await service.loadQueue();
+
+    expect(result.map((card) => card.id)).toEqual(['common', 'rare']);
+  });
+});
+
+describe('loadQueue – version-validation gotcha', () => {
   test('falls back to cached when an online card has no version field', async () => {
     const cachedCards = [makeCard({ id: 'cached-1' })];
     const badCard = { id: 'bad-card', user_id: 'u', word_id: 1, ease_factor: 2.5 }; // no version
@@ -195,10 +190,10 @@ describe('loadDueCards – version-validation gotcha', () => {
     });
     const service = makeService({
       store,
-      getDueCardsOnline: jest.fn().mockResolvedValue({ cards: [badCard] }),
+      buildQueueOnline: jest.fn().mockResolvedValue({ cards: [badCard] }),
     });
 
-    const result = await service.loadDueCards();
+    const result = await service.loadQueue();
 
     expect(result).toEqual(cachedCards);
     expect(store.cacheCards).not.toHaveBeenCalled();
@@ -212,12 +207,12 @@ describe('loadDueCards – version-validation gotcha', () => {
     });
     const service = makeService({
       store,
-      getDueCardsOnline: jest
+      buildQueueOnline: jest
         .fn()
         .mockResolvedValue({ cards: [nullVersionCard] }),
     });
 
-    const result = await service.loadDueCards();
+    const result = await service.loadQueue();
 
     expect(result).toEqual(cachedCards);
     expect(store.cacheCards).not.toHaveBeenCalled();
@@ -233,10 +228,10 @@ describe('loadDueCards – version-validation gotcha', () => {
     });
     const service = makeService({
       store,
-      getDueCardsOnline: jest.fn().mockResolvedValue({ cards: [validCard] }),
+      buildQueueOnline: jest.fn().mockResolvedValue({ cards: [validCard] }),
     });
 
-    const result = await service.loadDueCards();
+    const result = await service.loadQueue();
 
     expect(store.cacheCards).toHaveBeenCalledWith([validCard]);
     expect(result).toEqual([validCard]);
@@ -258,14 +253,14 @@ describe('rateCard – rating while offline', () => {
     expect(result.card.scheduling.reps).toBe(card.scheduling.reps + 1);
   });
 
-  test('does not call getDueCardsOnline during rating', async () => {
+  test('does not call buildQueueOnline during rating', async () => {
     const card = makeCard();
-    const getDueCardsOnline = jest.fn();
-    const service = makeService({ getDueCardsOnline });
+    const buildQueueOnline = jest.fn();
+    const service = makeService({ buildQueueOnline });
 
     await service.rateCard(card, 'hard', null);
 
-    expect(getDueCardsOnline).not.toHaveBeenCalled();
+    expect(buildQueueOnline).not.toHaveBeenCalled();
   });
 
   test('stores the calculated state as one scheduling object', async () => {

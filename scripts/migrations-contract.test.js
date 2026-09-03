@@ -121,12 +121,16 @@ describe('contratos de migraciones', () => {
     expect(types).toContain('prior_snapshot: Json | null');
     expect(types).toContain('apply_review: {');
     expect(types).toContain('p_time_ms?: number | null');
-    expect(types).toContain('get_due_cards: {');
+    expect(types).toContain('build_review_queue: {');
+    expect(types).toContain('create_study_plan: {');
+    expect(types).toContain('submit_diagnostic: {');
     expect(types).toContain('p_skill?: string');
     expect(types).toContain('revert_review: {');
     expect(types).not.toContain('retrievability: number | null');
     expect(types).not.toContain('review_flashcard: {');
     expect(types).not.toContain('ease_factor: number');
+    expect(types).not.toContain('get_due_cards: {');
+    expect(types).not.toContain('create_starter_deck: {');
   });
 
   it('deja la inicialización de habilidades exclusivamente en los triggers', () => {

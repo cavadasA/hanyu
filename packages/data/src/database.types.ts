@@ -1013,14 +1013,38 @@ export type Database = {
           deck_id: string | null
         }[]
       }
-      create_starter_deck: {
+      build_review_queue: {
         Args: {
+          p_deck_id?: string | null
           p_limit?: number | null
-          strategy?: string
+          p_skill?: string
         }
         Returns: {
-          inserted: number
-          total_deck_size: number
+          card_id: string
+          user_id: string
+          word_id: number
+          skill: string
+          is_new: boolean
+          difficulty: number | null
+          stability: number | null
+          reps: number
+          lapses: number
+          learning_steps: number
+          scheduled_days: number
+          elapsed_days: number
+          fsrs_state: string
+          next_review_at: string | null
+          last_reviewed_at: string | null
+          version: number
+        }[]
+      }
+      create_study_plan: {
+        Args: {
+          p_levels?: number[]
+        }
+        Returns: {
+          deck_id: string
+          scope_size: number
         }[]
       }
       clear_leech: {
@@ -1043,28 +1067,13 @@ export type Database = {
           word_count: number
         }[]
       }
-      get_due_cards: {
+      submit_diagnostic: {
         Args: {
-          p_deck_id?: string | null
-          p_limit?: number
-          p_skill?: string
+          p_results: Json
         }
         Returns: {
-          card_id: string
-          difficulty: number | null
-          elapsed_days: number
-          fsrs_state: string
-          last_reviewed_at: string | null
-          lapses: number
-          learning_steps: number
-          next_review_at: string | null
-          reps: number
-          scheduled_days: number
-          skill: string
-          stability: number | null
-          user_id: string
-          version: number
-          word_id: number
+          suspended: number
+          queued: number
         }[]
       }
       initialize_reading_skill_state: {

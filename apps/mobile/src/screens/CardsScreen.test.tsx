@@ -15,7 +15,7 @@ const mockGetDueCards = jest.fn();
 const mockReviewCard = jest.fn();
 const mockRateCard = jest.fn();
 const mockUndoRating = jest.fn();
-const mockLoadDueCards = jest.fn();
+const mockLoadQueue = jest.fn();
 const mockLogTime = jest.fn();
 const mockGetDashboard = jest.fn();
 const mockPush = jest.fn();
@@ -27,10 +27,8 @@ const mockPreviewIntervals = jest.fn((..._args: unknown[]) => ({
 }));
 let mockRequestRetention = 0.9;
 const mockOfflineService = {
-  loadDueCards: (limit: number, deckId?: string | null, skill?: string) =>
-    skill === undefined
-      ? mockLoadDueCards(limit, deckId)
-      : mockLoadDueCards(limit, deckId, skill),
+  loadQueue: (skill?: string, deckId?: string | null) =>
+    mockLoadQueue(skill ?? 'recognition', deckId),
   lastDeckSize: null as number | null,
   rateCard: (card: unknown, grade: string, timeMs: number | null) =>
     mockRateCard(card, grade, timeMs),
@@ -47,11 +45,6 @@ jest.mock('@hanyu/domain', () => {
 
 jest.mock('../lib/data', () => ({
   getData: () => ({
-    flashcards: {
-      getDueCards: (limit?: number, deckId?: string | null) => mockGetDueCards(limit, deckId),
-      reviewCard: (id: string, quality: number, timeMs: number | null) =>
-        mockReviewCard(id, quality, timeMs),
-    },
     stats: {
       logTime: (ms: number) => mockLogTime(ms),
       getDashboard: () => mockGetDashboard(),
@@ -141,7 +134,7 @@ describe('CardsScreen', () => {
     mockReviewCard.mockReset();
     mockRateCard.mockReset();
     mockUndoRating.mockReset();
-    mockLoadDueCards.mockReset();
+    mockLoadQueue.mockReset();
     mockLogTime.mockReset();
     mockPush.mockReset();
     mockPreviewIntervals.mockReset().mockReturnValue({ again: 1, hard: 2, good: 3, easy: 4 });
@@ -156,7 +149,7 @@ describe('CardsScreen', () => {
   });
 
   it('renders pre-session view with Reviews heading and Start review button', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
 
     await renderCards();
 
@@ -165,7 +158,7 @@ describe('CardsScreen', () => {
   });
 
   it('reveals the answer and advances to the next card after rating during active review', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
 
     await renderCards();
@@ -187,7 +180,7 @@ describe('CardsScreen', () => {
   });
 
   it('logs study time and shows summary stats when the session ends', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
     mockLogTime.mockResolvedValue(undefined);
 
@@ -206,7 +199,7 @@ describe('CardsScreen', () => {
   });
 
   it('rates through the offline service and never through the repository', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
 
     await renderCards();
@@ -220,7 +213,7 @@ describe('CardsScreen', () => {
   });
 
   it('undoes the rating that was actually written', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
     mockUndoRating.mockResolvedValue(card('c1', '你好'));
 
@@ -242,7 +235,7 @@ describe('CardsScreen', () => {
   });
 
   it('does not roll back the screen when the undo fails', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
     mockUndoRating.mockRejectedValue(new Error('This rating was already synced'));
 
@@ -260,7 +253,7 @@ describe('CardsScreen', () => {
   it('opens the diagnostic from the empty state', async () => {
     mockOfflineService.lastDeckSize = 0;
     mockGetDashboard.mockResolvedValueOnce({ cards: { total: 0, due: 0, by_status: {} } });
-    mockLoadDueCards.mockResolvedValue([]);
+    mockLoadQueue.mockResolvedValue([]);
 
     await renderCards();
 
@@ -271,32 +264,33 @@ describe('CardsScreen', () => {
   });
 
   it('shows no cards due state when deck exists but no cards are due', async () => {
-    mockLoadDueCards.mockResolvedValue([]);
+    mockLoadQueue.mockResolvedValue([]);
 
     await renderCards();
 
     expect(screen.getByText('No cards due right now')).toBeTruthy();
   });
 
-  it('passes deckId to getDueCards in focus mode', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+  it('no pide un número fijo de tarjetas: la cola la decide el servidor', async () => {
+    mockLoadQueue.mockResolvedValue([]);
 
     await renderCards();
 
-    expect(mockLoadDueCards).toHaveBeenLastCalledWith(50, 'd1');
+    expect(mockLoadQueue).toHaveBeenCalledWith('recognition', 'd1');
+    expect(JSON.stringify(mockLoadQueue.mock.calls)).not.toContain('50');
   });
 
   it('pide la cola de la habilidad seleccionada', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
 
     await renderCards();
     await fireEvent.press(screen.getByRole('button', { name: 'Recall' }));
 
-    await waitFor(() => expect(mockLoadDueCards).toHaveBeenLastCalledWith(50, 'd1', 'recall'));
+    await waitFor(() => expect(mockLoadQueue).toHaveBeenLastCalledWith('recall', 'd1'));
   });
 
   it('recalcula el preview cuando cambia la retención del proveedor', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
 
     const view = await act(async () => render(<CardsScreen />));
     await fireEvent.press(screen.getByText('Start review'));
@@ -318,12 +312,12 @@ describe('CardsScreen', () => {
   });
 
   it('en recuerdo pide escribir la respuesta y no revelar la tarjeta', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
 
     await renderCards();
     await fireEvent.press(screen.getByRole('button', { name: 'Recall' }));
-    await waitFor(() => expect(mockLoadDueCards).toHaveBeenLastCalledWith(50, 'd1', 'recall'));
+    await waitFor(() => expect(mockLoadQueue).toHaveBeenLastCalledWith('recall', 'd1'));
     await fireEvent.press(screen.getByRole('button', { name: 'Start review' }));
 
     expect(screen.getByPlaceholderText('Type the answer')).toBeTruthy();
@@ -343,7 +337,7 @@ describe('CardsScreen', () => {
   });
 
   it('shows a back to deck action on the completion screen in focus mode', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
 
     await renderCards();
@@ -355,7 +349,7 @@ describe('CardsScreen', () => {
   });
 
   it('vuelve a presentar dentro de la sesión una tarjeta fallada', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
     mockRateCard.mockImplementation(async (input: any, grade: string) => ({
       card: {
         ...input,
@@ -385,7 +379,7 @@ describe('CardsScreen', () => {
     const currentCards = Array.from({ length: 5 }, (_, offset) =>
       card(`c${offset + 5}`, `word-${offset + 5}`),
     );
-    mockLoadDueCards.mockResolvedValue(currentCards);
+    mockLoadQueue.mockResolvedValue(currentCards);
     await saveReviewSession({
       session_id: 'saved-session',
       deck_id: 'd1',
@@ -405,7 +399,7 @@ describe('CardsScreen', () => {
   });
 
   it('removes a requeued Again card when Undo returns to it', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
     mockRateCard.mockImplementation(async (input: any, grade: string) => ({
       card: {
         ...input,
@@ -431,7 +425,7 @@ describe('CardsScreen', () => {
   });
 
   it('persists the rewound position after a successful Undo', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
     mockUndoRating.mockResolvedValue(card('c1', '你好'));
 
@@ -452,7 +446,7 @@ describe('CardsScreen', () => {
   });
 
   it('discards the resumable session from the CardsScreen banner', async () => {
-    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+    mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
     await saveReviewSession({
       session_id: 'discard-me',
       deck_id: 'd1',

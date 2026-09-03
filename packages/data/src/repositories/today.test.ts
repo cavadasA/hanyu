@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { getToday } from './today';
 
-function clientFor() {
+function clientFor(options: { settings?: Record<string, unknown> } = {}) {
   const rpc = vi
     .fn()
     .mockResolvedValueOnce({ data: [{ deck_id: null, count: 150 }], error: null })
@@ -13,7 +13,17 @@ function clientFor() {
       s.select.mockReturnValue({
         eq: vi.fn(() => ({
           maybeSingle: vi.fn().mockResolvedValue({
-            data: { user_id: 'u1', review_limit_per_day: 200, session_size: 20, card_order: 'due', new_cards_per_day: 20, current_level: 2, theme: 'light', ai_provider: 'none' },
+            data: {
+              user_id: 'u1',
+              review_limit_per_day: 200,
+              session_size: 20,
+              card_order: 'due',
+              new_cards_per_day: 20,
+              current_level: 2,
+              theme: 'light',
+              ai_provider: 'none',
+              ...options.settings,
+            },
             error: null,
           }),
         })),
@@ -63,6 +73,25 @@ describe('getToday', () => {
     });
     expect(today.flashcards.due).toBe(3);
     expect(today.flashcards.deck_size).toBe(150);
-    expect(today.flashcards.target).toBe(20);
+    expect(today.flashcards.new_target).toBe(20);
+    expect(today.flashcards.review_target).toBe(200);
+  });
+
+  it('no fuerza el nivel del usuario a 2', async () => {
+    const today = await getToday(clientFor({ settings: { current_level: 1 } }));
+
+    expect(today.profile.current_level).toBe(1);
+  });
+
+  it('no afirma un modo de estudio que nadie ha elegido', async () => {
+    const today = await getToday(clientFor({ settings: { current_level: 2 } }));
+
+    expect(today.profile).not.toHaveProperty('mode');
+  });
+
+  it('la meta de tarjetas nuevas sale de los ajustes', async () => {
+    const today = await getToday(clientFor({ settings: { new_cards_per_day: 15 } }));
+
+    expect(today.flashcards.new_target).toBe(15);
   });
 });

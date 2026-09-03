@@ -286,12 +286,6 @@ export interface DueCard {
   context?: WordContext | null;
 }
 
-export interface DueCardsPayload {
-  cards: DueCard[];
-  total: number;
-  deck_size: number;
-}
-
 export interface ReviewEvent {
   card_id: string;
   /** Escala de FSRS: 1 Again, 2 Hard, 3 Good, 4 Easy. */
@@ -325,11 +319,6 @@ export interface RevertReviewResult {
   card: VersionedCard | null;
 }
 
-export interface StarterDeckResult {
-  inserted?: number;
-  deck_size?: number;
-}
-
 export interface FlashcardStats {
   total: number;
   due: number;
@@ -345,12 +334,12 @@ export interface StreakPayload {
 export interface TodayPayload {
   profile: {
     current_level: number;
-    mode: string;
   };
   flashcards: {
     deck_size: number;
     due: number;
-    target: number;
+    new_target: number;
+    review_target: number;
     completed: number;
   };
   exercises: {

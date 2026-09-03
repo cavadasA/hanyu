@@ -62,40 +62,6 @@ function mapVersionedCardRow(row: any, word?: any): VersionedCard {
   };
 }
 
-async function loadLatestWordContexts(
-  wordIds: number[],
-  client: HanyuClient,
-): Promise<Map<number, WordContext>> {
-  if (wordIds.length === 0) {
-    return new Map();
-  }
-
-  const { data, error } = await client
-    .from('word_context')
-    .select('word_id, sentence, source_kind, source_id, created_at')
-    .in('word_id', wordIds)
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    throw createRepositoryError(error, 'Failed to load word context');
-  }
-
-  const latest = new Map<number, WordContext>();
-  for (const row of data ?? []) {
-    const wordId = Number((row as any).word_id);
-    if (latest.has(wordId)) {
-      continue;
-    }
-    latest.set(wordId, {
-      sentence: String((row as any).sentence),
-      source_kind: 'reading',
-      source_id: String((row as any).source_id ?? ''),
-    });
-  }
-
-  return latest;
-}
-
 type ReviewSyncOutcome = ReviewSyncResult['outcome'];
 
 function normalizeReviewSyncOutcome(data: unknown): ReviewSyncOutcome {
@@ -117,87 +83,6 @@ function normalizeReviewSyncOutcome(data: unknown): ReviewSyncOutcome {
   }
 
   return outcome;
-}
-
-export async function getDueCards(
-  limit: number = 50,
-  client: HanyuClient,
-  deckId: string | null = null,
-  skill: LearningSkill = 'recognition',
-) {
-  const settings = await getSettings(client);
-  const maxFromSettings = settings.session_size || 20;
-  const requestedLimit = Math.max(1, parseInt(String(limit), 10) || maxFromSettings);
-  const effectiveLimit = Math.min(maxFromSettings, requestedLimit);
-
-  const { data, error } = await (client.rpc as any)('get_due_cards', {
-    p_limit: effectiveLimit,
-    p_deck_id: deckId,
-    p_skill: skill,
-  });
-  if (error) {
-    throw createRepositoryError(error, 'Failed to load due cards');
-  }
-
-  // The RPC returns skill-state rows, so attach word details when missing.
-  let rows = (data || []) as any[];
-  if (rows.some((row) => !row.words)) {
-    const wordIds = [...new Set(rows.map((row) => row.word_id))];
-    if (wordIds.length > 0) {
-      const { data: wordRows, error: wordError } = await client
-        .from('words')
-        .select(WORD_SELECT)
-        .in('id', wordIds);
-      if (wordError) {
-        throw createRepositoryError(wordError, 'Failed to load card words');
-      }
-      const byId = new Map((wordRows || []).map((w: any) => [String(w.id), w]));
-      rows = rows.map((row) => ({ ...row, words: byId.get(String(row.word_id)) ?? null }));
-    }
-  }
-
-  const contextByWord = await loadLatestWordContexts(
-    [...new Set(rows.map((row) => Number(row.word_id)))],
-    client,
-  );
-  rows = rows.map((row) => ({
-    ...row,
-    context: contextByWord.get(Number(row.word_id)) ?? null,
-  }));
-
-  // deck_size = distinct words in scope (active decks, or the focused deck).
-  const { data: sizeData, error: sizeError } = await (client.rpc as any)('count_deck_cards', {
-    p_deck_id: deckId,
-    p_due_only: false,
-  });
-  if (sizeError) {
-    throw createRepositoryError(sizeError, 'Failed to load deck size');
-  }
-  const deckSize = Number((Array.isArray(sizeData) ? sizeData[0] : sizeData)?.count || 0);
-
-  let cards = rows.map((row) => mapVersionedCardRow(row));
-  if (settings.card_order === 'frequency') {
-    cards = cards
-      .slice()
-      .sort((a, b) => {
-        const freqA = Number.isFinite(Number(a.frequency)) ? Number(a.frequency) : Number.MAX_SAFE_INTEGER;
-        const freqB = Number.isFinite(Number(b.frequency)) ? Number(b.frequency) : Number.MAX_SAFE_INTEGER;
-
-        if (freqA !== freqB) {
-          return freqA - freqB;
-        }
-
-        const dateA = new Date(a.scheduling.due).getTime();
-        const dateB = new Date(b.scheduling.due).getTime();
-        return dateA - dateB;
-      });
-  }
-
-  return {
-    cards,
-    total: cards.length,
-    deck_size: deckSize || 0,
-  };
 }
 
 /**

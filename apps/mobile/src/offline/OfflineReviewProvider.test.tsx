@@ -4,7 +4,7 @@
  * All real I/O is mocked:
  * - openReviewStore  → returns a hand-written fake ReviewStore
  * - useSession       → returns a controlled session value
- * - getData          → returns a stub with flashcards.getDueCards
+ * - getData          → returns a stub with flashcards.buildQueue
  * - expo-crypto      → randomUUID returns 'mock-uuid'
  *
  * No real SQLite or network is touched here.
@@ -79,7 +79,7 @@ beforeEach(() => {
   jest.clearAllMocks();
   mockGetData.mockReturnValue({
     flashcards: {
-      getDueCards: jest.fn().mockResolvedValue({ cards: [] }),
+      buildQueue: jest.fn().mockResolvedValue({ cards: [] }),
       reviewCardEvent: jest.fn().mockResolvedValue({ outcome: 'applied', card: {} }),
     },
   });
@@ -154,7 +154,7 @@ describe('OfflineReviewProvider – store open on user available', () => {
     mockGetData.mockReturnValue({
       settings,
       flashcards: {
-        getDueCards: jest.fn().mockResolvedValue({ cards: [] }),
+        buildQueue: jest.fn().mockResolvedValue({ cards: [] }),
         reviewCardEvent: jest.fn().mockResolvedValue({ outcome: 'applied', card: {} }),
         revertReview: jest.fn(),
       },

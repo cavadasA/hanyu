@@ -20,7 +20,7 @@ function countFromRpc(payload: unknown) {
 export async function getToday(client: HanyuClient) {
   const [userId, settings] = await Promise.all([getRequiredUserId(client), getSettings(client)]);
   const today = toDateString();
-  const currentLevel = Number(settings.current_level || 2);
+  const currentLevel = Number(settings.current_level ?? 2);
 
   const [deckSizeRpc, dueRpc, statsResult, readingResult] = await Promise.all([
     callRpcVariants(client, 'count_deck_cards', [{ p_deck_id: null, p_due_only: false }]),
@@ -29,7 +29,7 @@ export async function getToday(client: HanyuClient) {
     client
       .from('generated_readings')
       .select('id, title, hsk_level, format')
-      .eq('hsk_level', Math.min(2, currentLevel))
+      .eq('hsk_level', currentLevel)
       .order('created_at', { ascending: false })
       .limit(1)
       .maybeSingle(),
@@ -56,13 +56,13 @@ export async function getToday(client: HanyuClient) {
 
   return {
     profile: {
-      current_level: Math.max(2, currentLevel),
-      mode: 'hsk2_consolidation',
+      current_level: currentLevel,
     },
     flashcards: {
       deck_size: countFromRpc(deckSizeRpc),
       due: countFromRpc(dueRpc),
-      target: Number(settings.new_cards_per_day ?? 10),
+      new_target: Number(settings.new_cards_per_day ?? 10),
+      review_target: Number(settings.review_limit_per_day ?? 200),
       completed: Number((todayStats as any).cards_reviewed || 0),
     },
     exercises: {
@@ -72,7 +72,7 @@ export async function getToday(client: HanyuClient) {
     reading: {
       target: 1,
       completed: Number((todayStats as any).readings_done || 0),
-      level: 2,
+      level: currentLevel,
       next: readingResult.data || null,
     },
     progress: {

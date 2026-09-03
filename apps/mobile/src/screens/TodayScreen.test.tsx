@@ -26,8 +26,8 @@ jest.mock('expo-router', () => {
 });
 
 const payload = {
-  profile: { current_level: 2, mode: 'hsk2_consolidation' },
-  flashcards: { deck_size: 150, due: 18, target: 20, completed: 2 },
+  profile: { current_level: 2 },
+  flashcards: { deck_size: 150, due: 18, new_target: 10, review_target: 200, completed: 2 },
   exercises: { target: 5, completed: 0 },
   reading: {
     target: 1,
@@ -40,7 +40,7 @@ const payload = {
 
 const completedPayload = {
   ...payload,
-  flashcards: { deck_size: 150, due: 0, target: 20, completed: 20 },
+  flashcards: { deck_size: 150, due: 0, new_target: 10, review_target: 200, completed: 20 },
   exercises: { target: 5, completed: 5 },
   reading: { target: 1, completed: 1, level: 2, next: null },
   progress: { completed_blocks: 3, total_blocks: 3 },

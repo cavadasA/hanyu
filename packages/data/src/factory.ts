@@ -24,7 +24,6 @@ import {
   buildQueue,
   createStudyPlan,
   getCard,
-  getDueCards,
   getFlashcardStats,
   revertReview,
   reviewCardEvent,
@@ -96,11 +95,6 @@ export function createHanyuData(config: HanyuDataConfig) {
     },
     flashcards: {
       buildQueue: (input: Parameters<typeof buildQueue>[0] = {}) => buildQueue(input, client),
-      getDueCards: (
-        limit = 50,
-        deckId: string | null = null,
-        skill: LearningSkill = 'recognition',
-      ) => getDueCards(limit, client, deckId, skill),
       getCard: (id: string, skill: LearningSkill = 'recognition') => getCard(id, client, skill),
       reviewCardEvent: (event: Parameters<typeof reviewCardEvent>[0]) =>
         reviewCardEvent(event, client),

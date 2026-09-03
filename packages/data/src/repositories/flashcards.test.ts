@@ -4,71 +4,15 @@ import {
   buildQueue,
   createStudyPlan,
   getCard,
-  getDueCards,
   reviewCardEvent,
   revertReview,
   submitDiagnostic,
 } from './flashcards';
 
-function clientFor(options: {
-  rpcRows?: unknown[];
-  wordRows?: unknown[];
-  contextRows?: unknown[];
-  deckSize?: number;
-} = {}) {
-  const rpc = vi
-    .fn()
-    .mockResolvedValueOnce({ data: options.rpcRows ?? [], error: null })
-    .mockResolvedValue({
-      data: [{ deck_id: null, count: options.deckSize ?? 0 }],
-      error: null,
-    });
-
-  const from = vi.fn((table: string) => {
-    if (table === 'user_settings') {
-      const s = { select: vi.fn() };
-      s.select.mockReturnValue({
-        eq: vi.fn(() => ({
-          maybeSingle: vi.fn().mockResolvedValue({
-            data: { user_id: 'u1', review_limit_per_day: 200, session_size: 100, card_order: 'due', new_cards_per_day: 20, current_level: 2, theme: 'light', ai_provider: 'none' },
-            error: null,
-          }),
-        })),
-      });
-      return s;
-    }
-
-    if (table === 'words') {
-      return {
-        select: vi.fn(() => ({
-          in: vi.fn(() => ({ data: options.wordRows ?? [], error: null })),
-        })),
-      };
-    }
-
-    if (table === 'word_context') {
-      return {
-        select: vi.fn(() => ({
-          in: vi.fn(() => ({
-            order: vi.fn().mockResolvedValue({ data: options.contextRows ?? [], error: null }),
-          })),
-        })),
-      };
-    }
-
-    return { select: vi.fn(() => ({ data: [], error: null })) };
-  });
-
-  return {
-    rpc,
-    from,
-    auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
-  } as never;
-}
-
 function queueRow(cardId: string, isNew: boolean) {
   return {
     card_id: cardId,
+    user_id: 'u1',
     word_id: 1,
     skill: 'recognition',
     is_new: isNew,
@@ -113,6 +57,7 @@ describe('buildQueue', () => {
       p_limit: null,
     });
     expect(queue.cards).toHaveLength(2);
+    expect(queue.cards[0].user_id).toBe('u1');
   });
 
   it('distingue las tarjetas nuevas de los repasos', async () => {
@@ -282,133 +227,6 @@ function cardClient(skill: 'recognition' | 'recall' | 'listening' = 'recall') {
     auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
   } as never;
 }
-
-describe('getDueCards', () => {
-  it('maps the skill-state scheduling fields into one scheduling object', async () => {
-    const client = clientFor({
-      rpcRows: [
-        {
-          card_id: 'c-fsrs',
-          user_id: 'u1',
-          word_id: 5,
-          skill: 'recognition',
-          difficulty: 4.2,
-          stability: 8.5,
-          reps: 3,
-          lapses: 1,
-          learning_steps: 0,
-          scheduled_days: 8,
-          elapsed_days: 3,
-          fsrs_state: 'review',
-          next_review_at: '2026-09-02T09:00:00.000Z',
-          last_reviewed_at: '2026-08-30T09:00:00.000Z',
-          version: 4,
-        },
-      ],
-      wordRows: [{ id: 5, hanzi: '你', pinyin: 'nǐ', meaning_en: 'you', hsk_level: 1 }],
-      contextRows: [
-        { word_id: 5, sentence: '我喜欢你。', source_kind: 'reading', source_id: 'reading-new', created_at: '2026-09-03T10:00:00.000Z' },
-        { word_id: 5, sentence: '你好吗？', source_kind: 'reading', source_id: 'reading-old', created_at: '2026-09-02T10:00:00.000Z' },
-      ],
-      deckSize: 1,
-    });
-
-    const result = await getDueCards(50, client as never, null);
-
-    expect(result.cards[0]).toMatchObject({
-      id: 'c-fsrs',
-      skill: 'recognition',
-      version: 4,
-      scheduling: {
-        difficulty: 4.2,
-        stability: 8.5,
-        reps: 3,
-        lapses: 1,
-        learning_steps: 0,
-        scheduled_days: 8,
-        elapsed_days: 3,
-        state: 'review',
-        due: '2026-09-02T09:00:00.000Z',
-        last_review: '2026-08-30T09:00:00.000Z',
-      },
-      context: {
-        sentence: '我喜欢你。',
-        source_id: 'reading-new',
-      },
-      sense_index: null,
-      variants: [],
-    });
-  });
-
-  it('calls get_due_cards RPC and maps bare srs rows using fetched words', async () => {
-    const client = clientFor({
-      rpcRows: [
-        {
-          card_id: 'c1',
-          user_id: 'u1',
-          word_id: 5,
-          skill: 'recognition',
-          difficulty: 0,
-          stability: 0,
-          reps: 0,
-          lapses: 0,
-          learning_steps: 0,
-          scheduled_days: 0,
-          elapsed_days: 0,
-          fsrs_state: 'new',
-          next_review_at: '2020-01-01T00:00:00Z',
-          last_reviewed_at: null,
-          version: 1,
-        },
-      ],
-      wordRows: [{ id: 5, hanzi: '你', pinyin: 'nǐ', meaning_en: 'you', hsk_level: 1, pos: null, frequency: null }],
-      deckSize: 2,
-    });
-
-    const result = await getDueCards(50, client as never, null);
-
-    expect((client as any).rpc).toHaveBeenNthCalledWith(1, 'get_due_cards', {
-      p_limit: 50,
-      p_deck_id: null,
-      p_skill: 'recognition',
-    });
-    expect((client as any).rpc).toHaveBeenNthCalledWith(2, 'count_deck_cards', {
-      p_deck_id: null,
-      p_due_only: false,
-    });
-    expect(result.cards[0].hanzi).toBe('你');
-    expect(result.total).toBe(1);
-    expect(result.deck_size).toBe(2);
-  });
-
-  it('passes the focused deck id to both RPCs', async () => {
-    const client = clientFor({ rpcRows: [], deckSize: 2 });
-
-    await getDueCards(20, client as never, 'd1');
-
-    expect((client as any).rpc).toHaveBeenNthCalledWith(1, 'get_due_cards', {
-      p_limit: 20,
-      p_deck_id: 'd1',
-      p_skill: 'recognition',
-    });
-    expect((client as any).rpc).toHaveBeenNthCalledWith(2, 'count_deck_cards', {
-      p_deck_id: 'd1',
-      p_due_only: false,
-    });
-  });
-
-  it('passes the selected skill to the due-card RPC', async () => {
-    const client = clientFor({ rpcRows: [], deckSize: 0 });
-
-    await getDueCards(20, client as never, null, 'recall');
-
-    expect((client as any).rpc).toHaveBeenNthCalledWith(1, 'get_due_cards', {
-      p_limit: 20,
-      p_deck_id: null,
-      p_skill: 'recall',
-    });
-  });
-});
 
 describe('getCard y reviewCardEvent', () => {
   it('carga el estado de la habilidad solicitada', async () => {
