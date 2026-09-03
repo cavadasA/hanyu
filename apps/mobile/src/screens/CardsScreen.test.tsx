@@ -286,6 +286,28 @@ describe('CardsScreen', () => {
     await waitFor(() => expect(mockLoadDueCards).toHaveBeenLastCalledWith(50, 'd1', 'recall'));
   });
 
+  it('en recuerdo pide escribir la respuesta y no revelar la tarjeta', async () => {
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+    mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
+
+    await renderCards();
+    await fireEvent.press(screen.getByRole('button', { name: 'Recall' }));
+    await waitFor(() => expect(mockLoadDueCards).toHaveBeenLastCalledWith(50, 'd1', 'recall'));
+    await fireEvent.press(screen.getByRole('button', { name: 'Start review' }));
+
+    expect(screen.getByPlaceholderText('Type the answer')).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Show answer' })).toBeNull();
+
+    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '你好');
+    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
+
+    await waitFor(() => expect(mockRateCard).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'c1' }),
+      expect.any(String),
+      expect.any(Number),
+    ));
+  });
+
   it('shows a back to deck action on the completion screen in focus mode', async () => {
     mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });

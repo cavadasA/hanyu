@@ -21,8 +21,9 @@ import { AudioButton } from './AudioButton';
 import { Badge } from './Badge';
 import { Button } from './Button';
 import { Card } from './Card';
+import { WrittenAnswer } from './WrittenAnswer';
 
-export type ReviewMode = 'recognition' | 'recall' | 'listening';
+export type ReviewMode = 'recognition' | 'recall' | 'listening' | 'reading';
 
 interface FlashCardViewProps {
   card: DueCard;
@@ -54,6 +55,20 @@ const RATINGS: { label: string; grade: Grade; variant: Variant }[] = [
 const SWIPE_THRESHOLD = 88;
 const EASE = Easing.out(Easing.cubic);
 const MOTION_DISABLED = process.env.NODE_ENV === 'test';
+
+function readingPrompt(card: DueCard): string {
+  const sentence = card.context?.sentence ?? '';
+  const candidates = [card.hanzi, ...(card.variants ?? [])].filter(
+    (candidate): candidate is string => Boolean(candidate),
+  );
+  const target = candidates.find((candidate) => sentence.includes(candidate));
+
+  if (!target) {
+    return sentence;
+  }
+
+  return sentence.replace(target, '____');
+}
 
 export function FlashCardView({
   card,
@@ -239,8 +254,12 @@ export function FlashCardView({
             <Badge label={`HSK ${card.hsk_level ?? '-'}`} />
           </View>
           <View style={styles.face}>
-            <Text style={[styles.hanzi, { color: colors.text }]}>
-              {mode === 'recall' ? resolveGloss(card, supportLanguage) : card.hanzi}
+            <Text style={[styles.hanzi, { color: colors.text }]}> 
+              {mode === 'recall'
+                ? resolveGloss(card, supportLanguage)
+                : mode === 'reading'
+                  ? readingPrompt(card)
+                  : card.hanzi}
             </Text>
           </View>
         </Card>
@@ -290,18 +309,27 @@ export function FlashCardView({
             <Text style={[styles.hanzi, { color: colors.text }]}>{card.hanzi}</Text>
           ) : null}
 
-          {mode === 'recall' && !revealed ? (
-            <Text style={[styles.prompt, { color: colors.text }]}>
-              {resolveGloss(card, supportLanguage)}
-            </Text>
-          ) : null}
-
-          {mode === 'listening' && !revealed ? (
+          {mode !== 'recognition' && !revealed ? (
             <>
-              <Text style={[styles.prompt, { color: colors.textMuted }]}>
-                Listen and identify the word
-              </Text>
-              <AudioButton text={card.hanzi ?? ''} label="Play again" />
+              {mode === 'recall' ? (
+                <Text style={[styles.prompt, { color: colors.text }]}>
+                  {resolveGloss(card, supportLanguage)}
+                </Text>
+              ) : null}
+              {mode === 'listening' ? (
+                <>
+                  <Text style={[styles.prompt, { color: colors.textMuted }]}>Listen and identify the word</Text>
+                  <AudioButton text={card.hanzi ?? ''} label="Play again" />
+                </>
+              ) : null}
+              {mode === 'reading' ? (
+                <Text style={[styles.prompt, { color: colors.text }]}>{readingPrompt(card)}</Text>
+              ) : null}
+              <WrittenAnswer
+                expected={card.hanzi ?? ''}
+                kind="hanzi"
+                onGraded={(result) => onRate?.(result.grade)}
+              />
             </>
           ) : null}
 
@@ -341,9 +369,9 @@ export function FlashCardView({
               </View>
             ))}
           </View>
-        ) : (
+        ) : mode === 'recognition' ? (
           <Button label="Show answer" onPress={() => onReveal?.()} />
-        )}
+        ) : null}
       </Card>
     </Animated.View>
   );

@@ -7,7 +7,7 @@
 // permite reanudar de verdad.
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type ReviewMode = 'recognition' | 'recall' | 'listening';
+export type ReviewMode = 'recognition' | 'recall' | 'listening' | 'reading';
 
 const KEY = 'hanyu.review-session';
 
@@ -27,7 +27,7 @@ export interface ReviewSessionSnapshot {
 }
 
 function isReviewMode(value: unknown): value is ReviewMode {
-  return value === 'recognition' || value === 'recall' || value === 'listening';
+  return value === 'recognition' || value === 'recall' || value === 'listening' || value === 'reading';
 }
 
 function isNonNegativeInteger(value: unknown): value is number {

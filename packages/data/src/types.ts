@@ -271,6 +271,9 @@ export interface DueCard {
   hsk_level?: number;
   pos?: string | null;
   frequency?: number | null;
+  sense_index?: number | null;
+  variants?: string[];
+  context?: WordContext | null;
 }
 
 export interface DueCardsPayload {

@@ -27,7 +27,7 @@ import { Screen } from '../ui/Screen';
 import { Segmented, type SegmentedOption } from '../ui/Segmented';
 import { StatusBarChart } from '../ui/StatusBarChart';
 
-const MODES: ReviewMode[] = ['recognition', 'recall', 'listening'];
+const MODES: ReviewMode[] = ['recognition', 'recall', 'listening', 'reading'];
 const MODE_OPTIONS: SegmentedOption<ReviewMode>[] = MODES.map((value) => ({
   value,
   label: value[0].toUpperCase() + value.slice(1),
