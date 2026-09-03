@@ -454,6 +454,7 @@ export type Database = {
           lapses: number
           last_reviewed_at: string | null
           learning_steps: number
+          leech: boolean
           next_review_at: string | null
           reps: number
           retrievability: number | null
@@ -461,6 +462,7 @@ export type Database = {
           skill: string
           stability: number | null
           suspended: boolean
+          auto_suspended: boolean
           target_id: number
           target_kind: string
           updated_at: string
@@ -476,6 +478,7 @@ export type Database = {
           lapses?: number
           last_reviewed_at?: string | null
           learning_steps?: number
+          leech?: boolean
           next_review_at?: string | null
           reps?: number
           retrievability?: number | null
@@ -483,6 +486,7 @@ export type Database = {
           skill: string
           stability?: number | null
           suspended?: boolean
+          auto_suspended?: boolean
           target_id: number
           target_kind: string
           updated_at?: string
@@ -498,6 +502,7 @@ export type Database = {
           lapses?: number
           last_reviewed_at?: string | null
           learning_steps?: number
+          leech?: boolean
           next_review_at?: string | null
           reps?: number
           retrievability?: number | null
@@ -505,6 +510,7 @@ export type Database = {
           skill?: string
           stability?: number | null
           suspended?: boolean
+          auto_suspended?: boolean
           target_id?: number
           target_kind?: string
           updated_at?: string

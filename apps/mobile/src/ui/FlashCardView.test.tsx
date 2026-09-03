@@ -80,4 +80,36 @@ describe('FlashCardView', () => {
 
     expect(onRate).toHaveBeenCalledWith('easy', expect.any(Number));
   });
+
+  it('permite corregir un fallo escrito y valora una sola vez al continuar', async () => {
+    const onRate = jest.fn();
+    await render(<FlashCardView card={baseCard} mode="recall" onRate={onRate} />);
+
+    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '学');
+    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'I actually knew it' }));
+
+    expect(onRate).not.toHaveBeenCalled();
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+
+    expect(onRate).toHaveBeenCalledTimes(1);
+    expect(onRate).toHaveBeenCalledWith('hard', expect.any(Number));
+  });
+
+  it('resetea input y veredicto al cambiar a la tarjeta siguiente', async () => {
+    const onRate = jest.fn();
+    const nextCard = { ...baseCard, id: 'card-2', hanzi: '学' };
+    const view = await render(<FlashCardView card={baseCard} mode="recall" onRate={onRate} />);
+
+    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '还');
+    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
+    expect(screen.getByText('Correct')).toBeTruthy();
+
+    await view.rerender(<FlashCardView card={nextCard} mode="recall" onRate={onRate} />);
+
+    expect(screen.getByPlaceholderText('Type the answer').props.value).toBe('');
+    expect(screen.queryByText('Correct')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Continue' })).toBeNull();
+  });
 });

@@ -7,6 +7,8 @@ const mockSignOut = jest.fn();
 const mockGetDashboard = jest.fn();
 const mockGetLeechStates = jest.fn();
 const mockSetSkillSuspended = jest.fn();
+const mockClearLeech = jest.fn();
+const mockUpdateReviewSettings = jest.fn();
 
 jest.mock('../lib/data', () => ({
   getData: () => ({
@@ -20,8 +22,13 @@ jest.mock('../lib/data', () => ({
     skills: {
       getLeechStates: (skill: string) => mockGetLeechStates(skill),
       setSkillSuspended: (input: unknown) => mockSetSkillSuspended(input),
+      clearLeech: (input: unknown) => mockClearLeech(input),
     },
   }),
+}));
+
+jest.mock('../offline/OfflineReviewProvider', () => ({
+  useOfflineReview: () => ({ updateReviewSettings: mockUpdateReviewSettings }),
 }));
 
 
@@ -80,6 +87,8 @@ describe('YouScreen', () => {
     mockGetDashboard.mockReset();
     mockGetLeechStates.mockReset();
     mockSetSkillSuspended.mockReset();
+    mockClearLeech.mockReset();
+    mockUpdateReviewSettings.mockReset();
     mockGetLeechStates.mockResolvedValue([]);
     mockGetDashboard.mockResolvedValue({
       cards: { by_status: { mastered: 47 } },
@@ -148,6 +157,7 @@ describe('YouScreen', () => {
     await fireEvent.press(screen.getByText('Relajado (0,85)'));
 
     expect(mockUpdateSettings).toHaveBeenCalledWith({ request_retention: 0.85 });
+    expect(mockUpdateReviewSettings).toHaveBeenCalledWith({ request_retention: 0.85 });
   });
 
   it('shows a retryable error and rolls back when saving fails', async () => {
@@ -222,5 +232,28 @@ describe('YouScreen', () => {
 
     expect(screen.getByText('学 · 8 lapses')).toBeTruthy();
     expect(screen.queryByText('Word 42 · 8 lapses')).toBeNull();
+  });
+
+  it('limpia el leech al reactivarlo, en vez de cambiar una suspensión inexistente', async () => {
+    mockGetSettings.mockResolvedValue(settings);
+    mockClearLeech.mockResolvedValue(undefined);
+    mockGetLeechStates.mockResolvedValue([{
+      id: 'state-1',
+      target_kind: 'word',
+      target_id: 42,
+      skill: 'recognition',
+      lapses: 8,
+      word: { hanzi: '学', pinyin: 'xué', meaning_es: 'estudiar', meaning_en: 'to study' },
+    }]);
+
+    await renderYou();
+    await fireEvent.press(screen.getByRole('button', { name: 'Reactivate' }));
+
+    expect(mockClearLeech).toHaveBeenCalledWith({
+      target_kind: 'word',
+      target_id: 42,
+      skill: 'recognition',
+    });
+    expect(mockSetSkillSuspended).not.toHaveBeenCalled();
   });
 });

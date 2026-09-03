@@ -37,7 +37,13 @@ import {
   getReadings,
 } from './repositories/readings';
 import { getSettings, updateSettings } from './repositories/settings';
-import { getLeechStates, getSkillStates, setSkillSuspended, upsertSkillState } from './repositories/skills';
+import {
+  clearLeech,
+  getLeechStates,
+  getSkillStates,
+  setSkillSuspended,
+  upsertSkillState,
+} from './repositories/skills';
 import { getDashboard, getStreak, logTime } from './repositories/stats';
 import { getToday } from './repositories/today';
 import { getWord, getWords } from './repositories/words';
@@ -123,6 +129,7 @@ export function createHanyuData(config: HanyuDataConfig) {
         upsertSkillState(input, client),
       setSkillSuspended: (input: Parameters<typeof setSkillSuspended>[0]) =>
         setSkillSuspended(input, client),
+      clearLeech: (input: Parameters<typeof clearLeech>[0]) => clearLeech(input, client),
     },
     readings: {
       getReadings: (params: Parameters<typeof getReadings>[0] = {}) => getReadings(params, client),

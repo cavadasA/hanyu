@@ -37,6 +37,7 @@ interface OfflineReviewValue {
   ready: boolean;
   pendingCount: number;
   refreshPendingCount: () => Promise<void>;
+  updateReviewSettings: (patch: { request_retention?: number }) => void;
   sync: () => Promise<SyncSummary | null>;
   syncing: boolean;
   lastSummary: SyncSummary | null;
@@ -44,12 +45,14 @@ interface OfflineReviewValue {
 
 const noop = async () => undefined;
 const noopSync = async () => null;
+const noopUpdateReviewSettings = () => undefined;
 
 const OfflineReviewContext = createContext<OfflineReviewValue>({
   service: null,
   ready: false,
   pendingCount: 0,
   refreshPendingCount: noop,
+  updateReviewSettings: noopUpdateReviewSettings,
   sync: noopSync,
   syncing: false,
   lastSummary: null,
@@ -72,6 +75,8 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
   // Live reference to the currently-active service, used by cleanup and callbacks
   // without needing to capture stale closure values.
   const serviceRef = useRef<OfflineReviewService | null>(null);
+  const reviewStoreRef = useRef<ReviewStore | null>(null);
+  const paramsRef = useRef(schedulingParams({}));
   const syncEngineRef = useRef<ReviewSyncEngine | null>(null);
 
   // Set to true by the empty-deps effect's cleanup, which React calls *before*
@@ -105,6 +110,8 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
       setPendingCount(0);
       setSyncing(false);
       setLastSummary(null);
+      reviewStoreRef.current = null;
+      paramsRef.current = schedulingParams({});
       syncEngineRef.current = null;
       return;
     }
@@ -120,6 +127,8 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
         // The default retention is safe when settings are unavailable.
       }
 
+      paramsRef.current = params;
+
       const store = await openReviewStore(userId, params);
       if (cancelled) {
         store.close().catch(() => undefined);
@@ -132,18 +141,10 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
           getData().flashcards.getDueCards(limit, deckId, skill),
         now: () => new Date(),
         uuid: () => randomUUID(),
-        params: () => params,
-        refreshParams: async () => {
-          try {
-            const settings = await getData().settings.getSettings();
-            params = schedulingParams({ request_retention: settings.request_retention });
-          } catch {
-            // Keep the last known-good parameters when settings are unavailable.
-          }
-          return params;
-        },
+        params: () => paramsRef.current,
         revertReviewOnline: (reviewId: string) => getData().flashcards.revertReview(reviewId),
       });
+      reviewStoreRef.current = store as ReviewStore;
       syncEngineRef.current = new ReviewSyncEngine({
         store: store as ReviewStore,
         reviewCardEvent: (event) => getData().flashcards.reviewCardEvent(event),
@@ -165,6 +166,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
       // Clear the ref and reset UI state immediately so subsequent renders see
       // no service. The async cleanup below happens in the background.
       serviceRef.current = null;
+      reviewStoreRef.current = null;
       syncEngineRef.current = null;
       setService(null);
       setReady(false);
@@ -210,6 +212,14 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
     setPendingCount(count);
   }, []);
 
+  const updateReviewSettings = useCallback((patch: { request_retention?: number }) => {
+    if (patch.request_retention === undefined) return;
+
+    const params = schedulingParams({ request_retention: patch.request_retention });
+    paramsRef.current = params;
+    reviewStoreRef.current?.setParams(params);
+  }, []);
+
   const sync = useCallback(async (): Promise<SyncSummary | null> => {
     const engine = syncEngineRef.current;
     if (!engine) return null;
@@ -227,7 +237,16 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
 
   return (
     <OfflineReviewContext.Provider
-      value={{ service, ready, pendingCount, refreshPendingCount, sync, syncing, lastSummary }}
+      value={{
+        service,
+        ready,
+        pendingCount,
+        refreshPendingCount,
+        updateReviewSettings,
+        sync,
+        syncing,
+        lastSummary,
+      }}
     >
       {children}
     </OfflineReviewContext.Provider>

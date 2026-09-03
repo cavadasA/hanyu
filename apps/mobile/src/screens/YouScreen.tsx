@@ -9,6 +9,7 @@ import {
   type UserSettings,
 } from '@hanyu/data';
 import { getData } from '../lib/data';
+import { useOfflineReview } from '../offline/OfflineReviewProvider';
 import { useSession } from '../session/SessionProvider';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
@@ -37,6 +38,7 @@ interface HeroStats {
 export default function YouScreen() {
   const { colors, setPreference } = useTheme();
   const { session, signOut } = useSession();
+  const { updateReviewSettings } = useOfflineReview();
   const [settings, setSettings] = useState<UserSettings | null>(null);
   const [heroStats, setHeroStats] = useState<HeroStats | null>(null);
   const [error, setError] = useState('');
@@ -105,6 +107,9 @@ export default function YouScreen() {
     try {
       const saved = (await getData().settings.updateSettings(patch)) as UserSettings;
       setSettings(saved);
+      if (patch.request_retention !== undefined) {
+        updateReviewSettings({ request_retention: saved.request_retention });
+      }
     } catch (caught) {
       setSettings(previous);
       if (patch.theme && previousTheme) {
@@ -119,12 +124,11 @@ export default function YouScreen() {
   async function reactivate(state: LearnerSkillState) {
     try {
       const skills = getData().skills;
-      if (typeof skills?.setSkillSuspended !== 'function') return;
-      await skills.setSkillSuspended({
+      if (typeof skills?.clearLeech !== 'function') return;
+      await skills.clearLeech({
         target_kind: state.target_kind,
         target_id: state.target_id,
         skill: state.skill,
-        suspended: false,
       });
       setLeeches((current) => current.filter((entry) => entry.id !== state.id));
     } catch (caught) {

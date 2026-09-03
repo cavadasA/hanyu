@@ -1,7 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
   addCard,
-  availableSkills,
   getCard,
   getDueCards,
   reviewCardEvent,
@@ -364,26 +363,6 @@ describe('getCard y reviewCardEvent', () => {
     }));
     expect(result.card.skill).toBe('listening');
     expect(client.stateQuery.eq).toHaveBeenCalledWith('skill', 'listening');
-  });
-});
-
-describe('availableSkills', () => {
-  it('siempre ofrece reconocimiento, recuerdo y escucha', () => {
-    expect(availableSkills({ hasContext: false })).toEqual([
-      'recognition',
-      'recall',
-      'listening',
-    ]);
-  });
-
-  it('añade lectura en contexto solo cuando hay una frase guardada', () => {
-    expect(availableSkills({ hasContext: true })).toContain('reading');
-  });
-
-  it('nunca ofrece producción: no hay evaluación de voz', () => {
-    // Declararla sin poder evaluarla daría una tarjeta que el usuario no puede
-    // aprobar nunca.
-    expect(availableSkills({ hasContext: true })).not.toContain('production');
   });
 });
 

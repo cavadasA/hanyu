@@ -148,7 +148,7 @@ describe('OfflineReviewProvider – store open on user available', () => {
     expect(mockOpenReviewStore).toHaveBeenCalledTimes(1);
   });
 
-  test('relee la retención antes de valorar una tarjeta', async () => {
+  test('actualiza la caché de retención sin leer settings por tarjeta', async () => {
     let currentRetention = 0.9;
     const settings = { getSettings: jest.fn(() => Promise.resolve({ request_retention: currentRetention })) };
     mockGetData.mockReturnValue({
@@ -166,7 +166,10 @@ describe('OfflineReviewProvider – store open on user available', () => {
     const { result } = await renderHook(() => useOfflineReview(), { wrapper });
     await waitFor(() => expect(result.current.ready).toBe(true));
 
-    currentRetention = 0.95;
+    await act(async () => {
+      result.current.updateReviewSettings({ request_retention: 0.95 });
+    });
+
     await act(async () => {
       await result.current.service?.rateCard({
         id: 'card-1',
@@ -178,7 +181,7 @@ describe('OfflineReviewProvider – store open on user available', () => {
       }, 'good', 1000);
     });
 
-    expect(settings.getSettings).toHaveBeenCalledTimes(2);
+    expect(settings.getSettings).toHaveBeenCalledTimes(1);
     expect(mockStore.setParams).toHaveBeenLastCalledWith(
       expect.objectContaining({ request_retention: 0.95 }),
     );

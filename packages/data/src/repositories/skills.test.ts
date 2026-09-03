@@ -1,5 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
-import { getLeechStates, getSkillStates, upsertSkillState } from './skills';
+import {
+  clearLeech,
+  getLeechStates,
+  getSkillStates,
+  setSkillSuspended,
+  upsertSkillState,
+} from './skills';
 
 const user = { id: 'u1' };
 
@@ -48,6 +54,7 @@ const stateRow = {
   last_reviewed_at: '2026-09-01T10:00:00.000Z',
   next_review_at: '2026-09-07T10:00:00.000Z',
   suspended: false,
+  auto_suspended: false,
   version: 2,
 };
 
@@ -99,5 +106,32 @@ describe('skills repository', () => {
       meaning_en: 'to study',
     });
     expect(client.chains.words.in).toHaveBeenCalledWith('id', [42]);
+  });
+
+  it('marks a manual suspension as user-owned', async () => {
+    const client = clientFor({ learner_skill_state: { data: stateRow, error: null } });
+
+    await setSkillSuspended(
+      { target_kind: 'word', target_id: 42, skill: 'recall', suspended: true },
+      client,
+    );
+
+    expect(client.chains.learner_skill_state.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({ suspended: true, auto_suspended: false }),
+      { onConflict: 'user_id,target_kind,target_id,skill' },
+    );
+  });
+
+  it('clears the leech flag and its automatic suspension together', async () => {
+    const client = clientFor({ learner_skill_state: { data: stateRow, error: null } });
+
+    await clearLeech(
+      { target_kind: 'word', target_id: 42, skill: 'recognition' },
+      client,
+    );
+
+    expect(client.chains.learner_skill_state.update).toHaveBeenCalledWith(
+      expect.objectContaining({ leech: false, suspended: false, auto_suspended: false }),
+    );
   });
 });

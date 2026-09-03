@@ -52,7 +52,6 @@ function makeService(overrides: {
   now?: jest.Mock;
   uuid?: jest.Mock;
   params?: jest.Mock;
-  refreshParams?: jest.Mock;
   revertReviewOnline?: jest.Mock;
 } = {}) {
   return new OfflineReviewService({
@@ -63,7 +62,6 @@ function makeService(overrides: {
       overrides.now ?? jest.fn().mockReturnValue(new Date('2026-07-31T10:00:00.000Z')),
     uuid: overrides.uuid ?? jest.fn().mockReturnValue('default-uuid'),
     params: overrides.params ?? jest.fn().mockReturnValue(schedulingParams({})),
-    refreshParams: overrides.refreshParams,
     revertReviewOnline:
       overrides.revertReviewOnline ??
       jest.fn().mockResolvedValue({ outcome: 'reverted', card: makeCard() }),
@@ -422,16 +420,18 @@ describe('rateCard – UUID/time injection', () => {
     );
   });
 
-  test('refreshes the current retention parameters before calculating a review', async () => {
-    const refreshed = schedulingParams({ request_retention: 0.95 });
-    const refreshParams = jest.fn().mockResolvedValue(refreshed);
+  test('uses the provider cache synchronously when parameters change', async () => {
+    let current = schedulingParams({ request_retention: 0.9 });
+    const params = jest.fn(() => current);
     const store = makeFakeStore();
-    const service = makeService({ store, refreshParams });
+    const service = makeService({ store, params });
+
+    current = schedulingParams({ request_retention: 0.95 });
 
     await service.rateCard(makeCard(), 'good', 1000);
 
-    expect(refreshParams).toHaveBeenCalledTimes(1);
-    expect(store.setParams).toHaveBeenCalledWith(refreshed);
+    expect(params).toHaveBeenCalledTimes(1);
+    expect(store.setParams).toHaveBeenCalledWith(current);
   });
 });
 

@@ -81,6 +81,7 @@ export interface LearnerSkillState {
   last_reviewed_at: string | null;
   next_review_at: string | null;
   suspended: boolean;
+  auto_suspended: boolean;
   leech: boolean;
   version: number;
   /** Optional word label attached by getLeechStates for user-facing lists. */

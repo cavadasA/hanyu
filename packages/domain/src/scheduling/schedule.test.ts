@@ -24,6 +24,7 @@ describe('applyReview', () => {
     expect(state.retrievability).toEqual(expect.any(Number));
     expect(state.retrievability).toBeGreaterThanOrEqual(0);
     expect(state.retrievability).toBeLessThanOrEqual(1);
+    expect(state.retrievability).toBeLessThan(1);
   });
 
   it('los cuatro botones programan cosas distintas', () => {

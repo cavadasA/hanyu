@@ -109,6 +109,7 @@ export function FlashCardView({
   const reduceMotion = useRef(false);
   const [motionReady, setMotionReady] = useState(MOTION_DISABLED);
   const [writtenGrade, setWrittenGrade] = useState<WrittenGrade | null>(null);
+  const writtenContinuedRef = useRef(false);
   const entranceAnim = useRef<Animated.CompositeAnimation | null>(null);
   const revealAnim = useRef<Animated.CompositeAnimation | null>(null);
 
@@ -123,7 +124,14 @@ export function FlashCardView({
 
   useEffect(() => {
     setWrittenGrade(null);
+    writtenContinuedRef.current = false;
   }, [card.id, mode]);
+
+  function continueWritten() {
+    if (!writtenGrade || writtenContinuedRef.current) return;
+    writtenContinuedRef.current = true;
+    onRate?.(writtenGrade.grade, writtenGrade.elapsed_ms);
+  }
 
   useEffect(() => {
     if (MOTION_DISABLED) {
@@ -357,7 +365,7 @@ export function FlashCardView({
               {writtenGrade ? (
                 <Button
                   label="Continue"
-                  onPress={() => onRate?.(writtenGrade.grade, writtenGrade.elapsed_ms)}
+                  onPress={continueWritten}
                   disabled={ratingDisabled}
                 />
               ) : null}

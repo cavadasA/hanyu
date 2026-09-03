@@ -21,22 +21,6 @@ import {
 const WORD_SELECT =
   'id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency, sense_index, variants';
 
-/**
- * Las habilidades que una palabra puede ejercitar hoy dependen del material
- * que exista para ella, no de un catálogo fijo. `production` está declarada en
- * el enum desde el Plan 1C pero no se genera: sin evaluación de voz sería una
- * tarjeta imposible de aprobar.
- */
-export function availableSkills(input: { hasContext: boolean }): LearningSkill[] {
-  const skills: LearningSkill[] = ['recognition', 'recall', 'listening'];
-
-  if (input.hasContext) {
-    skills.push('reading');
-  }
-
-  return skills;
-}
-
 function mapVersionedCardRow(row: any, word?: any): VersionedCard {
   if (row.version === undefined || row.version === null) {
     throw createRepositoryError(new Error('Card version is missing'), 'Failed to load card');

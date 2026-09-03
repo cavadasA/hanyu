@@ -15,7 +15,7 @@ export type SchedulingPhase = 'new' | 'learning' | 'review' | 'relearning';
 export interface SchedulingState {
   difficulty: number;
   stability: number;
-  /** Last FSRS retrievability estimate, refreshed after each review. */
+  /** FSRS retrievability estimate at the next scheduled due time. */
   retrievability?: number | null;
   reps: number;
   lapses: number;
@@ -88,6 +88,17 @@ function minutesBetween(from: Date, to: Date): number {
   return Math.max(0, Math.round((to.getTime() - from.getTime()) / 60000));
 }
 
+function retrievabilityAtNextDue(card: Card, params: FSRSParameters): number {
+  // ts-fsrs measures elapsed time in whole days. A short-term due date would
+  // therefore still be exactly 1; use the first full day after it so the
+  // persisted value remains a useful forecast for learning cards too.
+  const due = new Date(card.due);
+  const forecast = card.scheduled_days > 0
+    ? due
+    : new Date(due.getTime() + 24 * 60 * 60 * 1000);
+  return fsrs(params).get_retrievability(card, forecast, false);
+}
+
 export function applyReview(
   state: SchedulingState,
   grade: Grade,
@@ -100,7 +111,9 @@ export function applyReview(
   return {
     state: {
       ...nextState,
-      retrievability: fsrs(params).get_retrievability(card, now, false),
+      // Measuring at `now` immediately after `next` always returns ~1. Store
+      // the value forecast for the next due window instead.
+      retrievability: retrievabilityAtNextDue(card, params),
     },
     interval_minutes: minutesBetween(now, card.due),
   };

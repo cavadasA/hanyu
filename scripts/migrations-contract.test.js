@@ -114,6 +114,8 @@ describe('contratos de migraciones', () => {
     expect(types).toContain('fsrs_state: string');
     expect(types).toContain('learning_steps: number');
     expect(types).toContain('scheduled_days: number');
+    expect(types).toContain('leech: boolean');
+    expect(types).toContain('auto_suspended: boolean');
     expect(types).toContain('request_retention: number');
     expect(types).toContain('grade: number | null');
     expect(types).toContain('prior_snapshot: Json | null');
@@ -142,5 +144,30 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'retrievability numeric');
     expectSqlToContain(migration, 's.retrievability');
     expectSqlToContain(migration, 'create or replace function public.get_due_cards');
+  });
+
+  it('separa la suspensión automática de la suspensión manual', () => {
+    const migration = readMigration('2026090304_skill_suspension_sources.sql');
+
+    expectSqlToContain(
+      migration,
+      'add column if not exists auto_suspended boolean not null default false',
+    );
+    expectSqlToContain(migration, 'set suspended = false, auto_suspended = false');
+    expectSqlToContain(migration, 'and s.auto_suspended');
+    expectSqlToContain(migration, "'recall', true, true");
+    expectSqlToContain(migration, "'listening', true, true");
+  });
+
+  it('protege la memoización de los intervalos de la tarjeta activa', () => {
+    const source = readFileSync(
+      join(rootDir, 'apps', 'mobile', 'src', 'screens', 'CardsScreen.tsx'),
+      'utf8',
+    );
+
+    expect(source).toContain('const currentIntervals = useMemo');
+    expect(source).not.toContain(
+      'previewIntervals(current.scheduling, new Date(), schedulingParams',
+    );
   });
 });
