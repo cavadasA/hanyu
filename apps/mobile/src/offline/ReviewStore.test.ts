@@ -531,9 +531,9 @@ describe('discardPending', () => {
       scheduling: { ...card.scheduling, reps: card.scheduling.reps + 1 },
     });
 
-    handle.withTransactionAsync = async (fn) => {
+    handle.withTransactionAsync = (async (fn: () => Promise<unknown>) => {
       await fn();
-    };
+    }) as unknown as DbHandle['withTransactionAsync'];
 
     const restored = await store.discardPending(event.review_id);
 

@@ -222,7 +222,8 @@ describe('revertReview', () => {
 
     expect((client as any).rpc).toHaveBeenCalledWith('revert_review', { p_review_id: 'r1' });
     expect(result.outcome).toBe('reverted');
-    expect(result.card.id).toBe('card-1');
+    expect(result.card).not.toBeNull();
+    expect(result.card?.id).toBe('card-1');
   });
 
   it('surfaces a conflict without pretending it worked', async () => {

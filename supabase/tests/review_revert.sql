@@ -1,6 +1,7 @@
 -- review_revert.sql
--- Comprueba revert_review en sus tres desenlaces: reversión, idempotencia y
--- conflicto. Todo va dentro de una transacción que se deshace al final.
+-- Comprueba revert_review contra el estado FSRS por habilidad: reversión,
+-- idempotencia y conflicto por una review posterior.
+-- Todo va dentro de una transacción que se deshace al final.
 
 begin;
 
@@ -15,116 +16,242 @@ insert into public.srs_cards (id, user_id, word_id)
 values ('d0000000-0000-0000-0000-000000000001',
         'c0000000-0000-0000-0000-000000000001', 99801);
 
+-- Sembramos un estado previo para que la comparación cubra los campos que
+-- revert_review restaura.
+insert into public.learner_skill_state (
+  user_id, target_kind, target_id, skill, next_review_at, fsrs_state,
+  reps, lapses, learning_steps, scheduled_days, elapsed_days, suspended, leech
+)
+values (
+  'c0000000-0000-0000-0000-000000000001', 'word', 99801, 'recognition',
+  '2026-09-03 00:00:00+00', 'new', 0, 0, 0, 0, 0, false, false
+);
+
 set local "request.jwt.claim.sub" = 'c0000000-0000-0000-0000-000000000001';
 
--- ── Caso 1: valorar y revertir devuelve la tarjeta a su estado anterior ──
+-- ── Caso 1: valorar y revertir restaura el snapshot previo ──
 do $$
 declare
-  v_before public.srs_cards;
-  v_after  public.srs_cards;
-  v_out    record;
+  v_before public.learner_skill_state;
+  v_after  public.learner_skill_state;
+  v_prior  jsonb;
+  v_result jsonb;
+  v_outcome text;
+  v_version bigint;
+  v_card_id uuid;
+  v_stats integer;
+  v_reverted_events integer;
 begin
-  select * into v_before from public.srs_cards
-  where id = 'd0000000-0000-0000-0000-000000000001';
+  select * into v_before
+  from public.learner_skill_state
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and target_kind = 'word' and target_id = 99801 and skill = 'recognition';
 
-  perform public.review_flashcard(
-    'd0000000-0000-0000-0000-000000000001', 4, 1200,
-    'e0000000-0000-0000-0000-000000000001', now(), v_before.version
+  v_prior := jsonb_build_object(
+    'difficulty', null::numeric,
+    'stability', null::numeric,
+    'retrievability', null::numeric,
+    'reps', 0,
+    'lapses', 0,
+    'learning_steps', 0,
+    'scheduled_days', 0,
+    'elapsed_days', 0,
+    'state', 'new',
+    'due', '2026-09-03T00:00:00+00:00',
+    'last_review', null::text,
+    'leech', false,
+    'suspended', false
+  );
+  v_result := jsonb_build_object(
+    'difficulty', 5.1,
+    'stability', 1.4,
+    'retrievability', null::numeric,
+    'reps', 1,
+    'lapses', 0,
+    'learning_steps', 1,
+    'scheduled_days', 1,
+    'elapsed_days', 0,
+    'state', 'learning',
+    'due', '2026-09-04T00:00:00+00:00'
   );
 
-  select * into v_out from public.revert_review('e0000000-0000-0000-0000-000000000001');
-  if v_out.outcome <> 'reverted' then
-    raise exception 'esperaba reverted, obtuve %', v_out.outcome;
-  end if;
-  if v_out.card_id <> 'd0000000-0000-0000-0000-000000000001' then
-    raise exception 'la RPC no devolvió el card_id';
+  select outcome, version into v_outcome, v_version
+  from public.apply_review(
+    'd0000000-0000-0000-0000-000000000001',
+    'e0000000-0000-0000-0000-000000000001',
+    '2026-09-03 10:00:00+00',
+    v_before.version,
+    4,
+    'recognition',
+    v_result,
+    v_prior
+  );
+
+  if v_outcome <> 'applied' or v_version <> v_before.version + 1 then
+    raise exception 'caso 1: apply_review no aplicó la review: outcome=%, version=%',
+      v_outcome, v_version;
   end if;
 
-  select * into v_after from public.srs_cards
-  where id = 'd0000000-0000-0000-0000-000000000001';
-
-  if v_after.repetitions <> v_before.repetitions
-     or v_after.interval_days <> v_before.interval_days
-     or v_after.ease_factor <> v_before.ease_factor
-     or v_after.status <> v_before.status then
-    raise exception 'la tarjeta no volvió a su estado previo';
+  select outcome, card_id, version
+  into v_outcome, v_card_id, v_version
+  from public.revert_review('e0000000-0000-0000-0000-000000000001');
+  if v_outcome <> 'reverted'
+     or v_card_id <> 'd0000000-0000-0000-0000-000000000001' then
+    raise exception 'caso 1: esperaba reverted con card_id, obtuve outcome=%, card_id=%',
+      v_outcome, v_card_id;
   end if;
 
-  -- La versión avanza aunque el estado retroceda: la reversión es una
-  -- mutación más, y otros dispositivos tienen que verla.
+  select * into v_after
+  from public.learner_skill_state
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and target_kind = 'word' and target_id = 99801 and skill = 'recognition';
+
+  if v_after.difficulty is distinct from v_before.difficulty
+     or v_after.stability is distinct from v_before.stability
+     or v_after.retrievability is distinct from v_before.retrievability
+     or v_after.reps is distinct from v_before.reps
+     or v_after.lapses is distinct from v_before.lapses
+     or v_after.learning_steps is distinct from v_before.learning_steps
+     or v_after.scheduled_days is distinct from v_before.scheduled_days
+     or v_after.elapsed_days is distinct from v_before.elapsed_days
+     or v_after.fsrs_state is distinct from v_before.fsrs_state
+     or v_after.next_review_at is distinct from v_before.next_review_at
+     or v_after.last_reviewed_at is distinct from v_before.last_reviewed_at
+     or v_after.suspended is distinct from v_before.suspended
+     or v_after.leech is distinct from v_before.leech then
+    raise exception 'caso 1: el estado FSRS no volvió a su snapshot previo';
+  end if;
+
+  -- La reversión es otra mutación: el estado retrocede, pero su versión avanza.
   if v_after.version <= v_before.version then
-    raise exception 'la versión debería avanzar tras revertir';
+    raise exception 'caso 1: la versión debería avanzar tras revertir';
   end if;
 
-  if (select cards_reviewed from public.user_stats
-      where user_id = 'c0000000-0000-0000-0000-000000000001'
-        and date = (now() at time zone 'utc')::date) <> 0 then
-    raise exception 'las estadísticas del día no descontaron la review';
+  select coalesce(sum(cards_reviewed), 0)::integer into v_stats
+  from public.user_stats
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and date = '2026-09-03';
+  if v_stats <> 0 then
+    raise exception 'caso 1: las estadísticas no descontaron la review: %', v_stats;
   end if;
 
-  raise notice 'caso 1 OK';
+  select count(*) into v_reverted_events
+  from public.learning_event
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and kind = 'review_reverted'
+    and reverts_event_id is not null;
+  if v_reverted_events <> 1 then
+    raise exception 'caso 1: faltó el evento review_reverted enlazado';
+  end if;
 end $$;
 
--- ── Caso 2: revertir dos veces no descuenta dos veces ──
+-- ── Caso 2: revertir dos veces es idempotente ──
 do $$
 declare
-  v_out   record;
+  v_outcome text;
+  v_card_id uuid;
+  v_version bigint;
   v_stats integer;
 begin
-  select * into v_out from public.revert_review('e0000000-0000-0000-0000-000000000001');
-  if v_out.outcome <> 'already_reverted' then
-    raise exception 'esperaba already_reverted, obtuve %', v_out.outcome;
+  select outcome, card_id, version into v_outcome, v_card_id, v_version
+  from public.revert_review('e0000000-0000-0000-0000-000000000001');
+
+  if v_outcome <> 'already_reverted'
+     or v_card_id <> 'd0000000-0000-0000-0000-000000000001' then
+    raise exception 'caso 2: esperaba already_reverted, obtuve outcome=%, card_id=%',
+      v_outcome, v_card_id;
   end if;
 
-  select coalesce(cards_reviewed, 0) into v_stats from public.user_stats
+  select coalesce(sum(cards_reviewed), 0)::integer into v_stats
+  from public.user_stats
   where user_id = 'c0000000-0000-0000-0000-000000000001'
-    and date = (now() at time zone 'utc')::date;
-
+    and date = '2026-09-03';
   if v_stats <> 0 then
-    raise exception 'la segunda reversión volvió a descontar: %', v_stats;
+    raise exception 'caso 2: la segunda reversión volvió a descontar: %', v_stats;
   end if;
-
-  raise notice 'caso 2 OK';
 end $$;
 
--- ── Caso 3: si la tarjeta avanzó después, la reversión se rechaza ──
+-- ── Caso 3: si el estado avanzó después, la reversión entra en conflicto ──
 do $$
 declare
-  v_card   public.srs_cards;
-  v_out    record;
-  v_before public.srs_cards;
+  v_before public.learner_skill_state;
+  v_after  public.learner_skill_state;
+  v_prior  jsonb;
+  v_result jsonb;
+  v_outcome text;
+  v_version bigint;
 begin
-  select * into v_card from public.srs_cards
-  where id = 'd0000000-0000-0000-0000-000000000001';
+  select * into v_before
+  from public.learner_skill_state
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and target_kind = 'word' and target_id = 99801 and skill = 'recognition';
 
-  perform public.review_flashcard(
-    'd0000000-0000-0000-0000-000000000001', 4, 1000,
-    'e0000000-0000-0000-0000-000000000002', now(), v_card.version
+  v_prior := jsonb_build_object(
+    'difficulty', null::numeric, 'stability', null::numeric,
+    'retrievability', null::numeric, 'reps', 0, 'lapses', 0,
+    'learning_steps', 0, 'scheduled_days', 0, 'elapsed_days', 0,
+    'state', 'new', 'due', '2026-09-03T00:00:00+00:00',
+    'last_review', null::text, 'leech', false, 'suspended', false
+  );
+  v_result := jsonb_build_object(
+    'difficulty', 5.0, 'stability', 1.5, 'retrievability', null::numeric,
+    'reps', 1, 'lapses', 0, 'learning_steps', 1, 'scheduled_days', 1,
+    'elapsed_days', 0, 'state', 'learning', 'due', '2026-09-04T00:00:00+00:00'
+  );
+  select outcome, version into v_outcome, v_version
+  from public.apply_review(
+    'd0000000-0000-0000-0000-000000000001',
+    'e0000000-0000-0000-0000-000000000002',
+    '2026-09-03 11:00:00+00', v_before.version, 4, 'recognition',
+    v_result, v_prior
   );
 
-  select * into v_card from public.srs_cards
-  where id = 'd0000000-0000-0000-0000-000000000001';
+  select * into v_before
+  from public.learner_skill_state
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and target_kind = 'word' and target_id = 99801 and skill = 'recognition';
 
-  perform public.review_flashcard(
-    'd0000000-0000-0000-0000-000000000001', 3, 1000,
-    'e0000000-0000-0000-0000-000000000003', now(), v_card.version
+  v_prior := jsonb_build_object(
+    'difficulty', 5.0, 'stability', 1.5, 'retrievability', null::numeric,
+    'reps', 1, 'lapses', 0, 'learning_steps', 1, 'scheduled_days', 1,
+    'elapsed_days', 0, 'state', 'learning',
+    'due', '2026-09-04T00:00:00+00:00',
+    'last_review', '2026-09-03T11:00:00+00:00', 'leech', false, 'suspended', false
+  );
+  v_result := jsonb_build_object(
+    'difficulty', 4.8, 'stability', 3.0, 'retrievability', null::numeric,
+    'reps', 2, 'lapses', 0, 'learning_steps', 0, 'scheduled_days', 3,
+    'elapsed_days', 1, 'state', 'review', 'due', '2026-09-06T00:00:00+00:00'
+  );
+  select outcome, version into v_outcome, v_version
+  from public.apply_review(
+    'd0000000-0000-0000-0000-000000000001',
+    'e0000000-0000-0000-0000-000000000003',
+    '2026-09-03 12:00:00+00', v_before.version, 3, 'recognition',
+    v_result, v_prior
   );
 
-  select * into v_before from public.srs_cards
-  where id = 'd0000000-0000-0000-0000-000000000001';
+  select * into v_before
+  from public.learner_skill_state
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and target_kind = 'word' and target_id = 99801 and skill = 'recognition';
 
-  -- Revertir la penúltima destruiría la última. Debe rechazarse.
-  select * into v_out from public.revert_review('e0000000-0000-0000-0000-000000000002');
-  if v_out.outcome <> 'conflict' then
-    raise exception 'esperaba conflict, obtuve %', v_out.outcome;
+  select outcome, version into v_outcome, v_version
+  from public.revert_review('e0000000-0000-0000-0000-000000000002');
+  if v_outcome <> 'conflict' or v_version <> v_before.version then
+    raise exception 'caso 3: esperaba conflict sin mutación, obtuve outcome=%, version=%',
+      v_outcome, v_version;
   end if;
 
-  if (select version from public.srs_cards
-      where id = 'd0000000-0000-0000-0000-000000000001') <> v_before.version then
-    raise exception 'un conflicto no debe mutar nada';
+  select * into v_after
+  from public.learner_skill_state
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and target_kind = 'word' and target_id = 99801 and skill = 'recognition';
+  if v_after.version <> v_before.version
+     or v_after.next_review_at is distinct from v_before.next_review_at
+     or v_after.fsrs_state is distinct from v_before.fsrs_state then
+    raise exception 'caso 3: el conflicto mutó el estado FSRS';
   end if;
-
-  raise notice 'caso 3 OK';
 end $$;
 
 rollback;
