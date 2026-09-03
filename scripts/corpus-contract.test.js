@@ -303,4 +303,33 @@ describe('contrato del corpus', () => {
         .toBeGreaterThanOrEqual(minimumByLevel[level]);
     }
   });
+
+  it('conserva las frases de ejemplo curadas al regenerar la gramática', () => {
+    // El sílabo enumera los puntos pero no los ejemplifica. Regenerar sin
+    // arrastrar lo curado borró 17 frases escritas a mano; esta prueba impide
+    // que vuelva a pasar.
+    const curated = JSON.parse(
+      readFileSync(join(seedDir, 'grammar-examples.json'), 'utf8'),
+    );
+    const grammar = JSON.parse(readFileSync(join(seedDir, 'grammar-points.json'), 'utf8'));
+
+    const missing = [];
+    for (const entry of curated) {
+      if (entry.examples.length === 0) continue;
+
+      const point = grammar.find(
+        (candidate) =>
+          candidate.hsk_level === entry.hsk_level &&
+          (candidate.code === entry.code ||
+            candidate.title === entry.title ||
+            candidate.detail === entry.title),
+      );
+
+      if (!point || !Array.isArray(point.examples) || point.examples.length === 0) {
+        missing.push(`L${entry.hsk_level} ${entry.title}`);
+      }
+    }
+
+    expect(missing).toEqual([]);
+  });
 });

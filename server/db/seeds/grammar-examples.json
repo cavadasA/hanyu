@@ -1,0 +1,73 @@
+[
+  {
+    "hsk_level": 1,
+    "code": "3.1.1",
+    "title": "Basic word order (SVO)",
+    "pattern": "Subject + Verb + Object",
+    "explanation": "Chinese follows a Subject-Verb-Object word order, similar to English. The subject comes first, followed by the verb, and then the object.",
+    "examples": [
+      { "zh": "我喝茶。", "pinyin": "Wǒ hē chá.", "en": "I drink tea." },
+      { "zh": "她看书。", "pinyin": "Tā kàn shū.", "en": "She reads books." },
+      { "zh": "他吃饭。", "pinyin": "Tā chī fàn.", "en": "He eats food." }
+    ]
+  },
+  {
+    "hsk_level": 1,
+    "code": "2.9.3",
+    "title": "Questions with 吗 (ma)",
+    "pattern": "Statement + 吗?",
+    "explanation": "To turn a statement into a yes/no question, add 吗 (ma) at the end. The word order stays the same.",
+    "examples": [
+      { "zh": "你好吗？", "pinyin": "Nǐ hǎo ma?", "en": "How are you?" },
+      { "zh": "你是学生吗？", "pinyin": "Nǐ shì xuéshēng ma?", "en": "Are you a student?" },
+      { "zh": "他喜欢中国吗？", "pinyin": "Tā xǐhuān Zhōngguó ma?", "en": "Does he like China?" }
+    ]
+  },
+  {
+    "hsk_level": 1,
+    "code": "2.6.6",
+    "title": "Negation with 不 (bù)",
+    "pattern": "不 + Verb/Adjective",
+    "explanation": "Place 不 (bù) before a verb or adjective to negate it. Note: 有 (yǒu) uses 没 (méi) for negation instead.",
+    "examples": [
+      { "zh": "我不喝咖啡。", "pinyin": "Wǒ bù hē kāfēi.", "en": "I don't drink coffee." },
+      { "zh": "她不是老师。", "pinyin": "Tā bú shì lǎoshī.", "en": "She is not a teacher." },
+      { "zh": "我没有钱。", "pinyin": "Wǒ méiyǒu qián.", "en": "I don't have money." }
+    ]
+  },
+  {
+    "hsk_level": 2,
+    "code": "6.1.1",
+    "title": "了 (le) for completed actions",
+    "pattern": "Verb + 了",
+    "explanation": "Place 了 (le) after a verb to indicate a completed action. It does not directly translate to past tense - it marks completion.",
+    "examples": [
+      { "zh": "我吃了午饭。", "pinyin": "Wǒ chī le wǔfàn.", "en": "I ate lunch." },
+      { "zh": "她买了一本书。", "pinyin": "Tā mǎi le yì běn shū.", "en": "She bought a book." },
+      { "zh": "我们看了电影。", "pinyin": "Wǒmen kàn le diànyǐng.", "en": "We watched a movie." }
+    ]
+  },
+  {
+    "hsk_level": 2,
+    "code": "6.4.3",
+    "title": "因为...所以... (because...therefore...)",
+    "pattern": "因为 + reason，所以 + result",
+    "explanation": "Use 因为 (yīnwèi) to state the cause and 所以 (suǒyǐ) to state the result. You can use both together or just one.",
+    "examples": [
+      { "zh": "因为下雨，所以我没去。", "pinyin": "Yīnwèi xià yǔ, suǒyǐ wǒ méi qù.", "en": "Because it rained, I didn't go." },
+      { "zh": "因为他生病了，所以没来上课。", "pinyin": "Yīnwèi tā shēngbìng le, suǒyǐ méi lái shàngkè.", "en": "Because he was sick, he didn't come to class." }
+    ]
+  },
+  {
+    "hsk_level": 3,
+    "code": "6.2.1",
+    "title": "把 (bǎ) construction",
+    "pattern": "Subject + 把 + Object + Verb + Complement",
+    "explanation": "The 把 (bǎ) structure is used to emphasize the result or effect of an action on a specific object. Pattern: Subject + 把 + Object + Verb + Complement.",
+    "examples": [
+      { "zh": "请把门关上。", "pinyin": "Qǐng bǎ mén guān shàng.", "en": "Please close the door." },
+      { "zh": "他把作业做完了。", "pinyin": "Tā bǎ zuòyè zuò wán le.", "en": "He finished his homework." },
+      { "zh": "我把书放在桌子上了。", "pinyin": "Wǒ bǎ shū fàng zài zhuōzi shàng le.", "en": "I put the book on the table." }
+    ]
+  }
+]
