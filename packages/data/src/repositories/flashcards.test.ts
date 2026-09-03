@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
   addCard,
+  buildQueue,
   getCard,
   getDueCards,
   reviewCardEvent,
@@ -62,6 +63,70 @@ function clientFor(options: {
     auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
   } as never;
 }
+
+function queueRow(cardId: string, isNew: boolean) {
+  return {
+    card_id: cardId,
+    word_id: 1,
+    skill: 'recognition',
+    is_new: isNew,
+    difficulty: 5,
+    stability: 10,
+    reps: 2,
+    lapses: 0,
+    learning_steps: 0,
+    scheduled_days: 3,
+    elapsed_days: 3,
+    fsrs_state: isNew ? 'new' : 'review',
+    next_review_at: '2026-09-02T00:00:00.000Z',
+    last_reviewed_at: '2026-08-30T00:00:00.000Z',
+    version: 1,
+  };
+}
+
+function queueClient(rows: unknown[]) {
+  return {
+    rpc: vi.fn().mockResolvedValue({ data: rows, error: null }),
+    from: vi.fn(() => ({
+      select: vi.fn(() => ({
+        in: vi.fn().mockResolvedValue({
+          data: [{ id: 1, hanzi: '你好', pinyin: 'nǐ hǎo', meaning_es: 'hola', hsk_level: 1 }],
+          error: null,
+        }),
+      })),
+    })),
+    auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
+  } as never;
+}
+
+describe('buildQueue', () => {
+  it('pide la cola al servidor y no recorta el resultado', async () => {
+    const client = queueClient([queueRow('c1', false), queueRow('c2', true)]);
+
+    const queue = await buildQueue({ skill: 'recognition' }, client);
+
+    expect((client as any).rpc).toHaveBeenCalledWith('build_review_queue', {
+      p_deck_id: null,
+      p_skill: 'recognition',
+      p_limit: null,
+    });
+    expect(queue.cards).toHaveLength(2);
+  });
+
+  it('distingue las tarjetas nuevas de los repasos', async () => {
+    const client = queueClient([queueRow('c1', false), queueRow('c2', true)]);
+
+    const queue = await buildQueue({ skill: 'recognition' }, client);
+
+    expect(queue.cards.map((card) => card.is_new)).toEqual([false, true]);
+  });
+
+  it('devuelve una cola vacía sin reventar cuando no hay nada que estudiar', async () => {
+    const queue = await buildQueue({ skill: 'recognition' }, queueClient([]));
+
+    expect(queue.cards).toEqual([]);
+  });
+});
 
 const revertCardRow = {
   id: 'card-1',

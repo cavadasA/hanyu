@@ -259,6 +259,12 @@ export interface UserSettings {
   updated_at?: string;
 }
 
+export interface BuildQueueInput {
+  skill?: LearningSkill;
+  deckId?: string | null;
+  limit?: number | null;
+}
+
 export interface DueCard {
   id: string;
   user_id: string;
@@ -302,6 +308,7 @@ export interface ReviewEvent {
 }
 
 export interface VersionedCard extends DueCard {
+  is_new: boolean;
   version: number;
 }
 

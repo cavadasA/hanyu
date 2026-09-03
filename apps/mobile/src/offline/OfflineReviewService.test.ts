@@ -20,6 +20,7 @@ function makeCard(overrides: Partial<VersionedCard> = {}): VersionedCard {
     user_id: 'user-test',
     word_id: 1,
     skill: 'recognition',
+    is_new: false,
     scheduling: emptyState(new Date('2026-07-31T10:00:00.000Z')),
     version: 1,
     ...overrides,

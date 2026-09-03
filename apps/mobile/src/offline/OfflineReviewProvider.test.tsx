@@ -176,6 +176,7 @@ describe('OfflineReviewProvider – store open on user available', () => {
         user_id: 'user-1',
         word_id: 1,
         skill: 'recognition',
+        is_new: false,
         scheduling: emptyState(new Date('2026-09-03T10:00:00.000Z')),
         version: 0,
       }, 'good', 1000);

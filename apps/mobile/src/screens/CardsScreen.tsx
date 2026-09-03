@@ -3,7 +3,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { randomUUID } from 'expo-crypto';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
-import { toUserMessage, type DueCard, type FlashcardStats } from '@hanyu/data';
+import { toUserMessage, type FlashcardStats, type VersionedCard } from '@hanyu/data';
 import { cardPhase, previewIntervals, schedulingParams, type Grade } from '@hanyu/domain';
 import { getData } from '../lib/data';
 import {
@@ -39,7 +39,7 @@ type ScreenPhase = 'pre-session' | 'reviewing' | 'complete';
 type SessionSize = 'quick' | 'all';
 
 interface UndoEntry {
-  card: DueCard;
+  card: VersionedCard;
   previousIndex: number;
   grade: Grade;
   reviewId: string;
@@ -60,8 +60,8 @@ export default function CardsScreen() {
   const focusedDeckId = typeof deckId === 'string' && deckId.length > 0 ? deckId : null;
 
   const [phase, setPhase] = useState<ScreenPhase>('pre-session');
-  const [allDueCards, setAllDueCards] = useState<DueCard[]>([]);
-  const [activeCards, setActiveCards] = useState<DueCard[]>([]);
+  const [allDueCards, setAllDueCards] = useState<VersionedCard[]>([]);
+  const [activeCards, setActiveCards] = useState<VersionedCard[]>([]);
   const [deckSize, setDeckSize] = useState<number | null>(null);
   const [byStatus, setByStatus] = useState<FlashcardStats['by_status']>({});
   const [deckTotal, setDeckTotal] = useState(0);
@@ -183,7 +183,7 @@ export default function CardsScreen() {
     const byId = new Map(allDueCards.map((entry) => [entry.id, entry]));
     const queue = snapshot.card_ids
       .map((id) => byId.get(id))
-      .filter((entry): entry is DueCard => Boolean(entry));
+      .filter((entry): entry is VersionedCard => Boolean(entry));
 
     if (queue.length === 0) {
       // Ninguna tarjeta de aquella cola sigue vencida: la sesión terminó por
@@ -290,7 +290,7 @@ export default function CardsScreen() {
     setError('');
 
     let reviewId: string;
-    let ratedCard: DueCard;
+    let ratedCard: VersionedCard;
     try {
       const result = await service.rateCard(
         current,

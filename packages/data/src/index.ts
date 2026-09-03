@@ -6,6 +6,7 @@ export { resolveGloss } from './gloss';
 export { toUserMessage } from './errors';
 export type {
   AiProvider,
+  BuildQueueInput,
   CardOrder,
   CardStatus,
   ContentItem,

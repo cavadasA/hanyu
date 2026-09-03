@@ -21,6 +21,7 @@ import {
 } from './repositories/decks';
 import {
   addCard,
+  buildQueue,
   createStarterDeck,
   getCard,
   getDueCards,
@@ -93,6 +94,7 @@ export function createHanyuData(config: HanyuDataConfig) {
         getGrammarPoint(level, id, client),
     },
     flashcards: {
+      buildQueue: (input: Parameters<typeof buildQueue>[0] = {}) => buildQueue(input, client),
       getDueCards: (
         limit = 50,
         deckId: string | null = null,

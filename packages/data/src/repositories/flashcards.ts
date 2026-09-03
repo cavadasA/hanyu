@@ -10,6 +10,7 @@ import type {
   VersionedCard,
   LearningSkill,
   WordContext,
+  BuildQueueInput,
 } from '../types';
 import { getSettings } from './settings';
 import {
@@ -45,6 +46,7 @@ function mapVersionedCardRow(row: any, word?: any): VersionedCard {
       due: String(row.next_review_at ?? new Date().toISOString()),
       last_review: row.last_reviewed_at ? String(row.last_reviewed_at) : null,
     } satisfies SchedulingState,
+    is_new: Boolean(row.is_new),
     version: Number(row.version),
     hanzi: relatedWord?.hanzi,
     pinyin: relatedWord?.pinyin,
@@ -196,6 +198,50 @@ export async function getDueCards(
     cards,
     total: cards.length,
     deck_size: deckSize || 0,
+  };
+}
+
+/**
+ * La cola llega ya decidida: qué entra hoy y cuánto son reglas sobre el
+ * conjunto completo de tarjetas, y solo se pueden aplicar donde está ese
+ * conjunto. Este repositorio no recorta ni reordena; el orden fino lo pone
+ * `orderQueue` del paquete de dominio, que necesita la curva de olvido.
+ */
+export async function buildQueue(
+  input: BuildQueueInput,
+  client: HanyuClient,
+): Promise<{ cards: VersionedCard[] }> {
+  const { data, error } = await (client.rpc as any)('build_review_queue', {
+    p_deck_id: input.deckId ?? null,
+    p_skill: input.skill ?? 'recognition',
+    p_limit: input.limit ?? null,
+  });
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to build the study queue');
+  }
+
+  const rows = (data ?? []) as any[];
+  if (rows.length === 0) {
+    return { cards: [] };
+  }
+
+  const { data: words, error: wordsError } = await client
+    .from('words')
+    .select(WORD_SELECT)
+    .in('id', rows.map((row) => Number(row.word_id)));
+
+  if (wordsError) {
+    throw createRepositoryError(wordsError, 'Failed to load queue words');
+  }
+
+  const byId = new Map((words ?? []).map((word: any) => [Number(word.id), word]));
+
+  return {
+    cards: rows.map((row) => ({
+      ...mapVersionedCardRow(row, byId.get(Number(row.word_id))),
+      is_new: Boolean(row.is_new),
+    })),
   };
 }
 
