@@ -42,7 +42,15 @@ describe('WordSheet', () => {
     mockGetSettings.mockResolvedValue({ support_language: 'es' });
 
     await act(async () => {
-      render(<WordSheet word={huan} text="还" onClose={() => {}} />);
+      render(
+        <WordSheet
+          word={huan}
+          text="还"
+          sentence={null}
+          readingId="reading-1"
+          onClose={() => {}}
+        />,
+      );
       await Promise.resolve();
     });
 
@@ -54,7 +62,15 @@ describe('WordSheet', () => {
     mockGetSettings.mockResolvedValue({ support_language: 'en' });
 
     await act(async () => {
-      render(<WordSheet word={huan} text="还" onClose={() => {}} />);
+      render(
+        <WordSheet
+          word={huan}
+          text="还"
+          sentence={null}
+          readingId="reading-1"
+          onClose={() => {}}
+        />,
+      );
       await Promise.resolve();
     });
 
@@ -65,7 +81,15 @@ describe('WordSheet', () => {
     mockGetSettings.mockResolvedValue({ support_language: 'es' });
 
     await act(async () => {
-      render(<WordSheet word={huan} text="还" onClose={() => {}} />);
+      render(
+        <WordSheet
+          word={huan}
+          text="还"
+          sentence={null}
+          readingId="reading-1"
+          onClose={() => {}}
+        />,
+      );
       await Promise.resolve();
     });
 

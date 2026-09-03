@@ -126,7 +126,7 @@ describe('WordsScreen', () => {
     await waitFor(() => expect(view.getByText('你好')).toBeTruthy());
     await fireEvent.press(view.getByRole('button', { name: 'Add 你好 to Cards' }));
 
-    await waitFor(() => expect(mockAddCard).toHaveBeenCalledWith(1, 'd2'));
+    await waitFor(() => expect(mockAddCard).toHaveBeenCalledWith(1, { deckId: 'd2' }));
   });
 });
 

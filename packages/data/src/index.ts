@@ -51,5 +51,6 @@ export type {
   UserSettings,
   VersionedCard,
   Word,
+  WordContext,
   WordPage,
 } from './types';

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { ReadingToken } from '@hanyu/data';
+import { sentenceOf } from '../lib/sentenceOf';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 import { WordSheet } from './WordSheet';
@@ -8,9 +9,11 @@ import { WordSheet } from './WordSheet';
 export function ReadingText({
   tokens,
   showPinyin,
+  readingId,
 }: {
   tokens: ReadingToken[];
   showPinyin: boolean;
+  readingId: string;
 }) {
   const { colors } = useTheme();
   const [selected, setSelected] = useState<ReadingToken | null>(null);
@@ -50,6 +53,8 @@ export function ReadingText({
         <WordSheet
           text={selected.text}
           word={selected.word}
+          sentence={sentenceOf(tokens, selected.id)}
+          readingId={readingId}
           onClose={() => setSelected(null)}
         />
       ) : null}

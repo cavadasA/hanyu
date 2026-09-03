@@ -35,6 +35,7 @@ const tokens: ReadingToken[] = [
   },
   { id: 't2', text: '，', type: 'punctuation', word: null },
   { id: 't3', text: '龘', type: 'unknown', word: null },
+  { id: 't4', text: '。', type: 'punctuation', word: null },
 ];
 
 describe('ReadingText', () => {
@@ -44,7 +45,9 @@ describe('ReadingText', () => {
 
   it('opens known and unknown word details and adds a known word once', async () => {
     mockAddCard.mockResolvedValue({ card_id: 'card-1' });
-    const view = await render(<ReadingText tokens={tokens} showPinyin={false} />);
+    const view = await render(
+      <ReadingText tokens={tokens} showPinyin={false} readingId="reading-1" />,
+    );
 
     await fireEvent.press(view.getByRole('button', { name: '你好' }));
     expect(view.getByText('ni hao')).toBeTruthy();
@@ -52,7 +55,13 @@ describe('ReadingText', () => {
 
     await fireEvent.press(view.getByRole('button', { name: 'Add to Cards' }));
     await waitFor(() => expect(view.getByText('Added')).toBeTruthy());
-    expect(mockAddCard).toHaveBeenCalledWith(1);
+    expect(mockAddCard).toHaveBeenCalledWith(1, {
+      context: {
+        sentence: '你好，龘。',
+        source_kind: 'reading',
+        source_id: 'reading-1',
+      },
+    });
 
     await fireEvent.press(view.getByRole('button', { name: '龘' }));
     expect(view.getByText('Unknown word')).toBeTruthy();

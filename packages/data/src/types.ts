@@ -33,6 +33,12 @@ export type LearningSkill =
   | 'reading'
   | 'production';
 
+export interface WordContext {
+  sentence: string;
+  source_kind: 'reading';
+  source_id: string;
+}
+
 export type LearningTargetKind = 'word' | 'grammar' | 'character';
 
 export type LearningEventKind =

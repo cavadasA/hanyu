@@ -509,6 +509,51 @@ export type Database = {
           },
         ]
       }
+      word_context: {
+        Row: {
+          created_at: string
+          id: string
+          sentence: string
+          source_id: string | null
+          source_kind: string
+          user_id: string
+          word_id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          sentence: string
+          source_id?: string | null
+          source_kind: string
+          user_id: string
+          word_id: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          sentence?: string
+          source_id?: string | null
+          source_kind?: string
+          user_id?: string
+          word_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "word_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "word_context_word_id_fkey"
+            columns: ["word_id"]
+            isOneToOne: false
+            referencedRelation: "words"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       grammar_points: {
         Row: {
           category: string | null

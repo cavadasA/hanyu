@@ -253,6 +253,40 @@ describe('revertReview', () => {
 });
 
 describe('addCard', () => {
+  it('guarda el contexto de lectura una sola vez por frase', async () => {
+    const upserts: Array<{ table: string; row: any; options?: any }> = [];
+    const client = {
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
+      from: vi.fn((table: string) => ({
+        upsert: vi.fn((row: any, options?: any) => {
+          upserts.push({ table, row, options });
+          return { error: null };
+        }),
+      })),
+    };
+
+    await addCard(5, client as any, {
+      deckId: 'd1',
+      context: {
+        sentence: '我明天还你钱。',
+        source_kind: 'reading',
+        source_id: 'reading-1',
+      },
+    });
+
+    expect(upserts.find((entry) => entry.table === 'word_context')).toEqual({
+      table: 'word_context',
+      row: {
+        user_id: 'u1',
+        word_id: 5,
+        sentence: '我明天还你钱。',
+        source_kind: 'reading',
+        source_id: 'reading-1',
+      },
+      options: { onConflict: 'user_id,word_id,sentence', ignoreDuplicates: true },
+    });
+  });
+
   it('inserts deck membership for the target deck and ensures the srs card', async () => {
     const inserts: Array<{ table: string; row: any; options?: any }> = [];
     const client = {
@@ -271,7 +305,7 @@ describe('addCard', () => {
       }),
     };
 
-    const result = await addCard(5, client as any, 'd1');
+    const result = await addCard(5, client as any, { deckId: 'd1' });
 
     const deckCard = inserts.find((i) => i.table === 'deck_cards');
     const srs = inserts.find((i) => i.table === 'srs_cards');

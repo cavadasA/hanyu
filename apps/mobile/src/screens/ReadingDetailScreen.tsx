@@ -120,7 +120,7 @@ export function ReadingDetailScreen() {
       ) : null}
 
       <Card>
-        <ReadingText tokens={reading.tokens} showPinyin={showPinyin} />
+        <ReadingText tokens={reading.tokens} showPinyin={showPinyin} readingId={reading.id} />
       </Card>
 
       <Card>

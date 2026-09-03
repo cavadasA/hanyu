@@ -61,7 +61,7 @@ export function WordsScreen() {
     setAddError(null);
     try {
       if (selectedDeckId) {
-        await flashcards.current.addCard(word.id, selectedDeckId);
+        await flashcards.current.addCard(word.id, { deckId: selectedDeckId });
       } else {
         await flashcards.current.addCard(word.id);
       }

@@ -41,7 +41,13 @@ import { getLeechStates, getSkillStates, setSkillSuspended, upsertSkillState } f
 import { getDashboard, getStreak, logTime } from './repositories/stats';
 import { getToday } from './repositories/today';
 import { getWord, getWords } from './repositories/words';
-import type { ExerciseAnswer, ExerciseType, HskLevel, ReadingFormat } from './types';
+import type {
+  ExerciseAnswer,
+  ExerciseType,
+  HskLevel,
+  ReadingFormat,
+  WordContext,
+} from './types';
 
 export function createHanyuData(config: HanyuDataConfig) {
   const client = createSupabaseClient(config);
@@ -85,7 +91,10 @@ export function createHanyuData(config: HanyuDataConfig) {
       reviewCardEvent: (event: Parameters<typeof reviewCardEvent>[0]) =>
         reviewCardEvent(event, client),
       revertReview: (reviewId: string) => revertReview(reviewId, client),
-      addCard: (wordId: number | string, deckId?: string) => addCard(wordId, client, deckId),
+      addCard: (
+        wordId: number | string,
+        options?: { deckId?: string; context?: WordContext },
+      ) => addCard(wordId, client, options),
       createStarterDeck: (input: { strategy?: string; limit?: number } = {}) =>
         createStarterDeck(input, client),
       getFlashcardStats: () => getFlashcardStats(client),

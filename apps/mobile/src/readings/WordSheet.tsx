@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { resolveGloss, toUserMessage, type Word } from '@hanyu/data';
+import { resolveGloss, toUserMessage, type Word, type WordContext } from '@hanyu/data';
 import { getData } from '../lib/data';
+import type { Sentence } from '../lib/sentenceOf';
 import { useSupportLanguage } from '../lib/useSupportLanguage';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
@@ -12,10 +13,12 @@ import { Card } from '../ui/Card';
 interface Props {
   word: Word | null;
   text: string;
+  sentence: Sentence | null;
+  readingId: string;
   onClose(): void;
 }
 
-export function WordSheet({ word, text, onClose }: Props) {
+export function WordSheet({ word, text, sentence, readingId, onClose }: Props) {
   const { colors } = useTheme();
   const supportLanguage = useSupportLanguage();
   const flashcards = useRef(getData().flashcards);
@@ -31,7 +34,10 @@ export function WordSheet({ word, text, onClose }: Props) {
     setAdding(true);
     setError(null);
     try {
-      await flashcards.current.addCard(word.id);
+      const context: WordContext | undefined = sentence
+        ? { sentence: sentence.text, source_kind: 'reading', source_id: readingId }
+        : undefined;
+      await flashcards.current.addCard(word.id, { context });
       setAdded(true);
     } catch (caught) {
       if (toUserMessage(caught).toLowerCase().includes('already')) {
@@ -65,6 +71,9 @@ export function WordSheet({ word, text, onClose }: Props) {
             {word.traditional ? <Badge label={`繁 ${word.traditional}`} /> : null}
             {word.classifier ? <Badge label={`量 ${word.classifier}`} /> : null}
           </View>
+          {sentence ? (
+            <Text style={[styles.context, { color: colors.textMuted }]}>{sentence.text}</Text>
+          ) : null}
           <Button
             label={added ? 'Added' : adding ? 'Adding...' : 'Add to Cards'}
             onPress={addCard}
@@ -99,6 +108,10 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   meaning: {
+    fontSize: tokens.fontSize.md,
+    lineHeight: 22,
+  },
+  context: {
     fontSize: tokens.fontSize.md,
     lineHeight: 22,
   },

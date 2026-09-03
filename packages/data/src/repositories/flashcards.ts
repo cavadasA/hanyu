@@ -8,6 +8,7 @@ import type {
   SchedulingPhase,
   SchedulingState,
   VersionedCard,
+  WordContext,
 } from '../types';
 import { getSettings } from './settings';
 import {
@@ -270,7 +271,7 @@ export async function revertReview(
 export async function addCard(
   wordId: number | string,
   client: HanyuClient,
-  deckId?: string,
+  options: { deckId?: string; context?: WordContext } = {},
 ) {
   const userId = await getRequiredUserId(client);
   const numericWordId = Number(wordId);
@@ -297,8 +298,24 @@ export async function addCard(
     );
   if (stateError) throw createRepositoryError(stateError, 'Failed to initialize card scheduling state');
 
+  if (options.context) {
+    const { error: contextError } = await client
+      .from('word_context')
+      .upsert(
+        {
+          user_id: userId,
+          word_id: numericWordId,
+          sentence: options.context.sentence,
+          source_kind: options.context.source_kind,
+          source_id: options.context.source_id,
+        } as any,
+        { onConflict: 'user_id,word_id,sentence', ignoreDuplicates: true },
+      );
+    if (contextError) throw createRepositoryError(contextError, 'Failed to save word context');
+  }
+
   // Resolve target deck (explicit, else the default deck).
-  let targetDeckId = deckId;
+  let targetDeckId = options.deckId;
   if (!targetDeckId) {
     const { data: def } = await client
       .from('decks')
