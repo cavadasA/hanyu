@@ -61,7 +61,7 @@ begin
   from public.apply_review(
     'b0000000-0000-0000-0000-000000000001',
     'c0000000-0000-0000-0000-000000000001',
-    '2026-09-03 10:00:00+00', 0, 4::smallint, 'recognition', v_result, v_prior
+    '2026-09-03 10:00:00+00', 0, 4::smallint, 'recognition', v_result, v_prior, 3210
   );
 
   if v_outcome <> 'applied' or v_version <> 1 then
@@ -82,6 +82,12 @@ begin
     and client_review_id = 'c0000000-0000-0000-0000-000000000001';
   if v_log_count <> 1 then
     raise exception 'caso 1: esperaba un review_log, obtuve %', v_log_count;
+  end if;
+
+  if (select time_ms from public.review_log
+      where user_id = 'a0000000-0000-0000-0000-000000000001'
+        and client_review_id = 'c0000000-0000-0000-0000-000000000001') <> 3210 then
+    raise exception 'caso 1: no persistió time_ms';
   end if;
 end $$;
 
@@ -238,6 +244,88 @@ begin
       raise exception 'caso 4c: error incorrecto: %', sqlerrm;
     end if;
   end;
+end $$;
+
+-- ── Caso 4d: suspended es independiente de los lapsos ──
+update public.learner_skill_state
+set suspended = true
+where user_id = 'a0000000-0000-0000-0000-000000000001'
+  and target_kind = 'word' and target_id = 99901 and skill = 'recognition';
+
+do $$
+declare
+  v_outcome text;
+  v_version bigint;
+  v_prior jsonb := jsonb_build_object(
+    'difficulty', 5.1, 'stability', 1.4, 'reps', 1, 'lapses', 0,
+    'learning_steps', 1, 'scheduled_days', 1, 'elapsed_days', 0,
+    'state', 'learning', 'due', '2026-09-04T00:00:00+00:00'
+  );
+  v_result jsonb := jsonb_build_object(
+    'difficulty', 5.1, 'stability', 2.0, 'reps', 2, 'lapses', 0,
+    'learning_steps', 0, 'scheduled_days', 2, 'elapsed_days', 1,
+    'state', 'review', 'due', '2026-09-05T00:00:00+00:00'
+  );
+begin
+  select outcome, version into v_outcome, v_version
+  from public.apply_review(
+    'b0000000-0000-0000-0000-000000000001',
+    'c0000000-0000-0000-0000-000000000096',
+    '2026-09-03 13:00:00+00', 1, 3::smallint, 'recognition', v_result, v_prior
+  );
+
+  if v_outcome <> 'applied' then
+    raise exception 'caso 4d: esperaba applied, obtuve %', v_outcome;
+  end if;
+  if not (select suspended from public.learner_skill_state
+          where user_id = 'a0000000-0000-0000-0000-000000000001'
+            and target_kind = 'word' and target_id = 99901 and skill = 'recognition') then
+    raise exception 'caso 4d: apply_review sobrescribió suspended';
+  end if;
+end $$;
+
+-- ── Caso 4e: una review de reconocimiento desbloquea una habilidad derivada ──
+insert into public.learner_skill_state (
+  user_id, target_kind, target_id, skill, next_review_at, fsrs_state,
+  reps, lapses, learning_steps, scheduled_days, elapsed_days, suspended, leech,
+  stability, difficulty
+)
+values (
+  'a0000000-0000-0000-0000-000000000001', 'word', 99901, 'recall',
+  '2026-09-03 00:00:00+00', 'review', 1, 0, 0, 1, 0, true, false, 1, 5
+)
+on conflict (user_id, target_kind, target_id, skill) do update
+set suspended = true;
+
+do $$
+declare
+  v_outcome text;
+  v_prior jsonb := jsonb_build_object(
+    'difficulty', 5.1, 'stability', 2.0, 'reps', 2, 'lapses', 0,
+    'learning_steps', 0, 'scheduled_days', 2, 'elapsed_days', 1,
+    'state', 'review', 'due', '2026-09-05T00:00:00+00:00'
+  );
+  v_result jsonb := jsonb_build_object(
+    'difficulty', 5.0, 'stability', 8.0, 'reps', 3, 'lapses', 0,
+    'learning_steps', 0, 'scheduled_days', 8, 'elapsed_days', 3,
+    'state', 'review', 'due', '2026-09-11T00:00:00+00:00'
+  );
+begin
+  select outcome into v_outcome
+  from public.apply_review(
+    'b0000000-0000-0000-0000-000000000001',
+    'c0000000-0000-0000-0000-000000000095',
+    '2026-09-03 14:00:00+00', 2, 3::smallint, 'recognition', v_result, v_prior
+  );
+
+  if v_outcome <> 'applied' then
+    raise exception 'caso 4e: esperaba applied, obtuve %', v_outcome;
+  end if;
+  if (select suspended from public.learner_skill_state
+      where user_id = 'a0000000-0000-0000-0000-000000000001'
+        and target_kind = 'word' and target_id = 99901 and skill = 'recall') then
+    raise exception 'caso 4e: recall sigue suspendida tras estabilidad suficiente';
+  end if;
 end $$;
 
 rollback;

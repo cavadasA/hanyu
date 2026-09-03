@@ -24,7 +24,7 @@ insert into public.learner_skill_state (
 )
 values (
   'c0000000-0000-0000-0000-000000000001', 'word', 99801, 'recognition',
-  '2026-09-03 00:00:00+00', 'new', 0, 0, 0, 0, 0, false, false
+  '2026-09-03 00:00:00+00', 'new', 0, 0, 0, 0, 0, true, false
 );
 
 set local "request.jwt.claim.sub" = 'c0000000-0000-0000-0000-000000000001';
@@ -84,7 +84,8 @@ begin
     4::smallint,
     'recognition',
     v_result,
-    v_prior
+    v_prior,
+    4567
   );
 
   if v_outcome <> 'applied' or v_version <> v_before.version + 1 then

@@ -69,4 +69,23 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, "base.skill = 'recognition'");
     expectSqlToContain(migration, 'coalesce(base.stability, 0) >= p_min_stability');
   });
+
+  it('endurece apply_review sin perder tiempo ni suspensión', () => {
+    const migration = readMigration('2026090301_review_hardening.sql');
+
+    expectSqlToContain(
+      migration,
+      'drop function if exists public.apply_review( uuid, uuid, timestamptz, bigint, smallint, public.learning_skill, jsonb, jsonb );',
+    );
+    expectSqlToContain(migration, 'p_time_ms integer default null');
+    expectSqlToContain(migration, 'select s.version into version');
+    expectSqlToContain(migration, 'p_time_ms < 0');
+    expectSqlToContain(migration, 'review_log ( user_id, card_id, reviewed_at, quality, grade, time_ms');
+    expectSqlToContain(migration, "perform public.unlock_derived_skills()");
+    expectSqlToContain(migration, "leech = ((p_state->>'lapses')::integer >= 8)");
+    expectSqlToContain(migration, "'suspended', v_state.suspended");
+    expectSqlToContain(migration, "leech = coalesce(");
+    expect(normalizeSql(migration)).not.toContain("suspended = ((p_state->>'lapses')::integer >= 8)");
+    expect(normalizeSql(migration)).not.toContain("suspended = coalesce((v_prior->>'suspended')::boolean, false)");
+  });
 });
