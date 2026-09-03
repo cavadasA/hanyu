@@ -191,7 +191,6 @@ describe('getDueCards', () => {
           skill: 'recognition',
           difficulty: 4.2,
           stability: 8.5,
-          retrievability: 0.84,
           reps: 3,
           lapses: 1,
           learning_steps: 0,
@@ -220,7 +219,6 @@ describe('getDueCards', () => {
       scheduling: {
         difficulty: 4.2,
         stability: 8.5,
-        retrievability: 0.84,
         reps: 3,
         lapses: 1,
         learning_steps: 0,

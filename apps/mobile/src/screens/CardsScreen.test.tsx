@@ -20,6 +20,13 @@ const mockLogTime = jest.fn();
 const mockCreateStarterDeck = jest.fn();
 const mockGetDashboard = jest.fn();
 const mockPush = jest.fn();
+const mockPreviewIntervals = jest.fn((..._args: unknown[]) => ({
+  again: 1,
+  hard: 2,
+  good: 3,
+  easy: 4,
+}));
+let mockRequestRetention = 0.9;
 const mockOfflineService = {
   loadDueCards: (limit: number, deckId?: string | null, skill?: string) =>
     skill === undefined
@@ -30,6 +37,14 @@ const mockOfflineService = {
     mockRateCard(card, grade, timeMs),
   undoRating: (reviewId: string) => mockUndoRating(reviewId),
 };
+
+jest.mock('@hanyu/domain', () => {
+  const actual = jest.requireActual('@hanyu/domain');
+  return {
+    ...actual,
+    previewIntervals: (...args: unknown[]) => mockPreviewIntervals(...args),
+  };
+});
 
 jest.mock('../lib/data', () => ({
   getData: () => ({
@@ -50,6 +65,7 @@ jest.mock('../offline/OfflineReviewProvider', () => ({
   useOfflineReview: () => ({
     service: mockOfflineService,
     ready: true,
+    requestRetention: mockRequestRetention,
     pendingCount: 0,
     refreshPendingCount: jest.fn(),
     sync: jest.fn(),
@@ -131,6 +147,8 @@ describe('CardsScreen', () => {
     mockLogTime.mockReset();
     mockCreateStarterDeck.mockReset();
     mockPush.mockReset();
+    mockPreviewIntervals.mockReset().mockReturnValue({ again: 1, hard: 2, good: 3, easy: 4 });
+    mockRequestRetention = 0.9;
     mockGetDashboard.mockReset().mockResolvedValue({
       cards: { total: 150, due: 2, by_status: { new: 100, learning: 30, review: 20 } },
     });
@@ -284,6 +302,28 @@ describe('CardsScreen', () => {
     await fireEvent.press(screen.getByRole('button', { name: 'Recall' }));
 
     await waitFor(() => expect(mockLoadDueCards).toHaveBeenLastCalledWith(50, 'd1', 'recall'));
+  });
+
+  it('recalcula el preview cuando cambia la retención del proveedor', async () => {
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+
+    const view = await act(async () => render(<CardsScreen />));
+    await fireEvent.press(screen.getByText('Start review'));
+
+    expect(mockPreviewIntervals).toHaveBeenLastCalledWith(
+      expect.any(Object),
+      expect.any(Date),
+      expect.objectContaining({ request_retention: 0.9 }),
+    );
+
+    mockRequestRetention = 0.95;
+    await view.rerender(<CardsScreen />);
+
+    expect(mockPreviewIntervals).toHaveBeenLastCalledWith(
+      expect.any(Object),
+      expect.any(Date),
+      expect.objectContaining({ request_retention: 0.95 }),
+    );
   });
 
   it('en recuerdo pide escribir la respuesta y no revelar la tarjeta', async () => {

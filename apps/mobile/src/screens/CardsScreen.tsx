@@ -54,7 +54,7 @@ interface SessionStats {
 
 export default function CardsScreen() {
   const { colors } = useTheme();
-  const { service, ready } = useOfflineReview();
+  const { service, ready, requestRetention } = useOfflineReview();
   const router = useRouter();
   const { deckId } = useLocalSearchParams<{ deckId?: string }>();
   const focusedDeckId = typeof deckId === 'string' && deckId.length > 0 ? deckId : null;
@@ -80,7 +80,6 @@ export default function CardsScreen() {
   const [undoStack, setUndoStack] = useState<UndoEntry[]>([]);
   const [stats, setStats] = useState<SessionStats>({ reviewed: 0, correct: 0, again: 0 });
   const [resumable, setResumable] = useState<ReviewSessionSnapshot | null>(null);
-  const [requestRetention, setRequestRetention] = useState(0.9);
 
   const timer = useSessionTimer();
   const sessionId = useRef<string | null>(null);
@@ -129,12 +128,6 @@ export default function CardsScreen() {
       setStats({ reviewed: 0, correct: 0, again: 0 });
 
       const data = getData();
-      try {
-        const settings = await data.settings.getSettings();
-        setRequestRetention(Number(settings.request_retention ?? 0.9));
-      } catch {
-        // Scheduling previews use the default when settings are unavailable.
-      }
       try {
         const dashboard = await data.stats.getDashboard();
         setByStatus(dashboard.cards?.by_status ?? {});

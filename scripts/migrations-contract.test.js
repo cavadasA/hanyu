@@ -124,6 +124,7 @@ describe('contratos de migraciones', () => {
     expect(types).toContain('get_due_cards: {');
     expect(types).toContain('p_skill?: string');
     expect(types).toContain('revert_review: {');
+    expect(types).not.toContain('retrievability: number | null');
     expect(types).not.toContain('review_flashcard: {');
     expect(types).not.toContain('ease_factor: number');
   });
@@ -136,14 +137,6 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'create or replace function public.create_starter_deck');
     expect(normalized).not.toContain('insert into public.learner_skill_state');
     expect(normalized).toContain('insert into public.srs_cards');
-  });
-
-  it('expone la recuperabilidad persistida en la RPC de tarjetas vencidas', () => {
-    const migration = readMigration('2026090303_due_cards_retrievability.sql');
-
-    expectSqlToContain(migration, 'retrievability numeric');
-    expectSqlToContain(migration, 's.retrievability');
-    expectSqlToContain(migration, 'create or replace function public.get_due_cards');
   });
 
   it('separa la suspensión automática de la suspensión manual', () => {
@@ -159,15 +152,13 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, "'listening', true, true");
   });
 
-  it('protege la memoización de los intervalos de la tarjeta activa', () => {
-    const source = readFileSync(
-      join(rootDir, 'apps', 'mobile', 'src', 'screens', 'CardsScreen.tsx'),
-      'utf8',
-    );
+  it('elimina el pronóstico persistido hasta que exista un consumidor analítico', () => {
+    const migration = readMigration('2026090305_drop_persisted_retrievability.sql');
+    const normalized = normalizeSql(migration);
 
-    expect(source).toContain('const currentIntervals = useMemo');
-    expect(source).not.toContain(
-      'previewIntervals(current.scheduling, new Date(), schedulingParams',
-    );
+    expectSqlToContain(migration, 'drop column if exists retrievability');
+    expectSqlToContain(migration, 'create or replace function public.apply_review');
+    expectSqlToContain(migration, 'create or replace function public.get_due_cards');
+    expect(normalized).not.toContain('retrievability =');
   });
 });

@@ -48,7 +48,6 @@ const stateRow = {
   skill: 'recognition',
   difficulty: 2.5,
   stability: 6,
-  retrievability: null,
   reps: 3,
   lapses: 0,
   last_reviewed_at: '2026-09-01T10:00:00.000Z',
@@ -131,7 +130,12 @@ describe('skills repository', () => {
     );
 
     expect(client.chains.learner_skill_state.update).toHaveBeenCalledWith(
-      expect.objectContaining({ leech: false, suspended: false, auto_suspended: false }),
+      expect.objectContaining({
+        leech: false,
+        suspended: false,
+        auto_suspended: false,
+        lapses: 0,
+      }),
     );
   });
 });

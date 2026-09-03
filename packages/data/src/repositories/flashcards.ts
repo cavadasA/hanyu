@@ -36,7 +36,6 @@ function mapVersionedCardRow(row: any, word?: any): VersionedCard {
     scheduling: {
       difficulty: Number(row.difficulty ?? 0),
       stability: Number(row.stability ?? 0),
-      retrievability: row.retrievability == null ? null : Number(row.retrievability),
       reps: Number(row.reps ?? 0),
       lapses: Number(row.lapses ?? 0),
       learning_steps: Number(row.learning_steps ?? 0),
@@ -229,7 +228,7 @@ export async function getCard(
   const { data: state, error: stateError } = await client
     .from('learner_skill_state')
     .select(
-      'skill, difficulty, stability, retrievability, reps, lapses, learning_steps, scheduled_days, elapsed_days, fsrs_state, next_review_at, last_reviewed_at, version',
+      'skill, difficulty, stability, reps, lapses, learning_steps, scheduled_days, elapsed_days, fsrs_state, next_review_at, last_reviewed_at, version',
     )
     .eq('user_id', userId)
     .eq('target_kind', 'word')
@@ -247,7 +246,6 @@ export async function getCard(
     skill,
     difficulty: fallback.difficulty,
     stability: fallback.stability,
-    retrievability: fallback.retrievability ?? null,
     reps: fallback.reps,
     lapses: fallback.lapses,
     learning_steps: fallback.learning_steps,

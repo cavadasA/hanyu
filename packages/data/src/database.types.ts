@@ -457,7 +457,6 @@ export type Database = {
           leech: boolean
           next_review_at: string | null
           reps: number
-          retrievability: number | null
           scheduled_days: number
           skill: string
           stability: number | null
@@ -481,7 +480,6 @@ export type Database = {
           leech?: boolean
           next_review_at?: string | null
           reps?: number
-          retrievability?: number | null
           scheduled_days?: number
           skill: string
           stability?: number | null
@@ -505,7 +503,6 @@ export type Database = {
           leech?: boolean
           next_review_at?: string | null
           reps?: number
-          retrievability?: number | null
           scheduled_days?: number
           skill?: string
           stability?: number | null
@@ -1048,7 +1045,6 @@ export type Database = {
           learning_steps: number
           next_review_at: string | null
           reps: number
-          retrievability: number | null
           scheduled_days: number
           skill: string
           stability: number | null

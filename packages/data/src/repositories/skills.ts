@@ -5,7 +5,7 @@ import type { LearnerSkillState, LearningSkill, LearningTargetKind } from '../ty
 import { createRepositoryError, getRequiredUserId } from './shared';
 
 const COLUMNS =
-  'id, user_id, target_kind, target_id, skill, difficulty, stability, retrievability, fsrs_state, learning_steps, scheduled_days, elapsed_days, reps, lapses, last_reviewed_at, next_review_at, suspended, auto_suspended, leech, version';
+  'id, user_id, target_kind, target_id, skill, difficulty, stability, fsrs_state, learning_steps, scheduled_days, elapsed_days, reps, lapses, last_reviewed_at, next_review_at, suspended, auto_suspended, leech, version';
 
 export interface GetSkillStatesInput {
   target_kind: LearningTargetKind;
@@ -49,7 +49,6 @@ export interface UpsertSkillStateInput {
   skill: LearningSkill;
   difficulty?: number | null;
   stability?: number | null;
-  retrievability?: number | null;
   reps?: number;
   lapses?: number;
   last_reviewed_at?: string | null;
@@ -147,6 +146,10 @@ export async function clearLeech(
       leech: false,
       suspended: false,
       auto_suspended: false,
+      // Lapses are the evidence used by apply_review to derive leech. Reset
+      // the counter so future lapses, rather than historical ones, can cross
+      // the attention threshold again.
+      lapses: 0,
       updated_at: new Date().toISOString(),
     })
     .eq('user_id', userId)

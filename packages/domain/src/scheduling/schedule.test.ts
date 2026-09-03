@@ -18,15 +18,6 @@ describe('applyReview', () => {
     expect(interval_minutes).toBeLessThan(60);
   });
 
-  it('guarda la recuperabilidad calculada junto al nuevo estado FSRS', () => {
-    const { state } = applyReview(emptyState(now), 'good', now, params);
-
-    expect(state.retrievability).toEqual(expect.any(Number));
-    expect(state.retrievability).toBeGreaterThanOrEqual(0);
-    expect(state.retrievability).toBeLessThanOrEqual(1);
-    expect(state.retrievability).toBeLessThan(1);
-  });
-
   it('los cuatro botones programan cosas distintas', () => {
     const intervals = previewIntervals(emptyState(now), now, params);
 

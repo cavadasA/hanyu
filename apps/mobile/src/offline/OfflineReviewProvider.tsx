@@ -36,6 +36,7 @@ interface OfflineReviewValue {
   service: OfflineReviewService | null;
   ready: boolean;
   pendingCount: number;
+  requestRetention: number;
   refreshPendingCount: () => Promise<void>;
   updateReviewSettings: (patch: { request_retention?: number }) => void;
   sync: () => Promise<SyncSummary | null>;
@@ -51,6 +52,7 @@ const OfflineReviewContext = createContext<OfflineReviewValue>({
   service: null,
   ready: false,
   pendingCount: 0,
+  requestRetention: schedulingParams({}).request_retention,
   refreshPendingCount: noop,
   updateReviewSettings: noopUpdateReviewSettings,
   sync: noopSync,
@@ -69,6 +71,9 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
   const [service, setService] = useState<OfflineReviewService | null>(null);
   const [ready, setReady] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
+  const [requestRetention, setRequestRetention] = useState(
+    schedulingParams({}).request_retention,
+  );
   const [syncing, setSyncing] = useState(false);
   const [lastSummary, setLastSummary] = useState<SyncSummary | null>(null);
 
@@ -108,6 +113,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
       setService(null);
       setReady(false);
       setPendingCount(0);
+      setRequestRetention(schedulingParams({}).request_retention);
       setSyncing(false);
       setLastSummary(null);
       reviewStoreRef.current = null;
@@ -128,6 +134,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
       }
 
       paramsRef.current = params;
+      setRequestRetention(params.request_retention);
 
       const store = await openReviewStore(userId, params);
       if (cancelled) {
@@ -217,6 +224,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
 
     const params = schedulingParams({ request_retention: patch.request_retention });
     paramsRef.current = params;
+    setRequestRetention(params.request_retention);
     reviewStoreRef.current?.setParams(params);
   }, []);
 
@@ -241,6 +249,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
         service,
         ready,
         pendingCount,
+        requestRetention,
         refreshPendingCount,
         updateReviewSettings,
         sync,

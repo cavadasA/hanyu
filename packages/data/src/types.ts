@@ -71,7 +71,6 @@ export interface LearnerSkillState {
   skill: LearningSkill;
   difficulty: number | null;
   stability: number | null;
-  retrievability: number | null;
   fsrs_state: SchedulingPhase;
   learning_steps: number;
   scheduled_days: number;
