@@ -43,6 +43,7 @@ interface UndoEntry {
   previousIndex: number;
   grade: Grade;
   reviewId: string;
+  requeued: boolean;
 }
 
 interface SessionStats {
@@ -184,8 +185,13 @@ export default function CardsScreen() {
       return;
     }
 
+    const savedNextCardId = snapshot.card_ids[snapshot.index];
+    const nextIndex = savedNextCardId
+      ? queue.findIndex((entry) => entry.id === savedNextCardId)
+      : -1;
+
     setActiveCards(queue);
-    setIndex(Math.min(snapshot.index, queue.length - 1));
+    setIndex(nextIndex >= 0 ? nextIndex : 0);
     setReviewed(snapshot.reviewed);
     setStats(snapshot.stats);
     setMode(snapshot.mode);
@@ -216,26 +222,53 @@ export default function CardsScreen() {
       return;
     }
 
-    setReviewing(false);
-    setUndoStack((prev) => prev.slice(0, -1));
-    setActiveCards((prev) => {
-      const updated = [...prev];
-      updated[lastEntry.previousIndex] = lastEntry.card;
-      return updated;
-    });
-    setIndex(lastEntry.previousIndex);
-    setReviewed((prev) => Math.max(0, prev - 1));
-    setStats((prev) => ({
-      reviewed: Math.max(0, prev.reviewed - 1),
+    const nextUndoStack = undoStack.slice(0, -1);
+    let requeuedIndex = -1;
+    if (lastEntry.requeued) {
+      for (let candidate = activeCards.length - 1; candidate > lastEntry.previousIndex; candidate -= 1) {
+        if (activeCards[candidate]?.id === lastEntry.card.id) {
+          requeuedIndex = candidate;
+          break;
+        }
+      }
+    }
+
+    const withoutRequeued = requeuedIndex >= 0
+      ? activeCards.filter((_, candidate) => candidate !== requeuedIndex)
+      : activeCards;
+    const nextActiveCards = withoutRequeued.map((entry, candidate) =>
+      candidate === lastEntry.previousIndex ? lastEntry.card : entry,
+    );
+    const nextReviewed = Math.max(0, reviewed - 1);
+    const nextStats = {
+      reviewed: Math.max(0, stats.reviewed - 1),
       correct: lastEntry.grade === 'good' || lastEntry.grade === 'easy'
-        ? Math.max(0, prev.correct - 1)
-        : prev.correct,
+        ? Math.max(0, stats.correct - 1)
+        : stats.correct,
       again: lastEntry.grade === 'again'
-        ? Math.max(0, prev.again - 1)
-        : prev.again,
-    }));
+        ? Math.max(0, stats.again - 1)
+        : stats.again,
+    };
+
+    setReviewing(false);
+    setUndoStack(nextUndoStack);
+    setActiveCards(nextActiveCards);
+    setIndex(lastEntry.previousIndex);
+    setReviewed(nextReviewed);
+    setStats(nextStats);
     setRevealed(false);
     cardStartedAt.current = Date.now();
+
+    void saveReviewSession({
+      session_id: sessionId.current ?? randomUUID(),
+      deck_id: focusedDeckId,
+      card_ids: nextActiveCards.map((card) => card.id),
+      index: lastEntry.previousIndex,
+      mode,
+      started_at: sessionStartedAt.current,
+      reviewed: nextReviewed,
+      stats: nextStats,
+    });
   }
 
   async function rate(grade: Grade) {
@@ -272,10 +305,6 @@ export default function CardsScreen() {
 
     const nextReviewed = reviewed + 1;
     setReviewed(nextReviewed);
-    setUndoStack((prev) => [
-      ...prev.slice(-4),
-      { card: current, previousIndex: index, grade, reviewId },
-    ]);
     const nextStats = {
       reviewed: stats.reviewed + 1,
       correct: stats.correct + (grade === 'good' || grade === 'easy' ? 1 : 0),
@@ -286,6 +315,11 @@ export default function CardsScreen() {
     const dueAt = Date.parse(ratedCard.scheduling.due);
     const requeueIntraday = Number.isFinite(dueAt) && dueAt - Date.now() < INTRA_SESSION_HORIZON_MS;
     const nextCards = requeueIntraday ? [...activeCards, ratedCard] : activeCards;
+
+    setUndoStack((prev) => [
+      ...prev.slice(-4),
+      { card: current, previousIndex: index, grade, reviewId, requeued: requeueIntraday },
+    ]);
 
     if (index + 1 >= nextCards.length) {
       timer.stop();

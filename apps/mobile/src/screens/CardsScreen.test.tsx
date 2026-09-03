@@ -1,10 +1,15 @@
-import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import {
   buildResponderGrantEvent,
   buildResponderReleaseEvent,
 } from '@testing-library/react-native/dist/event-builder';
 import CardsScreen from './CardsScreen';
 import { emptyState } from '@hanyu/domain';
+import {
+  clearReviewSession,
+  loadReviewSession,
+  saveReviewSession,
+} from '../lib/reviewSessionStore';
 
 const mockGetDueCards = jest.fn();
 const mockReviewCard = jest.fn();
@@ -63,6 +68,7 @@ jest.mock('expo-router', () => {
 });
 
 jest.mock('expo-speech', () => ({ speak: jest.fn(), stop: jest.fn() }));
+jest.mock('expo-crypto', () => ({ randomUUID: () => 'generated-session' }));
 
 function card(id: string, hanzi: string) {
   return {
@@ -111,7 +117,8 @@ async function renderCards() {
 }
 
 describe('CardsScreen', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
+    await clearReviewSession();
     mockOfflineService.lastDeckSize = 150;
     mockGetDueCards.mockReset();
     mockReviewCard.mockReset();
@@ -124,6 +131,10 @@ describe('CardsScreen', () => {
     mockGetDashboard.mockReset().mockResolvedValue({
       cards: { total: 150, due: 2, by_status: { new: 100, learning: 30, review: 20 } },
     });
+  });
+
+  afterEach(async () => {
+    await clearReviewSession();
   });
 
   it('renders pre-session view with Reviews heading and Start review button', async () => {
@@ -300,5 +311,95 @@ describe('CardsScreen', () => {
 
     expect(screen.queryByText('Session complete')).toBeNull();
     expect(screen.getByText('你好')).toBeTruthy();
+  });
+
+  it('reanuda en la siguiente tarjeta guardada aunque las anteriores ya no estén vencidas', async () => {
+    const currentCards = Array.from({ length: 5 }, (_, offset) =>
+      card(`c${offset + 5}`, `word-${offset + 5}`),
+    );
+    mockLoadDueCards.mockResolvedValue(currentCards);
+    await saveReviewSession({
+      session_id: 'saved-session',
+      deck_id: 'd1',
+      card_ids: Array.from({ length: 10 }, (_, index) => `c${index}`),
+      index: 5,
+      mode: 'recognition',
+      started_at: Date.now(),
+      reviewed: 5,
+      stats: { reviewed: 5, correct: 4, again: 1 },
+    });
+
+    await renderCards();
+    await fireEvent.press(screen.getByText('Continue'));
+
+    expect(screen.getByText('word-5')).toBeTruthy();
+    expect(screen.getByText('1/5')).toBeTruthy();
+  });
+
+  it('removes a requeued Again card when Undo returns to it', async () => {
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockRateCard.mockImplementation(async (input: any, grade: string) => ({
+      card: {
+        ...input,
+        scheduling: {
+          ...input.scheduling,
+          due: new Date(Date.now() + (grade === 'again' ? 60_000 : 86_400_000)).toISOString(),
+        },
+      },
+      reviewId: `r-${grade}`,
+    }));
+    mockUndoRating.mockResolvedValue(card('c1', '你好'));
+
+    await renderCards();
+    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Show answer'));
+    await fireEvent.press(screen.getByText('Again'));
+
+    expect(screen.getByText('2/3')).toBeTruthy();
+    await fireEvent.press(screen.getByLabelText('Undo last rating'));
+
+    expect(screen.getByText('你好')).toBeTruthy();
+    expect(screen.getByText('1/2')).toBeTruthy();
+  });
+
+  it('persists the rewound position after a successful Undo', async () => {
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
+    mockUndoRating.mockResolvedValue(card('c1', '你好'));
+
+    await renderCards();
+    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Show answer'));
+    await fireEvent.press(screen.getByText('Good'));
+    await fireEvent.press(screen.getByLabelText('Undo last rating'));
+
+    await waitFor(async () => {
+      await expect(loadReviewSession()).resolves.toMatchObject({
+        index: 0,
+        reviewed: 0,
+        card_ids: ['c1', 'c2'],
+        stats: { reviewed: 0, correct: 0, again: 0 },
+      });
+    });
+  });
+
+  it('discards the resumable session from the CardsScreen banner', async () => {
+    mockLoadDueCards.mockResolvedValue([card('c1', '你好')]);
+    await saveReviewSession({
+      session_id: 'discard-me',
+      deck_id: 'd1',
+      card_ids: ['c1'],
+      index: 0,
+      mode: 'recognition',
+      started_at: Date.now(),
+      reviewed: 0,
+      stats: { reviewed: 0, correct: 0, again: 0 },
+    });
+
+    await renderCards();
+    await fireEvent.press(screen.getByText('Discard'));
+
+    expect(screen.queryByText('Continue')).toBeNull();
+    await expect(loadReviewSession()).resolves.toBeNull();
   });
 });
