@@ -828,11 +828,12 @@ export type Database = {
         Row: {
           ai_provider: string
           card_order: string
-          cards_per_day: number
           created_at: string
           current_level: number
-          max_reviews_per_session: number
+          new_cards_per_day: number
+          review_limit_per_day: number
           request_retention: number
+          session_size: number
           support_language: string
           theme: string
           updated_at: string
@@ -841,11 +842,12 @@ export type Database = {
         Insert: {
           ai_provider?: string
           card_order?: string
-          cards_per_day?: number
           created_at?: string
           current_level?: number
-          max_reviews_per_session?: number
+          new_cards_per_day?: number
+          review_limit_per_day?: number
           request_retention?: number
+          session_size?: number
           support_language?: string
           theme?: string
           updated_at?: string
@@ -854,11 +856,12 @@ export type Database = {
         Update: {
           ai_provider?: string
           card_order?: string
-          cards_per_day?: number
           created_at?: string
           current_level?: number
-          max_reviews_per_session?: number
+          new_cards_per_day?: number
+          review_limit_per_day?: number
           request_retention?: number
+          session_size?: number
           support_language?: string
           theme?: string
           updated_at?: string

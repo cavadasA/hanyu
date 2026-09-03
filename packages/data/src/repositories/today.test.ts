@@ -13,7 +13,7 @@ function clientFor() {
       s.select.mockReturnValue({
         eq: vi.fn(() => ({
           maybeSingle: vi.fn().mockResolvedValue({
-            data: { user_id: 'u1', max_reviews_per_session: 100, card_order: 'due', cards_per_day: 20, current_level: 2, theme: 'light', ai_provider: 'none' },
+            data: { user_id: 'u1', review_limit_per_day: 200, session_size: 20, card_order: 'due', new_cards_per_day: 20, current_level: 2, theme: 'light', ai_provider: 'none' },
             error: null,
           }),
         })),

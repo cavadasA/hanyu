@@ -218,22 +218,32 @@ export default function YouScreen() {
             />
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <NumberRow
-              label="Cards per day"
-              value={settings.cards_per_day}
-              min={1}
+              label="New cards per day"
+              value={settings.new_cards_per_day}
+              min={0}
               max={100}
               step={5}
-              onChange={(cards_per_day) => save({ cards_per_day })}
+              onChange={(new_cards_per_day) => save({ new_cards_per_day })}
               disabled={saving}
             />
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <NumberRow
-              label="Max reviews per session"
-              value={settings.max_reviews_per_session}
-              min={1}
-              max={300}
+              label="Review limit per day"
+              value={settings.review_limit_per_day}
+              min={10}
+              max={999}
               step={10}
-              onChange={(max_reviews_per_session) => save({ max_reviews_per_session })}
+              onChange={(review_limit_per_day) => save({ review_limit_per_day })}
+              disabled={saving}
+            />
+            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <NumberRow
+              label="Session size"
+              value={settings.session_size}
+              min={5}
+              max={200}
+              step={5}
+              onChange={(session_size) => save({ session_size })}
               disabled={saving}
             />
           </View>

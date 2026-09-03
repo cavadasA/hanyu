@@ -247,8 +247,9 @@ export interface UserSettings {
   theme: ThemePreference;
   support_language: SupportLanguage;
   current_level: number;
-  cards_per_day: number;
-  max_reviews_per_session: number;
+  new_cards_per_day: number;
+  review_limit_per_day: number;
+  session_size: number;
   request_retention: number;
   card_order: CardOrder;
   ai_provider: AiProvider;

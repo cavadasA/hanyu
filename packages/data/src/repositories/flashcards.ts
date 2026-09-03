@@ -125,7 +125,7 @@ export async function getDueCards(
   skill: LearningSkill = 'recognition',
 ) {
   const settings = await getSettings(client);
-  const maxFromSettings = settings.max_reviews_per_session || 100;
+  const maxFromSettings = settings.session_size || 20;
   const requestedLimit = Math.max(1, parseInt(String(limit), 10) || maxFromSettings);
   const effectiveLimit = Math.min(maxFromSettings, requestedLimit);
 

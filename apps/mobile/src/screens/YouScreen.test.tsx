@@ -65,8 +65,9 @@ const settings = {
   theme: 'light',
   support_language: 'es',
   current_level: 2,
-  cards_per_day: 20,
-  max_reviews_per_session: 100,
+  new_cards_per_day: 10,
+  review_limit_per_day: 200,
+  session_size: 20,
   request_retention: 0.9,
   card_order: 'due',
   ai_provider: 'none',
@@ -102,8 +103,9 @@ describe('YouScreen', () => {
     await renderYou();
 
     expect(screen.getByText('learner@example.com')).toBeTruthy();
-    expect(screen.getByText('Cards per day: 20')).toBeTruthy();
-    expect(screen.getByText('Max reviews per session: 100')).toBeTruthy();
+    expect(screen.getByText('New cards per day: 10')).toBeTruthy();
+    expect(screen.getByText('Review limit per day: 200')).toBeTruthy();
+    expect(screen.getByText('Session size: 20')).toBeTruthy();
     expect(screen.getByText('6')).toBeTruthy();
   });
 
@@ -129,14 +131,14 @@ describe('YouScreen', () => {
     expect(screen.getByText('Failed to save settings')).toBeTruthy();
   });
 
-  it('persists a cards-per-day change', async () => {
+  it('persists a new-cards-per-day change', async () => {
     mockGetSettings.mockResolvedValue(settings);
-    mockUpdateSettings.mockResolvedValue({ ...settings, cards_per_day: 25 });
+    mockUpdateSettings.mockResolvedValue({ ...settings, new_cards_per_day: 15 });
 
     await renderYou();
-    await fireEvent.press(screen.getByLabelText('Increase cards per day'));
+    await fireEvent.press(screen.getByLabelText('Increase new cards per day'));
 
-    expect(mockUpdateSettings).toHaveBeenCalledWith({ cards_per_day: 25 });
+    expect(mockUpdateSettings).toHaveBeenCalledWith({ new_cards_per_day: 15 });
   });
 
   it('persists a support-language change', async () => {
@@ -165,10 +167,10 @@ describe('YouScreen', () => {
     mockUpdateSettings.mockRejectedValue({ message: 'Failed to save settings' });
 
     await renderYou();
-    await fireEvent.press(screen.getByLabelText('Increase cards per day'));
+    await fireEvent.press(screen.getByLabelText('Increase new cards per day'));
 
     expect(screen.getByText('Failed to save settings')).toBeTruthy();
-    expect(screen.getByText('Cards per day: 20')).toBeTruthy();
+    expect(screen.getByText('New cards per day: 10')).toBeTruthy();
   });
 
   it('signs the user out', async () => {
@@ -214,7 +216,7 @@ describe('YouScreen', () => {
     expect(screen.getByText('—')).toBeTruthy();
     expect(screen.getByText('HSK 2')).toBeTruthy();
     // Settings still load fine
-    expect(screen.getByText('Cards per day: 20')).toBeTruthy();
+    expect(screen.getByText('New cards per day: 10')).toBeTruthy();
   });
 
   it('muestra el hanzi en la lista de leeches, no el id interno', async () => {

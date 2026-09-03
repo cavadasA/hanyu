@@ -62,7 +62,7 @@ export async function getToday(client: HanyuClient) {
     flashcards: {
       deck_size: countFromRpc(deckSizeRpc),
       due: countFromRpc(dueRpc),
-      target: Number(settings.cards_per_day || 20),
+      target: Number(settings.new_cards_per_day ?? 10),
       completed: Number((todayStats as any).cards_reviewed || 0),
     },
     exercises: {
