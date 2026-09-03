@@ -151,6 +151,28 @@ describe('loadDueCards – online refresh merge', () => {
 
     expect(store.getDueProjectedCards).toHaveBeenCalledTimes(2);
   });
+
+  test('passes the focused deck and excludes cached cards outside it from the refreshed result', async () => {
+    const focusedCard = makeCard({ id: 'focused-card', version: 2 });
+    const cachedOtherDeckCard = makeCard({ id: 'other-deck-card', version: 1 });
+    const store = makeFakeStore({
+      getDueProjectedCards: jest
+        .fn()
+        .mockResolvedValueOnce([])
+        .mockResolvedValueOnce([focusedCard, cachedOtherDeckCard]),
+    });
+    const getDueCardsOnline = jest.fn().mockResolvedValue({
+      cards: [focusedCard],
+      deck_size: 7,
+    });
+    const service = makeService({ store, getDueCardsOnline });
+
+    const result = await service.loadDueCards(50, 'deck-1');
+
+    expect(getDueCardsOnline).toHaveBeenCalledWith(50, 'deck-1');
+    expect(result).toEqual([focusedCard]);
+    expect(service.lastDeckSize).toBe(7);
+  });
 });
 
 describe('loadDueCards – version-validation gotcha', () => {

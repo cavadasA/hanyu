@@ -16,7 +16,8 @@ const mockCreateStarterDeck = jest.fn();
 const mockGetDashboard = jest.fn();
 const mockPush = jest.fn();
 const mockOfflineService = {
-  loadDueCards: (limit: number) => mockLoadDueCards(limit),
+  loadDueCards: (limit: number, deckId?: string | null) => mockLoadDueCards(limit, deckId),
+  lastDeckSize: null as number | null,
   rateCard: (card: unknown, grade: string, timeMs: number | null) =>
     mockRateCard(card, grade, timeMs),
   undoRating: (reviewId: string) => mockUndoRating(reviewId),
@@ -111,6 +112,7 @@ async function renderCards() {
 
 describe('CardsScreen', () => {
   beforeEach(() => {
+    mockOfflineService.lastDeckSize = 150;
     mockGetDueCards.mockReset();
     mockReviewCard.mockReset();
     mockRateCard.mockReset();
@@ -227,6 +229,7 @@ describe('CardsScreen', () => {
   });
 
   it('creates the starter deck from the empty state', async () => {
+    mockOfflineService.lastDeckSize = 0;
     mockGetDashboard.mockResolvedValueOnce({ cards: { total: 0, due: 0, by_status: {} } });
     mockLoadDueCards
       .mockResolvedValueOnce([])
@@ -257,7 +260,7 @@ describe('CardsScreen', () => {
 
     await renderCards();
 
-    expect(mockLoadDueCards).toHaveBeenLastCalledWith(50);
+    expect(mockLoadDueCards).toHaveBeenLastCalledWith(50, 'd1');
   });
 
   it('shows a back to deck action on the completion screen in focus mode', async () => {

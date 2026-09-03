@@ -25,7 +25,10 @@ export interface OfflineReviewServiceDeps {
    * Kept this way intentionally: we only need cards, and we need the return
    * typed as unknown[] so we can do our own runtime version validation.
    */
-  getDueCardsOnline: (limit: number) => Promise<{ cards: unknown[] }>;
+  getDueCardsOnline: (
+    limit: number,
+    deckId: string | null,
+  ) => Promise<{ cards: unknown[]; deck_size?: number }>;
   /** Injected clock – production default: `() => new Date()`. */
   now: () => Date;
   /** Injected id generator – production default: expo-crypto randomUUID. */
@@ -41,7 +44,10 @@ export interface OfflineReviewServiceDeps {
 
 export class OfflineReviewService {
   private readonly store: ReviewStore;
-  private readonly getDueCardsOnlineImpl: (limit: number) => Promise<{ cards: unknown[] }>;
+  private readonly getDueCardsOnlineImpl: (
+    limit: number,
+    deckId: string | null,
+  ) => Promise<{ cards: unknown[]; deck_size?: number }>;
   private readonly now: () => Date;
   private readonly uuid: () => string;
   private readonly params: () => FSRSParameters;
@@ -50,6 +56,11 @@ export class OfflineReviewService {
   ) => Promise<{ outcome: RevertOutcome; card: VersionedCard | null }>;
   /** Per-card-id synchronous double-tap guard. */
   private readonly inFlight = new Set<string>();
+  private _lastDeckSize: number | null = null;
+
+  get lastDeckSize(): number | null {
+    return this._lastDeckSize;
+  }
 
   constructor(deps: OfflineReviewServiceDeps) {
     this.store = deps.store;
@@ -74,12 +85,12 @@ export class OfflineReviewService {
    *       the cached cards from step 1. loadDueCards never throws due to network
    *       failure — offline-first means the local store is always the fallback.
    */
-  async loadDueCards(limit = 50): Promise<VersionedCard[]> {
+  async loadDueCards(limit = 50, deckId: string | null = null): Promise<VersionedCard[]> {
     const nowIso = this.now().toISOString();
     const cached = await this.store.getDueProjectedCards(nowIso, limit);
 
     try {
-      const online = await this.getDueCardsOnlineImpl(limit);
+      const online = await this.getDueCardsOnlineImpl(limit, deckId);
       const freshCards: VersionedCard[] = [];
 
       for (const raw of online.cards) {
@@ -97,10 +108,21 @@ export class OfflineReviewService {
         freshCards.push(c as unknown as VersionedCard);
       }
 
+      this._lastDeckSize =
+        typeof online.deck_size === 'number' && Number.isFinite(online.deck_size)
+          ? online.deck_size
+          : null;
+
       await this.store.cacheCards(freshCards);
-      return await this.store.getDueProjectedCards(this.now().toISOString(), limit);
+      const refreshed = await this.store.getDueProjectedCards(this.now().toISOString(), limit);
+      if (deckId !== null) {
+        const focusedIds = new Set(freshCards.map((card) => card.id));
+        return refreshed.filter((card) => focusedIds.has(card.id));
+      }
+      return refreshed;
     } catch {
       // Any error (network, auth, validation) falls back to the cached baseline.
+      this._lastDeckSize = null;
       return cached;
     }
   }

@@ -99,8 +99,9 @@ export default function CardsScreen() {
         return;
       }
 
-      const cards = await service.loadDueCards(50);
+      const cards = await service.loadDueCards(50, focusedDeckId);
       setAllDueCards(cards);
+      setDeckSize(focusedDeckId ? service.lastDeckSize : null);
       setIndex(0);
       setReviewed(0);
       setRevealed(false);
@@ -121,7 +122,9 @@ export default function CardsScreen() {
       try {
         const dashboard = await data.stats.getDashboard();
         setByStatus(dashboard.cards?.by_status ?? {});
-        setDeckSize(dashboard.cards?.total ?? 0);
+        if (!focusedDeckId) {
+          setDeckSize(dashboard.cards?.total ?? 0);
+        }
         setDeckTotal(dashboard.cards?.total ?? 0);
       } catch {
         // non-blocking for cards load
