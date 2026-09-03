@@ -206,7 +206,18 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 **Cierra:** Alto 1, Alto 2, Alto 3; §5 carencias 1–10; §10 P2 completo.
 
 ## Plan 5 — Planificador, diagnóstico, unidades y modos
-**Tamaño:** L · **Depende de:** Planes 1, 4
+**Tamaño:** L · **Depende de:** Planes 1, 4A
+
+> **Se divide en dos documentos**, por la misma razón que el 1 y el 4: el maestro describe fases, no documentos. Con esto los ejecutables pasan de 13 a 14.
+>
+> - **5A — La cola gobernada y el diagnóstico** (`docs/superpowers/plans/2026-09-02-plan-5a-cola-gobernada.md`). Escrito. Qué tarjetas entran hoy y cuántas. Cierra el Crítico 1 y el Alto 6.
+> - **5B — El plan diario explicable.** Por qué esas y no otras: unidades con prerrequisitos, ranking de contenido, la explicación visible, y los tres modos Learn/Review/Exam.
+>
+> **El Crítico 1 sigue abierto y empeoró al ejecutar el 4A.** `create_starter_deck` conserva su `order by hsk_level ... limit 150`, y ahora además siembra una fila de `learner_skill_state` por palabra con `next_review_at` nulo, que el planificador trata como vencida. El problema se mudó de casa sin resolverse.
+>
+> La decisión de 5A es que **el mazo deja de ser una foto de 150 palabras** y pasa a ser el alcance completo del objetivo, del que el cupo diario introduce una porción. Un mazo de 150 elegidas de antemano no puede representar «preparar HSK 2» ni aunque las 150 sean las correctas.
+>
+> Sobre el reparto servidor/cliente: el servidor decide pertenencia y cupos —son reglas sobre el conjunto completo—, y el cliente ordena por riesgo de olvido, que necesita la curva de FSRS y calcularla en SQL sería la segunda implementación que el 4A eliminó. La diferencia con el defecto que señala la auditoría es que el conjunto que llega al cliente ya es el correcto: reordenarlo no puede volverlo incorrecto.
 
 > **Antes de escribirlo, sobre el Crítico 1:** en el árbol de trabajo hay una migración sin commitear, `supabase/migrations/2026080203_fix_decks_rpc.sql`, cuyo nombre invita a pensar que ya corrige el mazo inicial. **No lo hace.** Corrige un `column reference deck_id is ambiguous` en `add_deck_from_template`, que es un problema distinto. `create_starter_deck` sigue con `order by w.hsk_level, coalesce(w.frequency, ...) limit 150` sobre 301 palabras de HSK 1, así que el mazo "HSK2 consolidation" sigue conteniendo cero palabras de HSK 2.
 
