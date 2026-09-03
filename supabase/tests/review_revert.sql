@@ -81,7 +81,7 @@ begin
     'e0000000-0000-0000-0000-000000000001',
     '2026-09-03 10:00:00+00',
     v_before.version,
-    4,
+    4::smallint,
     'recognition',
     v_result,
     v_prior
@@ -202,7 +202,7 @@ begin
   from public.apply_review(
     'd0000000-0000-0000-0000-000000000001',
     'e0000000-0000-0000-0000-000000000002',
-    '2026-09-03 11:00:00+00', v_before.version, 4, 'recognition',
+    '2026-09-03 11:00:00+00', v_before.version, 4::smallint, 'recognition',
     v_result, v_prior
   );
 
@@ -227,7 +227,7 @@ begin
   from public.apply_review(
     'd0000000-0000-0000-0000-000000000001',
     'e0000000-0000-0000-0000-000000000003',
-    '2026-09-03 12:00:00+00', v_before.version, 3, 'recognition',
+    '2026-09-03 12:00:00+00', v_before.version, 3::smallint, 'recognition',
     v_result, v_prior
   );
 

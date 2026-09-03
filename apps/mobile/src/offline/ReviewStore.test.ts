@@ -44,12 +44,11 @@ function makeTestHandle(nativeDb: any): DbHandle {
       const row: T | undefined = nativeDb.prepare(sql).get(...params);
       return Promise.resolve(row !== undefined ? row : null);
     },
-    withTransactionAsync: async <T>(fn: () => Promise<T>): Promise<T> => {
+    withTransactionAsync: async (fn: () => Promise<void>): Promise<void> => {
       nativeDb.exec('BEGIN');
       try {
-        const result = await fn();
+        await fn();
         nativeDb.exec('COMMIT');
-        return result;
       } catch (err) {
         nativeDb.exec('ROLLBACK');
         throw err;

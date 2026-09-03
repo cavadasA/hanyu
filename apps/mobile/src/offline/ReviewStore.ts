@@ -18,7 +18,7 @@ export interface DbHandle {
   runAsync(sql: string, params: unknown[]): Promise<void>;
   getAllAsync<T>(sql: string, params: unknown[]): Promise<T[]>;
   getFirstAsync<T>(sql: string, params: unknown[]): Promise<T | null>;
-  withTransactionAsync<T>(fn: () => Promise<T>): Promise<T>;
+  withTransactionAsync(fn: () => Promise<void>): Promise<void>;
   closeAsync(): Promise<void>;
 }
 
@@ -366,7 +366,7 @@ export class ReviewStoreImpl implements ReviewStore {
       );
 
       if (!row) {
-        return null;
+        return;
       }
 
       await this.db.runAsync('DELETE FROM pending_reviews WHERE review_id = ?', [reviewId]);
@@ -380,7 +380,7 @@ export class ReviewStoreImpl implements ReviewStore {
         // La cola referenciaba una tarjeta que ya no está en caché. El evento
         // se descarta igualmente: dejarlo encolado enviaría al servidor una
         // valoración que el usuario acaba de deshacer.
-        return null;
+        return;
       }
 
       const remaining = await this.db.getAllAsync<PendingRow>(

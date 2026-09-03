@@ -61,7 +61,7 @@ begin
   from public.apply_review(
     'b0000000-0000-0000-0000-000000000001',
     'c0000000-0000-0000-0000-000000000001',
-    '2026-09-03 10:00:00+00', 0, 4, 'recognition', v_result, v_prior
+    '2026-09-03 10:00:00+00', 0, 4::smallint, 'recognition', v_result, v_prior
   );
 
   if v_outcome <> 'applied' or v_version <> 1 then
@@ -107,7 +107,7 @@ begin
   from public.apply_review(
     'b0000000-0000-0000-0000-000000000001',
     'c0000000-0000-0000-0000-000000000001',
-    '2026-09-03 10:00:00+00', 1, 4, 'recognition', v_result, v_prior
+    '2026-09-03 10:00:00+00', 1, 4::smallint, 'recognition', v_result, v_prior
   );
 
   if v_outcome <> 'duplicate' or v_version <> 1 then
@@ -153,7 +153,7 @@ begin
   from public.apply_review(
     'b0000000-0000-0000-0000-000000000001',
     'c0000000-0000-0000-0000-000000000002',
-    '2026-09-03 11:00:00+00', 0, 4, 'recognition', v_result, v_prior
+    '2026-09-03 11:00:00+00', 0, 4::smallint, 'recognition', v_result, v_prior
   );
 
   if v_outcome <> 'conflict' or v_version <> 1 then
@@ -187,7 +187,7 @@ begin
     perform public.apply_review(
       'b0000000-0000-0000-0000-000000000001',
       'c0000000-0000-0000-0000-000000000099',
-      '2026-09-03 12:00:00+00', 1, 6, 'recognition', v_result, v_prior
+      '2026-09-03 12:00:00+00', 1, 6::smallint, 'recognition', v_result, v_prior
     );
     raise exception 'caso 4a: no se rechazó grade=6';
   exception when others then
@@ -208,7 +208,7 @@ begin
     perform public.apply_review(
       'b0000000-0000-0000-0000-000000000002',
       'c0000000-0000-0000-0000-000000000098',
-      '2026-09-03 12:00:00+00', 0, 4, 'recognition', v_result, v_prior
+      '2026-09-03 12:00:00+00', 0, 4::smallint, 'recognition', v_result, v_prior
     );
     raise exception 'caso 4b: se pudo valorar una tarjeta ajena';
   exception when others then
@@ -229,7 +229,7 @@ begin
     perform public.apply_review(
       'b0000000-0000-0000-0000-000000000001',
       'c0000000-0000-0000-0000-000000000097',
-      '2026-09-03 12:00:00+00', null, 4, 'recognition', v_result, v_prior
+      '2026-09-03 12:00:00+00', null, 4::smallint, 'recognition', v_result, v_prior
     );
     raise exception 'caso 4c: no se rechazó expected_version nulo';
   exception when others then
