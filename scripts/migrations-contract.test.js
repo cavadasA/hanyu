@@ -152,6 +152,25 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, "'listening', true, true");
   });
 
+  it('recuerda el umbral de lapsos perdonado sin cambiar la versión', () => {
+    const migration = readMigration('2026090306_leech_clear_baseline.sql');
+    const normalized = normalizeSql(migration);
+    const clearLeechSql = migration.split('create or replace function public.clear_leech')[1]
+      .split('revoke all on function public.clear_leech')[0];
+
+    expectSqlToContain(
+      migration,
+      'add column if not exists leech_cleared_lapses integer not null default 0',
+    );
+    expectSqlToContain(migration, 'leech_cleared_lapses = lapses');
+    expectSqlToContain(migration, 'create or replace function public.leech_lapses_threshold');
+    expectSqlToContain(migration, 'leech_lapses_threshold()');
+    expectSqlToContain(migration, "coalesce((p_state->>'lapses')::integer, 0)");
+    expectSqlToContain(migration, 'coalesce(v_state.leech_cleared_lapses, 0)');
+    expect(normalized).not.toContain("p_state->>'lapses')::integer >= 8");
+    expect(normalizeSql(clearLeechSql.split('$$;')[0])).not.toContain('version');
+  });
+
   it('elimina el pronóstico persistido hasta que exista un consumidor analítico', () => {
     const migration = readMigration('2026090305_drop_persisted_retrievability.sql');
     const normalized = normalizeSql(migration);

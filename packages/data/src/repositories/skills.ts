@@ -5,7 +5,7 @@ import type { LearnerSkillState, LearningSkill, LearningTargetKind } from '../ty
 import { createRepositoryError, getRequiredUserId } from './shared';
 
 const COLUMNS =
-  'id, user_id, target_kind, target_id, skill, difficulty, stability, fsrs_state, learning_steps, scheduled_days, elapsed_days, reps, lapses, last_reviewed_at, next_review_at, suspended, auto_suspended, leech, version';
+  'id, user_id, target_kind, target_id, skill, difficulty, stability, fsrs_state, learning_steps, scheduled_days, elapsed_days, reps, lapses, last_reviewed_at, next_review_at, suspended, auto_suspended, leech, leech_cleared_lapses, version';
 
 export interface GetSkillStatesInput {
   target_kind: LearningTargetKind;
@@ -138,30 +138,14 @@ export async function setSkillSuspended(
 export async function clearLeech(
   input: Pick<UpsertSkillStateInput, 'target_kind' | 'target_id' | 'skill'>,
   client: HanyuClient,
-): Promise<LearnerSkillState> {
-  const userId = await getRequiredUserId(client);
-  const { data, error } = await client
-    .from('learner_skill_state')
-    .update({
-      leech: false,
-      suspended: false,
-      auto_suspended: false,
-      // Lapses are the evidence used by apply_review to derive leech. Reset
-      // the counter so future lapses, rather than historical ones, can cross
-      // the attention threshold again.
-      lapses: 0,
-      updated_at: new Date().toISOString(),
-    })
-    .eq('user_id', userId)
-    .eq('target_kind', input.target_kind)
-    .eq('target_id', input.target_id)
-    .eq('skill', input.skill)
-    .select(COLUMNS)
-    .single();
+): Promise<void> {
+  const { error } = await client.rpc('clear_leech', {
+    p_target_kind: input.target_kind,
+    p_target_id: input.target_id,
+    p_skill: input.skill,
+  });
 
   if (error) {
     throw createRepositoryError(error, 'Failed to clear leech');
   }
-
-  return data as unknown as LearnerSkillState;
 }

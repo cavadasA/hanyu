@@ -32,6 +32,7 @@ function clientFor(perTable: Record<string, Record<string, unknown>>) {
   const chains: Record<string, any> = {};
   return {
     auth: auth(),
+    rpc: vi.fn().mockResolvedValue({ data: null, error: null }),
     from: vi.fn((table: string) => {
       chains[table] = chains[table] ?? queryChain(perTable[table] ?? { data: null, error: null });
       return chains[table];
@@ -54,6 +55,7 @@ const stateRow = {
   next_review_at: '2026-09-07T10:00:00.000Z',
   suspended: false,
   auto_suspended: false,
+  leech_cleared_lapses: 0,
   version: 2,
 };
 
@@ -129,13 +131,10 @@ describe('skills repository', () => {
       client,
     );
 
-    expect(client.chains.learner_skill_state.update).toHaveBeenCalledWith(
-      expect.objectContaining({
-        leech: false,
-        suspended: false,
-        auto_suspended: false,
-        lapses: 0,
-      }),
-    );
+    expect(client.rpc).toHaveBeenCalledWith('clear_leech', {
+      p_target_kind: 'word',
+      p_target_id: 42,
+      p_skill: 'recognition',
+    });
   });
 });

@@ -455,6 +455,7 @@ export type Database = {
           last_reviewed_at: string | null
           learning_steps: number
           leech: boolean
+          leech_cleared_lapses: number
           next_review_at: string | null
           reps: number
           scheduled_days: number
@@ -478,6 +479,7 @@ export type Database = {
           last_reviewed_at?: string | null
           learning_steps?: number
           leech?: boolean
+          leech_cleared_lapses?: number
           next_review_at?: string | null
           reps?: number
           scheduled_days?: number
@@ -501,6 +503,7 @@ export type Database = {
           last_reviewed_at?: string | null
           learning_steps?: number
           leech?: boolean
+          leech_cleared_lapses?: number
           next_review_at?: string | null
           reps?: number
           scheduled_days?: number
@@ -1017,6 +1020,14 @@ export type Database = {
           total_deck_size: number
         }[]
       }
+      clear_leech: {
+        Args: {
+          p_skill: string
+          p_target_id: number
+          p_target_kind: string
+        }
+        Returns: unknown
+      }
       get_dashboard: {
         Args: Record<PropertyKey, never>
         Returns: Json
@@ -1060,6 +1071,10 @@ export type Database = {
       initialize_word_skill_states: {
         Args: Record<PropertyKey, never>
         Returns: unknown
+      }
+      leech_lapses_threshold: {
+        Args: Record<PropertyKey, never>
+        Returns: number
       }
       log_study_time: {
         Args: {

@@ -82,6 +82,7 @@ export interface LearnerSkillState {
   suspended: boolean;
   auto_suspended: boolean;
   leech: boolean;
+  leech_cleared_lapses: number;
   version: number;
   /** Optional word label attached by getLeechStates for user-facing lists. */
   word?: Pick<Word, 'hanzi' | 'pinyin' | 'meaning_es' | 'meaning_en'>;

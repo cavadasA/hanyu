@@ -1,6 +1,7 @@
 -- review_revert.sql
 -- Comprueba revert_review contra el estado FSRS por habilidad: reversión,
--- idempotencia y conflicto por una review posterior.
+-- idempotencia, conflicto por una review posterior y perdón de leeches ante
+-- una review creada con una caché obsoleta.
 -- Todo va dentro de una transacción que se deshace al final.
 
 begin;
@@ -50,7 +51,6 @@ begin
   v_prior := jsonb_build_object(
     'difficulty', null::numeric,
     'stability', null::numeric,
-    'retrievability', null::numeric,
     'reps', 0,
     'lapses', 0,
     'learning_steps', 0,
@@ -65,7 +65,6 @@ begin
   v_result := jsonb_build_object(
     'difficulty', 5.1,
     'stability', 1.4,
-    'retrievability', null::numeric,
     'reps', 1,
     'lapses', 0,
     'learning_steps', 1,
@@ -109,7 +108,6 @@ begin
 
   if v_after.difficulty is distinct from v_before.difficulty
      or v_after.stability is distinct from v_before.stability
-     or v_after.retrievability is distinct from v_before.retrievability
      or v_after.reps is distinct from v_before.reps
      or v_after.lapses is distinct from v_before.lapses
      or v_after.learning_steps is distinct from v_before.learning_steps
@@ -189,13 +187,13 @@ begin
 
   v_prior := jsonb_build_object(
     'difficulty', null::numeric, 'stability', null::numeric,
-    'retrievability', null::numeric, 'reps', 0, 'lapses', 0,
+    'reps', 0, 'lapses', 0,
     'learning_steps', 0, 'scheduled_days', 0, 'elapsed_days', 0,
     'state', 'new', 'due', '2026-09-03T00:00:00+00:00',
     'last_review', null::text, 'leech', false, 'suspended', false
   );
   v_result := jsonb_build_object(
-    'difficulty', 5.0, 'stability', 1.5, 'retrievability', null::numeric,
+    'difficulty', 5.0, 'stability', 1.5,
     'reps', 1, 'lapses', 0, 'learning_steps', 1, 'scheduled_days', 1,
     'elapsed_days', 0, 'state', 'learning', 'due', '2026-09-04T00:00:00+00:00'
   );
@@ -213,14 +211,14 @@ begin
     and target_kind = 'word' and target_id = 99801 and skill = 'recognition';
 
   v_prior := jsonb_build_object(
-    'difficulty', 5.0, 'stability', 1.5, 'retrievability', null::numeric,
+    'difficulty', 5.0, 'stability', 1.5,
     'reps', 1, 'lapses', 0, 'learning_steps', 1, 'scheduled_days', 1,
     'elapsed_days', 0, 'state', 'learning',
     'due', '2026-09-04T00:00:00+00:00',
     'last_review', '2026-09-03T11:00:00+00:00', 'leech', false, 'suspended', false
   );
   v_result := jsonb_build_object(
-    'difficulty', 4.8, 'stability', 3.0, 'retrievability', null::numeric,
+    'difficulty', 4.8, 'stability', 3.0,
     'reps', 2, 'lapses', 0, 'learning_steps', 0, 'scheduled_days', 3,
     'elapsed_days', 1, 'state', 'review', 'due', '2026-09-06T00:00:00+00:00'
   );
@@ -252,6 +250,71 @@ begin
      or v_after.next_review_at is distinct from v_before.next_review_at
      or v_after.fsrs_state is distinct from v_before.fsrs_state then
     raise exception 'caso 3: el conflicto mutó el estado FSRS';
+  end if;
+end $$;
+
+-- ── Caso 4: perdonar un leech no se pierde con una review obsoleta ──
+do $$
+declare
+  v_before public.learner_skill_state;
+  v_after public.learner_skill_state;
+  v_outcome text;
+  v_version bigint;
+begin
+  update public.learner_skill_state
+  set lapses = 8, leech = true, suspended = true
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and target_kind = 'word' and target_id = 99801 and skill = 'recognition';
+
+  select * into v_before
+  from public.learner_skill_state
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and target_kind = 'word' and target_id = 99801 and skill = 'recognition';
+
+  perform public.clear_leech( 'word', 99801, 'recognition' );
+
+  select * into v_after
+  from public.learner_skill_state
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and target_kind = 'word' and target_id = 99801 and skill = 'recognition';
+
+  if v_after.version <> v_before.version
+     or v_after.leech
+     or v_after.suspended
+     or v_after.leech_cleared_lapses <> 8 then
+    raise exception 'caso 4: clear_leech no conservó el baseline sin cambiar versión';
+  end if;
+
+  select outcome, version into v_outcome, v_version
+  from public.apply_review(
+    'd0000000-0000-0000-0000-000000000001',
+    'e0000000-0000-0000-0000-000000000004',
+    '2026-09-03 13:00:00+00',
+    v_after.version,
+    3::smallint,
+    'recognition',
+    jsonb_build_object(
+      'difficulty', 4.8, 'stability', 3.0, 'reps', 3, 'lapses', 8,
+      'learning_steps', 0, 'scheduled_days', 3, 'elapsed_days', 1,
+      'state', 'review', 'due', '2026-09-08T13:00:00+00:00'
+    ),
+    jsonb_build_object(
+      'difficulty', 4.8, 'stability', 3.0, 'reps', 2, 'lapses', 8,
+      'learning_steps', 0, 'scheduled_days', 3, 'elapsed_days', 1,
+      'state', 'review', 'due', '2026-09-03T13:00:00+00:00'
+    )
+  );
+
+  select * into v_after
+  from public.learner_skill_state
+  where user_id = 'c0000000-0000-0000-0000-000000000001'
+    and target_kind = 'word' and target_id = 99801 and skill = 'recognition';
+
+  if v_outcome <> 'applied'
+     or v_version <> v_after.version
+     or v_after.lapses <> 8
+     or v_after.leech then
+    raise exception 'caso 4: una review obsoleta volvió a marcar el leech';
   end if;
 end $$;
 

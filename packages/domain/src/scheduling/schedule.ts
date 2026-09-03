@@ -126,6 +126,8 @@ export function retrievability(
   return fsrs(params).get_retrievability(toCard(state), now, false);
 }
 
+// Keep this aligned with public.leech_lapses_threshold() in the latest
+// Supabase migration; both client previews and server persistence use it.
 export const LEECH_LAPSES = 8;
 export const MASTERED_MIN_STABILITY_DAYS = 30;
 
