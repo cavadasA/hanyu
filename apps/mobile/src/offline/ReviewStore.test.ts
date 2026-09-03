@@ -508,6 +508,18 @@ describe('markPermanentError', () => {
 });
 
 describe('discardPending', () => {
+  test('does not discard an event already claimed by the sync engine', async () => {
+    const { store } = await createStore();
+    const card = makeCard();
+    await store.cacheCards([card]);
+    const event = makeEvent(card.id, 'easy');
+    await store.enqueueAndProject(event, card);
+
+    expect(await store.markSyncing(event.review_id)).toBe(true);
+    expect(await store.discardPending(event.review_id)).toBeNull();
+    expect((await store.listPending())[0].queue_state).toBe('syncing');
+  });
+
   test('returns the reprojected card even when the database transaction does not return the callback value', async () => {
     const { store, handle } = await createStore();
     const card = makeCard();

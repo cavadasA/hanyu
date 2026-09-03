@@ -37,6 +37,10 @@ export interface ReviewStore {
   acknowledge(reviewId: string, serverCard: VersionedCard): Promise<void>;
   rebase(card: VersionedCard, events: QueuedReviewEvent[]): Promise<void>;
   markPermanentError(reviewId: string, message: string): Promise<void>;
+  /** Atomically claims a pending event for network submission. */
+  markSyncing(reviewId: string): Promise<boolean>;
+  /** Releases a claimed event after a submission that did not finish. */
+  markPending(reviewId: string): Promise<void>;
   discardPending(reviewId: string): Promise<VersionedCard | null>;
   pendingCount(): Promise<number>;
   close(): Promise<void>;
@@ -305,6 +309,37 @@ export class ReviewStoreImpl implements ReviewStore {
        SET state = 'permanent_error', last_error = ?, attempt_count = attempt_count + 1
        WHERE review_id = ?`,
       [message, reviewId],
+    );
+  }
+
+  async markSyncing(reviewId: string): Promise<boolean> {
+    let claimed = false;
+
+    await this.db.withTransactionAsync(async () => {
+      const row = await this.db.getFirstAsync<{ state: PendingRow['state'] }>(
+        `SELECT state FROM pending_reviews
+         WHERE review_id = ? AND state IN ('pending', 'syncing')`,
+        [reviewId],
+      );
+
+      if (!row) return;
+
+      if (row.state === 'pending') {
+        await this.db.runAsync(
+          `UPDATE pending_reviews SET state = 'syncing' WHERE review_id = ? AND state = 'pending'`,
+          [reviewId],
+        );
+      }
+      claimed = true;
+    });
+
+    return claimed;
+  }
+
+  async markPending(reviewId: string): Promise<void> {
+    await this.db.runAsync(
+      `UPDATE pending_reviews SET state = 'pending' WHERE review_id = ? AND state = 'syncing'`,
+      [reviewId],
     );
   }
 

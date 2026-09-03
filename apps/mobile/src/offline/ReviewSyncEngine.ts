@@ -114,7 +114,10 @@ export class ReviewSyncEngine {
     };
 
     const allPending = await this.store.listPending();
-    const pending = allPending.filter((ev) => ev.queue_state === 'pending');
+    // A syncing row may be a claim left by a previous process that crashed
+    // during the request. It is safe to retry it; permanent errors are the only
+    // rows that must stay out of the worker.
+    const pending = allPending.filter((ev) => ev.queue_state !== 'permanent_error');
     let remaining = pending.length;
     // Skip remaining events for a card after a conflict this run — expected_versions
     // are stale until Task 7 rebase rewrites them.
@@ -125,11 +128,20 @@ export class ReviewSyncEngine {
         continue;
       }
 
+      const claimed = await this.store.markSyncing(ev.review_id);
+      if (!claimed) {
+        // Undo won the transaction race and removed the event locally.
+        remaining -= 1;
+        continue;
+      }
+
       const result = await this.submitWithRetry(ev);
       if (result === 'auth_stop') {
+        await this.store.markPending(ev.review_id);
         break;
       }
       if (result === 'transient_exhausted') {
+        await this.store.markPending(ev.review_id);
         continue;
       }
       if (result === 'permanent_error') {
@@ -145,6 +157,7 @@ export class ReviewSyncEngine {
       } else if (outcome === 'conflict') {
         summary.conflicts += 1;
         conflictedCards.add(ev.card_id);
+        await this.store.markPending(ev.review_id);
         continue;
       }
 

@@ -35,6 +35,8 @@ function makeFakeStore(overrides: Partial<ReviewStore> = {}): jest.Mocked<Review
     acknowledge: jest.fn().mockResolvedValue(undefined),
     rebase: jest.fn().mockResolvedValue(undefined),
     markPermanentError: jest.fn().mockResolvedValue(undefined),
+    markSyncing: jest.fn().mockResolvedValue(true),
+    markPending: jest.fn().mockResolvedValue(undefined),
     discardPending: jest.fn().mockResolvedValue(null),
     pendingCount: jest.fn().mockResolvedValue(0),
     close: jest.fn().mockResolvedValue(undefined),

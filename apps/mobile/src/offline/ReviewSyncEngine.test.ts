@@ -76,6 +76,8 @@ function makeFakeStore(overrides: Partial<ReviewStore> = {}): jest.Mocked<Review
     pendingCount: jest.fn().mockResolvedValue(0),
     close: jest.fn().mockResolvedValue(undefined),
     destroy: jest.fn().mockResolvedValue(undefined),
+    markSyncing: jest.fn().mockResolvedValue(true),
+    markPending: jest.fn().mockResolvedValue(undefined),
     ...overrides,
   } as jest.Mocked<ReviewStore>;
 }
@@ -263,6 +265,37 @@ describe('ReviewSyncEngine – single-flight', () => {
     const [s1, s2] = await Promise.all([p1, p2]);
     expect(s1).toEqual(s2);
     expect(reviewCardEvent).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('ReviewSyncEngine – claim before submit', () => {
+  test('marks the event syncing before the network request starts', async () => {
+    const ev = makeQueuedEvent();
+    const serverCard = makeCard({ version: 2 });
+    let resolveRpc!: (value: ReviewSyncResult) => void;
+    const rpcPromise = new Promise<ReviewSyncResult>((resolve) => {
+      resolveRpc = resolve;
+    });
+    const markSyncing = jest.fn().mockResolvedValue(true);
+    const store = makeFakeStore({
+      listPending: jest.fn().mockResolvedValue([ev]),
+      pendingCount: jest.fn().mockResolvedValue(0),
+      markSyncing,
+    });
+    const reviewCardEvent = jest.fn().mockReturnValue(rpcPromise);
+    const { engine } = makeEngine({ store, reviewCardEvent });
+
+    const syncPromise = engine.sync();
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(markSyncing).toHaveBeenCalledWith(ev.review_id);
+    expect(markSyncing.mock.invocationCallOrder[0]).toBeLessThan(
+      reviewCardEvent.mock.invocationCallOrder[0],
+    );
+
+    resolveRpc(makeSyncResult('applied', serverCard));
+    await syncPromise;
   });
 });
 
