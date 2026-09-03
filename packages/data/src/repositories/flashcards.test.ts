@@ -2,10 +2,12 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   addCard,
   buildQueue,
+  createStudyPlan,
   getCard,
   getDueCards,
   reviewCardEvent,
   revertReview,
+  submitDiagnostic,
 } from './flashcards';
 
 function clientFor(options: {
@@ -125,6 +127,42 @@ describe('buildQueue', () => {
     const queue = await buildQueue({ skill: 'recognition' }, queueClient([]));
 
     expect(queue.cards).toEqual([]);
+  });
+});
+
+describe('study plan and diagnostic', () => {
+  it('crea el plan completo para los niveles elegidos', async () => {
+    const client = {
+      rpc: vi.fn().mockResolvedValue({
+        data: [{ deck_id: 'd1', scope_size: 504 }],
+        error: null,
+      }),
+    };
+
+    await expect(createStudyPlan([1, 2], client as never)).resolves.toEqual({
+      deck_id: 'd1',
+      scope_size: 504,
+    });
+    expect(client.rpc).toHaveBeenCalledWith('create_study_plan', { p_levels: [1, 2] });
+  });
+
+  it('guarda las respuestas del diagnóstico y devuelve sus conteos', async () => {
+    const client = {
+      rpc: vi.fn().mockResolvedValue({
+        data: [{ suspended: 1, queued: 1 }],
+        error: null,
+      }),
+    };
+    const results = [
+      { word_id: 1, known: true },
+      { word_id: 2, known: false },
+    ];
+
+    await expect(submitDiagnostic(results, client as never)).resolves.toEqual({
+      suspended: 1,
+      queued: 1,
+    });
+    expect(client.rpc).toHaveBeenCalledWith('submit_diagnostic', { p_results: results });
   });
 });
 

@@ -143,3 +143,109 @@ $$;
 
 revoke all on function public.build_review_queue(uuid, public.learning_skill, integer) from public;
 grant execute on function public.build_review_queue(uuid, public.learning_skill, integer) to authenticated;
+
+-- El mazo era una foto de 150 palabras elegidas ordenando por nivel, lo que
+-- llenaba de HSK 1 un mazo llamado "HSK 2". Ahora el mazo es el alcance
+-- completo del objetivo y las tarjetas se crean a medida que el cupo diario
+-- las introduce: la promesa del nombre y el contenido vuelven a coincidir.
+create or replace function public.create_study_plan(p_levels int[] default array[1, 2])
+returns table(deck_id uuid, scope_size integer)
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_user_id uuid := auth.uid();
+  v_deck_id uuid;
+begin
+  if v_user_id is null then
+    raise exception 'Authentication required';
+  end if;
+
+  select id into v_deck_id
+  from public.decks
+  where user_id = v_user_id and is_default;
+
+  if v_deck_id is null then
+    insert into public.decks (user_id, name, description, is_default)
+    values (
+      v_user_id,
+      'HSK ' || array_to_string(p_levels, ' + '),
+      'Todo el vocabulario del objetivo. Las tarjetas se introducen día a día.',
+      true
+    )
+    returning id into v_deck_id;
+  end if;
+
+  insert into public.deck_cards (deck_id, word_id)
+  select v_deck_id, w.id
+  from public.words w
+  where w.hsk_level = any(p_levels)
+  on conflict (deck_id, word_id) do nothing;
+
+  -- srs_cards es la identidad de la tarjeta y puede existir para todo el
+  -- alcance: es barato y no programa nada. Lo que NO se crea por adelantado es
+  -- learner_skill_state, porque una fila ahí es una tarjeta que el planificador
+  -- considera vencida.
+  insert into public.srs_cards (user_id, word_id)
+  select v_user_id, dc.word_id
+  from public.deck_cards dc
+  where dc.deck_id = v_deck_id
+  on conflict (user_id, word_id) do nothing;
+
+  deck_id := v_deck_id;
+  select count(*)::integer into scope_size
+  from public.deck_cards
+  where deck_cards.deck_id = v_deck_id;
+  return next;
+end;
+$$;
+
+-- Lo que el usuario demuestra reconocer no vuelve a la cola de nuevas. No se
+-- marca como aprendido —reconocerlo una vez no lo prueba— sino como suspendido
+-- con su motivo, para que pueda revivirlo desde Ajustes si se arrepiente.
+create or replace function public.submit_diagnostic(p_results jsonb)
+returns table(suspended integer, queued integer)
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_user_id uuid := auth.uid();
+begin
+  if v_user_id is null then
+    raise exception 'Authentication required';
+  end if;
+
+  insert into public.learner_skill_state (
+    user_id, target_kind, target_id, skill, suspended, fsrs_state
+  )
+  select
+    v_user_id, 'word', (entry->>'word_id')::bigint, 'recognition',
+    (entry->>'known')::boolean, 'new'
+  from jsonb_array_elements(p_results) as entry
+  where (entry->>'known')::boolean
+  on conflict (user_id, target_kind, target_id, skill)
+  do update set suspended = true, updated_at = now();
+
+  insert into public.learning_event (user_id, kind, target_kind, target_id, skill, payload)
+  select
+    v_user_id, 'review_rated', 'word', (entry->>'word_id')::bigint, 'recognition',
+    jsonb_build_object('source', 'diagnostic', 'known', entry->>'known')
+  from jsonb_array_elements(p_results) as entry;
+
+  select count(*)::integer into suspended
+  from jsonb_array_elements(p_results) as entry
+  where (entry->>'known')::boolean;
+
+  select jsonb_array_length(p_results) - suspended into queued;
+  return next;
+end;
+$$;
+
+drop function if exists public.create_starter_deck(text, integer);
+
+revoke all on function public.create_study_plan(int[]) from public;
+grant execute on function public.create_study_plan(int[]) to authenticated;
+revoke all on function public.submit_diagnostic(jsonb) from public;
+grant execute on function public.submit_diagnostic(jsonb) to authenticated;

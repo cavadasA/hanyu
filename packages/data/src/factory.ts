@@ -22,12 +22,13 @@ import {
 import {
   addCard,
   buildQueue,
-  createStarterDeck,
+  createStudyPlan,
   getCard,
   getDueCards,
   getFlashcardStats,
   revertReview,
   reviewCardEvent,
+  submitDiagnostic,
 } from './repositories/flashcards';
 import { checkExercise, generateExercise, getExerciseHistory } from './repositories/exercises';
 import { getEvents, recordEvent } from './repositories/events';
@@ -108,8 +109,9 @@ export function createHanyuData(config: HanyuDataConfig) {
         wordId: number | string,
         options?: { deckId?: string; context?: WordContext },
       ) => addCard(wordId, client, options),
-      createStarterDeck: (input: { strategy?: string; limit?: number } = {}) =>
-        createStarterDeck(input, client),
+      createStudyPlan: (levels: number[]) => createStudyPlan(levels, client),
+      submitDiagnostic: (results: Array<{ word_id: number; known: boolean }>) =>
+        submitDiagnostic(results, client),
       getFlashcardStats: () => getFlashcardStats(client),
     },
     exercises: {

@@ -14,7 +14,6 @@ import type {
 } from '../types';
 import { getSettings } from './settings';
 import {
-  callRpcVariants,
   createRepositoryError,
   getRequiredUserId,
 } from './shared';
@@ -423,21 +422,29 @@ export async function addCard(
   return { word_id: numericWordId, deck_id: targetDeckId ?? null };
 }
 
-export async function createStarterDeck(input: { strategy?: string; limit?: number } = {}, client: HanyuClient) {
-  const strategy = input.strategy || 'hsk2_consolidation';
-  const limit = input.limit === undefined ? null : parseInt(String(input.limit), 10);
+export async function createStudyPlan(levels: number[], client: HanyuClient) {
+  const { data, error } = await (client.rpc as any)('create_study_plan', { p_levels: levels });
 
-  const result = await callRpcVariants(client, 'create_starter_deck', [
-    { strategy, p_limit: limit },
-    { strategy, limit },
-    { p_strategy: strategy, p_limit: limit },
-  ]);
+  if (error) {
+    throw createRepositoryError(error, 'Failed to create the study plan');
+  }
 
-  const payload = (Array.isArray(result) ? result[0] : result) as any;
-  return {
-    inserted: payload?.inserted || 0,
-    total_deck_size: payload?.total_deck_size || payload?.deck_size || 0,
-  };
+  const row = Array.isArray(data) ? data[0] : data;
+  return { deck_id: String(row?.deck_id ?? ''), scope_size: Number(row?.scope_size ?? 0) };
+}
+
+export async function submitDiagnostic(
+  results: Array<{ word_id: number; known: boolean }>,
+  client: HanyuClient,
+) {
+  const { data, error } = await (client.rpc as any)('submit_diagnostic', { p_results: results });
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to save the diagnostic');
+  }
+
+  const row = Array.isArray(data) ? data[0] : data;
+  return { suspended: Number(row?.suspended ?? 0), queued: Number(row?.queued ?? 0) };
 }
 
 export async function getFlashcardStats(client: HanyuClient) {

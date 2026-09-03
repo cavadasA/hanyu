@@ -361,22 +361,6 @@ export default function CardsScreen() {
     });
   }
 
-  async function createStarterDeck() {
-    setLoading(true);
-    setError('');
-
-    try {
-      await getData().flashcards.createStarterDeck({
-        strategy: 'hsk2_consolidation',
-        limit: 150,
-      });
-      await load();
-    } catch (caught) {
-      setError(toUserMessage(caught));
-      setLoading(false);
-    }
-  }
-
   if (loading && !allDueCards.length && deckSize === null) {
     return (
       <Screen scroll={false}>
@@ -471,10 +455,10 @@ export default function CardsScreen() {
         {dueCount === 0 ? (
           deckSize === 0 ? (
             <EmptyState
-              title="Set up your HSK2 starter deck"
-              body="Start with 150 HSK1 review and HSK2 consolidation cards. You can add custom words later."
-              actionLabel="Create starter deck"
-              onAction={createStarterDeck}
+              title="Set up your HSK2 study plan"
+              body="Build the complete HSK 1–2 plan and skip words you already recognize."
+              actionLabel="Start diagnostic"
+              onAction={() => router.push('/diagnostic')}
               actionDisabled={loading}
             />
           ) : (

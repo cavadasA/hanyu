@@ -17,7 +17,6 @@ const mockRateCard = jest.fn();
 const mockUndoRating = jest.fn();
 const mockLoadDueCards = jest.fn();
 const mockLogTime = jest.fn();
-const mockCreateStarterDeck = jest.fn();
 const mockGetDashboard = jest.fn();
 const mockPush = jest.fn();
 const mockPreviewIntervals = jest.fn((..._args: unknown[]) => ({
@@ -52,7 +51,6 @@ jest.mock('../lib/data', () => ({
       getDueCards: (limit?: number, deckId?: string | null) => mockGetDueCards(limit, deckId),
       reviewCard: (id: string, quality: number, timeMs: number | null) =>
         mockReviewCard(id, quality, timeMs),
-      createStarterDeck: (input: unknown) => mockCreateStarterDeck(input),
     },
     stats: {
       logTime: (ms: number) => mockLogTime(ms),
@@ -145,7 +143,6 @@ describe('CardsScreen', () => {
     mockUndoRating.mockReset();
     mockLoadDueCards.mockReset();
     mockLogTime.mockReset();
-    mockCreateStarterDeck.mockReset();
     mockPush.mockReset();
     mockPreviewIntervals.mockReset().mockReturnValue({ again: 1, hard: 2, good: 3, easy: 4 });
     mockRequestRetention = 0.9;
@@ -260,23 +257,17 @@ describe('CardsScreen', () => {
     expect(screen.getByText('谢谢')).toBeTruthy();
   });
 
-  it('creates the starter deck from the empty state', async () => {
+  it('opens the diagnostic from the empty state', async () => {
     mockOfflineService.lastDeckSize = 0;
     mockGetDashboard.mockResolvedValueOnce({ cards: { total: 0, due: 0, by_status: {} } });
-    mockLoadDueCards
-      .mockResolvedValueOnce([])
-      .mockResolvedValueOnce([card('c1', '你好')]);
-    mockCreateStarterDeck.mockResolvedValue({ inserted: 150 });
+    mockLoadDueCards.mockResolvedValue([]);
 
     await renderCards();
 
-    expect(screen.getByText('Set up your HSK2 starter deck')).toBeTruthy();
-    await fireEvent.press(screen.getByText('Create starter deck'));
+    expect(screen.getByText('Set up your HSK2 study plan')).toBeTruthy();
+    await fireEvent.press(screen.getByText('Start diagnostic'));
 
-    expect(mockCreateStarterDeck).toHaveBeenCalledWith({
-      strategy: 'hsk2_consolidation',
-      limit: 150,
-    });
+    expect(mockPush).toHaveBeenCalledWith('/diagnostic');
   });
 
   it('shows no cards due state when deck exists but no cards are due', async () => {

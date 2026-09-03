@@ -18,7 +18,9 @@ describe('getData', () => {
     const data = getData();
 
     expect(typeof data.today.getToday).toBe('function');
-    expect(typeof data.flashcards.getDueCards).toBe('function');
+    expect(typeof data.flashcards.buildQueue).toBe('function');
+    expect(typeof data.flashcards.createStudyPlan).toBe('function');
+    expect(typeof data.flashcards.submitDiagnostic).toBe('function');
     expect(typeof data.settings.updateSettings).toBe('function');
     expect(typeof data.auth.signIn).toBe('function');
   });
