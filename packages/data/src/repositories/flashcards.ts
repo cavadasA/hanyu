@@ -253,7 +253,16 @@ export async function revertReview(
 
   const row = Array.isArray(data) ? data[0] : data;
   const outcome = String((row as any)?.outcome ?? 'not_found') as RevertOutcome;
-  const card = await getCard(String((row as any)?.card_id ?? ''), client);
+  if (outcome === 'not_found') {
+    return { outcome, card: null };
+  }
+
+  const cardId = (row as any)?.card_id;
+  if (typeof cardId !== 'string' || cardId.length === 0) {
+    throw createRepositoryError(new Error('Revert response is missing card_id'), 'Failed to revert review');
+  }
+
+  const card = await getCard(cardId, client);
 
   return { outcome, card };
 }

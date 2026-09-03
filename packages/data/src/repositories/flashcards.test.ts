@@ -230,6 +230,25 @@ describe('revertReview', () => {
 
     expect(result.outcome).toBe('conflict');
   });
+
+  it('returns not_found without querying a card for an RPC result with no card', async () => {
+    const client = {
+      rpc: vi.fn().mockResolvedValue({
+        data: [{ outcome: 'not_found', card_id: null, version: null }],
+        error: null,
+      }),
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
+      from: vi.fn(() => {
+        throw new Error('not_found must not load a card');
+      }),
+    } as never;
+
+    await expect(revertReview('missing-review', client)).resolves.toEqual({
+      outcome: 'not_found',
+      card: null,
+    });
+    expect((client as any).from).not.toHaveBeenCalled();
+  });
 });
 
 describe('addCard', () => {

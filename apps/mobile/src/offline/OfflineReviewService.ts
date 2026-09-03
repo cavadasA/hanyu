@@ -6,7 +6,7 @@
  * so that the class can be tested in plain Node/Jest without any native modules.
  */
 
-import type { VersionedCard, ReviewEvent } from '@hanyu/data';
+import type { RevertOutcome, VersionedCard, ReviewEvent } from '@hanyu/data';
 import { applyReview, type Grade } from '@hanyu/domain';
 import type { FSRSParameters } from 'ts-fsrs';
 import type { ReviewStore } from './ReviewStore';
@@ -36,7 +36,7 @@ export interface OfflineReviewServiceDeps {
    * Revierte en servidor una valoración ya sincronizada. Inyectada como el
    * resto de la E/S para que el servicio siga siendo probable en Node puro.
    */
-  revertReviewOnline: (reviewId: string) => Promise<{ outcome: string; card: VersionedCard }>;
+  revertReviewOnline: (reviewId: string) => Promise<{ outcome: RevertOutcome; card: VersionedCard | null }>;
 }
 
 export class OfflineReviewService {
@@ -47,7 +47,7 @@ export class OfflineReviewService {
   private readonly params: () => FSRSParameters;
   private readonly revertReviewOnline: (
     reviewId: string,
-  ) => Promise<{ outcome: string; card: VersionedCard }>;
+  ) => Promise<{ outcome: RevertOutcome; card: VersionedCard | null }>;
   /** Per-card-id synchronous double-tap guard. */
   private readonly inFlight = new Set<string>();
 
@@ -171,7 +171,7 @@ export class OfflineReviewService {
       return local;
     }
 
-    let result: { outcome: string; card: VersionedCard };
+    let result: { outcome: RevertOutcome; card: VersionedCard | null };
     try {
       result = await this.revertReviewOnline(reviewId);
     } catch {
@@ -182,8 +182,17 @@ export class OfflineReviewService {
       );
     }
 
-    if (result.outcome !== 'reverted') {
+    if (result.outcome === 'not_found') {
+      throw new Error('This rating could not be found, so it can no longer be undone.');
+    }
+    if (result.outcome === 'already_reverted') {
+      throw new Error('This rating was already undone.');
+    }
+    if (result.outcome === 'conflict') {
       throw new Error('This card was reviewed again after that rating, so it can no longer be undone.');
+    }
+    if (!result.card) {
+      throw new Error('The reverted card could not be loaded.');
     }
 
     await this.store.cacheCards([result.card]);

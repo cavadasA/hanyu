@@ -301,7 +301,8 @@ export type RevertOutcome = 'reverted' | 'conflict' | 'not_found' | 'already_rev
 
 export interface RevertReviewResult {
   outcome: RevertOutcome;
-  card: VersionedCard;
+  /** Null when the server cannot associate the review with a current card. */
+  card: VersionedCard | null;
 }
 
 export interface StarterDeckResult {

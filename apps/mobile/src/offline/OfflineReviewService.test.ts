@@ -307,6 +307,22 @@ describe('undoRating', () => {
     await expect(service.undoRating('r1')).rejects.toThrow(/reviewed again/i);
   });
 
+  test('explains when the review to undo no longer exists', async () => {
+    const revertReviewOnline = jest.fn().mockResolvedValue({ outcome: 'not_found', card: null });
+    const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(null) });
+    const service = makeService({ store, revertReviewOnline });
+
+    await expect(service.undoRating('missing-review')).rejects.toThrow(/could not be found/i);
+  });
+
+  test('explains when the review was already reverted', async () => {
+    const revertReviewOnline = jest.fn().mockResolvedValue({ outcome: 'already_reverted', card: null });
+    const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(null) });
+    const service = makeService({ store, revertReviewOnline });
+
+    await expect(service.undoRating('already-undone')).rejects.toThrow(/already undone/i);
+  });
+
   test('says plainly when an already-synced review has no connection', async () => {
     const revertReviewOnline = jest.fn().mockRejectedValue(new Error('Network request failed'));
     const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(null) });
