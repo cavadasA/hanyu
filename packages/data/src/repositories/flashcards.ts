@@ -349,22 +349,6 @@ export async function addCard(
     );
   if (cardError) throw createRepositoryError(cardError, 'Failed to add card');
 
-  for (const skill of availableSkills({ hasContext: Boolean(options.context) })) {
-    const { error: stateError } = await client
-      .from('learner_skill_state')
-      .upsert(
-        {
-          user_id: userId,
-          target_kind: 'word',
-          target_id: numericWordId,
-          skill,
-          suspended: skill !== 'recognition',
-        } as any,
-        { onConflict: 'user_id,target_kind,target_id,skill', ignoreDuplicates: true },
-      );
-    if (stateError) throw createRepositoryError(stateError, 'Failed to initialize card scheduling state');
-  }
-
   if (options.context) {
     const { error: contextError } = await client
       .from('word_context')

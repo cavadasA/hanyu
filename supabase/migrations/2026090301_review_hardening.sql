@@ -2,6 +2,41 @@
 -- Las migraciones anteriores pueden estar aplicadas: corregimos las funciones
 -- con una migración nueva en vez de editar su historial.
 
+-- Completa tarjetas creadas antes de los triggers de 4B. `do nothing` preserva
+-- cualquier estado que ya haya recibido una review o una suspensión manual.
+insert into public.learner_skill_state (
+  user_id, target_kind, target_id, skill, suspended
+)
+select sc.user_id, 'word', sc.word_id, skills.skill, skills.suspended
+from public.srs_cards sc
+cross join (values
+  ('recognition'::public.learning_skill, false),
+  ('recall'::public.learning_skill, true),
+  ('listening'::public.learning_skill, true)
+) as skills(skill, suspended)
+on conflict (user_id, target_kind, target_id, skill) do nothing;
+
+insert into public.learner_skill_state (
+  user_id, target_kind, target_id, skill, suspended
+)
+select wc.user_id, 'word', wc.word_id, 'reading', true
+from public.word_context wc
+join public.srs_cards sc
+  on sc.user_id = wc.user_id and sc.word_id = wc.word_id
+on conflict (user_id, target_kind, target_id, skill) do nothing;
+
+-- Reassert the single trigger path when this migration is applied to a
+-- partially migrated database.
+drop trigger if exists initialize_word_skill_states_on_card on public.srs_cards;
+create trigger initialize_word_skill_states_on_card
+after insert on public.srs_cards
+for each row execute function public.initialize_word_skill_states();
+
+drop trigger if exists initialize_reading_skill_state_on_context on public.word_context;
+create trigger initialize_reading_skill_state_on_context
+after insert on public.word_context
+for each row execute function public.initialize_reading_skill_state();
+
 drop function if exists public.apply_review(
   uuid, uuid, timestamptz, bigint, smallint, public.learning_skill, jsonb, jsonb
 );

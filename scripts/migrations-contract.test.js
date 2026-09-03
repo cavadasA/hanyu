@@ -88,4 +88,19 @@ describe('contratos de migraciones', () => {
     expect(normalizeSql(migration)).not.toContain("suspended = ((p_state->>'lapses')::integer >= 8)");
     expect(normalizeSql(migration)).not.toContain("suspended = coalesce((v_prior->>'suspended')::boolean, false)");
   });
+
+  it('deja una sola ruta idempotente para inicializar habilidades', () => {
+    const migration = readMigration('2026090301_review_hardening.sql');
+
+    expectSqlToContain(
+      migration,
+      "insert into public.learner_skill_state ( user_id, target_kind, target_id, skill, suspended )",
+    );
+    expectSqlToContain(migration, "from public.srs_cards sc");
+    expectSqlToContain(migration, "'recall'");
+    expectSqlToContain(migration, "'listening'");
+    expectSqlToContain(migration, "on conflict (user_id, target_kind, target_id, skill) do nothing");
+    expectSqlToContain(migration, 'create trigger initialize_word_skill_states_on_card');
+    expectSqlToContain(migration, 'create trigger initialize_reading_skill_state_on_context');
+  });
 });

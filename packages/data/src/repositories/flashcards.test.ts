@@ -272,7 +272,7 @@ describe('availableSkills', () => {
 });
 
 describe('skill state initialization', () => {
-  it('crea estados suspendidos para las habilidades derivadas', async () => {
+  it('delega los estados de habilidad en los triggers de la base', async () => {
     const rows: any[] = [];
     const client = {
       auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
@@ -286,13 +286,8 @@ describe('skill state initialization', () => {
 
     await addCard(5, client as any, { deckId: 'd1' });
 
-    expect(rows.filter((row) => row.table === 'learner_skill_state')).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ skill: 'recognition', suspended: false }),
-        expect.objectContaining({ skill: 'recall', suspended: true }),
-        expect.objectContaining({ skill: 'listening', suspended: true }),
-      ]),
-    );
+    expect(rows.filter((row) => row.table === 'learner_skill_state')).toHaveLength(0);
+    expect(rows.filter((row) => row.table === 'srs_cards')).toHaveLength(1);
   });
 });
 
