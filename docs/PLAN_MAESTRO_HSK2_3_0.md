@@ -212,7 +212,11 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 > **Se divide en dos documentos**, por la misma razón que el 1 y el 4: el maestro describe fases, no documentos. Con esto los ejecutables pasan de 13 a 14.
 >
 > - **5A — La cola gobernada y el diagnóstico** (`docs/superpowers/plans/2026-09-02-plan-5a-cola-gobernada.md`). Escrito. Qué tarjetas entran hoy y cuántas. Cierra el Crítico 1 y el Alto 6.
-> - **5B — El plan diario explicable.** Por qué esas y no otras: unidades con prerrequisitos, ranking de contenido, la explicación visible, y los tres modos Learn/Review/Exam.
+> - **5B — El plan diario explicable** (`docs/superpowers/plans/2026-09-02-plan-5b-plan-diario.md`). Escrito. Unidades derivadas del sílabo, ruta por prerrequisitos, función de valor de contenido, explicación visible y los tres modos.
+>
+> **Hallazgo que hace posible 5B:** los items de gramática del sílabo **enumeran palabras del corpus**. De los 120 fragmentos de los items de HSK 2, 63 son palabras exactas (`离合词 → 帮忙, 游泳, 跳舞, 跑步`). Las unidades no hay que escribirlas: se derivan.
+>
+> **Hallazgo incómodo:** de los seis pasos del orden de decisión de la auditoría, **solo tres tienen material**. Lectura, ejercicios sobre esa lectura y formato de examen no tienen catálogo —cero lecturas en el seed— así que nacen apagados con su motivo visible. El planificador ya los consulta; se encienden cuando el Plan 7 llene `content_item`.
 >
 > **El Crítico 1 sigue abierto por la selección fija del mazo.** `create_starter_deck` conserva su `order by hsk_level ... limit 150`, pero la inicialización duplicada de `learner_skill_state` ya quedó resuelta en 4C: los RPC de decks crean solo `srs_cards` y los triggers gobiernan los estados de habilidad. El planificador de 5A todavía debe sustituir la foto fija por una cola gobernada.
 >
