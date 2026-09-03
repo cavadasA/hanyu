@@ -92,7 +92,7 @@ export function createHanyuData(config: HanyuDataConfig) {
         deckId: string | null = null,
         skill: LearningSkill = 'recognition',
       ) => getDueCards(limit, client, deckId, skill),
-      getCard: (id: string) => getCard(id, client),
+      getCard: (id: string, skill: LearningSkill = 'recognition') => getCard(id, client, skill),
       reviewCardEvent: (event: Parameters<typeof reviewCardEvent>[0]) =>
         reviewCardEvent(event, client),
       revertReview: (reviewId: string) => revertReview(reviewId, client),

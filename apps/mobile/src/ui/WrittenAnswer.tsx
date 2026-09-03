@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { gradeWrittenAnswer, type Grade, type GradeReason } from '@hanyu/domain';
 import { tokens } from '../theme/tokens';
@@ -9,6 +9,8 @@ export interface WrittenGrade {
   grade: Grade;
   correct: boolean;
   reason: GradeReason;
+  elapsed_ms: number;
+  hints: number;
 }
 
 interface Props {
@@ -24,24 +26,39 @@ export function WrittenAnswer({ expected, kind, onGraded }: Props) {
   const [hints, setHints] = useState(0);
   const startedAt = useRef(Date.now());
 
+  useEffect(() => {
+    setValue('');
+    setResult(null);
+    setHints(0);
+    startedAt.current = Date.now();
+  }, [expected, kind]);
+
   function check() {
+    const elapsedMs = Date.now() - startedAt.current;
     const graded = gradeWrittenAnswer({
       expected,
       submitted: value,
       kind,
-      elapsed_ms: Date.now() - startedAt.current,
+      elapsed_ms: elapsedMs,
       hints,
     });
+    const resultWithEvidence: WrittenGrade = { ...graded, elapsed_ms: elapsedMs, hints };
 
-    setResult(graded);
-    onGraded(graded);
+    setResult(resultWithEvidence);
+    onGraded(resultWithEvidence);
   }
 
   // Teclear mal algo que sí se sabe no debe costar un intervalo entero. Se
   // concede `hard` y no `good`: haber necesitado la corrección es en sí una
   // señal de que la recuperación no fue limpia.
   function overrideAsKnown() {
-    const corrected: WrittenGrade = { grade: 'hard', correct: true, reason: 'hint' };
+    const corrected: WrittenGrade = {
+      grade: 'hard',
+      correct: true,
+      reason: 'hint',
+      elapsed_ms: Date.now() - startedAt.current,
+      hints,
+    };
     setResult(corrected);
     onGraded(corrected);
   }

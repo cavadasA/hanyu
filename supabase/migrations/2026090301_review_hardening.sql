@@ -87,6 +87,11 @@ begin
   if p_time_ms is not null and p_time_ms < 0 then
     raise exception 'time_ms must be non-negative';
   end if;
+  if p_state->>'retrievability' is not null
+     and ((p_state->>'retrievability')::numeric < 0
+       or (p_state->>'retrievability')::numeric > 1) then
+    raise exception 'retrievability must be between 0 and 1';
+  end if;
 
   select word_id into v_word_id
   from public.srs_cards
@@ -144,7 +149,7 @@ begin
   update public.learner_skill_state set
     difficulty       = (p_state->>'difficulty')::numeric,
     stability        = (p_state->>'stability')::numeric,
-    retrievability   = null,
+    retrievability   = (p_state->>'retrievability')::numeric,
     reps             = (p_state->>'reps')::integer,
     lapses           = (p_state->>'lapses')::integer,
     learning_steps   = (p_state->>'learning_steps')::integer,
@@ -314,7 +319,7 @@ begin
   update public.learner_skill_state set
     difficulty       = (v_prior->>'difficulty')::numeric,
     stability        = (v_prior->>'stability')::numeric,
-    retrievability   = null,
+    retrievability   = (v_prior->>'retrievability')::numeric,
     reps             = (v_prior->>'reps')::integer,
     lapses           = (v_prior->>'lapses')::integer,
     learning_steps   = (v_prior->>'learning_steps')::integer,

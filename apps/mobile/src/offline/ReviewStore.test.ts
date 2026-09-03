@@ -20,7 +20,7 @@ import { ReviewStoreImpl } from './ReviewStore';
 import type { DbHandle, ReviewStore } from './ReviewStore';
 import type { VersionedCard, ReviewEvent } from '@hanyu/data';
 import { deriveDbName } from './dbName';
-import { emptyState, type Grade } from '@hanyu/domain';
+import { applyReview, emptyState, schedulingParams, type Grade } from '@hanyu/domain';
 
 // ---------------------------------------------------------------------------
 // Test adapter: wraps a synchronous node:sqlite DatabaseSync instance
@@ -234,6 +234,32 @@ describe('cacheCards', () => {
     const due = await store.getDueProjectedCards('2026-08-02T00:00:00.000Z', 10);
     expect(due).toHaveLength(1);
     expect(due[0].scheduling.scheduled_days).toBe(7);
+  });
+
+  test('replays pending reviews with the latest FSRS parameters', async () => {
+    const { store, handle } = await createStore();
+    const card = makeCard();
+    const highRetention = schedulingParams({ request_retention: 0.95 });
+    const event = makeEvent(card.id, 'easy');
+
+    await store.cacheCards([card]);
+    await store.enqueueAndProject(event, card);
+    store.setParams(highRetention);
+    await store.cacheCards([{ ...card, version: 2 }]);
+
+    const row = await handle.getFirstAsync<{ projected_json: string }>(
+      'SELECT projected_json FROM cached_cards WHERE card_id = ?',
+      [card.id],
+    );
+    const projected = JSON.parse(row!.projected_json) as VersionedCard;
+    const expected = applyReview(
+      card.scheduling,
+      'easy',
+      new Date(event.reviewed_at),
+      highRetention,
+    ).state;
+
+    expect(projected.scheduling).toMatchObject(expected);
   });
 
   test('preserves pending-event projection when caching a new server card', async () => {

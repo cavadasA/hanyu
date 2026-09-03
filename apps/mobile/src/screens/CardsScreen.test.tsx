@@ -301,6 +301,9 @@ describe('CardsScreen', () => {
     await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '你好');
     await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
 
+    expect(mockRateCard).not.toHaveBeenCalled();
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+
     await waitFor(() => expect(mockRateCard).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'c1' }),
       expect.any(String),

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { getSkillStates, upsertSkillState } from './skills';
+import { getLeechStates, getSkillStates, upsertSkillState } from './skills';
 
 const user = { id: 'u1' };
 
@@ -82,5 +82,22 @@ describe('skills repository', () => {
       expect.objectContaining({ user_id: 'u1', target_id: 42, skill: 'listening' }),
       { onConflict: 'user_id,target_kind,target_id,skill' },
     );
+  });
+
+  it('getLeechStates enriches numeric targets with the word users can recognize', async () => {
+    const client = clientFor({
+      learner_skill_state: { data: [{ ...stateRow, leech: true }], error: null },
+      words: { data: [{ id: 42, hanzi: '学', pinyin: 'xué', meaning_es: 'estudiar', meaning_en: 'to study' }], error: null },
+    });
+
+    const states = await getLeechStates('recognition', client);
+
+    expect(states[0].word).toEqual({
+      hanzi: '学',
+      pinyin: 'xué',
+      meaning_es: 'estudiar',
+      meaning_en: 'to study',
+    });
+    expect(client.chains.words.in).toHaveBeenCalledWith('id', [42]);
   });
 });

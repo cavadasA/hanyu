@@ -31,6 +31,8 @@ export type QueuedReviewEvent = ReviewEvent & {
 
 export interface ReviewStore {
   cacheCards(cards: VersionedCard[]): Promise<void>;
+  /** Updates the FSRS parameters used when projecting pending events. */
+  setParams(params: FSRSParameters): void;
   getDueProjectedCards(now: string, limit: number): Promise<VersionedCard[]>;
   enqueueAndProject(event: ReviewEvent, projected: VersionedCard): Promise<void>;
   listPending(): Promise<QueuedReviewEvent[]>;
@@ -147,12 +149,20 @@ const UPDATE_CARD_PROJECTED = `
 `;
 
 export class ReviewStoreImpl implements ReviewStore {
+  private params: FSRSParameters;
+
   constructor(
     private readonly db: DbHandle,
     // Injected by openReviewStore.ts; called by destroy() to delete the on-disk file.
     private readonly destroyDb: () => Promise<void>,
-    private readonly params: FSRSParameters = schedulingParams({}),
-  ) {}
+    params: FSRSParameters = schedulingParams({}),
+  ) {
+    this.params = params;
+  }
+
+  setParams(params: FSRSParameters): void {
+    this.params = params;
+  }
 
   async cacheCards(cards: VersionedCard[]): Promise<void> {
     await this.db.withTransactionAsync(async () => {

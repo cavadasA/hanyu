@@ -125,6 +125,7 @@ describe('reviewCardEvent', () => {
       p_skill: 'recognition',
       p_state: reviewState,
       p_prior: reviewPrior,
+      p_time_ms: 1200,
     });
     expect(result.outcome).toBe('applied');
     expect(result.card).toMatchObject({

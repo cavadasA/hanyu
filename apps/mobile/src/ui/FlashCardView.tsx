@@ -21,7 +21,7 @@ import { AudioButton } from './AudioButton';
 import { Badge } from './Badge';
 import { Button } from './Button';
 import { Card } from './Card';
-import { WrittenAnswer } from './WrittenAnswer';
+import { WrittenAnswer, type WrittenGrade } from './WrittenAnswer';
 
 export type ReviewMode = 'recognition' | 'recall' | 'listening' | 'reading';
 
@@ -30,7 +30,7 @@ interface FlashCardViewProps {
   mode: ReviewMode;
   revealed?: boolean;
   onReveal?: () => void;
-  onRate?: (grade: Grade) => void | Promise<void>;
+  onRate?: (grade: Grade, timeMs?: number) => void | Promise<void>;
   intervals?: Record<Grade, number>;
   ratingDisabled?: boolean;
   pendingGrade?: Grade | null;
@@ -108,6 +108,7 @@ export function FlashCardView({
   const dragX = useRef(new Animated.Value(0)).current;
   const reduceMotion = useRef(false);
   const [motionReady, setMotionReady] = useState(MOTION_DISABLED);
+  const [writtenGrade, setWrittenGrade] = useState<WrittenGrade | null>(null);
   const entranceAnim = useRef<Animated.CompositeAnimation | null>(null);
   const revealAnim = useRef<Animated.CompositeAnimation | null>(null);
 
@@ -119,6 +120,10 @@ export function FlashCardView({
   disabledRef.current = ratingDisabled;
   onRateRef.current = onRate;
   onPanActiveChangeRef.current = onPanActiveChange;
+
+  useEffect(() => {
+    setWrittenGrade(null);
+  }, [card.id, mode]);
 
   useEffect(() => {
     if (MOTION_DISABLED) {
@@ -344,10 +349,18 @@ export function FlashCardView({
                 <Text style={[styles.prompt, { color: colors.text }]}>{readingPrompt(card)}</Text>
               ) : null}
               <WrittenAnswer
+                key={`${card.id}-${mode}`}
                 expected={card.hanzi ?? ''}
                 kind="hanzi"
-                onGraded={(result) => onRate?.(result.grade)}
+                onGraded={setWrittenGrade}
               />
+              {writtenGrade ? (
+                <Button
+                  label="Continue"
+                  onPress={() => onRate?.(writtenGrade.grade, writtenGrade.elapsed_ms)}
+                  disabled={ratingDisabled}
+                />
+              ) : null}
             </>
           ) : null}
 

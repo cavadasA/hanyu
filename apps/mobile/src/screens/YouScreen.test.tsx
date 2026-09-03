@@ -5,6 +5,8 @@ const mockGetSettings = jest.fn();
 const mockUpdateSettings = jest.fn();
 const mockSignOut = jest.fn();
 const mockGetDashboard = jest.fn();
+const mockGetLeechStates = jest.fn();
+const mockSetSkillSuspended = jest.fn();
 
 jest.mock('../lib/data', () => ({
   getData: () => ({
@@ -14,6 +16,10 @@ jest.mock('../lib/data', () => ({
     },
     stats: {
       getDashboard: () => mockGetDashboard(),
+    },
+    skills: {
+      getLeechStates: (skill: string) => mockGetLeechStates(skill),
+      setSkillSuspended: (input: unknown) => mockSetSkillSuspended(input),
     },
   }),
 }));
@@ -72,6 +78,9 @@ describe('YouScreen', () => {
     mockSignOut.mockReset();
     mockSetPreference.mockReset();
     mockGetDashboard.mockReset();
+    mockGetLeechStates.mockReset();
+    mockSetSkillSuspended.mockReset();
+    mockGetLeechStates.mockResolvedValue([]);
     mockGetDashboard.mockResolvedValue({
       cards: { by_status: { mastered: 47 } },
       exercise_stats: { accuracy: 82 },
@@ -196,5 +205,22 @@ describe('YouScreen', () => {
     expect(screen.getByText('HSK 2')).toBeTruthy();
     // Settings still load fine
     expect(screen.getByText('Cards per day: 20')).toBeTruthy();
+  });
+
+  it('muestra el hanzi en la lista de leeches, no el id interno', async () => {
+    mockGetSettings.mockResolvedValue(settings);
+    mockGetLeechStates.mockResolvedValue([{
+      id: 'state-1',
+      target_kind: 'word',
+      target_id: 42,
+      skill: 'recognition',
+      lapses: 8,
+      word: { hanzi: '学', pinyin: 'xué', meaning_es: 'estudiar', meaning_en: 'to study' },
+    }]);
+
+    await renderYou();
+
+    expect(screen.getByText('学 · 8 lapses')).toBeTruthy();
+    expect(screen.queryByText('Word 42 · 8 lapses')).toBeNull();
   });
 });

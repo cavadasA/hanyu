@@ -184,6 +184,7 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 >
 > - **4A — El motor FSRS** (`docs/superpowers/plans/2026-09-02-plan-4a-motor-fsrs.md`). Escrito. Qué se muestra mañana y por qué: FSRS con retención configurable, una sola implementación, cola intradía, intervalos visibles, leeches y `mastered` con evidencia. Se mide con retención observada.
 > - **4B — La recuperación activa** (`docs/superpowers/plans/2026-09-02-plan-4b-recuperacion-activa.md`). Escrito. Cómo se pregunta: respuesta escrita en recuerdo, escucha y contexto; valoración derivada de acierto, tiempo y ayudas, con la autoevaluación degradada a corrección; frase de origen capturada al leer; ficha con sentido, forma tradicional y clasificador. Se mide con evidencia por habilidad.
+> - **4C — Hardening de la revisión** (`docs/superpowers/plans/2026-09-03-plan-4c-hardening-review.md`). Implementado el 3 de septiembre. Cierra idempotencia, suspensión manual, desbloqueo de habilidades derivadas, tiempo de respuesta, parámetros FSRS dinámicos, aislamiento de respuestas escritas, leeches legibles y tipos generados. `mastered` usa recuperabilidad actual junto con estabilidad mínima, y esa evidencia se persiste en `learner_skill_state`.
 >
 > **Hallazgo que cambia el trabajo:** SM-2 no está duplicado, está **triplicado** — en `packages/domain/src/sm2.ts` y dentro de las dos firmas de `review_flashcard`, con el mismo bloque copiado literalmente, comentario incluido. Hay una cuarta copia en `server/services/srs-engine.js`, que queda congelada con el resto del servidor legado.
 >
@@ -213,7 +214,7 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 > - **5A — La cola gobernada y el diagnóstico** (`docs/superpowers/plans/2026-09-02-plan-5a-cola-gobernada.md`). Escrito. Qué tarjetas entran hoy y cuántas. Cierra el Crítico 1 y el Alto 6.
 > - **5B — El plan diario explicable.** Por qué esas y no otras: unidades con prerrequisitos, ranking de contenido, la explicación visible, y los tres modos Learn/Review/Exam.
 >
-> **El Crítico 1 sigue abierto y empeoró al ejecutar el 4A.** `create_starter_deck` conserva su `order by hsk_level ... limit 150`, y ahora además siembra una fila de `learner_skill_state` por palabra con `next_review_at` nulo, que el planificador trata como vencida. El problema se mudó de casa sin resolverse.
+> **El Crítico 1 sigue abierto por la selección fija del mazo.** `create_starter_deck` conserva su `order by hsk_level ... limit 150`, pero la inicialización duplicada de `learner_skill_state` ya quedó resuelta en 4C: los RPC de decks crean solo `srs_cards` y los triggers gobiernan los estados de habilidad. El planificador de 5A todavía debe sustituir la foto fija por una cola gobernada.
 >
 > La decisión de 5A es que **el mazo deja de ser una foto de 150 palabras** y pasa a ser el alcance completo del objetivo, del que el cupo diario introduce una porción. Un mazo de 150 elegidas de antemano no puede representar «preparar HSK 2» ni aunque las 150 sean las correctas.
 >

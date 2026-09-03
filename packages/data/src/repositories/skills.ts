@@ -88,6 +88,7 @@ export async function getLeechStates(
     .from('learner_skill_state') as any)
     .select(COLUMNS)
     .eq('user_id', userId)
+    .eq('target_kind', 'word')
     .eq('skill', skill)
     .eq('leech', true)
     .order('lapses', { ascending: false });
@@ -96,7 +97,31 @@ export async function getLeechStates(
     throw createRepositoryError(error, 'Failed to load leeches');
   }
 
-  return (data ?? []) as unknown as LearnerSkillState[];
+  const states = (data ?? []) as unknown as LearnerSkillState[];
+  const wordIds = [...new Set(states.map((state) => state.target_id))];
+  if (wordIds.length === 0) {
+    return states;
+  }
+
+  const { data: words, error: wordsError } = await client
+    .from('words')
+    .select('id, hanzi, pinyin, meaning_es, meaning_en')
+    .in('id', wordIds);
+
+  if (wordsError) {
+    throw createRepositoryError(wordsError, 'Failed to load leech words');
+  }
+
+  const wordsById = new Map(
+    (words ?? []).map((word: any) => [Number(word.id), {
+      hanzi: String(word.hanzi),
+      pinyin: String(word.pinyin),
+      meaning_es: word.meaning_es ?? null,
+      meaning_en: String(word.meaning_en),
+    }]),
+  );
+
+  return states.map((state) => ({ ...state, word: wordsById.get(state.target_id) }));
 }
 
 export async function setSkillSuspended(

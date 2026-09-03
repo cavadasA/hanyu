@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { randomUUID } from 'expo-crypto';
@@ -86,6 +86,19 @@ export default function CardsScreen() {
   const sessionId = useRef<string | null>(null);
   const sessionStartedAt = useRef(Date.now());
   const cardStartedAt = useRef(Date.now());
+  const scheduling = useMemo(
+    () => schedulingParams({ request_retention: requestRetention }),
+    [requestRetention],
+  );
+  const previewNow = useMemo(
+    () => new Date(),
+    [phase, index, requestRetention],
+  );
+  const currentCard = activeCards[index];
+  const currentIntervals = useMemo(
+    () => currentCard ? previewIntervals(currentCard.scheduling, previewNow, scheduling) : undefined,
+    [currentCard, previewNow, scheduling],
+  );
 
   const load = useCallback(async (selectedSkill: ReviewMode = mode) => {
     setLoading(true);
@@ -273,7 +286,7 @@ export default function CardsScreen() {
     });
   }
 
-  async function rate(grade: Grade) {
+  async function rate(grade: Grade, timeMs?: number) {
     const current = activeCards[index];
     if (!current || reviewing || !service) {
       return;
@@ -289,7 +302,7 @@ export default function CardsScreen() {
       const result = await service.rateCard(
         current,
         grade,
-        Date.now() - cardStartedAt.current,
+        timeMs ?? Date.now() - cardStartedAt.current,
       );
       reviewId = result.reviewId;
       ratedCard = result.card;
@@ -516,7 +529,7 @@ export default function CardsScreen() {
   }
 
   // --- PHASE: REVIEWING ---
-  const current = activeCards[index];
+  const current = currentCard;
   const next = activeCards[index + 1];
   const counter = activeCards.length
     ? `${Math.min(index + 1, activeCards.length)}/${activeCards.length}`
@@ -576,14 +589,15 @@ export default function CardsScreen() {
       {current ? (
         <>
           <View style={styles.cardHeaderRow}>
-            <CardStatusBadge status={cardPhase(current.scheduling)} />
+            <CardStatusBadge status={cardPhase(current.scheduling, previewNow, scheduling)} />
           </View>
           <View style={styles.stack}>
             {next ? <FlashCardView key={next.id} preview card={next} mode={mode} /> : null}
             <FlashCardView
+              key={current.id}
               card={current}
               mode={mode}
-              intervals={previewIntervals(current.scheduling, new Date(), schedulingParams({ request_retention: requestRetention }))}
+              intervals={currentIntervals}
               revealed={revealed}
               onReveal={() => setRevealed(true)}
               onRate={rate}

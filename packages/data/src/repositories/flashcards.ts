@@ -1,5 +1,5 @@
 import type { HanyuClient } from '../client';
-import { cardPhase, emptyState } from '@hanyu/domain';
+import { cardPhase, emptyState, schedulingParams } from '@hanyu/domain';
 import type {
   RevertReviewResult,
   RevertOutcome,
@@ -52,6 +52,7 @@ function mapVersionedCardRow(row: any, word?: any): VersionedCard {
     scheduling: {
       difficulty: Number(row.difficulty ?? 0),
       stability: Number(row.stability ?? 0),
+      retrievability: row.retrievability == null ? null : Number(row.retrievability),
       reps: Number(row.reps ?? 0),
       lapses: Number(row.lapses ?? 0),
       learning_steps: Number(row.learning_steps ?? 0),
@@ -215,7 +216,11 @@ export async function getDueCards(
   };
 }
 
-export async function getCard(id: string, client: HanyuClient): Promise<VersionedCard> {
+export async function getCard(
+  id: string,
+  client: HanyuClient,
+  skill: LearningSkill = 'recognition',
+): Promise<VersionedCard> {
   const userId = await getRequiredUserId(client);
 
   const { data, error } = await client
@@ -240,12 +245,12 @@ export async function getCard(id: string, client: HanyuClient): Promise<Versione
   const { data: state, error: stateError } = await client
     .from('learner_skill_state')
     .select(
-      'skill, difficulty, stability, reps, lapses, learning_steps, scheduled_days, elapsed_days, fsrs_state, next_review_at, last_reviewed_at, version',
+      'skill, difficulty, stability, retrievability, reps, lapses, learning_steps, scheduled_days, elapsed_days, fsrs_state, next_review_at, last_reviewed_at, version',
     )
     .eq('user_id', userId)
     .eq('target_kind', 'word')
     .eq('target_id', data.word_id)
-    .eq('skill', 'recognition')
+    .eq('skill', skill)
     .maybeSingle();
 
   if (stateError) {
@@ -255,9 +260,10 @@ export async function getCard(id: string, client: HanyuClient): Promise<Versione
   const fallback = emptyState(new Date());
   const cardRow = data as any;
   const stateRow = (state as any) ?? {
-    skill: 'recognition',
+    skill,
     difficulty: fallback.difficulty,
     stability: fallback.stability,
+    retrievability: fallback.retrievability ?? null,
     reps: fallback.reps,
     lapses: fallback.lapses,
     learning_steps: fallback.learning_steps,
@@ -285,6 +291,7 @@ export async function reviewCardEvent(event: ReviewEvent, client: HanyuClient): 
     p_skill: event.skill,
     p_state: event.state,
     p_prior: event.prior,
+    p_time_ms: event.time_ms,
   });
 
   if (error) {
@@ -292,7 +299,7 @@ export async function reviewCardEvent(event: ReviewEvent, client: HanyuClient): 
   }
 
   const outcome = normalizeReviewSyncOutcome(data);
-  const card = await getCard(event.card_id, client);
+  const card = await getCard(event.card_id, client, event.skill);
 
   return { outcome, card };
 }
@@ -407,7 +414,9 @@ export async function createStarterDeck(input: { strategy?: string; limit?: numb
 
 export async function getFlashcardStats(client: HanyuClient) {
   const userId = await getRequiredUserId(client);
-  const nowIso = new Date().toISOString();
+  const now = new Date();
+  const nowIso = now.toISOString();
+  const params = schedulingParams({ request_retention: (await getSettings(client)).request_retention });
 
   const [totalResult, dueResult, statusResult, levelResult] = await Promise.all([
     client.from('srs_cards').select('*', { count: 'exact', head: true }).eq('user_id', userId),
@@ -459,7 +468,7 @@ export async function getFlashcardStats(client: HanyuClient) {
       state: row.fsrs_state ?? 'new',
       due: String(row.next_review_at ?? nowIso),
       last_review: row.last_reviewed_at ? String(row.last_reviewed_at) : null,
-    });
+    }, now, params);
     byStatus[phase] = (byStatus[phase] || 0) + 1;
   }
 

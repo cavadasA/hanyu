@@ -448,12 +448,16 @@ export type Database = {
         Row: {
           created_at: string
           difficulty: number | null
+          elapsed_days: number
+          fsrs_state: string
           id: string
           lapses: number
           last_reviewed_at: string | null
+          learning_steps: number
           next_review_at: string | null
           reps: number
           retrievability: number | null
+          scheduled_days: number
           skill: string
           stability: number | null
           suspended: boolean
@@ -466,12 +470,16 @@ export type Database = {
         Insert: {
           created_at?: string
           difficulty?: number | null
+          elapsed_days?: number
+          fsrs_state?: string
           id?: string
           lapses?: number
           last_reviewed_at?: string | null
+          learning_steps?: number
           next_review_at?: string | null
           reps?: number
           retrievability?: number | null
+          scheduled_days?: number
           skill: string
           stability?: number | null
           suspended?: boolean
@@ -484,12 +492,16 @@ export type Database = {
         Update: {
           created_at?: string
           difficulty?: number | null
+          elapsed_days?: number
+          fsrs_state?: string
           id?: string
           lapses?: number
           last_reviewed_at?: string | null
+          learning_steps?: number
           next_review_at?: string | null
           reps?: number
           retrievability?: number | null
+          scheduled_days?: number
           skill?: string
           stability?: number | null
           suspended?: boolean
@@ -709,9 +721,12 @@ export type Database = {
           card_id: string
           client_review_id: string | null
           client_reviewed_at: string | null
+          grade: number | null
           id: string
-          quality: number
+          prior_snapshot: Json | null
+          quality: number | null
           result_snapshot: Json | null
+          reverted_at: string | null
           reviewed_at: string
           time_ms: number | null
           user_id: string
@@ -720,9 +735,12 @@ export type Database = {
           card_id: string
           client_review_id?: string | null
           client_reviewed_at?: string | null
+          grade?: number | null
           id?: string
-          quality: number
+          prior_snapshot?: Json | null
+          quality?: number | null
           result_snapshot?: Json | null
+          reverted_at?: string | null
           reviewed_at?: string
           time_ms?: number | null
           user_id: string
@@ -731,9 +749,12 @@ export type Database = {
           card_id?: string
           client_review_id?: string | null
           client_reviewed_at?: string | null
+          grade?: number | null
           id?: string
-          quality?: number
+          prior_snapshot?: Json | null
+          quality?: number | null
           result_snapshot?: Json | null
+          reverted_at?: string | null
           reviewed_at?: string
           time_ms?: number | null
           user_id?: string
@@ -758,13 +779,7 @@ export type Database = {
       srs_cards: {
         Row: {
           created_at: string
-          ease_factor: number
           id: string
-          interval_days: number
-          last_reviewed_at: string | null
-          next_review_at: string
-          repetitions: number
-          status: string
           updated_at: string
           user_id: string
           version: number
@@ -772,13 +787,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          ease_factor?: number
           id?: string
-          interval_days?: number
-          last_reviewed_at?: string | null
-          next_review_at?: string
-          repetitions?: number
-          status?: string
           updated_at?: string
           user_id: string
           version?: number
@@ -786,13 +795,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          ease_factor?: number
           id?: string
-          interval_days?: number
-          last_reviewed_at?: string | null
-          next_review_at?: string
-          repetitions?: number
-          status?: string
           updated_at?: string
           user_id?: string
           version?: number
@@ -823,6 +826,7 @@ export type Database = {
           created_at: string
           current_level: number
           max_reviews_per_session: number
+          request_retention: number
           support_language: string
           theme: string
           updated_at: string
@@ -835,6 +839,7 @@ export type Database = {
           created_at?: string
           current_level?: number
           max_reviews_per_session?: number
+          request_retention?: number
           support_language?: string
           theme?: string
           updated_at?: string
@@ -847,6 +852,7 @@ export type Database = {
           created_at?: string
           current_level?: number
           max_reviews_per_session?: number
+          request_retention?: number
           support_language?: string
           theme?: string
           updated_at?: string
@@ -962,24 +968,134 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      review_flashcard: {
+      add_deck_from_template: {
         Args: {
-          card_id: string
-          expected_version: number
-          quality: number
-          review_id: string
-          reviewed_at: string
-          time_ms: number | null
+          p_template_id: string
         }
         Returns: {
-          ease_factor: number
-          interval: number
-          last_reviewed_at: string | null
-          next_review: string
+          deck_id: string
+          inserted: number
+        }[]
+      }
+      apply_review: {
+        Args: {
+          p_card_id: string
+          p_expected_version: number
+          p_grade: number
+          p_prior: Json
+          p_review_id: string
+          p_reviewed_at: string
+          p_skill: string
+          p_state: Json
+          p_time_ms?: number | null
+        }
+        Returns: {
           outcome: string
-          repetitions: number
-          status: string
           version: number
+        }[]
+      }
+      count_deck_cards: {
+        Args: {
+          p_deck_id?: string | null
+          p_due_only?: boolean
+        }
+        Returns: {
+          count: number
+          deck_id: string | null
+        }[]
+      }
+      create_starter_deck: {
+        Args: {
+          p_limit?: number | null
+          strategy?: string
+        }
+        Returns: {
+          inserted: number
+          total_deck_size: number
+        }[]
+      }
+      get_dashboard: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      get_deck_stats: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          deck_id: string
+          due_count: number
+          word_count: number
+        }[]
+      }
+      get_due_cards: {
+        Args: {
+          p_deck_id?: string | null
+          p_limit?: number
+          p_skill?: string
+        }
+        Returns: {
+          card_id: string
+          difficulty: number | null
+          elapsed_days: number
+          fsrs_state: string
+          last_reviewed_at: string | null
+          lapses: number
+          learning_steps: number
+          next_review_at: string | null
+          reps: number
+          retrievability: number | null
+          scheduled_days: number
+          skill: string
+          stability: number | null
+          user_id: string
+          version: number
+          word_id: number
+        }[]
+      }
+      initialize_reading_skill_state: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      initialize_word_skill_states: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      log_study_time: {
+        Args: {
+          p_ms: number
+        }
+        Returns: {
+          time_spent_ms: number
+        }[]
+      }
+      revert_review: {
+        Args: {
+          p_review_id: string
+        }
+        Returns: {
+          card_id: string | null
+          outcome: string
+          version: number | null
+        }[]
+      }
+      unlock_derived_skills: {
+        Args: {
+          p_min_stability?: number
+        }
+        Returns: number
+      }
+      ensure_today_stats: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          cards_new: number
+          cards_reviewed: number
+          created_at: string
+          date: string
+          exercises_done: number
+          id: string
+          readings_done: number
+          time_spent_ms: number
+          updated_at: string
+          user_id: string
         }[]
       }
     }

@@ -15,6 +15,7 @@
 
 import React from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
+import { emptyState } from '@hanyu/domain';
 
 // ---------------------------------------------------------------------------
 // Mocks (factory mocks prevent transitive expo-sqlite loading)
@@ -51,6 +52,7 @@ function makeMockStore(pendingCountValue = 0) {
     markPending: jest.fn().mockResolvedValue(undefined),
     discardPending: jest.fn().mockResolvedValue(null),
     pendingCount: jest.fn().mockResolvedValue(pendingCountValue),
+    setParams: jest.fn(),
     close: jest.fn().mockResolvedValue(undefined),
     destroy: jest.fn().mockResolvedValue(undefined),
   };
@@ -144,6 +146,42 @@ describe('OfflineReviewProvider – store open on user available', () => {
     await rerender({}); // same userId — must not trigger another open
 
     expect(mockOpenReviewStore).toHaveBeenCalledTimes(1);
+  });
+
+  test('relee la retención antes de valorar una tarjeta', async () => {
+    let currentRetention = 0.9;
+    const settings = { getSettings: jest.fn(() => Promise.resolve({ request_retention: currentRetention })) };
+    mockGetData.mockReturnValue({
+      settings,
+      flashcards: {
+        getDueCards: jest.fn().mockResolvedValue({ cards: [] }),
+        reviewCardEvent: jest.fn().mockResolvedValue({ outcome: 'applied', card: {} }),
+        revertReview: jest.fn(),
+      },
+    });
+    const mockStore = makeMockStore();
+    mockOpenReviewStore.mockResolvedValue(mockStore);
+    mockUseSession.mockReturnValue(makeSessionValue({ userId: 'user-1' }));
+
+    const { result } = await renderHook(() => useOfflineReview(), { wrapper });
+    await waitFor(() => expect(result.current.ready).toBe(true));
+
+    currentRetention = 0.95;
+    await act(async () => {
+      await result.current.service?.rateCard({
+        id: 'card-1',
+        user_id: 'user-1',
+        word_id: 1,
+        skill: 'recognition',
+        scheduling: emptyState(new Date('2026-09-03T10:00:00.000Z')),
+        version: 0,
+      }, 'good', 1000);
+    });
+
+    expect(settings.getSettings).toHaveBeenCalledTimes(2);
+    expect(mockStore.setParams).toHaveBeenLastCalledWith(
+      expect.objectContaining({ request_retention: 0.95 }),
+    );
   });
 });
 

@@ -7,6 +7,7 @@ import {
   type FSRSParameters,
   type Grade as FsrsGrade,
 } from 'ts-fsrs';
+import { schedulingParams } from './params';
 
 export type Grade = 'again' | 'hard' | 'good' | 'easy';
 export type SchedulingPhase = 'new' | 'learning' | 'review' | 'relearning';
@@ -14,6 +15,8 @@ export type SchedulingPhase = 'new' | 'learning' | 'review' | 'relearning';
 export interface SchedulingState {
   difficulty: number;
   stability: number;
+  /** Last FSRS retrievability estimate, refreshed after each review. */
+  retrievability?: number | null;
   reps: number;
   lapses: number;
   learning_steps: number;
@@ -92,8 +95,15 @@ export function applyReview(
   params: FSRSParameters,
 ): { state: SchedulingState; interval_minutes: number } {
   const { card } = fsrs(params).next(toCard(state), now, GRADE_TO_RATING[grade]);
+  const nextState = fromCard(card);
 
-  return { state: fromCard(card), interval_minutes: minutesBetween(now, card.due) };
+  return {
+    state: {
+      ...nextState,
+      retrievability: fsrs(params).get_retrievability(card, now, false),
+    },
+    interval_minutes: minutesBetween(now, card.due),
+  };
 }
 
 export function previewIntervals(
@@ -119,8 +129,8 @@ export function retrievability(
   return fsrs(params).get_retrievability(toCard(state), now, false);
 }
 
-const LEECH_LAPSES = 8;
-const MASTERED_STABILITY_DAYS = 180;
+export const LEECH_LAPSES = 8;
+export const MASTERED_MIN_STABILITY_DAYS = 30;
 
 export function isLeech(state: SchedulingState): boolean {
   return state.lapses >= LEECH_LAPSES;
@@ -128,8 +138,14 @@ export function isLeech(state: SchedulingState): boolean {
 
 export function cardPhase(
   state: SchedulingState,
+  now: Date = new Date(),
+  params: FSRSParameters = schedulingParams({}),
 ): 'new' | 'learning' | 'review' | 'mastered' {
   if (state.state === 'new') return 'new';
   if (state.state === 'learning' || state.state === 'relearning') return 'learning';
-  return state.stability >= MASTERED_STABILITY_DAYS ? 'mastered' : 'review';
+  const currentRetrievability = retrievability(state, now, params);
+  return state.stability >= MASTERED_MIN_STABILITY_DAYS &&
+    currentRetrievability >= (params.request_retention ?? 0.9)
+    ? 'mastered'
+    : 'review';
 }

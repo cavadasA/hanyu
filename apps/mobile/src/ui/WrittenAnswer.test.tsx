@@ -31,7 +31,7 @@ describe('WrittenAnswer', () => {
     await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '你好');
     await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
 
-    expect(onGraded).toHaveBeenCalledWith(expect.objectContaining({ reason: 'hint' }));
+    expect(onGraded).toHaveBeenCalledWith(expect.objectContaining({ reason: 'hint', hints: 1 }));
   });
 
   it('deja corregir la valoración a mano', async () => {

@@ -36,6 +36,8 @@ export interface OfflineReviewServiceDeps {
   uuid: () => string;
   /** Scheduling parameters, re-read when the user changes settings. */
   params: () => FSRSParameters;
+  /** Refreshes settings before a review when the provider can read them. */
+  refreshParams?: () => Promise<FSRSParameters>;
   /**
    * Revierte en servidor una valoración ya sincronizada. Inyectada como el
    * resto de la E/S para que el servicio siga siendo probable en Node puro.
@@ -53,6 +55,7 @@ export class OfflineReviewService {
   private readonly now: () => Date;
   private readonly uuid: () => string;
   private readonly params: () => FSRSParameters;
+  private readonly refreshParams?: () => Promise<FSRSParameters>;
   private readonly revertReviewOnline: (
     reviewId: string,
   ) => Promise<{ outcome: RevertOutcome; card: VersionedCard | null }>;
@@ -70,6 +73,7 @@ export class OfflineReviewService {
     this.now = deps.now;
     this.uuid = deps.uuid;
     this.params = deps.params;
+    this.refreshParams = deps.refreshParams;
     this.revertReviewOnline = deps.revertReviewOnline;
   }
 
@@ -158,7 +162,9 @@ export class OfflineReviewService {
 
     try {
       const reviewedAt = this.now();
-      const outcome = applyReview(card.scheduling, grade, reviewedAt, this.params());
+      const params = this.refreshParams ? await this.refreshParams() : this.params();
+      this.store.setParams(params);
+      const outcome = applyReview(card.scheduling, grade, reviewedAt, params);
 
       const event: ReviewEvent = {
         card_id: card.id,

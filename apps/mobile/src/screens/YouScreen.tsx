@@ -304,7 +304,9 @@ export default function YouScreen() {
             <Text style={[styles.leechBody, { color: colors.textMuted }]}>These cards were difficult repeatedly.</Text>
             {leeches.map((state) => (
               <View key={state.id} style={styles.leechRow}>
-                <Text style={[styles.leechLabel, { color: colors.text }]}>Word {state.target_id} · {state.lapses} lapses</Text>
+                <Text style={[styles.leechLabel, { color: colors.text }]}>
+                  {state.word?.hanzi ?? `Word ${state.target_id}`} · {state.lapses} lapses
+                </Text>
                 <Button label="Reactivate" variant="outline" onPress={() => void reactivate(state)} />
               </View>
             ))}

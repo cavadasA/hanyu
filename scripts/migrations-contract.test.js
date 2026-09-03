@@ -80,6 +80,7 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'p_time_ms integer default null');
     expectSqlToContain(migration, 'select s.version into version');
     expectSqlToContain(migration, 'p_time_ms < 0');
+    expectSqlToContain(migration, "retrievability = (p_state->>'retrievability')::numeric");
     expectSqlToContain(migration, 'review_log ( user_id, card_id, reviewed_at, quality, grade, time_ms');
     expectSqlToContain(migration, "perform public.unlock_derived_skills()");
     expectSqlToContain(migration, "leech = ((p_state->>'lapses')::integer >= 8)");
@@ -102,5 +103,44 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, "on conflict (user_id, target_kind, target_id, skill) do nothing");
     expectSqlToContain(migration, 'create trigger initialize_word_skill_states_on_card');
     expectSqlToContain(migration, 'create trigger initialize_reading_skill_state_on_context');
+  });
+
+  it('mantiene database.types alineado con FSRS y las RPC actuales', () => {
+    const types = readFileSync(
+      join(rootDir, 'packages', 'data', 'src', 'database.types.ts'),
+      'utf8',
+    );
+
+    expect(types).toContain('fsrs_state: string');
+    expect(types).toContain('learning_steps: number');
+    expect(types).toContain('scheduled_days: number');
+    expect(types).toContain('request_retention: number');
+    expect(types).toContain('grade: number | null');
+    expect(types).toContain('prior_snapshot: Json | null');
+    expect(types).toContain('apply_review: {');
+    expect(types).toContain('p_time_ms?: number | null');
+    expect(types).toContain('get_due_cards: {');
+    expect(types).toContain('p_skill?: string');
+    expect(types).toContain('revert_review: {');
+    expect(types).not.toContain('review_flashcard: {');
+    expect(types).not.toContain('ease_factor: number');
+  });
+
+  it('deja la inicialización de habilidades exclusivamente en los triggers', () => {
+    const migration = readMigration('2026090302_trigger_only_skill_init.sql');
+    const normalized = normalizeSql(migration);
+
+    expectSqlToContain(migration, 'create or replace function public.add_deck_from_template');
+    expectSqlToContain(migration, 'create or replace function public.create_starter_deck');
+    expect(normalized).not.toContain('insert into public.learner_skill_state');
+    expect(normalized).toContain('insert into public.srs_cards');
+  });
+
+  it('expone la recuperabilidad persistida en la RPC de tarjetas vencidas', () => {
+    const migration = readMigration('2026090303_due_cards_retrievability.sql');
+
+    expectSqlToContain(migration, 'retrievability numeric');
+    expectSqlToContain(migration, 's.retrievability');
+    expectSqlToContain(migration, 'create or replace function public.get_due_cards');
   });
 });

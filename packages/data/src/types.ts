@@ -83,6 +83,8 @@ export interface LearnerSkillState {
   suspended: boolean;
   leech: boolean;
   version: number;
+  /** Optional word label attached by getLeechStates for user-facing lists. */
+  word?: Pick<Word, 'hanzi' | 'pinyin' | 'meaning_es' | 'meaning_en'>;
 }
 
 export type ContentKind = 'reading' | 'dialogue' | 'lesson' | 'exercise';

@@ -1,5 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
-import { addCard, availableSkills, getDueCards, revertReview } from './flashcards';
+import {
+  addCard,
+  availableSkills,
+  getCard,
+  getDueCards,
+  reviewCardEvent,
+  revertReview,
+} from './flashcards';
 
 function clientFor(options: {
   rpcRows?: unknown[];
@@ -124,6 +131,56 @@ function revertClient(outcome: string) {
   } as never;
 }
 
+function cardClient(skill: 'recognition' | 'recall' | 'listening' = 'recall') {
+  const makeChain = (data: unknown) => {
+    const chain: any = {
+      eq: vi.fn(() => chain),
+      maybeSingle: vi.fn().mockResolvedValue({ data, error: null }),
+    };
+    return chain;
+  };
+
+  const cardRow = {
+    id: 'card-1',
+    user_id: 'u1',
+    word_id: 7,
+    version: 4,
+    words: { id: 7, hanzi: '学', pinyin: 'xué', meaning_en: 'study' },
+  };
+  const stateRow = {
+    skill,
+    difficulty: 4.2,
+    stability: 8.5,
+    reps: 3,
+    lapses: 1,
+    learning_steps: 0,
+    scheduled_days: 8,
+    elapsed_days: 3,
+    fsrs_state: 'review',
+    next_review_at: '2026-09-04T09:00:00.000Z',
+    last_reviewed_at: '2026-08-30T09:00:00.000Z',
+    version: 4,
+  };
+  const cardQuery = makeChain(cardRow);
+  const stateQuery = makeChain(stateRow);
+  const from = vi.fn((table: string) =>
+    table === 'srs_cards'
+      ? { select: vi.fn(() => cardQuery) }
+      : { select: vi.fn(() => stateQuery) },
+  );
+
+  return {
+    rpc: vi.fn().mockResolvedValue({
+      data: [{ outcome: 'applied', card_id: 'card-1', version: 5 }],
+      error: null,
+    }),
+    from,
+    cardQuery,
+    stateQuery,
+    auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
+  } as never;
+}
+
 describe('getDueCards', () => {
   it('maps the skill-state scheduling fields into one scheduling object', async () => {
     const client = clientFor({
@@ -135,6 +192,7 @@ describe('getDueCards', () => {
           skill: 'recognition',
           difficulty: 4.2,
           stability: 8.5,
+          retrievability: 0.84,
           reps: 3,
           lapses: 1,
           learning_steps: 0,
@@ -163,6 +221,7 @@ describe('getDueCards', () => {
       scheduling: {
         difficulty: 4.2,
         stability: 8.5,
+        retrievability: 0.84,
         reps: 3,
         lapses: 1,
         learning_steps: 0,
@@ -248,6 +307,63 @@ describe('getDueCards', () => {
       p_deck_id: null,
       p_skill: 'recall',
     });
+  });
+});
+
+describe('getCard y reviewCardEvent', () => {
+  it('carga el estado de la habilidad solicitada', async () => {
+    const client = cardClient('recall') as any;
+
+    const card = await getCard('card-1', client, 'recall');
+
+    expect(card.skill).toBe('recall');
+    expect(client.stateQuery.eq).toHaveBeenCalledWith('skill', 'recall');
+  });
+
+  it('conserva time_ms y recarga la misma habilidad después de sincronizar', async () => {
+    const client = cardClient('listening') as any;
+    const event = {
+      card_id: 'card-1',
+      grade: 3 as const,
+      skill: 'listening' as const,
+      time_ms: 3200,
+      review_id: 'review-1',
+      reviewed_at: '2026-09-03T10:00:00.000Z',
+      expected_version: 4,
+      state: {
+        difficulty: 4.2,
+        stability: 8.5,
+        reps: 4,
+        lapses: 1,
+        learning_steps: 0,
+        scheduled_days: 8,
+        elapsed_days: 3,
+        state: 'review' as const,
+        due: '2026-09-04T09:00:00.000Z',
+        last_review: '2026-09-03T10:00:00.000Z',
+      },
+      prior: {
+        difficulty: 4.2,
+        stability: 8.5,
+        reps: 3,
+        lapses: 1,
+        learning_steps: 0,
+        scheduled_days: 8,
+        elapsed_days: 3,
+        state: 'review' as const,
+        due: '2026-09-03T09:00:00.000Z',
+        last_review: '2026-08-30T09:00:00.000Z',
+      },
+    };
+
+    const result = await reviewCardEvent(event, client);
+
+    expect(client.rpc).toHaveBeenCalledWith('apply_review', expect.objectContaining({
+      p_time_ms: 3200,
+      p_skill: 'listening',
+    }));
+    expect(result.card.skill).toBe('listening');
+    expect(client.stateQuery.eq).toHaveBeenCalledWith('skill', 'listening');
   });
 });
 

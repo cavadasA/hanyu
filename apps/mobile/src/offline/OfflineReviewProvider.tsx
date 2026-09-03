@@ -133,6 +133,15 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
         now: () => new Date(),
         uuid: () => randomUUID(),
         params: () => params,
+        refreshParams: async () => {
+          try {
+            const settings = await getData().settings.getSettings();
+            params = schedulingParams({ request_retention: settings.request_retention });
+          } catch {
+            // Keep the last known-good parameters when settings are unavailable.
+          }
+          return params;
+        },
         revertReviewOnline: (reviewId: string) => getData().flashcards.revertReview(reviewId),
       });
       syncEngineRef.current = new ReviewSyncEngine({

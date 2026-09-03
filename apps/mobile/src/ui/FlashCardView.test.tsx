@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 import { emptyState } from '@hanyu/domain';
 import type { DueCard } from '@hanyu/data';
 import { FlashCardView } from './FlashCardView';
@@ -64,5 +64,20 @@ describe('FlashCardView', () => {
     await render(<FlashCardView card={card} mode="recognition" revealed onRate={jest.fn()} />);
 
     expect(screen.getByLabelText('Sense 2')).toBeTruthy();
+  });
+
+  it('mantiene el resultado escrito visible hasta que el usuario continúa', async () => {
+    const onRate = jest.fn();
+    await render(<FlashCardView card={baseCard} mode="recall" onRate={onRate} />);
+
+    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '还');
+    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
+
+    expect(onRate).not.toHaveBeenCalled();
+    expect(screen.getByText('Correct')).toBeTruthy();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+
+    expect(onRate).toHaveBeenCalledWith('easy', expect.any(Number));
   });
 });
