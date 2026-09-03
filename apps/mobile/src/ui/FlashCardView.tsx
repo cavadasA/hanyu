@@ -70,6 +70,24 @@ function readingPrompt(card: DueCard): string {
   return sentence.replace(target, '____');
 }
 
+function contextParts(card: DueCard): { before: string; target: string; after: string } | null {
+  const sentence = card.context?.sentence ?? '';
+  const candidates = [card.hanzi, ...(card.variants ?? [])].filter(
+    (candidate): candidate is string => Boolean(candidate),
+  );
+  const target = candidates.find((candidate) => sentence.includes(candidate));
+  if (!target) {
+    return null;
+  }
+
+  const index = sentence.indexOf(target);
+  return {
+    before: sentence.slice(0, index),
+    target,
+    after: sentence.slice(index + target.length),
+  };
+}
+
 export function FlashCardView({
   card,
   mode,
@@ -347,9 +365,33 @@ export function FlashCardView({
             >
               <Text style={[styles.hanzi, { color: colors.text }]}>{card.hanzi}</Text>
               <Text style={[styles.pinyin, { color: colors.gold }]}>{card.pinyin}</Text>
-              <Text style={[styles.meaning, { color: colors.text }]}>
+              <Text style={[styles.meaning, { color: colors.text }]}> 
                 {resolveGloss(card, supportLanguage)}
               </Text>
+              {card.traditional ? (
+                <Text style={[styles.detail, { color: colors.textMuted }]}>繁 {card.traditional}</Text>
+              ) : null}
+              {card.variants && card.variants.length > 0 ? (
+                <Text style={[styles.detail, { color: colors.textMuted }]}>Variants: {card.variants.join(' · ')}</Text>
+              ) : null}
+              {card.sense_index !== null && card.sense_index !== undefined ? (
+                <Badge
+                  label={`Sense ${card.sense_index}`}
+                  accessibilityLabel={`Sense ${card.sense_index}`}
+                />
+              ) : null}
+              {card.classifier ? <Badge label={`量 ${card.classifier}`} /> : null}
+              {card.context ? (
+                <Text style={[styles.context, { color: colors.textMuted }]}> 
+                  {contextParts(card) ? (
+                    <>
+                      {contextParts(card)?.before}
+                      <Text style={{ color: colors.vermilion }}>{contextParts(card)?.target}</Text>
+                      {contextParts(card)?.after}
+                    </>
+                  ) : card.context.sentence}
+                </Text>
+              ) : null}
             </Animated.View>
           ) : null}
         </View>
@@ -400,6 +442,8 @@ const styles = StyleSheet.create({
   hanzi: { fontSize: 60, lineHeight: 66, fontWeight: '700' },
   pinyin: { fontSize: tokens.fontSize.lg, fontWeight: '600' },
   meaning: { fontSize: tokens.fontSize.md },
+  detail: { fontSize: tokens.fontSize.sm },
+  context: { fontSize: tokens.fontSize.md, textAlign: 'center' },
   prompt: { fontSize: tokens.fontSize.lg, textAlign: 'center' },
   ratings: { flexDirection: 'row', flexWrap: 'wrap', gap: tokens.spacing.sm },
   rating: { flexGrow: 1, flexBasis: '45%' },

@@ -1,7 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
 import { addCard, availableSkills, getDueCards, revertReview } from './flashcards';
 
-function clientFor(options: { rpcRows?: unknown[]; wordRows?: unknown[]; deckSize?: number } = {}) {
+function clientFor(options: {
+  rpcRows?: unknown[];
+  wordRows?: unknown[];
+  contextRows?: unknown[];
+  deckSize?: number;
+} = {}) {
   const rpc = vi
     .fn()
     .mockResolvedValueOnce({ data: options.rpcRows ?? [], error: null })
@@ -28,6 +33,16 @@ function clientFor(options: { rpcRows?: unknown[]; wordRows?: unknown[]; deckSiz
       return {
         select: vi.fn(() => ({
           in: vi.fn(() => ({ data: options.wordRows ?? [], error: null })),
+        })),
+      };
+    }
+
+    if (table === 'word_context') {
+      return {
+        select: vi.fn(() => ({
+          in: vi.fn(() => ({
+            order: vi.fn().mockResolvedValue({ data: options.contextRows ?? [], error: null }),
+          })),
         })),
       };
     }
@@ -132,6 +147,10 @@ describe('getDueCards', () => {
         },
       ],
       wordRows: [{ id: 5, hanzi: '你', pinyin: 'nǐ', meaning_en: 'you', hsk_level: 1 }],
+      contextRows: [
+        { word_id: 5, sentence: '我喜欢你。', source_kind: 'reading', source_id: 'reading-new', created_at: '2026-09-03T10:00:00.000Z' },
+        { word_id: 5, sentence: '你好吗？', source_kind: 'reading', source_id: 'reading-old', created_at: '2026-09-02T10:00:00.000Z' },
+      ],
       deckSize: 1,
     });
 
@@ -153,6 +172,12 @@ describe('getDueCards', () => {
         due: '2026-09-02T09:00:00.000Z',
         last_review: '2026-08-30T09:00:00.000Z',
       },
+      context: {
+        sentence: '我喜欢你。',
+        source_id: 'reading-new',
+      },
+      sense_index: null,
+      variants: [],
     });
   });
 

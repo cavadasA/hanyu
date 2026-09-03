@@ -2,11 +2,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 
-export function Badge({ label }: { label: string }) {
+export function Badge({ label, accessibilityLabel }: { label: string; accessibilityLabel?: string }) {
   const { colors } = useTheme();
 
   return (
-    <View style={[styles.badge, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+    <View
+      accessible={Boolean(accessibilityLabel)}
+      accessibilityLabel={accessibilityLabel}
+      style={[styles.badge, { backgroundColor: colors.surface, borderColor: colors.border }]}
+    >
       <Text style={[styles.label, { color: colors.textMuted }]}>{label}</Text>
     </View>
   );

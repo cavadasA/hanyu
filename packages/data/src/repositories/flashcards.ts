@@ -19,7 +19,7 @@ import {
 } from './shared';
 
 const WORD_SELECT =
-  'id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency';
+  'id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency, sense_index, variants';
 
 /**
  * Las habilidades que una palabra puede ejercitar hoy dependen del material
@@ -71,7 +71,44 @@ function mapVersionedCardRow(row: any, word?: any): VersionedCard {
     hsk_level: relatedWord?.hsk_level,
     pos: relatedWord?.pos ?? null,
     frequency: relatedWord?.frequency ?? null,
+    sense_index: relatedWord?.sense_index ?? null,
+    variants: relatedWord?.variants ?? [],
+    context: row.context ?? null,
   };
+}
+
+async function loadLatestWordContexts(
+  wordIds: number[],
+  client: HanyuClient,
+): Promise<Map<number, WordContext>> {
+  if (wordIds.length === 0) {
+    return new Map();
+  }
+
+  const { data, error } = await client
+    .from('word_context')
+    .select('word_id, sentence, source_kind, source_id, created_at')
+    .in('word_id', wordIds)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load word context');
+  }
+
+  const latest = new Map<number, WordContext>();
+  for (const row of data ?? []) {
+    const wordId = Number((row as any).word_id);
+    if (latest.has(wordId)) {
+      continue;
+    }
+    latest.set(wordId, {
+      sentence: String((row as any).sentence),
+      source_kind: 'reading',
+      source_id: String((row as any).source_id ?? ''),
+    });
+  }
+
+  return latest;
 }
 
 type ReviewSyncOutcome = ReviewSyncResult['outcome'];
@@ -133,6 +170,15 @@ export async function getDueCards(
       rows = rows.map((row) => ({ ...row, words: byId.get(String(row.word_id)) ?? null }));
     }
   }
+
+  const contextByWord = await loadLatestWordContexts(
+    [...new Set(rows.map((row) => Number(row.word_id)))],
+    client,
+  );
+  rows = rows.map((row) => ({
+    ...row,
+    context: contextByWord.get(Number(row.word_id)) ?? null,
+  }));
 
   // deck_size = distinct words in scope (active decks, or the focused deck).
   const { data: sizeData, error: sizeError } = await (client.rpc as any)('count_deck_cards', {
