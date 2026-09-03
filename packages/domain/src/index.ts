@@ -1,5 +1,6 @@
 export * from './scheduling/params';
 export * from './scheduling/schedule';
+export * from './scheduling/grade';
 export { normalizePinyin } from './pinyin';
 export * from './exercises/contract';
 export * from './exercises/evaluate';
