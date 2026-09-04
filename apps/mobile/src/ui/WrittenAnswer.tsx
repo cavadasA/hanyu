@@ -17,9 +17,10 @@ interface Props {
   expected: string;
   kind: 'hanzi' | 'pinyin' | 'text';
   onGraded(result: WrittenGrade): void;
+  allowHints?: boolean;
 }
 
-export function WrittenAnswer({ expected, kind, onGraded }: Props) {
+export function WrittenAnswer({ expected, kind, onGraded, allowHints = true }: Props) {
   const { colors } = useTheme();
   const [value, setValue] = useState('');
   const [result, setResult] = useState<WrittenGrade | null>(null);
@@ -78,14 +79,16 @@ export function WrittenAnswer({ expected, kind, onGraded }: Props) {
 
       {result === null ? (
         <View style={styles.actions}>
-          <Button
-            label="Show a hint"
-            variant="outline"
-            onPress={() => {
-              setHints((count) => count + 1);
-              setValue([...expected][0] ?? '');
-            }}
-          />
+          {allowHints ? (
+            <Button
+              label="Show a hint"
+              variant="outline"
+              onPress={() => {
+                setHints((count) => count + 1);
+                setValue([...expected][0] ?? '');
+              }}
+            />
+          ) : null}
           <Button label="Check" onPress={check} disabled={value.trim().length === 0} />
         </View>
       ) : (

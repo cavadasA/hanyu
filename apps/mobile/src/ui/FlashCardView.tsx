@@ -23,11 +23,16 @@ import { Button } from './Button';
 import { Card } from './Card';
 import { WrittenAnswer, type WrittenGrade } from './WrittenAnswer';
 
-export type ReviewMode = 'recognition' | 'recall' | 'listening' | 'reading';
+export type ReviewSkill = 'recognition' | 'recall' | 'listening' | 'reading';
+export type StudyMode = 'learn' | 'review' | 'exam';
+/** Legacy name kept for callers that selected the presentation skill directly. */
+export type ReviewMode = ReviewSkill;
 
 interface FlashCardViewProps {
   card: DueCard;
-  mode: ReviewMode;
+  mode: ReviewMode | StudyMode;
+  skill?: ReviewSkill;
+  allowHints?: boolean;
   revealed?: boolean;
   onReveal?: () => void;
   onRate?: (grade: Grade, timeMs?: number) => void | Promise<void>;
@@ -55,6 +60,10 @@ const RATINGS: { label: string; grade: Grade; variant: Variant }[] = [
 const SWIPE_THRESHOLD = 88;
 const EASE = Easing.out(Easing.cubic);
 const MOTION_DISABLED = process.env.NODE_ENV === 'test';
+
+function isStudyMode(mode: ReviewMode | StudyMode): mode is StudyMode {
+  return mode === 'learn' || mode === 'review' || mode === 'exam';
+}
 
 function readingPrompt(card: DueCard): string {
   const sentence = card.context?.sentence ?? '';
@@ -91,6 +100,8 @@ function contextParts(card: DueCard): { before: string; target: string; after: s
 export function FlashCardView({
   card,
   mode,
+  skill,
+  allowHints,
   revealed = false,
   onReveal,
   onRate,
@@ -100,6 +111,8 @@ export function FlashCardView({
   onPanActiveChange,
   preview = false,
 }: FlashCardViewProps) {
+  const presentationMode: ReviewSkill = isStudyMode(mode) ? (skill ?? 'recognition') : mode;
+  const hintsAllowed = allowHints ?? mode !== 'exam';
   const { colors } = useTheme();
   const supportLanguage = useSupportLanguage();
   const { speak, stop } = useSpeech();
@@ -125,7 +138,7 @@ export function FlashCardView({
   useEffect(() => {
     setWrittenGrade(null);
     writtenContinuedRef.current = false;
-  }, [card.id, mode]);
+  }, [card.id, mode, skill]);
 
   function continueWritten() {
     if (!writtenGrade || writtenContinuedRef.current) return;
@@ -208,13 +221,13 @@ export function FlashCardView({
   }, [revealed, reveal]);
 
   useEffect(() => {
-    if (!preview && mode === 'listening' && !revealed && card.hanzi) {
+    if (!preview && presentationMode === 'listening' && !revealed && card.hanzi) {
       speak(card.hanzi);
       return stop;
     }
 
     return undefined;
-  }, [card.id, card.hanzi, mode, revealed, speak, stop, preview]);
+  }, [card.id, card.hanzi, presentationMode, revealed, speak, stop, preview]);
 
   function finishSwipe(direction: -1 | 1, grade: Grade) {
     Animated.timing(dragX, {
@@ -286,9 +299,9 @@ export function FlashCardView({
           </View>
           <View style={styles.face}>
             <Text style={[styles.hanzi, { color: colors.text }]}> 
-              {mode === 'recall'
+              {presentationMode === 'recall'
                 ? resolveGloss(card, supportLanguage)
-                : mode === 'reading'
+                : presentationMode === 'reading'
                   ? readingPrompt(card)
                   : card.hanzi}
             </Text>
@@ -336,31 +349,32 @@ export function FlashCardView({
         </View>
 
         <View style={styles.face}>
-          {mode === 'recognition' && !revealed ? (
+          {presentationMode === 'recognition' && !revealed ? (
             <Text style={[styles.hanzi, { color: colors.text }]}>{card.hanzi}</Text>
           ) : null}
 
-          {mode !== 'recognition' && !revealed ? (
+          {presentationMode !== 'recognition' && !revealed ? (
             <>
-              {mode === 'recall' ? (
+              {presentationMode === 'recall' ? (
                 <Text style={[styles.prompt, { color: colors.text }]}>
                   {resolveGloss(card, supportLanguage)}
                 </Text>
               ) : null}
-              {mode === 'listening' ? (
+              {presentationMode === 'listening' ? (
                 <>
                   <Text style={[styles.prompt, { color: colors.textMuted }]}>Listen and identify the word</Text>
                   <AudioButton text={card.hanzi ?? ''} label="Play again" />
                 </>
               ) : null}
-              {mode === 'reading' ? (
+              {presentationMode === 'reading' ? (
                 <Text style={[styles.prompt, { color: colors.text }]}>{readingPrompt(card)}</Text>
               ) : null}
               <WrittenAnswer
-                key={`${card.id}-${mode}`}
+                key={`${card.id}-${mode}-${skill ?? ''}`}
                 expected={card.hanzi ?? ''}
                 kind="hanzi"
                 onGraded={setWrittenGrade}
+                allowHints={hintsAllowed}
               />
               {writtenGrade ? (
                 <Button
@@ -432,7 +446,7 @@ export function FlashCardView({
               </View>
             ))}
           </View>
-        ) : mode === 'recognition' ? (
+        ) : presentationMode === 'recognition' ? (
           <Button label="Show answer" onPress={() => onReveal?.()} />
         ) : null}
       </Card>

@@ -168,6 +168,19 @@ describe('loadQueue – online refresh', () => {
 
     expect(buildQueueOnline).toHaveBeenCalledWith({ skill: 'recall', deckId: 'deck-1' });
   });
+
+  test('passes the study mode to the online loader', async () => {
+    const buildQueueOnline = jest.fn().mockResolvedValue({ cards: [] });
+    const service = makeService({ buildQueueOnline });
+
+    await service.loadQueue('recognition', 'deck-1', 'learn');
+
+    expect(buildQueueOnline).toHaveBeenCalledWith({
+      skill: 'recognition',
+      deckId: 'deck-1',
+      mode: 'learn',
+    });
+  });
 });
 
 describe('loadQueue – ordering', () => {

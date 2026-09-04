@@ -6,7 +6,7 @@
  * so that the class can be tested in plain Node/Jest without any native modules.
  */
 
-import type { LearningSkill, RevertOutcome, VersionedCard, ReviewEvent } from '@hanyu/data';
+import type { LearningSkill, RevertOutcome, StudyMode, VersionedCard, ReviewEvent } from '@hanyu/data';
 import { applyReview, orderQueue, type Grade, type QueueStrategy } from '@hanyu/domain';
 import type { FSRSParameters } from 'ts-fsrs';
 import type { ReviewStore } from './ReviewStore';
@@ -28,6 +28,7 @@ export interface OfflineReviewServiceDeps {
   buildQueueOnline: (input: {
     skill: LearningSkill;
     deckId: string | null;
+    mode?: StudyMode;
   }) => Promise<{ cards: unknown[]; deck_size?: number | null }>;
   /** The server selects the queue; this strategy orders that selected set. */
   cardOrder: () => QueueStrategy;
@@ -49,6 +50,7 @@ export class OfflineReviewService {
   private readonly buildQueueOnlineImpl: (input: {
     skill: LearningSkill;
     deckId: string | null;
+    mode?: StudyMode;
   }) => Promise<{ cards: unknown[]; deck_size?: number | null }>;
   private readonly cardOrder: () => QueueStrategy;
   private readonly now: () => Date;
@@ -84,12 +86,17 @@ export class OfflineReviewService {
   async loadQueue(
     skill: LearningSkill = 'recognition',
     deckId: string | null = null,
+    mode: StudyMode = 'review',
   ): Promise<VersionedCard[]> {
     const nowIso = this.now().toISOString();
     const cached = await this.store.getDueProjectedCards(nowIso, 200);
 
     try {
-      const online = await this.buildQueueOnlineImpl({ skill, deckId });
+      const online = await this.buildQueueOnlineImpl({
+        skill,
+        deckId,
+        ...(mode !== 'review' ? { mode } : {}),
+      });
       const freshCards: VersionedCard[] = [];
 
       for (const raw of online.cards) {

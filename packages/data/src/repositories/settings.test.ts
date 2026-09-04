@@ -37,6 +37,7 @@ describe('getSettings', () => {
       session_size: 25,
       request_retention: 0.85,
       card_order: 'frequency',
+      exam_date: '2026-10-15',
       created_at: '2026-07-01T00:00:00.000Z',
       updated_at: '2026-07-30T00:00:00.000Z',
     };
@@ -63,6 +64,26 @@ describe('getSettings', () => {
       api_key: '',
       ...row,
     });
+  });
+
+  it('preserva la fecha del examen para el plan diario', async () => {
+    const client = clientFor({
+      data: {
+        user_id: 'u1',
+        theme: 'light',
+        support_language: 'es',
+        current_level: 2,
+        new_cards_per_day: 10,
+        review_limit_per_day: 200,
+        session_size: 20,
+        request_retention: 0.9,
+        card_order: 'due',
+        exam_date: '2026-12-01',
+      },
+      error: null,
+    });
+
+    await expect(getSettings(client as never)).resolves.toMatchObject({ exam_date: '2026-12-01' });
   });
 
   it('expone los cuatro límites por separado', async () => {

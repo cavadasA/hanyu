@@ -46,6 +46,7 @@ export type {
   RevertReviewResult,
   ReviewSyncResult,
   SupportLanguage,
+  StudyMode,
   StreakPayload,
   TeachesRole,
   ThemePreference,

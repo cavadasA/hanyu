@@ -6,8 +6,10 @@
 // Guardar los identificadores y el índice, y no solo los contadores, es lo que
 // permite reanudar de verdad.
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { StudyMode } from '@hanyu/data';
 
 export type ReviewMode = 'recognition' | 'recall' | 'listening' | 'reading';
+export type SessionMode = ReviewMode | StudyMode;
 
 const KEY = 'hanyu.review-session';
 
@@ -20,7 +22,8 @@ export interface ReviewSessionSnapshot {
   deck_id: string | null;
   card_ids: string[];
   index: number;
-  mode: ReviewMode;
+  mode: SessionMode;
+  skill?: ReviewMode;
   started_at: number;
   reviewed: number;
   stats: { reviewed: number; correct: number; again: number };
@@ -28,6 +31,10 @@ export interface ReviewSessionSnapshot {
 
 function isReviewMode(value: unknown): value is ReviewMode {
   return value === 'recognition' || value === 'recall' || value === 'listening' || value === 'reading';
+}
+
+function isSessionMode(value: unknown): value is SessionMode {
+  return isReviewMode(value) || value === 'learn' || value === 'review' || value === 'exam';
 }
 
 function isNonNegativeInteger(value: unknown): value is number {
@@ -48,7 +55,8 @@ function isSnapshot(value: unknown): value is ReviewSessionSnapshot {
       Array.isArray(snapshot.card_ids) &&
       snapshot.card_ids.every((id) => typeof id === 'string') &&
       isNonNegativeInteger(snapshot.index) &&
-      isReviewMode(snapshot.mode) &&
+      isSessionMode(snapshot.mode) &&
+      (snapshot.skill === undefined || isReviewMode(snapshot.skill)) &&
       typeof snapshot.started_at === 'number' &&
       Number.isFinite(snapshot.started_at) &&
       isNonNegativeInteger(snapshot.reviewed) &&

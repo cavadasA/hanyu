@@ -41,6 +41,7 @@ export interface WordContext {
 }
 
 export type LearningTargetKind = 'word' | 'grammar' | 'character';
+export type StudyMode = 'learn' | 'review' | 'exam';
 
 export type LearningEventKind =
   | 'review_rated'
@@ -277,6 +278,7 @@ export interface UserSettings {
   session_size: number;
   request_retention: number;
   card_order: CardOrder;
+  exam_date: string | null;
   api_key: string;
   created_at?: string;
   updated_at?: string;
@@ -286,6 +288,7 @@ export interface BuildQueueInput {
   skill?: LearningSkill;
   deckId?: string | null;
   limit?: number | null;
+  mode?: StudyMode;
 }
 
 export interface DueCard {

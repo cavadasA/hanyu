@@ -207,6 +207,19 @@ describe('contratos de migraciones', () => {
     expect(normalized).not.toContain('commit;');
   });
 
+  it('separa Learn, Review y Exam en la cola y conserva la fecha objetivo', () => {
+    const migration = readMigration('2026090208_units.sql');
+    const normalized = normalizeSql(migration);
+
+    expectSqlToContain(migration, 'add column if not exists exam_date date;');
+    expectSqlToContain(migration, 'p_mode text default \'review\'');
+    expectSqlToContain(migration, "p_mode not in ('learn', 'review', 'exam')");
+    expectSqlToContain(migration, 'from public.active_unit()');
+    expectSqlToContain(migration, 'order by random()');
+    expectSqlToContain(migration, 'where not q.is_new;');
+    expect(normalized).toContain('grant execute on function public.build_review_queue(uuid, public.learning_skill, integer, text) to authenticated');
+  });
+
   it('normaliza el formato antiguo de los objetivos gramaticales', () => {
     const migration = readMigration('2026090402_normalize_reading_grammar_targets.sql');
     const normalized = normalizeSql(migration);

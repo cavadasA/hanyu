@@ -112,4 +112,18 @@ describe('FlashCardView', () => {
     expect(screen.queryByText('Correct')).toBeNull();
     expect(screen.queryByRole('button', { name: 'Continue' })).toBeNull();
   });
+
+  it('oculta las pistas de recuperación durante un Exam', async () => {
+    await render(
+      <FlashCardView
+        card={baseCard}
+        mode="exam"
+        skill="recall"
+        allowHints={false}
+      />,
+    );
+
+    expect(screen.queryByRole('button', { name: 'Show a hint' })).toBeNull();
+    expect(screen.getByPlaceholderText('Type the answer')).toBeTruthy();
+  });
 });

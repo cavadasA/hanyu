@@ -11,6 +11,7 @@ const DEFAULT_SETTINGS = {
   session_size: 20,
   request_retention: 0.9,
   card_order: 'due',
+  exam_date: null,
 };
 
 const ALLOWED_THEMES = new Set(['light', 'dark', 'system']);
@@ -43,10 +44,15 @@ function normalizeSettings(row: any) {
     session_size: clampNumber(row?.session_size, 5, 200, DEFAULT_SETTINGS.session_size),
     request_retention: clampDecimal(row?.request_retention, 0.7, 0.97, DEFAULT_SETTINGS.request_retention),
     card_order: normalizeCardOrder(row?.card_order),
+    exam_date: normalizeExamDate(row?.exam_date),
     api_key: '',
     created_at: row?.created_at,
     updated_at: row?.updated_at,
   };
+}
+
+function normalizeExamDate(value: unknown): string | null {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : null;
 }
 
 function clampNumber(value: any, min: number, max: number, fallback: number) {
@@ -119,6 +125,10 @@ function sanitizeUpdates(data: Record<string, unknown>) {
     updates.card_order = normalizeCardOrder(data.card_order);
   }
 
+  if (data.exam_date !== undefined) {
+    updates.exam_date = normalizeExamDate(data.exam_date);
+  }
+
   return updates;
 }
 
@@ -126,7 +136,7 @@ async function readSettingsRow(userId: string, client: HanyuClient) {
   const { data, error } = await client
     .from('user_settings')
     .select(
-      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, created_at, updated_at',
+      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, exam_date, created_at, updated_at',
     )
     .eq('user_id', userId)
     .maybeSingle();
@@ -143,7 +153,7 @@ async function ensureSettingsRow(userId: string, client: HanyuClient) {
     .from('user_settings')
     .upsert({ user_id: userId, ...DEFAULT_SETTINGS } as any, { onConflict: 'user_id' })
     .select(
-      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, created_at, updated_at',
+      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, exam_date, created_at, updated_at',
     )
     .single();
 
@@ -174,7 +184,7 @@ export async function updateSettings(input: Record<string, unknown>, client: Han
     .from('user_settings')
     .upsert(payload as any, { onConflict: 'user_id' })
     .select(
-      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, created_at, updated_at',
+      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, exam_date, created_at, updated_at',
     )
     .single();
 

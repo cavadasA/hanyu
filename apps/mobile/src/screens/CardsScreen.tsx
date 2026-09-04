@@ -3,7 +3,12 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { randomUUID } from 'expo-crypto';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
-import { toUserMessage, type FlashcardStats, type VersionedCard } from '@hanyu/data';
+import {
+  toUserMessage,
+  type FlashcardStats,
+  type StudyMode,
+  type VersionedCard,
+} from '@hanyu/data';
 import { cardPhase, previewIntervals, schedulingParams, type Grade } from '@hanyu/domain';
 import { getData } from '../lib/data';
 import {
@@ -21,14 +26,19 @@ import { Card } from '../ui/Card';
 import { CardStatusBadge } from '../ui/CardStatusBadge';
 import { EmptyState } from '../ui/EmptyState';
 import { ErrorBanner } from '../ui/ErrorBanner';
-import { FlashCardView, type ReviewMode } from '../ui/FlashCardView';
+import { FlashCardView, type ReviewSkill } from '../ui/FlashCardView';
 import { ActiveSessionBanner } from '../ui/ActiveSessionBanner';
 import { Screen } from '../ui/Screen';
 import { Segmented, type SegmentedOption } from '../ui/Segmented';
 import { StatusBarChart } from '../ui/StatusBarChart';
 
-const MODES: ReviewMode[] = ['recognition', 'recall', 'listening', 'reading'];
-const MODE_OPTIONS: SegmentedOption<ReviewMode>[] = MODES.map((value) => ({
+const STUDY_MODES: StudyMode[] = ['learn', 'review', 'exam'];
+const STUDY_MODE_OPTIONS: SegmentedOption<StudyMode>[] = STUDY_MODES.map((value) => ({
+  value,
+  label: value[0].toUpperCase() + value.slice(1),
+}));
+const SKILLS: ReviewSkill[] = ['recognition', 'recall', 'listening', 'reading'];
+const SKILL_OPTIONS: SegmentedOption<ReviewSkill>[] = SKILLS.map((value) => ({
   value,
   label: value[0].toUpperCase() + value.slice(1),
 }));
@@ -65,7 +75,8 @@ export default function CardsScreen() {
   const [deckTotal, setDeckTotal] = useState(0);
 
   const [index, setIndex] = useState(0);
-  const [mode, setMode] = useState<ReviewMode>('recognition');
+  const [studyMode, setStudyMode] = useState<StudyMode>('review');
+  const [skill, setSkill] = useState<ReviewSkill>('recognition');
   const [revealed, setRevealed] = useState(false);
   const [reviewed, setReviewed] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -96,7 +107,10 @@ export default function CardsScreen() {
     [currentCard, previewNow, scheduling],
   );
 
-  const load = useCallback(async (selectedSkill: ReviewMode = mode) => {
+  const load = useCallback(async (
+    selectedSkill: ReviewSkill = skill,
+    selectedMode: StudyMode = studyMode,
+  ) => {
     setLoading(true);
     setError('');
 
@@ -109,7 +123,7 @@ export default function CardsScreen() {
         return;
       }
 
-      const cards = await service.loadQueue(selectedSkill, focusedDeckId);
+      const cards = await service.loadQueue(selectedSkill, focusedDeckId, selectedMode);
       setAllDueCards(cards);
       setDeckSize(focusedDeckId ? service.lastDeckSize : null);
       setIndex(0);
@@ -138,7 +152,7 @@ export default function CardsScreen() {
     } finally {
       setLoading(false);
     }
-  }, [focusedDeckId, ready, service]);
+  }, [focusedDeckId, ready, service, skill, studyMode]);
 
   useEffect(() => {
     void load();
@@ -159,14 +173,17 @@ export default function CardsScreen() {
     sessionStartedAt.current = Date.now();
     cardStartedAt.current = Date.now();
     sessionId.current = randomUUID();
-    timer.start();
+    if (studyMode !== 'learn') {
+      timer.start();
+    }
     setPhase('reviewing');
     void saveReviewSession({
       session_id: sessionId.current,
       deck_id: focusedDeckId,
       card_ids: sessionCards.map((card) => card.id),
       index: 0,
-      mode,
+      mode: studyMode,
+      skill,
       started_at: sessionStartedAt.current,
       reviewed: 0,
       stats: { reviewed: 0, correct: 0, again: 0 },
@@ -196,13 +213,23 @@ export default function CardsScreen() {
     setIndex(nextIndex >= 0 ? nextIndex : 0);
     setReviewed(snapshot.reviewed);
     setStats(snapshot.stats);
-    setMode(snapshot.mode);
+    const legacySkill = snapshot.mode === 'recognition' || snapshot.mode === 'recall' ||
+      snapshot.mode === 'listening' || snapshot.mode === 'reading'
+      ? snapshot.mode
+      : 'recognition';
+    const savedStudyMode: StudyMode = snapshot.mode === 'learn' || snapshot.mode === 'review' || snapshot.mode === 'exam'
+      ? snapshot.mode
+      : 'review';
+    setStudyMode(savedStudyMode);
+    setSkill(snapshot.skill ?? legacySkill);
     setUndoStack([]);
     setRevealed(false);
     sessionId.current = snapshot.session_id;
     sessionStartedAt.current = snapshot.started_at;
     cardStartedAt.current = Date.now();
-    timer.start();
+    if (savedStudyMode !== 'learn') {
+      timer.start();
+    }
     setPhase('reviewing');
     setResumable(null);
   }
@@ -266,7 +293,8 @@ export default function CardsScreen() {
       deck_id: focusedDeckId,
       card_ids: nextActiveCards.map((card) => card.id),
       index: lastEntry.previousIndex,
-      mode,
+      mode: studyMode,
+      skill,
       started_at: sessionStartedAt.current,
       reviewed: nextReviewed,
       stats: nextStats,
@@ -283,16 +311,27 @@ export default function CardsScreen() {
     setPendingGrade(grade);
     setError('');
 
-    let reviewId: string;
-    let ratedCard: VersionedCard;
+    let reviewId: string | null = null;
+    let ratedCard = current;
     try {
-      const result = await service.rateCard(
-        current,
-        grade,
-        timeMs ?? Date.now() - cardStartedAt.current,
-      );
-      reviewId = result.reviewId;
-      ratedCard = result.card;
+      const elapsedMs = timeMs ?? Date.now() - cardStartedAt.current;
+      if (studyMode !== 'review') {
+        await getData().events.recordEvent({
+          kind: 'exercise_attempted',
+          target_kind: 'word',
+          target_id: current.word_id,
+          skill: current.skill,
+          payload: {
+            mode: studyMode,
+            grade,
+            time_ms: studyMode === 'exam' ? elapsedMs : null,
+          },
+        });
+      } else {
+        const result = await service.rateCard(current, grade, elapsedMs);
+        reviewId = result.reviewId;
+        ratedCard = result.card;
+      }
     } catch (caught) {
       setError(toUserMessage(caught));
       setRetryGrade(grade);
@@ -315,23 +354,28 @@ export default function CardsScreen() {
     setStats(nextStats);
 
     const dueAt = Date.parse(ratedCard.scheduling.due);
-    const requeueIntraday = Number.isFinite(dueAt) && dueAt - Date.now() < INTRA_SESSION_HORIZON_MS;
+    const requeueIntraday = studyMode === 'review' &&
+      Number.isFinite(dueAt) && dueAt - Date.now() < INTRA_SESSION_HORIZON_MS;
     const nextCards = requeueIntraday ? [...activeCards, ratedCard] : activeCards;
 
-    setUndoStack((prev) => [
-      ...prev.slice(-4),
-      { card: current, previousIndex: index, grade, reviewId, requeued: requeueIntraday },
-    ]);
+    if (reviewId) {
+      setUndoStack((prev) => [
+        ...prev.slice(-4),
+        { card: current, previousIndex: index, grade, reviewId, requeued: requeueIntraday },
+      ]);
+    }
 
     if (index + 1 >= nextCards.length) {
       timer.stop();
       void clearReviewSession();
       setPhase('complete');
 
-      try {
-        await getData().stats.logTime(Date.now() - sessionStartedAt.current);
-      } catch {
-        // Study time is not worth blocking the summary for.
+      if (studyMode !== 'learn') {
+        try {
+          await getData().stats.logTime(Date.now() - sessionStartedAt.current);
+        } catch {
+          // Study time is not worth blocking the summary for.
+        }
       }
 
       return;
@@ -348,7 +392,8 @@ export default function CardsScreen() {
       deck_id: focusedDeckId,
       card_ids: nextCards.map((card) => card.id),
       index: nextIndex,
-      mode,
+      mode: studyMode,
+      skill,
       started_at: sessionStartedAt.current,
       reviewed: nextReviewed,
       stats: nextStats,
@@ -388,10 +433,12 @@ export default function CardsScreen() {
                 <Text style={[styles.statValue, { color: colors.vermilion }]}>{accuracy}%</Text>
                 <Text style={[styles.statLabel, { color: colors.textMuted }]}>Accuracy</Text>
               </View>
-              <View style={styles.statCell}>
-                <Text style={[styles.statValue, { color: colors.text }]}>{timer.formatted}</Text>
-                <Text style={[styles.statLabel, { color: colors.textMuted }]}>Time</Text>
-              </View>
+              {studyMode !== 'learn' ? (
+                <View style={styles.statCell}>
+                  <Text style={[styles.statValue, { color: colors.text }]}>{timer.formatted}</Text>
+                  <Text style={[styles.statLabel, { color: colors.textMuted }]}>Time</Text>
+                </View>
+              ) : null}
               <View style={styles.statCell}>
                 <Text style={[styles.statValue, { color: colors.gold }]}>{stats.again}</Text>
                 <Text style={[styles.statLabel, { color: colors.textMuted }]}>Again</Text>
@@ -446,6 +493,27 @@ export default function CardsScreen() {
           />
         ) : null}
 
+        <Card>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>Study mode</Text>
+          <Segmented
+            options={STUDY_MODE_OPTIONS}
+            value={studyMode}
+            onChange={(selectedMode) => {
+              setStudyMode(selectedMode);
+              void load(skill, selectedMode);
+            }}
+          />
+          <Text style={[styles.sectionTitle, styles.skillTitle, { color: colors.text }]}>Skill</Text>
+          <Segmented
+            options={SKILL_OPTIONS}
+            value={skill}
+            onChange={(selectedSkill) => {
+              setSkill(selectedSkill);
+              void load(selectedSkill, studyMode);
+            }}
+          />
+        </Card>
+
         {dueCount === 0 ? (
           deckSize === 0 && !focusedDeckId ? (
             <EmptyState
@@ -463,18 +531,6 @@ export default function CardsScreen() {
           )
         ) : (
           <>
-            <Card>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Review Mode</Text>
-              <Segmented
-                options={MODE_OPTIONS}
-                value={mode}
-                onChange={(selectedSkill) => {
-                  setMode(selectedSkill);
-                  void load(selectedSkill);
-                }}
-              />
-            </Card>
-
             <Button label="Start review" variant="primary" onPress={startReview} />
 
             <Card>
@@ -522,7 +578,9 @@ export default function CardsScreen() {
         </View>
 
         <View style={styles.reviewHeaderRight}>
-          <Text style={[styles.timerLabel, { color: colors.textMuted }]}>{timer.formatted}</Text>
+          {studyMode !== 'learn' ? (
+            <Text style={[styles.timerLabel, { color: colors.textMuted }]}>{timer.formatted}</Text>
+          ) : null}
           {undoStack.length > 0 ? (
             <Pressable
               accessibilityRole="button"
@@ -551,11 +609,22 @@ export default function CardsScreen() {
             <CardStatusBadge status={cardPhase(current.scheduling, previewNow, scheduling)} />
           </View>
           <View style={styles.stack}>
-            {next ? <FlashCardView key={next.id} preview card={next} mode={mode} /> : null}
+            {next ? (
+              <FlashCardView
+                key={next.id}
+                preview
+                card={next}
+                mode={studyMode}
+                skill={skill}
+                allowHints={studyMode !== 'exam'}
+              />
+            ) : null}
             <FlashCardView
               key={current.id}
               card={current}
-              mode={mode}
+              mode={studyMode}
+              skill={skill}
+              allowHints={studyMode !== 'exam'}
               intervals={currentIntervals}
               revealed={revealed}
               onReveal={() => setRevealed(true)}
@@ -597,6 +666,7 @@ const styles = StyleSheet.create({
   dueLabel: { fontSize: tokens.fontSize.xs, fontWeight: '700' },
 
   sectionTitle: { fontSize: tokens.fontSize.sm, fontWeight: '600', marginBottom: tokens.spacing.xs },
+  skillTitle: { marginTop: tokens.spacing.md },
 
   reviewHeader: {
     flexDirection: 'row',

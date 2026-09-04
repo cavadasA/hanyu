@@ -74,6 +74,19 @@ describe('buildQueue', () => {
     expect(queue.cards).toEqual([]);
   });
 
+  it('pasa el modo de estudio al planificador del servidor', async () => {
+    const client = queueClient([]);
+
+    await buildQueue({ skill: 'recognition', mode: 'learn' }, client);
+
+    expect((client as any).rpc).toHaveBeenCalledWith('build_review_queue', {
+      p_deck_id: null,
+      p_skill: 'recognition',
+      p_limit: null,
+      p_mode: 'learn',
+    });
+  });
+
   it('devuelve el tamaño real del mazo enfocado aunque la cola esté vacía', async () => {
     const rpc = vi
       .fn()

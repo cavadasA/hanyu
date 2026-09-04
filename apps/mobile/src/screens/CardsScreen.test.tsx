@@ -18,6 +18,7 @@ const mockUndoRating = jest.fn();
 const mockLoadQueue = jest.fn();
 const mockLogTime = jest.fn();
 const mockGetDashboard = jest.fn();
+const mockRecordEvent = jest.fn();
 const mockPush = jest.fn();
 const mockPreviewIntervals = jest.fn((..._args: unknown[]) => ({
   again: 1,
@@ -27,8 +28,10 @@ const mockPreviewIntervals = jest.fn((..._args: unknown[]) => ({
 }));
 let mockRequestRetention = 0.9;
 const mockOfflineService = {
-  loadQueue: (skill?: string, deckId?: string | null) =>
-    mockLoadQueue(skill ?? 'recognition', deckId),
+  loadQueue: (skill?: string, deckId?: string | null, mode?: string) =>
+    mode && mode !== 'review'
+      ? mockLoadQueue(skill ?? 'recognition', deckId, mode)
+      : mockLoadQueue(skill ?? 'recognition', deckId),
   lastDeckSize: null as number | null,
   rateCard: (card: unknown, grade: string, timeMs: number | null) =>
     mockRateCard(card, grade, timeMs),
@@ -49,6 +52,7 @@ jest.mock('../lib/data', () => ({
       logTime: (ms: number) => mockLogTime(ms),
       getDashboard: () => mockGetDashboard(),
     },
+    events: { recordEvent: (input: unknown) => mockRecordEvent(input) },
   }),
 }));
 
@@ -136,6 +140,7 @@ describe('CardsScreen', () => {
     mockUndoRating.mockReset();
     mockLoadQueue.mockReset();
     mockLogTime.mockReset();
+    mockRecordEvent.mockReset();
     mockPush.mockReset();
     mockPreviewIntervals.mockReset().mockReturnValue({ again: 1, hard: 2, good: 3, easy: 4 });
     mockRequestRetention = 0.9;
@@ -462,5 +467,52 @@ describe('CardsScreen', () => {
 
     expect(screen.queryByText('Continue')).toBeNull();
     await expect(loadReviewSession()).resolves.toBeNull();
+  });
+
+  it('en modo Learn solo entran elementos nuevos', async () => {
+    mockLoadQueue.mockResolvedValue([]);
+
+    await renderCards();
+    await fireEvent.press(screen.getByText('Learn'));
+
+    expect(mockLoadQueue).toHaveBeenLastCalledWith('recognition', 'd1', 'learn');
+  });
+
+  it('en modo Learn avanzar no crea una programación FSRS', async () => {
+    mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
+
+    await renderCards();
+    await fireEvent.press(screen.getByText('Learn'));
+    await waitFor(() => expect(mockLoadQueue).toHaveBeenLastCalledWith('recognition', 'd1', 'learn'));
+    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Show answer'));
+    await fireEvent.press(screen.getByText('Good'));
+
+    expect(mockRateCard).not.toHaveBeenCalled();
+  });
+
+  it('en modo Exam no se ofrecen pistas', async () => {
+    mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
+
+    await renderCards();
+    await fireEvent.press(screen.getByText('Exam'));
+    await fireEvent.press(screen.getByText('Start review'));
+
+    expect(screen.queryByText('Show a hint')).toBeNull();
+  });
+
+  it('en modo Exam la valoración se registra pero no reprograma', async () => {
+    mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
+
+    await renderCards();
+    await fireEvent.press(screen.getByText('Exam'));
+    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Show answer'));
+    await fireEvent.press(screen.getByText('Good'));
+
+    expect(mockRateCard).not.toHaveBeenCalled();
+    expect(mockRecordEvent).toHaveBeenCalledWith(
+      expect.objectContaining({ kind: 'exercise_attempted' }),
+    );
   });
 });

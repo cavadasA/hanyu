@@ -883,6 +883,7 @@ export type Database = {
           card_order: string
           created_at: string
           current_level: number
+          exam_date: string | null
           new_cards_per_day: number
           review_limit_per_day: number
           request_retention: number
@@ -896,6 +897,7 @@ export type Database = {
           card_order?: string
           created_at?: string
           current_level?: number
+          exam_date?: string | null
           new_cards_per_day?: number
           review_limit_per_day?: number
           request_retention?: number
@@ -909,6 +911,7 @@ export type Database = {
           card_order?: string
           created_at?: string
           current_level?: number
+          exam_date?: string | null
           new_cards_per_day?: number
           review_limit_per_day?: number
           request_retention?: number
@@ -1068,6 +1071,7 @@ export type Database = {
         Args: {
           p_deck_id?: string | null
           p_limit?: number | null
+          p_mode?: string
           p_skill?: string
         }
         Returns: {

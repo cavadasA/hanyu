@@ -101,11 +101,13 @@ export async function buildQueue(
   input: BuildQueueInput,
   client: HanyuClient,
 ): Promise<{ cards: VersionedCard[]; deck_size: number | null }> {
-  const { data, error } = await (client.rpc as any)('build_review_queue', {
+  const queueArgs = {
     p_deck_id: input.deckId ?? null,
     p_skill: input.skill ?? 'recognition',
     p_limit: input.limit ?? null,
-  });
+    ...(input.mode ? { p_mode: input.mode } : {}),
+  };
+  const { data, error } = await (client.rpc as any)('build_review_queue', queueArgs);
 
   if (error) {
     throw createRepositoryError(error, 'Failed to build the study queue');

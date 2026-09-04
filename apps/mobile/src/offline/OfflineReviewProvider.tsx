@@ -148,8 +148,8 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
 
       const svc = new OfflineReviewService({
         store,
-        buildQueueOnline: ({ skill, deckId }) =>
-          getData().flashcards.buildQueue({ skill, deckId }),
+        buildQueueOnline: ({ skill, deckId, mode }) =>
+          getData().flashcards.buildQueue({ skill, deckId, ...(mode ? { mode } : {}) }),
         cardOrder: () => cardOrderRef.current,
         now: () => new Date(),
         uuid: () => randomUUID(),

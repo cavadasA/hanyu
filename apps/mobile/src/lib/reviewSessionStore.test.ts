@@ -43,6 +43,14 @@ describe('reviewSessionStore', () => {
     expect(await loadReviewSession()).toEqual(snapshot);
   });
 
+  it('persists the study mode separately from the card skill', async () => {
+    const studySnapshot = { ...snapshot, mode: 'learn' as const, skill: 'recall' as const };
+
+    await saveReviewSession(studySnapshot);
+
+    expect(await loadReviewSession()).toEqual(studySnapshot);
+  });
+
   it('keeps the queue and the position, not just the counters', async () => {
     await saveReviewSession(snapshot);
     const restored = await loadReviewSession();
