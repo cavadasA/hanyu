@@ -38,6 +38,42 @@ const speech = {
   stop() {
     Speech.stop();
   },
+  speakSentences(
+    sentences: readonly string[],
+    fromIndex: number,
+    options: { rate: number; onSentence(index: number | null): void },
+  ) {
+    let cancelled = false;
+
+    const next = (index: number) => {
+      if (cancelled || index >= sentences.length) {
+        options.onSentence(null);
+        return;
+      }
+
+      options.onSentence(index);
+      Speech.speak(sentences[index], {
+        language: 'zh-CN',
+        rate: options.rate,
+        useApplicationAudioSession: true,
+        onDone: () => next(index + 1),
+        onStopped: () => options.onSentence(null),
+        onError: () => options.onSentence(null),
+      });
+    };
+
+    void ensureMediaAudioSession().then(() => {
+      if (cancelled) return;
+      Speech.stop();
+      next(fromIndex);
+    });
+
+    return () => {
+      cancelled = true;
+      Speech.stop();
+      options.onSentence(null);
+    };
+  },
 };
 
 export function useSpeech() {

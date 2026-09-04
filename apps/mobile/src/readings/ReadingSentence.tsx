@@ -15,6 +15,7 @@ interface Props {
   sentence: Sentence;
   showPinyin: boolean;
   onSelectToken(token: ReadingToken): void;
+  onPlay?(): void;
   active?: boolean;
   testID?: string;
 }
@@ -23,6 +24,7 @@ export function ReadingSentence({
   sentence,
   showPinyin,
   onSelectToken,
+  onPlay,
   active = false,
   testID,
 }: Props) {
@@ -69,6 +71,16 @@ export function ReadingSentence({
         <Text style={[styles.translate, { color: colors.textMuted }]}>Traducir</Text>
       </Pressable>
 
+      {onPlay ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`Leer desde aquí: ${sentence.zh}`}
+          onPress={onPlay}
+        >
+          <Text style={[styles.play, { color: colors.vermilion }]}>Leer desde aquí</Text>
+        </Pressable>
+      ) : null}
+
       {showPinyin ? (
         <Text style={[styles.pinyin, { color: colors.textMuted }]}>{sentence.pinyin}</Text>
       ) : null}
@@ -102,6 +114,7 @@ const styles = StyleSheet.create({
   line: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end' },
   token: { fontSize: t.fontSize.xl, lineHeight: 38, marginRight: t.spacing.xs },
   translate: { fontSize: t.fontSize.xs, marginTop: t.spacing.xs },
+  play: { fontSize: t.fontSize.xs, marginTop: t.spacing.xs, fontWeight: '700' },
   pinyin: { fontSize: t.fontSize.xs, marginTop: 2 },
   translation: { fontSize: t.fontSize.md, lineHeight: 22, marginTop: t.spacing.xs },
 });

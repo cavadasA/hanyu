@@ -3,6 +3,8 @@ import { ReadingDetailScreen } from './ReadingDetailScreen';
 
 const mockGetReading = jest.fn();
 const mockCompleteReading = jest.fn();
+const mockSpeakSentences = jest.fn();
+const mockStop = jest.fn();
 
 jest.mock('expo-router', () => ({
   useLocalSearchParams: () => ({ id: 'reading-1' }),
@@ -20,10 +22,19 @@ jest.mock('../lib/data', () => ({
   }),
 }));
 
+jest.mock('../audio/useSpeech', () => ({
+  useSpeech: () => ({
+    speakSentences: (...args: unknown[]) => mockSpeakSentences(...args),
+    stop: mockStop,
+  }),
+}));
+
 describe('ReadingDetailScreen', () => {
   beforeEach(() => {
     mockGetReading.mockReset();
     mockCompleteReading.mockReset();
+    mockSpeakSentences.mockReset();
+    mockStop.mockReset();
   });
 
   it('loads a reading, toggles pinyin, and submits answers once', async () => {
@@ -86,7 +97,7 @@ describe('ReadingDetailScreen', () => {
     const view = await render(<ReadingDetailScreen />);
 
     await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
-    expect(view.getByRole('button', { name: 'Play reading' })).toBeTruthy();
+    expect(view.getByRole('button', { name: 'Reproducir' })).toBeTruthy();
 
     await fireEvent.press(view.getByRole('button', { name: 'Show pinyin' }));
     expect(view.getByText('wo yao cha.')).toBeTruthy();
@@ -152,4 +163,74 @@ describe('ReadingDetailScreen', () => {
     await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
     expect(view.queryByText('Voz sintética')).toBeNull();
   });
+
+  it('resalta la frase que está sonando', async () => {
+    mockGetReading.mockResolvedValue(readingForAudio());
+    mockSpeakSentences.mockImplementation((_sentences, fromIndex, options) => {
+      options.onSentence(fromIndex);
+      return jest.fn();
+    });
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
+    await fireEvent.press(view.getByLabelText('Reproducir'));
+
+    expect(view.getByTestId('sentence-0').props.accessibilityState.selected).toBe(true);
+  });
+
+  it('empieza por la frase que se toca y aplica la velocidad elegida', async () => {
+    mockGetReading.mockResolvedValue(readingForAudio());
+    mockSpeakSentences.mockImplementation((_sentences, fromIndex, options) => {
+      options.onSentence(fromIndex);
+      return jest.fn();
+    });
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
+    await fireEvent.press(view.getByText('0.75x'));
+    await fireEvent.press(view.getAllByLabelText('Leer desde aquí', { exact: false })[0]);
+
+    expect(mockSpeakSentences).toHaveBeenCalledWith(
+      ['我要茶。', '咖啡比茶贵。'],
+      0,
+      expect.objectContaining({ rate: 0.75 }),
+    );
+  });
+
+  it('para el audio al salir de la pantalla', async () => {
+    mockGetReading.mockResolvedValue(readingForAudio());
+    mockSpeakSentences.mockReturnValue(jest.fn());
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
+    await fireEvent.press(view.getByLabelText('Reproducir'));
+    view.unmount();
+
+    expect(mockStop).toHaveBeenCalled();
+  });
 });
+
+function readingForAudio() {
+  return {
+    id: 'reading-1',
+    slug: 'reading-1',
+    title: 'Ordering tea',
+    hsk_level: 1,
+    format: 'short_text',
+    topic: 'compras',
+    series: null,
+    series_index: null,
+    audio_kind: 'tts',
+    audio_url: null,
+    content: '我要茶。咖啡比茶贵。',
+    sentences: [
+      { zh: '我要茶。', pinyin: 'Wǒ yào chá.', es: 'Quiero té.', tokens: [] },
+      { zh: '咖啡比茶贵。', pinyin: 'Kāfēi bǐ chá guì.', es: 'El café es más caro que el té.', tokens: [] },
+    ],
+    grammar_points: [],
+    target_words: [],
+    target_grammar: [],
+    tokens: [],
+    questions: [],
+  };
+}

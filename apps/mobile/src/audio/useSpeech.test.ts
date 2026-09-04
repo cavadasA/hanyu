@@ -41,4 +41,30 @@ describe('useSpeech', () => {
     expect(Speech.speak).not.toHaveBeenCalled();
     expect(setAudioModeAsync).not.toHaveBeenCalled();
   });
+
+  it('reproduce frases en secuencia y avisa cuál está sonando', async () => {
+    const onSentence = jest.fn();
+    const cancel = useSpeech().speakSentences(['第一句。', '第二句。'], 0, {
+      rate: 0.75,
+      onSentence,
+    });
+
+    await Promise.resolve();
+    expect(onSentence).toHaveBeenCalledWith(0);
+    expect(Speech.speak).toHaveBeenCalledWith(
+      '第一句。',
+      expect.objectContaining({ language: 'zh-CN', rate: 0.75 }),
+    );
+
+    const firstOptions = (Speech.speak as jest.Mock).mock.calls[0][1];
+    firstOptions.onDone();
+    expect(onSentence).toHaveBeenCalledWith(1);
+
+    const secondOptions = (Speech.speak as jest.Mock).mock.calls[1][1];
+    secondOptions.onDone();
+    expect(onSentence).toHaveBeenLastCalledWith(null);
+
+    cancel();
+    expect(Speech.stop).toHaveBeenCalled();
+  });
 });

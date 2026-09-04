@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { toUserMessage, type ReadingDetail, type ReadingResult } from '@hanyu/data';
 import { getData } from '../lib/data';
+import { useSpeech } from '../audio/useSpeech';
 import { ReadingQuestions } from '../readings/ReadingQuestions';
 import { GrammarNote } from '../readings/GrammarNote';
 import { ReadingText } from '../readings/ReadingText';
@@ -20,6 +21,8 @@ export function ReadingDetailScreen() {
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const { colors } = useTheme();
   const readingsApi = useRef(getData().readings);
+  const speech = useSpeech();
+  const speechCancel = useRef<(() => void) | null>(null);
   const submitting = useRef(false);
   const [reading, setReading] = useState<ReadingDetail | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -28,6 +31,8 @@ export function ReadingDetailScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeSentenceIndex, setActiveSentenceIndex] = useState<number | null>(null);
+  const [speechRate, setSpeechRate] = useState(1);
 
   async function load() {
     if (!id) {
@@ -53,6 +58,29 @@ export function ReadingDetailScreen() {
   useEffect(() => {
     void load();
   }, [id]);
+
+  useEffect(() => () => {
+    speechCancel.current?.();
+    speechCancel.current = null;
+    speech.stop();
+  }, [speech]);
+
+  function playFrom(index: number) {
+    if (!reading) return;
+    speechCancel.current?.();
+    speechCancel.current = speech.speakSentences(
+      reading.sentences.map(sentence => sentence.zh),
+      index,
+      { rate: speechRate, onSentence: setActiveSentenceIndex },
+    );
+  }
+
+  function stopSpeech() {
+    speechCancel.current?.();
+    speechCancel.current = null;
+    setActiveSentenceIndex(null);
+    speech.stop();
+  }
 
   async function submit() {
     if (!id || !reading || submitting.current || result || !allAnswered(reading, answers)) {
@@ -106,7 +134,25 @@ export function ReadingDetailScreen() {
       </View>
 
       <View style={styles.actions}>
-        <AudioButton text={reading.content} audioUrl={reading.audio_url} label="Play reading" />
+        {reading.audio_kind === 'tts' ? (
+          <>
+            <Button
+              label={activeSentenceIndex === null ? 'Reproducir' : 'Detener'}
+              onPress={activeSentenceIndex === null ? () => playFrom(0) : stopSpeech}
+            />
+            {[0.75, 1, 1.25].map(rate => (
+              <Button
+                key={rate}
+                label={`${rate}x`}
+                variant="secondary"
+                selected={speechRate === rate}
+                onPress={() => setSpeechRate(rate)}
+              />
+            ))}
+          </>
+        ) : (
+          <AudioButton text={reading.content} audioUrl={reading.audio_url} label="Play reading" />
+        )}
         {reading.audio_kind === 'tts' ? (
           <Text style={[styles.audioNote, { color: colors.textMuted }]}>Voz sintética</Text>
         ) : null}
@@ -120,7 +166,13 @@ export function ReadingDetailScreen() {
       </View>
 
       <Card>
-        <ReadingText sentences={reading.sentences} showPinyin={showPinyin} readingId={reading.id} />
+        <ReadingText
+          sentences={reading.sentences}
+          showPinyin={showPinyin}
+          readingId={reading.id}
+          activeSentenceIndex={activeSentenceIndex}
+          onPlaySentence={playFrom}
+        />
       </Card>
 
       <Card>

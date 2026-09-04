@@ -11,12 +11,14 @@ export function ReadingText({
   showPinyin,
   readingId,
   activeSentenceIndex = null,
+  onPlaySentence,
 }: {
   sentences?: Sentence[];
   tokens?: ReadingToken[];
   showPinyin: boolean;
   readingId: string;
   activeSentenceIndex?: number | null;
+  onPlaySentence?: (index: number) => void;
 }) {
   const [selected, setSelected] = useState<{ token: ReadingToken; sentence: Sentence } | null>(null);
   const displaySentences = sentences ?? (legacyTokens ? [{
@@ -34,6 +36,7 @@ export function ReadingText({
           sentence={sentence}
           showPinyin={showPinyin}
           active={activeSentenceIndex === index}
+          onPlay={onPlaySentence ? () => onPlaySentence(index) : undefined}
           testID={`sentence-${index}`}
           onSelectToken={token => setSelected({ token, sentence })}
         />
