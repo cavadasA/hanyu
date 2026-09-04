@@ -135,4 +135,57 @@ describe('TodayScreen', () => {
     expect(screen.getByText('Free reading')).toBeTruthy();
     expect(screen.getByText('Browse grammar')).toBeTruthy();
   });
+
+  it('dice qué unidad se está estudiando', async () => {
+    mockGetToday.mockResolvedValue({
+      ...payload,
+      steps: [
+        {
+          kind: 'new_items',
+          status: 'ready',
+          payload: { count: 5, unit_title: '离合词', unit_progress: '1/4' },
+        },
+      ],
+    });
+    mockGetDashboard.mockResolvedValue(dashboard);
+
+    await renderToday();
+
+    expect(screen.getByText('离合词')).toBeTruthy();
+    expect(screen.getByText('1/4')).toBeTruthy();
+  });
+
+  it('explica por qué propone una lectura', async () => {
+    mockGetToday.mockResolvedValue({
+      ...payload,
+      steps: [
+        {
+          kind: 'reading',
+          status: 'ready',
+          payload: { id: 'r1' },
+          why: [
+            { kind: 'reinforces_targets', count: 6 },
+            { kind: 'comprehensible', ratio: 0.95 },
+          ],
+        },
+      ],
+    });
+    mockGetDashboard.mockResolvedValue(dashboard);
+
+    await renderToday();
+
+    expect(screen.getByText('Refuerza 6 palabras que estás aprendiendo')).toBeTruthy();
+  });
+
+  it('dice que no hay lecturas en vez de mostrar un bloque vacío', async () => {
+    mockGetToday.mockResolvedValue({
+      ...payload,
+      steps: [{ kind: 'reading', status: 'unavailable', reason: 'no_content' }],
+    });
+    mockGetDashboard.mockResolvedValue(dashboard);
+
+    await renderToday();
+
+    expect(screen.getByText('Todavía no hay lecturas disponibles')).toBeTruthy();
+  });
 });

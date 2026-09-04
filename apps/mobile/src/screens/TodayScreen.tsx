@@ -14,6 +14,7 @@ import {
 import {
   toUserMessage,
   type FlashcardStats,
+  type PlanStep,
   type StreakPayload,
   type TodayPayload,
 } from '@hanyu/data';
@@ -33,6 +34,7 @@ import { ErrorBanner } from '../ui/ErrorBanner';
 import { ProgressRing } from '../ui/ProgressRing';
 import { Screen } from '../ui/Screen';
 import { StatusBarChart } from '../ui/StatusBarChart';
+import { reasonToText, unavailableToText } from '../lib/planCopy';
 
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
 
@@ -79,6 +81,67 @@ function fraction(completed: number, target: number): `${number}%` {
 
 function isDone(completed: number, target: number): boolean {
   return target > 0 && completed >= target;
+}
+
+interface TodayTask {
+  key: string;
+  icon: IconName;
+  primary: string;
+  sub: string;
+  why: string[];
+  unitTitle?: string;
+  unitProgress?: string;
+  width: `${number}%`;
+  done: boolean;
+  status: 'ready' | 'unavailable';
+  cta?: string;
+  go?: () => void;
+}
+
+const STEP_ICONS: Record<PlanStep['kind'], IconName> = {
+  reviews: 'albums',
+  relearning: 'refresh',
+  new_items: 'sparkles',
+  reading: 'book',
+  exercises: 'clipboard',
+  exam: 'timer',
+};
+
+const STEP_LABELS: Record<PlanStep['kind'], string> = {
+  reviews: 'Reviews',
+  relearning: 'Relearning',
+  new_items: 'New words',
+  reading: 'Reading',
+  exercises: 'Exercises',
+  exam: 'Exam practice',
+};
+
+function planStepTask(
+  step: PlanStep,
+  go: () => void,
+): TodayTask {
+  const payload = step.payload ?? {};
+  const count = typeof payload.count === 'number' ? payload.count : null;
+  const label = STEP_LABELS[step.kind];
+  const primary = count === null ? label : `${count} ${step.kind === 'new_items' ? 'new words' : label.toLowerCase()}`;
+  const unitTitle = typeof payload.unit_title === 'string' ? payload.unit_title : undefined;
+  const unitProgress = typeof payload.unit_progress === 'string' ? payload.unit_progress : undefined;
+  const why = step.why?.map(reasonToText) ?? [];
+
+  return {
+    key: step.kind,
+    icon: STEP_ICONS[step.kind],
+    primary,
+    sub: step.status === 'unavailable' ? unavailableToText(step.reason, step.kind) : '',
+    why,
+    unitTitle,
+    unitProgress,
+    width: '0%',
+    done: false,
+    status: step.status,
+    cta: step.status === 'ready' ? `Start ${step.kind === 'new_items' ? 'learning' : step.kind}` : undefined,
+    go: step.status === 'ready' ? go : undefined,
+  };
 }
 
 function Reveal({ index = 0, children }: { index?: number; children: ReactNode }) {
@@ -217,42 +280,63 @@ export default function TodayScreen() {
   const blocksDone = today?.progress.completed_blocks ?? 0;
   const allDone = blocks > 0 && blocksDone >= blocks;
 
-  const tasks = today
+  const legacyTasks: TodayTask[] = today
     ? [
         {
           key: 'review',
-          icon: 'albums' as IconName,
+          icon: 'albums',
           primary: `${today.flashcards.due} cards due`,
           sub: `Reviewed ${today.flashcards.completed} of ${today.flashcards.review_target} today`,
+          why: [],
           width: fraction(today.flashcards.completed, today.flashcards.review_target),
           done: isDone(today.flashcards.completed, today.flashcards.review_target),
+          status: 'ready',
           cta: 'Start review',
           go: () => router.push('/cards'),
         },
         {
           key: 'exercises',
-          icon: 'clipboard' as IconName,
+          icon: 'clipboard',
           primary: `Exercises ${today.exercises.completed}/${today.exercises.target}`,
           sub: 'Grammar and sentence drills',
+          why: [],
           width: fraction(today.exercises.completed, today.exercises.target),
           done: isDone(today.exercises.completed, today.exercises.target),
+          status: 'ready',
           cta: 'Start exercises',
           go: () => router.push('/practice/exercises'),
         },
         {
           key: 'reading',
-          icon: 'book' as IconName,
+          icon: 'book',
           primary: `Reading ${today.reading.completed}/${today.reading.target}`,
           sub: today.reading.next?.title ? `Up next: ${today.reading.next.title}` : 'One short passage',
+          why: [],
           width: fraction(today.reading.completed, today.reading.target),
           done: isDone(today.reading.completed, today.reading.target),
+          status: 'ready',
           cta: 'Start reading',
           go: () => router.push('/practice/readings'),
         },
       ]
     : [];
 
-  const nextPendingKey = tasks.find((task) => !task.done)?.key;
+  const planSteps = Array.isArray((today as (TodayPayload & { steps?: unknown }) | null)?.steps)
+    ? (today as TodayPayload).steps
+    : null;
+  const tasks: TodayTask[] = today && planSteps
+    ? planSteps.map((step) => planStepTask(step, () => {
+        if (step.kind === 'exercises') {
+          router.push('/practice/exercises');
+        } else if (step.kind === 'reading') {
+          router.push('/practice/readings');
+        } else {
+          router.push('/cards');
+        }
+      }))
+    : legacyTasks;
+
+  const nextPendingKey = tasks.find((task) => task.status === 'ready' && !task.done)?.key;
 
   return (
     <Screen
@@ -347,46 +431,86 @@ export default function TodayScreen() {
                       <View style={[styles.taskDivider, { backgroundColor: colors.border }]} />
                     ) : null}
 
-                    <View style={styles.task}>
+                    <View
+                      style={[
+                        styles.task,
+                        task.status === 'unavailable' ? styles.unavailableTask : null,
+                      ]}
+                    >
                       <View style={styles.taskHead}>
                         <View
                           style={[
                             styles.taskIcon,
-                            { backgroundColor: (task.done ? colors.gold : colors.vermilion) + '1A' },
+                            {
+                              backgroundColor:
+                                (task.status === 'unavailable'
+                                  ? colors.textMuted
+                                  : task.done
+                                    ? colors.gold
+                                    : colors.vermilion) + '1A',
+                            },
                           ]}
                         >
                           <Ionicons
                             name={task.icon}
                             size={20}
-                            color={task.done ? colors.gold : colors.vermilion}
+                            color={
+                              task.status === 'unavailable'
+                                ? colors.textMuted
+                                : task.done
+                                  ? colors.gold
+                                  : colors.vermilion
+                            }
                           />
                         </View>
                         <View style={styles.taskText}>
-                          <Text style={[styles.taskPrimary, { color: colors.text }]}>
+                          <Text
+                            style={[
+                              styles.taskPrimary,
+                              { color: task.status === 'unavailable' ? colors.textMuted : colors.text },
+                            ]}
+                          >
                             {task.primary}
                           </Text>
-                          <Text style={[styles.taskSub, { color: colors.textMuted }]}>{task.sub}</Text>
+                          {task.unitTitle ? (
+                            <Text style={[styles.taskSub, { color: colors.text }]}>{task.unitTitle}</Text>
+                          ) : null}
+                          {task.unitProgress ? (
+                            <Text style={[styles.taskSub, { color: colors.textMuted }]}>{task.unitProgress}</Text>
+                          ) : null}
+                          {task.sub ? (
+                            <Text style={[styles.taskSub, { color: colors.textMuted }]}>{task.sub}</Text>
+                          ) : null}
+                          {task.why.map((reason, reasonIndex) => (
+                            <Text key={`${task.key}-reason-${reasonIndex}`} style={[styles.taskSub, { color: colors.textMuted }]}> 
+                              {reason}
+                            </Text>
+                          ))}
                         </View>
-                        {task.done ? (
+                        {task.status === 'ready' && task.done ? (
                           <Ionicons name="checkmark-circle" size={22} color={colors.gold} />
                         ) : null}
                       </View>
 
-                      <View style={[styles.progressTrack, { backgroundColor: colors.border }]}>
-                        <View
-                          style={[
-                            styles.progressFill,
-                            { backgroundColor: colors.vermilion, width: task.width },
-                          ]}
-                        />
-                      </View>
+                      {task.status === 'ready' ? (
+                        <>
+                          <View style={[styles.progressTrack, { backgroundColor: colors.border }]}>
+                            <View
+                              style={[
+                                styles.progressFill,
+                                { backgroundColor: colors.vermilion, width: task.width },
+                              ]}
+                            />
+                          </View>
 
-                      <Button
-                        label={task.done ? 'Done' : task.cta}
-                        variant={task.done ? 'outline' : task.key === nextPendingKey ? 'primary' : 'outline'}
-                        onPress={task.go}
-                        disabled={task.done}
-                      />
+                          <Button
+                            label={task.done ? 'Done' : task.cta ?? 'Start'}
+                            variant={task.done ? 'outline' : task.key === nextPendingKey ? 'primary' : 'outline'}
+                            onPress={task.go ?? (() => undefined)}
+                            disabled={task.done}
+                          />
+                        </>
+                      ) : null}
                     </View>
                   </View>
                 ))}
@@ -448,6 +572,7 @@ const styles = StyleSheet.create({
   sectionTitle: { fontSize: tokens.fontSize.md, fontWeight: '600' },
 
   task: { gap: tokens.spacing.sm, paddingVertical: tokens.spacing.sm },
+  unavailableTask: { opacity: 0.72 },
   taskDivider: { height: StyleSheet.hairlineWidth, marginTop: tokens.spacing.sm },
   taskHead: { flexDirection: 'row', alignItems: 'center', gap: tokens.spacing.md },
   taskIcon: {
