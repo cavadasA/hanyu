@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { ExerciseRendererProps } from './types';
 import type { ExercisePrompt } from '@hanyu/data';
@@ -13,6 +14,11 @@ export function FillBlankExercise({
   onChange,
 }: ExerciseRendererProps<Prompt>) {
   const { colors } = useTheme();
+  const [showOptions, setShowOptions] = useState(false);
+
+  useEffect(() => {
+    setShowOptions(false);
+  }, [prompt.sentence]);
 
   return (
     <View style={styles.container}>
@@ -25,7 +31,18 @@ export function FillBlankExercise({
         onChangeText={(text) => onChange({ kind: 'fill_blank', text })}
         style={[styles.input, { color: colors.text, borderColor: colors.border }]}
       />
-      {prompt.options?.map(option => (
+      {prompt.options?.length ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityState={{ disabled }}
+          disabled={disabled}
+          onPress={() => setShowOptions(true)}
+          style={[styles.reveal, { borderColor: colors.border }]}
+        >
+          <Text style={{ color: colors.text }}>{showOptions ? 'Opciones' : 'Ver opciones'}</Text>
+        </Pressable>
+      ) : null}
+      {showOptions ? prompt.options?.map(option => (
         <Pressable
           key={option}
           accessibilityRole="button"
@@ -39,7 +56,7 @@ export function FillBlankExercise({
         >
           <Text style={{ color: colors.text }}>{option}</Text>
         </Pressable>
-      ))}
+      )) : null}
     </View>
   );
 }
@@ -53,6 +70,11 @@ const styles = StyleSheet.create({
     padding: tokens.spacing.md,
   },
   option: {
+    borderWidth: 1,
+    borderRadius: tokens.radius.md,
+    padding: tokens.spacing.md,
+  },
+  reveal: {
     borderWidth: 1,
     borderRadius: tokens.radius.md,
     padding: tokens.spacing.md,

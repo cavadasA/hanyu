@@ -7,6 +7,7 @@ export * from './exercises/contract';
 export * from './exercises/evaluate';
 export * from './exercises/validate';
 export * from './exercises/order';
+export * from './exercises/diagnose';
 export { normalizeHanzi, normalizePinyinInput, normalizeText } from './exercises/normalize';
 export { tokenizeReading, type DictionaryEntry, type ReadingToken } from './reading/tokenize';
 export { validateReading, type IssueKind, type ReadingGrammarTarget, type ReadingQuestion, type ReadingSentence, type ReadingSource, type ValidationContext, type ValidationIssue } from './reading/validate';

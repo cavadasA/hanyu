@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { diagnose } from '@hanyu/domain';
 import { ExerciseRenderer } from '../exercises/ExerciseRenderer';
 import { useExerciseSession } from '../exercises/useExerciseSession';
 import { tokens } from '../theme/tokens';
@@ -75,6 +76,11 @@ export function ExercisesScreen() {
               {session.result.explanation ? (
                 <Text style={[styles.explanation, { color: colors.textMuted }]}>
                   {session.result.explanation}
+                </Text>
+              ) : null}
+              {!session.result.correct ? (
+                <Text style={[styles.explanation, { color: colors.textMuted }]}>
+                  {diagnose(session.result.detail)}
                 </Text>
               ) : null}
               {isLast ? (

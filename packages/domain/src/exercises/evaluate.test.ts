@@ -60,7 +60,7 @@ describe('evaluateAnswer', () => {
     });
 
     expect(result.correct).toBe(true);
-    expect(result.detail).toEqual({ kind: 'matching', wrong: [], missing: [] });
+    expect(result.detail).toEqual({ kind: 'matching', wrong: [], missing: [], wrong_pairs: [] });
   });
 
   it('dice qué pares de matching están mal y cuáles faltan', () => {
@@ -70,7 +70,12 @@ describe('evaluateAnswer', () => {
     });
 
     expect(result.correct).toBe(false);
-    expect(result.detail).toEqual({ kind: 'matching', wrong: ['学生'], missing: ['朋友'] });
+    expect(result.detail).toEqual({
+      kind: 'matching',
+      wrong: ['学生'],
+      missing: ['朋友'],
+      wrong_pairs: ['学生', '朋友'],
+    });
   });
 
   it('acepta dictation en hanzi con y sin puntuación', () => {

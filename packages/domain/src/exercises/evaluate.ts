@@ -7,8 +7,14 @@ import type { ExerciseAnswer, ExerciseSolution } from './contract.ts';
 import { normalizeHanzi, normalizePinyinInput, normalizeText } from './normalize.ts';
 
 export type EvaluationDetail =
-  | { kind: 'matching'; wrong: string[]; missing: string[] }
+  | {
+      kind: 'matching';
+      wrong?: string[];
+      missing?: string[];
+      wrong_pairs?: string[];
+    }
   | { kind: 'reorder'; first_wrong_index: number | null }
+  | { kind: 'dictation'; syllables_match: boolean; tones_match: boolean }
   | { kind: 'simple' };
 
 export interface Evaluation {
@@ -53,6 +59,34 @@ function evaluationOf(
   detail: EvaluationDetail = { kind: 'simple' },
 ): Evaluation {
   return { correct, solution, answer, detail };
+}
+
+function pinyinToneSignature(input: string): string {
+  const toneByMark: Record<string, string> = {
+    '̄': '1',
+    '́': '2',
+    '̌': '3',
+    '̀': '4',
+  };
+
+  return String(input ?? '')
+    .replace(/[.,!?;:'"()[\]{}¿¡…—–-]|[。，！？；：、“”‘’（）《》〈〉【】]/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((syllable) => {
+      const digit = syllable.match(/[0-5]$/)?.[0];
+      let markTone = '5';
+
+      for (const character of syllable.normalize('NFD')) {
+        if (toneByMark[character]) {
+          markTone = toneByMark[character];
+        }
+      }
+
+      return digit ?? markTone;
+    })
+    .join('|');
 }
 
 export function evaluateAnswer(
@@ -102,7 +136,20 @@ export function evaluateAnswer(
         solution.pinyin !== null &&
         normalizePinyinInput(text) === normalizePinyinInput(solution.pinyin);
 
-      return evaluationOf(asHanzi || asPinyin, solution, answer);
+      const syllablesMatch = asHanzi || (
+        solution.pinyin !== null &&
+        normalizePinyinInput(text) === normalizePinyinInput(solution.pinyin)
+      );
+      const tonesMatch = asHanzi || (
+        solution.pinyin !== null &&
+        pinyinToneSignature(text) === pinyinToneSignature(solution.pinyin)
+      );
+
+      return evaluationOf(asHanzi || asPinyin, solution, answer, {
+        kind: 'dictation',
+        syllables_match: syllablesMatch,
+        tones_match: tonesMatch,
+      });
     }
 
     case 'matching': {
@@ -124,6 +171,7 @@ export function evaluateAnswer(
         kind: 'matching',
         wrong,
         missing,
+        wrong_pairs: [...wrong, ...missing],
       });
     }
   }
