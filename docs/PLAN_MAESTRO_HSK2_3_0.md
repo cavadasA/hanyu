@@ -281,7 +281,15 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 **Cierra:** Crítico 4; §6 gaps 1–4; §6 mejoras 1–3 y 8; §6 pipeline; §10 P3.1, P3.3.
 
 ## Plan 8 — Lector avanzado y bucle lectura → memoria
-**Tamaño:** L · **Depende de:** Planes 1, 7
+**Tamaño:** L · **Depende de:** Planes 7 y 4B (ejecutados) y 5B (para la recomendación)
+
+> **Escrito:** `docs/superpowers/plans/2026-09-02-plan-8-lector-avanzado.md`, 6 tareas.
+>
+> El cambio que lo ordena todo: **la unidad de render pasa de «lectura» a «frase»**. El Plan 7 ya dejó el catálogo por frases con su pinyin y su español; la pantalla seguía pintando el texto entero. Sobre esa base cuelgan la traducción al tocar, las notas, el estado por palabra y el audio.
+>
+> Así se arregla §6.14 sin elegir entre dos sitios: **el bloque global de pinyin desaparece porque deja de tener dónde ir**. Hoy `ReadingDetailScreen:119` lo pinta entero y `ReadingText:44` lo repite bajo cada token.
+>
+> **Dos cosas que no se pueden hacer bien y no se fingen.** La desambiguación de sentidos pide análisis sintáctico, y adivinar por frecuencia fallaría en silencio justo en las palabras ambiguas: se muestran **todas las acepciones**, con la del nivel primero. Y el karaoke por palabra necesita marcas de tiempo que `expo-speech` no da: se resalta **la frase que suena**, reproduciendo frase a frase, así que la sincronización es exacta por construcción.
 
 - Traducción por oración y notas gramaticales contextualizadas.
 - Velocidad, seek por palabra y resaltado tipo karaoke sincronizado con el audio.
