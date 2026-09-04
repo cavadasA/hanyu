@@ -50,4 +50,13 @@ describe('buildSeedSql', () => {
   it('lleva el corpus completo', () => {
     expect(counts.words).toBe(1009);
   });
+
+  it('siembra las unidades y sus palabras', () => {
+    expect(sql).toContain('insert into public.unit (');
+    expect(sql).toContain('insert into public.unit_word (');
+  });
+
+  it('resuelve las palabras de la unidad por hanzi, no por índice de fichero', () => {
+    expect(sql).toMatch(/insert into public\.unit_word[\s\S]*?select[\s\S]*?from public\.words/);
+  });
 });

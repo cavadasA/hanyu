@@ -114,6 +114,70 @@ function buildGrammarPrerequisiteRows() {
   ]);
 }
 
+function loadCorpus() {
+  const corpus = [];
+  for (const level of [1, 2, 3]) {
+    corpus.push(...readJson(`hsk${level}-words.json`).map((word) => ({ ...word, hsk_level: level })));
+  }
+  return corpus;
+}
+
+function buildUnitRows() {
+  return readJson('units.json').map((unit, index) => [
+    sqlString(unit.code),
+    sqlInteger(unit.hsk_level),
+    sqlString(unit.title),
+    sqlString(unit.group),
+    sqlString(unit.category),
+    unit.patterns.length > 0
+      ? `array[${unit.patterns.map(sqlString).join(', ')}]::text[]`
+      : `'{}'::text[]`,
+    sqlInteger(index + 1),
+  ]);
+}
+
+function buildUnitWordMemberships() {
+  const units = readJson('units.json');
+  const corpus = loadCorpus();
+  const memberships = [];
+
+  for (const unit of units) {
+    for (const wordIndex of unit.word_ids) {
+      const word = corpus[wordIndex];
+      if (!word) continue;
+      memberships.push(
+        `  (${sqlInteger(unit.hsk_level)}, ${sqlString(unit.code)}, ${sqlString(word.hanzi)}, ${sqlInteger(word.hsk_level ?? unit.hsk_level)})`,
+      );
+    }
+  }
+
+  return memberships;
+}
+
+function buildUnitSql() {
+  const unitRows = buildUnitRows();
+  const memberships = buildUnitWordMemberships();
+  const unitInsert = buildInsert(
+    'unit',
+    ['code', 'hsk_level', 'title', '"group"', 'category', 'patterns', 'order_idx'],
+    unitRows,
+    'on conflict (hsk_level, code) do update set title = excluded.title, patterns = excluded.patterns, order_idx = excluded.order_idx',
+  );
+
+  const wordInsert = memberships.length === 0
+    ? '-- unit_word: no rows\n'
+    : `insert into public.unit_word (hsk_level, code, word_id)
+select m.unit_level, m.code, w.id
+from (values
+${memberships.join(',\n')}
+) as m(unit_level, code, hanzi, word_level)
+join public.words w on w.hanzi = m.hanzi and w.hsk_level = m.word_level
+on conflict do nothing;
+`;
+
+  return { sql: `${unitInsert}\n${wordInsert}`, unitCount: unitRows.length, unitWordCount: memberships.length };
+}
+
 function buildCharacterRows() {
   return readJson('hsk-characters.json').map((entry) => [
     sqlString(entry.hanzi),
@@ -220,6 +284,7 @@ export function buildSeedSql() {
   const characterRows = buildCharacterRows();
   const grammarRows = buildGrammarRows();
   const grammarPrerequisiteRows = buildGrammarPrerequisiteRows();
+  const unitSql = buildUnitSql();
   const exerciseRows = buildExerciseRows();
   const readingRows = buildReadingRows();
   const readingContentRows = buildReadingContentRows();
@@ -266,6 +331,7 @@ export function buildSeedSql() {
       grammarPrerequisiteRows,
       'on conflict do nothing',
     ),
+    unitSql.sql,
     buildInsert(
       'generated_exercises',
       ['type', 'hsk_level', 'prompt', 'answer', 'source_model', 'created_by'],
@@ -296,6 +362,8 @@ export function buildSeedSql() {
       characters: characterRows.length,
       grammar_points: grammarRows.length,
       grammar_prerequisites: grammarPrerequisiteRows.length,
+      units: unitSql.unitCount,
+      unit_words: unitSql.unitWordCount,
       generated_exercises: exerciseRows.length,
       readings: readingRows.length,
       reading_content_items: readingContentRows.length,
