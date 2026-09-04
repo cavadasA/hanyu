@@ -17,6 +17,7 @@ import {
 } from './shared';
 
 const VALID_FORMATS = new Set(['short_text', 'story', 'dialogue']);
+const KNOWN_MIN_STABILITY_DAYS = 30;
 const READING_SELECT =
   'slug, hsk_level, format, title, topic, series, series_index, sentences, questions, target_words, target_grammar, audio_kind, audio_url';
 
@@ -100,6 +101,58 @@ function tokensBySentence(sentences: ReadingSentence[], tokens: ReadingDetail['t
     sentenceStart = sentenceEnd;
 
     return { ...sentence, tokens: sentenceTokens };
+  });
+}
+
+async function getRecognitionStates(wordIds: number[], client: HanyuClient) {
+  const states = new Map<number, number | null>();
+  if (wordIds.length === 0) return states;
+
+  let query: any;
+  try {
+    query = client
+      .from('learner_skill_state')
+      .select('target_id, stability')
+      .eq('target_kind', 'word')
+      .eq('skill', 'recognition');
+  } catch {
+    return states;
+  }
+
+  if (typeof query.in !== 'function') return states;
+  const { data, error } = await query.in('target_id', wordIds);
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load reading word progress');
+  }
+
+  for (const state of data ?? []) {
+    states.set(Number(state.target_id), state.stability === null ? null : Number(state.stability));
+  }
+  return states;
+}
+
+function statusTokens(
+  tokens: ReadingDetail['tokens'],
+  targetWords: string[],
+  recognitionStates: Map<number, number | null>,
+) {
+  const targets = new Set(targetWords);
+
+  return tokens.map(token => {
+    if (token.type === 'punctuation' || !token.word) {
+      return { ...token, status: token.type === 'punctuation' ? undefined : 'unknown' as const };
+    }
+
+    if (targets.has(token.word.hanzi)) {
+      return { ...token, status: 'target' as const };
+    }
+
+    const stability = recognitionStates.get(token.word.id);
+    if (stability !== undefined && stability !== null && stability >= KNOWN_MIN_STABILITY_DAYS) {
+      return { ...token, status: 'known' as const };
+    }
+
+    return { ...token, status: token.word.in_srs ? 'learning' as const : 'unknown' as const };
   });
 }
 
@@ -280,7 +333,12 @@ export async function getReading(slug: string, client: HanyuClient): Promise<Rea
   }
 
   const sentences = parseJsonField(data.sentences, []) as ReadingSentence[];
-  const tokenizedSentences = tokensBySentence(sentences, tokenData.tokens);
+  const wordIds: number[] = tokenData.tokens
+    .map((token: any) => token.word?.id)
+    .filter((id: unknown): id is number => typeof id === 'number');
+  const recognitionStates = await getRecognitionStates([...new Set(wordIds)], client);
+  const tokens = statusTokens(tokenData.tokens, normalizeSummary(data).target_words, recognitionStates);
+  const tokenizedSentences = tokensBySentence(sentences, tokens);
   const targetGrammar = normalizeGrammarTargets(data.target_grammar);
 
   return {
@@ -289,7 +347,7 @@ export async function getReading(slug: string, client: HanyuClient): Promise<Rea
     content: sentences.map(sentence => sentence.zh).join(''),
     grammar_points: await getReadingGrammarPoints(targetGrammar, client),
     questions: normalizeQuestions(parseJsonField(data.questions, [])),
-    tokens: tokenData.tokens,
+    tokens,
   };
 }
 

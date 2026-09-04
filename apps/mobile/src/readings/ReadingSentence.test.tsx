@@ -58,4 +58,35 @@ describe('ReadingSentence', () => {
 
     expect(screen.queryByText('El café es más caro que el té.')).toBeNull();
   });
+
+  it('distingue visualmente los cuatro estados', async () => {
+    const tokens = [
+      { id: 't0', text: '我', type: 'word', status: 'known', word: { id: 1 } },
+      { id: 't1', text: '咖啡', type: 'word', status: 'learning', word: { id: 2 } },
+      { id: 't2', text: '比', type: 'word', status: 'target', word: { id: 3 } },
+      { id: 't3', text: '图书馆', type: 'word', status: 'unknown', word: null },
+    ];
+
+    await render(
+      <ReadingSentence
+        sentence={{ ...sentence, tokens }}
+        showPinyin={false}
+        onSelectToken={jest.fn()}
+      />,
+    );
+
+    const colors = tokens.map(token => screen.getByText(token.text).props.style[1].color);
+    expect(new Set(colors).size).toBe(4);
+  });
+
+  it('marca como desconocida la palabra sin tarjeta', async () => {
+    const unknown = {
+      ...sentence,
+      tokens: [{ id: 't3', text: '图书馆', type: 'unknown' as const, word: null }],
+    };
+
+    await render(<ReadingSentence sentence={unknown} showPinyin={false} onSelectToken={jest.fn()} />);
+
+    expect(screen.getByLabelText('图书馆').props.accessibilityHint).toMatch(/no está/i);
+  });
 });

@@ -79,9 +79,13 @@ describe('handleTokenizeReading', () => {
           word: {
             id: 2,
             hanzi: '你好',
+            sense_index: null,
+            variants: [],
+            traditional: null,
             pinyin: 'nǐ hǎo',
             meaning_en: 'hello',
             meaning_es: 'hola',
+            classifier: null,
             hsk_level: 1,
             pos: null,
             frequency: 2,

@@ -130,4 +130,37 @@ describe('reading tokens repository integration', () => {
       expect.objectContaining({ code: '6.3.4', title: '比较句', category: '句子' }),
     ]);
   });
+
+  it('asigna estado de aprendizaje a cada palabra de la lectura', async () => {
+    const reading = readingQuery();
+    const skillQuery: Record<string, any> = {
+      select: vi.fn(() => skillQuery),
+      eq: vi.fn(() => skillQuery),
+      in: vi.fn(() => skillQuery),
+      then: (resolve: (value: unknown) => unknown) => Promise.resolve({
+        data: [{ target_id: 2, skill: 'recognition', stability: 31 }],
+        error: null,
+      }).then(resolve),
+    };
+    const client = {
+      from: vi.fn((table: string) => table === 'learner_skill_state' ? skillQuery : reading),
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
+      functions: {
+        invoke: vi.fn().mockResolvedValue({
+          data: {
+            tokens: [
+              { id: 't0', text: '你好', type: 'word', word: { id: 2, hanzi: '你好', in_srs: true } },
+              { id: 't2', text: '龘', type: 'unknown', word: null },
+            ],
+          },
+          error: null,
+        }),
+      },
+    };
+
+    const result = await getReading('reading-1', client as never);
+
+    expect(result.sentences[0].tokens[0].status).toBe('known');
+    expect(result.sentences[0].tokens[1].status).toBe('unknown');
+  });
 });

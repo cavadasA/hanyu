@@ -95,4 +95,35 @@ describe('WordSheet', () => {
 
     await waitFor(() => expect(screen.getByText('繁 還')).toBeTruthy());
   });
+
+  it('muestra todas las acepciones cuando la forma tiene varias', async () => {
+    mockGetSettings.mockResolvedValue({ support_language: 'es' });
+    const senses = [
+      { id: 1, hanzi: '还', pinyin: 'hái', sense_index: null, meaning_es: 'todavía; aún', hsk_level: 1 },
+      { id: 2, hanzi: '还', pinyin: 'huán', sense_index: null, meaning_es: 'devolver', hsk_level: 3 },
+    ];
+
+    await act(async () => {
+      render(<WordSheet text="还" senses={senses} readingLevel={2} sentence={null} readingId="r1" onClose={jest.fn()} />);
+      await Promise.resolve();
+    });
+
+    expect(screen.getByText('hái')).toBeTruthy();
+    expect(screen.getByText('huán')).toBeTruthy();
+  });
+
+  it('pone primero la acepción del nivel de la lectura', async () => {
+    mockGetSettings.mockResolvedValue({ support_language: 'es' });
+    const senses = [
+      { id: 2, hanzi: '还', pinyin: 'huán', meaning_es: 'devolver', hsk_level: 3 },
+      { id: 1, hanzi: '还', pinyin: 'hái', meaning_es: 'todavía; aún', hsk_level: 1 },
+    ];
+
+    await act(async () => {
+      render(<WordSheet text="还" senses={senses} readingLevel={2} sentence={null} readingId="r1" onClose={jest.fn()} />);
+      await Promise.resolve();
+    });
+
+    expect(screen.getAllByLabelText(/acepción/)[0].props.accessibilityLabel).toContain('hái');
+  });
 });

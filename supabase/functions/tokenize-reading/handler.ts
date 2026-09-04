@@ -59,7 +59,7 @@ export async function handleTokenizeReading(
     await Promise.all([
       supabase
         .from('words')
-        .select('id, hanzi, pinyin, meaning_en, meaning_es, hsk_level, pos, frequency')
+        .select('id, hanzi, sense_index, variants, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency')
         .in('hsk_level', [1, 2, 3]),
       supabase
         .from('srs_cards')
@@ -75,9 +75,13 @@ export async function handleTokenizeReading(
   const dictionary: DictionaryEntry[] = (words || []).map((word: any) => ({
     id: Number(word.id),
     hanzi: String(word.hanzi),
+    sense_index: word.sense_index ?? null,
+    variants: Array.isArray(word.variants) ? word.variants.map(String) : [],
+    traditional: word.traditional ?? null,
     pinyin: String(word.pinyin),
     meaning_en: String(word.meaning_en),
     meaning_es: word.meaning_es ? String(word.meaning_es) : null,
+    classifier: word.classifier ?? null,
     hsk_level: Number(word.hsk_level),
     pos: word.pos ? String(word.pos) : null,
     frequency: word.frequency === null ? null : Number(word.frequency),

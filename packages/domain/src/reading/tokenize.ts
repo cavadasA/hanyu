@@ -8,6 +8,10 @@ export interface DictionaryEntry {
   pos?: string | null;
   frequency?: number | null;
   in_srs?: boolean;
+  sense_index?: number | null;
+  variants?: string[];
+  traditional?: string | null;
+  classifier?: string | null;
 }
 
 export interface ReadingToken {
@@ -15,6 +19,7 @@ export interface ReadingToken {
   text: string;
   type: 'word' | 'unknown' | 'punctuation';
   word: DictionaryEntry | null;
+  senses?: DictionaryEntry[];
 }
 
 export function tokenizeReading(
@@ -48,11 +53,14 @@ export function tokenizeReading(
     );
 
     if (word) {
+      const senses = (wordsByFirstCharacter.get(text) ?? [])
+        .filter(candidate => candidate.hanzi === word.hanzi);
       tokens.push({
         id: `t${offset}`,
         text: word.hanzi,
         type: 'word',
         word,
+        ...(senses.length > 1 ? { senses } : {}),
       });
       offset += word.hanzi.length;
       continue;

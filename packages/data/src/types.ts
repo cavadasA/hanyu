@@ -261,6 +261,7 @@ export interface ReadingToken {
   type: 'word' | 'unknown' | 'punctuation';
   word: Word | null;
   status?: ReadingTokenStatus;
+  senses?: Word[];
 }
 
 export type ReadingTokenStatus = 'known' | 'learning' | 'target' | 'unknown';

@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import type { ReadingToken } from '@hanyu/data';
 import { tokens } from '../theme/tokens';
 import { ReadingSentence, type Sentence } from './ReadingSentence';
-import { WordSheet } from './WordSheet';
+import { WordSheet, type ReadingSense } from './WordSheet';
 
 export function ReadingText({
   sentences,
@@ -42,8 +42,9 @@ export function ReadingText({
       {selected ? (
         <WordSheet
           text={selected.token.text}
-          word={selected.token.word}
+          senses={(selected.token.senses ?? (selected.token.word ? [selected.token.word] : [])) as ReadingSense[]}
           sentence={{ text: selected.sentence.zh, tokens: selected.sentence.tokens }}
+          readingLevel={selected.token.word?.hsk_level}
           readingId={readingId}
           onClose={() => setSelected(null)}
         />

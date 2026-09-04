@@ -38,6 +38,21 @@ const dictionary = [
 ];
 
 describe('tokenizeReading', () => {
+  it('conserva todas las acepciones de una forma escrita', () => {
+    const tokens = tokenizeReading('还', [
+      { id: 1, hanzi: '还', pinyin: 'hái', hsk_level: 1 },
+      { id: 2, hanzi: '还', pinyin: 'huán', hsk_level: 3 },
+    ]);
+
+    expect(tokens[0]).toMatchObject({
+      word: { pinyin: 'hái' },
+      senses: [
+        { id: 1, pinyin: 'hái' },
+        { id: 2, pinyin: 'huán' },
+      ],
+    });
+  });
+
   it('uses the longest dictionary match without dropping punctuation', () => {
     const tokens = tokenizeReading('你好，朋友。', dictionary);
 

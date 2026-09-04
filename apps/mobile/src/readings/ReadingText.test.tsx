@@ -57,8 +57,8 @@ describe('ReadingText', () => {
     expect(view.getByText('ni hao')).toBeTruthy();
     expect(view.getByText('hello')).toBeTruthy();
 
-    await fireEvent.press(view.getByRole('button', { name: 'Add to Cards' }));
-    await waitFor(() => expect(view.getByText('Added')).toBeTruthy());
+    await fireEvent.press(view.getByRole('button', { name: /Añadir acepción 1/ }));
+    await waitFor(() => expect(view.getByText('Añadir acepción 1: ni hao')).toBeTruthy());
     expect(mockAddCard).toHaveBeenCalledWith(1, {
       context: {
         sentence: '你好，龘。',
