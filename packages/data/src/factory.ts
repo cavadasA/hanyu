@@ -29,7 +29,7 @@ import {
   reviewCardEvent,
   submitDiagnostic,
 } from './repositories/flashcards';
-import { checkExercise, generateExercise, getExerciseHistory } from './repositories/exercises';
+import { buildExerciseSession, checkExercise, generateExercise, getExerciseHistory } from './repositories/exercises';
 import { getEvents, recordEvent } from './repositories/events';
 import {
   completeReading,
@@ -109,6 +109,8 @@ export function createHanyuData(config: HanyuDataConfig) {
       getFlashcardStats: () => getFlashcardStats(client),
     },
     exercises: {
+      buildExerciseSession: (unitCode?: string | null, length = 8) =>
+        buildExerciseSession(unitCode, length, client),
       generateExercise: (type: ExerciseType, level: HskLevel) =>
         generateExercise(type, level, client),
       checkExercise: (id: string, answer: ExerciseAnswer) => checkExercise(id, answer, client),

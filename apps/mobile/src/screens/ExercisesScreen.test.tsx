@@ -1,128 +1,121 @@
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
-import { ExercisesScreen } from './ExercisesScreen';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
+import type { ExerciseKind } from '@hanyu/domain';
 
-const mockGenerateExercise = jest.fn();
+const mockBuildExerciseSession = jest.fn();
 const mockCheckExercise = jest.fn();
 
 jest.mock('../lib/data', () => ({
   getData: () => ({
     exercises: {
-      generateExercise: (...args: unknown[]) => mockGenerateExercise(...args),
+      buildExerciseSession: (...args: unknown[]) => mockBuildExerciseSession(...args),
       checkExercise: (...args: unknown[]) => mockCheckExercise(...args),
     },
   }),
 }));
 
-describe('ExercisesScreen', () => {
-  beforeEach(() => {
-    mockGenerateExercise.mockReset();
-    mockCheckExercise.mockReset();
-  });
+const { ExercisesScreen } = require('./ExercisesScreen');
 
-  it('completes a dictation and shows its explanation', async () => {
-    mockGenerateExercise.mockResolvedValue({
-      id: 'exercise-1',
-      type: 'dictation',
+function exercise(id: string, type: ExerciseKind) {
+  if (type === 'dictation') {
+    return {
+      id,
+      type,
       hsk_level: 2,
       prompt: { kind: 'dictation', audio_text: '你好' },
       solution: { kind: 'dictation', hanzi: '你好', pinyin: null },
-      explanation: 'Listen for both syllables.',
+      explanation: null,
+    };
+  }
+
+  if (type === 'reorder') {
+    return {
+      id,
+      type,
+      hsk_level: 2,
+      prompt: { kind: 'reorder', tokens: ['我', '喜欢', '茶'] },
+      solution: { kind: 'reorder', order: ['我', '喜欢', '茶'] },
+      explanation: null,
+    };
+  }
+
+  return {
+    id,
+    type,
+    hsk_level: 2,
+    prompt: { kind: 'multiple_choice', question: '选择', options: ['A', 'B'] },
+    solution: { kind: 'multiple_choice', correct: 'A' },
+    explanation: null,
+  };
+}
+
+async function renderExercises() {
+  await act(async () => {
+    render(<ExercisesScreen />);
+  });
+  await waitFor(() => expect(screen.getByText('离合词')).toBeTruthy());
+}
+
+describe('ExercisesScreen', () => {
+  beforeEach(() => {
+    mockBuildExerciseSession.mockReset();
+    mockCheckExercise.mockReset();
+  });
+
+  it('propone la unidad activa en vez de pedir que elijas nivel y tipo', async () => {
+    mockBuildExerciseSession.mockResolvedValue({ unit_title: '离合词', exercises: [], length: 8 });
+
+    await renderExercises();
+
+    expect(screen.getByText('离合词')).toBeTruthy();
+    expect(screen.queryByText('HSK 1')).toBeNull();
+  });
+
+  it('ordena los ejercicios de discriminación a producción', async () => {
+    mockBuildExerciseSession.mockResolvedValue({
+      unit_title: '离合词',
+      exercises: [exercise('e1', 'dictation'), exercise('e2', 'multiple_choice'), exercise('e3', 'reorder')],
+      length: 3,
+    });
+
+    await renderExercises();
+    await fireEvent.press(screen.getByText('Empezar'));
+
+    expect(screen.getByTestId('exercise-slug').props.children).toBe('e2');
+  });
+
+  it('muestra el progreso y termina con un resumen', async () => {
+    mockBuildExerciseSession.mockResolvedValue({
+      unit_title: '离合词',
+      exercises: [exercise('e1', 'multiple_choice')],
+      length: 1,
     });
     mockCheckExercise.mockResolvedValue({
       correct: true,
-      expected_answer: { kind: 'dictation', hanzi: '你好', pinyin: null },
-      submitted_answer: { kind: 'dictation', text: '你好' },
+      expected_answer: { kind: 'multiple_choice', correct: 'A' },
+      submitted_answer: { kind: 'multiple_choice', option: 'A' },
       detail: { kind: 'simple' },
-      explanation: 'Correct greeting.',
-    });
-    const view = await render(<ExercisesScreen />);
-
-    await fireEvent.press(view.getByRole('button', { name: 'Dictation' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Generate exercise' }));
-
-    await waitFor(() => expect(view.getByRole('button', { name: 'Play dictation' })).toBeTruthy());
-    expect(view.getByRole('button', { name: 'Check answer' }).props.accessibilityState)
-      .toMatchObject({ disabled: true });
-
-    await fireEvent.changeText(view.getByPlaceholderText('Type what you hear'), '你好');
-    await fireEvent.press(view.getByRole('button', { name: 'Check answer' }));
-
-    await waitFor(() => expect(view.getByText('Correct')).toBeTruthy());
-    expect(view.getByText('Correct greeting.')).toBeTruthy();
-    expect(mockGenerateExercise).toHaveBeenCalledWith('dictation', 2);
-    expect(mockCheckExercise).toHaveBeenCalledWith('exercise-1', {
-      kind: 'dictation',
-      text: '你好',
-    });
-  });
-
-  const MATCHING = {
-    id: 'exercise-2',
-    type: 'matching' as const,
-    hsk_level: 2 as const,
-    prompt: {
-      kind: 'matching' as const,
-      pairs: [
-        { left: '学生', right: 'student' },
-        { left: '老师', right: 'teacher' },
-        { left: '朋友', right: 'friend' },
-        { left: '医生', right: 'doctor' },
-      ],
-    },
-    solution: {
-      kind: 'matching' as const,
-      pairs: { 学生: 'student', 老师: 'teacher', 朋友: 'friend', 医生: 'doctor' },
-    },
-    explanation: null,
-  };
-
-  it('will not let a half-finished matching be checked', async () => {
-    mockGenerateExercise.mockResolvedValue(MATCHING);
-    const view = await render(<ExercisesScreen />);
-
-    await fireEvent.press(view.getByRole('button', { name: 'Matching' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Generate exercise' }));
-    await waitFor(() =>
-      expect(view.getByRole('button', { name: 'Select 学生' })).toBeTruthy(),
-    );
-
-    await fireEvent.press(view.getByRole('button', { name: 'Select 学生' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Match student' }));
-
-    // Un par de cuatro no es una respuesta.
-    expect(view.getByRole('button', { name: 'Check answer' }).props.accessibilityState)
-      .toMatchObject({ disabled: true });
-  });
-
-  it('says which pairs were wrong', async () => {
-    mockGenerateExercise.mockResolvedValue(MATCHING);
-    mockCheckExercise.mockResolvedValue({
-      correct: false,
-      expected_answer: MATCHING.solution,
-      submitted_answer: { kind: 'matching', pairs: {} },
-      detail: { kind: 'matching', wrong: ['学生'], missing: [] },
       explanation: null,
     });
-    const view = await render(<ExercisesScreen />);
 
-    await fireEvent.press(view.getByRole('button', { name: 'Matching' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Generate exercise' }));
-    await waitFor(() =>
-      expect(view.getByRole('button', { name: 'Select 学生' })).toBeTruthy(),
-    );
+    await renderExercises();
+    await fireEvent.press(screen.getByText('Empezar'));
 
-    for (const [left, right] of [
-      ['学生', 'teacher'],
-      ['老师', 'student'],
-      ['朋友', 'friend'],
-      ['医生', 'doctor'],
-    ]) {
-      await fireEvent.press(view.getByRole('button', { name: `Select ${left}` }));
-      await fireEvent.press(view.getByRole('button', { name: `Match ${right}` }));
-    }
+    expect(screen.getByText('1/1')).toBeTruthy();
+    await fireEvent.press(screen.getByText('A'));
+    await fireEvent.press(screen.getByText('Comprobar'));
+    await waitFor(() => expect(screen.getByText('Terminado')).toBeTruthy());
+  });
 
-    await fireEvent.press(view.getByRole('button', { name: 'Check answer' }));
+  it('no repite el mismo ejercicio dos veces seguidas', async () => {
+    mockBuildExerciseSession.mockResolvedValue({
+      unit_title: '离合词',
+      exercises: [exercise('e1', 'multiple_choice'), exercise('e1', 'multiple_choice')],
+      length: 2,
+    });
 
-    await waitFor(() => expect(view.getByText('Wrong: 学生')).toBeTruthy());
+    await renderExercises();
+    await fireEvent.press(screen.getByText('Empezar'));
+
+    expect(screen.getByText('1/1')).toBeTruthy();
   });
 });

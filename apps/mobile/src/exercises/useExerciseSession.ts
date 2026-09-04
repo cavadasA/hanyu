@@ -1,65 +1,97 @@
-import { useCallback, useRef, useState } from 'react';
-import { emptyAnswer, isAnswerComplete, type ExerciseAnswer } from '@hanyu/domain';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { emptyAnswer, isAnswerComplete, orderExercises, type ExerciseAnswer } from '@hanyu/domain';
 import {
   toUserMessage,
   type Exercise,
   type ExerciseCheckResult,
-  type ExerciseType,
-  type HskLevel,
+  type ExerciseSession as ExerciseSessionData,
 } from '@hanyu/data';
 import { getData } from '../lib/data';
 
-type Status = 'idle' | 'loading' | 'answering' | 'checking' | 'checked' | 'error';
+type Status = 'idle' | 'loading' | 'ready' | 'answering' | 'checking' | 'checked' | 'complete' | 'error';
 
 interface ExerciseApi {
-  generateExercise(type: ExerciseType, level: HskLevel): Promise<Exercise>;
+  buildExerciseSession(unitCode?: string | null, length?: number): Promise<ExerciseSessionData>;
   checkExercise(id: string, answer: ExerciseAnswer): Promise<ExerciseCheckResult>;
+}
+
+export interface ExerciseSessionSummary {
+  total: number;
+  correct: number;
+  incorrect: number;
 }
 
 export interface ExerciseSession {
   status: Status;
-  type: ExerciseType;
-  level: HskLevel;
+  unit: ExerciseSessionData | null;
+  exercises: Exercise[];
+  index: number;
   exercise: Exercise | null;
   draft: ExerciseAnswer;
   complete: boolean;
+  progress: string;
   result: ExerciseCheckResult | null;
+  summary: ExerciseSessionSummary | null;
   error: string | null;
-  setType(type: ExerciseType): void;
-  setLevel(level: HskLevel): void;
-  setDraft(value: ExerciseAnswer): void;
   load(): Promise<void>;
+  start(): void;
+  setDraft(value: ExerciseAnswer): void;
   check(): Promise<void>;
   next(): Promise<void>;
 }
 
-export function useExerciseSession(
-  api: ExerciseApi = getData().exercises,
-): ExerciseSession {
+function uniqueExercises(exercises: Exercise[]): Exercise[] {
+  const seen = new Set<string>();
+  return exercises.filter((exercise, index) => {
+    const key = String((exercise as Exercise & { slug?: string }).slug ?? exercise.id ?? index);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
+  const resolvedApi = useMemo(() => api ?? getData().exercises, [api]);
   const [status, setStatus] = useState<Status>('idle');
-  const [type, setType] = useState<ExerciseType>('fill_blank');
-  const [level, setLevel] = useState<HskLevel>(2);
-  const [exercise, setExercise] = useState<Exercise | null>(null);
+  const [unit, setUnit] = useState<ExerciseSessionData | null>(null);
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<ExerciseAnswer>(emptyAnswer('fill_blank'));
   const [result, setResult] = useState<ExerciseCheckResult | null>(null);
+  const [summary, setSummary] = useState<ExerciseSessionSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const checking = useRef(false);
+  const exercise = exercises[index] ?? null;
 
   const load = useCallback(async () => {
     setStatus('loading');
     setError(null);
 
     try {
-      const nextExercise = await api.generateExercise(type, level);
-      setExercise(nextExercise);
-      setDraft(emptyAnswer(nextExercise.type));
+      const nextSession = await resolvedApi.buildExerciseSession(null, 8);
+      const nextExercises = orderExercises(uniqueExercises(nextSession.exercises));
+      setUnit({ ...nextSession, exercises: nextExercises, length: nextExercises.length });
+      setExercises(nextExercises);
+      setIndex(0);
+      setDraft(emptyAnswer('fill_blank'));
       setResult(null);
-      setStatus('answering');
+      setSummary(null);
+      setStatus('ready');
     } catch (caught) {
       setError(toUserMessage(caught));
       setStatus('error');
     }
-  }, [api, level, type]);
+  }, [resolvedApi]);
+
+  const start = useCallback(() => {
+    if (exercises.length === 0) return;
+    setIndex(0);
+    setDraft(emptyAnswer(exercises[0].type));
+    setResult(null);
+    setSummary({ total: exercises.length, correct: 0, incorrect: 0 });
+    setError(null);
+    setStatus('answering');
+  }, [exercises]);
 
   const check = useCallback(async () => {
     if (
@@ -76,8 +108,13 @@ export function useExerciseSession(
     setError(null);
 
     try {
-      const checkResult = await api.checkExercise(exercise.id, draft);
+      const checkResult = await resolvedApi.checkExercise(exercise.id, draft);
       setResult(checkResult);
+      setSummary((current) => current ? {
+        ...current,
+        correct: current.correct + (checkResult.correct ? 1 : 0),
+        incorrect: current.incorrect + (checkResult.correct ? 0 : 1),
+      } : current);
       setStatus('checked');
     } catch (caught) {
       setError(toUserMessage(caught));
@@ -85,27 +122,41 @@ export function useExerciseSession(
     } finally {
       checking.current = false;
     }
-  }, [api, draft, exercise, status]);
-
-  const complete = exercise ? isAnswerComplete(exercise.solution, draft) : false;
+  }, [resolvedApi, draft, exercise, status]);
 
   const next = useCallback(async () => {
-    await load();
-  }, [load]);
+    if (status !== 'checked') return;
+
+    if (index >= exercises.length - 1) {
+      setStatus('complete');
+      return;
+    }
+
+    const nextIndex = index + 1;
+    setIndex(nextIndex);
+    setDraft(emptyAnswer(exercises[nextIndex].type));
+    setResult(null);
+    setStatus('answering');
+  }, [exercises, index, status]);
+
+  const complete = exercise ? isAnswerComplete(exercise.solution, draft) : false;
+  const progress = exercise ? `${index + 1}/${exercises.length}` : `0/${exercises.length}`;
 
   return {
     status,
-    type,
-    level,
+    unit,
+    exercises,
+    index,
     exercise,
     draft,
     complete,
+    progress,
     result,
+    summary,
     error,
-    setType,
-    setLevel,
-    setDraft,
     load,
+    start,
+    setDraft,
     check,
     next,
   };

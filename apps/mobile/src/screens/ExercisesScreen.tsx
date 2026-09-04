@@ -1,5 +1,5 @@
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
-import type { ExerciseType, HskLevel } from '@hanyu/data';
+import { useEffect } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { ExerciseRenderer } from '../exercises/ExerciseRenderer';
 import { useExerciseSession } from '../exercises/useExerciseSession';
 import { tokens } from '../theme/tokens';
@@ -9,25 +9,21 @@ import { Card } from '../ui/Card';
 import { ErrorBanner } from '../ui/ErrorBanner';
 import { Screen } from '../ui/Screen';
 
-const LEVELS: HskLevel[] = [1, 2, 3];
-
-const TYPES: Array<{ type: ExerciseType; label: string }> = [
-  { type: 'fill_blank', label: 'Fill blank' },
-  { type: 'multiple_choice', label: 'Multiple choice' },
-  { type: 'reorder', label: 'Reorder' },
-  { type: 'dictation', label: 'Dictation' },
-  { type: 'matching', label: 'Matching' },
-];
+function exerciseIdentifier(exercise: { id: string; slug?: string }) {
+  return exercise.slug ?? exercise.id;
+}
 
 export function ExercisesScreen() {
   const { colors } = useTheme();
   const session = useExerciseSession();
   const busy = session.status === 'loading' || session.status === 'checking';
   const canCheck = session.status === 'answering' && session.complete;
-  const explanation =
-    session.result?.explanation ??
-    session.exercise?.explanation ??
-    (session.result ? `Expected answer: ${String(session.result.expected_answer)}` : null);
+  const hasExercise = Boolean(session.exercise) && session.status !== 'complete';
+  const isLast = session.index === session.exercises.length - 1;
+
+  useEffect(() => {
+    void session.load();
+  }, [session.load]);
 
   return (
     <Screen>
@@ -36,60 +32,33 @@ export function ExercisesScreen() {
         <Text style={[styles.title, { color: colors.text }]}>Exercises</Text>
       </View>
 
-      <View style={styles.segmentGroup}>
-        {LEVELS.map(level => (
-          <Pressable
-            key={level}
-            accessibilityRole="button"
-            accessibilityLabel={`HSK ${level}`}
-            accessibilityState={{ selected: session.level === level, disabled: busy }}
-            disabled={busy}
-            onPress={() => session.setLevel(level)}
-            style={[
-              styles.segment,
-              {
-                borderColor: session.level === level ? colors.vermilion : colors.border,
-                backgroundColor: session.level === level ? colors.surface : colors.bg,
-              },
-            ]}
-          >
-            <Text style={{ color: colors.text }}>HSK {level}</Text>
-          </Pressable>
-        ))}
-      </View>
-
-      <View style={styles.typeGrid}>
-        {TYPES.map(item => (
-          <Pressable
-            key={item.type}
-            accessibilityRole="button"
-            accessibilityLabel={item.label}
-            accessibilityState={{ selected: session.type === item.type, disabled: busy }}
-            disabled={busy}
-            onPress={() => session.setType(item.type)}
-            style={[
-              styles.typeButton,
-              {
-                borderColor: session.type === item.type ? colors.vermilion : colors.border,
-                backgroundColor: session.type === item.type ? colors.surface : colors.bg,
-              },
-            ]}
-          >
-            <Text style={{ color: colors.text }}>{item.label}</Text>
-          </Pressable>
-        ))}
-      </View>
-
       {session.error ? <ErrorBanner message={session.error} onRetry={session.load} /> : null}
 
-      {!session.exercise ? (
-        <Button
-          label={session.status === 'loading' ? 'Generating...' : 'Generate exercise'}
-          onPress={session.load}
-          disabled={session.status === 'loading'}
-        />
-      ) : (
+      {session.status === 'loading' && !session.unit ? <ActivityIndicator /> : null}
+
+      {session.status === 'ready' && session.unit ? (
         <Card>
+          <Text style={[styles.unitLabel, { color: colors.textMuted }]}>Unidad activa</Text>
+          <Text style={[styles.unitTitle, { color: colors.text }]}>{session.unit.unit_title}</Text>
+          <Text style={[styles.unitMeta, { color: colors.textMuted }]}>
+            {`${session.exercises.length} ejercicios, de reconocer a producir`}
+          </Text>
+          <Button
+            label="Empezar"
+            onPress={session.start}
+            disabled={session.exercises.length === 0 || busy}
+          />
+        </Card>
+      ) : null}
+
+      {hasExercise && session.exercise ? (
+        <Card>
+          <View style={styles.progressRow}>
+            <Text style={[styles.progress, { color: colors.textMuted }]}>{session.progress}</Text>
+            <Text testID="exercise-slug" style={[styles.exerciseId, { color: colors.textMuted }]}>
+              {exerciseIdentifier(session.exercise as typeof session.exercise & { slug?: string })}
+            </Text>
+          </View>
           <ExerciseRenderer
             exercise={session.exercise}
             value={session.draft}
@@ -101,36 +70,39 @@ export function ExercisesScreen() {
           {session.result ? (
             <View style={styles.result}>
               <Text style={[styles.resultTitle, { color: colors.text }]}>
-                {session.result.correct ? 'Correct' : 'Not quite'}
+                {session.result.correct ? 'Correcto' : 'No del todo'}
               </Text>
-              {explanation ? (
-                <Text style={[styles.explanation, { color: colors.textMuted }]}>{explanation}</Text>
-              ) : null}
-              {session.result.detail.kind === 'matching' && session.result.detail.wrong.length > 0 ? (
-                <Text style={[styles.detail, { color: colors.vermilion }]}>
-                  {`Wrong: ${session.result.detail.wrong.join('、')}`}
+              {session.result.explanation ? (
+                <Text style={[styles.explanation, { color: colors.textMuted }]}>
+                  {session.result.explanation}
                 </Text>
               ) : null}
-              {session.result.detail.kind === 'reorder' &&
-              session.result.detail.first_wrong_index !== null ? (
-                <Text style={[styles.detail, { color: colors.vermilion }]}>
-                  {`First wrong position: ${session.result.detail.first_wrong_index + 1}`}
-                </Text>
+              {isLast ? (
+                <Text style={[styles.detail, { color: colors.text }]}>Terminado</Text>
               ) : null}
             </View>
           ) : null}
 
           {session.result ? (
-            <Button label="Next exercise" onPress={session.next} disabled={session.status === 'loading'} />
+            <Button label={isLast ? 'Ver resumen' : 'Siguiente'} onPress={session.next} />
           ) : (
             <Button
-              label={session.status === 'checking' ? 'Checking...' : 'Check answer'}
+              label={session.status === 'checking' ? 'Comprobando...' : 'Comprobar'}
               onPress={session.check}
               disabled={!canCheck || session.status === 'checking'}
             />
           )}
         </Card>
-      )}
+      ) : null}
+
+      {session.status === 'complete' && session.summary ? (
+        <Card>
+          <Text style={[styles.resultTitle, { color: colors.text }]}>Terminado</Text>
+          <Text style={[styles.summary, { color: colors.textMuted }]}>
+            {`${session.summary.correct}/${session.summary.total} correctos`}
+          </Text>
+        </Card>
+      ) : null}
     </Screen>
   );
 }
@@ -146,30 +118,31 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     marginTop: tokens.spacing.xs,
   },
-  segmentGroup: {
+  unitLabel: {
+    fontSize: tokens.fontSize.sm,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  unitTitle: {
+    fontSize: tokens.fontSize.lg,
+    fontWeight: '800',
+    marginTop: tokens.spacing.xs,
+  },
+  unitMeta: {
+    fontSize: tokens.fontSize.sm,
+    marginTop: tokens.spacing.sm,
+  },
+  progressRow: {
     flexDirection: 'row',
-    gap: tokens.spacing.sm,
-  },
-  segment: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: tokens.radius.md,
-    minHeight: 44,
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  typeGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: tokens.spacing.sm,
+  progress: {
+    fontSize: tokens.fontSize.sm,
+    fontWeight: '700',
   },
-  typeButton: {
-    borderWidth: 1,
-    borderRadius: tokens.radius.md,
-    minHeight: 44,
-    paddingHorizontal: tokens.spacing.md,
-    alignItems: 'center',
-    justifyContent: 'center',
+  exerciseId: {
+    fontSize: tokens.fontSize.xs,
   },
   result: {
     gap: tokens.spacing.xs,
@@ -185,5 +158,9 @@ const styles = StyleSheet.create({
   detail: {
     fontSize: tokens.fontSize.sm,
     fontWeight: '700',
+  },
+  summary: {
+    fontSize: tokens.fontSize.md,
+    marginTop: tokens.spacing.sm,
   },
 });

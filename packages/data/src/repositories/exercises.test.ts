@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { checkExercise, generateExercise } from './exercises';
+import { buildExerciseSession, checkExercise, generateExercise } from './exercises';
 
 const user = { id: 'u1' };
 
@@ -66,6 +66,32 @@ const reorderRow = {
 };
 
 describe('exercises repository', () => {
+  it('construye una sesión para la unidad solicitada', async () => {
+    const client = clientFor({});
+    client.rpc.mockResolvedValue({
+      data: {
+        unit_code: '2.2.2',
+        unit_title: '离合词',
+        length: 3,
+        exercises: [reorderRow, matchingRow],
+      },
+      error: null,
+    });
+
+    const session = await buildExerciseSession('2.2.2', 3, client);
+
+    expect(client.rpc).toHaveBeenCalledWith('build_exercise_session', {
+      p_unit_code: '2.2.2',
+      p_length: 3,
+    });
+    expect(session).toMatchObject({
+      unit_code: '2.2.2',
+      unit_title: '离合词',
+      length: 3,
+    });
+    expect(session.exercises).toHaveLength(2);
+  });
+
   it('checkExercise marca correcto un matching completo y bien emparejado', async () => {
     const client = clientFor({
       generated_exercises: { data: matchingRow, error: null },

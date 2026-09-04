@@ -131,6 +131,13 @@ export interface Exercise {
   explanation: string | null;
 }
 
+export interface ExerciseSession {
+  unit_code: string | null;
+  unit_title: string;
+  exercises: Exercise[];
+  length: number;
+}
+
 export interface ExerciseCheckResult {
   correct: boolean;
   expected_answer: ExerciseSolution;

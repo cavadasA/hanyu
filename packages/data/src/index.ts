@@ -19,6 +19,7 @@ export type {
   Exercise,
   ExerciseAnswer,
   ExerciseCheckResult,
+  ExerciseSession,
   ExercisePrompt,
   ExerciseSolution,
   ExerciseType,

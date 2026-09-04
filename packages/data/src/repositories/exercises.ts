@@ -4,6 +4,7 @@ import type {
   Exercise,
   ExerciseAnswer,
   ExerciseCheckResult,
+  ExerciseSession,
   ExercisePrompt,
   ExerciseType,
   HskLevel,
@@ -87,6 +88,23 @@ function normalizeGeneratedExerciseRow(row: any) {
   });
 }
 
+function normalizeExerciseSession(payload: any): ExerciseSession {
+  const session = parseJsonField(
+    Array.isArray(payload) ? payload[0] : payload,
+    {},
+  );
+  const exercises = Array.isArray(session?.exercises)
+    ? session.exercises.map((exercise: any) => normalizeExercise(exercise))
+    : [];
+
+  return {
+    unit_code: session?.unit_code ? String(session.unit_code) : null,
+    unit_title: String(session?.unit_title ?? 'Unidad activa'),
+    exercises,
+    length: Number(session?.length ?? exercises.length),
+  };
+}
+
 async function incrementExerciseDone(client: HanyuClient, userId: string) {
   const today = toDateString();
   const { data: existing, error: existingError } = await client
@@ -122,6 +140,24 @@ async function incrementExerciseDone(client: HanyuClient, userId: string) {
   if (error) {
     throw createRepositoryError(error, 'Failed to create exercise stats row');
   }
+}
+
+export async function buildExerciseSession(
+  unitCode: string | null | undefined,
+  length: number = 8,
+  client: HanyuClient,
+): Promise<ExerciseSession> {
+  const safeLength = Math.min(20, Math.max(1, Math.trunc(Number(length)) || 8));
+  const { data, error } = await (client.rpc as any)('build_exercise_session', {
+    p_unit_code: unitCode ?? null,
+    p_length: safeLength,
+  });
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to build exercise session');
+  }
+
+  return normalizeExerciseSession(data);
 }
 
 export async function generateExercise(

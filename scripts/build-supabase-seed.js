@@ -194,6 +194,8 @@ function buildExerciseRows() {
   return exercises.map((exercise) => {
     const prompt = {
       type: exercise.type,
+      slug: exercise.slug,
+      unit_code: exercise.unit_code,
       ...(exercise.prompt || {}),
       explanation: exercise.explanation ?? exercise.prompt?.explanation ?? null,
     };
