@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { loadOfficialCharacters } from './lib/official-terms.js';
 import { loadOfficialGrammar } from './lib/official-grammar.js';
 import { deriveGrammarPrerequisites } from './lib/grammar-prerequisites.js';
+import { deriveUnits } from './lib/derive-units.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
@@ -70,3 +71,14 @@ writeFileSync(
   'utf8',
 );
 console.log(`prerrequisitos: ${prerequisites.length} -> grammar-prerequisites.json`);
+
+const corpus = [];
+for (const level of [1, 2, 3]) {
+  corpus.push(...JSON.parse(readFileSync(join(seedDir, `hsk${level}-words.json`), 'utf-8')));
+}
+
+// El corpus no lleva id: lo asigna Postgres al sembrarlo. Aquí se usa el índice
+// estable dentro del fichero, y el generador de seed lo resuelve por hanzi.
+const units = deriveUnits(grammar, corpus.map((word, index) => ({ ...word, id: index })));
+writeFileSync(join(seedDir, 'units.json'), JSON.stringify(units, null, 2), 'utf8');
+console.log(`unidades: ${units.length} -> units.json`);

@@ -332,4 +332,16 @@ describe('contrato del corpus', () => {
 
     expect(missing).toEqual([]);
   });
+
+  it('deriva una unidad por cada punto de gramática, con contenido', () => {
+    const units = JSON.parse(readFileSync(join(seedDir, 'units.json'), 'utf8'));
+    const grammar = JSON.parse(readFileSync(join(seedDir, 'grammar-points.json'), 'utf8'));
+
+    expect(units).toHaveLength(grammar.filter((point) => point.items.length > 0).length);
+
+    const empty = units.filter(
+      (unit) => unit.word_ids.length === 0 && unit.patterns.length === 0,
+    );
+    expect(empty.map((unit) => `${unit.code} ${unit.title}`)).toEqual([]);
+  });
 });
