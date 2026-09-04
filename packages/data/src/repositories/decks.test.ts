@@ -154,8 +154,8 @@ describe('decks repository', () => {
       deck_cards: { data: [{ deck_id: 'd1', word_id: 5 }, { deck_id: 'd1', word_id: 6 }], error: null },
       learner_skill_state: {
         data: [
-          { target_id: 5, next_review_at: '2020-01-01T00:00:00.000Z' },
-          { target_id: 7, next_review_at: '2020-01-01T00:00:00.000Z' },
+          { target_id: 5, fsrs_state: 'review', next_review_at: '2020-01-01T00:00:00.000Z' },
+          { target_id: 6, fsrs_state: 'new', next_review_at: '2020-01-01T00:00:00.000Z' },
         ],
         error: null,
       },

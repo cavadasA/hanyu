@@ -18,8 +18,26 @@ export function loadReadings() {
 
   return readdirSync(readingDir)
     .filter(name => name.endsWith('.json'))
-    .sort()
-    .map(name => JSON.parse(readFileSync(join(readingDir, name), 'utf8')));
+    .map(name => {
+      const reading = JSON.parse(readFileSync(join(readingDir, name), 'utf8'));
+      const expectedSlug = name.slice(0, -'.json'.length);
+      if (reading.slug !== expectedSlug) {
+        throw new Error(`Reading slug ${reading.slug} must match filename ${name}`);
+      }
+      return reading;
+    })
+    .sort((a, b) => {
+      if (a.hsk_level !== b.hsk_level) return a.hsk_level - b.hsk_level;
+      if (a.series !== b.series) {
+        if (a.series === null || a.series === undefined) return 1;
+        if (b.series === null || b.series === undefined) return -1;
+        return String(a.series).localeCompare(String(b.series));
+      }
+      const aIndex = a.series_index ?? Number.MAX_SAFE_INTEGER;
+      const bIndex = b.series_index ?? Number.MAX_SAFE_INTEGER;
+      if (aIndex !== bIndex) return aIndex - bIndex;
+      return String(a.slug).localeCompare(String(b.slug));
+    });
 }
 
 function loadDictionary() {

@@ -184,4 +184,20 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'create or replace function public.get_due_cards');
     expect(normalized).not.toContain('retrievability =');
   });
+
+  it('aplica el hardening posterior sobre todas las migraciones 030x', () => {
+    const migration = readMigration('2026090401_followup_hardening.sql');
+    const normalized = normalizeSql(migration);
+
+    expectSqlToContain(migration, 'drop function if exists public.create_starter_deck(text, integer);');
+    expectSqlToContain(migration, 'drop function if exists public.get_due_cards(integer, uuid, public.learning_skill);');
+    expectSqlToContain(migration, 'drop function if exists public.get_due_cards(integer, uuid);');
+    expectSqlToContain(migration, 'create or replace function public.build_review_queue(');
+    expectSqlToContain(migration, 'create or replace function public.get_dashboard(');
+    expectSqlToContain(migration, 'alter table public.reading');
+    expectSqlToContain(migration, 'insert into public.content_teaches');
+    expect(normalized).toContain("fsrs_state <> 'new'");
+    expect(normalized).toContain('next_review_at is not null');
+    expect(normalized).toContain('from public.reading');
+  });
 });

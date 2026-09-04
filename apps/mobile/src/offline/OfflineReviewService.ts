@@ -28,7 +28,7 @@ export interface OfflineReviewServiceDeps {
   buildQueueOnline: (input: {
     skill: LearningSkill;
     deckId: string | null;
-  }) => Promise<{ cards: unknown[]; deck_size?: number }>;
+  }) => Promise<{ cards: unknown[]; deck_size?: number | null }>;
   /** The server selects the queue; this strategy orders that selected set. */
   cardOrder: () => QueueStrategy;
   /** Injected clock – production default: `() => new Date()`. */
@@ -49,7 +49,7 @@ export class OfflineReviewService {
   private readonly buildQueueOnlineImpl: (input: {
     skill: LearningSkill;
     deckId: string | null;
-  }) => Promise<{ cards: unknown[]; deck_size?: number }>;
+  }) => Promise<{ cards: unknown[]; deck_size?: number | null }>;
   private readonly cardOrder: () => QueueStrategy;
   private readonly now: () => Date;
   private readonly uuid: () => string;
@@ -110,7 +110,7 @@ export class OfflineReviewService {
       this._lastDeckSize =
         typeof online.deck_size === 'number' && Number.isFinite(online.deck_size)
           ? online.deck_size
-          : freshCards.length;
+          : null;
 
       await this.store.cacheCards(freshCards);
       return orderQueue(freshCards, this.now(), this.params(), this.cardOrder());

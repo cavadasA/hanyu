@@ -145,6 +145,8 @@ function buildReadingRows() {
     sqlInteger(reading.series_index ?? null),
     sqlJson(reading.sentences),
     sqlJson(reading.questions || []),
+    sqlTextArray(reading.target_words),
+    sqlTextArray(reading.target_grammar),
     sqlString(reading.audio_kind || 'tts'),
     sqlString(reading.audio_url ?? null),
   ]);
@@ -158,6 +160,71 @@ function buildReadingContentRows() {
     sqlString('reading'),
     sqlString(reading.slug),
   ]);
+}
+
+const GRAMMAR_TARGET_LEVELS = {
+  '2.2.1': 2,
+  '2.6.1': 1,
+  '5.4.2': 2,
+  '5.4.4': 2,
+  '6.3.4': 2,
+  '6.3.5': 2,
+  '6.4.2': 2,
+  '6.4.3': 2,
+  '6.4.4': 2,
+  '7.1.1': 2,
+};
+
+function buildReadingTeachingRows() {
+  return loadReadings().flatMap(reading => [
+    ...(reading.target_words || []).map(target => [
+      reading.slug,
+      'word',
+      target,
+      reading.hsk_level,
+    ]),
+    ...(reading.target_grammar || []).map(target => {
+      const level = GRAMMAR_TARGET_LEVELS[target];
+      if (!level) {
+        throw new Error(`Unknown grammar target ${target} in ${reading.slug}`);
+      }
+      return [reading.slug, 'grammar', target, level];
+    }),
+  ]);
+}
+
+function buildReadingTeachesSql() {
+  const rows = buildReadingTeachingRows();
+  if (!rows.length) return '-- content_teaches: no rows\n';
+
+  const values = rows
+    .map(row => `  (${sqlString(row[0])}, ${sqlString(row[1])}, ${sqlString(row[2])}, ${sqlInteger(row[3])})`)
+    .join(',\n');
+
+  return `with reading_targets (slug, target_kind, target_value, target_level) as (\n` +
+    `  values\n${values}\n` +
+    `), resolved as (\n` +
+    `  select ci.id as content_id, 'word'::public.learning_target_kind as target_kind, w.id as target_id\n` +
+    `  from reading_targets t\n` +
+    `  join public.content_item ci on ci.source_table = 'reading' and ci.source_id = t.slug\n` +
+    `  join lateral (\n` +
+    `    select w.id\n` +
+    `    from public.words w\n` +
+    `    join public.reading r on r.slug = t.slug\n` +
+    `    where t.target_kind = 'word' and w.hanzi = t.target_value and w.hsk_level <= r.hsk_level\n` +
+    `    order by w.hsk_level desc, coalesce(w.sense_index, 0), w.id\n` +
+    `    limit 1\n` +
+    `  ) w on true\n` +
+    `  union all\n` +
+    `  select ci.id, 'grammar'::public.learning_target_kind, g.id\n` +
+    `  from reading_targets t\n` +
+    `  join public.content_item ci on ci.source_table = 'reading' and ci.source_id = t.slug\n` +
+    `  join public.grammar_points g on g.code = t.target_value and g.hsk_level = t.target_level\n` +
+    `)\n` +
+    `insert into public.content_teaches (content_id, target_kind, target_id, role)\n` +
+    `select distinct content_id, target_kind, target_id, 'target'::public.teaches_role\n` +
+    `from resolved\n` +
+    `on conflict (content_id, target_kind, target_id) do update set role = excluded.role;\n`;
 }
 
 export function buildSeedSql() {
@@ -219,9 +286,9 @@ export function buildSeedSql() {
     ),
     buildInsert(
       'reading',
-      ['slug', 'hsk_level', 'format', 'title', 'topic', 'series', 'series_index', 'sentences', 'questions', 'audio_kind', 'audio_url'],
+      ['slug', 'hsk_level', 'format', 'title', 'topic', 'series', 'series_index', 'sentences', 'questions', 'target_words', 'target_grammar', 'audio_kind', 'audio_url'],
       readingRows,
-      'on conflict (slug) do update set hsk_level = excluded.hsk_level, format = excluded.format, title = excluded.title, topic = excluded.topic, series = excluded.series, series_index = excluded.series_index, sentences = excluded.sentences, questions = excluded.questions, audio_kind = excluded.audio_kind, audio_url = excluded.audio_url',
+      'on conflict (slug) do update set hsk_level = excluded.hsk_level, format = excluded.format, title = excluded.title, topic = excluded.topic, series = excluded.series, series_index = excluded.series_index, sentences = excluded.sentences, questions = excluded.questions, target_words = excluded.target_words, target_grammar = excluded.target_grammar, audio_kind = excluded.audio_kind, audio_url = excluded.audio_url',
     ),
     buildInsert(
       'content_item',
@@ -229,6 +296,7 @@ export function buildSeedSql() {
       readingContentRows,
       'on conflict (source_table, source_id) do update set hsk_level = excluded.hsk_level, title = excluded.title',
     ),
+    buildReadingTeachesSql(),
     'commit;',
     '',
   ].join('\n');
@@ -243,6 +311,7 @@ export function buildSeedSql() {
       generated_exercises: exerciseRows.length,
       readings: readingRows.length,
       reading_content_items: readingContentRows.length,
+      reading_teaches: buildReadingTeachingRows().length,
     },
   };
 }

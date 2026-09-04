@@ -33,7 +33,7 @@ const payload = {
     target: 1,
     completed: 0,
     level: 2,
-    next: { id: 'r1', title: 'Cafe', hsk_level: 2, format: 'story' },
+    next: { slug: 'r1', title: 'Cafe', hsk_level: 2, format: 'story' },
   },
   progress: { completed_blocks: 1, total_blocks: 3 },
 };

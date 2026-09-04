@@ -27,10 +27,12 @@ export async function getToday(client: HanyuClient) {
     callRpcVariants(client, 'count_deck_cards', [{ p_deck_id: null, p_due_only: true }]),
     client.from('user_stats').select('*').eq('user_id', userId).eq('date', today).maybeSingle(),
     client
-      .from('generated_readings')
-      .select('id, title, hsk_level, format')
+      .from('reading')
+      .select('slug, title, hsk_level, format, topic, series, series_index, audio_kind, audio_url')
       .eq('hsk_level', currentLevel)
-      .order('created_at', { ascending: false })
+      .order('series', { ascending: true, nullsFirst: false })
+      .order('series_index', { ascending: true, nullsFirst: false })
+      .order('slug', { ascending: true })
       .limit(1)
       .maybeSingle(),
   ]);

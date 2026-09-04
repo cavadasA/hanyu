@@ -93,6 +93,19 @@ describe('validateReading', () => {
     expect(validateReading(reading, context).map(i => i.kind)).toContain('answers_not_spread');
   });
 
+  it('rechaza una secuencia A-B-C predecible aunque las respuestas no sean iguales', () => {
+    const reading = {
+      ...valid,
+      questions: [
+        { ...valid.questions[0], answer_index: 0 },
+        { ...valid.questions[0], answer_index: 1 },
+        { ...valid.questions[0], answer_index: 2 },
+      ],
+    };
+
+    expect(validateReading(reading, context).map(i => i.kind)).toContain('answers_not_spread');
+  });
+
   it('exige que cada pregunta apunte a una frase que exista', () => {
     const reading = {
       ...valid,

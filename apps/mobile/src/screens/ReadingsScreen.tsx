@@ -9,7 +9,7 @@ import { EmptyState } from '../ui/EmptyState';
 import { ErrorBanner } from '../ui/ErrorBanner';
 import { Screen } from '../ui/Screen';
 
-const LEVELS: HskLevel[] = [1, 2, 3];
+const LEVELS: HskLevel[] = [2];
 const TOPICS: Array<{ value?: string; label: string }> = [
   { label: 'All topics' },
   { value: 'compras', label: 'compras' },
@@ -28,7 +28,7 @@ const FORMAT_LABELS: Record<ReadingFormat, string> = {
 export function ReadingsScreen() {
   const router = useRouter();
   const { colors } = useTheme();
-  const readings = useReadings();
+  const readings = useReadings(undefined, 2);
   const busy = readings.loading;
 
   return (

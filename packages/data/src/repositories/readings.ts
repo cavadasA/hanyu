@@ -8,7 +8,6 @@ import type {
   ReadingSummary,
 } from '../types';
 import {
-  callRpcVariants,
   createRepositoryError,
   getRequiredUserId,
   parseJsonField,
@@ -17,7 +16,7 @@ import {
 
 const VALID_FORMATS = new Set(['short_text', 'story', 'dialogue']);
 const READING_SELECT =
-  'slug, hsk_level, format, title, topic, series, series_index, sentences, questions, audio_kind, audio_url';
+  'slug, hsk_level, format, title, topic, series, series_index, sentences, questions, target_words, target_grammar, audio_kind, audio_url';
 
 function normalizeQuestions(questions: unknown) {
   return (Array.isArray(questions) ? questions : []).map((question: any, index: number) => ({
@@ -88,15 +87,6 @@ function scoreLocally(questions: any, answers: any) {
   };
 }
 
-function normalizeCompletionResult(payload: any, fallbackQuestions: any[] = []) {
-  const data = Array.isArray(payload) ? payload[0] : payload;
-  return {
-    score: Number(data?.score || 0),
-    total: Number(data?.total || fallbackQuestions.length || 0),
-    results: data?.results || [],
-  };
-}
-
 async function incrementReadingStat(client: HanyuClient, userId: string) {
   const today = toDateString();
   const { data: existing, error: existingError } = await client
@@ -138,7 +128,13 @@ export async function getReadings(
   params: { level?: HskLevel; topic?: string; format?: ReadingFormat } = {},
   client: HanyuClient,
 ): Promise<ReadingSummary[]> {
-  let query = client.from('reading').select(READING_SELECT).order('hsk_level').order('slug');
+  let query = client
+    .from('reading')
+    .select(READING_SELECT)
+    .order('hsk_level')
+    .order('series', { ascending: true, nullsFirst: false })
+    .order('series_index', { ascending: true, nullsFirst: false })
+    .order('slug');
 
   if (params.level) {
     query = query.eq('hsk_level', params.level);
@@ -174,6 +170,8 @@ function normalizeSummary(row: any): ReadingSummary {
     series_index: row.series_index === null || row.series_index === undefined
       ? null
       : Number(row.series_index),
+    target_words: Array.isArray(row.target_words) ? row.target_words.map(String) : [],
+    target_grammar: Array.isArray(row.target_grammar) ? row.target_grammar.map(String) : [],
     audio_kind: row.audio_kind === 'human' ? 'human' : 'tts',
     audio_url: row.audio_url === null || row.audio_url === undefined ? null : String(row.audio_url),
     ...(row.created_at ? { created_at: String(row.created_at) } : {}),
@@ -229,18 +227,6 @@ export async function completeReading(
   answers: Record<string, string>,
   client: HanyuClient,
 ): Promise<ReadingResult> {
-  try {
-    const rpcData = await callRpcVariants(client, 'submit_reading_attempt', [
-      { reading_id: id, answers },
-      { p_reading_id: id, p_answers: answers },
-      { reading_id: id, p_answers: answers },
-    ]);
-
-    return normalizeCompletionResult(rpcData);
-  } catch {
-    // Fallback for local/dev environments without deployed RPC.
-  }
-
   const reading = await loadReadingRow(id, client);
   const localResult = scoreLocally(parseJsonField(reading.questions, []), answers);
   const userId = await getRequiredUserId(client);

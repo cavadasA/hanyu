@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { getToday } from './today';
 
-function clientFor(options: { settings?: Record<string, unknown> } = {}) {
+function clientFor(options: { settings?: Record<string, unknown>; reading?: unknown } = {}) {
   const rpc = vi
     .fn()
     .mockResolvedValueOnce({ data: [{ deck_id: null, count: 150 }], error: null })
@@ -38,11 +38,15 @@ function clientFor(options: { settings?: Record<string, unknown> } = {}) {
       return s;
     }
 
-    if (table === 'generated_readings') {
+    if (table === 'reading') {
       const s = { select: vi.fn() };
-      s.select.mockReturnValue({
-        eq: vi.fn(() => ({ order: vi.fn(() => ({ limit: vi.fn(() => ({ maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }) })) })) })),
-      });
+      const readingQuery: any = {
+        eq: vi.fn(() => readingQuery),
+        order: vi.fn(() => readingQuery),
+        limit: vi.fn(() => readingQuery),
+        maybeSingle: vi.fn().mockResolvedValue({ data: options.reading ?? null, error: null }),
+      };
+      s.select.mockReturnValue(readingQuery);
       return s;
     }
 
@@ -92,5 +96,15 @@ describe('getToday', () => {
     const today = await getToday(clientFor({ settings: { new_cards_per_day: 15 } }));
 
     expect(today.flashcards.new_target).toBe(15);
+  });
+
+  it('lee la próxima lectura del catálogo reading', async () => {
+    const reading = { slug: 'reading-1', title: 'Una lectura', hsk_level: 2, format: 'short_text' };
+    const client = clientFor({ reading });
+
+    const today = await getToday(client as never);
+
+    expect(today.reading.next).toEqual(reading);
+    expect((client as any).from).toHaveBeenCalledWith('reading');
   });
 });

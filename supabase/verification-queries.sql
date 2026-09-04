@@ -16,7 +16,9 @@ where table_schema = 'public'
     'user_stats',
     'generated_exercises',
     'exercise_attempts',
-    'generated_readings',
+    'reading',
+    'content_item',
+    'content_teaches',
     'reading_attempts'
   )
 order by table_name;
@@ -37,7 +39,9 @@ where schemaname = 'public'
     'user_stats',
     'generated_exercises',
     'exercise_attempts',
-    'generated_readings',
+    'reading',
+    'content_item',
+    'content_teaches',
     'reading_attempts'
   )
 order by tablename;
@@ -55,7 +59,6 @@ where proname in (
   'set_updated_at',
   'handle_new_user',
   'ensure_today_stats',
-  'create_starter_deck',
   'apply_review',
   'log_study_time',
   'get_dashboard'

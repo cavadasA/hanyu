@@ -250,17 +250,16 @@ describe('CardsScreen', () => {
     expect(screen.getByText('谢谢')).toBeTruthy();
   });
 
-  it('opens the diagnostic from the empty state', async () => {
+  it('does not open the diagnostic for an explicitly focused empty deck', async () => {
     mockOfflineService.lastDeckSize = 0;
     mockGetDashboard.mockResolvedValueOnce({ cards: { total: 0, due: 0, by_status: {} } });
     mockLoadQueue.mockResolvedValue([]);
 
     await renderCards();
 
-    expect(screen.getByText('Set up your HSK2 study plan')).toBeTruthy();
-    await fireEvent.press(screen.getByText('Start diagnostic'));
-
-    expect(mockPush).toHaveBeenCalledWith('/diagnostic');
+    expect(screen.queryByText('Set up your HSK2 study plan')).toBeNull();
+    expect(screen.getByText('No cards due right now')).toBeTruthy();
+    expect(mockPush).not.toHaveBeenCalledWith('/diagnostic');
   });
 
   it('shows no cards due state when deck exists but no cards are due', async () => {

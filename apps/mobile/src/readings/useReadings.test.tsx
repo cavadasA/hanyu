@@ -11,6 +11,8 @@ const firstReading: ReadingSummary = {
   topic: 'saludos',
   series: null,
   series_index: null,
+  target_words: [],
+  target_grammar: [],
   audio_kind: 'tts',
   audio_url: null,
 };
@@ -24,6 +26,8 @@ const storyReading: ReadingSummary = {
   topic: 'estudio',
   series: 'escuela',
   series_index: 1,
+  target_words: ['同学'],
+  target_grammar: ['6.3.5'],
   audio_kind: 'tts',
   audio_url: null,
 };

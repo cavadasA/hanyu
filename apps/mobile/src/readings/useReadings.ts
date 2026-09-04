@@ -10,13 +10,13 @@ interface ReadingApi {
   getReadings(input: { level: HskLevel; topic?: string }): Promise<ReadingSummary[]>;
 }
 
-export function useReadings(api?: ReadingApi) {
+export function useReadings(api?: ReadingApi, initialLevel: HskLevel = 1) {
   const defaultApi = useRef<ReadingApi | null>(null);
   if (!api && !defaultApi.current) {
     defaultApi.current = getData().readings;
   }
   const readingApi = api ?? defaultApi.current!;
-  const [level, setLevel] = useState<HskLevel>(1);
+  const [level, setLevel] = useState<HskLevel>(initialLevel);
   const [topic, setTopic] = useState<string | undefined>(undefined);
   const [readings, setReadings] = useState<ReadingSummary[]>([]);
   const [loading, setLoading] = useState(false);

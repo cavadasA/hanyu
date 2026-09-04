@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { toUserMessage, type Word } from '@hanyu/data';
+import { toUserMessage, type HskLevel, type Word } from '@hanyu/data';
 import { getData } from '../lib/data';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
@@ -10,7 +10,7 @@ import { Card } from '../ui/Card';
 import { ErrorBanner } from '../ui/ErrorBanner';
 import { Screen } from '../ui/Screen';
 
-const TARGET_LEVELS = [1, 2];
+const TARGET_LEVELS: HskLevel[] = [1, 2];
 const SAMPLE_SIZE = 12;
 
 type DiagnosticAnswer = { word_id: number; known: boolean };
@@ -28,8 +28,17 @@ export default function DiagnosticScreen() {
       // El plan se crea antes de preguntar nada: si el usuario se salta el
       // diagnóstico, la app ya tiene con qué trabajar.
       await getData().flashcards.createStudyPlan(TARGET_LEVELS);
-      const page = await getData().words.getWords({ level: 2, page_size: SAMPLE_SIZE });
-      setWords(page.items ?? []);
+      const baseSize = Math.floor(SAMPLE_SIZE / TARGET_LEVELS.length);
+      const remainder = SAMPLE_SIZE % TARGET_LEVELS.length;
+      const pages = await Promise.all(
+        TARGET_LEVELS.map((level, levelIndex) =>
+          getData().words.getWords({
+            level,
+            page_size: baseSize + (levelIndex < remainder ? 1 : 0),
+          }),
+        ),
+      );
+      setWords(pages.flatMap(page => page.items ?? []).slice(0, SAMPLE_SIZE));
     } catch (caught) {
       setError(toUserMessage(caught));
     }

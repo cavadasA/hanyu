@@ -132,7 +132,7 @@ export async function getDashboard(client: HanyuClient) {
       .gte('date', toDateString(weekAgo)),
     client.from('user_stats').select('time_spent_ms').eq('user_id', userId),
     client.from('generated_exercises').select('type'),
-    client.from('generated_readings').select('*', { count: 'exact', head: true }),
+    client.from('reading').select('*', { count: 'exact', head: true }),
     getStreak(client),
   ]);
 

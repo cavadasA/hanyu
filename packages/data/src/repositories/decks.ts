@@ -50,7 +50,7 @@ export async function getDecks(client: HanyuClient): Promise<DeckSummary[]> {
 
   const { data: due, error: dueError } = await client
     .from('learner_skill_state')
-    .select('target_id, next_review_at')
+    .select('target_id, fsrs_state, next_review_at')
     .eq('user_id', userId)
     .eq('target_kind', 'word')
     .eq('skill', 'recognition')
@@ -58,7 +58,11 @@ export async function getDecks(client: HanyuClient): Promise<DeckSummary[]> {
     .lte('next_review_at', nowIso);
   if (dueError) throw createRepositoryError(dueError, 'Failed to load due words');
 
-  const dueWords = new Set((due || []).map((r: any) => String(r.target_id)));
+  const dueWords = new Set(
+    (due || [])
+      .filter((r: any) => r.fsrs_state !== 'new' && r.next_review_at !== null)
+      .map((r: any) => String(r.target_id)),
+  );
   const byDeck: Record<string, { total: number; dueCount: number }> = {};
   for (const m of (members || []) as any[]) {
     const bucket = byDeck[m.deck_id] || (byDeck[m.deck_id] = { total: 0, dueCount: 0 });

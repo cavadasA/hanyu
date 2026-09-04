@@ -1,10 +1,10 @@
 {
-  "slug": "market-01-first-visit",
+  "slug": "shop-01-tea-and-coffee",
   "title": "去商店买东西",
   "hsk_level": 2,
   "format": "short_text",
   "topic": "compras",
-  "series": "mercado",
+  "series": "tienda",
   "series_index": 1,
   "target_words": ["比", "咖啡", "但是"],
   "target_grammar": ["6.3.4"],

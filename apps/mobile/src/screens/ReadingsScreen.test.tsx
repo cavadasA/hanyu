@@ -52,5 +52,7 @@ describe('ReadingsScreen', () => {
       topic: 'compras',
     }));
     expect(view.queryByRole('button', { name: 'Generate reading' })).toBeNull();
+    expect(view.queryByRole('button', { name: 'HSK 1' })).toBeNull();
+    expect(view.queryByRole('button', { name: 'HSK 3' })).toBeNull();
   });
 });

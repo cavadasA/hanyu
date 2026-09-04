@@ -73,6 +73,19 @@ describe('buildQueue', () => {
 
     expect(queue.cards).toEqual([]);
   });
+
+  it('devuelve el tamaño real del mazo enfocado aunque la cola esté vacía', async () => {
+    const rpc = vi
+      .fn()
+      .mockResolvedValueOnce({ data: [], error: null })
+      .mockResolvedValueOnce({ data: [{ deck_id: 'd1', count: 7 }], error: null });
+    const client = queueClient([]) as any;
+    client.rpc = rpc;
+
+    const queue = await buildQueue({ skill: 'recognition', deckId: 'd1' }, client);
+
+    expect(queue).toEqual({ cards: [], deck_size: 7 });
+  });
 });
 
 describe('study plan and diagnostic', () => {

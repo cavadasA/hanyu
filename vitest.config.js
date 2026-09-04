@@ -10,7 +10,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@hanyu/domain': path.resolve(__dirname, 'packages/domain/src/index.ts'),
-      'npm:@hanyu/domain': path.resolve(__dirname, 'packages/domain/src/index.ts'),
     },
   },
   test: {

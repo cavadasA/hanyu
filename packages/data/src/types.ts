@@ -217,6 +217,8 @@ export interface ReadingSummary {
   topic: string;
   series: string | null;
   series_index: number | null;
+  target_words: string[];
+  target_grammar: string[];
   audio_kind: ReadingAudioKind;
   audio_url: string | null;
   created_at?: string;
@@ -364,7 +366,7 @@ export interface TodayPayload {
     target: number;
     completed: number;
     level: number;
-    next: { id: string; title: string; hsk_level: number; format: string } | null;
+    next: { slug: string; title: string; hsk_level: number; format: string } | null;
   };
   progress: {
     completed_blocks: number;

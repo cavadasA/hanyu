@@ -12,6 +12,9 @@ describe('buildSeedSql', () => {
     expect(generated.sql).toContain('insert into public.grammar_points');
     expect(generated.sql).toContain('insert into public.grammar_prerequisite');
     expect(generated.sql).toContain('insert into public.generated_exercises');
+    expect(generated.sql).toContain('target_words');
+    expect(generated.sql).toContain('target_grammar');
+    expect(generated.sql).toContain('insert into public.content_teaches');
 
     expect(generated.counts.words).toBeGreaterThan(0);
     expect(generated.counts.characters).toBe(655);

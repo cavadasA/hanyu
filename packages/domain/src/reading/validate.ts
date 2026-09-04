@@ -130,11 +130,13 @@ export function validateReading(
     }
   });
 
-  // Con tres o más preguntas, tenerlas todas en la misma opción convierte el
-  // cuestionario en un test de pulsar siempre A.
+  // Con tres o más preguntas, tenerlas todas en la misma opción o seguir una
+  // secuencia fija convierte el cuestionario en un test predecible.
   if (reading.questions.length >= 3) {
-    const positions = new Set(reading.questions.map(question => question.answer_index));
-    if (positions.size === 1) {
+    const answerIndexes = reading.questions.map(question => question.answer_index);
+    const positions = new Set(answerIndexes);
+    const sequential = answerIndexes.every((answer, index) => answer === index);
+    if (positions.size === 1 || sequential) {
       issues.push({ kind: 'answers_not_spread' });
     }
   }

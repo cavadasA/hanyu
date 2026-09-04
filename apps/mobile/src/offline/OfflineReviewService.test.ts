@@ -150,6 +150,16 @@ describe('loadQueue – online refresh', () => {
     expect(service.lastDeckSize).toBe(7);
   });
 
+  test('no infiere el tamaño del mazo a partir de una cola vacía', async () => {
+    const service = makeService({
+      buildQueueOnline: jest.fn().mockResolvedValue({ cards: [] }),
+    });
+
+    await service.loadQueue('recognition', 'deck-1');
+
+    expect(service.lastDeckSize).toBeNull();
+  });
+
   test('passes a non-recognition skill to the online loader', async () => {
     const buildQueueOnline = jest.fn().mockResolvedValue({ cards: [] });
     const service = makeService({ buildQueueOnline });

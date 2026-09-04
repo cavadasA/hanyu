@@ -7,7 +7,7 @@
   "series": null,
   "series_index": null,
   "target_words": ["电影", "一起", "快乐"],
-  "target_grammar": ["一…就…"],
+  "target_grammar": ["6.4.4"],
   "sentences": [
     { "zh": "星期天我没有课，想和朋友一起看电影。", "pinyin": "Xīngqītiān wǒ méiyǒu kè, xiǎng hé péngyou yìqǐ kàn diànyǐng.", "es": "El domingo no tengo clase y quiero ver una película con mi amigo." },
     { "zh": "我们在家里吃饭，再坐地铁去电影院。", "pinyin": "Wǒmen zài jiā lǐ chīfàn, zài zuò dìtiě qù diànyǐngyuàn.", "es": "Comemos en casa y después vamos al cine en metro." },
@@ -18,8 +18,8 @@
     { "zh": "我们还一起看书。", "pinyin": "Wǒmen hái yìqǐ kàn shū.", "es": "También leemos juntos." }
   ],
   "questions": [
-    { "prompt": "他们怎么去电影院？", "options": ["坐地铁", "坐飞机", "走路"], "answer_index": 0, "evidence_sentence": 1 },
-    { "prompt": "朋友觉得电影怎么样？", "options": ["很冷", "很好看", "太贵"], "answer_index": 1, "evidence_sentence": 2 },
-    { "prompt": "我晚上给谁打电话？", "options": ["老师", "朋友", "妈妈"], "answer_index": 2, "evidence_sentence": 5 }
+    { "prompt": "他们怎么去电影院？", "options": ["坐飞机", "走路", "坐地铁"], "answer_index": 2, "evidence_sentence": 1 },
+    { "prompt": "朋友觉得电影怎么样？", "options": ["很好看", "很冷", "太贵"], "answer_index": 0, "evidence_sentence": 2 },
+    { "prompt": "我晚上给谁打电话？", "options": ["老师", "妈妈", "朋友"], "answer_index": 1, "evidence_sentence": 5 }
   ]
 }

@@ -447,7 +447,7 @@ export default function CardsScreen() {
         ) : null}
 
         {dueCount === 0 ? (
-          deckSize === 0 ? (
+          deckSize === 0 && !focusedDeckId ? (
             <EmptyState
               title="Set up your HSK2 study plan"
               body="Build the complete HSK 1–2 plan and skip words you already recognize."

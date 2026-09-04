@@ -7,7 +7,7 @@
   "series": null,
   "series_index": null,
   "target_words": ["地铁", "车站", "走"],
-  "target_grammar": ["趋向补语"],
+  "target_grammar": ["5.4.2"],
   "sentences": [
     { "zh": "我今天来到这里，不知道车站怎么走。", "pinyin": "Wǒ jīntiān lái dào zhèlǐ, bù zhīdào chēzhàn zěnme zǒu.", "es": "Hoy he venido aquí, pero no sé cómo llegar a la estación." },
     { "zh": "我问一个人地铁站在哪里。", "pinyin": "Wǒ wèn yí gè rén dìtiě zhàn zài nǎlǐ.", "es": "Le pregunto a una persona dónde está la estación de metro." },
@@ -20,8 +20,8 @@
     { "zh": "我觉得走路很好。", "pinyin": "Wǒ juéde zǒulù hěn hǎo.", "es": "Creo que caminar está muy bien." }
   ],
   "questions": [
-    { "prompt": "地铁站在哪里？", "options": ["右边", "后面", "商店里"], "answer_index": 0, "evidence_sentence": 2 },
-    { "prompt": "我到了车站以后买了什么？", "options": ["衣服", "票", "药"], "answer_index": 1, "evidence_sentence": 5 },
-    { "prompt": "谁走过来了？", "options": ["老师", "医生", "朋友"], "answer_index": 2, "evidence_sentence": 7 }
+    { "prompt": "地铁站在哪里？", "options": ["后面", "右边", "商店里"], "answer_index": 1, "evidence_sentence": 2 },
+    { "prompt": "我到了车站以后买了什么？", "options": ["衣服", "药", "票"], "answer_index": 2, "evidence_sentence": 5 },
+    { "prompt": "谁走过来了？", "options": ["朋友", "老师", "医生"], "answer_index": 0, "evidence_sentence": 7 }
   ]
 }

@@ -14,12 +14,18 @@ import type {
 } from '../types';
 import { getSettings } from './settings';
 import {
+  callRpcVariants,
   createRepositoryError,
   getRequiredUserId,
 } from './shared';
 
 const WORD_SELECT =
   'id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level, pos, frequency, sense_index, variants';
+
+function countFromRpc(payload: unknown) {
+  const row = (Array.isArray(payload) ? payload[0] : payload) as any;
+  return Number(row?.count ?? 0);
+}
 
 function mapVersionedCardRow(row: any, word?: any): VersionedCard {
   if (row.version === undefined || row.version === null) {
@@ -94,7 +100,7 @@ function normalizeReviewSyncOutcome(data: unknown): ReviewSyncOutcome {
 export async function buildQueue(
   input: BuildQueueInput,
   client: HanyuClient,
-): Promise<{ cards: VersionedCard[] }> {
+): Promise<{ cards: VersionedCard[]; deck_size: number | null }> {
   const { data, error } = await (client.rpc as any)('build_review_queue', {
     p_deck_id: input.deckId ?? null,
     p_skill: input.skill ?? 'recognition',
@@ -105,9 +111,21 @@ export async function buildQueue(
     throw createRepositoryError(error, 'Failed to build the study queue');
   }
 
+  let deckSize: number | null = null;
+  if (input.deckId) {
+    try {
+      const count = await callRpcVariants(client, 'count_deck_cards', [
+        { p_deck_id: input.deckId, p_due_only: false },
+      ]);
+      deckSize = countFromRpc(count);
+    } catch {
+      // La cola sigue siendo útil si una instalación aún no expone el contador.
+    }
+  }
+
   const rows = (data ?? []) as any[];
   if (rows.length === 0) {
-    return { cards: [] };
+    return { cards: [], deck_size: deckSize };
   }
 
   const { data: words, error: wordsError } = await client
@@ -126,6 +144,7 @@ export async function buildQueue(
       ...mapVersionedCardRow(row, byId.get(Number(row.word_id))),
       is_new: Boolean(row.is_new),
     })),
+    deck_size: deckSize,
   };
 }
 
@@ -342,7 +361,7 @@ export async function getFlashcardStats(client: HanyuClient) {
     client.from('srs_cards').select('*', { count: 'exact', head: true }).eq('user_id', userId),
     client
       .from('learner_skill_state')
-      .select('next_review_at', { count: 'exact' })
+      .select('fsrs_state, next_review_at', { count: 'exact' })
       .eq('user_id', userId)
       .eq('target_kind', 'word')
       .eq('skill', 'recognition')
@@ -404,7 +423,7 @@ export async function getFlashcardStats(client: HanyuClient) {
   return {
     total: totalResult.count || 0,
     due: ((dueResult.data || []) as any[]).filter(
-      (row) => row.next_review_at === null || row.next_review_at <= nowIso,
+      (row) => row.fsrs_state !== 'new' && row.next_review_at !== null && row.next_review_at <= nowIso,
     ).length,
     by_status: byStatus,
     by_level: byLevel,
