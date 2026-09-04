@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { ReadingToken } from '@hanyu/data';
 import { tokens as t } from '../theme/tokens';
@@ -26,6 +27,7 @@ export function ReadingSentence({
   testID,
 }: Props) {
   const { colors } = useTheme();
+  const [translated, setTranslated] = useState(false);
   const sentenceTokens = sentence.tokens ?? [];
 
   return (
@@ -58,8 +60,20 @@ export function ReadingSentence({
         )}
       </View>
 
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Traducir la frase"
+        accessibilityState={{ selected: translated }}
+        onPress={() => setTranslated(value => !value)}
+      >
+        <Text style={[styles.translate, { color: colors.textMuted }]}>Traducir</Text>
+      </Pressable>
+
       {showPinyin ? (
         <Text style={[styles.pinyin, { color: colors.textMuted }]}>{sentence.pinyin}</Text>
+      ) : null}
+      {translated ? (
+        <Text style={[styles.translation, { color: colors.textMuted }]}>{sentence.es}</Text>
       ) : null}
     </View>
   );
@@ -76,6 +90,8 @@ function colorForToken(
       return colors.gold;
     case 'target':
       return colors.vermilion;
+    case 'unknown':
+      return colors.text;
     default:
       return token.type === 'unknown' ? colors.text : colors.vermilion;
   }
@@ -85,5 +101,7 @@ const styles = StyleSheet.create({
   sentence: { marginBottom: t.spacing.md },
   line: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end' },
   token: { fontSize: t.fontSize.xl, lineHeight: 38, marginRight: t.spacing.xs },
+  translate: { fontSize: t.fontSize.xs, marginTop: t.spacing.xs },
   pinyin: { fontSize: t.fontSize.xs, marginTop: 2 },
+  translation: { fontSize: t.fontSize.md, lineHeight: 22, marginTop: t.spacing.xs },
 });

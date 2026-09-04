@@ -4,6 +4,7 @@ import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { toUserMessage, type ReadingDetail, type ReadingResult } from '@hanyu/data';
 import { getData } from '../lib/data';
 import { ReadingQuestions } from '../readings/ReadingQuestions';
+import { GrammarNote } from '../readings/GrammarNote';
 import { ReadingText } from '../readings/ReadingText';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
@@ -96,6 +97,8 @@ export function ReadingDetailScreen() {
         <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Reading</Text>
         <Text style={[styles.title, { color: colors.text }]}>{reading.title}</Text>
       </View>
+
+      <GrammarNote points={reading.grammar_points ?? []} />
 
       <View style={styles.meta}>
         <Badge label={`HSK ${reading.hsk_level}`} />

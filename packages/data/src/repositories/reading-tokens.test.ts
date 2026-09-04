@@ -89,4 +89,45 @@ describe('reading tokens repository integration', () => {
       message: 'Failed to prepare reading words',
     });
   });
+
+  it('carga los puntos de gramática declarados por la lectura', async () => {
+    const reading = readingQuery();
+    reading.single = vi.fn().mockResolvedValue({
+      data: {
+        slug: 'reading-1',
+        hsk_level: 2,
+        format: 'story',
+        title: '你好',
+        topic: 'saludos',
+        series: null,
+        series_index: null,
+        sentences: [{ zh: '你好。', pinyin: 'nǐ hǎo', es: 'Hola.' }],
+        target_grammar: [{ code: '6.3.4', level: 2 }],
+        questions: [],
+        audio_kind: 'tts',
+        audio_url: null,
+      },
+      error: null,
+    });
+    const grammarQuery: Record<string, any> = {
+      select: vi.fn(() => grammarQuery),
+      in: vi.fn(() => grammarQuery),
+      then: (resolve: (value: unknown) => unknown) => Promise.resolve({
+        data: [{ code: '6.3.4', hsk_level: 2, title: '比较句', category: '句子' }],
+        error: null,
+      }).then(resolve),
+    };
+    const client = {
+      from: vi.fn((table: string) => table === 'grammar_points' ? grammarQuery : reading),
+      functions: {
+        invoke: vi.fn().mockResolvedValue({ data: { tokens: [] }, error: null }),
+      },
+    };
+
+    const result = await getReading('reading-1', client as never);
+
+    expect(result.grammar_points).toEqual([
+      expect.objectContaining({ code: '6.3.4', title: '比较句', category: '句子' }),
+    ]);
+  });
 });

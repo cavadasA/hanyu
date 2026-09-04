@@ -1,6 +1,7 @@
 import type { HanyuClient } from '../client';
 import type {
   HskLevel,
+  GrammarPoint,
   ReadingDetail,
   ReadingFormat,
   ReadingGrammarTarget,
@@ -40,6 +41,47 @@ function normalizeGrammarTargets(value: unknown): ReadingGrammarTarget[] {
 
     return code && Number.isInteger(level) ? [{ code, level }] : [];
   });
+}
+
+function normalizeGrammarPoint(point: any): GrammarPoint {
+  return {
+    id: Number(point.id),
+    hsk_level: Number(point.hsk_level) as HskLevel,
+    code: String(point.code),
+    group: point.group ?? null,
+    category: point.category ?? null,
+    detail: point.detail ?? null,
+    title: String(point.title ?? ''),
+    pattern: point.pattern ?? null,
+    explanation: point.explanation ?? null,
+    items: parseJsonField(point.items, []),
+    examples: parseJsonField(point.examples, []),
+    ...(point.order_idx === undefined ? {} : { order_idx: point.order_idx }),
+  };
+}
+
+async function getReadingGrammarPoints(
+  targets: ReadingGrammarTarget[],
+  client: HanyuClient,
+): Promise<GrammarPoint[]> {
+  if (targets.length === 0) {
+    return [];
+  }
+
+  const codes = [...new Set(targets.map(target => target.code))];
+  const { data, error } = await client
+    .from('grammar_points')
+    .select('id, hsk_level, code, "group", category, detail, title, pattern, explanation, items, examples, order_idx')
+    .in('code', codes);
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load reading grammar points');
+  }
+
+  const targetKeys = new Set(targets.map(target => `${target.code}:${target.level}`));
+  return (data ?? [])
+    .map(normalizeGrammarPoint)
+    .filter(point => targetKeys.has(`${point.code}:${point.hsk_level}`));
 }
 
 function normalizeQuestionId(question: any, index: number) {
@@ -239,11 +281,13 @@ export async function getReading(slug: string, client: HanyuClient): Promise<Rea
 
   const sentences = parseJsonField(data.sentences, []) as ReadingSentence[];
   const tokenizedSentences = tokensBySentence(sentences, tokenData.tokens);
+  const targetGrammar = normalizeGrammarTargets(data.target_grammar);
 
   return {
     ...normalizeSummary(data),
     sentences: tokenizedSentences,
     content: sentences.map(sentence => sentence.zh).join(''),
+    grammar_points: await getReadingGrammarPoints(targetGrammar, client),
     questions: normalizeQuestions(parseJsonField(data.questions, [])),
     tokens: tokenData.tokens,
   };

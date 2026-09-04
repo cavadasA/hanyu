@@ -39,4 +39,23 @@ describe('ReadingSentence', () => {
 
     expect(screen.queryByLabelText('。')).toBeNull();
   });
+
+  it('muestra la traducción solo al tocar la frase', async () => {
+    await render(<ReadingSentence sentence={sentence} showPinyin={false} onSelectToken={jest.fn()} />);
+
+    expect(screen.queryByText('El café es más caro que el té.')).toBeNull();
+
+    await fireEvent.press(screen.getByLabelText('Traducir la frase'));
+
+    expect(screen.getByText('El café es más caro que el té.')).toBeTruthy();
+  });
+
+  it('vuelve a esconderla al tocar otra vez', async () => {
+    await render(<ReadingSentence sentence={sentence} showPinyin={false} onSelectToken={jest.fn()} />);
+
+    await fireEvent.press(screen.getByLabelText('Traducir la frase'));
+    await fireEvent.press(screen.getByLabelText('Traducir la frase'));
+
+    expect(screen.queryByText('El café es más caro que el té.')).toBeNull();
+  });
 });

@@ -286,6 +286,7 @@ export interface ReadingSummary {
 export interface ReadingDetail extends ReadingSummary {
   sentences: ReadingSentence[];
   content: string;
+  grammar_points: GrammarPoint[];
   questions: ReadingQuestion[];
   tokens: ReadingToken[];
 }
