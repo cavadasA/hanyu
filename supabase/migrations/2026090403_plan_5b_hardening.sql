@@ -38,6 +38,14 @@ for select using (auth.role() = 'authenticated');
 -- Umbral de estabilidad, en días, para dar una palabra por asentada dentro de
 -- una unidad. Veintiuno es el punto en que el intervalo deja de medirse en días
 -- sueltos; por debajo, llamar "completada" a la unidad sería optimismo.
+create or replace function public.unit_completion_stability_days()
+returns numeric
+language sql
+immutable
+as $$
+  select 21::numeric;
+$$;
+
 alter type public.learning_event_kind add value if not exists 'grammar_studied';
 
 create or replace function public.mark_grammar_studied(p_grammar_id bigint)
@@ -46,6 +54,8 @@ language plpgsql
 security definer
 set search_path = public
 as $$
+declare
+  v_completion_stability_days integer := public.unit_completion_stability_days()::integer;
 begin
   if auth.uid() is null then
     raise exception 'Authentication required';
@@ -59,11 +69,15 @@ begin
     user_id, target_kind, target_id, skill, difficulty, stability, reps,
     learning_steps, scheduled_days, elapsed_days, fsrs_state, suspended
   ) values (
-    auth.uid(), 'grammar', p_grammar_id, 'recognition', 0, 21, 1,
-    0, 21, 0, 'review', false
+    auth.uid(), 'grammar', p_grammar_id, 'recognition', null,
+    v_completion_stability_days, 1, 0, v_completion_stability_days, 0,
+    'review', false
   )
   on conflict (user_id, target_kind, target_id, skill) do update
-    set stability = greatest(coalesce(learner_skill_state.stability, 0), 21),
+    set stability = greatest(
+          coalesce(learner_skill_state.stability, 0),
+          v_completion_stability_days
+        ),
         fsrs_state = 'review',
         suspended = false,
         updated_at = now();
@@ -80,7 +94,9 @@ grant execute on function public.mark_grammar_studied(bigint) to authenticated;
 
 drop function if exists public.active_unit(numeric);
 
-create or replace function public.active_unit(p_stability_days numeric default 21)
+create or replace function public.active_unit(
+  p_stability_days numeric default public.unit_completion_stability_days()
+)
 returns table(
   hsk_level integer,
   code text,

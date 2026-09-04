@@ -18,6 +18,15 @@ function countFromRpc(payload: unknown) {
   return Number(row?.count || 0);
 }
 
+function isMissingRpcError(error: unknown) {
+  return Boolean(
+    error &&
+      typeof error === 'object' &&
+      'code' in error &&
+      (error as { code?: unknown }).code === 'PGRST202',
+  );
+}
+
 async function optionalRpc(
   client: HanyuClient,
   rpcName: string,
@@ -25,8 +34,11 @@ async function optionalRpc(
 ) {
   try {
     return await callRpcVariants(client, rpcName, [args]);
-  } catch {
-    return null;
+  } catch (error) {
+    if (isMissingRpcError(error)) {
+      return null;
+    }
+    throw error;
   }
 }
 

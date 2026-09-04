@@ -81,7 +81,7 @@ export async function getGrammarStudyState(
 
   const { data, error } = await client
     .from('learner_skill_state')
-    .select('stability, suspended')
+    .select('fsrs_state, suspended')
     .eq('target_kind', 'grammar')
     .eq('target_id', numericId)
     .eq('skill', 'recognition')
@@ -91,5 +91,5 @@ export async function getGrammarStudyState(
     throw createRepositoryError(error, 'Failed to load grammar progress');
   }
 
-  return Number(data?.stability ?? 0) >= 21 || Boolean(data?.suspended);
+  return data?.fsrs_state === 'review' || Boolean(data?.suspended);
 }

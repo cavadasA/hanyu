@@ -168,7 +168,7 @@ describe('mobile content repository contracts', () => {
   });
 
   it('recupera el estado persistido de estudio de un punto de gramática', async () => {
-    const rows = queryResult({ data: { stability: 21, suspended: false }, error: null });
+    const rows = queryResult({ data: { fsrs_state: 'review', suspended: false }, error: null });
     const client = { from: vi.fn(() => rows) };
 
     await expect(getGrammarStudyState(42, client as never)).resolves.toBe(true);

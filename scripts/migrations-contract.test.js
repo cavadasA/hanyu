@@ -127,6 +127,7 @@ describe('contratos de migraciones', () => {
     expect(types).toContain('unit: {');
     expect(types).toContain('unit_word: {');
     expect(types).toContain('active_unit: {');
+    expect(types).toContain('unit_completion_stability_days: {');
     expect(types).toContain('create_study_plan: {');
     expect(types).toContain('submit_diagnostic: {');
     expect(types).toContain('p_skill?: string');
@@ -227,6 +228,10 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'grammar_id');
     expectSqlToContain(migration, "add value if not exists 'grammar_studied'");
     expectSqlToContain(migration, 'create or replace function public.mark_grammar_studied(');
+    expectSqlToContain(migration, 'create or replace function public.unit_completion_stability_days()');
+    expectSqlToContain(migration, 'default public.unit_completion_stability_days()');
+    expectSqlToContain(migration, 'v_completion_stability_days integer');
+    expectSqlToContain(migration, "'recognition', null, v_completion_stability_days");
     expectSqlToContain(migration, 'order by random()');
     expectSqlToContain(migration, 'order by case when i.total_words > 0 then 0 else 1 end');
     expectSqlToContain(migration, 'where not q.is_new;');
@@ -242,6 +247,27 @@ describe('contratos de migraciones', () => {
 
     expect(unitMigration).toBe('2026090403_plan_5b_hardening.sql');
     expect(names.indexOf(unitMigration)).toBeGreaterThan(names.indexOf('2026090402_normalize_reading_grammar_targets.sql'));
+  });
+
+  it('incluye una prueba SQL de comportamiento para la ruta diaria', () => {
+    const integrationTest = readFileSync(join(rootDir, 'supabase', 'tests', 'daily_plan.sql'), 'utf8');
+
+    expectSqlToContain(integrationTest, 'begin;');
+    expectSqlToContain(integrationTest, 'from public.active_unit()');
+    expectSqlToContain(integrationTest, 'public.build_review_queue_mode(');
+    expectSqlToContain(integrationTest, 'public.mark_grammar_studied(');
+    expectSqlToContain(integrationTest, 'rollback;');
+    expect(integrationTest).toContain('prerrequisito bloquea');
+  });
+
+  it('publica el hardening SQL posterior para bases que ya aplicaron 0403', () => {
+    const migration = readMigration('2026090404_plan_followup_hardening.sql');
+
+    expectSqlToContain(migration, 'create or replace function public.unit_completion_stability_days()');
+    expectSqlToContain(migration, 'create or replace function public.mark_grammar_studied(');
+    expectSqlToContain(migration, "'recognition', null, v_completion_stability_days");
+    expectSqlToContain(migration, 'create or replace function public.active_unit(');
+    expectSqlToContain(migration, 'order by case when i.total_words > 0 then 0 else 1 end');
   });
 
   it('normaliza el formato antiguo de los objetivos gramaticales', () => {

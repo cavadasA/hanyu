@@ -1,6 +1,15 @@
 import { describe, expect, it, vi } from 'vitest';
 import { getToday } from './today';
 
+type RpcFailure = 'missing' | 'network';
+
+function rpcError(failure: RpcFailure | undefined) {
+  if (!failure) return null;
+  return failure === 'missing'
+    ? { code: 'PGRST202', message: 'Function was not found' }
+    : { code: '42501', message: 'Network or permission failure' };
+}
+
 function clientFor(options: {
   settings?: Record<string, unknown>;
   reading?: unknown;
@@ -8,9 +17,9 @@ function clientFor(options: {
   dueState?: { regular_due_count: number; relearning_count: number };
   queue?: unknown[];
   unit?: unknown;
-  dueStateError?: boolean;
-  unitError?: boolean;
-  learnQueueError?: boolean;
+  dueStateError?: RpcFailure;
+  unitError?: RpcFailure;
+  learnQueueError?: RpcFailure;
 } = {}) {
   const rpc = vi
     .fn()
@@ -18,13 +27,13 @@ function clientFor(options: {
     .mockResolvedValueOnce({ data: [{ deck_id: null, count: options.dueCount ?? 3 }], error: null })
     .mockResolvedValueOnce({
       data: [options.dueState ?? { regular_due_count: 2, relearning_count: 1 }],
-      error: options.dueStateError ? { message: 'RPC not available' } : null,
+      error: rpcError(options.dueStateError),
     })
     .mockResolvedValueOnce({
       data: options.unit === undefined
         ? [{ code: '2.2.3', title: '离合词', total_words: 4, settled_words: 1 }]
         : options.unit,
-      error: options.unitError ? { message: 'RPC not available' } : null,
+      error: rpcError(options.unitError),
     })
     .mockResolvedValueOnce({
       data: options.queue ?? [
@@ -32,7 +41,7 @@ function clientFor(options: {
         { is_new: false, fsrs_state: 'review' },
         { is_new: false, fsrs_state: 'relearning' },
       ],
-      error: options.learnQueueError ? { message: 'RPC not available' } : null,
+      error: rpcError(options.learnQueueError),
     })
     .mockResolvedValueOnce({
       data: options.queue ?? [{ is_new: true, fsrs_state: 'new' }],
@@ -190,7 +199,11 @@ describe('getToday', () => {
   });
 
   it('degrada los RPC opcionales sin tumbar Today', async () => {
-    const today = await getToday(clientFor({ dueStateError: true, unitError: true, learnQueueError: true }));
+    const today = await getToday(clientFor({
+      dueStateError: 'missing',
+      unitError: 'missing',
+      learnQueueError: 'missing',
+    }));
 
     expect(today.flashcards.due).toBe(3);
     expect(today.steps[0]).toMatchObject({ payload: { count: 3 } });
@@ -200,7 +213,7 @@ describe('getToday', () => {
 
   it('usa la cola antigua solo como degradación cuando falta la cola Learn', async () => {
     const client = clientFor({
-      learnQueueError: true,
+      learnQueueError: 'missing',
       queue: [
         { is_new: true, fsrs_state: 'new' },
         { is_new: true, fsrs_state: 'new' },
@@ -214,5 +227,11 @@ describe('getToday', () => {
       p_skill: 'recognition',
       p_limit: null,
     });
+  });
+
+  it('propaga errores de red o permisos en los RPC opcionales', async () => {
+    await expect(getToday(clientFor({ unitError: 'network' }))).rejects.toThrow(
+      'Network or permission failure',
+    );
   });
 });

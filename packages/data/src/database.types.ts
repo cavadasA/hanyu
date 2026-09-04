@@ -1214,6 +1214,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      unit_completion_stability_days: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
       create_study_plan: {
         Args: {
           p_levels?: number[]
