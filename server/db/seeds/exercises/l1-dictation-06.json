@@ -1,0 +1,12 @@
+{
+  "slug": "l1-dictation-06",
+  "type": "dictation",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "她是学生",
+    "pinyin": "tā shì xuésheng",
+    "accept_pinyin": true
+  },
+  "explanation": "这是身份判断句，听清主语和“是”的位置。"
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "l2-fill-blank-03",
+  "type": "fill_blank",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "他___喜欢喝茶。",
+    "options": [
+      "很",
+      "已经",
+      "虽然",
+      "所以"
+    ],
+    "correct": "很"
+  },
+  "explanation": "程度副词“很”放在动词性偏好前表达程度。"
+}

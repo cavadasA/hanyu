@@ -1,0 +1,27 @@
+{
+  "slug": "l3-matching-04",
+  "type": "matching",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "比较",
+        "right": "relatively"
+      },
+      {
+        "left": "可能",
+        "right": "possibly"
+      },
+      {
+        "left": "终于",
+        "right": "finally"
+      },
+      {
+        "left": "已经",
+        "right": "already"
+      }
+    ]
+  },
+  "explanation": "这些副词表达程度、推测、最终结果和完成。"
+}

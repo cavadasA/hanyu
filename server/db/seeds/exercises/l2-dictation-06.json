@@ -1,0 +1,12 @@
+{
+  "slug": "l2-dictation-06",
+  "type": "dictation",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "咖啡比茶贵",
+    "pinyin": "kāfēi bǐ chá guì",
+    "accept_pinyin": true
+  },
+  "explanation": "这是比较句，注意“比”位于两个对象之间。"
+}

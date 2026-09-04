@@ -1,6 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import { loadExercises } from './build-exercises.js';
 import { loadReadings } from './build-readings.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -188,16 +189,32 @@ function buildCharacterRows() {
 }
 
 function buildExerciseRows() {
-  const exercises = readJson('exercises-pool.json');
+  const exercises = loadExercises();
 
-  return exercises.map((exercise) => [
-    sqlString(exercise.type),
-    sqlInteger(exercise.hsk_level),
-    sqlJson(exercise.prompt || {}),
-    sqlJson(exercise.answer),
-    sqlString('seed'),
-    'null',
-  ]);
+  return exercises.map((exercise) => {
+    const prompt = {
+      type: exercise.type,
+      ...(exercise.prompt || {}),
+      explanation: exercise.explanation ?? exercise.prompt?.explanation ?? null,
+    };
+    const answer = exercise.answer ??
+      (exercise.type === 'fill_blank' || exercise.type === 'multiple_choice'
+        ? exercise.prompt?.correct
+        : exercise.type === 'reorder'
+          ? exercise.prompt?.correct_order?.join('')
+          : exercise.type === 'dictation'
+            ? exercise.prompt?.audio_text
+            : 'matched');
+
+    return [
+      sqlString(exercise.type),
+      sqlInteger(exercise.hsk_level),
+      sqlJson(prompt),
+      sqlJson(answer),
+      sqlString('seed'),
+      'null',
+    ];
+  });
 }
 
 function buildReadingRows() {

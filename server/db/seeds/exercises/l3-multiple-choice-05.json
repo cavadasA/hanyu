@@ -1,0 +1,17 @@
+{
+  "slug": "l3-multiple-choice-05",
+  "type": "multiple_choice",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "question": "What does 关系 mean?",
+    "options": [
+      "relationship",
+      "result",
+      "condition",
+      "question"
+    ],
+    "correct": "relationship"
+  },
+  "explanation": "“关系”可以表示人与人或事物之间的联系。"
+}

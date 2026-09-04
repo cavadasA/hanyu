@@ -1,0 +1,12 @@
+{
+  "slug": "l3-dictation-06",
+  "type": "dictation",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "我们根据问题做决定",
+    "pinyin": "wǒmen gēnjù wèntí zuò juédìng",
+    "accept_pinyin": true
+  },
+  "explanation": "“根据”后面是依据，最后是动作和结果。"
+}

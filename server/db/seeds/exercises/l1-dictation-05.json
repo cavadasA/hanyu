@@ -1,0 +1,12 @@
+{
+  "slug": "l1-dictation-05",
+  "type": "dictation",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "我喜欢茶",
+    "pinyin": "wǒ xǐhuan chá",
+    "accept_pinyin": true
+  },
+  "explanation": "“喜欢”表达偏好，后面接喜欢的对象。"
+}

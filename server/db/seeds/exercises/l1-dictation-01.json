@@ -1,0 +1,12 @@
+{
+  "slug": "l1-dictation-01",
+  "type": "dictation",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "你好",
+    "pinyin": "nǐ hǎo",
+    "accept_pinyin": true
+  },
+  "explanation": "听到两个音节后，按原顺序写出问候语。"
+}

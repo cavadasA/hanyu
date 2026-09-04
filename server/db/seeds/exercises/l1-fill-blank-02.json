@@ -1,0 +1,17 @@
+{
+  "slug": "l1-fill-blank-02",
+  "type": "fill_blank",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "她是我的___。",
+    "options": [
+      "朋友",
+      "学校",
+      "中国",
+      "时候"
+    ],
+    "correct": "朋友"
+  },
+  "explanation": "“我的”后面需要一个人或关系名词，所以用“朋友”。"
+}

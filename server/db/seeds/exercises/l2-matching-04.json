@@ -1,0 +1,27 @@
+{
+  "slug": "l2-matching-04",
+  "type": "matching",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "一次",
+        "right": "once"
+      },
+      {
+        "left": "两次",
+        "right": "twice"
+      },
+      {
+        "left": "三块钱",
+        "right": "three yuan"
+      },
+      {
+        "left": "两本书",
+        "right": "two books"
+      }
+    ]
+  },
+  "explanation": "数量和次数词组要保持完整的量词结构。"
+}

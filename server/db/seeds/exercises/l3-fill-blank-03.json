@@ -1,0 +1,17 @@
+{
+  "slug": "l3-fill-blank-03",
+  "type": "fill_blank",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "这个问题___很好。",
+    "options": [
+      "比较",
+      "已经",
+      "因为",
+      "所以"
+    ],
+    "correct": "比较"
+  },
+  "explanation": "比较程度时使用“比较 + 形容词”。"
+}

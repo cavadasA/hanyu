@@ -1,0 +1,17 @@
+{
+  "slug": "l3-fill-blank-01",
+  "type": "fill_blank",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "___天气不好，我们还是去了。",
+    "options": [
+      "尽管",
+      "所以",
+      "因为",
+      "而且"
+    ],
+    "correct": "尽管"
+  },
+  "explanation": "“尽管”引出让步条件，后面的“还是”说明结果没有改变。"
+}

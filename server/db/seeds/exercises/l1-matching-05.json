@@ -1,0 +1,27 @@
+{
+  "slug": "l1-matching-05",
+  "type": "matching",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "茶",
+        "right": "tea"
+      },
+      {
+        "left": "水",
+        "right": "water"
+      },
+      {
+        "left": "书",
+        "right": "book"
+      },
+      {
+        "left": "家",
+        "right": "home"
+      }
+    ]
+  },
+  "explanation": "这些是日常生活中常见的事物和地点。"
+}

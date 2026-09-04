@@ -21,7 +21,8 @@ describe('buildSeedSql', () => {
     expect(generated.counts.characters).toBe(655);
     expect(generated.counts.grammar_points).toBeGreaterThan(0);
     expect(generated.counts.grammar_prerequisites).toBe(13);
-    expect(generated.counts.generated_exercises).toBeGreaterThan(0);
+    expect(generated.counts.generated_exercises).toBe(90);
+    expect(generated.sql).toContain('喜欢连接主语');
   });
 
   it('inserta las columnas de sentido', () => {

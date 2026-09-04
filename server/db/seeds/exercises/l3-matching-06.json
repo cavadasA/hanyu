@@ -1,0 +1,27 @@
+{
+  "slug": "l3-matching-06",
+  "type": "matching",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "办法",
+        "right": "method"
+      },
+      {
+        "left": "问题",
+        "right": "question"
+      },
+      {
+        "left": "希望",
+        "right": "to hope"
+      },
+      {
+        "left": "重要",
+        "right": "important"
+      }
+    ]
+  },
+  "explanation": "最后一组混合了名词、动词和形容词的常用释义。"
+}

@@ -1,0 +1,24 @@
+{
+  "slug": "l3-reorder-05",
+  "type": "reorder",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "作业",
+      "应该",
+      "早点",
+      "我们",
+      "完成"
+    ],
+    "correct_order": [
+      "我们",
+      "应该",
+      "早点",
+      "完成",
+      "作业"
+    ],
+    "translation": "我们应该早点完成作业"
+  },
+  "explanation": "“应该”表达建议，“早点”修饰完成作业。"
+}

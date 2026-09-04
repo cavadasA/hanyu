@@ -1,0 +1,12 @@
+{
+  "slug": "l2-dictation-03",
+  "type": "dictation",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "他已经到了中国",
+    "pinyin": "tā yǐjīng dào le zhōngguó",
+    "accept_pinyin": true
+  },
+  "explanation": "“已经”说明完成，“了”标记动作变化。"
+}

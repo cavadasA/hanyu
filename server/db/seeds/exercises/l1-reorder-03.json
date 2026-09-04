@@ -1,0 +1,20 @@
+{
+  "slug": "l1-reorder-03",
+  "type": "reorder",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "学生",
+      "她",
+      "是"
+    ],
+    "correct_order": [
+      "她",
+      "是",
+      "学生"
+    ],
+    "translation": "她是学生"
+  },
+  "explanation": "“是”连接主语和身份。"
+}

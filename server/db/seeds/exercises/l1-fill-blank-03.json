@@ -1,0 +1,17 @@
+{
+  "slug": "l1-fill-blank-03",
+  "type": "fill_blank",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "我___去学校。",
+    "options": [
+      "要",
+      "已经",
+      "虽然",
+      "但是"
+    ],
+    "correct": "要"
+  },
+  "explanation": "“要”放在动词“去”前，表示计划或意愿。"
+}

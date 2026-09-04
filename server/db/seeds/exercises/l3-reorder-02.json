@@ -1,0 +1,24 @@
+{
+  "slug": "l3-reorder-02",
+  "type": "reorder",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "做完",
+      "他",
+      "作业",
+      "把",
+      "了"
+    ],
+    "correct_order": [
+      "他",
+      "把",
+      "作业",
+      "做完",
+      "了"
+    ],
+    "translation": "他把作业做完了"
+  },
+  "explanation": "把字句把对象放在“把”后，结果补语放在动词后。"
+}

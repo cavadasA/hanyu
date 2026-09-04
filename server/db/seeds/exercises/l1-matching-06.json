@@ -1,0 +1,27 @@
+{
+  "slug": "l1-matching-06",
+  "type": "matching",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "中国",
+        "right": "China"
+      },
+      {
+        "left": "老师",
+        "right": "teacher"
+      },
+      {
+        "left": "学校",
+        "right": "school"
+      },
+      {
+        "left": "学生",
+        "right": "student"
+      }
+    ]
+  },
+  "explanation": "地点和人物要与对应的英文名词配对。"
+}

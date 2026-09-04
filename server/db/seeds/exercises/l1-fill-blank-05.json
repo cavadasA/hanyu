@@ -1,0 +1,17 @@
+{
+  "slug": "l1-fill-blank-05",
+  "type": "fill_blank",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "她___中国人。",
+    "options": [
+      "是",
+      "在",
+      "很",
+      "也"
+    ],
+    "correct": "是"
+  },
+  "explanation": "国籍是身份信息，用“是”而不是表示地点的“在”。"
+}

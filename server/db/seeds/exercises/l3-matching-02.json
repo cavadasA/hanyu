@@ -1,0 +1,27 @@
+{
+  "slug": "l3-matching-02",
+  "type": "matching",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "因为",
+        "right": "because"
+      },
+      {
+        "left": "虽然",
+        "right": "although"
+      },
+      {
+        "left": "不过",
+        "right": "however"
+      },
+      {
+        "left": "而且",
+        "right": "moreover"
+      }
+    ]
+  },
+  "explanation": "连接词的语气不同，分别对应条件、让步、转折和补充。"
+}

@@ -1,0 +1,27 @@
+{
+  "slug": "l2-matching-02",
+  "type": "matching",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "已经",
+        "right": "already"
+      },
+      {
+        "left": "可能",
+        "right": "maybe"
+      },
+      {
+        "left": "虽然",
+        "right": "although"
+      },
+      {
+        "left": "准备",
+        "right": "to prepare"
+      }
+    ]
+  },
+  "explanation": "这些副词和能愿词表达完成、不确定、建议和准备。"
+}

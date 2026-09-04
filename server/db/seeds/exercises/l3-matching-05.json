@@ -1,0 +1,27 @@
+{
+  "slug": "l3-matching-05",
+  "type": "matching",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "根据",
+        "right": "according to"
+      },
+      {
+        "left": "因为",
+        "right": "because"
+      },
+      {
+        "left": "所以",
+        "right": "therefore"
+      },
+      {
+        "left": "虽然",
+        "right": "although"
+      }
+    ]
+  },
+  "explanation": "这些词分别引出依据、原因、结果和让步。"
+}

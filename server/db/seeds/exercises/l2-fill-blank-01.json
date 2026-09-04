@@ -1,0 +1,17 @@
+{
+  "slug": "l2-fill-blank-01",
+  "type": "fill_blank",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "___下雨了，我们不去了。",
+    "options": [
+      "因为",
+      "所以",
+      "但是",
+      "如果"
+    ],
+    "correct": "因为"
+  },
+  "explanation": "“因为”引出原因；后面的“不去了”是结果。"
+}

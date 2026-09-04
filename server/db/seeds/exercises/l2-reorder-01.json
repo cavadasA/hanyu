@@ -1,0 +1,22 @@
+{
+  "slug": "l2-reorder-01",
+  "type": "reorder",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "很",
+      "今天",
+      "好",
+      "天气"
+    ],
+    "correct_order": [
+      "今天",
+      "天气",
+      "很",
+      "好"
+    ],
+    "translation": "今天天气很好"
+  },
+  "explanation": "时间放在句首，随后是主语、程度和形容词。"
+}

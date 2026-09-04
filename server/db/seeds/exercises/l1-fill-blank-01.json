@@ -1,0 +1,17 @@
+{
+  "slug": "l1-fill-blank-01",
+  "type": "fill_blank",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "我___喝茶。",
+    "options": [
+      "喜欢",
+      "已经",
+      "可能",
+      "虽然"
+    ],
+    "correct": "喜欢"
+  },
+  "explanation": "喜欢连接主语和“喝茶”，表达稳定的偏好。"
+}

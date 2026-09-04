@@ -1,0 +1,22 @@
+{
+  "slug": "l3-reorder-01",
+  "type": "reorder",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "把",
+      "请",
+      "关上",
+      "门"
+    ],
+    "correct_order": [
+      "请",
+      "把",
+      "门",
+      "关上"
+    ],
+    "translation": "请把门关上"
+  },
+  "explanation": "把字句先提出对象“门”，再说明处理结果“关上”。"
+}

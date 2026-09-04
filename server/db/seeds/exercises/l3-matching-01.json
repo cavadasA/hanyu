@@ -1,0 +1,27 @@
+{
+  "slug": "l3-matching-01",
+  "type": "matching",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "关系",
+        "right": "relationship"
+      },
+      {
+        "left": "终于",
+        "right": "finally"
+      },
+      {
+        "left": "根据",
+        "right": "according to"
+      },
+      {
+        "left": "而且",
+        "right": "moreover"
+      }
+    ]
+  },
+  "explanation": "这些词分别表达联系、最终结果、依据和递进。"
+}

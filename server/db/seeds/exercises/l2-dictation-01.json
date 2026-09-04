@@ -1,0 +1,12 @@
+{
+  "slug": "l2-dictation-01",
+  "type": "dictation",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "今天天气很好",
+    "pinyin": "jīntiān tiānqì hěn hǎo",
+    "accept_pinyin": true
+  },
+  "explanation": "先听时间，再听主语和状态描述，注意“很”的位置。"
+}

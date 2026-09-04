@@ -1,0 +1,24 @@
+{
+  "slug": "l3-reorder-06",
+  "type": "reorder",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "问题",
+      "根据",
+      "做",
+      "决定",
+      "我们"
+    ],
+    "correct_order": [
+      "我们",
+      "根据",
+      "问题",
+      "做",
+      "决定"
+    ],
+    "translation": "我们根据问题做决定"
+  },
+  "explanation": "“根据”引出依据，之后是动作和结果。"
+}

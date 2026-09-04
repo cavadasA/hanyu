@@ -1,0 +1,17 @@
+{
+  "slug": "l2-fill-blank-04",
+  "type": "fill_blank",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "因为下雨，我们___去。",
+    "options": [
+      "不",
+      "已经",
+      "但是",
+      "因为"
+    ],
+    "correct": "不"
+  },
+  "explanation": "“如果”提出条件，结果分句用“不”表示否定。"
+}

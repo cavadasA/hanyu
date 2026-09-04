@@ -1,0 +1,22 @@
+{
+  "slug": "l2-reorder-06",
+  "type": "reorder",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "早点",
+      "回家",
+      "已经",
+      "我"
+    ],
+    "correct_order": [
+      "我",
+      "已经",
+      "早点",
+      "回家"
+    ],
+    "translation": "我已经早点回家"
+  },
+  "explanation": "“已经”说明回家的动作已完成，“早点”修饰时间。"
+}

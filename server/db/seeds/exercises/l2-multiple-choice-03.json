@@ -1,0 +1,17 @@
+{
+  "slug": "l2-multiple-choice-03",
+  "type": "multiple_choice",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "question": "What does 已经 mean?",
+    "options": [
+      "already",
+      "perhaps",
+      "therefore",
+      "but"
+    ],
+    "correct": "already"
+  },
+  "explanation": "“已经”表示事情在参照时间前完成。"
+}

@@ -1,0 +1,12 @@
+{
+  "slug": "l3-dictation-05",
+  "type": "dictation",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "我们应该早点回家",
+    "pinyin": "wǒmen yīnggāi zǎodiǎn huí jiā",
+    "accept_pinyin": true
+  },
+  "explanation": "“应该”表达建议，“早点”修饰回家的时间。"
+}

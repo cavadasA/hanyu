@@ -1,0 +1,20 @@
+{
+  "slug": "l1-reorder-04",
+  "type": "reorder",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "朋友",
+      "我",
+      "有"
+    ],
+    "correct_order": [
+      "我",
+      "有",
+      "朋友"
+    ],
+    "translation": "我有朋友"
+  },
+  "explanation": "“有”后面接拥有的对象。"
+}

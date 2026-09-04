@@ -1,0 +1,27 @@
+{
+  "slug": "l1-matching-02",
+  "type": "matching",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "大",
+        "right": "big"
+      },
+      {
+        "left": "小",
+        "right": "small"
+      },
+      {
+        "left": "好",
+        "right": "good"
+      },
+      {
+        "left": "多",
+        "right": "many"
+      }
+    ]
+  },
+  "explanation": "这组形容词要根据中文的基本意义配对。"
+}

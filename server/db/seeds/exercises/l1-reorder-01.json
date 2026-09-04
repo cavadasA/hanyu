@@ -1,0 +1,22 @@
+{
+  "slug": "l1-reorder-01",
+  "type": "reorder",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "喝",
+      "我",
+      "茶",
+      "喜欢"
+    ],
+    "correct_order": [
+      "我",
+      "喜欢",
+      "喝",
+      "茶"
+    ],
+    "translation": "我喜欢喝茶"
+  },
+  "explanation": "先说人，再说偏好，最后说动作和对象。"
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "l3-fill-blank-02",
+  "type": "fill_blank",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "他的成绩___好的。",
+    "options": [
+      "比较",
+      "已经",
+      "终于",
+      "而且"
+    ],
+    "correct": "比较"
+  },
+  "explanation": "“比较”放在形容词前，表示相对程度而非完成时间。"
+}

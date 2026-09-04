@@ -1,0 +1,27 @@
+{
+  "slug": "l2-matching-03",
+  "type": "matching",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "咖啡",
+        "right": "coffee"
+      },
+      {
+        "left": "茶",
+        "right": "tea"
+      },
+      {
+        "left": "天气",
+        "right": "weather"
+      },
+      {
+        "left": "学校",
+        "right": "school"
+      }
+    ]
+  },
+  "explanation": "四个名词分别对应饮品、饮品、自然状态和学习地点。"
+}

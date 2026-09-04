@@ -1,0 +1,12 @@
+{
+  "slug": "l3-dictation-04",
+  "type": "dictation",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "他的成绩比较好",
+    "pinyin": "tā de chéngjì bǐjiào hǎo",
+    "accept_pinyin": true
+  },
+  "explanation": "“比较”放在形容词前，注意所属关系“他的”。"
+}

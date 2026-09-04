@@ -1,0 +1,27 @@
+{
+  "slug": "l2-matching-05",
+  "type": "matching",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "可能",
+        "right": "maybe"
+      },
+      {
+        "left": "虽然",
+        "right": "although"
+      },
+      {
+        "left": "一起",
+        "right": "together"
+      },
+      {
+        "left": "已经",
+        "right": "already"
+      }
+    ]
+  },
+  "explanation": "这些词表达程度、结果、共同动作和完成。"
+}

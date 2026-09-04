@@ -1,0 +1,27 @@
+{
+  "slug": "l2-matching-01",
+  "type": "matching",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "因为",
+        "right": "because"
+      },
+      {
+        "left": "所以",
+        "right": "therefore"
+      },
+      {
+        "left": "但是",
+        "right": "but"
+      },
+      {
+        "left": "虽然",
+        "right": "although"
+      }
+    ]
+  },
+  "explanation": "这组连接词分别标记原因、结果、转折和条件。"
+}

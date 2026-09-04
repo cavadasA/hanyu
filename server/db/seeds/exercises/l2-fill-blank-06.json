@@ -1,0 +1,17 @@
+{
+  "slug": "l2-fill-blank-06",
+  "type": "fill_blank",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "我觉得咖啡___茶贵。",
+    "options": [
+      "比",
+      "因为",
+      "已经",
+      "所以"
+    ],
+    "correct": "比"
+  },
+  "explanation": "比较句用“ A 比 B + 形容词”表达两者差异。"
+}

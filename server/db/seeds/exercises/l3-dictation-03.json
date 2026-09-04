@@ -1,0 +1,12 @@
+{
+  "slug": "l3-dictation-03",
+  "type": "dictation",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "虽然天气不好",
+    "pinyin": "suīrán tiānqì bù hǎo",
+    "accept_pinyin": true
+  },
+  "explanation": "让步连接词“尽管”位于分句开头。"
+}

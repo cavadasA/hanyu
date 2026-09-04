@@ -1,0 +1,17 @@
+{
+  "slug": "l2-fill-blank-02",
+  "type": "fill_blank",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "他___到了中国。",
+    "options": [
+      "已经",
+      "可能",
+      "虽然",
+      "因为"
+    ],
+    "correct": "已经"
+  },
+  "explanation": "“已经”说明到北京的动作在说话前完成了。"
+}

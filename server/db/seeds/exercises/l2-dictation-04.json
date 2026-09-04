@@ -1,0 +1,12 @@
+{
+  "slug": "l2-dictation-04",
+  "type": "dictation",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "我们一起看书",
+    "pinyin": "wǒmen yìqǐ kàn shū",
+    "accept_pinyin": true
+  },
+  "explanation": "“一起”说明共同动作，写在主语后面。"
+}

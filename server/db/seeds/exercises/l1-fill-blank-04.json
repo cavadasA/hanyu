@@ -1,0 +1,17 @@
+{
+  "slug": "l1-fill-blank-04",
+  "type": "fill_blank",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "他___学生。",
+    "options": [
+      "是",
+      "喝",
+      "朋友",
+      "茶"
+    ],
+    "correct": "是"
+  },
+  "explanation": "“是”连接主语和身份名词，构成判断句。"
+}

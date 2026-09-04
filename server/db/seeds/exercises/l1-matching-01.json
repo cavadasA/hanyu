@@ -1,0 +1,27 @@
+{
+  "slug": "l1-matching-01",
+  "type": "matching",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "学生",
+        "right": "student"
+      },
+      {
+        "left": "老师",
+        "right": "teacher"
+      },
+      {
+        "left": "朋友",
+        "right": "friend"
+      },
+      {
+        "left": "医生",
+        "right": "doctor"
+      }
+    ]
+  },
+  "explanation": "这些词分别表示学习者、教课的人、朋友和医生。"
+}

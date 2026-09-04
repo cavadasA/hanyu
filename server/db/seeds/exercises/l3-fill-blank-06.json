@@ -1,0 +1,17 @@
+{
+  "slug": "l3-fill-blank-06",
+  "type": "fill_blank",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "sentence": "他___完成了作业。",
+    "options": [
+      "终于",
+      "虽然",
+      "而且",
+      "如果"
+    ],
+    "correct": "终于"
+  },
+  "explanation": "“终于”表示经过等待或过程后完成。"
+}

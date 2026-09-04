@@ -1,0 +1,24 @@
+{
+  "slug": "l2-reorder-02",
+  "type": "reorder",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "买",
+      "她",
+      "了",
+      "书",
+      "一本"
+    ],
+    "correct_order": [
+      "她",
+      "买",
+      "了",
+      "一本",
+      "书"
+    ],
+    "translation": "她买了一本书"
+  },
+  "explanation": "数量短语“一本”放在动词和名词之间。"
+}

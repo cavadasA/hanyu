@@ -1,0 +1,27 @@
+{
+  "slug": "l1-matching-03",
+  "type": "matching",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "pairs": [
+      {
+        "left": "爱",
+        "right": "to love"
+      },
+      {
+        "left": "喝",
+        "right": "to drink"
+      },
+      {
+        "left": "吃",
+        "right": "to eat"
+      },
+      {
+        "left": "看",
+        "right": "to see"
+      }
+    ]
+  },
+  "explanation": "动作词的英文释义分别对应爱、喝、吃和看。"
+}

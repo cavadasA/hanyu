@@ -1,0 +1,20 @@
+{
+  "slug": "l3-reorder-03",
+  "type": "reorder",
+  "hsk_level": 3,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "到了",
+      "他",
+      "终于"
+    ],
+    "correct_order": [
+      "他",
+      "终于",
+      "到了"
+    ],
+    "translation": "他终于到了"
+  },
+  "explanation": "“终于”放在主语后，说明结果经过了等待。"
+}

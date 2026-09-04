@@ -1,0 +1,12 @@
+{
+  "slug": "l1-dictation-02",
+  "type": "dictation",
+  "hsk_level": 1,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "audio_text": "谢谢",
+    "pinyin": "xiè xie",
+    "accept_pinyin": true
+  },
+  "explanation": "第二个音节轻读，但两个字都要写出。"
+}

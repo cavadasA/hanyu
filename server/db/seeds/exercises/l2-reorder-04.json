@@ -1,0 +1,22 @@
+{
+  "slug": "l2-reorder-04",
+  "type": "reorder",
+  "hsk_level": 2,
+  "unit_code": "2.2.2",
+  "prompt": {
+    "words": [
+      "已经",
+      "他",
+      "到了",
+      "中国"
+    ],
+    "correct_order": [
+      "他",
+      "已经",
+      "到了",
+      "中国"
+    ],
+    "translation": "他已经到了中国"
+  },
+  "explanation": "“已经”放在主语后修饰完成的动作。"
+}
