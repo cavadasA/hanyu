@@ -23,6 +23,7 @@ export type {
   ExerciseType,
   Evaluation,
   EvaluationDetail,
+  PlanStep,
   FlashcardStats,
   GrammarPoint,
   HskLevel,

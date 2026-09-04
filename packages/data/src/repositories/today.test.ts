@@ -5,7 +5,19 @@ function clientFor(options: { settings?: Record<string, unknown>; reading?: unkn
   const rpc = vi
     .fn()
     .mockResolvedValueOnce({ data: [{ deck_id: null, count: 150 }], error: null })
-    .mockResolvedValueOnce({ data: [{ deck_id: null, count: 3 }], error: null });
+    .mockResolvedValueOnce({ data: [{ deck_id: null, count: 3 }], error: null })
+    .mockResolvedValueOnce({
+      data: [{ code: '2.2.3', title: '离合词', total_words: 4, settled_words: 1 }],
+      error: null,
+    })
+    .mockResolvedValueOnce({
+      data: [
+        { is_new: true, fsrs_state: 'new' },
+        { is_new: false, fsrs_state: 'review' },
+        { is_new: false, fsrs_state: 'relearning' },
+      ],
+      error: null,
+    });
 
   const from = vi.fn((table: string) => {
     if (table === 'user_settings') {
@@ -106,5 +118,25 @@ describe('getToday', () => {
 
     expect(today.reading.next).toEqual(reading);
     expect((client as any).from).toHaveBeenCalledWith('reading');
+  });
+
+  it('incluye el plan diario construido con unidad y cola', async () => {
+    const client = clientFor();
+    const today = await getToday(client);
+
+    expect(today.steps.map((step) => step.kind)).toEqual([
+      'reviews',
+      'relearning',
+      'new_items',
+      'reading',
+      'exercises',
+      'exam',
+    ]);
+    expect(today.steps[0]).toMatchObject({ kind: 'reviews', status: 'ready', payload: { count: 2 } });
+    expect(today.steps[2]).toMatchObject({
+      kind: 'new_items',
+      status: 'ready',
+      payload: { unit_title: '离合词', unit_progress: '1/4' },
+    });
   });
 });

@@ -4,6 +4,7 @@ import type {
   ExerciseSolution,
   Evaluation,
   EvaluationDetail,
+  PlanStep,
   SchedulingPhase,
   SchedulingState,
 } from '@hanyu/domain';
@@ -13,6 +14,7 @@ export type {
   ExerciseSolution,
   Evaluation,
   EvaluationDetail,
+  PlanStep,
   SchedulingPhase,
   SchedulingState,
 } from '@hanyu/domain';
@@ -377,4 +379,5 @@ export interface TodayPayload {
     completed_blocks: number;
     total_blocks: number;
   };
+  steps: PlanStep[];
 }
