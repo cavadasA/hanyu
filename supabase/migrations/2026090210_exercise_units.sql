@@ -1,6 +1,21 @@
 -- Plan 6: build a practice session from the learner's active curriculum unit.
 -- The client owns the pedagogical ordering; this RPC owns scope and deduplication.
 
+create table if not exists public.exam_structure (
+  hsk_level integer primary key check (hsk_level between 1 and 6),
+  source text not null,
+  source_note text,
+  total_minutes integer not null,
+  answer_sheet_minutes integer not null default 0,
+  sections jsonb not null default '[]'::jsonb
+);
+
+alter table public.exam_structure enable row level security;
+
+drop policy if exists exam_structure_select_authenticated on public.exam_structure;
+create policy exam_structure_select_authenticated on public.exam_structure
+for select using (auth.role() = 'authenticated');
+
 create or replace function public.build_exercise_session(
   p_unit_code text default null,
   p_length integer default 8
@@ -127,3 +142,105 @@ $$;
 
 revoke all on function public.mistake_queue(integer) from public;
 grant execute on function public.mistake_queue(integer) to authenticated;
+
+create or replace function public.build_mock_exam(
+  p_level integer,
+  p_scope text default 'section'
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_structure record;
+  v_section jsonb;
+  v_part jsonb;
+  v_sections jsonb := '[]'::jsonb;
+  v_unsupported jsonb := '[]'::jsonb;
+  v_section_exercises jsonb;
+  v_part_exercises jsonb;
+  v_selected_section boolean := false;
+  v_question_count integer;
+begin
+  if auth.uid() is null then
+    raise exception 'Authentication required';
+  end if;
+
+  if p_scope not in ('section', 'full') then
+    raise exception 'p_scope must be section or full';
+  end if;
+
+  select es.hsk_level, es.sections
+    into v_structure
+  from public.exam_structure es
+  where es.hsk_level = p_level;
+
+  if not found then
+    raise exception 'No exam structure available for HSK %', p_level;
+  end if;
+
+  for v_section in select value from jsonb_array_elements(v_structure.sections)
+  loop
+    -- A section-scoped mock picks the first official section. The full scope
+    -- includes every section in the transcribed structure.
+    if p_scope = 'section' and v_selected_section then
+      continue;
+    end if;
+    v_selected_section := true;
+    v_section_exercises := '[]'::jsonb;
+
+    for v_part in select value from jsonb_array_elements(v_section->'parts')
+    loop
+      v_question_count := greatest(0, coalesce((v_part->>'question_count')::integer, 0));
+
+      if nullif(v_part->>'our_type', '') is null then
+        v_unsupported := v_unsupported || jsonb_build_array(jsonb_build_object(
+          'section', coalesce(v_section->>'title', v_section->>'code'),
+          'part', v_part->>'code',
+          'reason', 'no_matching_type'
+        ));
+        continue;
+      end if;
+
+      select coalesce(jsonb_agg(to_jsonb(candidate)), '[]'::jsonb)
+        into v_part_exercises
+      from (
+        select ge.id, ge.type, ge.hsk_level, ge.prompt, ge.answer
+        from public.generated_exercises ge
+        where ge.hsk_level = v_structure.hsk_level
+          and ge.type = v_part->>'our_type'
+        order by random()
+        limit v_question_count
+      ) candidate;
+
+      v_section_exercises := v_section_exercises || v_part_exercises;
+
+      if jsonb_array_length(v_part_exercises) < v_question_count then
+        v_unsupported := v_unsupported || jsonb_build_array(jsonb_build_object(
+          'section', coalesce(v_section->>'title', v_section->>'code'),
+          'part', v_part->>'code',
+          'reason', 'insufficient_exercises'
+        ));
+      end if;
+    end loop;
+
+    v_sections := v_sections || jsonb_build_array(jsonb_build_object(
+      'code', v_section->>'code',
+      'title', v_section->>'title',
+      'minutes', (v_section->>'minutes')::integer,
+      'exercises', v_section_exercises
+    ));
+  end loop;
+
+  return jsonb_build_object(
+    'hsk_level', v_structure.hsk_level,
+    'scope', p_scope,
+    'sections', v_sections,
+    'unsupported', v_unsupported
+  );
+end;
+$$;
+
+revoke all on function public.build_mock_exam(integer, text) from public;
+grant execute on function public.build_mock_exam(integer, text) to authenticated;

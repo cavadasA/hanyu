@@ -145,6 +145,28 @@ export interface Mistake {
   distinct_days: number;
 }
 
+export type MockExamScope = 'section' | 'full';
+
+export interface MockExamSection {
+  code: string;
+  title: string;
+  minutes: number;
+  exercises: Exercise[];
+}
+
+export interface MockExamUnsupported {
+  section: string;
+  part?: string;
+  reason: string;
+}
+
+export interface MockExam {
+  hsk_level: HskLevel;
+  scope: MockExamScope;
+  sections: MockExamSection[];
+  unsupported: MockExamUnsupported[];
+}
+
 export interface ExerciseCheckResult {
   correct: boolean;
   expected_answer: ExerciseSolution;

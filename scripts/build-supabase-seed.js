@@ -188,6 +188,19 @@ function buildCharacterRows() {
   ]);
 }
 
+function buildExamStructureRows() {
+  const structure = readJson('exam-structure.json');
+
+  return [[
+    sqlInteger(structure.hsk_level),
+    sqlString(structure.source),
+    sqlString(structure.source_note),
+    sqlInteger(structure.total_minutes),
+    sqlInteger(structure.answer_sheet_minutes),
+    sqlJson(structure.sections || []),
+  ]];
+}
+
 function buildExerciseRows() {
   const exercises = loadExercises();
 
@@ -303,6 +316,7 @@ function buildReadingTeachesSql() {
 export function buildSeedSql() {
   const wordsRows = buildWordsRows();
   const characterRows = buildCharacterRows();
+  const examStructureRows = buildExamStructureRows();
   const grammarRows = buildGrammarRows();
   const grammarPrerequisiteRows = buildGrammarPrerequisiteRows();
   const unitSql = buildUnitSql();
@@ -354,6 +368,12 @@ export function buildSeedSql() {
     ),
     unitSql.sql,
     buildInsert(
+      'exam_structure',
+      ['hsk_level', 'source', 'source_note', 'total_minutes', 'answer_sheet_minutes', 'sections'],
+      examStructureRows,
+      'on conflict (hsk_level) do update set source = excluded.source, source_note = excluded.source_note, total_minutes = excluded.total_minutes, answer_sheet_minutes = excluded.answer_sheet_minutes, sections = excluded.sections',
+    ),
+    buildInsert(
       'generated_exercises',
       ['type', 'hsk_level', 'prompt', 'answer', 'source_model', 'created_by'],
       exerciseRows,
@@ -381,6 +401,7 @@ export function buildSeedSql() {
     counts: {
       words: wordsRows.length,
       characters: characterRows.length,
+      exam_structures: examStructureRows.length,
       grammar_points: grammarRows.length,
       grammar_prerequisites: grammarPrerequisiteRows.length,
       units: unitSql.unitCount,

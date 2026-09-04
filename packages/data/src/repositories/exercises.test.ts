@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { buildExerciseSession, checkExercise, generateExercise, getMistakes } from './exercises';
+import { buildExerciseSession, buildMockExam, checkExercise, generateExercise, getMistakes } from './exercises';
 
 const user = { id: 'u1' };
 
@@ -96,6 +96,36 @@ describe('exercises repository', () => {
       length: 3,
     });
     expect(session.exercises).toHaveLength(2);
+    expect(session.exercises[0].prompt).toEqual({
+      kind: 'reorder',
+      tokens: ['喝', '我', '茶', '喜欢'],
+    });
+  });
+
+  it('construye un simulacro por sección sin reprogramar tarjetas', async () => {
+    const client = clientFor({});
+    client.rpc.mockResolvedValue({
+      data: {
+        hsk_level: 2,
+        scope: 'section',
+        sections: [{ code: 'listening', title: '听力', minutes: 25, exercises: [reorderRow] }],
+        unsupported: [{ section: '书写', reason: 'no_matching_type' }],
+      },
+      error: null,
+    });
+
+    const exam = await buildMockExam(2, 'section', client);
+
+    expect(client.rpc).toHaveBeenCalledWith('build_mock_exam', {
+      p_level: 2,
+      p_scope: 'section',
+    });
+    expect(exam.sections[0]).toMatchObject({ code: 'listening', minutes: 25 });
+    expect(exam.sections[0].exercises[0].prompt).toEqual({
+      kind: 'reorder',
+      tokens: ['喝', '我', '茶', '喜欢'],
+    });
+    expect(exam.unsupported[0].section).toBe('书写');
   });
 
   it('checkExercise marca correcto un matching completo y bien emparejado', async () => {
@@ -144,7 +174,12 @@ describe('exercises repository', () => {
     );
 
     expect(result.correct).toBe(false);
-    expect(result.detail).toEqual({ kind: 'matching', wrong: ['学生'], missing: [] });
+    expect(result.detail).toEqual({
+      kind: 'matching',
+      wrong: ['学生'],
+      missing: [],
+      wrong_pairs: ['学生'],
+    });
   });
 
   it('checkExercise no llama a ninguna RPC ni Edge Function', async () => {

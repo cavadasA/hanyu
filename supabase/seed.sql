@@ -2311,6 +2311,11 @@ join public.words w on w.hanzi = m.hanzi
   and ((m.sense_index is null and w.sense_index is null) or w.sense_index = m.sense_index)
 on conflict do nothing;
 
+insert into public.exam_structure (hsk_level, source, source_note, total_minutes, answer_sheet_minutes, sections)
+values
+  (2, 'H20901', 'Transcrito a mano de la muestra oficial. El PDF usa fuentes CID y no se puede extraer por script. La muestra indica 3 minutos para pasar respuestas tras listening y 5 minutos para los datos personales; answer_sheet_minutes suma ambos bloques administrativos.', 55, 8, '[{"code":"listening","title":"听力","minutes":25,"parts":[{"code":"1","question_count":10,"format":"听句子，判断图片是否正确","our_type":null},{"code":"2","question_count":10,"format":"听对话，从图片中选出正确答案","our_type":null},{"code":"3","question_count":10,"format":"听对话和问题，选择正确答案","our_type":"multiple_choice"},{"code":"4","question_count":5,"format":"听较长对话和问题，选择正确答案","our_type":"multiple_choice"}]},{"code":"reading","title":"阅读","minutes":22,"parts":[{"code":"1","question_count":5,"format":"看句子，选择相应的图片","our_type":null},{"code":"2","question_count":5,"format":"选择词语填空","our_type":"fill_blank"},{"code":"3","question_count":5,"format":"读句子，判断正误","our_type":null},{"code":"4","question_count":10,"format":"读句子，从选项中选择正确答案","our_type":"matching"}]}]'::jsonb)
+on conflict (hsk_level) do update set source = excluded.source, source_note = excluded.source_note, total_minutes = excluded.total_minutes, answer_sheet_minutes = excluded.answer_sheet_minutes, sections = excluded.sections;
+
 insert into public.generated_exercises (type, hsk_level, prompt, answer, source_model, created_by)
 values
   ('dictation', 1, '{"type":"dictation","slug":"l1-dictation-01","unit_code":"2.2.2","audio_text":"你好","pinyin":"nǐ hǎo","accept_pinyin":true,"explanation":"听到两个音节后，按原顺序写出问候语。"}'::jsonb, '"你好"'::jsonb, 'seed', null),

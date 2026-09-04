@@ -11,6 +11,7 @@ export function FillBlankExercise({
   prompt,
   value,
   disabled,
+  allowHints = true,
   onChange,
 }: ExerciseRendererProps<Prompt>) {
   const { colors } = useTheme();
@@ -31,7 +32,7 @@ export function FillBlankExercise({
         onChangeText={(text) => onChange({ kind: 'fill_blank', text })}
         style={[styles.input, { color: colors.text, borderColor: colors.border }]}
       />
-      {prompt.options?.length ? (
+      {allowHints && prompt.options?.length ? (
         <Pressable
           accessibilityRole="button"
           accessibilityState={{ disabled }}

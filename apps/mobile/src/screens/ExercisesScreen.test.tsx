@@ -2,14 +2,18 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-
 import type { ExerciseKind } from '@hanyu/domain';
 
 const mockBuildExerciseSession = jest.fn();
+const mockBuildMock = jest.fn();
 const mockCheckExercise = jest.fn();
+const mockRateCard = jest.fn();
 
 jest.mock('../lib/data', () => ({
   getData: () => ({
     exercises: {
       buildExerciseSession: (...args: unknown[]) => mockBuildExerciseSession(...args),
+      buildMockExam: (...args: unknown[]) => mockBuildMock(...args),
       checkExercise: (...args: unknown[]) => mockCheckExercise(...args),
     },
+    flashcards: { rateCard: (...args: unknown[]) => mockRateCard(...args) },
   }),
 }));
 
@@ -58,7 +62,9 @@ async function renderExercises() {
 describe('ExercisesScreen', () => {
   beforeEach(() => {
     mockBuildExerciseSession.mockReset();
+    mockBuildMock.mockReset();
     mockCheckExercise.mockReset();
+    mockRateCard.mockReset();
   });
 
   it('propone la unidad activa en vez de pedir que elijas nivel y tipo', async () => {
@@ -117,5 +123,52 @@ describe('ExercisesScreen', () => {
     await fireEvent.press(screen.getByText('Empezar'));
 
     expect(screen.getByText('1/1')).toBeTruthy();
+  });
+
+  it('cronometra cada sección con los minutos oficiales', async () => {
+    mockBuildExerciseSession.mockResolvedValue({ unit_title: '离合词', exercises: [], length: 8 });
+    mockBuildMock.mockResolvedValue({
+      sections: [{ code: 'listening', title: '听力', minutes: 25, exercises: [] }],
+    });
+
+    await renderExercises();
+    await fireEvent.press(screen.getByText('Simulacro'));
+
+    expect(screen.getByText('25:00')).toBeTruthy();
+  });
+
+  it('dice qué partes del examen no puede simular todavía', async () => {
+    mockBuildExerciseSession.mockResolvedValue({ unit_title: '离合词', exercises: [], length: 8 });
+    mockBuildMock.mockResolvedValue({
+      sections: [{ code: 'listening', title: '听力', minutes: 25, exercises: [] }],
+      unsupported: [{ section: '书写', reason: 'no_matching_type' }],
+    });
+
+    await renderExercises();
+    await fireEvent.press(screen.getByText('Simulacro'));
+
+    expect(screen.getByText(/书写/)).toBeTruthy();
+  });
+
+  it('no reprograma ninguna tarjeta', async () => {
+    mockBuildExerciseSession.mockResolvedValue({ unit_title: '离合词', exercises: [], length: 8 });
+    mockBuildMock.mockResolvedValue({
+      sections: [{ code: 'reading', title: '阅读', minutes: 22, exercises: [exercise('e1', 'multiple_choice')] }],
+    });
+    mockCheckExercise.mockResolvedValue({
+      correct: true,
+      expected_answer: { kind: 'multiple_choice', correct: 'A' },
+      submitted_answer: { kind: 'multiple_choice', option: 'A' },
+      detail: { kind: 'simple' },
+      explanation: null,
+    });
+
+    await renderExercises();
+    await fireEvent.press(screen.getByText('Simulacro'));
+    await fireEvent.press(screen.getByText('Empezar'));
+    await fireEvent.press(screen.getByText('A'));
+    await fireEvent.press(screen.getByText('Comprobar'));
+
+    expect(mockRateCard).not.toHaveBeenCalled();
   });
 });

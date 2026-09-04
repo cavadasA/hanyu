@@ -5,6 +5,9 @@ import {
   type Exercise,
   type ExerciseCheckResult,
   type ExerciseSession as ExerciseSessionData,
+  type HskLevel,
+  type MockExam,
+  type MockExamScope,
 } from '@hanyu/data';
 import { getData } from '../lib/data';
 
@@ -12,6 +15,7 @@ type Status = 'idle' | 'loading' | 'ready' | 'answering' | 'checking' | 'checked
 
 interface ExerciseApi {
   buildExerciseSession(unitCode?: string | null, length?: number): Promise<ExerciseSessionData>;
+  buildMockExam?(level: HskLevel, scope: MockExamScope): Promise<MockExam>;
   checkExercise(id: string, answer: ExerciseAnswer): Promise<ExerciseCheckResult>;
 }
 
@@ -33,6 +37,7 @@ export interface ExerciseSession {
   result: ExerciseCheckResult | null;
   summary: ExerciseSessionSummary | null;
   error: string | null;
+  buildMockExam(level: HskLevel, scope?: MockExamScope): Promise<MockExam>;
   load(): Promise<void>;
   start(): void;
   setDraft(value: ExerciseAnswer): void;
@@ -139,6 +144,14 @@ export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
     setStatus('answering');
   }, [exercises, index, status]);
 
+  const buildMockExam = useCallback(async (level: HskLevel, scope: MockExamScope = 'section') => {
+    if (!resolvedApi.buildMockExam) {
+      throw new Error('El simulacro no está disponible todavía.');
+    }
+
+    return resolvedApi.buildMockExam(level, scope);
+  }, [resolvedApi]);
+
   const complete = exercise ? isAnswerComplete(exercise.solution, draft) : false;
   const progress = exercise ? `${index + 1}/${exercises.length}` : `0/${exercises.length}`;
 
@@ -154,6 +167,7 @@ export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
     result,
     summary,
     error,
+    buildMockExam,
     load,
     start,
     setDraft,

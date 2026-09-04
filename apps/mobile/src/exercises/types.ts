@@ -4,5 +4,6 @@ export interface ExerciseRendererProps<TPrompt extends ExercisePrompt = Exercise
   prompt: TPrompt;
   value: ExerciseAnswer;
   disabled: boolean;
+  allowHints?: boolean;
   onChange(value: ExerciseAnswer): void;
 }
