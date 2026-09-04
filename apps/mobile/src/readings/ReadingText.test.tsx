@@ -46,7 +46,11 @@ describe('ReadingText', () => {
   it('opens known and unknown word details and adds a known word once', async () => {
     mockAddCard.mockResolvedValue({ card_id: 'card-1' });
     const view = await render(
-      <ReadingText tokens={tokens} showPinyin={false} readingId="reading-1" />,
+      <ReadingText
+        sentences={[{ zh: '你好，龘。', pinyin: 'ni hao', es: 'Hello.', tokens }]}
+        showPinyin={false}
+        readingId="reading-1"
+      />,
     );
 
     await fireEvent.press(view.getByRole('button', { name: '你好' }));

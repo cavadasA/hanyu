@@ -65,6 +65,8 @@ describe('reading tokens repository integration', () => {
       body: { reading_id: 'reading-1' },
     });
     expect(reading.tokens).toHaveLength(1);
+    expect(reading.sentences[0].tokens).toHaveLength(1);
+    expect(reading.sentences[0].tokens[0].text).toBe('你好');
     expect(reading.questions).toEqual([{
       id: 'q0',
       prompt: '他说什么？',

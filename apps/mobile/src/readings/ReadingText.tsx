@@ -1,59 +1,49 @@
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import type { ReadingToken } from '@hanyu/data';
-import { sentenceOf } from '../lib/sentenceOf';
 import { tokens } from '../theme/tokens';
-import { useTheme } from '../theme/ThemeProvider';
+import { ReadingSentence, type Sentence } from './ReadingSentence';
 import { WordSheet } from './WordSheet';
 
 export function ReadingText({
-  tokens,
+  sentences,
+  tokens: legacyTokens,
   showPinyin,
   readingId,
+  activeSentenceIndex = null,
 }: {
-  tokens: ReadingToken[];
+  sentences?: Sentence[];
+  tokens?: ReadingToken[];
   showPinyin: boolean;
   readingId: string;
+  activeSentenceIndex?: number | null;
 }) {
-  const { colors } = useTheme();
-  const [selected, setSelected] = useState<ReadingToken | null>(null);
+  const [selected, setSelected] = useState<{ token: ReadingToken; sentence: Sentence } | null>(null);
+  const displaySentences = sentences ?? (legacyTokens ? [{
+    zh: legacyTokens.map(token => token.text).join(''),
+    pinyin: '',
+    es: '',
+    tokens: legacyTokens,
+  }] : []);
 
   return (
     <View style={styles.container}>
-      <View style={styles.tokens}>
-        {tokens.map(token => {
-          if (token.type === 'punctuation') {
-            return (
-              <Text key={token.id} style={[styles.token, { color: colors.text }]}>
-                {token.text}
-              </Text>
-            );
-          }
-
-          return (
-            <Pressable
-              key={token.id}
-              accessibilityRole="button"
-              accessibilityLabel={token.text}
-              accessibilityState={{ selected: selected?.id === token.id }}
-              onPress={() => setSelected(token)}
-            >
-              <View style={styles.tokenBlock}>
-                <Text style={[styles.token, { color: colors.vermilion }]}>{token.text}</Text>
-                {showPinyin && token.word ? (
-                  <Text style={[styles.pinyin, { color: colors.textMuted }]}>{token.word.pinyin}</Text>
-                ) : null}
-              </View>
-            </Pressable>
-          );
-        })}
-      </View>
+      {displaySentences.map((sentence, index) => (
+        <ReadingSentence
+          key={`${sentence.zh}-${index}`}
+          sentence={sentence}
+          showPinyin={showPinyin}
+          active={activeSentenceIndex === index}
+          testID={`sentence-${index}`}
+          onSelectToken={token => setSelected({ token, sentence })}
+        />
+      ))}
 
       {selected ? (
         <WordSheet
-          text={selected.text}
-          word={selected.word}
-          sentence={sentenceOf(tokens, selected.id)}
+          text={selected.token.text}
+          word={selected.token.word}
+          sentence={{ text: selected.sentence.zh, tokens: selected.sentence.tokens }}
           readingId={readingId}
           onClose={() => setSelected(null)}
         />
@@ -65,22 +55,5 @@ export function ReadingText({
 const styles = StyleSheet.create({
   container: {
     gap: tokens.spacing.md,
-  },
-  tokens: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-end',
-  },
-  tokenBlock: {
-    alignItems: 'center',
-    marginRight: tokens.spacing.xs,
-    marginBottom: tokens.spacing.xs,
-  },
-  token: {
-    fontSize: tokens.fontSize.xl,
-    lineHeight: 38,
-  },
-  pinyin: {
-    fontSize: tokens.fontSize.xs,
   },
 });

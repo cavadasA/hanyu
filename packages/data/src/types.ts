@@ -245,6 +245,7 @@ export interface ReadingSentence {
   zh: string;
   pinyin: string;
   es: string;
+  tokens: ReadingToken[];
 }
 
 export interface ReadingGrammarTarget {
@@ -259,7 +260,10 @@ export interface ReadingToken {
   text: string;
   type: 'word' | 'unknown' | 'punctuation';
   word: Word | null;
+  status?: ReadingTokenStatus;
 }
+
+export type ReadingTokenStatus = 'known' | 'learning' | 'target' | 'unknown';
 
 export interface ReadingSummary {
   id: string;
@@ -282,7 +286,6 @@ export interface ReadingSummary {
 export interface ReadingDetail extends ReadingSummary {
   sentences: ReadingSentence[];
   content: string;
-  pinyin_text: string | null;
   questions: ReadingQuestion[];
   tokens: ReadingToken[];
 }

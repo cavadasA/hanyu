@@ -48,6 +48,7 @@ export type {
   ReadingResult,
   ReadingSummary,
   ReadingToken,
+  ReadingTokenStatus,
   ReviewEvent,
   RevertOutcome,
   RevertReviewResult,

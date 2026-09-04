@@ -46,6 +46,21 @@ function normalizeQuestionId(question: any, index: number) {
   return question.id || `q${index}`;
 }
 
+function tokensBySentence(sentences: ReadingSentence[], tokens: ReadingDetail['tokens']) {
+  let sentenceStart = 0;
+
+  return sentences.map((sentence) => {
+    const sentenceEnd = sentenceStart + sentence.zh.length;
+    const sentenceTokens = tokens.filter((token) => {
+      const offset = Number(String(token.id).replace(/^t/, ''));
+      return Number.isInteger(offset) && offset >= sentenceStart && offset < sentenceEnd;
+    });
+    sentenceStart = sentenceEnd;
+
+    return { ...sentence, tokens: sentenceTokens };
+  });
+}
+
 function extractCorrectOptionId(question: any) {
   if (question.correct_option_id !== undefined) {
     return question.correct_option_id;
@@ -223,12 +238,12 @@ export async function getReading(slug: string, client: HanyuClient): Promise<Rea
   }
 
   const sentences = parseJsonField(data.sentences, []) as ReadingSentence[];
+  const tokenizedSentences = tokensBySentence(sentences, tokenData.tokens);
 
   return {
     ...normalizeSummary(data),
-    sentences,
+    sentences: tokenizedSentences,
     content: sentences.map(sentence => sentence.zh).join(''),
-    pinyin_text: sentences.map(sentence => sentence.pinyin).filter(Boolean).join(' ') || null,
     questions: normalizeQuestions(parseJsonField(data.questions, [])),
     tokens: tokenData.tokens,
   };

@@ -107,7 +107,7 @@ export function ReadingDetailScreen() {
         {reading.audio_kind === 'tts' ? (
           <Text style={[styles.audioNote, { color: colors.textMuted }]}>Voz sintética</Text>
         ) : null}
-        {reading.pinyin_text ? (
+        {reading.sentences.some(sentence => Boolean(sentence.pinyin)) ? (
           <Button
             label={showPinyin ? 'Hide pinyin' : 'Show pinyin'}
             variant="secondary"
@@ -116,14 +116,8 @@ export function ReadingDetailScreen() {
         ) : null}
       </View>
 
-      {showPinyin && reading.pinyin_text ? (
-        <Card>
-          <Text style={[styles.pinyinText, { color: colors.textMuted }]}>{reading.pinyin_text}</Text>
-        </Card>
-      ) : null}
-
       <Card>
-        <ReadingText tokens={reading.tokens} showPinyin={showPinyin} readingId={reading.id} />
+        <ReadingText sentences={reading.sentences} showPinyin={showPinyin} readingId={reading.id} />
       </Card>
 
       <Card>
@@ -172,10 +166,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: tokens.spacing.sm,
     alignItems: 'center',
-  },
-  pinyinText: {
-    fontSize: tokens.fontSize.md,
-    lineHeight: 22,
   },
   audioNote: {
     fontSize: tokens.fontSize.sm,
