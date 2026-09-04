@@ -258,6 +258,9 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(integrationTest, 'public.mark_grammar_studied(');
     expectSqlToContain(integrationTest, 'rollback;');
     expect(integrationTest).toContain('prerrequisito bloquea');
+    expectSqlToContain(integrationTest, "v_unit.code is distinct from 'test.graph.a'");
+    expectSqlToContain(integrationTest, "v_grammar_state.fsrs_state is distinct from 'review'");
+    expectSqlToContain(integrationTest, "v_unit.code is distinct from 'test.graph.b'");
   });
 
   it('publica el hardening SQL posterior para bases que ya aplicaron 0403', () => {

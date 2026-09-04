@@ -89,7 +89,7 @@ declare
   v_word_id bigint;
 begin
   select * into v_unit from public.active_unit();
-  if v_unit.code <> 'test.graph.a' then
+  if v_unit.code is distinct from 'test.graph.a' then
     raise exception 'prerrequisito bloquea: esperaba test.graph.a, obtuve %', v_unit.code;
   end if;
 
@@ -102,8 +102,8 @@ begin
     and target_id = 99701
     and skill = 'recognition';
 
-  if v_grammar_state.fsrs_state <> 'review'
-     or v_grammar_state.stability <> public.unit_completion_stability_days()
+  if v_grammar_state.fsrs_state is distinct from 'review'
+     or v_grammar_state.stability is distinct from public.unit_completion_stability_days()
      or v_grammar_state.difficulty is not null then
     raise exception 'mark_grammar_studied no dejó el estado esperado';
   end if;
@@ -118,7 +118,7 @@ begin
     and skill = 'recognition';
 
   select * into v_unit from public.active_unit();
-  if v_unit.code <> 'test.graph.b' then
+  if v_unit.code is distinct from 'test.graph.b' then
     raise exception 'la unidad dependiente no se desbloqueó: obtuve %', v_unit.code;
   end if;
 
