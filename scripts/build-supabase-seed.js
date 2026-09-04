@@ -385,7 +385,7 @@ export function buildSeedSql() {
       'generated_exercises',
       ['type', 'hsk_level', 'target_word_id', 'prompt', 'answer', 'source_model', 'created_by'],
       exerciseRows,
-      'on conflict do update set target_word_id = excluded.target_word_id, prompt = excluded.prompt, answer = excluded.answer, source_model = excluded.source_model'
+      "on conflict ((prompt->>'slug')) where source_model = 'seed' and nullif(prompt->>'slug', '') is not null do update set type = excluded.type, hsk_level = excluded.hsk_level, target_word_id = excluded.target_word_id, prompt = excluded.prompt, answer = excluded.answer, source_model = excluded.source_model"
     ),
     buildInsert(
       'reading',

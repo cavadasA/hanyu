@@ -13,6 +13,7 @@ const steps = [
   ['typecheck @hanyu/mobile', 'npm', ['run', 'typecheck', '-w', '@hanyu/mobile']],
   ['tests corpus + data + domain + functions (vitest)', 'npx', ['vitest', 'run']],
   ['tests mobile (jest)', 'npm', ['run', 'test', '-w', '@hanyu/mobile']],
+  ['tests Supabase SQL (pgTAP)', 'node', ['scripts/run-supabase-tests.js']],
 ];
 
 const results = [];

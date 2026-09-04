@@ -303,4 +303,15 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(integrationTest, 'public.mistake_queue(');
     expectSqlToContain(integrationTest, 'select * from finish();');
   });
+
+  it('hace idempotente el seed de ejercicios por slug natural', () => {
+    const migration = readMigration('2026090501_generated_exercise_seed_identity.sql');
+    const normalized = normalizeSql(migration);
+
+    expectSqlToContain(migration, 'delete from public.generated_exercises duplicate');
+    expectSqlToContain(migration, "create unique index if not exists idx_generated_exercises_seed_slug");
+    expectSqlToContain(migration, "on public.generated_exercises ((prompt->>'slug'))");
+    expectSqlToContain(migration, "where source_model = 'seed'");
+    expect(normalized).toContain("duplicate.prompt->>'slug' = keeper.prompt->>'slug'");
+  });
 });

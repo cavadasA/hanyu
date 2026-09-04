@@ -346,7 +346,7 @@ export async function checkExercise(
   const { error: eventError } = await client.from('learning_event').insert({
     user_id: userId,
     kind: 'exercise_attempted',
-    target_kind: targetWordId ? 'word' : null,
+    target_kind: targetWordId !== null ? 'word' : null,
     target_id: targetWordId,
     skill: row.type === 'dictation' ? 'listening' : 'recall',
     payload: {
@@ -393,7 +393,7 @@ export async function recordHintUsed(exerciseId: string, client: HanyuClient): P
   const { error: eventError } = await client.from('learning_event').insert({
     user_id: userId,
     kind: 'hint_used',
-    target_kind: targetWordId ? 'word' : null,
+    target_kind: targetWordId !== null ? 'word' : null,
     target_id: targetWordId,
     payload: { exercise_id: exerciseId, hint: 'options' },
   } as any);

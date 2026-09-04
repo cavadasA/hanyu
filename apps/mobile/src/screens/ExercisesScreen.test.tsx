@@ -140,12 +140,12 @@ describe('ExercisesScreen', () => {
     });
 
     await renderExercises();
-    await fireEvent.press(screen.getByText('Simulacro'));
+    await fireEvent.press(screen.getByText('Comprensión auditiva'));
 
     expect(screen.getByText('25:00')).toBeTruthy();
   });
 
-  it('pasa el nivel de la unidad y permite elegir el alcance del simulacro', async () => {
+  it('usa el único nivel transcrito cuando la unidad es de otro nivel', async () => {
     mockBuildExerciseSession.mockResolvedValue({
       unit_title: 'Unidad HSK 3',
       hsk_level: 3,
@@ -153,17 +153,18 @@ describe('ExercisesScreen', () => {
       length: 8,
     });
     mockBuildMock.mockResolvedValue({
-      hsk_level: 3,
+      hsk_level: 2,
       scope: 'full',
       sections: [{ code: 'reading', title: '阅读', minutes: 22, exercises: [] }],
       unsupported: [],
     });
 
     await renderExercises();
+    expect(screen.getByText(/Tu unidad es HSK 3/)).toBeTruthy();
     await fireEvent.press(screen.getByText('Examen completo'));
 
     await waitFor(() => expect(screen.getByText('阅读')).toBeTruthy());
-    expect(mockBuildMock).toHaveBeenCalledWith(3, 'full', undefined);
+    expect(mockBuildMock).toHaveBeenCalledWith(2, 'full', undefined);
   });
 
   it('dice qué partes del examen no puede simular todavía', async () => {
@@ -174,7 +175,7 @@ describe('ExercisesScreen', () => {
     });
 
     await renderExercises();
-    await fireEvent.press(screen.getByText('Simulacro'));
+    await fireEvent.press(screen.getByText('Comprensión auditiva'));
 
     expect(screen.getByText(/书写/)).toBeTruthy();
   });
@@ -193,7 +194,7 @@ describe('ExercisesScreen', () => {
     });
 
     await renderExercises();
-    await fireEvent.press(screen.getByText('Simulacro'));
+    await fireEvent.press(screen.getByText('Comprensión auditiva'));
     await fireEvent.press(screen.getByText('Empezar'));
     await fireEvent.press(screen.getByText('A'));
     await fireEvent.press(screen.getByText('Comprobar'));
@@ -209,7 +210,7 @@ describe('ExercisesScreen', () => {
     });
 
     await renderExercises();
-    await fireEvent.press(screen.getByText('Simulacro'));
+    await fireEvent.press(screen.getByText('Comprensión auditiva'));
     await fireEvent.press(screen.getByText('Empezar'));
 
     expect(screen.queryByText('Elige la respuesta correcta')).toBeNull();
@@ -226,7 +227,7 @@ describe('ExercisesScreen', () => {
 
     await renderExercises();
     jest.useFakeTimers();
-    await fireEvent.press(screen.getByText('Simulacro'));
+    await fireEvent.press(screen.getByText('Comprensión auditiva'));
     await fireEvent.press(screen.getByText('Empezar'));
 
     await act(async () => {

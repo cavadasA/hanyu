@@ -15,7 +15,10 @@ describe('buildSeedSql', () => {
     expect(generated.sql).toContain('target_word_id');
     expect(generated.sql).toContain('(select w.id from public.words w');
     expect(generated.sql).toContain('w.pinyin =');
-    expect(generated.sql).toContain('on conflict do update set target_word_id = excluded.target_word_id');
+    expect(generated.sql).toContain(
+      "on conflict ((prompt->>'slug')) where source_model = 'seed' and nullif(prompt->>'slug', '') is not null do update set",
+    );
+    expect(generated.sql).not.toContain('on conflict do update set target_word_id = excluded.target_word_id');
     expect(generated.sql).toContain('insert into public.exam_structure');
     expect(generated.sql).toContain('target_words');
     expect(generated.sql).toContain('target_grammar');
@@ -28,7 +31,7 @@ describe('buildSeedSql', () => {
     expect(generated.counts.grammar_prerequisites).toBe(13);
     expect(generated.counts.generated_exercises).toBe(90);
     expect(generated.counts.exam_structures).toBe(1);
-    expect(generated.sql).toContain('encaja en');
+    expect(generated.sql).toContain('introduce la causa');
   });
 
   it('inserta las columnas de sentido', () => {

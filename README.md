@@ -124,7 +124,7 @@ npm start
 | `npm run seed` | Inserta palabras y puntos gramaticales base |
 | `npm run import-hsk` | Convierte TSV de HSK a JSON de seeds |
 | `npm start` | Arranca el servidor Express en modo produccion |
-| `npm test` | Ejecuta Vitest y despues Jest para la app movil |
+| `npm test` | Ejecuta typechecks, Vitest, Jest y pgTAP de Supabase cuando se define `SUPABASE_TEST_DATABASE_URL` |
 | `npm run test:web` | Ejecuta Vitest (paquetes y web) |
 | `npm run test:mobile` | Ejecuta Jest en `apps/mobile` |
 | `npm run test:watch` | Ejecuta Vitest en watch mode |

@@ -110,6 +110,14 @@ describe('validateExercise', () => {
     );
   });
 
+  it('también rechaza la glosa traducida al español', () => {
+    const broken = { ...valid, explanation: '«比» significa «que».' };
+
+    expect(validateExercise(broken, context).map((issue) => issue.kind)).toContain(
+      'gloss_not_explanation',
+    );
+  });
+
   it('exige que el ejercicio declare a qué unidad pertenece', () => {
     const broken = { ...valid, unit_code: '' };
 

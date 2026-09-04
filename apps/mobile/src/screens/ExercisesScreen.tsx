@@ -7,6 +7,7 @@ import {
   type Exercise,
   type ExerciseAnswer,
   type ExerciseCheckResult,
+  type HskLevel,
   type MockExam,
   type MockExamScope,
 } from '@hanyu/data';
@@ -34,6 +35,11 @@ function examExercise(raw: Exercise | undefined): Exercise | null {
   if (!raw?.id || !raw.prompt || !raw.solution || raw.prompt.kind !== raw.solution.kind) return null;
   return raw;
 }
+
+// The seed currently contains the official HSK 2 structure only. Keep this
+// limitation explicit at the UI boundary so an HSK 1/3 learner never sends an
+// unsupported level to the RPC and sees a raw database error.
+const AVAILABLE_MOCK_LEVEL: HskLevel = 2;
 
 export function ExercisesScreen() {
   const { colors } = useTheme();
@@ -66,7 +72,11 @@ export function ExercisesScreen() {
       currentMockExercise &&
       isAnswerComplete(currentMockExercise.solution, mockDraft),
   );
-  const mockLevel = session.unit?.hsk_level ?? 2;
+  const requestedMockLevel = session.unit?.hsk_level ?? AVAILABLE_MOCK_LEVEL;
+  const mockLevel = AVAILABLE_MOCK_LEVEL;
+  const mockLevelLabel = requestedMockLevel === AVAILABLE_MOCK_LEVEL
+    ? `Nivel HSK ${mockLevel}; elige una sección o el examen completo.`
+    : `Tu unidad es HSK ${requestedMockLevel}; el simulacro disponible es HSK ${mockLevel}.`;
   const mistakesParam = Array.isArray(params.mistakes) ? params.mistakes[0] : params.mistakes;
   const mistakeKey = mistakesParam ?? '';
 
@@ -211,8 +221,8 @@ export function ExercisesScreen() {
       {!mockExam ? (
         <Card>
           <Text style={[styles.unitLabel, { color: colors.textMuted }]}>Práctica de examen</Text>
-          <Text style={[styles.unitMeta, { color: colors.textMuted }]}>Nivel HSK {mockLevel}; elige una sección o el examen completo.</Text>
-          <Button label="Simulacro" onPress={() => openMockExam('section', 'listening')} disabled={busy} />
+          <Text style={[styles.unitMeta, { color: colors.textMuted }]}>{mockLevelLabel}</Text>
+          <Button label="Comprensión auditiva" onPress={() => openMockExam('section', 'listening')} disabled={busy} />
           <Button label="Lectura" onPress={() => openMockExam('section', 'reading')} disabled={busy} />
           <Button label="Examen completo" onPress={() => openMockExam('full')} disabled={busy} />
         </Card>

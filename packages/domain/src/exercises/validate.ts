@@ -31,11 +31,15 @@ const BLANK = '___';
  * esta forma, así que ninguna debe llegar al banco nuevo sin ser reescrita.
  *
  * La heurística es deliberadamente tosca: una explicación que cabe en el patrón
- * "X (pinyin) means 'Y'" y no dice nada más, se rechaza. Detectar una buena
- * explicación es imposible automáticamente; detectar esta forma concreta de
- * explicación vacía, no.
+ * "X (pinyin) means 'Y'" y no dice nada más, se rechaza. También cubrimos la
+ * traducción literal de esa plantilla («X» significa «Y»), que es igual de
+ * vacía para un alumno hispanohablante. Detectar una buena explicación es
+ * imposible automáticamente; detectar estas formas concretas, no.
  */
-const GLOSS_ONLY = /^\s*\S+\s*\([^)]*\)\s*means\s+['"][^'"]*['"]\.?\s*$/i;
+const GLOSS_ONLY = [
+  /^\s*\S+\s*\([^)]*\)\s*means\s+['"][^'"]*['"]\.?\s*$/i,
+  /^\s*[«“"][^»”"]+[»”"]\s+(?:significa|quiere decir)\s+[«“"][^»”"]+[»”"]\.?\s*$/i,
+];
 
 interface ExerciseLike {
   slug: string;
@@ -140,7 +144,7 @@ export function validateExercise(
     issues.push({ kind: 'invalid_target' });
   }
 
-  if (GLOSS_ONLY.test(exercise.explanation ?? '')) {
+  if (GLOSS_ONLY.some((pattern) => pattern.test(exercise.explanation ?? ''))) {
     issues.push({ kind: 'gloss_not_explanation' });
   }
   if (!isSpanishExplanation(exercise.explanation)) {
