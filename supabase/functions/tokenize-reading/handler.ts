@@ -1,7 +1,7 @@
 import { jsonResponse } from '../_shared/cors.ts';
 import {
   tokenizeReading,
-  type DictionaryWord,
+  type DictionaryEntry,
 } from '../_shared/reading-tokenizer.ts';
 
 interface TokenizerClient {
@@ -72,7 +72,7 @@ export async function handleTokenizeReading(
   }
 
   const cardWordIds = new Set((cards || []).map((card: any) => Number(card.word_id)));
-  const dictionary: DictionaryWord[] = (words || []).map((word: any) => ({
+  const dictionary: DictionaryEntry[] = (words || []).map((word: any) => ({
     id: Number(word.id),
     hanzi: String(word.hanzi),
     pinyin: String(word.pinyin),
