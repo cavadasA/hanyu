@@ -7,7 +7,7 @@
   "series": "tienda",
   "series_index": 3,
   "target_words": ["苹果", "水果", "买"],
-  "target_grammar": ["5.4.4"],
+  "target_grammar": [{"code": "5.4.4", "level": 2}],
   "sentences": [
     { "zh": "今天我和朋友去商店买水果。", "pinyin": "Jīntiān wǒ hé péngyou qù shāngdiàn mǎi shuǐguǒ.", "es": "Hoy mi amigo y yo vamos a la tienda a comprar fruta." },
     { "zh": "我们看了苹果，也看了肉。", "pinyin": "Wǒmen kàn le píngguǒ, yě kàn le ròu.", "es": "Miramos las manzanas y también la carne." },

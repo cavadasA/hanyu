@@ -52,8 +52,14 @@ function loadDictionary() {
   return dictionary;
 }
 
+function loadGrammarPoints() {
+  return JSON.parse(readFileSync(join(seedDir, 'grammar-points.json'), 'utf8'))
+    .map(point => ({ code: point.code, hsk_level: point.hsk_level }));
+}
+
 export function validateCatalog() {
   const dictionary = loadDictionary();
+  const grammar_points = loadGrammarPoints();
 
   return loadReadings().map(reading => ({
     slug: reading.slug,
@@ -61,6 +67,7 @@ export function validateCatalog() {
       dictionary,
       max_level: reading.hsk_level,
       target_word_ids: [],
+      grammar_points,
     }),
   }));
 }

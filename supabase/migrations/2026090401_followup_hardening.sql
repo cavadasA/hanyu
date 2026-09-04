@@ -2,11 +2,9 @@
 -- This migration is deliberately after every 20260903xx migration so a clean
 -- reset and an already deployed database converge on the same API surface.
 
-begin;
-
 alter table public.reading
   add column if not exists target_words text[] not null default '{}'::text[],
-  add column if not exists target_grammar text[] not null default '{}'::text[];
+  add column if not exists target_grammar jsonb not null default '[]'::jsonb;
 
 -- Backfill existing catalog rows when this migration is applied after a seed;
 -- the generated seed repeats the same idempotent operation after inserting
@@ -29,10 +27,10 @@ insert into public.content_teaches (content_id, target_kind, target_id, role)
 select distinct ci.id, 'grammar'::public.learning_target_kind, g.id, 'target'::public.teaches_role
 from public.reading r
 join public.content_item ci on ci.source_table = 'reading' and ci.source_id = r.slug
-cross join lateral unnest(coalesce(r.target_grammar, '{}'::text[])) target(code)
+cross join lateral jsonb_array_elements(coalesce(r.target_grammar, '[]'::jsonb)) target(item)
 join public.grammar_points g
-  on g.code = target.code
- and g.hsk_level = case when target.code = '2.6.1' then 1 else r.hsk_level end
+  on g.code = target.item->>'code'
+ and g.hsk_level = (target.item->>'level')::integer
 on conflict (content_id, target_kind, target_id) do update set role = excluded.role;
 
 -- A new card has no due date by design. Only a scheduled, non-new state is due.
@@ -127,6 +125,7 @@ declare
   v_new_allowance integer;
   v_review_allowance integer;
   v_session integer;
+  v_new_session_cap integer;
 begin
   if v_user_id is null then
     raise exception 'Authentication required';
@@ -149,6 +148,7 @@ begin
 
   v_new_allowance := greatest(0, v_settings.new_cards_per_day - coalesce(v_introduced, 0));
   v_review_allowance := greatest(0, v_settings.review_limit_per_day - coalesce(v_reviewed, 0));
+  v_new_session_cap := greatest(0, floor(v_session / 2.0)::integer);
 
   return query
   with scope as (
@@ -177,7 +177,7 @@ begin
       w.hsk_level,
       coalesce(w.frequency, 2147483647),
       w.id
-    limit least(v_session, v_new_allowance)
+    limit least(v_new_allowance, v_new_session_cap)
   ),
   due_reviews as (
     select
@@ -368,5 +368,3 @@ drop function if exists public.create_starter_deck(text, integer);
 -- There are no production callers for this compatibility scheduler anymore.
 drop function if exists public.get_due_cards(integer, uuid, public.learning_skill);
 drop function if exists public.get_due_cards(integer, uuid);
-
-commit;

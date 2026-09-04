@@ -7,7 +7,7 @@
   "series": "tienda",
   "series_index": 1,
   "target_words": ["比", "咖啡", "但是"],
-  "target_grammar": ["6.3.4"],
+  "target_grammar": [{"code": "6.3.4", "level": 2}],
   "sentences": [
     { "zh": "今天我和朋友去商店买东西。", "pinyin": "Jīntiān wǒ hé péngyou qù shāngdiàn mǎi dōngxi.", "es": "Hoy mi amigo y yo fuimos a la tienda a comprar cosas." },
     { "zh": "商店里的水果很多。", "pinyin": "Shāngdiàn lǐ de shuǐguǒ hěn duō.", "es": "En la tienda hay mucha fruta." },

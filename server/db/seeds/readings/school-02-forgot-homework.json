@@ -7,7 +7,7 @@
   "series": "escuela",
   "series_index": 2,
   "target_words": ["因为", "所以", "身体"],
-  "target_grammar": ["6.4.3"],
+  "target_grammar": [{"code": "6.4.3", "level": 2}],
   "sentences": [
     { "zh": "今天老师问我们为什么没有写字。", "pinyin": "Jīntiān lǎoshī wèn wǒmen wèishénme méiyǒu xiězì.", "es": "Hoy el profesor pregunta por qué no hemos escrito." },
     { "zh": "同学说因为昨天身体不好，所以没有学习。", "pinyin": "Tóngxué shuō yīnwèi zuótiān shēntǐ bù hǎo, suǒyǐ méiyǒu xuéxí.", "es": "El compañero dice que ayer no se encontraba bien, así que no estudió." },

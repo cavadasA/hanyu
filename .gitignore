@@ -9,5 +9,6 @@ dist/
 .env.hanyu.local
 .superpowers/
 supabase/.temp/
+deno.lock
 /data/*
 !/data/sources.json

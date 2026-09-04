@@ -14,6 +14,7 @@ export type IssueKind =
   | 'missing_evidence'
   | 'duplicate_options'
   | 'target_absent'
+  | 'unknown_grammar'
   | 'no_questions';
 
 export interface ValidationIssue {
@@ -37,6 +38,11 @@ export interface ReadingQuestion {
   evidence_sentence: number;
 }
 
+export interface ReadingGrammarTarget {
+  code: string;
+  level: number;
+}
+
 export interface ReadingSource {
   slug: string;
   title: string;
@@ -45,7 +51,7 @@ export interface ReadingSource {
   topic: string;
   sentences: ReadingSentence[];
   target_words: string[];
-  target_grammar: string[];
+  target_grammar: ReadingGrammarTarget[];
   questions: ReadingQuestion[];
 }
 
@@ -53,6 +59,7 @@ export interface ValidationContext {
   dictionary: (DictionaryEntry & { hsk_level: number })[];
   max_level: number;
   target_word_ids: number[];
+  grammar_points: Array<{ code: string; hsk_level: number }>;
 }
 
 /**
@@ -111,6 +118,21 @@ export function validateReading(
     }
     if (!allowedForms.has(target)) {
       issues.push({ kind: 'unknown_vocabulary', detail: target });
+    }
+  }
+
+  for (const target of reading.target_grammar) {
+    const code = typeof target?.code === 'string' ? target.code : '';
+    const level = target?.level;
+    const known = typeof level === 'number' && Number.isInteger(level) &&
+      level >= 1 && level <= context.max_level &&
+      context.grammar_points.some(point => point.code === code && point.hsk_level === level);
+
+    if (!known) {
+      issues.push({
+        kind: 'unknown_grammar',
+        detail: code ? `${code}@${String(target?.level)}` : 'invalid target',
+      });
     }
   }
 

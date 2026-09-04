@@ -7,7 +7,7 @@
   "series": null,
   "series_index": null,
   "target_words": ["身体", "药", "休息"],
-  "target_grammar": ["6.4.2"],
+  "target_grammar": [{"code": "6.4.2", "level": 2}],
   "sentences": [
     { "zh": "今天早上我觉得身体不太好。", "pinyin": "Jīntiān zǎoshang wǒ juéde shēntǐ bú tài hǎo.", "es": "Esta mañana no me encontraba muy bien." },
     { "zh": "我告诉妈妈我的头有一点儿疼。", "pinyin": "Wǒ gàosu māma wǒ de tóu yǒu yìdiǎnr téng.", "es": "Le digo a mamá que me duele un poco la cabeza." },

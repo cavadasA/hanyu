@@ -27,7 +27,7 @@ const storyReading: ReadingSummary = {
   series: 'escuela',
   series_index: 1,
   target_words: ['同学'],
-  target_grammar: ['6.3.5'],
+  target_grammar: [{ code: '6.3.5', level: 2 }],
   audio_kind: 'tts',
   audio_url: null,
 };

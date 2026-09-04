@@ -11,7 +11,15 @@ const dictionary = [
   { hanzi: '好喝', pinyin: 'hǎohē', hsk_level: 2 },
 ];
 
-const context = { dictionary, max_level: 2, target_word_ids: [] };
+const context = {
+  dictionary,
+  max_level: 2,
+  target_word_ids: [],
+  grammar_points: [
+    { code: '6.3.4', hsk_level: 2 },
+    { code: '2.6.1', hsk_level: 3 },
+  ],
+};
 const validSentence = {
   zh: '我喜欢喝茶，茶比咖啡好喝。',
   pinyin: 'Wǒ xǐhuān hē chá, chá bǐ kāfēi hǎohē.',
@@ -26,7 +34,7 @@ const valid = {
   topic: 'comida',
   sentences: Array.from({ length: 8 }, () => ({ ...validSentence })),
   target_words: ['比'],
-  target_grammar: ['6.3.4'],
+  target_grammar: [{ code: '6.3.4', level: 2 }],
   questions: [
     {
       prompt: '说话人更喜欢什么？',
@@ -128,6 +136,15 @@ describe('validateReading', () => {
     const reading = { ...valid, target_words: ['图书馆'] };
 
     expect(validateReading(reading, context).map(i => i.kind)).toContain('target_absent');
+  });
+
+  it('rechaza un objetivo gramatical inexistente o de otro nivel', () => {
+    const reading = {
+      ...valid,
+      target_grammar: [{ code: '2.6.1', level: 3 }],
+    };
+
+    expect(validateReading(reading, context).map(i => i.kind)).toContain('unknown_grammar');
   });
 
   it('rechaza una lectura sin preguntas', () => {

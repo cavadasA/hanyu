@@ -33,6 +33,7 @@ export type {
   LearningTargetKind,
   ReadingDetail,
   ReadingFormat,
+  ReadingGrammarTarget,
   ReadingQuestion,
   ReadingSentence,
   ReadingAudioKind,

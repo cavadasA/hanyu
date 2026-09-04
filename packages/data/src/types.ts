@@ -199,6 +199,11 @@ export interface ReadingSentence {
   es: string;
 }
 
+export interface ReadingGrammarTarget {
+  code: string;
+  level: number;
+}
+
 export type ReadingAudioKind = 'tts' | 'human';
 
 export interface ReadingToken {
@@ -218,7 +223,7 @@ export interface ReadingSummary {
   series: string | null;
   series_index: number | null;
   target_words: string[];
-  target_grammar: string[];
+  target_grammar: ReadingGrammarTarget[];
   audio_kind: ReadingAudioKind;
   audio_url: string | null;
   created_at?: string;

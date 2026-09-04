@@ -7,7 +7,7 @@
   "series": "escuela",
   "series_index": 1,
   "target_words": ["新", "同学", "认识"],
-  "target_grammar": ["6.3.5"],
+  "target_grammar": [{"code": "6.3.5", "level": 2}],
   "sentences": [
     { "zh": "昨天学校来了一个新同学。", "pinyin": "Zuótiān xuéxiào lái le yí gè xīn tóngxué.", "es": "Ayer llegó un compañero nuevo a la escuela." },
     { "zh": "老师给我们介绍他的姓名。", "pinyin": "Lǎoshī gěi wǒmen jièshào tā de xìngmíng.", "es": "El profesor nos presentó su nombre." },

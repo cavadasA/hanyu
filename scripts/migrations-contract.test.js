@@ -195,9 +195,26 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'create or replace function public.build_review_queue(');
     expectSqlToContain(migration, 'create or replace function public.get_dashboard(');
     expectSqlToContain(migration, 'alter table public.reading');
+    expectSqlToContain(migration, 'add column if not exists target_grammar jsonb not null default \'[]\'::jsonb;');
     expectSqlToContain(migration, 'insert into public.content_teaches');
+    expectSqlToContain(migration, 'v_new_session_cap integer;');
+    expectSqlToContain(migration, 'v_new_session_cap := greatest(0, floor(v_session / 2.0)::integer);');
+    expectSqlToContain(migration, 'limit least(v_new_allowance, v_new_session_cap)');
     expect(normalized).toContain("fsrs_state <> 'new'");
     expect(normalized).toContain('next_review_at is not null');
     expect(normalized).toContain('from public.reading');
+    expect(normalized).not.toContain('begin;');
+    expect(normalized).not.toContain('commit;');
+  });
+
+  it('normaliza el formato antiguo de los objetivos gramaticales', () => {
+    const migration = readMigration('2026090402_normalize_reading_grammar_targets.sql');
+    const normalized = normalizeSql(migration);
+
+    expectSqlToContain(migration, 'alter table public.reading alter column target_grammar type jsonb');
+    expectSqlToContain(migration, "jsonb_build_object('code', target.code, 'level', g.hsk_level)");
+    expectSqlToContain(migration, "jsonb_typeof(item) = 'string'");
+    expect(normalized).not.toContain('begin;');
+    expect(normalized).not.toContain('commit;');
   });
 });

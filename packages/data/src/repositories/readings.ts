@@ -3,6 +3,7 @@ import type {
   HskLevel,
   ReadingDetail,
   ReadingFormat,
+  ReadingGrammarTarget,
   ReadingResult,
   ReadingSentence,
   ReadingSummary,
@@ -28,6 +29,17 @@ function normalizeQuestions(questions: unknown) {
         : { id: String(option.id ?? optionIndex), text: String(option.text ?? '') },
     ),
   }));
+}
+
+function normalizeGrammarTargets(value: unknown): ReadingGrammarTarget[] {
+  const targets = parseJsonField(value, []);
+
+  return (Array.isArray(targets) ? targets : []).flatMap((target: any) => {
+    const code = typeof target?.code === 'string' ? target.code : '';
+    const level = Number(target?.level);
+
+    return code && Number.isInteger(level) ? [{ code, level }] : [];
+  });
 }
 
 function normalizeQuestionId(question: any, index: number) {
@@ -171,7 +183,7 @@ function normalizeSummary(row: any): ReadingSummary {
       ? null
       : Number(row.series_index),
     target_words: Array.isArray(row.target_words) ? row.target_words.map(String) : [],
-    target_grammar: Array.isArray(row.target_grammar) ? row.target_grammar.map(String) : [],
+    target_grammar: normalizeGrammarTargets(row.target_grammar),
     audio_kind: row.audio_kind === 'human' ? 'human' : 'tts',
     audio_url: row.audio_url === null || row.audio_url === undefined ? null : String(row.audio_url),
     ...(row.created_at ? { created_at: String(row.created_at) } : {}),

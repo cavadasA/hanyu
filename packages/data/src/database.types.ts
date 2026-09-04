@@ -260,7 +260,7 @@ export type Database = {
           series: string | null
           series_index: number | null
           slug: string
-          target_grammar: string[]
+          target_grammar: Json
           target_words: string[]
           title: string
           topic: string
@@ -276,7 +276,7 @@ export type Database = {
           series?: string | null
           series_index?: number | null
           slug: string
-          target_grammar?: string[]
+          target_grammar?: Json
           target_words?: string[]
           title: string
           topic: string
@@ -292,7 +292,7 @@ export type Database = {
           series?: string | null
           series_index?: number | null
           slug?: string
-          target_grammar?: string[]
+          target_grammar?: Json
           target_words?: string[]
           title?: string
           topic?: string

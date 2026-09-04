@@ -7,7 +7,7 @@
   "series": "tienda",
   "series_index": 2,
   "target_words": ["太", "贵", "便宜"],
-  "target_grammar": ["2.6.1"],
+  "target_grammar": [{"code": "2.6.1", "level": 1}],
   "sentences": [
     { "zh": "今天我和朋友一起买新衣服。", "pinyin": "Jīntiān wǒ hé péngyou yìqǐ mǎi xīn yīfu.", "es": "Hoy mi amigo y yo vamos a comprar ropa nueva." },
     { "zh": "他问商店里的衣服多少钱。", "pinyin": "Tā wèn shāngdiàn lǐ de yīfu duōshao qián.", "es": "Pregunta cuánto cuesta la ropa de la tienda." },

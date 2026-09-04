@@ -146,7 +146,7 @@ function buildReadingRows() {
     sqlJson(reading.sentences),
     sqlJson(reading.questions || []),
     sqlTextArray(reading.target_words),
-    sqlTextArray(reading.target_grammar),
+    sqlJson(reading.target_grammar || []),
     sqlString(reading.audio_kind || 'tts'),
     sqlString(reading.audio_url ?? null),
   ]);
@@ -162,19 +162,6 @@ function buildReadingContentRows() {
   ]);
 }
 
-const GRAMMAR_TARGET_LEVELS = {
-  '2.2.1': 2,
-  '2.6.1': 1,
-  '5.4.2': 2,
-  '5.4.4': 2,
-  '6.3.4': 2,
-  '6.3.5': 2,
-  '6.4.2': 2,
-  '6.4.3': 2,
-  '6.4.4': 2,
-  '7.1.1': 2,
-};
-
 function buildReadingTeachingRows() {
   return loadReadings().flatMap(reading => [
     ...(reading.target_words || []).map(target => [
@@ -184,11 +171,12 @@ function buildReadingTeachingRows() {
       reading.hsk_level,
     ]),
     ...(reading.target_grammar || []).map(target => {
-      const level = GRAMMAR_TARGET_LEVELS[target];
-      if (!level) {
-        throw new Error(`Unknown grammar target ${target} in ${reading.slug}`);
+      const code = target?.code;
+      const level = target?.level;
+      if (typeof code !== 'string' || !code || typeof level !== 'number' || !Number.isInteger(level)) {
+        throw new Error(`Invalid grammar target in ${reading.slug}`);
       }
-      return [reading.slug, 'grammar', target, level];
+      return [reading.slug, 'grammar', code, level];
     }),
   ]);
 }

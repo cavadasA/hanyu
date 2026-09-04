@@ -7,7 +7,7 @@
   "series": null,
   "series_index": null,
   "target_words": ["起床", "做饭", "事情"],
-  "target_grammar": ["2.2.1"],
+  "target_grammar": [{"code": "2.2.1", "level": 2}],
   "sentences": [
     { "zh": "星期天我六点起床。", "pinyin": "Xīngqītiān wǒ liù diǎn qǐchuáng.", "es": "El domingo me levanto a las seis." },
     { "zh": "妈妈在房间做饭，爸爸在房间看书。", "pinyin": "Māma zài fángjiān zuòfàn, bàba zài fángjiān kàn shū.", "es": "Mamá cocina en la habitación y papá lee en la habitación." },

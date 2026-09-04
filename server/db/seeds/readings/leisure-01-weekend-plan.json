@@ -7,7 +7,7 @@
   "series": null,
   "series_index": null,
   "target_words": ["电影", "一起", "快乐"],
-  "target_grammar": ["6.4.4"],
+  "target_grammar": [{"code": "6.4.4", "level": 2}],
   "sentences": [
     { "zh": "星期天我没有课，想和朋友一起看电影。", "pinyin": "Xīngqītiān wǒ méiyǒu kè, xiǎng hé péngyou yìqǐ kàn diànyǐng.", "es": "El domingo no tengo clase y quiero ver una película con mi amigo." },
     { "zh": "我们在家里吃饭，再坐地铁去电影院。", "pinyin": "Wǒmen zài jiā lǐ chīfàn, zài zuò dìtiě qù diànyǐngyuàn.", "es": "Comemos en casa y después vamos al cine en metro." },

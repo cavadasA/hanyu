@@ -7,7 +7,7 @@
   "series": null,
   "series_index": null,
   "target_words": ["着", "虽然", "高兴"],
-  "target_grammar": ["7.1.1"],
+  "target_grammar": [{"code": "7.1.1", "level": 2}],
   "sentences": [
     { "zh": "今天妈妈在房间做饭。", "pinyin": "Jīntiān māma zài fángjiān zuòfàn.", "es": "Hoy mamá cocina en la habitación." },
     { "zh": "妈妈坐在桌子旁边，手里拿着茶。", "pinyin": "Māma zuò zài zhuōzi pángbiān, shǒu lǐ ná zhe chá.", "es": "Mamá se sienta junto a la mesa y sostiene té en la mano." },

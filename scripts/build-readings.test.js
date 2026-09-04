@@ -12,6 +12,16 @@ describe('catálogo de lecturas', () => {
     expect(new Set(slugs).size).toBe(slugs.length);
   });
 
+  it('declara el nivel junto a cada objetivo gramatical', () => {
+    expect(loadReadings().every(reading =>
+      reading.target_grammar?.every(target =>
+        typeof target === 'object' &&
+        typeof target.code === 'string' &&
+        Number.isInteger(target.level),
+      ),
+    )).toBe(true);
+  });
+
   it('mantiene el orden y la identidad de la serie tienda', () => {
     const readings = loadReadings().filter(reading => reading.series === 'tienda');
 
