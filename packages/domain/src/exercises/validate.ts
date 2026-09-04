@@ -30,15 +30,29 @@ const BLANK = '___';
  * sabe cuál era, lo que no sabe es por qué. Las semillas históricas usaban
  * esta forma, así que ninguna debe llegar al banco nuevo sin ser reescrita.
  *
- * La heurística es deliberadamente tosca: una explicación que cabe en el patrón
- * "X (pinyin) means 'Y'" y no dice nada más, se rechaza. También cubrimos la
- * traducción literal de esa plantilla («X» significa «Y»), que es igual de
- * vacía para un alumno hispanohablante. Detectar una buena explicación es
- * imposible automáticamente; detectar estas formas concretas, no.
+ * La heurística es deliberadamente tosca: se rechaza la glosa "X (pinyin) means
+ * 'Y'" y su traducción literal («X» significa «Y»), que es igual de vacía para
+ * un alumno hispanohablante.
+ *
+ * Una glosa no deja de serlo porque se le pegue una coletilla detrás: la versión
+ * anterior anclaba en `$` y «X» significa «Y»; la opción correcta es la traducción
+ * se colaba entera. Por eso se admite una cola, pero solo si habla del ejercicio
+ * —opción, respuesta, traducción, elegir— en vez de hablar de la lengua. Ese
+ * vocabulario sí es una lista cerrada; el de la lengua no, y exigirlo daba 15
+ * falsos positivos sobre explicaciones buenas del banco.
+ *
+ * Lo que esta regla no puede ver sigue siendo lo de siempre: una explicación
+ * vacía que no tenga forma de glosa. Detectar una buena explicación es imposible
+ * automáticamente; detectar estas formas concretas, no.
  */
+const QUOTED = '[«“"][^»”"]+[»”"]';
+const EXERCISE_TALK =
+  '(?:[^.;:]*\\b(?:opci[óo]n|opciones|respuesta|correcta?|correcto|traducci[óo]n|elige|elegir|marca(?:r)?|acierta|se pide|encaja)\\b[^.;:]*)';
+const GLOSS_TAIL = `(?:\\s*[;,:]?\\s*(?:as[íi] que\\s+)?${EXERCISE_TALK})*`;
+
 const GLOSS_ONLY = [
-  /^\s*\S+\s*\([^)]*\)\s*means\s+['"][^'"]*['"]\.?\s*$/i,
-  /^\s*[«“"][^»”"]+[»”"]\s+(?:significa|quiere decir)\s+[«“"][^»”"]+[»”"]\.?\s*$/i,
+  new RegExp(`^\\s*\\S+\\s*\\([^)]*\\)\\s*means\\s+['"][^'"]*['"]\\s*\\.?${GLOSS_TAIL}\\s*\\.?\\s*$`, 'i'),
+  new RegExp(`^\\s*${QUOTED}\\s+(?:significa|quiere decir)\\s+${QUOTED}\\s*\\.?${GLOSS_TAIL}\\s*\\.?\\s*$`, 'i'),
 ];
 
 interface ExerciseLike {

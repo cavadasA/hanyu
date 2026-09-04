@@ -7,13 +7,20 @@ import { spawnSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// Un paso omitido no es un paso que pasa, así que no puede salir con 0: eso
+// contaba como verde en el resumen de verify.js. No se exporta a propósito
+// —importar este fichero lo ejecutaría—, así que verify.js repite el número con
+// el mismo comentario. psql solo devuelve 0, 1, 2 o 3, de modo que 78 no
+// colisiona con un fallo real de la prueba.
+const SKIP_EXIT_CODE = 78;
+
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const testFile = join(rootDir, 'supabase', 'tests', 'exercises_exam_hardening.sql');
 const databaseUrl = process.env.SUPABASE_TEST_DATABASE_URL;
 
 if (!databaseUrl) {
   console.log('SKIP  Supabase pgTAP (define SUPABASE_TEST_DATABASE_URL para ejecutarlo)');
-  process.exit(0);
+  process.exit(SKIP_EXIT_CODE);
 }
 
 if (!existsSync(testFile)) {

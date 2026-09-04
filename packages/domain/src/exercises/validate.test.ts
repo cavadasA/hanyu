@@ -118,6 +118,33 @@ describe('validateExercise', () => {
     );
   });
 
+  it('rechaza la glosa aunque lleve una coletilla sobre el ejercicio', () => {
+    // Una glosa no deja de serlo por pegarle una frase detrás: hablar de «la
+    // opción correcta» no dice nada de la lengua.
+    for (const explanation of [
+      '«比» significa «que»; la opción correcta es la traducción que encaja con esa palabra.',
+      '«比» quiere decir «que»: marca la traducción correcta.',
+      '«比» significa «que», así que elige esa opción.',
+      "比 (bǐ) means 'than'; that is the correct option.",
+    ]) {
+      expect(validateExercise({ ...valid, explanation }, context).map((issue) => issue.kind)).toContain(
+        'gloss_not_explanation',
+      );
+    }
+  });
+
+  it('acepta la traducción cuando va acompañada de un análisis', () => {
+    // La cola aquí habla de la lengua, no de qué casilla marcar.
+    for (const explanation of [
+      '«比» significa «que»: introduce el segundo término de la comparación.',
+      '«比» compara dos cosas y equivale a «que»; el adjetivo va al final.',
+    ]) {
+      expect(validateExercise({ ...valid, explanation }, context).map((issue) => issue.kind)).not.toContain(
+        'gloss_not_explanation',
+      );
+    }
+  });
+
   it('exige que el ejercicio declare a qué unidad pertenece', () => {
     const broken = { ...valid, unit_code: '' };
 
