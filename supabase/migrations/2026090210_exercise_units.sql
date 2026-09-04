@@ -86,3 +86,44 @@ $$;
 
 revoke all on function public.build_exercise_session(text, integer) from public;
 grant execute on function public.build_exercise_session(text, integer) to authenticated;
+
+-- Un error que no vuelve no enseña nada. La cola se calcula del log de eventos
+-- en vez de guardarse aparte: así no hay dos verdades que mantener de acuerdo.
+create or replace function public.mistake_queue(p_limit integer default 20)
+returns table(target_id bigint, misses integer, hits_since integer, distinct_days integer)
+language sql
+security definer
+set search_path = public
+as $$
+  with attempts as (
+    select
+      e.target_id,
+      e.occurred_at,
+      (e.payload->>'correct')::boolean as correct,
+      max(case when (e.payload->>'correct')::boolean is false then e.occurred_at end)
+        over (partition by e.target_id) as last_miss
+    from public.learning_event e
+    where e.user_id = auth.uid()
+      and e.kind = 'exercise_attempted'
+      and e.target_kind = 'word'
+  )
+  select
+    a.target_id,
+    count(*) filter (where not a.correct)::integer as misses,
+    count(*) filter (where a.correct and a.occurred_at > a.last_miss)::integer as hits_since,
+    count(distinct date(a.occurred_at)) filter (
+      where a.correct and a.occurred_at > a.last_miss
+    )::integer as distinct_days
+  from attempts a
+  where a.last_miss is not null
+  group by a.target_id
+  having count(*) filter (where a.correct and a.occurred_at > a.last_miss) < 2
+      or count(distinct date(a.occurred_at)) filter (
+           where a.correct and a.occurred_at > a.last_miss
+         ) < 2
+  order by max(a.last_miss) desc
+  limit greatest(1, coalesce(p_limit, 20));
+$$;
+
+revoke all on function public.mistake_queue(integer) from public;
+grant execute on function public.mistake_queue(integer) to authenticated;

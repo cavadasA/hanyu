@@ -34,6 +34,7 @@ export type {
   LearningEventKind,
   LearningSkill,
   LearningTargetKind,
+  Mistake,
   ReadingDetail,
   ReadingFormat,
   ReadingGrammarTarget,

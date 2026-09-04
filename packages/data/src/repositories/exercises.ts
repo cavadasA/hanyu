@@ -8,6 +8,7 @@ import type {
   ExercisePrompt,
   ExerciseType,
   HskLevel,
+  Mistake,
 } from '../types';
 import {
   createRepositoryError,
@@ -103,6 +104,26 @@ function normalizeExerciseSession(payload: any): ExerciseSession {
     exercises,
     length: Number(session?.length ?? exercises.length),
   };
+}
+
+export async function getMistakes(client: HanyuClient, limit = 20): Promise<Mistake[]> {
+  const { data, error } = await (client.rpc as any)('mistake_queue', {
+    p_limit: Math.max(1, Math.trunc(Number(limit)) || 20),
+  });
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load mistake queue');
+  }
+
+  const rows = Array.isArray(data) ? data : [];
+  return rows
+    .map((row: any) => ({
+      target_id: Number(row.target_id),
+      misses: Number(row.misses ?? 0),
+      hits_since: Number(row.hits_since ?? 0),
+      distinct_days: Number(row.distinct_days ?? 0),
+    }))
+    .filter((row) => row.misses > 0 && (row.hits_since < 2 || row.distinct_days < 2));
 }
 
 async function incrementExerciseDone(client: HanyuClient, userId: string) {

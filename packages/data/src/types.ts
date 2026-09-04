@@ -138,6 +138,13 @@ export interface ExerciseSession {
   length: number;
 }
 
+export interface Mistake {
+  target_id: number;
+  misses: number;
+  hits_since: number;
+  distinct_days: number;
+}
+
 export interface ExerciseCheckResult {
   correct: boolean;
   expected_answer: ExerciseSolution;

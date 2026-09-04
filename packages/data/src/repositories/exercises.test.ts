@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { buildExerciseSession, checkExercise, generateExercise } from './exercises';
+import { buildExerciseSession, checkExercise, generateExercise, getMistakes } from './exercises';
 
 const user = { id: 'u1' };
 
@@ -37,6 +37,12 @@ function clientFor(perTable: Record<string, Record<string, unknown>>) {
     }),
     chains,
   } as any;
+}
+
+function mistakeClient(rows: unknown[]) {
+  const client = clientFor({});
+  client.rpc.mockResolvedValue({ data: rows, error: null });
+  return client;
 }
 
 const matchingRow = {
@@ -167,5 +173,23 @@ describe('exercises repository', () => {
     expect(Object.keys(exercise).sort()).toEqual(
       ['explanation', 'hsk_level', 'id', 'prompt', 'solution', 'type'].sort(),
     );
+  });
+
+  it('mete en la cola lo fallado', async () => {
+    const client = mistakeClient([{ target_id: 42, misses: 1, hits_since: 0 }]);
+
+    expect(await getMistakes(client)).toHaveLength(1);
+  });
+
+  it('saca de la cola lo acertado dos veces en días distintos', async () => {
+    const client = mistakeClient([{ target_id: 42, misses: 1, hits_since: 2, distinct_days: 2 }]);
+
+    expect(await getMistakes(client)).toHaveLength(0);
+  });
+
+  it('mantiene en la cola lo acertado dos veces el mismo día', async () => {
+    const client = mistakeClient([{ target_id: 42, misses: 1, hits_since: 2, distinct_days: 1 }]);
+
+    expect(await getMistakes(client)).toHaveLength(1);
   });
 });
