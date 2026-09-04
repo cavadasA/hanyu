@@ -1,17 +1,47 @@
+import { useEffect, useRef } from 'react';
+import { createAudioPlayer, type AudioPlayer } from 'expo-audio';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { useSpeech } from '../audio/useSpeech';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 
-export function AudioButton({ text, label = 'Play audio' }: { text: string; label?: string }) {
+export function AudioButton({
+  text,
+  audioUrl,
+  label = 'Play audio',
+}: {
+  text: string;
+  audioUrl?: string | null;
+  label?: string;
+}) {
   const { colors } = useTheme();
   const { speak } = useSpeech();
+  const player = useRef<AudioPlayer | null>(null);
+
+  useEffect(() => () => {
+    player.current?.release();
+    player.current = null;
+  }, []);
+
+  function play() {
+    if (!audioUrl) {
+      void speak(text);
+      return;
+    }
+
+    if (!player.current) {
+      player.current = createAudioPlayer(audioUrl);
+    } else {
+      player.current.replace(audioUrl);
+    }
+    player.current.play();
+  }
 
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={label}
-      onPress={() => speak(text)}
+      onPress={play}
       style={({ pressed }) => [
         styles.button,
         {

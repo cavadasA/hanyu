@@ -11,4 +11,9 @@ jest.mock('react-native-safe-area-context', () =>
 // uses the audio-mode switch, so mock the whole module.
 jest.mock('expo-audio', () => ({
   setAudioModeAsync: jest.fn().mockResolvedValue(undefined),
+  createAudioPlayer: jest.fn(() => ({
+    play: jest.fn(),
+    replace: jest.fn(),
+    release: jest.fn(),
+  })),
 }));

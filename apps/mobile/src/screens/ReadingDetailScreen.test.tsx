@@ -103,4 +103,53 @@ describe('ReadingDetailScreen', () => {
     expect(mockCompleteReading).toHaveBeenCalledTimes(1);
     expect(mockCompleteReading).toHaveBeenCalledWith('reading-1', { q1: 'B' });
   });
+
+  it('avisa de que el audio es sintético cuando lo es', async () => {
+    mockGetReading.mockResolvedValue({
+      id: 'reading-1',
+      slug: 'reading-1',
+      title: 'Ordering tea',
+      hsk_level: 1,
+      format: 'short_text',
+      topic: 'compras',
+      series: null,
+      series_index: null,
+      audio_kind: 'tts',
+      audio_url: null,
+      content: '我要茶。',
+      pinyin_text: null,
+      sentences: [{ zh: '我要茶。', pinyin: '', es: 'Quiero té.' }],
+      tokens: [],
+      questions: [],
+    });
+
+    const view = await render(<ReadingDetailScreen />);
+
+    await waitFor(() => expect(view.getByText('Voz sintética')).toBeTruthy());
+  });
+
+  it('no avisa cuando la grabación es humana', async () => {
+    mockGetReading.mockResolvedValue({
+      id: 'reading-1',
+      slug: 'reading-1',
+      title: 'Ordering tea',
+      hsk_level: 1,
+      format: 'short_text',
+      topic: 'compras',
+      series: null,
+      series_index: null,
+      audio_kind: 'human',
+      audio_url: 'https://example.test/market-01.mp3',
+      content: '我要茶。',
+      pinyin_text: null,
+      sentences: [{ zh: '我要茶。', pinyin: '', es: 'Quiero té.' }],
+      tokens: [],
+      questions: [],
+    });
+
+    const view = await render(<ReadingDetailScreen />);
+
+    await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
+    expect(view.queryByText('Voz sintética')).toBeNull();
+  });
 });

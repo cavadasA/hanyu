@@ -103,7 +103,10 @@ export function ReadingDetailScreen() {
       </View>
 
       <View style={styles.actions}>
-        <AudioButton text={reading.content} label="Play reading" />
+        <AudioButton text={reading.content} audioUrl={reading.audio_url} label="Play reading" />
+        {reading.audio_kind === 'tts' ? (
+          <Text style={[styles.audioNote, { color: colors.textMuted }]}>Voz sintética</Text>
+        ) : null}
         {reading.pinyin_text ? (
           <Button
             label={showPinyin ? 'Hide pinyin' : 'Show pinyin'}
@@ -173,5 +176,8 @@ const styles = StyleSheet.create({
   pinyinText: {
     fontSize: tokens.fontSize.md,
     lineHeight: 22,
+  },
+  audioNote: {
+    fontSize: tokens.fontSize.sm,
   },
 });
