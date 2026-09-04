@@ -1,0 +1,25 @@
+{
+  "slug": "leisure-01-weekend-plan",
+  "title": "星期天看电影",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "ocio",
+  "series": null,
+  "series_index": null,
+  "target_words": ["电影", "一起", "快乐"],
+  "target_grammar": ["一…就…"],
+  "sentences": [
+    { "zh": "星期天我没有课，想和朋友一起看电影。", "pinyin": "Xīngqītiān wǒ méiyǒu kè, xiǎng hé péngyou yìqǐ kàn diànyǐng.", "es": "El domingo no tengo clase y quiero ver una película con mi amigo." },
+    { "zh": "我们在家里吃饭，再坐地铁去电影院。", "pinyin": "Wǒmen zài jiā lǐ chīfàn, zài zuò dìtiě qù diànyǐngyuàn.", "es": "Comemos en casa y después vamos al cine en metro." },
+    { "zh": "朋友说这个电影很好看，但是时间有一点儿晚。", "pinyin": "Péngyou shuō zhège diànyǐng hěn hǎokàn, dànshì shíjiān yǒu yìdiǎnr wǎn.", "es": "Mi amigo dice que esta película es muy bonita, pero la hora es algo tarde." },
+    { "zh": "电影完了，我们在外边喝茶。", "pinyin": "Diànyǐng wán le, wǒmen zài wàibian hē chá.", "es": "Cuando termina la película, tomamos té fuera." },
+    { "zh": "我觉得和朋友一起做事很快乐。", "pinyin": "Wǒ juéde hé péngyou yìqǐ zuò shì hěn kuàilè.", "es": "Creo que hacer cosas con amigos es muy divertido." },
+    { "zh": "晚上回到家，我给妈妈打电话。", "pinyin": "Wǎnshang huí dào jiā, wǒ gěi māma dǎ diànhuà.", "es": "Por la noche vuelvo a casa y llamo a mamá." },
+    { "zh": "我们还一起看书。", "pinyin": "Wǒmen hái yìqǐ kàn shū.", "es": "También leemos juntos." }
+  ],
+  "questions": [
+    { "prompt": "他们怎么去电影院？", "options": ["坐地铁", "坐飞机", "走路"], "answer_index": 0, "evidence_sentence": 1 },
+    { "prompt": "朋友觉得电影怎么样？", "options": ["很冷", "很好看", "太贵"], "answer_index": 1, "evidence_sentence": 2 },
+    { "prompt": "我晚上给谁打电话？", "options": ["老师", "朋友", "妈妈"], "answer_index": 2, "evidence_sentence": 5 }
+  ]
+}

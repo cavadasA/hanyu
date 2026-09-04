@@ -1,0 +1,26 @@
+{
+  "slug": "school-01-new-classmate",
+  "title": "新同学",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "estudio",
+  "series": "escuela",
+  "series_index": 1,
+  "target_words": ["新", "同学", "认识"],
+  "target_grammar": ["是…的"],
+  "sentences": [
+    { "zh": "昨天学校来了一个新同学。", "pinyin": "Zuótiān xuéxiào lái le yí gè xīn tóngxué.", "es": "Ayer llegó un compañero nuevo a la escuela." },
+    { "zh": "老师给我们介绍他的姓名。", "pinyin": "Lǎoshī gěi wǒmen jièshào tā de xìngmíng.", "es": "El profesor nos presentó su nombre." },
+    { "zh": "老师说他的姓名很好听。", "pinyin": "Lǎoshī shuō tā de xìngmíng hěn hǎotīng.", "es": "El profesor dice que su nombre suena bien." },
+    { "zh": "我和他坐在一起学习汉语。", "pinyin": "Wǒ hé tā zuò zài yìqǐ xuéxí Hànyǔ.", "es": "Él y yo nos sentamos juntos a estudiar chino." },
+    { "zh": "下课的时候，我们一起说话。", "pinyin": "Xiàkè de shíhou, wǒmen yìqǐ shuōhuà.", "es": "Cuando termina la clase, hablamos juntos." },
+    { "zh": "他喜欢看书，也喜欢看电影。", "pinyin": "Tā xǐhuan kàn shū, yě xǐhuan kàn diànyǐng.", "es": "Le gusta leer y también ver películas." },
+    { "zh": "我觉得认识新朋友很高兴。", "pinyin": "Wǒ juéde rènshi xīn péngyou hěn gāoxìng.", "es": "Creo que es muy agradable conocer a un amigo nuevo." },
+    { "zh": "明天我还想和他一起去学校。", "pinyin": "Míngtiān wǒ hái xiǎng hé tā yìqǐ qù xuéxiào.", "es": "Mañana también quiero ir a la escuela con él." }
+  ],
+  "questions": [
+    { "prompt": "新同学喜欢看什么？", "options": ["书和电影", "水果和茶", "衣服和咖啡"], "answer_index": 0, "evidence_sentence": 5 },
+    { "prompt": "我和新同学一起做什么？", "options": ["买东西", "学习汉语", "看病"], "answer_index": 1, "evidence_sentence": 3 },
+    { "prompt": "新同学明天要去哪里？", "options": ["商店", "医院", "学校"], "answer_index": 2, "evidence_sentence": 7 }
+  ]
+}

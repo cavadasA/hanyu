@@ -1,0 +1,26 @@
+{
+  "slug": "market-03-buying-fruit",
+  "title": "买水果",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "compras",
+  "series": "mercado",
+  "series_index": 3,
+  "target_words": ["苹果", "水果", "买"],
+  "target_grammar": ["数量补语"],
+  "sentences": [
+    { "zh": "今天妈妈和我去买水果。", "pinyin": "Jīntiān māma hé wǒ qù mǎi shuǐguǒ.", "es": "Hoy mamá y yo vamos a comprar fruta." },
+    { "zh": "我们看了苹果，也看了水果。", "pinyin": "Wǒmen kàn le píngguǒ, yě kàn le shuǐguǒ.", "es": "Miramos las manzanas y también la fruta." },
+    { "zh": "妈妈说苹果很好吃，但是水果太贵。", "pinyin": "Māma shuō píngguǒ hěn hǎochī, dànshì shuǐguǒ tài guì.", "es": "Mamá dice que las manzanas están muy ricas, pero la fruta es demasiado cara." },
+    { "zh": "我问一个苹果多少元。", "pinyin": "Wǒ wèn yí gè píngguǒ duōshao yuán.", "es": "Pregunto cuántos yuanes cuesta una manzana." },
+    { "zh": "先生说一个苹果三元，三个苹果八元。", "pinyin": "Xiānsheng shuō yí gè píngguǒ sān yuán, sān gè píngguǒ bā yuán.", "es": "El señor dice que una manzana cuesta tres yuanes y tres cuestan ocho." },
+    { "zh": "我们买了三个苹果和两个包子。", "pinyin": "Wǒmen mǎi le sān gè píngguǒ hé liǎng gè bāozi.", "es": "Compramos tres manzanas y dos bollos." },
+    { "zh": "回家的时候，我很高兴。", "pinyin": "Huí jiā de shíhou, wǒ hěn gāoxìng.", "es": "Cuando volvemos a casa, estoy muy contento." },
+    { "zh": "晚上我们一起吃水果。", "pinyin": "Wǎnshang wǒmen yìqǐ chī shuǐguǒ.", "es": "Por la noche comemos fruta juntos." }
+  ],
+  "questions": [
+    { "prompt": "三个苹果多少钱？", "options": ["三元", "八元", "十元"], "answer_index": 1, "evidence_sentence": 4 },
+    { "prompt": "他们买了几个苹果？", "options": ["一个", "两个", "三个"], "answer_index": 2, "evidence_sentence": 5 },
+    { "prompt": "妈妈觉得水果怎么样？", "options": ["太贵", "很好听", "很冷"], "answer_index": 0, "evidence_sentence": 2 }
+  ]
+}

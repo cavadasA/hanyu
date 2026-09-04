@@ -1,0 +1,26 @@
+{
+  "slug": "home-02-cooking",
+  "title": "一起做饭",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "vida diaria",
+  "series": null,
+  "series_index": null,
+  "target_words": ["着", "虽然", "高兴"],
+  "target_grammar": ["着"],
+  "sentences": [
+    { "zh": "今天妈妈在房间做饭。", "pinyin": "Jīntiān māma zài fángjiān zuòfàn.", "es": "Hoy mamá cocina en la habitación." },
+    { "zh": "妈妈坐在桌子旁边，手里拿着茶。", "pinyin": "Māma zuò zài zhuōzi pángbiān, shǒu lǐ ná zhe chá.", "es": "Mamá se sienta junto a la mesa y sostiene té en la mano." },
+    { "zh": "爸爸在桌子旁边看书。", "pinyin": "Bàba zài zhuōzi pángbiān kàn shū.", "es": "Papá lee junto a la mesa." },
+    { "zh": "我也给大家做饭，也给大家喝水。", "pinyin": "Wǒ yě gěi dàjiā zuòfàn, yě gěi dàjiā hē shuǐ.", "es": "Yo también cocino para todos y les doy agua para beber." },
+    { "zh": "饭做好了，我们一起吃饭。", "pinyin": "Fàn zuò hǎo le, wǒmen yìqǐ chīfàn.", "es": "La comida está lista y comemos juntos." },
+    { "zh": "虽然今天很忙，但是我们都很高兴。", "pinyin": "Suīrán jīntiān hěn máng, dànshì wǒmen dōu hěn gāoxìng.", "es": "Aunque hoy estamos muy ocupados, estamos todos contentos." },
+    { "zh": "吃完饭，我现在去睡觉。", "pinyin": "Chī wán fàn, wǒ xiànzài qù shuìjiào.", "es": "Después de comer, ahora me voy a dormir." },
+    { "zh": "爸爸也很高兴。", "pinyin": "Bàba yě hěn gāoxìng.", "es": "Papá también está muy contento." }
+  ],
+  "questions": [
+    { "prompt": "妈妈手里拿着什么？", "options": ["茶", "书", "水"], "answer_index": 0, "evidence_sentence": 1 },
+    { "prompt": "谁在桌子旁边看书？", "options": ["妈妈", "爸爸", "我"], "answer_index": 1, "evidence_sentence": 2 },
+    { "prompt": "他们什么时候一起吃饭？", "options": ["吃饭以前", "明天", "饭做好以后"], "answer_index": 2, "evidence_sentence": 4 }
+  ]
+}

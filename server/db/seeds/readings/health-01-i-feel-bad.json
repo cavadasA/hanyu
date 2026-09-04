@@ -1,0 +1,25 @@
+{
+  "slug": "health-01-i-feel-bad",
+  "title": "身体不太好",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "salud",
+  "series": null,
+  "series_index": null,
+  "target_words": ["身体", "药", "休息"],
+  "target_grammar": ["虽然…但是…"],
+  "sentences": [
+    { "zh": "今天早上我觉得身体不太好。", "pinyin": "Jīntiān zǎoshang wǒ juéde shēntǐ bú tài hǎo.", "es": "Esta mañana no me encontraba muy bien." },
+    { "zh": "我告诉妈妈我的头有一点儿疼。", "pinyin": "Wǒ gàosu māma wǒ de tóu yǒu yìdiǎnr téng.", "es": "Le digo a mamá que me duele un poco la cabeza." },
+    { "zh": "妈妈和我去医院看医生。", "pinyin": "Māma hé wǒ qù yīyuàn kàn yīshēng.", "es": "Mamá y yo vamos al hospital a ver al médico." },
+    { "zh": "医生说我多喝水，也要休息。", "pinyin": "Yīshēng shuō wǒ duō hē shuǐ, yě yào xiūxi.", "es": "El médico dice que debo beber más agua y descansar." },
+    { "zh": "他给我一些药。", "pinyin": "Tā gěi wǒ yìxiē yào.", "es": "Me da algo de medicina." },
+    { "zh": "虽然我不想休息，但是妈妈说身体很好。", "pinyin": "Suīrán wǒ bù xiǎng xiūxi, dànshì māma shuō shēntǐ hěn hǎo.", "es": "Aunque no quiero descansar, mamá dice que mi cuerpo está bien." },
+    { "zh": "下午我吃了药，已经好一点儿了。", "pinyin": "Xiàwǔ wǒ chī le yào, yǐjīng hǎo yìdiǎnr le.", "es": "Por la tarde tomo la medicina y ya estoy algo mejor." }
+  ],
+  "questions": [
+    { "prompt": "我哪里疼？", "options": ["头", "手", "眼睛"], "answer_index": 0, "evidence_sentence": 1 },
+    { "prompt": "医生让我做什么？", "options": ["看电影", "喝水和休息", "买衣服"], "answer_index": 1, "evidence_sentence": 3 },
+    { "prompt": "谁给我药？", "options": ["爸爸", "朋友", "医生"], "answer_index": 2, "evidence_sentence": 4 }
+  ]
+}

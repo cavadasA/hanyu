@@ -1,0 +1,26 @@
+{
+  "slug": "home-01-morning",
+  "title": "早上的生活",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "vida diaria",
+  "series": null,
+  "series_index": null,
+  "target_words": ["起床", "做饭", "事情"],
+  "target_grammar": ["动词重叠"],
+  "sentences": [
+    { "zh": "星期天我六点起床。", "pinyin": "Xīngqītiān wǒ liù diǎn qǐchuáng.", "es": "El domingo me levanto a las seis." },
+    { "zh": "妈妈在房间做饭，爸爸在房间看书。", "pinyin": "Māma zài fángjiān zuòfàn, bàba zài fángjiān kàn shū.", "es": "Mamá cocina en la habitación y papá lee en la habitación." },
+    { "zh": "我喝了水，也吃了鸡蛋和面包。", "pinyin": "Wǒ hē le shuǐ, yě chī le jīdàn hé miànbāo.", "es": "Bebo agua y también como huevos y pan." },
+    { "zh": "中午回家的时候，妈妈已经做好了午饭。", "pinyin": "Zhōngwǔ huí jiā de shíhou, māma yǐjīng zuò hǎo le wǔfàn.", "es": "Al volver a casa al mediodía, mamá ya ha preparado el almuerzo." },
+    { "zh": "晚上我们一起说今天的事情。", "pinyin": "Wǎnshang wǒmen yìqǐ shuō jīntiān de shìqing.", "es": "Por la noche hablamos juntos de lo que ha pasado hoy." },
+    { "zh": "我觉得今天很好。", "pinyin": "Wǒ juéde jīntiān hěn hǎo.", "es": "Creo que hoy ha sido un buen día." },
+    { "zh": "晚上我看看书，也喝茶。", "pinyin": "Wǎnshang wǒ kànkan shū, yě hē chá.", "es": "Por la noche leo un poco y también bebo té." },
+    { "zh": "星期天大家都不忙。", "pinyin": "Xīngqītiān dàjiā dōu bù máng.", "es": "El domingo nadie está ocupado." }
+  ],
+  "questions": [
+    { "prompt": "我几点起床？", "options": ["六点", "八点", "十点"], "answer_index": 0, "evidence_sentence": 0 },
+    { "prompt": "谁在房间看书？", "options": ["妈妈", "爸爸", "老师"], "answer_index": 1, "evidence_sentence": 1 },
+    { "prompt": "妈妈做好了什么？", "options": ["晚饭", "咖啡", "午饭"], "answer_index": 2, "evidence_sentence": 3 }
+  ]
+}

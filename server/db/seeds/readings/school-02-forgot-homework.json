@@ -1,0 +1,26 @@
+{
+  "slug": "school-02-forgot-homework",
+  "title": "为什么没有写字",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "estudio",
+  "series": "escuela",
+  "series_index": 2,
+  "target_words": ["因为", "所以", "身体"],
+  "target_grammar": ["因为…所以…"],
+  "sentences": [
+    { "zh": "今天老师问我们为什么没有写字。", "pinyin": "Jīntiān lǎoshī wèn wǒmen wèishénme méiyǒu xiězì.", "es": "Hoy el profesor pregunta por qué no hemos escrito." },
+    { "zh": "同学说因为昨天身体不好，所以没有学习。", "pinyin": "Tóngxué shuō yīnwèi zuótiān shēntǐ bù hǎo, suǒyǐ méiyǒu xuéxí.", "es": "El compañero dice que ayer no se encontraba bien, así que no estudió." },
+    { "zh": "老师说现在好了吗。", "pinyin": "Lǎoshī shuō xiànzài hǎo le ma.", "es": "El profesor pregunta si ahora está mejor." },
+    { "zh": "同学说已经好了，但是还想休息。", "pinyin": "Tóngxué shuō yǐjīng hǎo le, dànshì hái xiǎng xiūxi.", "es": "El compañero dice que ya está mejor, pero aún quiere descansar." },
+    { "zh": "老师让他明天再写字。", "pinyin": "Lǎoshī ràng tā míngtiān zài xiězì.", "es": "El profesor le pide que escriba mañana." },
+    { "zh": "同学们都希望他回到学校。", "pinyin": "Tóngxuémen dōu xīwàng tā huí dào xuéxiào.", "es": "Todos los compañeros esperan que vuelva a la escuela." },
+    { "zh": "他会和老师说话。", "pinyin": "Tā huì hé lǎoshī shuōhuà.", "es": "Él hablará con el profesor." },
+    { "zh": "今天大家一起学习。", "pinyin": "Jīntiān dàjiā yìqǐ xuéxí.", "es": "Hoy todos estudiamos juntos." }
+  ],
+  "questions": [
+    { "prompt": "同学昨天为什么没有学习？", "options": ["因为身体不好", "因为去商店", "因为看电影"], "answer_index": 0, "evidence_sentence": 1 },
+    { "prompt": "同学现在想做什么？", "options": ["买衣服", "休息", "踢足球"], "answer_index": 1, "evidence_sentence": 3 },
+    { "prompt": "老师让他什么时候写字？", "options": ["昨天", "今天", "明天"], "answer_index": 2, "evidence_sentence": 4 }
+  ]
+}

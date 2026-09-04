@@ -1,0 +1,27 @@
+{
+  "slug": "market-02-too-expensive",
+  "title": "这件衣服太贵了",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "compras",
+  "series": "mercado",
+  "series_index": 2,
+  "target_words": ["太", "贵", "便宜"],
+  "target_grammar": ["太…了"],
+  "sentences": [
+    { "zh": "朋友想买新衣服。", "pinyin": "Péngyou xiǎng mǎi xīn yīfu.", "es": "Mi amigo quiere comprar ropa nueva." },
+    { "zh": "他问商店里的衣服多少钱。", "pinyin": "Tā wèn shāngdiàn lǐ de yīfu duōshao qián.", "es": "Pregunta cuánto cuesta la ropa de la tienda." },
+    { "zh": "先生说这件衣服太贵了。", "pinyin": "Xiānsheng shuō zhè jiàn yīfu tài guì le.", "es": "El señor dice que esta prenda es demasiado cara." },
+    { "zh": "朋友觉得那个颜色很好看。", "pinyin": "Péngyou juéde nàge yánsè hěn hǎokàn.", "es": "A mi amigo le parece muy bonito ese color." },
+    { "zh": "但是他没有很多钱。", "pinyin": "Dànshì tā méiyǒu hěn duō qián.", "es": "Pero no tiene mucho dinero." },
+    { "zh": "先生说那件便宜一些。", "pinyin": "Xiānsheng shuō nà jiàn piányi yìxiē.", "es": "El señor dice que aquella es algo más barata." },
+    { "zh": "朋友看了看，还是觉得太贵。", "pinyin": "Péngyou kàn le kàn, háishi juéde tài guì.", "es": "Mi amigo la mira y sigue pensando que es demasiado cara." },
+    { "zh": "朋友买了一件便宜的衣服。", "pinyin": "Péngyou mǎi le yí jiàn piányi de yīfu.", "es": "Mi amigo compra una prenda barata." },
+    { "zh": "明天他还来这个商店买东西。", "pinyin": "Míngtiān tā hái lái zhège shāngdiàn mǎi dōngxi.", "es": "Mañana volverá a esta tienda a comprar cosas." }
+  ],
+  "questions": [
+    { "prompt": "朋友觉得衣服怎么样？", "options": ["太贵", "很好吃", "很冷"], "answer_index": 0, "evidence_sentence": 6 },
+    { "prompt": "朋友最后买了什么？", "options": ["咖啡", "一件便宜的衣服", "水果"], "answer_index": 1, "evidence_sentence": 7 },
+    { "prompt": "朋友明天还要去哪里？", "options": ["学校", "医院", "这个商店"], "answer_index": 2, "evidence_sentence": 8 }
+  ]
+}
