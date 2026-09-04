@@ -9,6 +9,7 @@ export type {
   BuildQueueInput,
   CardOrder,
   CardStatus,
+  Coverage,
   ContentItem,
   ContentTeaches,
   ContentKind,

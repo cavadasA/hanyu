@@ -5,6 +5,7 @@ import { useReadings } from '../readings/useReadings';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 import { Card } from '../ui/Card';
+import { Badge } from '../ui/Badge';
 import { EmptyState } from '../ui/EmptyState';
 import { ErrorBanner } from '../ui/ErrorBanner';
 import { Screen } from '../ui/Screen';
@@ -101,6 +102,14 @@ export function ReadingsScreen() {
             <Text style={{ color: colors.textMuted }}>
               HSK {reading.hsk_level} · {formatLabel(reading.format)} · {reading.topic}
             </Text>
+            {reading.coverage ? (
+              <View style={styles.coverage}>
+                <Text style={{ color: colors.textMuted }}>
+                  {Math.round(reading.coverage.ratio * 100)}% known · {reading.coverage.unknown_count} new words
+                </Text>
+                <Badge label={reading.coverage.ratio < 0.92 ? 'Difficult' : 'Comfortable'} />
+              </View>
+            ) : null}
           </Card>
         </Pressable>
       ))}
@@ -151,5 +160,8 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: tokens.fontSize.lg,
     fontWeight: '700',
+  },
+  coverage: {
+    gap: tokens.spacing.xs,
   },
 });

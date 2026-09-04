@@ -2,6 +2,7 @@ import type {
   ExerciseAnswer,
   ExerciseKind,
   ExerciseSolution,
+  Coverage,
   Evaluation,
   EvaluationDetail,
   PlanStep,
@@ -17,6 +18,7 @@ export type {
   PlanStep,
   SchedulingPhase,
   SchedulingState,
+  Coverage,
 } from '@hanyu/domain';
 
 export type ThemePreference = 'light' | 'dark' | 'system';
@@ -279,6 +281,7 @@ export interface ReadingSummary {
   target_grammar: ReadingGrammarTarget[];
   audio_kind: ReadingAudioKind;
   audio_url: string | null;
+  coverage?: Coverage | null;
   created_at?: string;
   /** Compatibility alias retained for clients that still display this field. */
   generated_at?: string;

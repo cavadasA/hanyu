@@ -1,3 +1,4 @@
+import { coverageOf, type CoverageToken } from '@hanyu/domain';
 import type { HanyuClient } from '../client';
 import type {
   HskLevel,
@@ -129,6 +130,34 @@ async function getRecognitionStates(wordIds: number[], client: HanyuClient) {
     states.set(Number(state.target_id), state.stability === null ? null : Number(state.stability));
   }
   return states;
+}
+
+async function coverageForReading(summary: ReadingSummary, client: HanyuClient) {
+  const functions = (client as any).functions;
+  if (!functions || typeof functions.invoke !== 'function') {
+    return null;
+  }
+
+  const { data, error } = await functions.invoke('tokenize-reading', {
+    body: { reading_id: summary.slug },
+  });
+  if (error || !Array.isArray(data?.tokens)) {
+    return null;
+  }
+
+  const tokens: CoverageToken[] = data.tokens.map((token: any) => ({
+    word_id: typeof token.word?.id === 'number' ? token.word.id : null,
+    type: token.type,
+  }));
+  const ids = [...new Set(tokens.map(token => token.word_id).filter((id): id is number => id !== null))];
+  const states = await getRecognitionStates(ids, client);
+  const known = new Set(
+    [...states.entries()]
+      .filter(([, stability]) => stability !== null && stability !== undefined && stability >= KNOWN_MIN_STABILITY_DAYS)
+      .map(([id]) => id),
+  );
+
+  return coverageOf(tokens, known);
 }
 
 function statusTokens(
@@ -275,7 +304,11 @@ export async function getReadings(
     throw createRepositoryError(error, 'Failed to load readings');
   }
 
-  return (data || []).map(normalizeSummary);
+  const summaries = (data || []).map(normalizeSummary);
+  return Promise.all(summaries.map(async summary => ({
+    ...summary,
+    coverage: await coverageForReading(summary, client),
+  })));
 }
 
 function normalizeSummary(row: any): ReadingSummary {

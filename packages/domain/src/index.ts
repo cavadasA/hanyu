@@ -10,6 +10,7 @@ export * from './exercises/order';
 export * from './exercises/diagnose';
 export { normalizeHanzi, normalizePinyinInput, normalizeText } from './exercises/normalize';
 export { tokenizeReading, type DictionaryEntry, type ReadingToken } from './reading/tokenize';
+export { coverageOf, type Coverage, type CoverageToken } from './reading/coverage';
 export { validateReading, type IssueKind, type ReadingGrammarTarget, type ReadingQuestion, type ReadingSentence, type ReadingSource, type ValidationContext, type ValidationIssue } from './reading/validate';
 export * from './planner/rank';
 export * from './planner/plan';

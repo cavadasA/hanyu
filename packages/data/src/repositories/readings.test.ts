@@ -6,6 +6,7 @@ function readingClient(rows: unknown[]) {
     select: vi.fn(() => query),
     order: vi.fn(() => query),
     eq: vi.fn(() => query),
+    in: vi.fn(() => query),
     then: (resolve: (value: unknown) => unknown) =>
       Promise.resolve({ data: rows, error: null }).then(resolve),
   };
@@ -95,5 +96,37 @@ describe('readings repository', () => {
 
     expect(rpc).not.toHaveBeenCalled();
     expect(attempts[0]).toMatchObject({ reading_slug: 'reading-1', score: 1, total: 1 });
+  });
+
+  it('calcula la cobertura conocida antes de abrir cada lectura', async () => {
+    const catalog = readingClient([{ slug: 'reading-1', title: 'Una lectura', sentences: [] }]);
+    const skillQuery: Record<string, any> = {
+      select: vi.fn(() => skillQuery),
+      eq: vi.fn(() => skillQuery),
+      in: vi.fn(() => skillQuery),
+      then: (resolve: (value: unknown) => unknown) => Promise.resolve({
+        data: [{ target_id: 1, stability: 31 }],
+        error: null,
+      }).then(resolve),
+    };
+    const client = {
+      ...catalog,
+      from: vi.fn((table: string) => table === 'learner_skill_state' ? skillQuery : (catalog as any).from()),
+      functions: {
+        invoke: vi.fn().mockResolvedValue({
+          data: {
+            tokens: [
+              { id: 't0', text: '我', type: 'word', word: { id: 1 } },
+              { id: 't1', text: '龘', type: 'unknown', word: null },
+            ],
+          },
+          error: null,
+        }),
+      },
+    };
+
+    const readings = await getReadings({ level: 2 }, client as never);
+
+    expect(readings[0].coverage).toEqual({ ratio: 0.5, known_count: 1, unknown_count: 1 });
   });
 });
