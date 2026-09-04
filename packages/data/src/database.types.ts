@@ -248,6 +248,51 @@ export type Database = {
           },
         ]
       }
+      reading: {
+        Row: {
+          audio_kind: string
+          audio_url: string | null
+          created_at: string
+          format: string
+          hsk_level: number
+          questions: Json
+          sentences: Json
+          series: string | null
+          series_index: number | null
+          slug: string
+          title: string
+          topic: string
+        }
+        Insert: {
+          audio_kind?: string
+          audio_url?: string | null
+          created_at?: string
+          format: string
+          hsk_level: number
+          questions?: Json
+          sentences: Json
+          series?: string | null
+          series_index?: number | null
+          slug: string
+          title: string
+          topic: string
+        }
+        Update: {
+          audio_kind?: string
+          audio_url?: string | null
+          created_at?: string
+          format?: string
+          hsk_level?: number
+          questions?: Json
+          sentences?: Json
+          series?: string | null
+          series_index?: number | null
+          slug?: string
+          title?: string
+          topic?: string
+        }
+        Relationships: []
+      }
       generated_readings: {
         Row: {
           content: string
@@ -682,7 +727,8 @@ export type Database = {
           answers: Json
           created_at: string
           id: string
-          reading_id: string
+          reading_id: string | null
+          reading_slug: string | null
           score: number
           total: number
           user_id: string
@@ -691,7 +737,8 @@ export type Database = {
           answers: Json
           created_at?: string
           id?: string
-          reading_id: string
+          reading_id?: string | null
+          reading_slug?: string | null
           score: number
           total: number
           user_id: string
@@ -700,7 +747,8 @@ export type Database = {
           answers?: Json
           created_at?: string
           id?: string
-          reading_id?: string
+          reading_id?: string | null
+          reading_slug?: string | null
           score?: number
           total?: number
           user_id?: string
@@ -826,7 +874,6 @@ export type Database = {
       }
       user_settings: {
         Row: {
-          ai_provider: string
           card_order: string
           created_at: string
           current_level: number
@@ -840,7 +887,6 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          ai_provider?: string
           card_order?: string
           created_at?: string
           current_level?: number
@@ -854,7 +900,6 @@ export type Database = {
           user_id: string
         }
         Update: {
-          ai_provider?: string
           card_order?: string
           created_at?: string
           current_level?: number

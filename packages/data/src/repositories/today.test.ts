@@ -21,7 +21,6 @@ function clientFor(options: { settings?: Record<string, unknown> } = {}) {
               new_cards_per_day: 20,
               current_level: 2,
               theme: 'light',
-              ai_provider: 'none',
               ...options.settings,
             },
             error: null,

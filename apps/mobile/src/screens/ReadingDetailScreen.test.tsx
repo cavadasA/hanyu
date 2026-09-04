@@ -29,12 +29,18 @@ describe('ReadingDetailScreen', () => {
   it('loads a reading, toggles pinyin, and submits answers once', async () => {
     mockGetReading.mockResolvedValue({
       id: 'reading-1',
+      slug: 'reading-1',
       title: 'Ordering tea',
       hsk_level: 1,
       format: 'short_text',
-      generated_at: '2026-07-30T10:00:00Z',
+      topic: 'compras',
+      series: null,
+      series_index: null,
+      audio_kind: 'tts',
+      audio_url: null,
       content: '我要茶。',
       pinyin_text: 'wo yao cha.',
+      sentences: [{ zh: '我要茶。', pinyin: 'wo yao cha.', es: 'Quiero té.' }],
       tokens: [
         {
           id: 't0',

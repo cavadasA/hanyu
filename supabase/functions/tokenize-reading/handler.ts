@@ -47,9 +47,9 @@ export async function handleTokenizeReading(
   }
 
   const { data: reading, error: readingError } = await supabase
-    .from('generated_readings')
-    .select('content')
-    .eq('id', readingId)
+    .from('reading')
+    .select('sentences')
+    .eq('slug', readingId)
     .single();
   if (readingError || !reading) {
     return jsonResponse({ error: 'Reading not found' }, 404);
@@ -85,6 +85,11 @@ export async function handleTokenizeReading(
   }));
 
   return jsonResponse({
-    tokens: tokenizeReading(String(reading.content), dictionary),
+    tokens: tokenizeReading(
+      (Array.isArray(reading.sentences) ? reading.sentences : [])
+        .map((sentence: any) => String(sentence?.zh ?? ''))
+        .join(''),
+      dictionary,
+    ),
   });
 }

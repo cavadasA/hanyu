@@ -2,15 +2,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   toUserMessage,
   type HskLevel,
-  type ReadingDetail,
-  type ReadingFormat,
   type ReadingSummary,
 } from '@hanyu/data';
 import { getData } from '../lib/data';
 
 interface ReadingApi {
-  getReadings(input: { level: HskLevel; format: ReadingFormat }): Promise<{ readings: ReadingSummary[] }>;
-  generateReading(level: HskLevel, format: ReadingFormat): Promise<ReadingDetail>;
+  getReadings(input: { level: HskLevel; topic?: string }): Promise<ReadingSummary[]>;
 }
 
 export function useReadings(api?: ReadingApi) {
@@ -20,10 +17,9 @@ export function useReadings(api?: ReadingApi) {
   }
   const readingApi = api ?? defaultApi.current!;
   const [level, setLevel] = useState<HskLevel>(1);
-  const [format, setFormat] = useState<ReadingFormat>('short_text');
+  const [topic, setTopic] = useState<string | undefined>(undefined);
   const [readings, setReadings] = useState<ReadingSummary[]>([]);
   const [loading, setLoading] = useState(false);
-  const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const requestId = useRef(0);
 
@@ -34,9 +30,12 @@ export function useReadings(api?: ReadingApi) {
     setError(null);
 
     try {
-      const result = await readingApi.getReadings({ level, format });
+      const result = await readingApi.getReadings({
+        level,
+        ...(topic ? { topic } : {}),
+      });
       if (requestId.current === currentRequest) {
-        setReadings(result.readings);
+        setReadings(result);
       }
     } catch (caught) {
       if (requestId.current === currentRequest) {
@@ -47,38 +46,20 @@ export function useReadings(api?: ReadingApi) {
         setLoading(false);
       }
     }
-  }, [format, level, readingApi]);
+  }, [level, readingApi, topic]);
 
   useEffect(() => {
     void reload();
   }, [reload]);
 
-  const generate = useCallback(async () => {
-    setGenerating(true);
-    setError(null);
-
-    try {
-      const detail = await readingApi.generateReading(level, format);
-      void reload();
-      return detail;
-    } catch (caught) {
-      setError(toUserMessage(caught));
-      return null;
-    } finally {
-      setGenerating(false);
-    }
-  }, [format, level, readingApi, reload]);
-
   return {
     level,
-    format,
+    topic,
     readings,
     loading,
-    generating,
     error,
     setLevel,
-    setFormat,
+    setTopic,
     reload,
-    generate,
   };
 }

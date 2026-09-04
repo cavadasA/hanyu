@@ -5,7 +5,6 @@ export type { HanyuData } from './factory';
 export { resolveGloss } from './gloss';
 export { toUserMessage } from './errors';
 export type {
-  AiProvider,
   BuildQueueInput,
   CardOrder,
   CardStatus,
@@ -35,6 +34,8 @@ export type {
   ReadingDetail,
   ReadingFormat,
   ReadingQuestion,
+  ReadingSentence,
+  ReadingAudioKind,
   ReadingResult,
   ReadingSummary,
   ReadingToken,

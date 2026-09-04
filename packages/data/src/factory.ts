@@ -33,7 +33,6 @@ import { checkExercise, generateExercise, getExerciseHistory } from './repositor
 import { getEvents, recordEvent } from './repositories/events';
 import {
   completeReading,
-  generateReading,
   getReading,
   getReadings,
 } from './repositories/readings';
@@ -52,7 +51,6 @@ import type {
   ExerciseAnswer,
   ExerciseType,
   HskLevel,
-  ReadingFormat,
   LearningSkill,
   WordContext,
 } from './types';
@@ -131,11 +129,9 @@ export function createHanyuData(config: HanyuDataConfig) {
     },
     readings: {
       getReadings: (params: Parameters<typeof getReadings>[0] = {}) => getReadings(params, client),
-      getReading: (id: string) => getReading(id, client),
-      generateReading: (level: HskLevel, format: ReadingFormat) =>
-        generateReading(level, format, client),
-      completeReading: (id: string, answers: Record<string, string>) =>
-        completeReading(id, answers, client),
+      getReading: (slug: string) => getReading(slug, client),
+      completeReading: (slug: string, answers: Record<string, string>) =>
+        completeReading(slug, answers, client),
     },
     settings: {
       getSettings: () => getSettings(client),

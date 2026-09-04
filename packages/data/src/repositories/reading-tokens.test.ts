@@ -7,19 +7,22 @@ function readingQuery() {
     eq: vi.fn(() => query),
     single: vi.fn().mockResolvedValue({
       data: {
-        id: 'reading-1',
+        slug: 'reading-1',
         hsk_level: 2,
         format: 'story',
         title: '你好',
-        content: '你好。',
-        pinyin_text: 'nǐ hǎo',
+        topic: 'saludos',
+        series: null,
+        series_index: null,
+        sentences: [{ zh: '你好。', pinyin: 'nǐ hǎo', es: 'Hola.' }],
         questions: [{
-          id: 'q0',
-          question: '他说什么？',
-          options: [{ id: 'A', text: '你好' }],
+          prompt: '他说什么？',
+          options: ['你好'],
+          answer_index: 0,
+          evidence_sentence: 0,
         }],
-        source_model: 'fallback',
-        created_at: '2026-07-30T08:00:00.000Z',
+        audio_kind: 'tts',
+        audio_url: null,
       },
       error: null,
     }),
@@ -65,7 +68,7 @@ describe('reading tokens repository integration', () => {
     expect(reading.questions).toEqual([{
       id: 'q0',
       prompt: '他说什么？',
-      options: [{ id: 'A', text: '你好' }],
+      options: [{ id: '0', text: '你好' }],
     }]);
   });
 

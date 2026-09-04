@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import {
   toUserMessage,
-  type AiProvider,
   type CardOrder,
   type LearnerSkillState,
   type ThemePreference,
@@ -21,7 +20,6 @@ import { Screen } from '../ui/Screen';
 
 const THEMES: readonly ThemePreference[] = ['light', 'dark', 'system'];
 const ORDERS: readonly CardOrder[] = ['due', 'frequency'];
-const PROVIDERS: readonly AiProvider[] = ['none', 'deepseek', 'gemini'];
 const LEVELS = ['1', '2', '3', '4', '5', '6'] as const;
 const SUPPORT_LANGUAGES = ['es', 'en'] as const;
 const RETENTION_OPTIONS = [
@@ -278,21 +276,7 @@ export default function YouScreen() {
 
           <View style={[styles.sectionDivider, { backgroundColor: colors.border }]} />
 
-          {/* Section 3: AI Engine */}
-          <View style={styles.panelSection}>
-            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>AI TUTOR ENGINE</Text>
-            <OptionRow
-              label="AI provider"
-              value={settings.ai_provider}
-              options={PROVIDERS}
-              onChange={(ai_provider) => save({ ai_provider })}
-              disabled={saving}
-            />
-          </View>
-
-          <View style={[styles.sectionDivider, { backgroundColor: colors.border }]} />
-
-          {/* Section 4: Appearance */}
+          {/* Section 3: Appearance */}
           <View style={styles.panelSection}>
             <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>APPEARANCE</Text>
             <OptionRow

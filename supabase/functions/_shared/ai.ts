@@ -6,8 +6,6 @@ export const VALID_EXERCISE_TYPES = new Set([
   'matching',
 ]);
 
-export const VALID_READING_FORMATS = new Set(['short_text', 'story', 'dialogue']);
-
 type ExercisePayload = {
   prompt: Record<string, unknown>;
   answer: unknown;
@@ -69,41 +67,4 @@ export function buildFallbackExercise(type: string, level: number): ExercisePayl
         answer: '学习',
       };
   }
-}
-
-export function buildFallbackReading(level: number, format: string) {
-  const title = `HSK${level} ${format.replace('_', ' ')} practice`;
-  const content = '你好！我每天学习汉语。我喜欢读书，也喜欢喝茶。';
-
-  return {
-    hsk_level: level,
-    format,
-    title,
-    content,
-    pinyin_text: 'Ni hao! Wo mei tian xue xi Han yu. Wo xi huan du shu, ye xi huan he cha.',
-    questions: [
-      {
-        id: 'q0',
-        question: '这个人每天做什么？',
-        options: [
-          { id: 'A', text: '学习汉语' },
-          { id: 'B', text: '看电影' },
-          { id: 'C', text: '踢足球' },
-          { id: 'D', text: '做饭' },
-        ],
-        correct_option_id: 'A',
-      },
-      {
-        id: 'q1',
-        question: '他喜欢什么？',
-        options: [
-          { id: 'A', text: '读书和喝茶' },
-          { id: 'B', text: '跑步和游泳' },
-          { id: 'C', text: '唱歌和跳舞' },
-          { id: 'D', text: '画画和写作' },
-        ],
-        correct_option_id: 'A',
-      },
-    ],
-  };
 }

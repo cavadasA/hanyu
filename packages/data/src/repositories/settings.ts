@@ -11,12 +11,10 @@ const DEFAULT_SETTINGS = {
   session_size: 20,
   request_retention: 0.9,
   card_order: 'due',
-  ai_provider: 'none',
 };
 
 const ALLOWED_THEMES = new Set(['light', 'dark', 'system']);
 const ALLOWED_CARD_ORDER = new Set(['due', 'frequency']);
-const ALLOWED_AI_PROVIDERS = new Set(['none', 'deepseek', 'gemini']);
 const ALLOWED_SUPPORT_LANGUAGES = new Set(['es', 'en']);
 
 function normalizeCardOrder(value: any) {
@@ -45,9 +43,7 @@ function normalizeSettings(row: any) {
     session_size: clampNumber(row?.session_size, 5, 200, DEFAULT_SETTINGS.session_size),
     request_retention: clampDecimal(row?.request_retention, 0.7, 0.97, DEFAULT_SETTINGS.request_retention),
     card_order: normalizeCardOrder(row?.card_order),
-    ai_provider: ALLOWED_AI_PROVIDERS.has(row?.ai_provider) ? row.ai_provider : DEFAULT_SETTINGS.ai_provider,
     api_key: '',
-    api_key_configured: false,
     created_at: row?.created_at,
     updated_at: row?.updated_at,
   };
@@ -123,12 +119,6 @@ function sanitizeUpdates(data: Record<string, unknown>) {
     updates.card_order = normalizeCardOrder(data.card_order);
   }
 
-  if (data.ai_provider !== undefined) {
-    updates.ai_provider = ALLOWED_AI_PROVIDERS.has(data.ai_provider as string)
-      ? data.ai_provider
-      : DEFAULT_SETTINGS.ai_provider;
-  }
-
   return updates;
 }
 
@@ -136,7 +126,7 @@ async function readSettingsRow(userId: string, client: HanyuClient) {
   const { data, error } = await client
     .from('user_settings')
     .select(
-      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, ai_provider, created_at, updated_at',
+      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, created_at, updated_at',
     )
     .eq('user_id', userId)
     .maybeSingle();
@@ -153,7 +143,7 @@ async function ensureSettingsRow(userId: string, client: HanyuClient) {
     .from('user_settings')
     .upsert({ user_id: userId, ...DEFAULT_SETTINGS } as any, { onConflict: 'user_id' })
     .select(
-      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, ai_provider, created_at, updated_at',
+      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, created_at, updated_at',
     )
     .single();
 
@@ -184,7 +174,7 @@ export async function updateSettings(input: Record<string, unknown>, client: Han
     .from('user_settings')
     .upsert(payload as any, { onConflict: 'user_id' })
     .select(
-      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, ai_provider, created_at, updated_at',
+      'user_id, theme, support_language, current_level, new_cards_per_day, review_limit_per_day, session_size, request_retention, card_order, created_at, updated_at',
     )
     .single();
 

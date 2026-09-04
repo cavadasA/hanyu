@@ -27,7 +27,10 @@ describe('handleTokenizeReading', () => {
   });
 
   it('returns display-ready tokens with the current SRS state', async () => {
-    const reading = queryResult({ data: { content: '你好龘' }, error: null });
+    const reading = queryResult({
+      data: { sentences: [{ zh: '你好龘。', pinyin: 'nǐ hǎo dá.', es: 'Hola.' }] },
+      error: null,
+    });
     const words = queryResult({
       data: [{
         id: 2,
@@ -50,7 +53,7 @@ describe('handleTokenizeReading', () => {
         }),
       },
       from: vi.fn((table: string) => {
-        if (table === 'generated_readings') return reading;
+        if (table === 'reading') return reading;
         if (table === 'words') return words;
         if (table === 'srs_cards') return cards;
         throw new Error(`Unexpected table ${table}`);
@@ -86,6 +89,7 @@ describe('handleTokenizeReading', () => {
           },
         },
         { id: 't2', text: '龘', type: 'unknown', word: null },
+        { id: 't3', text: '。', type: 'punctuation', word: null },
       ],
     });
   });

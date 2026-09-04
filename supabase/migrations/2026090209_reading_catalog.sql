@@ -31,6 +31,18 @@ for select using (auth.role() = 'authenticated');
 
 grant select on public.reading to authenticated;
 
+-- Las lecturas catalogadas usan el slug. Los intentos históricos siguen
+-- apuntando a generated_readings mediante reading_id.
+alter table public.reading_attempts
+  alter column reading_id drop not null;
+alter table public.reading_attempts
+  add column if not exists reading_slug text references public.reading(slug) on delete cascade;
+create index if not exists idx_reading_attempts_catalog_reading
+  on public.reading_attempts(reading_slug, created_at desc);
+
+-- Ya no hay selector ni proveedor configurable: el contenido es curado.
+alter table public.user_settings drop column if exists ai_provider;
+
 -- Qué enseña cada lectura, en la tabla que el Plan 1C creó y dejó vacía.
 insert into public.content_item (kind, hsk_level, title, source_table, source_id)
 select 'reading', r.hsk_level, r.title, 'reading', r.slug

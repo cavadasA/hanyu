@@ -20,7 +20,6 @@ export type {
 export type ThemePreference = 'light' | 'dark' | 'system';
 export type SupportLanguage = 'es' | 'en';
 export type CardOrder = 'due' | 'frequency';
-export type AiProvider = 'none' | 'deepseek' | 'gemini';
 export type CardStatus = 'new' | 'learning' | 'review' | 'mastered';
 export type HskLevel = 1 | 2 | 3;
 export type ExerciseType = ExerciseKind;
@@ -194,6 +193,14 @@ export interface ReadingQuestion {
   options: Array<{ id: string; text: string }>;
 }
 
+export interface ReadingSentence {
+  zh: string;
+  pinyin: string;
+  es: string;
+}
+
+export type ReadingAudioKind = 'tts' | 'human';
+
 export interface ReadingToken {
   id: string;
   text: string;
@@ -203,13 +210,22 @@ export interface ReadingToken {
 
 export interface ReadingSummary {
   id: string;
+  slug: string;
   title: string;
   hsk_level: HskLevel;
   format: ReadingFormat;
-  generated_at: string;
+  topic: string;
+  series: string | null;
+  series_index: number | null;
+  audio_kind: ReadingAudioKind;
+  audio_url: string | null;
+  created_at?: string;
+  /** Compatibility alias retained for clients that still display this field. */
+  generated_at?: string;
 }
 
 export interface ReadingDetail extends ReadingSummary {
+  sentences: ReadingSentence[];
   content: string;
   pinyin_text: string | null;
   questions: ReadingQuestion[];
@@ -252,9 +268,7 @@ export interface UserSettings {
   session_size: number;
   request_retention: number;
   card_order: CardOrder;
-  ai_provider: AiProvider;
   api_key: string;
-  api_key_configured: boolean;
   created_at?: string;
   updated_at?: string;
 }

@@ -104,25 +104,32 @@ describe('mobile content repository contracts', () => {
   it('normalizes reading summaries without leaking created_at', async () => {
     const rows = queryResult({
       data: [{
-        id: 'reading-1',
+        slug: 'reading-1',
         hsk_level: 2,
         format: 'story',
         title: 'A day',
-        source_model: 'fallback',
-        created_at: '2026-07-30T08:00:00.000Z',
+        topic: 'vida diaria',
+        series: null,
+        series_index: null,
+        sentences: [],
+        questions: [],
+        audio_kind: 'tts',
+        audio_url: null,
       }],
       error: null,
     });
     const client = { from: vi.fn(() => rows) };
 
     await expect(getReadings({ level: 2, format: 'story' }, client as never)).resolves.toMatchObject({
-      readings: [{
+      0: {
         id: 'reading-1',
+        slug: 'reading-1',
         hsk_level: 2,
         format: 'story',
         title: 'A day',
-        generated_at: '2026-07-30T08:00:00.000Z',
-      }],
+        topic: 'vida diaria',
+        audio_kind: 'tts',
+      },
     });
   });
 

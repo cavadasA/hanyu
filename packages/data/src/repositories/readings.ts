@@ -4,6 +4,7 @@ import type {
   ReadingDetail,
   ReadingFormat,
   ReadingResult,
+  ReadingSentence,
   ReadingSummary,
 } from '../types';
 import {
@@ -15,15 +16,18 @@ import {
 } from './shared';
 
 const VALID_FORMATS = new Set(['short_text', 'story', 'dialogue']);
+const READING_SELECT =
+  'slug, hsk_level, format, title, topic, series, series_index, sentences, questions, audio_kind, audio_url';
 
 function normalizeQuestions(questions: unknown) {
   return (Array.isArray(questions) ? questions : []).map((question: any, index: number) => ({
     id: String(question.id ?? `q${index}`),
     prompt: String(question.prompt ?? question.question ?? ''),
-    options: (Array.isArray(question.options) ? question.options : []).map((option: any) => ({
-      id: String(option.id),
-      text: String(option.text),
-    })),
+    options: (Array.isArray(question.options) ? question.options : []).map((option: any, optionIndex: number) =>
+      typeof option === 'string'
+        ? { id: String(optionIndex), text: option }
+        : { id: String(option.id ?? optionIndex), text: String(option.text ?? '') },
+    ),
   }));
 }
 
@@ -38,6 +42,10 @@ function extractCorrectOptionId(question: any) {
 
   if (question.correct !== undefined) {
     return question.correct;
+  }
+
+  if (question.answer_index !== undefined && Array.isArray(question.options)) {
+    return String(question.answer_index);
   }
 
   if (Array.isArray(question.options)) {
@@ -127,25 +135,21 @@ async function incrementReadingStat(client: HanyuClient, userId: string) {
 }
 
 export async function getReadings(
-  params: { level?: HskLevel; format?: ReadingFormat; limit?: number } = {},
+  params: { level?: HskLevel; topic?: string; format?: ReadingFormat } = {},
   client: HanyuClient,
-): Promise<{ readings: ReadingSummary[] }> {
-  const level = params.level ? parseInt(String(params.level), 10) : null;
-  const format = params.format ? String(params.format) : '';
-  const limit = Math.min(50, Math.max(1, parseInt(String(params.limit), 10) || 20));
+): Promise<ReadingSummary[]> {
+  let query = client.from('reading').select(READING_SELECT).order('hsk_level').order('slug');
 
-  let query = client
-    .from('generated_readings')
-    .select('id, hsk_level, format, title, source_model, created_at')
-    .order('created_at', { ascending: false })
-    .limit(limit);
-
-  if (level && !Number.isNaN(level)) {
-    query = query.eq('hsk_level', level);
+  if (params.level) {
+    query = query.eq('hsk_level', params.level);
   }
 
-  if (format && VALID_FORMATS.has(format)) {
-    query = query.eq('format', format);
+  if (params.topic) {
+    query = query.eq('topic', params.topic);
+  }
+
+  if (params.format && VALID_FORMATS.has(params.format)) {
+    query = query.eq('format', params.format);
   }
 
   const { data, error } = await query;
@@ -153,22 +157,34 @@ export async function getReadings(
     throw createRepositoryError(error, 'Failed to load readings');
   }
 
+  return (data || []).map(normalizeSummary);
+}
+
+function normalizeSummary(row: any): ReadingSummary {
+  const slug = String(row.slug);
+
   return {
-    readings: (data || []).map((row: any) => ({
-      id: String(row.id),
-      hsk_level: Number(row.hsk_level) as HskLevel,
-      format: row.format as ReadingFormat,
-      title: String(row.title),
-      generated_at: row.created_at,
-    })),
+    id: slug,
+    slug,
+    hsk_level: Number(row.hsk_level) as HskLevel,
+    format: row.format as ReadingFormat,
+    title: String(row.title),
+    topic: String(row.topic ?? ''),
+    series: row.series === null || row.series === undefined ? null : String(row.series),
+    series_index: row.series_index === null || row.series_index === undefined
+      ? null
+      : Number(row.series_index),
+    audio_kind: row.audio_kind === 'human' ? 'human' : 'tts',
+    audio_url: row.audio_url === null || row.audio_url === undefined ? null : String(row.audio_url),
+    ...(row.created_at ? { created_at: String(row.created_at) } : {}),
   };
 }
 
-async function loadReadingRow(id: string, client: HanyuClient) {
+async function loadReadingRow(slug: string, client: HanyuClient) {
   const { data, error } = await client
-    .from('generated_readings')
-    .select('id, hsk_level, format, title, content, pinyin_text, questions, source_model, created_at')
-    .eq('id', id as any)
+    .from('reading')
+    .select(READING_SELECT)
+    .eq('slug', slug)
     .single();
 
   if (error) {
@@ -178,11 +194,11 @@ async function loadReadingRow(id: string, client: HanyuClient) {
   return data as any;
 }
 
-export async function getReading(id: string, client: HanyuClient): Promise<ReadingDetail> {
-  const data = await loadReadingRow(id, client);
+export async function getReading(slug: string, client: HanyuClient): Promise<ReadingDetail> {
+  const data = await loadReadingRow(slug, client);
   const { data: tokenData, error: tokenError } = await client.functions.invoke(
     'tokenize-reading',
-    { body: { reading_id: id } },
+    { body: { reading_id: slug } },
   );
 
   if (tokenError || !Array.isArray(tokenData?.tokens)) {
@@ -196,39 +212,16 @@ export async function getReading(id: string, client: HanyuClient): Promise<Readi
     );
   }
 
+  const sentences = parseJsonField(data.sentences, []) as ReadingSentence[];
+
   return {
-    ...data,
-    id: String(data.id),
-    hsk_level: Number(data.hsk_level) as HskLevel,
-    format: data.format as ReadingFormat,
-    generated_at: data.created_at,
+    ...normalizeSummary(data),
+    sentences,
+    content: sentences.map(sentence => sentence.zh).join(''),
+    pinyin_text: sentences.map(sentence => sentence.pinyin).filter(Boolean).join(' ') || null,
     questions: normalizeQuestions(parseJsonField(data.questions, [])),
     tokens: tokenData.tokens,
   };
-}
-
-export async function generateReading(
-  level: HskLevel,
-  format: ReadingFormat,
-  client: HanyuClient,
-): Promise<ReadingDetail> {
-  const safeFormat = VALID_FORMATS.has(format) ? format : 'short_text';
-  const { data, error } = await client.functions.invoke('generate-reading', {
-    body: {
-      level: parseInt(String(level), 10) || 1,
-      format: safeFormat,
-    },
-  });
-
-  if (error) {
-    throw createRepositoryError(error, 'Failed to generate reading');
-  }
-
-  if (!data) {
-    throw new Error('Reading generation returned an empty payload.');
-  }
-
-  return getReading(String(data.id), client);
 }
 
 export async function completeReading(
@@ -254,7 +247,8 @@ export async function completeReading(
 
   const { error: attemptError } = await client.from('reading_attempts').insert({
     user_id: userId,
-    reading_id: id as any,
+    reading_id: null,
+    reading_slug: id,
     answers,
     score: localResult.score,
     total: localResult.total,

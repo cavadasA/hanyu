@@ -70,7 +70,6 @@ const settings = {
   session_size: 20,
   request_retention: 0.9,
   card_order: 'due',
-  ai_provider: 'none',
 };
 
 async function renderYou() {

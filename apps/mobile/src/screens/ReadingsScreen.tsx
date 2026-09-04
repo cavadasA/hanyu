@@ -4,31 +4,32 @@ import type { HskLevel, ReadingFormat } from '@hanyu/data';
 import { useReadings } from '../readings/useReadings';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
-import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { EmptyState } from '../ui/EmptyState';
 import { ErrorBanner } from '../ui/ErrorBanner';
 import { Screen } from '../ui/Screen';
 
 const LEVELS: HskLevel[] = [1, 2, 3];
-const FORMATS: Array<{ value: ReadingFormat; label: string }> = [
-  { value: 'short_text', label: 'Short text' },
-  { value: 'story', label: 'Story' },
-  { value: 'dialogue', label: 'Dialogue' },
+const TOPICS: Array<{ value?: string; label: string }> = [
+  { label: 'All topics' },
+  { value: 'compras', label: 'compras' },
+  { value: 'estudio', label: 'estudio' },
+  { value: 'vida diaria', label: 'vida diaria' },
+  { value: 'salud', label: 'salud' },
+  { value: 'lugares', label: 'lugares' },
+  { value: 'ocio', label: 'ocio' },
 ];
+const FORMAT_LABELS: Record<ReadingFormat, string> = {
+  short_text: 'Short text',
+  story: 'Story',
+  dialogue: 'Dialogue',
+};
 
 export function ReadingsScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const readings = useReadings();
-  const busy = readings.loading || readings.generating;
-
-  async function generate() {
-    const detail = await readings.generate();
-    if (detail) {
-      router.push(`/practice/readings/${detail.id}`);
-    }
-  }
+  const busy = readings.loading;
 
   return (
     <Screen>
@@ -59,39 +60,33 @@ export function ReadingsScreen() {
         ))}
       </View>
 
-      <View style={styles.formatGroup}>
-        {FORMATS.map(format => (
+      <View style={styles.topicGroup}>
+        {TOPICS.map(topic => (
           <Pressable
-            key={format.value}
+            key={topic.label}
             accessibilityRole="button"
-            accessibilityLabel={format.label}
-            accessibilityState={{ selected: readings.format === format.value, disabled: busy }}
+            accessibilityLabel={topic.label}
+            accessibilityState={{ selected: readings.topic === topic.value, disabled: busy }}
             disabled={busy}
-            onPress={() => readings.setFormat(format.value)}
+            onPress={() => readings.setTopic(topic.value)}
             style={[
-              styles.formatButton,
+              styles.topicButton,
               {
-                borderColor: readings.format === format.value ? colors.vermilion : colors.border,
-                backgroundColor: readings.format === format.value ? colors.surface : colors.bg,
+                borderColor: readings.topic === topic.value ? colors.vermilion : colors.border,
+                backgroundColor: readings.topic === topic.value ? colors.surface : colors.bg,
               },
             ]}
           >
-            <Text style={{ color: colors.text }}>{format.label}</Text>
+            <Text style={{ color: colors.text }}>{topic.label}</Text>
           </Pressable>
         ))}
       </View>
-
-      <Button
-        label={readings.generating ? 'Generating...' : 'Generate reading'}
-        onPress={generate}
-        disabled={readings.generating}
-      />
 
       {readings.error ? <ErrorBanner message={readings.error} onRetry={readings.reload} /> : null}
       {readings.loading ? <ActivityIndicator /> : null}
 
       {!readings.loading && readings.readings.length === 0 ? (
-        <EmptyState title="No readings yet" body="Generate one for this HSK level." />
+        <EmptyState title="No readings yet" body="No readings match this filter." />
       ) : null}
 
       {readings.readings.map(reading => (
@@ -104,7 +99,7 @@ export function ReadingsScreen() {
           <Card>
             <Text style={[styles.cardTitle, { color: colors.text }]}>{reading.title}</Text>
             <Text style={{ color: colors.textMuted }}>
-              HSK {reading.hsk_level} · {formatLabel(reading.format)}
+              HSK {reading.hsk_level} · {formatLabel(reading.format)} · {reading.topic}
             </Text>
           </Card>
         </Pressable>
@@ -114,7 +109,7 @@ export function ReadingsScreen() {
 }
 
 function formatLabel(format: ReadingFormat) {
-  return FORMATS.find(item => item.value === format)?.label ?? format;
+  return FORMAT_LABELS[format] ?? format;
 }
 
 const styles = StyleSheet.create({
@@ -140,12 +135,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  formatGroup: {
+  topicGroup: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: tokens.spacing.sm,
   },
-  formatButton: {
+  topicButton: {
     borderWidth: 1,
     borderRadius: tokens.radius.md,
     minHeight: 44,

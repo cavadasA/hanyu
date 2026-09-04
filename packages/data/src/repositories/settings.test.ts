@@ -37,7 +37,6 @@ describe('getSettings', () => {
       session_size: 25,
       request_retention: 0.85,
       card_order: 'frequency',
-      ai_provider: 'gemini',
       created_at: '2026-07-01T00:00:00.000Z',
       updated_at: '2026-07-30T00:00:00.000Z',
     };
@@ -61,9 +60,8 @@ describe('getSettings', () => {
     const settings = await getSettings(client as never);
 
     expect(settings).toEqual({
-      ...row,
       api_key: '',
-      api_key_configured: false,
+      ...row,
     });
   });
 
@@ -79,7 +77,6 @@ describe('getSettings', () => {
         session_size: 25,
         card_order: 'due',
         request_retention: 0.9,
-        ai_provider: 'none',
       },
       error: null,
     });
@@ -111,5 +108,27 @@ describe('getSettings', () => {
       expect.objectContaining({ session_size: 200 }),
       expect.anything(),
     );
+  });
+
+  it('ya no ofrece un proveedor de IA', async () => {
+    const client = clientFor({
+      data: {
+        user_id: 'u1',
+        theme: 'light',
+        support_language: 'es',
+        current_level: 2,
+        new_cards_per_day: 10,
+        review_limit_per_day: 200,
+        session_size: 20,
+        request_retention: 0.9,
+        card_order: 'due',
+      },
+      error: null,
+    });
+
+    const settings = await getSettings(client as never);
+
+    expect('ai_provider' in settings).toBe(false);
+    expect('api_key_configured' in settings).toBe(false);
   });
 });
