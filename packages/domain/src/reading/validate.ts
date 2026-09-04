@@ -1,7 +1,7 @@
 // Reglas deterministas. Ninguna usa un modelo: si una regla necesitase juicio
 // no sería un validador sino una revisión, y ésa la hace quien mira el diff.
 // Una lista vacía de problemas es la única condición para publicar.
-import { tokenizeReading, type DictionaryEntry } from './tokenize';
+import { tokenizeReading, type DictionaryEntry } from './tokenize.ts';
 
 export type IssueKind =
   | 'unknown_vocabulary'
