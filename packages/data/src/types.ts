@@ -49,7 +49,8 @@ export type LearningEventKind =
   | 'exercise_attempted'
   | 'word_looked_up'
   | 'reading_completed'
-  | 'hint_used';
+  | 'hint_used'
+  | 'grammar_studied';
 
 export interface LearningEvent {
   id: string;

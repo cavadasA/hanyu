@@ -62,9 +62,14 @@ export class OfflineReviewService {
   /** Per-card-id synchronous double-tap guard. */
   private readonly inFlight = new Set<string>();
   private _lastDeckSize: number | null = null;
+  private _lastQueueError: string | null = null;
 
   get lastDeckSize(): number | null {
     return this._lastDeckSize;
+  }
+
+  get lastQueueError(): string | null {
+    return this._lastQueueError;
   }
 
   constructor(deps: OfflineReviewServiceDeps) {
@@ -78,10 +83,9 @@ export class OfflineReviewService {
   }
 
   /**
-   * La cola la decide el servidor; aquí solo se ordena lo que llega y se cae a
-   * la caché local si no hay red. Sin conexión no se puede aplicar la política
-   * de cupos —requiere el conjunto completo— así que se estudia lo que hay
-   * cacheado y los cupos vuelven a aplicarse en cuanto haya red.
+   * La cola la decide el servidor; aquí solo se ordena lo que llega. Review
+   * puede caer a la caché local si no hay red, pero Learn y Exam no pueden
+   * reutilizar esa cola porque sus subconjuntos tienen otra semántica.
    */
   async loadQueue(
     skill: LearningSkill = 'recognition',
@@ -90,12 +94,13 @@ export class OfflineReviewService {
   ): Promise<VersionedCard[]> {
     const nowIso = this.now().toISOString();
     const cached = await this.store.getDueProjectedCards(nowIso, 200);
+    this._lastQueueError = null;
 
     try {
       const online = await this.buildQueueOnlineImpl({
         skill,
         deckId,
-        ...(mode !== 'review' ? { mode } : {}),
+        mode,
       });
       const freshCards: VersionedCard[] = [];
 
@@ -121,9 +126,14 @@ export class OfflineReviewService {
 
       await this.store.cacheCards(freshCards);
       return orderQueue(freshCards, this.now(), this.params(), this.cardOrder());
-    } catch {
-      // Any error (network, auth, validation) falls back to the cached baseline.
+    } catch (caught) {
+      this._lastQueueError = caught instanceof Error ? caught.message : String(caught);
       this._lastDeckSize = null;
+      if (mode !== 'review') {
+        // A review cache is not a valid Learn/Exam queue: returning it would
+        // make a mode-specific server failure look like a successful session.
+        return [];
+      }
       return orderQueue(cached, this.now(), this.params(), this.cardOrder());
     }
   }

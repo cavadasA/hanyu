@@ -54,3 +54,18 @@ export async function getGrammarPoint(
 
   return normalizeGrammarPoint(data);
 }
+
+export async function markGrammarStudied(
+  id: number | string,
+  client: HanyuClient,
+): Promise<void> {
+  const numericId = parseInt(String(id), 10);
+  if (Number.isNaN(numericId)) {
+    throw new Error('Invalid grammar parameters');
+  }
+
+  const { error } = await client.rpc('mark_grammar_studied', { p_grammar_id: numericId });
+  if (error) {
+    throw createRepositoryError(error, 'Failed to save grammar progress');
+  }
+}

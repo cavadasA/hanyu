@@ -33,6 +33,7 @@ const mockOfflineService = {
       ? mockLoadQueue(skill ?? 'recognition', deckId, mode)
       : mockLoadQueue(skill ?? 'recognition', deckId),
   lastDeckSize: null as number | null,
+  lastQueueError: null as string | null,
   rateCard: (card: unknown, grade: string, timeMs: number | null) =>
     mockRateCard(card, grade, timeMs),
   undoRating: (reviewId: string) => mockUndoRating(reviewId),
@@ -134,6 +135,7 @@ describe('CardsScreen', () => {
   beforeEach(async () => {
     await clearReviewSession();
     mockOfflineService.lastDeckSize = 150;
+    mockOfflineService.lastQueueError = null;
     mockGetDueCards.mockReset();
     mockReviewCard.mockReset();
     mockRateCard.mockReset();
@@ -478,8 +480,18 @@ describe('CardsScreen', () => {
     expect(mockLoadQueue).toHaveBeenLastCalledWith('recognition', 'd1', 'learn');
   });
 
-  it('en modo Learn avanzar no crea una programación FSRS', async () => {
+  it('muestra cuando la cola específica del modo no pudo cargarse', async () => {
+    mockLoadQueue.mockResolvedValue([]);
+    mockOfflineService.lastQueueError = 'active unit failed';
+
+    await renderCards();
+
+    expect(screen.getByText('active unit failed')).toBeTruthy();
+  });
+
+  it('en modo Learn avanzar introduce la tarjeta y crea una programación FSRS', async () => {
     mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
+    mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
 
     await renderCards();
     await fireEvent.press(screen.getByText('Learn'));
@@ -488,7 +500,12 @@ describe('CardsScreen', () => {
     await fireEvent.press(screen.getByText('Show answer'));
     await fireEvent.press(screen.getByText('Good'));
 
-    expect(mockRateCard).not.toHaveBeenCalled();
+    expect(mockRateCard).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'c1' }),
+      'good',
+      expect.any(Number),
+    );
+    expect(mockRecordEvent).not.toHaveBeenCalled();
   });
 
   it('en modo Exam no se ofrecen pistas', async () => {

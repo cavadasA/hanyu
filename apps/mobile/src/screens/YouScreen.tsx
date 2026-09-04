@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-native';
 import {
   toUserMessage,
   type CardOrder,
@@ -43,6 +43,7 @@ export default function YouScreen() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [leeches, setLeeches] = useState<LearnerSkillState[]>([]);
+  const [draftExamDate, setDraftExamDate] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -51,6 +52,7 @@ export default function YouScreen() {
     try {
       const loaded = (await getData().settings.getSettings()) as UserSettings;
       setSettings(loaded);
+      setDraftExamDate(loaded.exam_date ?? '');
     } catch (caught) {
       setError(toUserMessage(caught));
       setLoading(false);
@@ -105,6 +107,9 @@ export default function YouScreen() {
     try {
       const saved = (await getData().settings.updateSettings(patch)) as UserSettings;
       setSettings(saved);
+      if (patch.exam_date !== undefined) {
+        setDraftExamDate(saved.exam_date ?? '');
+      }
       if (patch.request_retention !== undefined) {
         updateReviewSettings({ request_retention: saved.request_retention });
       }
@@ -244,6 +249,30 @@ export default function YouScreen() {
               onChange={(session_size) => save({ session_size })}
               disabled={saving}
             />
+            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <View style={styles.examDateRow}>
+              <View style={styles.examDateCopy}>
+                <Text style={[styles.rowLabel, { color: colors.text }]}>Exam date</Text>
+                <Text style={[styles.rowHint, { color: colors.textMuted }]}>YYYY-MM-DD</Text>
+              </View>
+              <TextInput
+                accessibilityLabel="Exam date"
+                value={draftExamDate}
+                onChangeText={setDraftExamDate}
+                placeholder="YYYY-MM-DD"
+                placeholderTextColor={colors.textMuted}
+                editable={!saving}
+                autoCapitalize="none"
+                keyboardType="numbers-and-punctuation"
+                style={[styles.examDateInput, { color: colors.text, borderColor: colors.border }]}
+              />
+              <Button
+                label="Save exam date"
+                variant="outline"
+                onPress={() => void save({ exam_date: draftExamDate.trim() || null })}
+                disabled={saving}
+              />
+            </View>
           </View>
 
           <View style={[styles.sectionDivider, { backgroundColor: colors.border }]} />
@@ -388,6 +417,26 @@ const styles = StyleSheet.create({
   profileDetails: {
     flex: 1,
     gap: 2,
+  },
+  examDateRow: {
+    gap: tokens.spacing.sm,
+  },
+  examDateCopy: {
+    gap: 2,
+  },
+  rowLabel: {
+    fontSize: tokens.fontSize.sm,
+    fontWeight: '600',
+  },
+  rowHint: {
+    fontSize: tokens.fontSize.xs,
+  },
+  examDateInput: {
+    minHeight: 44,
+    borderWidth: 1,
+    borderRadius: tokens.radius.sm,
+    paddingHorizontal: tokens.spacing.sm,
+    fontSize: tokens.fontSize.sm,
   },
   userEmail: {
     fontSize: tokens.fontSize.sm,

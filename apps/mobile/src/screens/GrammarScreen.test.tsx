@@ -4,6 +4,7 @@ import { GrammarScreen } from './GrammarScreen';
 
 const mockGetGrammar = jest.fn();
 const mockGetGrammarPoint = jest.fn();
+const mockMarkGrammarStudied = jest.fn();
 const mockPush = jest.fn();
 let mockParams: Record<string, string> = {};
 
@@ -17,6 +18,7 @@ jest.mock('../lib/data', () => ({
     grammar: {
       getGrammar: (...args: unknown[]) => mockGetGrammar(...args),
       getGrammarPoint: (...args: unknown[]) => mockGetGrammarPoint(...args),
+      markGrammarStudied: (...args: unknown[]) => mockMarkGrammarStudied(...args),
     },
   }),
 }));
@@ -25,6 +27,7 @@ describe('Grammar screens', () => {
   beforeEach(() => {
     mockGetGrammar.mockReset();
     mockGetGrammarPoint.mockReset();
+    mockMarkGrammarStudied.mockReset();
     mockPush.mockReset();
     mockParams = {};
   });
@@ -79,5 +82,7 @@ describe('Grammar screens', () => {
     expect(view.getByText('Because it rains, I am not going.')).toBeTruthy();
     expect(view.queryByText('null')).toBeNull();
     expect(mockGetGrammarPoint).toHaveBeenCalledWith(2, 3);
+    await fireEvent.press(view.getByText('Mark as studied'));
+    expect(mockMarkGrammarStudied).toHaveBeenCalledWith(3);
   });
 });

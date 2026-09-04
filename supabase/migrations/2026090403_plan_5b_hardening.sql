@@ -38,13 +38,60 @@ for select using (auth.role() = 'authenticated');
 -- Umbral de estabilidad, en días, para dar una palabra por asentada dentro de
 -- una unidad. Veintiuno es el punto en que el intervalo deja de medirse en días
 -- sueltos; por debajo, llamar "completada" a la unidad sería optimismo.
+alter type public.learning_event_kind add value if not exists 'grammar_studied';
+
+create or replace function public.mark_grammar_studied(p_grammar_id bigint)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if auth.uid() is null then
+    raise exception 'Authentication required';
+  end if;
+
+  if not exists (select 1 from public.grammar_points where id = p_grammar_id) then
+    raise exception 'Grammar point not found';
+  end if;
+
+  insert into public.learner_skill_state (
+    user_id, target_kind, target_id, skill, difficulty, stability, reps,
+    learning_steps, scheduled_days, elapsed_days, fsrs_state, suspended
+  ) values (
+    auth.uid(), 'grammar', p_grammar_id, 'recognition', 0, 21, 1,
+    0, 21, 0, 'review', false
+  )
+  on conflict (user_id, target_kind, target_id, skill) do update
+    set stability = greatest(coalesce(learner_skill_state.stability, 0), 21),
+        fsrs_state = 'review',
+        suspended = false,
+        updated_at = now();
+
+  insert into public.learning_event (user_id, kind, target_kind, target_id, skill, payload)
+  values (
+    auth.uid(), 'grammar_studied', 'grammar', p_grammar_id, 'recognition', '{}'::jsonb
+  );
+end;
+$$;
+
+revoke all on function public.mark_grammar_studied(bigint) from public;
+grant execute on function public.mark_grammar_studied(bigint) to authenticated;
+
+drop function if exists public.active_unit(numeric);
+
 create or replace function public.active_unit(p_stability_days numeric default 21)
 returns table(
   hsk_level integer,
   code text,
   title text,
   total_words integer,
-  settled_words integer
+  settled_words integer,
+  word_count integer,
+  pattern_count integer,
+  grammar_id bigint,
+  total_items integer,
+  settled_items integer
 )
 language sql
 security definer
@@ -56,12 +103,35 @@ as $$
       u.code,
       u.title,
       u.order_idx,
+      gp.id as grammar_id,
       count(uw.word_id)::integer as total_words,
+      count(uw.word_id)::integer as word_count,
       count(*) filter (
-        where coalesce(s.stability, 0) >= p_stability_days or coalesce(s.suspended, false)
-      )::integer as settled_words
+        where uw.word_id is not null
+          and (coalesce(s.stability, 0) >= p_stability_days or coalesce(s.suspended, false))
+      )::integer as settled_words,
+      cardinality(u.patterns)::integer as pattern_count,
+      (
+        count(uw.word_id)::integer + case when cardinality(u.patterns) > 0 then 1 else 0 end
+      )::integer as total_items,
+      (
+        count(*) filter (
+          where uw.word_id is not null
+            and (coalesce(s.stability, 0) >= p_stability_days or coalesce(s.suspended, false))
+        )::integer
+        + case when cardinality(u.patterns) > 0 and exists (
+            select 1
+            from public.learner_skill_state gs
+            where gs.user_id = auth.uid()
+              and gs.target_kind = 'grammar'
+              and gs.target_id = gp.id
+              and gs.skill = 'recognition'
+              and (coalesce(gs.stability, 0) >= p_stability_days or coalesce(gs.suspended, false))
+          ) then 1 else 0 end
+      )::integer as settled_items
     from public.unit u
     left join public.unit_word uw on uw.hsk_level = u.hsk_level and uw.code = u.code
+    left join public.grammar_points gp on gp.hsk_level = u.hsk_level and gp.code = u.code
     left join public.learner_skill_state s
       on s.user_id = auth.uid()
      and s.target_kind = 'word'
@@ -70,13 +140,14 @@ as $$
     where u.hsk_level <= (
       select current_level from public.user_settings where user_id = auth.uid()
     )
-    group by u.hsk_level, u.code, u.title, u.order_idx
+    group by u.hsk_level, u.code, u.title, u.order_idx, gp.id, u.patterns
   ),
   incomplete as (
     select * from progress
-    where total_words > 0 and settled_words < total_words
+    where total_items > 0 and settled_items < total_items
   )
-  select i.hsk_level, i.code, i.title, i.total_words, i.settled_words
+  select i.hsk_level, i.code, i.title, i.total_words, i.settled_words,
+    i.word_count, i.pattern_count, i.grammar_id, i.total_items, i.settled_items
   from incomplete i
   -- Una unidad no se propone si algún prerrequisito suyo sigue incompleto.
   where not exists (
@@ -99,14 +170,50 @@ grant execute on function public.active_unit(numeric) to authenticated;
 alter table public.user_settings
   add column if not exists exam_date date;
 
+-- Today needs the uncapped split, not the session-sized queue. Relearning is
+-- part of the due set, but it is displayed as its own step.
+create or replace function public.count_due_cards_by_state(
+  p_deck_id uuid default null,
+  p_skill public.learning_skill default 'recognition'
+)
+returns table(regular_due_count bigint, relearning_count bigint)
+language sql
+security definer
+set search_path = public
+as $$
+  select
+    count(distinct dc.word_id) filter (where s.fsrs_state <> 'relearning') as regular_due_count,
+    count(distinct dc.word_id) filter (where s.fsrs_state = 'relearning') as relearning_count
+  from public.deck_cards dc
+  join public.decks d on d.id = dc.deck_id and d.user_id = auth.uid()
+  join public.learner_skill_state s
+    on s.user_id = d.user_id
+   and s.target_kind = 'word'
+   and s.target_id = dc.word_id
+   and s.skill = p_skill
+  where ((p_deck_id is null and d.is_active) or dc.deck_id = p_deck_id)
+    and not s.suspended
+    and s.fsrs_state <> 'new'
+    and s.next_review_at is not null
+    and s.next_review_at <= now();
+$$;
+
+revoke all on function public.count_due_cards_by_state(uuid, public.learning_skill) from public;
+grant execute on function public.count_due_cards_by_state(uuid, public.learning_skill) to authenticated;
+
+-- El archivo 0208 pudo haberse aplicado ya en una base existente. Retiramos
+-- su sobrecarga antes de publicar la función con nombre explícito.
+drop function if exists public.build_review_queue(uuid, public.learning_skill, integer, text);
+
 -- La habilidad describe el ejercicio; el modo describe qué subconjunto se
 -- estudia y qué efectos persistentes tiene. Se conserva la RPC de tres
--- argumentos para clientes antiguos y se añade esta sobrecarga explícita.
-create or replace function public.build_review_queue(
+-- argumentos para clientes antiguos y se añade una RPC con nombre distinto:
+-- PostgreSQL no puede resolver de forma segura dos firmas con defaults.
+create or replace function public.build_review_queue_mode(
+  p_mode text,
   p_deck_id uuid default null,
   p_skill public.learning_skill default 'recognition',
-  p_limit integer default null,
-  p_mode text default 'review'
+  p_limit integer default null
 )
 returns table(
   card_id uuid,
@@ -236,5 +343,5 @@ begin
 end;
 $$;
 
-revoke all on function public.build_review_queue(uuid, public.learning_skill, integer, text) from public;
-grant execute on function public.build_review_queue(uuid, public.learning_skill, integer, text) to authenticated;
+revoke all on function public.build_review_queue_mode(text, uuid, public.learning_skill, integer) from public;
+grant execute on function public.build_review_queue_mode(text, uuid, public.learning_skill, integer) to authenticated;

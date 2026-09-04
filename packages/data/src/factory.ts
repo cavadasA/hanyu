@@ -7,7 +7,7 @@ import {
   signUp,
   subscribeToAuthChanges,
 } from './auth';
-import { getGrammar, getGrammarPoint } from './repositories/grammar';
+import { getGrammar, getGrammarPoint, markGrammarStudied } from './repositories/grammar';
 import {
   addDeckFromTemplate,
   addWordToDeck,
@@ -90,6 +90,7 @@ export function createHanyuData(config: HanyuDataConfig) {
       getGrammar: (level: HskLevel) => getGrammar(level, client),
       getGrammarPoint: (level: HskLevel, id: number | string) =>
         getGrammarPoint(level, id, client),
+      markGrammarStudied: (id: number | string) => markGrammarStudied(id, client),
     },
     flashcards: {
       buildQueue: (input: Parameters<typeof buildQueue>[0] = {}) => buildQueue(input, client),

@@ -5,23 +5,33 @@
 // patrones para no perder lo que la unidad enseña.
 
 const DESCRIPTION_PREFIX = /^[^：:]*[：:]/;
-const SENSE_SUFFIX = /[0-9]$/;
+const SENSE_SUFFIX = /([0-9])$/;
 
-export function splitItem(item) {
+function splitItemRefs(item) {
   return String(item)
     .replace(DESCRIPTION_PREFIX, '')
     .split(/[、，,]/)
     .map((fragment) => fragment.trim())
     .filter(Boolean)
-    .map((fragment) => fragment.replace(SENSE_SUFFIX, ''));
+    .map((fragment) => {
+      const match = fragment.match(SENSE_SUFFIX);
+      return {
+        value: match ? fragment.slice(0, -1) : fragment,
+        sense_index: match ? Number(match[1]) : null,
+      };
+    });
+}
+
+export function splitItem(item) {
+  return splitItemRefs(item).map((fragment) => fragment.value);
 }
 
 export function deriveUnits(grammar, words) {
   const byHanzi = new Map();
   for (const word of words) {
-    if (!byHanzi.has(word.hanzi)) {
-      byHanzi.set(word.hanzi, word.id);
-    }
+    const candidates = byHanzi.get(word.hanzi) ?? [];
+    candidates.push(word);
+    byHanzi.set(word.hanzi, candidates);
   }
 
   return grammar
@@ -30,12 +40,15 @@ export function deriveUnits(grammar, words) {
       const patterns = [];
 
       for (const item of point.items ?? []) {
-        for (const fragment of splitItem(item)) {
-          const id = byHanzi.get(fragment);
-          if (id !== undefined) {
-            if (!wordIds.includes(id)) wordIds.push(id);
+        for (const fragment of splitItemRefs(item)) {
+          const candidates = byHanzi.get(fragment.value) ?? [];
+          const candidate = candidates.find((word) =>
+            fragment.sense_index === null || word.sense_index === fragment.sense_index,
+          ) ?? (candidates.length === 1 && candidates[0].sense_index == null ? candidates[0] : undefined);
+          if (candidate) {
+            if (!wordIds.includes(candidate.id)) wordIds.push(candidate.id);
           } else {
-            patterns.push(fragment);
+            patterns.push(fragment.value);
           }
         }
       }

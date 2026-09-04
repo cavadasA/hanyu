@@ -105,9 +105,9 @@ export async function buildQueue(
     p_deck_id: input.deckId ?? null,
     p_skill: input.skill ?? 'recognition',
     p_limit: input.limit ?? null,
-    ...(input.mode ? { p_mode: input.mode } : {}),
+    p_mode: input.mode ?? 'review',
   };
-  const { data, error } = await (client.rpc as any)('build_review_queue', queueArgs);
+  const { data, error } = await client.rpc('build_review_queue_mode', queueArgs);
 
   if (error) {
     throw createRepositoryError(error, 'Failed to build the study queue');

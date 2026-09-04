@@ -100,6 +100,20 @@ describe('loadQueue – cache-first load', () => {
     await expect(service.loadQueue()).resolves.toBeDefined();
   });
 
+  test('does not present the review cache as another study mode after a mode-specific error', async () => {
+    const cachedCards = [makeCard({ id: 'cached-review' })];
+    const store = makeFakeStore({
+      getDueProjectedCards: jest.fn().mockResolvedValue(cachedCards),
+    });
+    const service = makeService({
+      store,
+      buildQueueOnline: jest.fn().mockRejectedValue(new Error('active unit failed')),
+    });
+
+    await expect(service.loadQueue('recognition', null, 'learn')).resolves.toEqual([]);
+    expect(service.lastQueueError).toBe('active unit failed');
+  });
+
   test('reads cached cards with the injected clock timestamp', async () => {
     const fixedNow = new Date('2026-07-31T12:00:00.000Z');
     const now = jest.fn().mockReturnValue(fixedNow);
@@ -145,7 +159,7 @@ describe('loadQueue – online refresh', () => {
 
     const result = await service.loadQueue('recognition', 'deck-1');
 
-    expect(buildQueueOnline).toHaveBeenCalledWith({ skill: 'recognition', deckId: 'deck-1' });
+    expect(buildQueueOnline).toHaveBeenCalledWith({ skill: 'recognition', deckId: 'deck-1', mode: 'review' });
     expect(result).toHaveLength(1);
     expect(service.lastDeckSize).toBe(7);
   });
@@ -166,7 +180,7 @@ describe('loadQueue – online refresh', () => {
 
     await service.loadQueue('recall', 'deck-1');
 
-    expect(buildQueueOnline).toHaveBeenCalledWith({ skill: 'recall', deckId: 'deck-1' });
+    expect(buildQueueOnline).toHaveBeenCalledWith({ skill: 'recall', deckId: 'deck-1', mode: 'review' });
   });
 
   test('passes the study mode to the online loader', async () => {

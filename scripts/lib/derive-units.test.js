@@ -62,4 +62,19 @@ describe('deriveUnits', () => {
 
     expect(adverbs.word_ids).toEqual([5]);
   });
+
+  it('conserva el sentido exacto cuando el corpus comparte hanzi y nivel', () => {
+    const duplicateWords = [
+      { id: 10, hanzi: '还', hsk_level: 1, sense_index: 1 },
+      { id: 11, hanzi: '还', hsk_level: 1, sense_index: 2 },
+    ];
+    const duplicateUnits = deriveUnits([
+      {
+        code: '2.7.4', hsk_level: 1, group: '副词', category: '时间',
+        detail: '还', title: '还', items: ['还2'],
+      },
+    ], duplicateWords);
+
+    expect(duplicateUnits[0].word_ids).toEqual([11]);
+  });
 });

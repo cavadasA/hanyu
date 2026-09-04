@@ -55,4 +55,12 @@ describe('rankContent', () => {
   it('no premia una lectura sin ninguna palabra', () => {
     expect(rankContent({ ...item, word_ids: [] }, learner).value).toBe(0);
   });
+
+  it('penaliza un texto sin nada nuevo por encima del máximo comprensible', () => {
+    const veryEasy = rankContent({ ...item, word_ids: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19] }, learner);
+    const slightlyHarder = rankContent({ ...item, word_ids: [10, 11, 12, 13, 14, 15, 16, 17, 18, 90] }, learner);
+
+    expect(veryEasy.value).toBeLessThan(slightlyHarder.value);
+    expect(veryEasy.reasons.map((reason) => reason.kind)).toContain('too_easy');
+  });
 });

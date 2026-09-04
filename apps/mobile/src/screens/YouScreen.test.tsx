@@ -70,6 +70,7 @@ const settings = {
   session_size: 20,
   request_retention: 0.9,
   card_order: 'due',
+  exam_date: null,
 };
 
 async function renderYou() {
@@ -148,6 +149,17 @@ describe('YouScreen', () => {
     await fireEvent.press(screen.getByText('en'));
 
     expect(mockUpdateSettings).toHaveBeenCalledWith({ support_language: 'en' });
+  });
+
+  it('permite guardar la fecha del examen desde el perfil', async () => {
+    mockGetSettings.mockResolvedValue(settings);
+    mockUpdateSettings.mockResolvedValue({ ...settings, exam_date: '2026-10-15' });
+
+    await renderYou();
+    await fireEvent.changeText(screen.getByLabelText('Exam date'), '2026-10-15');
+    await fireEvent.press(screen.getByText('Save exam date'));
+
+    expect(mockUpdateSettings).toHaveBeenCalledWith({ exam_date: '2026-10-15' });
   });
 
   it('persists the target retention setting', async () => {

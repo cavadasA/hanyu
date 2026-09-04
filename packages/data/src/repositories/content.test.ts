@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { generateExercise } from './exercises';
-import { getGrammar } from './grammar';
+import { getGrammar, markGrammarStudied } from './grammar';
 import { getReadings } from './readings';
 import { getWords } from './words';
 
@@ -158,5 +158,12 @@ describe('mobile content repository contracts', () => {
         english: 'Because it rains, I am not going.',
       }],
     }]);
+  });
+
+  it('marca un punto de gramática como estudiado', async () => {
+    const client = { rpc: vi.fn().mockResolvedValue({ data: null, error: null }) };
+
+    await expect(markGrammarStudied(42, client as never)).resolves.toBeUndefined();
+    expect(client.rpc).toHaveBeenCalledWith('mark_grammar_studied', { p_grammar_id: 42 });
   });
 });

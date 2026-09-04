@@ -6,6 +6,7 @@ import { getData } from '../lib/data';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 import { Badge } from '../ui/Badge';
+import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { ErrorBanner } from '../ui/ErrorBanner';
 import { Screen } from '../ui/Screen';
@@ -19,6 +20,7 @@ export function GrammarDetailScreen() {
   const [point, setPoint] = useState<GrammarPoint | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
 
   async function load() {
     if (!id || !level) {
@@ -35,6 +37,19 @@ export function GrammarDetailScreen() {
       setError(toUserMessage(caught));
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function markStudied() {
+    if (!point || saving) return;
+    setSaving(true);
+    setError(null);
+    try {
+      await getData().grammar.markGrammarStudied(point.id);
+    } catch (caught) {
+      setError(toUserMessage(caught));
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -61,6 +76,12 @@ export function GrammarDetailScreen() {
             <Text style={[styles.title, { color: colors.text }]}>{point.title}</Text>
           </View>
           <Badge label={`HSK ${point.hsk_level}`} />
+          <Button
+            label={saving ? 'Saving...' : 'Mark as studied'}
+            variant="outline"
+            onPress={() => void markStudied()}
+            disabled={saving}
+          />
 
           {point.pattern ? (
             <Card>

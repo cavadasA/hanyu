@@ -58,5 +58,7 @@ describe('buildSeedSql', () => {
 
   it('resuelve las palabras de la unidad por hanzi, no por índice de fichero', () => {
     expect(sql).toMatch(/insert into public\.unit_word[\s\S]*?select[\s\S]*?from public\.words/);
+    expect(sql).toContain('m.sense_index');
+    expect(sql).toContain('w.sense_index = m.sense_index');
   });
 });

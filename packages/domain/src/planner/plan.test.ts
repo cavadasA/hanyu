@@ -55,9 +55,97 @@ describe('buildDailyPlan', () => {
     expect(newItems?.reason).toBe('daily_limit_reached');
   });
 
+  it('declara una unidad no disponible sin afirmar que está completada', () => {
+    const plan = buildDailyPlan({ ...base, active_unit: null });
+    const newItems = plan.steps.find((step) => step.kind === 'new_items');
+
+    expect(newItems?.reason).toBe('unit_unavailable');
+  });
+
+  it('mantiene en la ruta una unidad de patrones para estudiarla en gramática', () => {
+    const plan = buildDailyPlan({
+      ...base,
+      active_unit: {
+        code: '1.1',
+        title: '前缀',
+        total_words: 0,
+        settled_words: 0,
+        word_count: 0,
+        grammar_id: 42,
+        total_items: 1,
+        settled_items: 0,
+      },
+    });
+    const newItems = plan.steps.find((step) => step.kind === 'new_items');
+
+    expect(newItems).toMatchObject({
+      status: 'ready',
+      payload: { grammar_id: 42, grammar_only: true, unit_progress: '0/1' },
+    });
+  });
+
+  it('abre el patrón pendiente de una unidad mixta después de consolidar sus palabras', () => {
+    const plan = buildDailyPlan({
+      ...base,
+      active_unit: {
+        code: '2.4',
+        title: '比较句',
+        total_words: 2,
+        settled_words: 2,
+        word_count: 2,
+        pattern_count: 1,
+        grammar_id: 43,
+        total_items: 3,
+        settled_items: 2,
+      },
+    });
+    const newItems = plan.steps.find((step) => step.kind === 'new_items');
+
+    expect(newItems).toMatchObject({
+      status: 'ready',
+      payload: { grammar_id: 43, grammar_only: true, unit_progress: '2/3' },
+    });
+  });
+
   it('lleva la unidad activa en el paso de elementos nuevos', () => {
     const newItems = buildDailyPlan(base).steps.find((step) => step.kind === 'new_items');
 
     expect(newItems?.payload?.unit_title).toBe('离合词');
+  });
+
+  it('conserva el progreso de la meta de repasos para la pantalla', () => {
+    const plan = buildDailyPlan({
+      ...base,
+      review_completed: 12,
+      review_target: 200,
+    });
+    const reviews = plan.steps.find((step) => step.kind === 'reviews');
+
+    expect(reviews?.payload).toMatchObject({ count: 12, completed: 12, target: 200 });
+  });
+
+  it('no propone material cuyo valor total sea negativo', () => {
+    const plan = buildDailyPlan({
+      ...base,
+      readings: [{ id: 'opaque', topic: null, word_ids: [90, 91, 92, 93, 94] }],
+      learner: { target_word_ids: [], known_word_ids: [], recent_content_ids: [], covered_topics: [] },
+    });
+    const reading = plan.steps.find((step) => step.kind === 'reading');
+
+    expect(reading).toMatchObject({ status: 'unavailable', reason: 'no_content' });
+  });
+
+  it('resuelve los empates de contenido con un orden estable', () => {
+    const plan = buildDailyPlan({
+      ...base,
+      readings: [
+        { id: 'b', topic: 'nuevo', word_ids: [1] },
+        { id: 'a', topic: 'nuevo', word_ids: [2] },
+      ],
+      learner: { target_word_ids: [], known_word_ids: [1, 2], recent_content_ids: [], covered_topics: [] },
+    });
+    const reading = plan.steps.find((step) => step.kind === 'reading');
+
+    expect(reading?.payload?.id).toBe('a');
   });
 });

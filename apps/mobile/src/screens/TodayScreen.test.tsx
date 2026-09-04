@@ -155,6 +155,48 @@ describe('TodayScreen', () => {
     expect(screen.getByText('1/4')).toBeTruthy();
   });
 
+  it('muestra el progreso de repasos del plan diario', async () => {
+    mockGetToday.mockResolvedValue({
+      ...payload,
+      steps: [{
+        kind: 'reviews',
+        status: 'ready',
+        payload: { count: 18, completed: 12, target: 200 },
+      }],
+    });
+    mockGetDashboard.mockResolvedValue(dashboard);
+
+    await renderToday();
+
+    expect(screen.getByText('Reviewed 12 of 200 today')).toBeTruthy();
+  });
+
+  it('abre el punto de gramática de la unidad activa cuando no hay palabras', async () => {
+    mockGetToday.mockResolvedValue({
+      ...payload,
+      steps: [{
+        kind: 'new_items',
+        status: 'ready',
+        payload: {
+          grammar_id: 42,
+          grammar_only: true,
+          unit_level: 1,
+          unit_title: '前缀',
+          unit_progress: '0/1',
+        },
+      }],
+    });
+    mockGetDashboard.mockResolvedValue(dashboard);
+
+    await renderToday();
+    await fireEvent.press(screen.getByText('Open grammar'));
+
+    expect(mockPush).toHaveBeenLastCalledWith({
+      pathname: '/library/grammar/[id]',
+      params: { id: '42', level: '1' },
+    });
+  });
+
   it('explica por qué propone una lectura', async () => {
     mockGetToday.mockResolvedValue({
       ...payload,

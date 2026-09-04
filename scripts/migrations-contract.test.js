@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -122,6 +122,11 @@ describe('contratos de migraciones', () => {
     expect(types).toContain('apply_review: {');
     expect(types).toContain('p_time_ms?: number | null');
     expect(types).toContain('build_review_queue: {');
+    expect(types).toContain('build_review_queue_mode: {');
+    expect(types).toContain('count_due_cards_by_state: {');
+    expect(types).toContain('unit: {');
+    expect(types).toContain('unit_word: {');
+    expect(types).toContain('active_unit: {');
     expect(types).toContain('create_study_plan: {');
     expect(types).toContain('submit_diagnostic: {');
     expect(types).toContain('p_skill?: string');
@@ -208,16 +213,34 @@ describe('contratos de migraciones', () => {
   });
 
   it('separa Learn, Review y Exam en la cola y conserva la fecha objetivo', () => {
-    const migration = readMigration('2026090208_units.sql');
+    const migration = readMigration('2026090403_plan_5b_hardening.sql');
     const normalized = normalizeSql(migration);
 
     expectSqlToContain(migration, 'add column if not exists exam_date date;');
-    expectSqlToContain(migration, 'p_mode text default \'review\'');
+    expectSqlToContain(migration, 'create or replace function public.build_review_queue_mode(');
+    expectSqlToContain(migration, 'p_mode text');
     expectSqlToContain(migration, "p_mode not in ('learn', 'review', 'exam')");
     expectSqlToContain(migration, 'from public.active_unit()');
+    expectSqlToContain(migration, 'count(uw.word_id)::integer as word_count');
+    expectSqlToContain(migration, 'cardinality(u.patterns)::integer as pattern_count');
+    expectSqlToContain(migration, "target_kind = 'grammar'");
+    expectSqlToContain(migration, 'grammar_id');
+    expectSqlToContain(migration, "add value if not exists 'grammar_studied'");
+    expectSqlToContain(migration, 'create or replace function public.mark_grammar_studied(');
     expectSqlToContain(migration, 'order by random()');
     expectSqlToContain(migration, 'where not q.is_new;');
-    expect(normalized).toContain('grant execute on function public.build_review_queue(uuid, public.learning_skill, integer, text) to authenticated');
+    expect(normalized).toContain('grant execute on function public.build_review_queue_mode(text, uuid, public.learning_skill, integer) to authenticated');
+    expect(normalized).toContain('drop function if exists public.build_review_queue(uuid, public.learning_skill, integer, text)');
+    expect(normalized).not.toContain('create or replace function public.build_review_queue(');
+    expect(normalized).not.toContain('where total_words > 0 and settled_words < total_words');
+  });
+
+  it('aplica la migración de unidades después de las migraciones existentes', () => {
+    const names = readdirSync(migrationDir).filter((name) => name.endsWith('.sql')).sort();
+    const unitMigration = names.find((name) => name.includes('_plan_5b_hardening'));
+
+    expect(unitMigration).toBe('2026090403_plan_5b_hardening.sql');
+    expect(names.indexOf(unitMigration)).toBeGreaterThan(names.indexOf('2026090402_normalize_reading_grammar_targets.sql'));
   });
 
   it('normaliza el formato antiguo de los objetivos gramaticales', () => {

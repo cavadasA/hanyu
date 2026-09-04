@@ -146,7 +146,7 @@ function buildUnitWordMemberships() {
       const word = corpus[wordIndex];
       if (!word) continue;
       memberships.push(
-        `  (${sqlInteger(unit.hsk_level)}, ${sqlString(unit.code)}, ${sqlString(word.hanzi)}, ${sqlInteger(word.hsk_level ?? unit.hsk_level)})`,
+        `  (${sqlInteger(unit.hsk_level)}, ${sqlString(unit.code)}, ${sqlString(word.hanzi)}, ${sqlInteger(word.hsk_level ?? unit.hsk_level)}, ${sqlInteger(word.sense_index ?? null)})`,
       );
     }
   }
@@ -170,8 +170,10 @@ function buildUnitSql() {
 select m.unit_level, m.code, w.id
 from (values
 ${memberships.join(',\n')}
-) as m(unit_level, code, hanzi, word_level)
-join public.words w on w.hanzi = m.hanzi and w.hsk_level = m.word_level
+) as m(unit_level, code, hanzi, word_level, sense_index)
+join public.words w on w.hanzi = m.hanzi
+  and w.hsk_level = m.word_level
+  and ((m.sense_index is null and w.sense_index is null) or w.sense_index = m.sense_index)
 on conflict do nothing;
 `;
 

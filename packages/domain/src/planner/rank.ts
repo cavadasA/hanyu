@@ -10,6 +10,7 @@
 export type RankReasonKind =
   | 'reinforces_targets'
   | 'comprehensible'
+  | 'too_easy'
   | 'too_many_unknown'
   | 'new_topic'
   | 'seen_recently';
@@ -70,6 +71,9 @@ export function rankContent(
   } else if (comprehensible < MIN_COMPREHENSIBLE) {
     value -= (MIN_COMPREHENSIBLE - comprehensible) * 40;
     reasons.push({ kind: 'too_many_unknown', ratio: comprehensible });
+  } else {
+    value -= (comprehensible - MAX_COMPREHENSIBLE) * 80;
+    reasons.push({ kind: 'too_easy', ratio: comprehensible });
   }
 
   if (item.topic && !learner.covered_topics.includes(item.topic)) {

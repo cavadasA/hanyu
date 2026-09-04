@@ -124,6 +124,9 @@ export default function CardsScreen() {
       }
 
       const cards = await service.loadQueue(selectedSkill, focusedDeckId, selectedMode);
+      if (service.lastQueueError) {
+        setError(toUserMessage(new Error(service.lastQueueError)));
+      }
       setAllDueCards(cards);
       setDeckSize(focusedDeckId ? service.lastDeckSize : null);
       setIndex(0);
@@ -315,7 +318,7 @@ export default function CardsScreen() {
     let ratedCard = current;
     try {
       const elapsedMs = timeMs ?? Date.now() - cardStartedAt.current;
-      if (studyMode !== 'review') {
+      if (studyMode === 'exam') {
         await getData().events.recordEvent({
           kind: 'exercise_attempted',
           target_kind: 'word',
@@ -354,7 +357,7 @@ export default function CardsScreen() {
     setStats(nextStats);
 
     const dueAt = Date.parse(ratedCard.scheduling.due);
-    const requeueIntraday = studyMode === 'review' &&
+    const requeueIntraday = studyMode !== 'exam' &&
       Number.isFinite(dueAt) && dueAt - Date.now() < INTRA_SESSION_HORIZON_MS;
     const nextCards = requeueIntraday ? [...activeCards, ratedCard] : activeCards;
 

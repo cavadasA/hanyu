@@ -1,17 +1,27 @@
 import { describe, expect, it, vi } from 'vitest';
 import { getToday } from './today';
 
-function clientFor(options: { settings?: Record<string, unknown>; reading?: unknown } = {}) {
+function clientFor(options: {
+  settings?: Record<string, unknown>;
+  reading?: unknown;
+  dueCount?: number;
+  dueState?: { regular_due_count: number; relearning_count: number };
+  queue?: unknown[];
+} = {}) {
   const rpc = vi
     .fn()
     .mockResolvedValueOnce({ data: [{ deck_id: null, count: 150 }], error: null })
-    .mockResolvedValueOnce({ data: [{ deck_id: null, count: 3 }], error: null })
+    .mockResolvedValueOnce({ data: [{ deck_id: null, count: options.dueCount ?? 3 }], error: null })
+    .mockResolvedValueOnce({
+      data: [options.dueState ?? { regular_due_count: 2, relearning_count: 1 }],
+      error: null,
+    })
     .mockResolvedValueOnce({
       data: [{ code: '2.2.3', title: '离合词', total_words: 4, settled_words: 1 }],
       error: null,
     })
     .mockResolvedValueOnce({
-      data: [
+      data: options.queue ?? [
         { is_new: true, fsrs_state: 'new' },
         { is_new: false, fsrs_state: 'review' },
         { is_new: false, fsrs_state: 'relearning' },
@@ -138,5 +148,28 @@ describe('getToday', () => {
       status: 'ready',
       payload: { unit_title: '离合词', unit_progress: '1/4' },
     });
+  });
+
+  it('separa repasos normales y reaprendizaje sin contar el subconjunto dos veces', async () => {
+    const today = await getToday(clientFor());
+
+    expect(today.steps[0]).toMatchObject({ payload: { count: 2 } });
+    expect(today.steps[1]).toMatchObject({ payload: { count: 1 } });
+  });
+
+  it('usa el conteo real aunque la cola entregada esté limitada por la sesión', async () => {
+    const queue = Array.from({ length: 20 }, (_, index) => ({
+      is_new: false,
+      fsrs_state: index === 0 ? 'relearning' : 'review',
+    }));
+    const today = await getToday(clientFor({
+      dueCount: 137,
+      dueState: { regular_due_count: 136, relearning_count: 1 },
+      queue,
+    }));
+
+    expect(today.flashcards.due).toBe(137);
+    expect(today.steps[0]).toMatchObject({ payload: { count: 136 } });
+    expect(today.steps[1]).toMatchObject({ payload: { count: 1 } });
   });
 });

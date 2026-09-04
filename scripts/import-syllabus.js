@@ -78,7 +78,8 @@ for (const level of [1, 2, 3]) {
 }
 
 // El corpus no lleva id: lo asigna Postgres al sembrarlo. Aquí se usa el índice
-// estable dentro del fichero, y el generador de seed lo resuelve por hanzi.
+// estable dentro del fichero, y el generador de seed lo resuelve por forma,
+// nivel y sentido.
 const units = deriveUnits(grammar, corpus.map((word, index) => ({ ...word, id: index })));
 writeFileSync(join(seedDir, 'units.json'), JSON.stringify(units, null, 2), 'utf8');
 console.log(`unidades: ${units.length} -> units.json`);

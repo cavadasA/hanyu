@@ -42,6 +42,69 @@ export type Database = {
           },
         ]
       }
+      unit: {
+        Row: {
+          category: string | null
+          code: string
+          group: string | null
+          hsk_level: number
+          order_idx: number
+          patterns: string[]
+          title: string
+        }
+        Insert: {
+          category?: string | null
+          code: string
+          group?: string | null
+          hsk_level: number
+          order_idx: number
+          patterns?: string[]
+          title: string
+        }
+        Update: {
+          category?: string | null
+          code?: string
+          group?: string | null
+          hsk_level?: number
+          order_idx?: number
+          patterns?: string[]
+          title?: string
+        }
+        Relationships: []
+      }
+      unit_word: {
+        Row: {
+          code: string
+          hsk_level: number
+          word_id: number
+        }
+        Insert: {
+          code: string
+          hsk_level: number
+          word_id: number
+        }
+        Update: {
+          code?: string
+          hsk_level?: number
+          word_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "unit_word_unit_fkey"
+            columns: ["hsk_level", "code"]
+            isOneToOne: false
+            referencedRelation: "unit"
+            referencedColumns: ["hsk_level", "code"]
+          },
+          {
+            foreignKeyName: "unit_word_word_id_fkey"
+            columns: ["word_id"]
+            isOneToOne: false
+            referencedRelation: "words"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       deck_templates: {
         Row: {
           category: string
@@ -1031,6 +1094,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      active_unit: {
+        Args: {
+          p_stability_days?: number
+        }
+        Returns: {
+          hsk_level: number
+          code: string
+          title: string
+          total_words: number
+          settled_words: number
+          word_count: number
+          pattern_count: number
+          grammar_id: number | null
+          total_items: number
+          settled_items: number
+        }[]
+      }
       add_deck_from_template: {
         Args: {
           p_template_id: string
@@ -1067,11 +1147,20 @@ export type Database = {
           deck_id: string | null
         }[]
       }
+      count_due_cards_by_state: {
+        Args: {
+          p_deck_id?: string | null
+          p_skill?: string
+        }
+        Returns: {
+          regular_due_count: number
+          relearning_count: number
+        }[]
+      }
       build_review_queue: {
         Args: {
           p_deck_id?: string | null
           p_limit?: number | null
-          p_mode?: string
           p_skill?: string
         }
         Returns: {
@@ -1092,6 +1181,38 @@ export type Database = {
           last_reviewed_at: string | null
           version: number
         }[]
+      }
+      build_review_queue_mode: {
+        Args: {
+          p_deck_id?: string | null
+          p_limit?: number | null
+          p_mode: string
+          p_skill?: string
+        }
+        Returns: {
+          card_id: string
+          user_id: string
+          word_id: number
+          skill: string
+          is_new: boolean
+          difficulty: number | null
+          stability: number | null
+          reps: number
+          lapses: number
+          learning_steps: number
+          scheduled_days: number
+          elapsed_days: number
+          fsrs_state: string
+          next_review_at: string | null
+          last_reviewed_at: string | null
+          version: number
+        }[]
+      }
+      mark_grammar_studied: {
+        Args: {
+          p_grammar_id: number
+        }
+        Returns: undefined
       }
       create_study_plan: {
         Args: {

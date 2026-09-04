@@ -51,10 +51,11 @@ describe('buildQueue', () => {
 
     const queue = await buildQueue({ skill: 'recognition' }, client);
 
-    expect((client as any).rpc).toHaveBeenCalledWith('build_review_queue', {
+    expect((client as any).rpc).toHaveBeenCalledWith('build_review_queue_mode', {
       p_deck_id: null,
       p_skill: 'recognition',
       p_limit: null,
+      p_mode: 'review',
     });
     expect(queue.cards).toHaveLength(2);
     expect(queue.cards[0].user_id).toBe('u1');
@@ -79,7 +80,7 @@ describe('buildQueue', () => {
 
     await buildQueue({ skill: 'recognition', mode: 'learn' }, client);
 
-    expect((client as any).rpc).toHaveBeenCalledWith('build_review_queue', {
+    expect((client as any).rpc).toHaveBeenCalledWith('build_review_queue_mode', {
       p_deck_id: null,
       p_skill: 'recognition',
       p_limit: null,

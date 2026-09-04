@@ -122,24 +122,45 @@ function planStepTask(
 ): TodayTask {
   const payload = step.payload ?? {};
   const count = typeof payload.count === 'number' ? payload.count : null;
+  const completed = typeof payload.completed === 'number' ? payload.completed : null;
+  const target = typeof payload.target === 'number' ? payload.target : null;
+  const grammarOnly = payload.grammar_only === true;
   const label = STEP_LABELS[step.kind];
-  const primary = count === null ? label : `${count} ${step.kind === 'new_items' ? 'new words' : label.toLowerCase()}`;
+  const primary = grammarOnly
+    ? 'Grammar practice'
+    : count === null ? label : `${count} ${step.kind === 'new_items' ? 'new words' : label.toLowerCase()}`;
   const unitTitle = typeof payload.unit_title === 'string' ? payload.unit_title : undefined;
   const unitProgress = typeof payload.unit_progress === 'string' ? payload.unit_progress : undefined;
   const why = step.why?.map(reasonToText) ?? [];
+  const unitProgressMatch = unitProgress?.match(/^(\d+)\/(\d+)$/);
+  const unitCompleted = unitProgressMatch ? Number(unitProgressMatch[1]) : null;
+  const unitTarget = unitProgressMatch ? Number(unitProgressMatch[2]) : null;
+  const progressCompleted = completed ?? unitCompleted;
+  const progressTarget = target ?? unitTarget;
+  const progressSub = step.kind === 'reviews' && completed !== null && target !== null
+    ? `Reviewed ${completed} of ${target} today`
+    : '';
 
   return {
     key: step.kind,
     icon: STEP_ICONS[step.kind],
     primary,
-    sub: step.status === 'unavailable' ? unavailableToText(step.reason, step.kind) : '',
+    sub: step.status === 'unavailable'
+      ? unavailableToText(step.reason, step.kind)
+      : progressSub,
     why,
     unitTitle,
     unitProgress,
-    width: '0%',
-    done: false,
+    width: progressCompleted !== null && progressTarget !== null
+      ? fraction(progressCompleted, progressTarget)
+      : '0%',
+    done: progressCompleted !== null && progressTarget !== null
+      ? isDone(progressCompleted, progressTarget)
+      : false,
     status: step.status,
-    cta: step.status === 'ready' ? `Start ${step.kind === 'new_items' ? 'learning' : step.kind}` : undefined,
+    cta: step.status === 'ready'
+      ? grammarOnly ? 'Open grammar' : `Start ${step.kind === 'new_items' ? 'learning' : step.kind}`
+      : undefined,
     go: step.status === 'ready' ? go : undefined,
   };
 }
@@ -326,7 +347,16 @@ export default function TodayScreen() {
     : null;
   const tasks: TodayTask[] = today && planSteps
     ? planSteps.map((step) => planStepTask(step, () => {
-        if (step.kind === 'exercises') {
+        const payload = step.payload ?? {};
+        if (step.kind === 'new_items' && typeof payload.grammar_id === 'number') {
+          router.push({
+            pathname: '/library/grammar/[id]',
+            params: {
+              id: String(payload.grammar_id),
+              level: String(typeof payload.unit_level === 'number' ? payload.unit_level : today.profile.current_level),
+            },
+          });
+        } else if (step.kind === 'exercises') {
           router.push('/practice/exercises');
         } else if (step.kind === 'reading') {
           router.push('/practice/readings');

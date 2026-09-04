@@ -18,7 +18,7 @@ export type PlanStepReason =
   | 'no_content'
   | 'no_exam_date'
   | 'daily_limit_reached'
-  | 'unit_complete';
+  | 'unit_unavailable';
 
 export interface PlanStep {
   kind: PlanStepKind;
@@ -31,7 +31,20 @@ export interface PlanStep {
 export interface DailyPlanInput {
   due_reviews: number;
   relearning: number;
-  active_unit: { code: string; title: string; total_words: number; settled_words: number } | null;
+  review_completed?: number;
+  review_target?: number;
+  active_unit: {
+    code: string;
+    title: string;
+    total_words: number;
+    settled_words: number;
+    hsk_level?: number;
+    word_count?: number;
+    pattern_count?: number;
+    grammar_id?: number;
+    total_items?: number;
+    settled_items?: number;
+  } | null;
   new_allowance: number;
   readings: RankableContent[];
   exercises: RankableContent[];
@@ -51,12 +64,16 @@ function best(items: RankableContent[], learner: LearnerModel) {
 
   for (const item of items) {
     const { value, reasons } = rankContent(item, learner);
-    if (!winner || value > winner.value) {
+    if (
+      !winner ||
+      value > winner.value ||
+      (value === winner.value && item.id.localeCompare(winner.item.id) < 0)
+    ) {
       winner = { item, value, reasons };
     }
   }
 
-  return winner;
+  return winner && winner.value > 0 ? winner : null;
 }
 
 export function buildDailyPlan(input: DailyPlanInput): { steps: PlanStep[] } {
@@ -65,7 +82,15 @@ export function buildDailyPlan(input: DailyPlanInput): { steps: PlanStep[] } {
 
   steps.push(
     input.due_reviews > 0
-      ? { kind: 'reviews', status: 'ready', payload: { count: input.due_reviews } }
+      ? {
+          kind: 'reviews',
+          status: 'ready',
+          payload: {
+            count: input.due_reviews,
+            completed: input.review_completed ?? 0,
+            target: input.review_target ?? input.due_reviews,
+          },
+        }
       : { kind: 'reviews', status: 'unavailable', reason: 'nothing_due' },
   );
 
@@ -75,10 +100,28 @@ export function buildDailyPlan(input: DailyPlanInput): { steps: PlanStep[] } {
       : { kind: 'relearning', status: 'unavailable', reason: 'nothing_due' },
   );
 
-  if (input.new_allowance <= 0) {
+  const activeUnit = input.active_unit;
+  const grammarPractice = activeUnit?.grammar_id != null && (
+    activeUnit.word_count === 0 ||
+    (activeUnit.pattern_count ?? 0) > 0 && activeUnit.settled_words >= activeUnit.total_words
+  );
+  if (grammarPractice) {
+    steps.push({
+      kind: 'new_items',
+      status: 'ready',
+      payload: {
+        grammar_id: activeUnit.grammar_id,
+        grammar_only: true,
+        unit_code: activeUnit.code,
+        unit_title: activeUnit.title,
+        unit_level: activeUnit.hsk_level,
+        unit_progress: `${activeUnit.settled_items ?? 0}/${activeUnit.total_items ?? 1}`,
+      },
+    });
+  } else if (input.new_allowance <= 0) {
     steps.push({ kind: 'new_items', status: 'unavailable', reason: 'daily_limit_reached' });
   } else if (!input.active_unit) {
-    steps.push({ kind: 'new_items', status: 'unavailable', reason: 'unit_complete' });
+    steps.push({ kind: 'new_items', status: 'unavailable', reason: 'unit_unavailable' });
   } else {
     steps.push({
       kind: 'new_items',
