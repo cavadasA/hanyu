@@ -3,6 +3,7 @@
   "type": "reorder",
   "hsk_level": 2,
   "unit_code": "2.2.2",
+  "target_word_id": 229,
   "prompt": {
     "words": [
       "中国",
@@ -18,5 +19,5 @@
     ],
     "translation": "我想去中国"
   },
-  "explanation": "“想”后接动作“去”，地点放在动作后。"
+  "explanation": "El orden correcto forma «我想去中国»: coloca las piezas en el orden natural de la oración."
 }

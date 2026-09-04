@@ -8,10 +8,20 @@ const prompt = {
 };
 const answer = { kind: 'fill_blank' as const, text: '' };
 
-async function renderFillBlank() {
+async function renderFillBlank(onHintUsed = jest.fn()) {
   await act(async () => {
-    render(<FillBlankExercise prompt={prompt} value={answer} disabled={false} onChange={jest.fn()} />);
+    render(
+      <FillBlankExercise
+        prompt={prompt}
+        value={answer}
+        disabled={false}
+        onChange={jest.fn()}
+        onHintUsed={onHintUsed}
+      />,
+    );
   });
+
+  return onHintUsed;
 }
 
 describe('FillBlankExercise', () => {
@@ -26,5 +36,12 @@ describe('FillBlankExercise', () => {
     await fireEvent.press(screen.getByText('Ver opciones'));
 
     expect(screen.getByText('已经')).toBeTruthy();
+  });
+
+  it('registra la pista al revelar las opciones', async () => {
+    const onHintUsed = await renderFillBlank();
+    await fireEvent.press(screen.getByText('Ver opciones'));
+
+    expect(onHintUsed).toHaveBeenCalledTimes(1);
   });
 });

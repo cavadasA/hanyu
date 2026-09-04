@@ -2,16 +2,17 @@
   "slug": "l2-multiple-choice-02",
   "type": "multiple_choice",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "6.1.1",
+  "target_word_id": 496,
   "prompt": {
-    "question": "What does 准备 mean?",
+    "question": "¿Qué significa 准备?",
     "options": [
-      "to prepare",
-      "to forget",
-      "to believe",
-      "to explain"
+      "preparar",
+      "olvidar",
+      "creer",
+      "explicar"
     ],
-    "correct": "to prepare"
+    "correct": "preparar"
   },
-  "explanation": "“准备”表示为将来的事情做安排。"
+  "explanation": "«准备» significa «preparar»; la opción correcta es la traducción que encaja con esa palabra."
 }

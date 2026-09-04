@@ -33,6 +33,14 @@ export function PracticeHomeScreen() {
         actionLabel="Readings"
         onPress={() => router.push('/practice/readings')}
       />
+
+      <HubTile
+        icon="alert-circle-outline"
+        title="Mistakes"
+        description="Practise words that still need work"
+        actionLabel="Mistakes"
+        onPress={() => router.push('/practice/mistakes')}
+      />
     </Screen>
   );
 }

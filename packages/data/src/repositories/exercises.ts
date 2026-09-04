@@ -74,6 +74,9 @@ function normalizeExercise(payload: any): Exercise {
     id: String(payload.id),
     type,
     hsk_level: Number(payload.hsk_level) as HskLevel,
+    ...(payload.slug ? { slug: String(payload.slug) } : {}),
+    ...(payload.unit_code ? { unit_code: String(payload.unit_code) } : {}),
+    target_word_id: payload.target_word_id == null ? null : Number(payload.target_word_id),
     prompt: toExercisePrompt(type, payload),
     solution: toSolution(type, payload, payload.answer ?? null),
     explanation: payload.explanation ?? null,
@@ -88,6 +91,9 @@ function normalizeGeneratedExerciseRow(row: any) {
     ...prompt,
     type: prompt.type || row.type,
     hsk_level: row.hsk_level,
+    slug: row.slug ?? prompt.slug,
+    unit_code: row.unit_code ?? prompt.unit_code,
+    target_word_id: row.target_word_id,
     answer: parseJsonField(row.answer, row.answer),
     explanation: prompt.explanation ?? null,
   });
@@ -105,6 +111,7 @@ function normalizeExerciseSession(payload: any): ExerciseSession {
   return {
     unit_code: session?.unit_code ? String(session.unit_code) : null,
     unit_title: String(session?.unit_title ?? 'Unidad activa'),
+    hsk_level: Number(session?.hsk_level ?? 2) as HskLevel,
     exercises,
     length: Number(session?.length ?? exercises.length),
   };
@@ -123,11 +130,18 @@ export async function getMistakes(client: HanyuClient, limit = 20): Promise<Mist
   return rows
     .map((row: any) => ({
       target_id: Number(row.target_id),
+      ...(row.hanzi ? {
+        word: {
+          hanzi: String(row.hanzi),
+          pinyin: String(row.pinyin ?? ''),
+          meaning_es: row.meaning_es ? String(row.meaning_es) : null,
+          meaning_en: String(row.meaning_en ?? ''),
+        },
+      } : {}),
       misses: Number(row.misses ?? 0),
       hits_since: Number(row.hits_since ?? 0),
       distinct_days: Number(row.distinct_days ?? 0),
-    }))
-    .filter((row) => row.misses > 0 && (row.hits_since < 2 || row.distinct_days < 2));
+    }));
 }
 
 function normalizeMockExam(payload: any): MockExam {
@@ -162,13 +176,17 @@ export async function buildMockExam(
   level: HskLevel,
   scope: MockExamScope,
   client: HanyuClient,
+  sectionCode?: string | null,
 ): Promise<MockExam> {
   const safeLevel = Math.min(3, Math.max(1, Math.trunc(Number(level)) || 2)) as HskLevel;
   const safeScope: MockExamScope = scope === 'full' ? 'full' : 'section';
-  const { data, error } = await (client.rpc as any)('build_mock_exam', {
+  const params: Record<string, unknown> = {
     p_level: safeLevel,
     p_scope: safeScope,
-  });
+  };
+  if (sectionCode) params.p_section_code = sectionCode;
+
+  const { data, error } = await (client.rpc as any)('build_mock_exam', params);
 
   if (error) {
     throw createRepositoryError(error, 'Failed to build mock exam');
@@ -218,12 +236,19 @@ export async function buildExerciseSession(
   unitCode: string | null | undefined,
   length: number = 8,
   client: HanyuClient,
+  targetWordIds: number[] = [],
 ): Promise<ExerciseSession> {
   const safeLength = Math.min(20, Math.max(1, Math.trunc(Number(length)) || 8));
-  const { data, error } = await (client.rpc as any)('build_exercise_session', {
+  const params: Record<string, unknown> = {
     p_unit_code: unitCode ?? null,
     p_length: safeLength,
-  });
+  };
+  const safeTargetWordIds = targetWordIds
+    .map(Number)
+    .filter((id) => Number.isInteger(id) && id > 0);
+  if (safeTargetWordIds.length > 0) params.p_target_word_ids = safeTargetWordIds;
+
+  const { data, error } = await (client.rpc as any)('build_exercise_session', params);
 
   if (error) {
     throw createRepositoryError(error, 'Failed to build exercise session');
@@ -254,7 +279,7 @@ export async function generateExercise(
   } catch {
     const { data, error } = await client
       .from('generated_exercises')
-      .select('id, type, hsk_level, prompt, answer, source_model, created_at')
+      .select('id, type, hsk_level, target_word_id, prompt, answer, source_model, created_at')
       .eq('type', type)
       .eq('hsk_level', parseInt(String(level), 10) || 1)
       .order('created_at', { ascending: false })
@@ -277,6 +302,7 @@ export async function checkExercise(
   id: string,
   answer: ExerciseAnswer,
   client: HanyuClient,
+  options: { hintUsed?: boolean } = {},
 ): Promise<ExerciseCheckResult> {
   // No hay comprobación de servidor. La versión anterior intentaba una RPC
   // `check_exercise` con tres firmas distintas y después una Edge Function
@@ -288,7 +314,7 @@ export async function checkExercise(
 
   const { data: exerciseRow, error: exerciseError } = await client
     .from('generated_exercises')
-    .select('id, type, prompt, answer')
+    .select('id, type, prompt, answer, target_word_id')
     .eq('id', id as any)
     .single();
 
@@ -301,27 +327,80 @@ export async function checkExercise(
   const storedAnswer = parseJsonField(row.answer, row.answer);
   const solution = toSolution(row.type, prompt, storedAnswer);
   const evaluation = evaluateAnswer(solution, answer);
+  const hintUsed = options.hintUsed === true;
+  const countedAsCorrect = evaluation.correct && !hintUsed;
 
   const { error: attemptError } = await client.from('exercise_attempts').insert({
     user_id: userId,
     exercise_id: id,
-    correct: evaluation.correct,
+    is_correct: countedAsCorrect,
     submitted_answer: answer,
+    feedback: hintUsed ? { hint_used: true } : null,
   } as any);
 
   if (attemptError) {
     throw createRepositoryError(attemptError, 'Failed to record exercise attempt');
   }
 
+  const targetWordId = row.target_word_id == null ? null : Number(row.target_word_id);
+  const { error: eventError } = await client.from('learning_event').insert({
+    user_id: userId,
+    kind: 'exercise_attempted',
+    target_kind: targetWordId ? 'word' : null,
+    target_id: targetWordId,
+    skill: row.type === 'dictation' ? 'listening' : 'recall',
+    payload: {
+      exercise_id: id,
+      correct: countedAsCorrect,
+      answer_correct: evaluation.correct,
+      hint_used: hintUsed,
+    },
+  } as any);
+
+  if (eventError) {
+    throw createRepositoryError(eventError, 'Failed to record exercise learning event');
+  }
+
   await incrementExerciseDone(client, userId);
 
   return {
-    correct: evaluation.correct,
+    correct: countedAsCorrect,
+    answer_correct: evaluation.correct,
+    counted_as_correct: countedAsCorrect,
+    hint_used: hintUsed,
     expected_answer: evaluation.solution,
     submitted_answer: evaluation.answer,
     detail: evaluation.detail,
-    explanation: prompt?.explanation ?? null,
+    explanation: hintUsed && evaluation.correct
+      ? `${prompt?.explanation ?? ''} Has usado una pista: esta respuesta no cuenta como un acierto sin ayuda.`.trim()
+      : prompt?.explanation ?? null,
   };
+}
+
+export async function recordHintUsed(exerciseId: string, client: HanyuClient): Promise<void> {
+  const userId = await getRequiredUserId(client);
+  const { data, error } = await client
+    .from('generated_exercises')
+    .select('target_word_id')
+    .eq('id', exerciseId as any)
+    .single();
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load exercise for hint tracking');
+  }
+
+  const targetWordId = data?.target_word_id == null ? null : Number(data.target_word_id);
+  const { error: eventError } = await client.from('learning_event').insert({
+    user_id: userId,
+    kind: 'hint_used',
+    target_kind: targetWordId ? 'word' : null,
+    target_id: targetWordId,
+    payload: { exercise_id: exerciseId, hint: 'options' },
+  } as any);
+
+  if (eventError) {
+    throw createRepositoryError(eventError, 'Failed to record hint usage');
+  }
 }
 
 export async function getExerciseHistory(limit: number = 20, client: HanyuClient) {

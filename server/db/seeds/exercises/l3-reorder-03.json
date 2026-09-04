@@ -2,7 +2,8 @@
   "slug": "l3-reorder-03",
   "type": "reorder",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "2.5.3",
+  "target_word_id": 200,
   "prompt": {
     "words": [
       "到了",
@@ -16,5 +17,5 @@
     ],
     "translation": "他终于到了"
   },
-  "explanation": "“终于”放在主语后，说明结果经过了等待。"
+  "explanation": "El orden correcto forma «他终于到了»: coloca las piezas en el orden natural de la oración."
 }

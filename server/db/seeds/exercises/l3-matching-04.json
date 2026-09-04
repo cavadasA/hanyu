@@ -2,26 +2,27 @@
   "slug": "l3-matching-04",
   "type": "matching",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "2.5.3",
+  "target_word_id": 538,
   "prompt": {
     "pairs": [
       {
         "left": "比较",
-        "right": "relatively"
+        "right": "relativamente"
       },
       {
         "left": "可能",
-        "right": "possibly"
+        "right": "posiblemente"
       },
       {
         "left": "终于",
-        "right": "finally"
+        "right": "por fin"
       },
       {
         "left": "已经",
-        "right": "already"
+        "right": "ya"
       }
     ]
   },
-  "explanation": "这些副词表达程度、推测、最终结果和完成。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «比较» = «relativamente» y «可能» = «posiblemente»."
 }

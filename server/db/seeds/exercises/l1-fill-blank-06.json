@@ -2,16 +2,17 @@
   "slug": "l1-fill-blank-06",
   "type": "fill_blank",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "4.2",
+  "target_word_id": 241,
   "prompt": {
     "sentence": "我们___看书。",
     "options": [
       "喜欢",
-      "因为",
-      "如果",
-      "虽然"
+      "要",
+      "能",
+      "有"
     ],
     "correct": "喜欢"
   },
-  "explanation": "“喜欢”后面可以接动作，表示喜欢做什么。"
+  "explanation": "«喜欢» encaja en «我们喜欢看书。» porque completa el sentido que pide la frase."
 }

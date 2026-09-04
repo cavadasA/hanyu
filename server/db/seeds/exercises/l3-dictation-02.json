@@ -2,11 +2,12 @@
   "slug": "l3-dictation-02",
   "type": "dictation",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "2.5.3",
+  "target_word_id": 994,
   "prompt": {
     "audio_text": "他终于到了",
     "pinyin": "tā zhōngyú dào le",
     "accept_pinyin": true
   },
-  "explanation": "“终于”表达等待后的结果，末尾的“了”不要遗漏。"
+  "explanation": "La respuesta reproduce la frase escuchada «他终于到了»; escríbela en el mismo orden y comprueba sus sílabas."
 }

@@ -62,4 +62,18 @@ describe('useSessionTimer', () => {
     expect(result.current.elapsed).toBe(2);
     jest.useRealTimers();
   });
+
+  it('se detiene al llegar al límite de una sección', async () => {
+    jest.useFakeTimers();
+    const { result } = await renderHook(() => useSessionTimer());
+
+    await act(async () => {
+      result.current.start(3);
+      jest.advanceTimersByTime(5000);
+    });
+
+    expect(result.current.elapsed).toBe(3);
+    expect(result.current.expired).toBe(true);
+    jest.useRealTimers();
+  });
 });

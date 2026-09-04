@@ -89,6 +89,17 @@ describe('evaluateAnswer', () => {
     }
   });
 
+  it('distingue una sílaba correcta de un tono incorrecto', () => {
+    const tea: ExerciseSolution = { kind: 'dictation', hanzi: '茶', pinyin: 'chá' };
+
+    expect(evaluateAnswer(tea, { kind: 'dictation', text: 'cha3' })).toMatchObject({
+      correct: false,
+      detail: { kind: 'dictation', syllables_match: true, tones_match: false },
+    });
+    expect(evaluateAnswer(tea, { kind: 'dictation', text: 'chà' }).correct).toBe(false);
+    expect(evaluateAnswer(tea, { kind: 'dictation', text: 'cha' }).correct).toBe(true);
+  });
+
   it('rechaza el pinyin cuando el ejercicio no lo acepta', () => {
     const hanziOnly: ExerciseSolution = { kind: 'dictation', hanzi: '你好', pinyin: null };
 

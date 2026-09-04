@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { buildExerciseSession, buildMockExam, checkExercise, generateExercise, getMistakes } from './exercises';
+import { buildExerciseSession, buildMockExam, checkExercise, generateExercise, getMistakes, recordHintUsed } from './exercises';
 
 const user = { id: 'u1' };
 
@@ -49,6 +49,7 @@ const matchingRow = {
   id: 'x1',
   type: 'matching',
   hsk_level: 1,
+  target_word_id: 4,
   prompt: {
     type: 'matching',
     pairs: [
@@ -63,6 +64,9 @@ const reorderRow = {
   id: 'x2',
   type: 'reorder',
   hsk_level: 1,
+  slug: 'l1-reorder-01',
+  unit_code: '4.3',
+  target_word_id: 4,
   prompt: {
     type: 'reorder',
     words: ['喝', '我', '茶', '喜欢'],
@@ -144,6 +148,51 @@ describe('exercises repository', () => {
     expect(result.correct).toBe(true);
   });
 
+  it('guarda is_correct y emite el evento que alimenta el cuaderno', async () => {
+    const client = clientFor({
+      generated_exercises: { data: matchingRow, error: null },
+      exercise_attempts: { data: null, error: null },
+      user_stats: { data: null, error: null },
+    });
+
+    await checkExercise(
+      'x1',
+      { kind: 'matching', pairs: { 学生: 'student', 老师: 'teacher' } },
+      client,
+    );
+
+    expect(client.chains.exercise_attempts.insert).toHaveBeenCalledWith(expect.objectContaining({
+      is_correct: true,
+    }));
+    expect(client.chains.learning_event.insert).toHaveBeenCalledWith(expect.objectContaining({
+      kind: 'exercise_attempted',
+      target_kind: 'word',
+      target_id: 4,
+      payload: expect.objectContaining({ correct: true }),
+    }));
+  });
+
+  it('cuenta una respuesta con pista como no consolidada', async () => {
+    const client = clientFor({
+      generated_exercises: { data: matchingRow, error: null },
+      exercise_attempts: { data: null, error: null },
+      user_stats: { data: null, error: null },
+    });
+
+    const result = await checkExercise(
+      'x1',
+      { kind: 'matching', pairs: { 学生: 'student', 老师: 'teacher' } },
+      client,
+      { hintUsed: true },
+    );
+
+    expect(result).toMatchObject({ correct: false, answer_correct: true, hint_used: true });
+    expect(client.chains.exercise_attempts.insert).toHaveBeenCalledWith(expect.objectContaining({
+      is_correct: false,
+      feedback: { hint_used: true },
+    }));
+  });
+
   it('checkExercise marca correcto un reorder bien ordenado', async () => {
     const client = clientFor({
       generated_exercises: { data: reorderRow, error: null },
@@ -206,25 +255,45 @@ describe('exercises repository', () => {
       order: ['我', '喜欢', '喝', '茶'],
     });
     expect(Object.keys(exercise).sort()).toEqual(
-      ['explanation', 'hsk_level', 'id', 'prompt', 'solution', 'type'].sort(),
+      ['explanation', 'hsk_level', 'id', 'prompt', 'solution', 'slug', 'target_word_id', 'type', 'unit_code'].sort(),
     );
+    expect(exercise.slug).toBe('l1-reorder-01');
+    expect(exercise.unit_code).toBe('4.3');
   });
 
   it('mete en la cola lo fallado', async () => {
-    const client = mistakeClient([{ target_id: 42, misses: 1, hits_since: 0 }]);
+    const client = mistakeClient([{ target_id: 42, hanzi: '茶', pinyin: 'chá', meaning_es: 'té', misses: 1, hits_since: 0 }]);
+
+    expect(await getMistakes(client)).toMatchObject([{
+      target_id: 42,
+      word: { hanzi: '茶', meaning_es: 'té' },
+    }]);
+  });
+
+  it('confía en la decisión de salida calculada por SQL', async () => {
+    const client = mistakeClient([{ target_id: 42, misses: 1, hits_since: 2, distinct_days: 2 }]);
 
     expect(await getMistakes(client)).toHaveLength(1);
   });
 
-  it('saca de la cola lo acertado dos veces en días distintos', async () => {
-    const client = mistakeClient([{ target_id: 42, misses: 1, hits_since: 2, distinct_days: 2 }]);
-
-    expect(await getMistakes(client)).toHaveLength(0);
-  });
-
-  it('mantiene en la cola lo acertado dos veces el mismo día', async () => {
+  it('no duplica la decisión de salida en el cliente', async () => {
     const client = mistakeClient([{ target_id: 42, misses: 1, hits_since: 2, distinct_days: 1 }]);
 
     expect(await getMistakes(client)).toHaveLength(1);
+  });
+
+  it('registra el uso de la pista con la palabra objetivo', async () => {
+    const client = clientFor({
+      generated_exercises: { data: { target_word_id: 4 }, error: null },
+      learning_event: { data: null, error: null },
+    });
+
+    await recordHintUsed('x1', client);
+
+    expect(client.chains.learning_event.insert).toHaveBeenCalledWith(expect.objectContaining({
+      kind: 'hint_used',
+      target_kind: 'word',
+      target_id: 4,
+    }));
   });
 });

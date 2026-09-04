@@ -2,26 +2,27 @@
   "slug": "l3-matching-06",
   "type": "matching",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "5.1",
+  "target_word_id": 519,
   "prompt": {
     "pairs": [
       {
         "left": "办法",
-        "right": "method"
+        "right": "método"
       },
       {
         "left": "问题",
-        "right": "question"
+        "right": "pregunta"
       },
       {
         "left": "希望",
-        "right": "to hope"
+        "right": "esperar"
       },
       {
         "left": "重要",
-        "right": "important"
+        "right": "importante"
       }
     ]
   },
-  "explanation": "最后一组混合了名词、动词和形容词的常用释义。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «办法» = «método» y «问题» = «pregunta»."
 }

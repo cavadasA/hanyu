@@ -2,11 +2,12 @@
   "slug": "l1-dictation-04",
   "type": "dictation",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "4.3",
+  "target_word_id": 78,
   "prompt": {
     "audio_text": "我喝水",
     "pinyin": "wǒ hē shuǐ",
     "accept_pinyin": true
   },
-  "explanation": "“喝”后面接液体“水”，不要写成“吃”。"
+  "explanation": "La respuesta reproduce la frase escuchada «我喝水»; escríbela en el mismo orden y comprueba sus sílabas."
 }

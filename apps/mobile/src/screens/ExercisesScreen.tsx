@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 import { diagnose, emptyAnswer, isAnswerComplete } from '@hanyu/domain';
 import {
   toUserMessage,
@@ -7,6 +8,7 @@ import {
   type ExerciseAnswer,
   type ExerciseCheckResult,
   type MockExam,
+  type MockExamScope,
 } from '@hanyu/data';
 import { ExerciseRenderer } from '../exercises/ExerciseRenderer';
 import { useExerciseSession } from '../exercises/useExerciseSession';
@@ -29,28 +31,21 @@ function formatRemaining(minutes: number, elapsed: number) {
 }
 
 function examExercise(raw: Exercise | undefined): Exercise | null {
-  if (!raw) return null;
-  if (raw.prompt && raw.solution && raw.id) return raw;
-
-  // This fallback keeps a partially populated RPC response renderable. The
-  // production repository always returns the complete exercise contract.
-  return {
-    id: String((raw as Exercise & { slug?: string }).slug ?? raw.id ?? 'exam-question'),
-    type: 'multiple_choice',
-    hsk_level: raw.hsk_level ?? 2,
-    prompt: { kind: 'multiple_choice', question: 'Elige la respuesta correcta', options: ['A', 'B'] },
-    solution: { kind: 'multiple_choice', correct: 'A' },
-    explanation: null,
-  };
+  if (!raw?.id || !raw.prompt || !raw.solution || raw.prompt.kind !== raw.solution.kind) return null;
+  return raw;
 }
 
 export function ExercisesScreen() {
   const { colors } = useTheme();
+  const params = useLocalSearchParams<{ mistakes?: string | string[] }>();
   const session = useExerciseSession();
   const timer = useSessionTimer();
   const [mockExam, setMockExam] = useState<MockExam | null>(null);
+  const [mockScope, setMockScope] = useState<MockExamScope>('section');
+  const [mockSectionCode, setMockSectionCode] = useState<string | null>(null);
   const [mockLoading, setMockLoading] = useState(false);
   const [mockStarted, setMockStarted] = useState(false);
+  const [mockExpired, setMockExpired] = useState(false);
   const [mockSectionIndex, setMockSectionIndex] = useState(0);
   const [mockExerciseIndex, setMockExerciseIndex] = useState(0);
   const [mockDraft, setMockDraft] = useState<ExerciseAnswer>(emptyAnswer('fill_blank'));
@@ -66,26 +61,46 @@ export function ExercisesScreen() {
   const currentMockExercise = examExercise(mockSection?.exercises[mockExerciseIndex]);
   const mockCanCheck = Boolean(
     mockStarted &&
+      !mockExpired &&
+      !timer.expired &&
       currentMockExercise &&
       isAnswerComplete(currentMockExercise.solution, mockDraft),
   );
+  const mockLevel = session.unit?.hsk_level ?? 2;
+  const mistakesParam = Array.isArray(params.mistakes) ? params.mistakes[0] : params.mistakes;
+  const mistakeKey = mistakesParam ?? '';
 
   useEffect(() => {
-    void session.load();
-  }, [session.load]);
+    const targetWordIds = mistakeKey
+      .split(',')
+      .map(Number)
+      .filter((id) => Number.isInteger(id) && id > 0);
+    void session.load(targetWordIds);
+  }, [mistakeKey, session.load]);
 
-  async function openMockExam() {
+  useEffect(() => {
+    if (!mockStarted || !timer.expired) return;
+
+    timer.stop();
+    setMockExpired(true);
+    setMockStarted(false);
+  }, [mockStarted, timer.expired, timer.stop]);
+
+  async function openMockExam(scope: MockExamScope = 'section', sectionCode?: string | null) {
     setMockLoading(true);
     setMockError(null);
 
     try {
-      const nextExam = await session.buildMockExam(2, 'section');
+      const nextExam = await session.buildMockExam(mockLevel, scope, sectionCode);
       setMockExam(nextExam);
+      setMockScope(scope);
+      setMockSectionCode(sectionCode ?? null);
       setMockSectionIndex(0);
       setMockExerciseIndex(0);
       setMockDraft(emptyAnswer('fill_blank'));
       setMockResult(null);
       setMockStarted(false);
+      setMockExpired(false);
       timer.reset();
     } catch (caught) {
       setMockError(toUserMessage(caught));
@@ -97,7 +112,7 @@ export function ExercisesScreen() {
   function startMockExam() {
     if (!mockSection || !currentMockExercise) {
       setMockStarted(true);
-      timer.start();
+      timer.start(mockSection ? mockSection.minutes * 60 : 60);
       return;
     }
 
@@ -105,8 +120,9 @@ export function ExercisesScreen() {
     setMockDraft(emptyAnswer(currentMockExercise.type));
     setMockResult(null);
     setMockError(null);
+    setMockExpired(false);
     setMockStarted(true);
-    timer.start();
+    timer.start(mockSection.minutes * 60);
   }
 
   async function checkMockAnswer() {
@@ -125,6 +141,25 @@ export function ExercisesScreen() {
     }
   }
 
+  function advanceMockSection() {
+    if (!mockExam) return;
+
+    if (mockSectionIndex < mockExam.sections.length - 1) {
+      const nextSectionIndex = mockSectionIndex + 1;
+      const nextSection = mockExam.sections[nextSectionIndex];
+      setMockSectionIndex(nextSectionIndex);
+      setMockExerciseIndex(0);
+      setMockDraft(emptyAnswer(examExercise(nextSection.exercises[0])?.type ?? 'fill_blank'));
+      setMockResult(null);
+      setMockExpired(false);
+      timer.start(nextSection.minutes * 60);
+      return;
+    }
+
+    timer.stop();
+    setMockStarted(false);
+  }
+
   function nextMockExercise() {
     if (!mockSection || !mockResult) return;
 
@@ -136,8 +171,15 @@ export function ExercisesScreen() {
       return;
     }
 
-    timer.stop();
-    setMockStarted(false);
+    advanceMockSection();
+  }
+
+  function retrySession() {
+    const targetWordIds = mistakeKey
+      .split(',')
+      .map(Number)
+      .filter((id) => Number.isInteger(id) && id > 0);
+    void session.load(targetWordIds);
   }
 
   return (
@@ -147,8 +189,8 @@ export function ExercisesScreen() {
         <Text style={[styles.title, { color: colors.text }]}>Exercises</Text>
       </View>
 
-      {session.error ? <ErrorBanner message={session.error} onRetry={session.load} /> : null}
-      {mockError ? <ErrorBanner message={mockError} onRetry={openMockExam} /> : null}
+      {session.error ? <ErrorBanner message={session.error} onRetry={retrySession} /> : null}
+      {mockError ? <ErrorBanner message={mockError} onRetry={() => openMockExam(mockScope, mockSectionCode)} /> : null}
       {session.status === 'loading' && !session.unit ? <ActivityIndicator /> : null}
 
       {session.status === 'ready' && session.unit && !mockExam ? (
@@ -163,13 +205,24 @@ export function ExercisesScreen() {
             onPress={session.start}
             disabled={session.exercises.length === 0 || busy}
           />
-          <Button label="Simulacro" onPress={openMockExam} disabled={busy} />
+        </Card>
+      ) : null}
+
+      {!mockExam ? (
+        <Card>
+          <Text style={[styles.unitLabel, { color: colors.textMuted }]}>Práctica de examen</Text>
+          <Text style={[styles.unitMeta, { color: colors.textMuted }]}>Nivel HSK {mockLevel}; elige una sección o el examen completo.</Text>
+          <Button label="Simulacro" onPress={() => openMockExam('section', 'listening')} disabled={busy} />
+          <Button label="Lectura" onPress={() => openMockExam('section', 'reading')} disabled={busy} />
+          <Button label="Examen completo" onPress={() => openMockExam('full')} disabled={busy} />
         </Card>
       ) : null}
 
       {mockExam && mockSection ? (
         <Card>
-          <Text style={[styles.unitLabel, { color: colors.textMuted }]}>Simulacro HSK 2</Text>
+          <Text style={[styles.unitLabel, { color: colors.textMuted }]}>
+            {mockScope === 'full' ? `Examen completo HSK ${mockExam.hsk_level ?? mockLevel}` : `Simulacro HSK ${mockExam.hsk_level ?? mockLevel}`}
+          </Text>
           <Text style={[styles.unitTitle, { color: colors.text }]}>{mockSection.title}</Text>
           <Text style={[styles.timer, { color: colors.text }]}>
             {formatRemaining(mockSection.minutes, timer.elapsed)}
@@ -181,7 +234,12 @@ export function ExercisesScreen() {
             </Text>
           ))}
 
-          {!mockStarted ? (
+          {mockExpired ? (
+            <>
+              <Text style={[styles.explanation, { color: colors.textMuted }]}>Tiempo agotado: esta sección queda cerrada.</Text>
+              <Button label="Reintentar sección" onPress={startMockExam} disabled={busy} />
+            </>
+          ) : !mockStarted ? (
             <Button label="Empezar" onPress={startMockExam} disabled={busy} />
           ) : currentMockExercise ? (
             <>
@@ -219,7 +277,12 @@ export function ExercisesScreen() {
               />
             </>
           ) : (
-            <Text style={[styles.explanation, { color: colors.textMuted }]}>Esta sección todavía no tiene ejercicios simulables.</Text>
+            <>
+              <Text style={[styles.explanation, { color: colors.textMuted }]}>Esta sección todavía no tiene ejercicios simulables.</Text>
+              {mockScope === 'full' && mockSectionIndex < mockExam.sections.length - 1 ? (
+                <Button label="Siguiente sección" onPress={advanceMockSection} />
+              ) : null}
+            </>
           )}
         </Card>
       ) : null}
@@ -237,13 +300,16 @@ export function ExercisesScreen() {
             value={session.draft}
             disabled={session.status !== 'answering'}
             onChange={session.setDraft}
+            onHintUsed={session.markHintUsed}
           />
           {session.status === 'checking' ? <ActivityIndicator /> : null}
 
           {session.result ? (
             <View style={styles.result}>
               <Text style={[styles.resultTitle, { color: colors.text }]}>
-                {session.result.correct ? 'Correcto' : 'No del todo'}
+                {session.result.hint_used && session.result.answer_correct
+                  ? 'Correcto con ayuda'
+                  : session.result.correct ? 'Correcto' : 'No del todo'}
               </Text>
               {session.result.explanation ? (
                 <Text style={[styles.explanation, { color: colors.textMuted }]}>
@@ -265,7 +331,7 @@ export function ExercisesScreen() {
             <Button
               label={session.status === 'checking' ? 'Comprobando...' : 'Comprobar'}
               onPress={session.check}
-              disabled={!canCheck || session.status === 'checking'}
+              disabled={!canCheck || session.status === 'checking' || session.hintPending}
             />
           )}
         </Card>

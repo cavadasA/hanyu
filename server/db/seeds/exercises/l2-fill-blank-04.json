@@ -2,7 +2,8 @@
   "slug": "l2-fill-blank-04",
   "type": "fill_blank",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "2.7.5",
+  "target_word_id": 13,
   "prompt": {
     "sentence": "因为下雨，我们___去。",
     "options": [
@@ -13,5 +14,5 @@
     ],
     "correct": "不"
   },
-  "explanation": "“如果”提出条件，结果分句用“不”表示否定。"
+  "explanation": "«不» encaja en «因为下雨，我们不去。» porque completa el sentido que pide la frase."
 }

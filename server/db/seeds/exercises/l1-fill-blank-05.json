@@ -2,7 +2,8 @@
   "slug": "l1-fill-blank-05",
   "type": "fill_blank",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "5.3.1",
+  "target_word_id": 186,
   "prompt": {
     "sentence": "她___中国人。",
     "options": [
@@ -13,5 +14,5 @@
     ],
     "correct": "是"
   },
-  "explanation": "国籍是身份信息，用“是”而不是表示地点的“在”。"
+  "explanation": "«是» encaja en «她是中国人。» porque completa el sentido que pide la frase."
 }

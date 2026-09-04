@@ -2,7 +2,8 @@
   "slug": "l1-fill-blank-02",
   "type": "fill_blank",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "5.3.1",
+  "target_word_id": 156,
   "prompt": {
     "sentence": "她是我的___。",
     "options": [
@@ -13,5 +14,5 @@
     ],
     "correct": "朋友"
   },
-  "explanation": "“我的”后面需要一个人或关系名词，所以用“朋友”。"
+  "explanation": "«朋友» encaja en «她是我的朋友。» porque completa el sentido que pide la frase."
 }

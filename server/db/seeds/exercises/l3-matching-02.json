@@ -2,26 +2,27 @@
   "slug": "l3-matching-02",
   "type": "matching",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "6.3.5",
+  "target_word_id": 477,
   "prompt": {
     "pairs": [
       {
         "left": "因为",
-        "right": "because"
+        "right": "porque"
       },
       {
         "left": "虽然",
-        "right": "although"
+        "right": "aunque"
       },
       {
         "left": "不过",
-        "right": "however"
+        "right": "sin embargo"
       },
       {
         "left": "而且",
-        "right": "moreover"
+        "right": "además"
       }
     ]
   },
-  "explanation": "连接词的语气不同，分别对应条件、让步、转折和补充。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «因为» = «porque» y «虽然» = «aunque»."
 }

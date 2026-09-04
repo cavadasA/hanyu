@@ -279,6 +279,7 @@ export type Database = {
           id: string
           prompt: Json
           source_model: string | null
+          target_word_id: number | null
           type: string
         }
         Insert: {
@@ -289,6 +290,7 @@ export type Database = {
           id?: string
           prompt: Json
           source_model?: string | null
+          target_word_id?: number | null
           type: string
         }
         Update: {
@@ -299,6 +301,7 @@ export type Database = {
           id?: string
           prompt?: Json
           source_model?: string | null
+          target_word_id?: number | null
           type?: string
         }
         Relationships: [
@@ -1111,6 +1114,22 @@ export type Database = {
           settled_items: number
         }[]
       }
+      build_exercise_session: {
+        Args: {
+          p_length?: number
+          p_target_word_ids?: number[] | null
+          p_unit_code?: string | null
+        }
+        Returns: Json
+      }
+      build_mock_exam: {
+        Args: {
+          p_level: number
+          p_scope?: string
+          p_section_code?: string | null
+        }
+        Returns: Json
+      }
       add_deck_from_template: {
         Args: {
           p_template_id: string
@@ -1155,6 +1174,21 @@ export type Database = {
         Returns: {
           regular_due_count: number
           relearning_count: number
+        }[]
+      }
+      mistake_queue: {
+        Args: {
+          p_limit?: number
+        }
+        Returns: {
+          target_id: number
+          hanzi: string
+          pinyin: string
+          meaning_es: string | null
+          meaning_en: string
+          misses: number
+          hits_since: number
+          distinct_days: number
         }[]
       }
       build_review_queue: {

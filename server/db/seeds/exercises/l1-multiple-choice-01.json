@@ -2,16 +2,17 @@
   "slug": "l1-multiple-choice-01",
   "type": "multiple_choice",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "5.3.1",
+  "target_word_id": 249,
   "prompt": {
-    "question": "What does 学生 mean?",
+    "question": "¿Qué significa 学生?",
     "options": [
-      "teacher",
-      "student",
-      "doctor",
-      "friend"
+      "profesor/a",
+      "estudiante",
+      "médico/a",
+      "amigo/a"
     ],
-    "correct": "student"
+    "correct": "estudiante"
   },
-  "explanation": "“学生”指正在学习的人，和“学校”有关。"
+  "explanation": "«学生» significa «estudiante»; la opción correcta es la traducción que encaja con esa palabra."
 }

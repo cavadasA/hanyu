@@ -3,10 +3,11 @@
   "type": "dictation",
   "hsk_level": 2,
   "unit_code": "2.2.2",
+  "target_word_id": 229,
   "prompt": {
     "audio_text": "我想去中国",
     "pinyin": "wǒ xiǎng qù zhōngguó",
     "accept_pinyin": true
   },
-  "explanation": "“想”后接“去”和地点，顺序不能调换。"
+  "explanation": "La respuesta reproduce la frase escuchada «我想去中国»; escríbela en el mismo orden y comprueba sus sílabas."
 }

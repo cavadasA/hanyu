@@ -3,9 +3,13 @@ import { tokenizeReading, type DictionaryEntry } from '../reading/tokenize.ts';
 export type ExerciseIssueKind =
   | 'answer_not_in_options'
   | 'duplicate_options'
+  | 'invalid_reorder'
   | 'unknown_vocabulary'
   | 'no_blank'
   | 'gloss_not_explanation'
+  | 'explanation_not_spanish'
+  | 'unit_level_mismatch'
+  | 'invalid_target'
   | 'no_unit';
 
 export interface ExerciseIssue {
@@ -16,6 +20,7 @@ export interface ExerciseIssue {
 export interface ExerciseValidationContext {
   dictionary: (DictionaryEntry & { hsk_level: number })[];
   max_level: number;
+  units?: Array<{ code: string; hsk_level: number }>;
 }
 
 const BLANK = '___';
@@ -38,6 +43,7 @@ interface ExerciseLike {
   unit_code?: string;
   prompt?: Record<string, unknown>;
   explanation?: string | null;
+  target_word_id?: number | null;
 }
 
 function chineseTextValues(prompt: Record<string, unknown> | undefined): string[] {
@@ -52,6 +58,8 @@ function chineseTextValues(prompt: Record<string, unknown> | undefined): string[
     if (Array.isArray(prompt[key])) values.push(prompt[key].map(String).join(''));
   }
 
+  if (Array.isArray(prompt.options)) values.push(...prompt.options.map(String));
+
   if (Array.isArray(prompt.pairs)) {
     for (const pair of prompt.pairs) {
       if (!pair || typeof pair !== 'object') continue;
@@ -62,6 +70,34 @@ function chineseTextValues(prompt: Record<string, unknown> | undefined): string[
   }
 
   return values;
+}
+
+function isSpanishExplanation(explanation: string | null | undefined): boolean {
+  const text = String(explanation ?? '').trim();
+  if (!text) return false;
+
+  return /[áéíóúüñ¿¡]/i.test(text) ||
+    /\b(el|la|los|las|un|una|unos|unas|se|que|para|por|con|en|del|esta|este|porque|cuando|entre|después|antes|significa|indica|expresa|completa|encaja|relaciona|escucha|escribe|ordena|compara)\b/i.test(text);
+}
+
+function hasSameMultiset(left: unknown[], right: unknown[]): boolean {
+  const normalize = (value: unknown) => String(value).trim();
+  const counts = (values: unknown[]) => {
+    const result = new Map<string, number>();
+    for (const value of values) {
+      const normalized = normalize(value);
+      result.set(normalized, (result.get(normalized) ?? 0) + 1);
+    }
+    return result;
+  };
+
+  const leftCounts = counts(left);
+  const rightCounts = counts(right);
+  if (leftCounts.size !== rightCounts.size) return false;
+  for (const [value, count] of leftCounts) {
+    if (rightCounts.get(value) !== count) return false;
+  }
+  return true;
 }
 
 function unknownVocabulary(
@@ -91,9 +127,24 @@ export function validateExercise(
   const correct = prompt.correct ?? prompt.answer;
 
   if (!exercise.unit_code) issues.push({ kind: 'no_unit' });
+  else if (
+    context.units &&
+    !context.units.some(unit => unit.code === exercise.unit_code && unit.hsk_level === context.max_level)
+  ) {
+    issues.push({ kind: 'unit_level_mismatch', detail: exercise.unit_code });
+  }
+
+  if (!Number.isInteger(exercise.target_word_id) || !context.dictionary.some(
+    (entry) => entry.id === exercise.target_word_id && entry.hsk_level <= context.max_level,
+  )) {
+    issues.push({ kind: 'invalid_target' });
+  }
 
   if (GLOSS_ONLY.test(exercise.explanation ?? '')) {
     issues.push({ kind: 'gloss_not_explanation' });
+  }
+  if (!isSpanishExplanation(exercise.explanation)) {
+    issues.push({ kind: 'explanation_not_spanish' });
   }
 
   if (options.length > 0) {
@@ -110,7 +161,20 @@ export function validateExercise(
     issues.push({ kind: 'no_blank' });
   }
 
+  if (
+    exercise.type === 'reorder' &&
+    Array.isArray(prompt.words) &&
+    Array.isArray(prompt.correct_order) &&
+    !hasSameMultiset(prompt.words, prompt.correct_order)
+  ) {
+    issues.push({ kind: 'invalid_reorder' });
+  }
+
   for (const token of unknownVocabulary(prompt, allowed)) {
+    issues.push({ kind: 'unknown_vocabulary', detail: token });
+  }
+
+  for (const token of unknownVocabulary({ sentence: exercise.explanation }, allowed)) {
     issues.push({ kind: 'unknown_vocabulary', detail: token });
   }
 

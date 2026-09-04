@@ -203,6 +203,7 @@ function buildExamStructureRows() {
 
 function buildExerciseRows() {
   const exercises = loadExercises();
+  const corpus = loadCorpus();
 
   return exercises.map((exercise) => {
     const prompt = {
@@ -220,10 +221,17 @@ function buildExerciseRows() {
           : exercise.type === 'dictation'
             ? exercise.prompt?.audio_text
             : 'matched');
+    const targetWord = Number.isInteger(exercise.target_word_id)
+      ? corpus[exercise.target_word_id - 1]
+      : null;
+    const targetWordId = targetWord
+      ? `(select w.id from public.words w where w.hanzi = ${sqlString(targetWord.hanzi)} and w.pinyin = ${sqlString(targetWord.pinyin)} and w.hsk_level = ${sqlInteger(targetWord.hsk_level)} and ((w.sense_index is null and ${sqlInteger(targetWord.sense_index)} is null) or w.sense_index = ${sqlInteger(targetWord.sense_index)}) order by w.id limit 1)`
+      : 'null';
 
     return [
       sqlString(exercise.type),
       sqlInteger(exercise.hsk_level),
+      targetWordId,
       sqlJson(prompt),
       sqlJson(answer),
       sqlString('seed'),
@@ -375,9 +383,9 @@ export function buildSeedSql() {
     ),
     buildInsert(
       'generated_exercises',
-      ['type', 'hsk_level', 'prompt', 'answer', 'source_model', 'created_by'],
+      ['type', 'hsk_level', 'target_word_id', 'prompt', 'answer', 'source_model', 'created_by'],
       exerciseRows,
-      'on conflict do nothing'
+      'on conflict do update set target_word_id = excluded.target_word_id, prompt = excluded.prompt, answer = excluded.answer, source_model = excluded.source_model'
     ),
     buildInsert(
       'reading',

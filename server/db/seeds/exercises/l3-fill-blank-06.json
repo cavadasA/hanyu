@@ -2,7 +2,8 @@
   "slug": "l3-fill-blank-06",
   "type": "fill_blank",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "2.5.3",
+  "target_word_id": 994,
   "prompt": {
     "sentence": "他___完成了作业。",
     "options": [
@@ -13,5 +14,5 @@
     ],
     "correct": "终于"
   },
-  "explanation": "“终于”表示经过等待或过程后完成。"
+  "explanation": "«终于» encaja en «他终于完成了作业。» porque completa el sentido que pide la frase."
 }

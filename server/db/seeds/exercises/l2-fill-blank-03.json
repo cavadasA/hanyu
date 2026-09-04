@@ -2,7 +2,8 @@
   "slug": "l2-fill-blank-03",
   "type": "fill_blank",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "2.7.1",
+  "target_word_id": 79,
   "prompt": {
     "sentence": "他___喜欢喝茶。",
     "options": [
@@ -13,5 +14,5 @@
     ],
     "correct": "很"
   },
-  "explanation": "程度副词“很”放在动词性偏好前表达程度。"
+  "explanation": "«很» encaja en «他很喜欢喝茶。» porque completa el sentido que pide la frase."
 }

@@ -11,10 +11,11 @@ interface Props {
   disabled: boolean;
   allowHints?: boolean;
   onChange(value: ExerciseAnswer): void;
+  onHintUsed?(): void | Promise<void>;
 }
 
-export function ExerciseRenderer({ exercise, value, disabled, allowHints, onChange }: Props) {
-  const shared = { value, disabled, allowHints, onChange };
+export function ExerciseRenderer({ exercise, value, disabled, allowHints, onChange, onHintUsed }: Props) {
+  const shared = { value, disabled, allowHints, onChange, onHintUsed };
 
   switch (exercise.prompt.kind) {
     case 'fill_blank':

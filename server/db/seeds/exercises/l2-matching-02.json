@@ -2,26 +2,27 @@
   "slug": "l2-matching-02",
   "type": "matching",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "6.4.2",
+  "target_word_id": 475,
   "prompt": {
     "pairs": [
       {
         "left": "已经",
-        "right": "already"
+        "right": "ya"
       },
       {
         "left": "可能",
-        "right": "maybe"
+        "right": "quizá"
       },
       {
         "left": "虽然",
-        "right": "although"
+        "right": "aunque"
       },
       {
         "left": "准备",
-        "right": "to prepare"
+        "right": "preparar"
       }
     ]
   },
-  "explanation": "这些副词和能愿词表达完成、不确定、建议和准备。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «已经» = «ya» y «可能» = «quizá»."
 }

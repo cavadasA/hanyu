@@ -2,26 +2,27 @@
   "slug": "l1-matching-05",
   "type": "matching",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "4.3",
+  "target_word_id": 17,
   "prompt": {
     "pairs": [
       {
         "left": "茶",
-        "right": "tea"
+        "right": "té"
       },
       {
         "left": "水",
-        "right": "water"
+        "right": "agua"
       },
       {
         "left": "书",
-        "right": "book"
+        "right": "libro"
       },
       {
         "left": "家",
-        "right": "home"
+        "right": "casa"
       }
     ]
   },
-  "explanation": "这些是日常生活中常见的事物和地点。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «茶» = «té» y «水» = «agua»."
 }

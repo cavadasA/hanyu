@@ -2,7 +2,8 @@
   "slug": "l1-reorder-03",
   "type": "reorder",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "5.3.1",
+  "target_word_id": 186,
   "prompt": {
     "words": [
       "学生",
@@ -16,5 +17,5 @@
     ],
     "translation": "她是学生"
   },
-  "explanation": "“是”连接主语和身份。"
+  "explanation": "El orden correcto forma «她是学生»: coloca las piezas en el orden natural de la oración."
 }

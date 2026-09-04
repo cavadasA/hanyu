@@ -2,26 +2,27 @@
   "slug": "l1-matching-03",
   "type": "matching",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "4.2",
+  "target_word_id": 1,
   "prompt": {
     "pairs": [
       {
         "left": "爱",
-        "right": "to love"
+        "right": "amar"
       },
       {
         "left": "喝",
-        "right": "to drink"
+        "right": "beber"
       },
       {
         "left": "吃",
-        "right": "to eat"
+        "right": "comer"
       },
       {
         "left": "看",
-        "right": "to see"
+        "right": "ver"
       }
     ]
   },
-  "explanation": "动作词的英文释义分别对应爱、喝、吃和看。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «爱» = «amar» y «喝» = «beber»."
 }

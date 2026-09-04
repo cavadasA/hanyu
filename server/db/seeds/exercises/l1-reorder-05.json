@@ -2,7 +2,8 @@
   "slug": "l1-reorder-05",
   "type": "reorder",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "5.3.1",
+  "target_word_id": 186,
   "prompt": {
     "words": [
       "茶",
@@ -16,5 +17,5 @@
     ],
     "translation": "这是茶"
   },
-  "explanation": "指示词后用“是”说明对象。"
+  "explanation": "El orden correcto forma «这是茶»: coloca las piezas en el orden natural de la oración."
 }

@@ -327,6 +327,7 @@ export default function CardsScreen() {
           payload: {
             mode: studyMode,
             grade,
+            correct: grade !== 'again',
             time_ms: studyMode === 'exam' ? elapsedMs : null,
           },
         });

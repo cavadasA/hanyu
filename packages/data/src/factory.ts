@@ -36,6 +36,7 @@ import {
   generateExercise,
   getExerciseHistory,
   getMistakes,
+  recordHintUsed,
 } from './repositories/exercises';
 import { getEvents, recordEvent } from './repositories/events';
 import {
@@ -117,13 +118,15 @@ export function createHanyuData(config: HanyuDataConfig) {
       getFlashcardStats: () => getFlashcardStats(client),
     },
     exercises: {
-      buildExerciseSession: (unitCode?: string | null, length = 8) =>
-        buildExerciseSession(unitCode, length, client),
-      buildMockExam: (level: HskLevel, scope: MockExamScope = 'section') =>
-        buildMockExam(level, scope, client),
+      buildExerciseSession: (unitCode?: string | null, length = 8, targetWordIds: number[] = []) =>
+        buildExerciseSession(unitCode, length, client, targetWordIds),
+      buildMockExam: (level: HskLevel, scope: MockExamScope = 'section', sectionCode?: string | null) =>
+        buildMockExam(level, scope, client, sectionCode),
       generateExercise: (type: ExerciseType, level: HskLevel) =>
         generateExercise(type, level, client),
-      checkExercise: (id: string, answer: ExerciseAnswer) => checkExercise(id, answer, client),
+      checkExercise: (id: string, answer: ExerciseAnswer, options?: { hintUsed?: boolean }) =>
+        checkExercise(id, answer, client, options),
+      recordHintUsed: (id: string) => recordHintUsed(id, client),
       getExerciseHistory: (limit = 20) => getExerciseHistory(limit, client),
       getMistakes: (limit = 20) => getMistakes(client, limit),
     },

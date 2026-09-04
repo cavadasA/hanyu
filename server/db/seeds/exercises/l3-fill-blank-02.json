@@ -2,7 +2,8 @@
   "slug": "l3-fill-blank-02",
   "type": "fill_blank",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "2.5.1",
+  "target_word_id": 538,
   "prompt": {
     "sentence": "他的成绩___好的。",
     "options": [
@@ -13,5 +14,5 @@
     ],
     "correct": "比较"
   },
-  "explanation": "“比较”放在形容词前，表示相对程度而非完成时间。"
+  "explanation": "«比较» encaja en «他的成绩比较好的。» porque completa el sentido que pide la frase."
 }

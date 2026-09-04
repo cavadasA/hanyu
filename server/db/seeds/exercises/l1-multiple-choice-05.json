@@ -2,16 +2,17 @@
   "slug": "l1-multiple-choice-05",
   "type": "multiple_choice",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "4.2",
+  "target_word_id": 78,
   "prompt": {
-    "question": "What does 喝 mean?",
+    "question": "¿Qué significa 喝?",
     "options": [
-      "to see",
-      "to drink",
-      "to eat",
-      "to go"
+      "ver",
+      "beber",
+      "comer",
+      "ir"
     ],
-    "correct": "to drink"
+    "correct": "beber"
   },
-  "explanation": "“喝”用于液体，例如茶和水。"
+  "explanation": "«喝» significa «beber»; la opción correcta es la traducción que encaja con esa palabra."
 }

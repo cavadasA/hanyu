@@ -2,16 +2,17 @@
   "slug": "l3-fill-blank-04",
   "type": "fill_blank",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "2.5.6",
+  "target_word_id": 385,
   "prompt": {
     "sentence": "他___没有来。",
     "options": [
       "可能",
-      "尽管",
+      "虽然",
       "而且",
       "终于"
     ],
     "correct": "可能"
   },
-  "explanation": "“可能”表达推测，说明说话人并不确定原因。"
+  "explanation": "«可能» encaja en «他可能没有来。» porque completa el sentido que pide la frase."
 }

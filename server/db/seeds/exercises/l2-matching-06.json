@@ -2,26 +2,27 @@
   "slug": "l2-matching-06",
   "type": "matching",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "6.1.1",
+  "target_word_id": 96,
   "prompt": {
     "pairs": [
       {
         "left": "觉得",
-        "right": "to feel"
+        "right": "sentir"
       },
       {
         "left": "希望",
-        "right": "to hope"
+        "right": "esperar"
       },
       {
         "left": "知道",
-        "right": "to know"
+        "right": "saber"
       },
       {
         "left": "问题",
-        "right": "question"
+        "right": "pregunta"
       }
     ]
   },
-  "explanation": "动词和名词按常用英文释义配对。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «觉得» = «sentir» y «希望» = «esperar»."
 }

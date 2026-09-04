@@ -2,7 +2,8 @@
   "slug": "l2-fill-blank-02",
   "type": "fill_blank",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "2.7.3",
+  "target_word_id": 475,
   "prompt": {
     "sentence": "他___到了中国。",
     "options": [
@@ -13,5 +14,5 @@
     ],
     "correct": "已经"
   },
-  "explanation": "“已经”说明到北京的动作在说话前完成了。"
+  "explanation": "«已经» encaja en «他已经到了中国。» porque completa el sentido que pide la frase."
 }

@@ -6,4 +6,5 @@ export interface ExerciseRendererProps<TPrompt extends ExercisePrompt = Exercise
   disabled: boolean;
   allowHints?: boolean;
   onChange(value: ExerciseAnswer): void;
+  onHintUsed?(): void | Promise<void>;
 }

@@ -2,16 +2,17 @@
   "slug": "l3-fill-blank-01",
   "type": "fill_blank",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "6.3.5",
+  "target_word_id": 441,
   "prompt": {
     "sentence": "___天气不好，我们还是去了。",
     "options": [
-      "尽管",
+      "虽然",
       "所以",
       "因为",
       "而且"
     ],
-    "correct": "尽管"
+    "correct": "虽然"
   },
-  "explanation": "“尽管”引出让步条件，后面的“还是”说明结果没有改变。"
+  "explanation": "«虽然» encaja en «虽然天气不好，我们还是去了。» porque completa el sentido que pide la frase."
 }

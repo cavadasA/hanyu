@@ -2,11 +2,12 @@
   "slug": "l1-dictation-03",
   "type": "dictation",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "4.2",
+  "target_word_id": 1,
   "prompt": {
     "audio_text": "我爱你",
     "pinyin": "wǒ ài nǐ",
     "accept_pinyin": true
   },
-  "explanation": "句子的顺序是说话人、动作和对象。"
+  "explanation": "La respuesta reproduce la frase escuchada «我爱你»; escríbela en el mismo orden y comprueba sus sílabas."
 }

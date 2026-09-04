@@ -2,26 +2,27 @@
   "slug": "l1-matching-04",
   "type": "matching",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "2.3.2",
+  "target_word_id": 221,
   "prompt": {
     "pairs": [
       {
         "left": "我",
-        "right": "I"
+        "right": "yo; mi"
       },
       {
         "left": "你",
-        "right": "you"
+        "right": "tú"
       },
       {
         "left": "他",
-        "right": "he"
+        "right": "él"
       },
       {
         "left": "她",
-        "right": "she"
+        "right": "ella"
       }
     ]
   },
-  "explanation": "人称代词按说话人、听话人和第三人称区分。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «我» = «yo; mi» y «你» = «tú»."
 }

@@ -2,7 +2,8 @@
   "slug": "l3-reorder-04",
   "type": "reorder",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "6.3.5",
+  "target_word_id": 441,
   "prompt": {
     "words": [
       "不好",
@@ -20,5 +21,5 @@
     ],
     "translation": "虽然天气不好还是去了"
   },
-  "explanation": "让步分句先出现，结果分句用“还是”承接。"
+  "explanation": "El orden correcto forma «虽然天气不好还是去了»: coloca las piezas en el orden natural de la oración."
 }

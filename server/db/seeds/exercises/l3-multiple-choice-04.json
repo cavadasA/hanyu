@@ -2,16 +2,17 @@
   "slug": "l3-multiple-choice-04",
   "type": "multiple_choice",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "6.3.4",
+  "target_word_id": 622,
   "prompt": {
-    "question": "What does 而且 mean?",
+    "question": "¿Qué significa 而且?",
     "options": [
-      "moreover",
-      "already",
-      "finally",
-      "maybe"
+      "además",
+      "ya",
+      "por fin",
+      "quizá"
     ],
-    "correct": "moreover"
+    "correct": "además"
   },
-  "explanation": "“而且”在已有信息上继续补充另一点。"
+  "explanation": "«而且» significa «además»; la opción correcta es la traducción que encaja con esa palabra."
 }

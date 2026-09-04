@@ -30,12 +30,19 @@ describe('MistakesScreen', () => {
 
   it('lista lo fallado y cuántas veces', async () => {
     mockGetMistakes.mockResolvedValue([
-      { target_id: 42, misses: 3, hits_since: 1, distinct_days: 1 },
+      {
+        target_id: 42,
+        word: { hanzi: '茶', pinyin: 'chá', meaning_es: 'té', meaning_en: 'tea' },
+        misses: 3,
+        hits_since: 1,
+        distinct_days: 1,
+      },
     ]);
 
     await renderMistakes();
 
-    await waitFor(() => expect(screen.getByText('Palabra 42')).toBeTruthy());
+    await waitFor(() => expect(screen.getByText('茶')).toBeTruthy());
+    expect(screen.queryByText('Palabra 42')).toBeNull();
     expect(screen.getByText('3 fallos · 1 acierto desde entonces')).toBeTruthy();
   });
 

@@ -2,16 +2,17 @@
   "slug": "l1-multiple-choice-03",
   "type": "multiple_choice",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "4.3",
+  "target_word_id": 156,
   "prompt": {
-    "question": "What does 朋友 mean?",
+    "question": "¿Qué significa 朋友?",
     "options": [
-      "teacher",
-      "friend",
-      "student",
-      "doctor"
+      "profesor/a",
+      "amigo/a",
+      "estudiante",
+      "médico/a"
     ],
-    "correct": "friend"
+    "correct": "amigo/a"
   },
-  "explanation": "“朋友”表示关系亲近的人。"
+  "explanation": "«朋友» significa «amigo/a»; la opción correcta es la traducción que encaja con esa palabra."
 }

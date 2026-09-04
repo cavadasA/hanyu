@@ -17,6 +17,10 @@ jest.mock('../lib/data', () => ({
   }),
 }));
 
+jest.mock('expo-router', () => ({
+  useLocalSearchParams: () => ({}),
+}));
+
 const { ExercisesScreen } = require('./ExercisesScreen');
 
 function exercise(id: string, type: ExerciseKind) {
@@ -56,7 +60,7 @@ async function renderExercises() {
   await act(async () => {
     render(<ExercisesScreen />);
   });
-  await waitFor(() => expect(screen.getByText('离合词')).toBeTruthy());
+  await waitFor(() => expect(mockBuildExerciseSession).toHaveBeenCalled());
 }
 
 describe('ExercisesScreen', () => {
@@ -65,6 +69,10 @@ describe('ExercisesScreen', () => {
     mockBuildMock.mockReset();
     mockCheckExercise.mockReset();
     mockRateCard.mockReset();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
   it('propone la unidad activa en vez de pedir que elijas nivel y tipo', async () => {
@@ -137,6 +145,27 @@ describe('ExercisesScreen', () => {
     expect(screen.getByText('25:00')).toBeTruthy();
   });
 
+  it('pasa el nivel de la unidad y permite elegir el alcance del simulacro', async () => {
+    mockBuildExerciseSession.mockResolvedValue({
+      unit_title: 'Unidad HSK 3',
+      hsk_level: 3,
+      exercises: [],
+      length: 8,
+    });
+    mockBuildMock.mockResolvedValue({
+      hsk_level: 3,
+      scope: 'full',
+      sections: [{ code: 'reading', title: '阅读', minutes: 22, exercises: [] }],
+      unsupported: [],
+    });
+
+    await renderExercises();
+    await fireEvent.press(screen.getByText('Examen completo'));
+
+    await waitFor(() => expect(screen.getByText('阅读')).toBeTruthy());
+    expect(mockBuildMock).toHaveBeenCalledWith(3, 'full', undefined);
+  });
+
   it('dice qué partes del examen no puede simular todavía', async () => {
     mockBuildExerciseSession.mockResolvedValue({ unit_title: '离合词', exercises: [], length: 8 });
     mockBuildMock.mockResolvedValue({
@@ -170,5 +199,41 @@ describe('ExercisesScreen', () => {
     await fireEvent.press(screen.getByText('Comprobar'));
 
     expect(mockRateCard).not.toHaveBeenCalled();
+  });
+
+  it('no fabrica una pregunta cuando la RPC devuelve una fila incompleta', async () => {
+    mockBuildExerciseSession.mockResolvedValue({ unit_title: '离合词', exercises: [], length: 8 });
+    mockBuildMock.mockResolvedValue({
+      sections: [{ code: 'reading', title: '阅读', minutes: 22, exercises: [{ id: 'broken', type: 'multiple_choice' }] }],
+      unsupported: [],
+    });
+
+    await renderExercises();
+    await fireEvent.press(screen.getByText('Simulacro'));
+    await fireEvent.press(screen.getByText('Empezar'));
+
+    expect(screen.queryByText('Elige la respuesta correcta')).toBeNull();
+    expect(screen.getByText(/todavía no tiene ejercicios simulables/)).toBeTruthy();
+    expect(mockCheckExercise).not.toHaveBeenCalled();
+  });
+
+  it('cierra la sección cuando se agota su tiempo oficial', async () => {
+    mockBuildExerciseSession.mockResolvedValue({ unit_title: '离合词', exercises: [], length: 8 });
+    mockBuildMock.mockResolvedValue({
+      sections: [{ code: 'reading', title: '阅读', minutes: 22, exercises: [] }],
+      unsupported: [],
+    });
+
+    await renderExercises();
+    jest.useFakeTimers();
+    await fireEvent.press(screen.getByText('Simulacro'));
+    await fireEvent.press(screen.getByText('Empezar'));
+
+    await act(async () => {
+      jest.advanceTimersByTime(22 * 60 * 1000);
+      await Promise.resolve();
+    });
+
+    expect(screen.getByText(/Tiempo agotado/)).toBeTruthy();
   });
 });

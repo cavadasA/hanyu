@@ -283,4 +283,24 @@ describe('contratos de migraciones', () => {
     expect(normalized).not.toContain('begin;');
     expect(normalized).not.toContain('commit;');
   });
+
+  it('publica el hardening de ejercicios, simulacro y cuaderno de errores', () => {
+    const migration = readMigration('2026090405_exercises_exam_hardening.sql');
+    const integrationTest = readFileSync(
+      join(rootDir, 'supabase', 'tests', 'exercises_exam_hardening.sql'),
+      'utf8',
+    );
+
+    expectSqlToContain(migration, 'add column if not exists target_word_id bigint');
+    expectSqlToContain(migration, 'p_target_word_ids bigint[]');
+    expectSqlToContain(migration, "jsonb_typeof(e.payload->'correct') = 'boolean'");
+    expectSqlToContain(migration, 'v_used_exercise_ids uuid[]');
+    expectSqlToContain(migration, "v_section->>'code' = 'listening'");
+    expectSqlToContain(migration, 'p_section_code text default null');
+    expectSqlToContain(integrationTest, 'select plan(10);');
+    expectSqlToContain(integrationTest, 'public.build_exercise_session(');
+    expectSqlToContain(integrationTest, 'public.build_mock_exam(');
+    expectSqlToContain(integrationTest, 'public.mistake_queue(');
+    expectSqlToContain(integrationTest, 'select * from finish();');
+  });
 });

@@ -2,16 +2,17 @@
   "slug": "l3-fill-blank-05",
   "type": "fill_blank",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "2.7.2",
+  "target_word_id": 442,
   "prompt": {
     "sentence": "因为天气不好，___我们没有出门。",
     "options": [
       "所以",
-      "尽管",
+      "虽然",
       "而且",
       "如果"
     ],
     "correct": "所以"
   },
-  "explanation": "“因为”给出原因，“所以”引出相应的结果。"
+  "explanation": "«所以» encaja en «因为天气不好，所以我们没有出门。» porque completa el sentido que pide la frase."
 }

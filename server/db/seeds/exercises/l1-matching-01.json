@@ -2,26 +2,27 @@
   "slug": "l1-matching-01",
   "type": "matching",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "4.1",
+  "target_word_id": 249,
   "prompt": {
     "pairs": [
       {
         "left": "学生",
-        "right": "student"
+        "right": "estudiante"
       },
       {
         "left": "老师",
-        "right": "teacher"
+        "right": "profesor/a"
       },
       {
         "left": "朋友",
-        "right": "friend"
+        "right": "amigo/a"
       },
       {
         "left": "医生",
-        "right": "doctor"
+        "right": "médico/a"
       }
     ]
   },
-  "explanation": "这些词分别表示学习者、教课的人、朋友和医生。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «学生» = «estudiante» y «老师» = «profesor/a»."
 }

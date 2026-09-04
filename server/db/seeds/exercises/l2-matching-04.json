@@ -2,26 +2,27 @@
   "slug": "l2-matching-04",
   "type": "matching",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "2.5",
+  "target_word_id": 254,
   "prompt": {
     "pairs": [
       {
         "left": "一次",
-        "right": "once"
+        "right": "una vez"
       },
       {
         "left": "两次",
-        "right": "twice"
+        "right": "dos veces"
       },
       {
         "left": "三块钱",
-        "right": "three yuan"
+        "right": "tres yuanes"
       },
       {
         "left": "两本书",
-        "right": "two books"
+        "right": "dos libros"
       }
     ]
   },
-  "explanation": "数量和次数词组要保持完整的量词结构。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «一次» = «una vez» y «两次» = «dos veces»."
 }

@@ -2,16 +2,17 @@
   "slug": "l3-multiple-choice-05",
   "type": "multiple_choice",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "5.1",
+  "target_word_id": 662,
   "prompt": {
-    "question": "What does 关系 mean?",
+    "question": "¿Qué significa 关系?",
     "options": [
-      "relationship",
-      "result",
-      "condition",
-      "question"
+      "relación",
+      "resultado",
+      "condición",
+      "pregunta"
     ],
-    "correct": "relationship"
+    "correct": "relación"
   },
-  "explanation": "“关系”可以表示人与人或事物之间的联系。"
+  "explanation": "«关系» significa «relación»; la opción correcta es la traducción que encaja con esa palabra."
 }

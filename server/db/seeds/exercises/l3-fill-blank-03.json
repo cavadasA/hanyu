@@ -2,7 +2,8 @@
   "slug": "l3-fill-blank-03",
   "type": "fill_blank",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "2.5.1",
+  "target_word_id": 538,
   "prompt": {
     "sentence": "这个问题___很好。",
     "options": [
@@ -13,5 +14,5 @@
     ],
     "correct": "比较"
   },
-  "explanation": "比较程度时使用“比较 + 形容词”。"
+  "explanation": "«比较» encaja en «这个问题比较很好。» porque completa el sentido que pide la frase."
 }

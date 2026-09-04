@@ -2,11 +2,12 @@
   "slug": "l3-dictation-03",
   "type": "dictation",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "6.3.5",
+  "target_word_id": 441,
   "prompt": {
     "audio_text": "虽然天气不好",
     "pinyin": "suīrán tiānqì bù hǎo",
     "accept_pinyin": true
   },
-  "explanation": "让步连接词“尽管”位于分句开头。"
+  "explanation": "La respuesta reproduce la frase escuchada «虽然天气不好»; escríbela en el mismo orden y comprueba sus sílabas."
 }

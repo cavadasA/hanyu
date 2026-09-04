@@ -32,6 +32,7 @@ describe('useExerciseSession', () => {
     await act(async () => {
       await hook.result.current.load();
     });
+    expect(api.buildExerciseSession).toHaveBeenCalledWith(null, 8, []);
     expect(hook.result.current.status).toBe('ready');
     expect(hook.result.current.unit?.unit_title).toBe('离合词');
 
@@ -47,10 +48,11 @@ describe('useExerciseSession', () => {
     await act(async () => {
       await hook.result.current.check();
     });
-    expect(api.checkExercise).toHaveBeenCalledWith('exercise-1', {
-      kind: 'multiple_choice',
-      option: 'A',
-    });
+    expect(api.checkExercise).toHaveBeenCalledWith(
+      'exercise-1',
+      { kind: 'multiple_choice', option: 'A' },
+      { hintUsed: false },
+    );
 
     await act(async () => {
       await hook.result.current.next();
@@ -78,6 +80,27 @@ describe('useExerciseSession', () => {
 
     expect(hook.result.current.exercises).toHaveLength(1);
     expect(hook.result.current.progress).toBe('1/1');
+  });
+
+  it('carga el cuaderno por palabras objetivo, no por un id de ejercicio inventado', async () => {
+    const api = {
+      buildExerciseSession: jest.fn().mockResolvedValue({
+        unit_code: null,
+        unit_title: 'Cuaderno de errores',
+        hsk_level: 2,
+        exercises: [exercise],
+        length: 1,
+      }),
+      checkExercise: jest.fn(),
+    };
+    const hook = await renderHook(() => useExerciseSession(api));
+
+    await act(async () => {
+      await hook.result.current.load([42]);
+    });
+
+    expect(api.buildExerciseSession).toHaveBeenCalledWith(null, 8, [42]);
+    expect(hook.result.current.unit?.unit_title).toBe('Cuaderno de errores');
   });
 
   it('muestra el error de carga sin perder la unidad anterior', async () => {

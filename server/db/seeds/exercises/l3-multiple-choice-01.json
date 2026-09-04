@@ -2,16 +2,17 @@
   "slug": "l3-multiple-choice-01",
   "type": "multiple_choice",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "2.5.3",
+  "target_word_id": 994,
   "prompt": {
-    "question": "What does 终于 mean?",
+    "question": "¿Qué significa 终于?",
     "options": [
-      "suddenly",
-      "finally",
-      "almost",
-      "perhaps"
+      "de repente",
+      "por fin",
+      "casi",
+      "quizá"
     ],
-    "correct": "finally"
+    "correct": "por fin"
   },
-  "explanation": "“终于”强调经过一段过程后达到结果。"
+  "explanation": "«终于» significa «por fin»; la opción correcta es la traducción que encaja con esa palabra."
 }

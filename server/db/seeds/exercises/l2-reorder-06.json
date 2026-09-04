@@ -2,7 +2,8 @@
   "slug": "l2-reorder-06",
   "type": "reorder",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "2.7.3",
+  "target_word_id": 475,
   "prompt": {
     "words": [
       "早点",
@@ -18,5 +19,5 @@
     ],
     "translation": "我已经早点回家"
   },
-  "explanation": "“已经”说明回家的动作已完成，“早点”修饰时间。"
+  "explanation": "El orden correcto forma «我已经早点回家»: coloca las piezas en el orden natural de la oración."
 }

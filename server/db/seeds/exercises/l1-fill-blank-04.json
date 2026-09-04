@@ -2,7 +2,8 @@
   "slug": "l1-fill-blank-04",
   "type": "fill_blank",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "5.3.1",
+  "target_word_id": 186,
   "prompt": {
     "sentence": "他___学生。",
     "options": [
@@ -13,5 +14,5 @@
     ],
     "correct": "是"
   },
-  "explanation": "“是”连接主语和身份名词，构成判断句。"
+  "explanation": "«是» encaja en «他是学生。» porque completa el sentido que pide la frase."
 }

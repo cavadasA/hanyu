@@ -12,8 +12,8 @@
       "parts": [
         { "code": "1", "question_count": 10, "format": "听句子，判断图片是否正确", "our_type": null },
         { "code": "2", "question_count": 10, "format": "听对话，从图片中选出正确答案", "our_type": null },
-        { "code": "3", "question_count": 10, "format": "听对话和问题，选择正确答案", "our_type": "multiple_choice" },
-        { "code": "4", "question_count": 5, "format": "听较长对话和问题，选择正确答案", "our_type": "multiple_choice" }
+        { "code": "3", "question_count": 10, "format": "听对话和问题，选择正确答案", "our_type": null },
+        { "code": "4", "question_count": 5, "format": "听较长对话和问题，选择正确答案", "our_type": null }
       ]
     },
     {

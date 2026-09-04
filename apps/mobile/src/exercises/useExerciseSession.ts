@@ -14,9 +14,10 @@ import { getData } from '../lib/data';
 type Status = 'idle' | 'loading' | 'ready' | 'answering' | 'checking' | 'checked' | 'complete' | 'error';
 
 interface ExerciseApi {
-  buildExerciseSession(unitCode?: string | null, length?: number): Promise<ExerciseSessionData>;
-  buildMockExam?(level: HskLevel, scope: MockExamScope): Promise<MockExam>;
-  checkExercise(id: string, answer: ExerciseAnswer): Promise<ExerciseCheckResult>;
+  buildExerciseSession(unitCode?: string | null, length?: number, targetWordIds?: number[]): Promise<ExerciseSessionData>;
+  buildMockExam?(level: HskLevel, scope: MockExamScope, sectionCode?: string | null): Promise<MockExam>;
+  checkExercise(id: string, answer: ExerciseAnswer, options?: { hintUsed?: boolean }): Promise<ExerciseCheckResult>;
+  recordHintUsed?(id: string): Promise<void>;
 }
 
 export interface ExerciseSessionSummary {
@@ -35,12 +36,15 @@ export interface ExerciseSession {
   complete: boolean;
   progress: string;
   result: ExerciseCheckResult | null;
+  hintUsed: boolean;
+  hintPending: boolean;
   summary: ExerciseSessionSummary | null;
   error: string | null;
-  buildMockExam(level: HskLevel, scope?: MockExamScope): Promise<MockExam>;
-  load(): Promise<void>;
+  buildMockExam(level: HskLevel, scope?: MockExamScope, sectionCode?: string | null): Promise<MockExam>;
+  load(targetWordIds?: number[]): Promise<void>;
   start(): void;
   setDraft(value: ExerciseAnswer): void;
+  markHintUsed(): Promise<void>;
   check(): Promise<void>;
   next(): Promise<void>;
 }
@@ -63,23 +67,26 @@ export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<ExerciseAnswer>(emptyAnswer('fill_blank'));
   const [result, setResult] = useState<ExerciseCheckResult | null>(null);
+  const [hintUsed, setHintUsed] = useState(false);
+  const [hintPending, setHintPending] = useState(false);
   const [summary, setSummary] = useState<ExerciseSessionSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const checking = useRef(false);
   const exercise = exercises[index] ?? null;
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (targetWordIds: number[] = []) => {
     setStatus('loading');
     setError(null);
 
     try {
-      const nextSession = await resolvedApi.buildExerciseSession(null, 8);
+      const nextSession = await resolvedApi.buildExerciseSession(null, 8, targetWordIds);
       const nextExercises = orderExercises(uniqueExercises(nextSession.exercises));
       setUnit({ ...nextSession, exercises: nextExercises, length: nextExercises.length });
       setExercises(nextExercises);
       setIndex(0);
       setDraft(emptyAnswer('fill_blank'));
       setResult(null);
+      setHintUsed(false);
       setSummary(null);
       setStatus('ready');
     } catch (caught) {
@@ -93,6 +100,7 @@ export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
     setIndex(0);
     setDraft(emptyAnswer(exercises[0].type));
     setResult(null);
+    setHintUsed(false);
     setSummary({ total: exercises.length, correct: 0, incorrect: 0 });
     setError(null);
     setStatus('answering');
@@ -101,6 +109,7 @@ export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
   const check = useCallback(async () => {
     if (
       checking.current ||
+      hintPending ||
       status !== 'answering' ||
       !exercise ||
       !isAnswerComplete(exercise.solution, draft)
@@ -113,7 +122,7 @@ export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
     setError(null);
 
     try {
-      const checkResult = await resolvedApi.checkExercise(exercise.id, draft);
+      const checkResult = await resolvedApi.checkExercise(exercise.id, draft, { hintUsed });
       setResult(checkResult);
       setSummary((current) => current ? {
         ...current,
@@ -127,7 +136,7 @@ export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
     } finally {
       checking.current = false;
     }
-  }, [resolvedApi, draft, exercise, status]);
+  }, [resolvedApi, draft, exercise, hintUsed, hintPending, status]);
 
   const next = useCallback(async () => {
     if (status !== 'checked') return;
@@ -141,16 +150,37 @@ export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
     setIndex(nextIndex);
     setDraft(emptyAnswer(exercises[nextIndex].type));
     setResult(null);
+    setHintUsed(false);
     setStatus('answering');
   }, [exercises, index, status]);
 
-  const buildMockExam = useCallback(async (level: HskLevel, scope: MockExamScope = 'section') => {
+  const buildMockExam = useCallback(async (
+    level: HskLevel,
+    scope: MockExamScope = 'section',
+    sectionCode?: string | null,
+  ) => {
     if (!resolvedApi.buildMockExam) {
       throw new Error('El simulacro no está disponible todavía.');
     }
 
-    return resolvedApi.buildMockExam(level, scope);
+    return resolvedApi.buildMockExam(level, scope, sectionCode);
   }, [resolvedApi]);
+
+  const markHintUsed = useCallback(async () => {
+    if (!exercise || status !== 'answering' || hintPending || hintUsed) return;
+
+    setHintUsed(true);
+    if (!resolvedApi.recordHintUsed) return;
+
+    setHintPending(true);
+    try {
+      await resolvedApi.recordHintUsed(exercise.id);
+    } catch (caught) {
+      setError(toUserMessage(caught));
+    } finally {
+      setHintPending(false);
+    }
+  }, [exercise, hintPending, hintUsed, resolvedApi, status]);
 
   const complete = exercise ? isAnswerComplete(exercise.solution, draft) : false;
   const progress = exercise ? `${index + 1}/${exercises.length}` : `0/${exercises.length}`;
@@ -165,12 +195,15 @@ export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
     complete,
     progress,
     result,
+    hintUsed,
+    hintPending,
     summary,
     error,
     buildMockExam,
     load,
     start,
     setDraft,
+    markHintUsed,
     check,
     next,
   };

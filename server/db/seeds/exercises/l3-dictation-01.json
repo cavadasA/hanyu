@@ -2,11 +2,12 @@
   "slug": "l3-dictation-01",
   "type": "dictation",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "6.2.1",
+  "target_word_id": 516,
   "prompt": {
     "audio_text": "请把门关上",
     "pinyin": "qǐng bǎ mén guān shàng",
     "accept_pinyin": true
   },
-  "explanation": "听清“把”字句的对象和结果补语，按原顺序书写。"
+  "explanation": "La respuesta reproduce la frase escuchada «请把门关上»; escríbela en el mismo orden y comprueba sus sílabas."
 }

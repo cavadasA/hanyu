@@ -2,26 +2,27 @@
   "slug": "l2-matching-05",
   "type": "matching",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "6.4.2",
+  "target_word_id": 385,
   "prompt": {
     "pairs": [
       {
         "left": "可能",
-        "right": "maybe"
+        "right": "quizá"
       },
       {
         "left": "虽然",
-        "right": "although"
+        "right": "aunque"
       },
       {
         "left": "一起",
-        "right": "together"
+        "right": "juntos/as"
       },
       {
         "left": "已经",
-        "right": "already"
+        "right": "ya"
       }
     ]
   },
-  "explanation": "这些词表达程度、结果、共同动作和完成。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «可能» = «quizá» y «虽然» = «aunque»."
 }

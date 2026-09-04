@@ -29,21 +29,30 @@ export function loadExercises() {
 
 function loadDictionary() {
   const dictionary = [];
+  let id = 1;
   for (const level of [1, 2, 3]) {
     for (const word of JSON.parse(readFileSync(join(seedDir, `hsk${level}-words.json`), 'utf8'))) {
-      dictionary.push({ hanzi: word.hanzi, pinyin: word.pinyin, hsk_level: level });
+      dictionary.push({ id, hanzi: word.hanzi, pinyin: word.pinyin, hsk_level: level });
+      id += 1;
     }
   }
   return dictionary;
 }
 
+function loadUnits() {
+  return JSON.parse(readFileSync(join(seedDir, 'units.json'), 'utf8'))
+    .map((unit) => ({ code: unit.code, hsk_level: unit.hsk_level }));
+}
+
 export function validateBank() {
   const dictionary = loadDictionary();
+  const units = loadUnits();
   return loadExercises().map((exercise) => ({
     slug: exercise.slug,
     issues: validateExercise(exercise, {
       dictionary,
       max_level: exercise.hsk_level,
+      units,
     }),
   }));
 }

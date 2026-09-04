@@ -2,16 +2,17 @@
   "slug": "l1-fill-blank-01",
   "type": "fill_blank",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "4.2",
+  "target_word_id": 241,
   "prompt": {
     "sentence": "我___喝茶。",
     "options": [
       "喜欢",
-      "已经",
-      "可能",
-      "虽然"
+      "要",
+      "能",
+      "很"
     ],
     "correct": "喜欢"
   },
-  "explanation": "喜欢连接主语和“喝茶”，表达稳定的偏好。"
+  "explanation": "«喜欢» encaja en «我喜欢喝茶。» porque completa el sentido que pide la frase."
 }

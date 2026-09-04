@@ -2,16 +2,17 @@
   "slug": "l3-multiple-choice-06",
   "type": "multiple_choice",
   "hsk_level": 3,
-  "unit_code": "2.2.2",
+  "unit_code": "6.3.6",
+  "target_word_id": 828,
   "prompt": {
-    "question": "What does 如果 mean?",
+    "question": "¿Qué significa 如果?",
     "options": [
-      "if",
-      "according to",
-      "although",
-      "finally"
+      "si",
+      "según",
+      "aunque",
+      "por fin"
     ],
-    "correct": "if"
+    "correct": "si"
   },
-  "explanation": "“如果”引出条件，后面的分句说明条件成立时的结果。"
+  "explanation": "«如果» significa «si»; la opción correcta es la traducción que encaja con esa palabra."
 }

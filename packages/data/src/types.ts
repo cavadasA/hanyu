@@ -126,6 +126,9 @@ export interface Exercise {
   id: string;
   type: ExerciseType;
   hsk_level: HskLevel;
+  slug?: string;
+  unit_code?: string;
+  target_word_id?: number | null;
   prompt: ExercisePrompt;
   solution: ExerciseSolution;
   explanation: string | null;
@@ -134,6 +137,7 @@ export interface Exercise {
 export interface ExerciseSession {
   unit_code: string | null;
   unit_title: string;
+  hsk_level: HskLevel;
   exercises: Exercise[];
   length: number;
 }
@@ -143,6 +147,7 @@ export interface Mistake {
   misses: number;
   hits_since: number;
   distinct_days: number;
+  word?: Pick<Word, 'hanzi' | 'pinyin' | 'meaning_es' | 'meaning_en'>;
 }
 
 export type MockExamScope = 'section' | 'full';
@@ -169,6 +174,9 @@ export interface MockExam {
 
 export interface ExerciseCheckResult {
   correct: boolean;
+  answer_correct: boolean;
+  counted_as_correct: boolean;
+  hint_used: boolean;
   expected_answer: ExerciseSolution;
   submitted_answer: ExerciseAnswer;
   detail: EvaluationDetail;

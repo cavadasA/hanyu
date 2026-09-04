@@ -89,6 +89,10 @@ function pinyinToneSignature(input: string): string {
     .join('|');
 }
 
+function hasExplicitTone(input: string): boolean {
+  return /[0-5]|[\u0300\u0301\u0304\u030c]/u.test(String(input ?? '').normalize('NFD'));
+}
+
 export function evaluateAnswer(
   solution: ExerciseSolution,
   answer: ExerciseAnswer,
@@ -132,20 +136,16 @@ export function evaluateAnswer(
     case 'dictation': {
       const text = (answer as { text: string }).text;
       const asHanzi = normalizeHanzi(text) === normalizeHanzi(solution.hanzi);
-      const asPinyin =
-        solution.pinyin !== null &&
-        normalizePinyinInput(text) === normalizePinyinInput(solution.pinyin);
-
       const syllablesMatch = asHanzi || (
         solution.pinyin !== null &&
         normalizePinyinInput(text) === normalizePinyinInput(solution.pinyin)
       );
       const tonesMatch = asHanzi || (
         solution.pinyin !== null &&
-        pinyinToneSignature(text) === pinyinToneSignature(solution.pinyin)
+        (!hasExplicitTone(text) || pinyinToneSignature(text) === pinyinToneSignature(solution.pinyin))
       );
 
-      return evaluationOf(asHanzi || asPinyin, solution, answer, {
+      return evaluationOf(syllablesMatch && tonesMatch, solution, answer, {
         kind: 'dictation',
         syllables_match: syllablesMatch,
         tones_match: tonesMatch,

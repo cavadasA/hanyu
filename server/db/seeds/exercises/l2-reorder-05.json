@@ -2,7 +2,8 @@
   "slug": "l2-reorder-05",
   "type": "reorder",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "2.7.6",
+  "target_word_id": 478,
   "prompt": {
     "words": [
       "看书",
@@ -16,5 +17,5 @@
     ],
     "translation": "我们一起看书"
   },
-  "explanation": "“一起”放在主语后，修饰共同进行的动作。"
+  "explanation": "El orden correcto forma «我们一起看书»: coloca las piezas en el orden natural de la oración."
 }

@@ -2,26 +2,27 @@
   "slug": "l1-matching-02",
   "type": "matching",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "4.2",
+  "target_word_id": 24,
   "prompt": {
     "pairs": [
       {
         "left": "大",
-        "right": "big"
+        "right": "grande"
       },
       {
         "left": "小",
-        "right": "small"
+        "right": "pequeño/a"
       },
       {
         "left": "好",
-        "right": "good"
+        "right": "bueno/a"
       },
       {
         "left": "多",
-        "right": "many"
+        "right": "muchos/as"
       }
     ]
   },
-  "explanation": "这组形容词要根据中文的基本意义配对。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «大» = «grande» y «小» = «pequeño/a»."
 }

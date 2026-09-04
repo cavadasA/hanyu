@@ -2,7 +2,8 @@
   "slug": "l2-fill-blank-06",
   "type": "fill_blank",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "6.3.4",
+  "target_word_id": 313,
   "prompt": {
     "sentence": "我觉得咖啡___茶贵。",
     "options": [
@@ -13,5 +14,5 @@
     ],
     "correct": "比"
   },
-  "explanation": "比较句用“ A 比 B + 形容词”表达两者差异。"
+  "explanation": "«比» encaja en «我觉得咖啡比茶贵。» porque completa el sentido que pide la frase."
 }

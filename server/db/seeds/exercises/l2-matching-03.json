@@ -2,26 +2,27 @@
   "slug": "l2-matching-03",
   "type": "matching",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "6.1.1",
+  "target_word_id": 380,
   "prompt": {
     "pairs": [
       {
         "left": "咖啡",
-        "right": "coffee"
+        "right": "café"
       },
       {
         "left": "茶",
-        "right": "tea"
+        "right": "té"
       },
       {
         "left": "天气",
-        "right": "weather"
+        "right": "tiempo (clima); meteorología; estado del tiempo; condiciones atmosféricas"
       },
       {
         "left": "学校",
-        "right": "school"
+        "right": "escuela"
       }
     ]
   },
-  "explanation": "四个名词分别对应饮品、饮品、自然状态和学习地点。"
+  "explanation": "Relaciona cada palabra china con su significado en español; por ejemplo, «咖啡» = «café» y «茶» = «té»."
 }

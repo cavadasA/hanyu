@@ -21,6 +21,9 @@ describe('content tab navigation', () => {
 
     await fireEvent.press(practice.getByRole('button', { name: 'Readings' }));
     expect(mockPush).toHaveBeenLastCalledWith('/practice/readings');
+
+    await fireEvent.press(practice.getByRole('button', { name: 'Mistakes' }));
+    expect(mockPush).toHaveBeenLastCalledWith('/practice/mistakes');
     await practice.unmount();
 
     const library = await render(<LibraryHomeScreen />);

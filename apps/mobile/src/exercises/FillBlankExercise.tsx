@@ -13,6 +13,7 @@ export function FillBlankExercise({
   disabled,
   allowHints = true,
   onChange,
+  onHintUsed,
 }: ExerciseRendererProps<Prompt>) {
   const { colors } = useTheme();
   const [showOptions, setShowOptions] = useState(false);
@@ -37,7 +38,10 @@ export function FillBlankExercise({
           accessibilityRole="button"
           accessibilityState={{ disabled }}
           disabled={disabled}
-          onPress={() => setShowOptions(true)}
+          onPress={() => {
+            setShowOptions(true);
+            void onHintUsed?.();
+          }}
           style={[styles.reveal, { borderColor: colors.border }]}
         >
           <Text style={{ color: colors.text }}>{showOptions ? 'Opciones' : 'Ver opciones'}</Text>

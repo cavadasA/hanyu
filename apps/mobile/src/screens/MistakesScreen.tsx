@@ -63,7 +63,15 @@ export function MistakesScreen() {
         <>
           {mistakes.map((mistake) => (
             <Card key={mistake.target_id}>
-              <Text style={[styles.word, { color: colors.text }]}>{`Palabra ${mistake.target_id}`}</Text>
+              <Text style={[styles.word, { color: colors.text }]}>
+                {mistake.word?.hanzi ?? 'Palabra sin ficha'}
+              </Text>
+              {mistake.word?.pinyin ? (
+                <Text style={[styles.pinyin, { color: colors.textMuted }]}>{mistake.word.pinyin}</Text>
+              ) : null}
+              {mistake.word?.meaning_es ? (
+                <Text style={[styles.meaning, { color: colors.textMuted }]}>{mistake.word.meaning_es}</Text>
+              ) : null}
               <Text style={[styles.meta, { color: colors.textMuted }]}>
                 {`${mistake.misses} fallos · ${mistake.hits_since} acierto${mistake.hits_since === 1 ? '' : 's'} desde entonces`}
               </Text>
@@ -97,6 +105,14 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   meta: {
+    fontSize: tokens.fontSize.sm,
+    marginTop: tokens.spacing.xs,
+  },
+  pinyin: {
+    fontSize: tokens.fontSize.sm,
+    marginTop: tokens.spacing.xs,
+  },
+  meaning: {
     fontSize: tokens.fontSize.sm,
     marginTop: tokens.spacing.xs,
   },

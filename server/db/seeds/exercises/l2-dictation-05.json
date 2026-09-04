@@ -2,11 +2,12 @@
   "slug": "l2-dictation-05",
   "type": "dictation",
   "hsk_level": 2,
-  "unit_code": "2.2.2",
+  "unit_code": "2.7.7",
+  "target_word_id": 385,
   "prompt": {
     "audio_text": "我可能早点回家",
     "pinyin": "wǒ kěnéng zǎodiǎn huí jiā",
     "accept_pinyin": true
   },
-  "explanation": "“应该”表达建议，“早点”修饰回家。"
+  "explanation": "La respuesta reproduce la frase escuchada «我可能早点回家»; escríbela en el mismo orden y comprueba sus sílabas."
 }

@@ -2,7 +2,8 @@
   "slug": "l1-reorder-02",
   "type": "reorder",
   "hsk_level": 1,
-  "unit_code": "2.2.2",
+  "unit_code": "5.3.4",
+  "target_word_id": 167,
   "prompt": {
     "words": [
       "去",
@@ -16,5 +17,5 @@
     ],
     "translation": "他去学校"
   },
-  "explanation": "简单陈述句按主语、动作、地点排列。"
+  "explanation": "El orden correcto forma «他去学校»: coloca las piezas en el orden natural de la oración."
 }
