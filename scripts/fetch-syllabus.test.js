@@ -3,8 +3,8 @@ import { loadManifest, verifyLocalSources } from './fetch-syllabus.js';
 describe('manifiesto del sílabo', () => {
   const manifest = loadManifest();
 
-  it('declara las doce fuentes de los niveles 1 a 3', () => {
-    expect(manifest).toHaveLength(12);
+  it('declara las fuentes de los niveles 1 a 3 y del examen HSK 2', () => {
+    expect(manifest).toHaveLength(14);
   });
 
   it('fija revisión y suma para cada fuente', () => {

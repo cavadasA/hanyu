@@ -17,6 +17,8 @@
     { "id": "grammar-3", "path": "data/HSK_Grammar_3.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/HSK%20Grammar/HSK%203.txt", "sha256": "676b2ad4a4747c768d3c316a5405475f7f131f675612765b55145574d60a7d70" },
     { "id": "xiehanzi-1", "path": "data/HSK_Level_1.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/Anki%20xiehanzi/HSK_Level_1.txt", "sha256": "d7808dbd8ce6f083faae57970d94fc6458154a7e8636e6f123525f27b51bbc1f" },
     { "id": "xiehanzi-2", "path": "data/HSK_Level_2.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/Anki%20xiehanzi/HSK_Level_2.txt", "sha256": "b03dd8524c7b96dfa6e9c7c9d2d28f071e823853326d5221ac14212fb01e3414" },
-    { "id": "xiehanzi-3", "path": "data/HSK_Level_3.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/Anki%20xiehanzi/HSK_Level_3.txt", "sha256": "172a276d3bdee7223d7ed42360bfdbab378ba1100655b3f0ee703001cd145475" }
+    { "id": "xiehanzi-3", "path": "data/HSK_Level_3.txt", "url": "https://raw.githubusercontent.com/krmanik/HSK-3.0/main/New%20HSK%20(2025)/Anki%20xiehanzi/HSK_Level_3.txt", "sha256": "172a276d3bdee7223d7ed42360bfdbab378ba1100655b3f0ee703001cd145475" },
+    { "id": "exam-outline-2", "path": "data/HSK2.pdf", "url": "https://www.chinesetest.cn/userfiles/file/dagang/HSK2.pdf", "sha256": "f0b8839358e405b5b2852a2b655e005b4684ad271879ad6f505fb01bc8e5a81c" },
+    { "id": "exam-sample-2", "path": "data/HSK2_sample.pdf", "url": "https://www.chinesetest.cn/userfiles/file/HSK/level2/H20901.pdf", "sha256": "61575a9aa25c564e0d7fe147d52c10da49581543ec597074701bce4a308affe9" }
   ]
 }

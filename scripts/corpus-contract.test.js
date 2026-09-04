@@ -344,4 +344,32 @@ describe('contrato del corpus', () => {
     );
     expect(empty.map((unit) => `${unit.code} ${unit.title}`)).toEqual([]);
   });
+
+  it('la estructura del examen cuadra consigo misma', () => {
+    const exam = JSON.parse(readFileSync(join(seedDir, 'exam-structure.json'), 'utf8'));
+
+    const questions = exam.sections
+      .flatMap((section) => section.parts)
+      .reduce((count, part) => count + part.question_count, 0);
+    const minutes = exam.sections.reduce((count, section) => count + section.minutes, 0);
+
+    expect(questions).toBeGreaterThan(0);
+    expect(minutes + exam.answer_sheet_minutes).toBe(exam.total_minutes);
+  });
+
+  it('cada parte declara si la app puede practicarla', () => {
+    const exam = JSON.parse(readFileSync(join(seedDir, 'exam-structure.json'), 'utf8'));
+    const known = new Set([
+      'fill_blank',
+      'multiple_choice',
+      'reorder',
+      'dictation',
+      'matching',
+      null,
+    ]);
+
+    for (const part of exam.sections.flatMap((section) => section.parts)) {
+      expect(known.has(part.our_type)).toBe(true);
+    }
+  });
 });

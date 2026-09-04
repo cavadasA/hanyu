@@ -1,0 +1,31 @@
+{
+  "hsk_level": 2,
+  "source": "H20901",
+  "source_note": "Transcrito a mano de la muestra oficial. El PDF usa fuentes CID y no se puede extraer por script. La muestra indica 3 minutos para pasar respuestas tras listening y 5 minutos para los datos personales; answer_sheet_minutes suma ambos bloques administrativos.",
+  "total_minutes": 55,
+  "answer_sheet_minutes": 8,
+  "sections": [
+    {
+      "code": "listening",
+      "title": "听力",
+      "minutes": 25,
+      "parts": [
+        { "code": "1", "question_count": 10, "format": "听句子，判断图片是否正确", "our_type": null },
+        { "code": "2", "question_count": 10, "format": "听对话，从图片中选出正确答案", "our_type": null },
+        { "code": "3", "question_count": 10, "format": "听对话和问题，选择正确答案", "our_type": "multiple_choice" },
+        { "code": "4", "question_count": 5, "format": "听较长对话和问题，选择正确答案", "our_type": "multiple_choice" }
+      ]
+    },
+    {
+      "code": "reading",
+      "title": "阅读",
+      "minutes": 22,
+      "parts": [
+        { "code": "1", "question_count": 5, "format": "看句子，选择相应的图片", "our_type": null },
+        { "code": "2", "question_count": 5, "format": "选择词语填空", "our_type": "fill_blank" },
+        { "code": "3", "question_count": 5, "format": "读句子，判断正误", "our_type": null },
+        { "code": "4", "question_count": 10, "format": "读句子，从选项中选择正确答案", "our_type": "matching" }
+      ]
+    }
+  ]
+}
