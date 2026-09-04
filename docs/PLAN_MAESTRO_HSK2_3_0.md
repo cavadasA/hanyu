@@ -238,7 +238,15 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 **Cierra:** Crítico 1; Alto 6; §8 completo; §10 P1.4.
 
 ## Plan 6 — Ejercicios en unidades, producción y simulacro HSK 3.0
-**Tamaño:** XL · **Depende de:** Planes 1, 2, 5 (y 8 para los ejercicios derivados de lectura)
+**Tamaño:** XL · **Depende de:** Planes 2, 5B, 1C
+
+> **Escrito:** `docs/superpowers/plans/2026-09-02-plan-6-ejercicios-y-simulacro.md`, 6 tareas. **No se parte**: el Plan 2 ya dejó resuelta la evaluación y el 5B las unidades, así que lo que queda cabe en un documento.
+>
+> **La muestra oficial existe y es accesible.** Verificado en el centro de recursos `kw.chinesetest.cn`: el esquema `dagang/HSK2.pdf` (835 KB) y la muestra de examen `HSK/level2/H20901.pdf` (381 KB), ambos HTTP 200. Los dos usan fuentes CID: al inflar sus streams salen los números —`35`, `25`, `2`, `25`, `22`— pero el chino no es legible sin descodificar el CMap. **Sería fácil suponer la estructura de esos números y probablemente acertar; no se hace.** Transcribirla mirando el PDF es la Tarea 1, igual que pasó con el sílabo en el 1B.
+>
+> La progresión de siete pasos que pide la auditoría no se implementa como siete pantallas: se implementa como un orden sobre los cinco tipos que ya existen, porque cada uno cae en un escalón (discriminación → reconstrucción → producción). Input, noticing y transferencia no tienen tipo que los represente y **se declaran ausentes** en vez de fingirse: los dos primeros los cubre la lectura de la unidad, el tercero necesitaría producción libre.
+>
+> Un validador nuevo que merece mención: **ninguna explicación puede tener la forma «X (pinyin) means 'Y'»**. Las 30 semillas actuales son todas así, y ninguna sobrevive a la regla. Ése es el punto.
 
 - Convertir el selector manual de nivel+tipo en unidades con longitud, objetivo, progreso y resumen.
 - Progresión por unidad: input comprensible → noticing → discriminación → reconstrucción → producción → transferencia → repaso espaciado.
