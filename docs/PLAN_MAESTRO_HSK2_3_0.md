@@ -255,6 +255,14 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 ## Plan 7 — Lecturas: corpus editorial y pipeline validado
 **Tamaño:** XL · **Depende de:** Plan 1 · **Rama paralela a 4/5**
 
+> **Escrito:** `docs/superpowers/plans/2026-09-02-plan-7-corpus-de-lecturas.md`, 6 tareas.
+>
+> **La decisión central resultó ser una tercera opción que el maestro no contemplaba.** El maestro planteaba «conectar un proveedor real detrás de validadores, o eliminar el ajuste». Al aterrizarlo aparece algo mejor: **generar en tiempo de construcción, no de ejecución**. Las lecturas son ficheros del repositorio, un script las valida, y `npm test` falla si alguna no cumple. El contenido se revisa en un diff, como el código.
+>
+> Que lo escriba un modelo no es el problema; que entre sin revisión, sí. Con este reparto un texto generado y uno escrito a mano pasan por el mismo filtro, y de paso desaparece la necesidad de clave, cuota y latencia. `buildFallbackReading` se borra, la Edge Function de generación se elimina entera —solo hacía un `select`— y `ai_provider` sale de los ajustes: no es esconder un selector placebo, es que deja de haber nada que seleccionar.
+>
+> El plan incluye **una lectura completa con su vocabulario verificado contra el corpus** (86 caracteres, todos en HSK 1–2), para que las nueve restantes tengan un modelo y no una plantilla.
+
 - 10 lecturas HSK 2 impecables antes de las 60. Objetivo 40–60, en miniseries con continuidad narrativa.
 - Temas y tareas oficiales: vida diaria, estudio, trabajo, eventos, lugares, compras, salud, ocio, comunicación interpersonal.
 - Eliminar el fallback único (`你好！我每天学习汉语…`), idéntico para short text, story y dialogue, con las dos respuestas correctas siempre en la opción A.
