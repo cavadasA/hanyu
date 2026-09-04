@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-native';
 import {
   toUserMessage,
+  isValidExamDate,
   type CardOrder,
   type LearnerSkillState,
   type ThemePreference,
@@ -44,6 +45,7 @@ export default function YouScreen() {
   const [saving, setSaving] = useState(false);
   const [leeches, setLeeches] = useState<LearnerSkillState[]>([]);
   const [draftExamDate, setDraftExamDate] = useState('');
+  const [examDateError, setExamDateError] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -53,6 +55,7 @@ export default function YouScreen() {
       const loaded = (await getData().settings.getSettings()) as UserSettings;
       setSettings(loaded);
       setDraftExamDate(loaded.exam_date ?? '');
+      setExamDateError('');
     } catch (caught) {
       setError(toUserMessage(caught));
       setLoading(false);
@@ -258,7 +261,10 @@ export default function YouScreen() {
               <TextInput
                 accessibilityLabel="Exam date"
                 value={draftExamDate}
-                onChangeText={setDraftExamDate}
+                onChangeText={(value) => {
+                  setDraftExamDate(value);
+                  setExamDateError('');
+                }}
                 placeholder="YYYY-MM-DD"
                 placeholderTextColor={colors.textMuted}
                 editable={!saving}
@@ -266,10 +272,20 @@ export default function YouScreen() {
                 keyboardType="numbers-and-punctuation"
                 style={[styles.examDateInput, { color: colors.text, borderColor: colors.border }]}
               />
+              {examDateError ? (
+                <Text style={[styles.examDateError, { color: colors.vermilion }]}>{examDateError}</Text>
+              ) : null}
               <Button
                 label="Save exam date"
                 variant="outline"
-                onPress={() => void save({ exam_date: draftExamDate.trim() || null })}
+                onPress={() => {
+                  const value = draftExamDate.trim();
+                  if (value && !isValidExamDate(value)) {
+                    setExamDateError('Usa una fecha real con formato YYYY-MM-DD');
+                    return;
+                  }
+                  void save({ exam_date: value || null });
+                }}
                 disabled={saving}
               />
             </View>
@@ -437,6 +453,9 @@ const styles = StyleSheet.create({
     borderRadius: tokens.radius.sm,
     paddingHorizontal: tokens.spacing.sm,
     fontSize: tokens.fontSize.sm,
+  },
+  examDateError: {
+    fontSize: tokens.fontSize.xs,
   },
   userEmail: {
     fontSize: tokens.fontSize.sm,

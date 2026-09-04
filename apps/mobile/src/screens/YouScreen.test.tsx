@@ -162,6 +162,17 @@ describe('YouScreen', () => {
     expect(mockUpdateSettings).toHaveBeenCalledWith({ exam_date: '2026-10-15' });
   });
 
+  it('avisa antes de guardar una fecha de examen inválida', async () => {
+    mockGetSettings.mockResolvedValue(settings);
+
+    await renderYou();
+    await fireEvent.changeText(screen.getByLabelText('Exam date'), '2026-13-45');
+    await fireEvent.press(screen.getByText('Save exam date'));
+
+    expect(mockUpdateSettings).not.toHaveBeenCalled();
+    expect(screen.getByText('Usa una fecha real con formato YYYY-MM-DD')).toBeTruthy();
+  });
+
   it('persists the target retention setting', async () => {
     mockGetSettings.mockResolvedValue(settings);
     mockUpdateSettings.mockResolvedValue({ ...settings, request_retention: 0.85 });

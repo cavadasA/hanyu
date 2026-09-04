@@ -7,6 +7,10 @@ function clientFor(options: {
   dueCount?: number;
   dueState?: { regular_due_count: number; relearning_count: number };
   queue?: unknown[];
+  unit?: unknown;
+  dueStateError?: boolean;
+  unitError?: boolean;
+  learnQueueError?: boolean;
 } = {}) {
   const rpc = vi
     .fn()
@@ -14,11 +18,13 @@ function clientFor(options: {
     .mockResolvedValueOnce({ data: [{ deck_id: null, count: options.dueCount ?? 3 }], error: null })
     .mockResolvedValueOnce({
       data: [options.dueState ?? { regular_due_count: 2, relearning_count: 1 }],
-      error: null,
+      error: options.dueStateError ? { message: 'RPC not available' } : null,
     })
     .mockResolvedValueOnce({
-      data: [{ code: '2.2.3', title: '离合词', total_words: 4, settled_words: 1 }],
-      error: null,
+      data: options.unit === undefined
+        ? [{ code: '2.2.3', title: '离合词', total_words: 4, settled_words: 1 }]
+        : options.unit,
+      error: options.unitError ? { message: 'RPC not available' } : null,
     })
     .mockResolvedValueOnce({
       data: options.queue ?? [
@@ -26,6 +32,10 @@ function clientFor(options: {
         { is_new: false, fsrs_state: 'review' },
         { is_new: false, fsrs_state: 'relearning' },
       ],
+      error: options.learnQueueError ? { message: 'RPC not available' } : null,
+    })
+    .mockResolvedValueOnce({
+      data: options.queue ?? [{ is_new: true, fsrs_state: 'new' }],
       error: null,
     });
 
@@ -95,6 +105,12 @@ describe('getToday', () => {
     expect((client as any).rpc).toHaveBeenNthCalledWith(2, 'count_deck_cards', {
       p_deck_id: null,
       p_due_only: true,
+    });
+    expect((client as any).rpc).toHaveBeenNthCalledWith(5, 'build_review_queue_mode', {
+      p_mode: 'learn',
+      p_deck_id: null,
+      p_skill: 'recognition',
+      p_limit: null,
     });
     expect(today.flashcards.due).toBe(3);
     expect(today.flashcards.deck_size).toBe(150);
@@ -171,5 +187,32 @@ describe('getToday', () => {
     expect(today.flashcards.due).toBe(137);
     expect(today.steps[0]).toMatchObject({ payload: { count: 136 } });
     expect(today.steps[1]).toMatchObject({ payload: { count: 1 } });
+  });
+
+  it('degrada los RPC opcionales sin tumbar Today', async () => {
+    const today = await getToday(clientFor({ dueStateError: true, unitError: true, learnQueueError: true }));
+
+    expect(today.flashcards.due).toBe(3);
+    expect(today.steps[0]).toMatchObject({ payload: { count: 3 } });
+    expect(today.steps[1]).toMatchObject({ status: 'unavailable', reason: 'nothing_due' });
+    expect(today.steps[2]).toMatchObject({ status: 'unavailable', reason: 'unit_unavailable' });
+  });
+
+  it('usa la cola antigua solo como degradación cuando falta la cola Learn', async () => {
+    const client = clientFor({
+      learnQueueError: true,
+      queue: [
+        { is_new: true, fsrs_state: 'new' },
+        { is_new: true, fsrs_state: 'new' },
+      ],
+    });
+    const today = await getToday(client);
+
+    expect(today.steps[2]).toMatchObject({ payload: { count: 2 } });
+    expect((client as any).rpc).toHaveBeenNthCalledWith(6, 'build_review_queue', {
+      p_deck_id: null,
+      p_skill: 'recognition',
+      p_limit: null,
+    });
   });
 });

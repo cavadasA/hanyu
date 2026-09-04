@@ -4,6 +4,7 @@ export { createHanyuData } from './factory';
 export type { HanyuData } from './factory';
 export { resolveGloss } from './gloss';
 export { toUserMessage } from './errors';
+export { isValidExamDate } from './repositories/settings';
 export type {
   BuildQueueInput,
   CardOrder,

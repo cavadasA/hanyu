@@ -107,6 +107,26 @@ describe('buildDailyPlan', () => {
     });
   });
 
+  it('muestra el progreso de todos los elementos de una unidad mixta', () => {
+    const plan = buildDailyPlan({
+      ...base,
+      active_unit: {
+        code: '2.4',
+        title: '比较句',
+        total_words: 2,
+        settled_words: 1,
+        word_count: 2,
+        pattern_count: 1,
+        grammar_id: 43,
+        total_items: 3,
+        settled_items: 1,
+      },
+    });
+    const newItems = plan.steps.find((step) => step.kind === 'new_items');
+
+    expect(newItems?.payload).toMatchObject({ unit_progress: '1/3' });
+  });
+
   it('lleva la unidad activa en el paso de elementos nuevos', () => {
     const newItems = buildDailyPlan(base).steps.find((step) => step.kind === 'new_items');
 
@@ -132,7 +152,7 @@ describe('buildDailyPlan', () => {
     });
     const reading = plan.steps.find((step) => step.kind === 'reading');
 
-    expect(reading).toMatchObject({ status: 'unavailable', reason: 'no_content' });
+    expect(reading).toMatchObject({ status: 'unavailable', reason: 'no_suitable_content' });
   });
 
   it('resuelve los empates de contenido con un orden estable', () => {

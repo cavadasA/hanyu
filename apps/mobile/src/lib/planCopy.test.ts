@@ -13,6 +13,12 @@ describe('planCopy', () => {
     );
   });
 
+  it('distingue contenido existente que no encaja con el nivel', () => {
+    expect(unavailableToText('no_suitable_content', 'reading')).toBe(
+      'Hay lecturas, pero ninguna encaja con tu nivel ahora',
+    );
+  });
+
   it('no promete una selección manual de unidad ni pide una acción imposible', () => {
     expect(unavailableToText('unit_unavailable', 'new_items')).toBe(
       'No hay una unidad disponible para introducir palabras nuevas ahora',

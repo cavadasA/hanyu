@@ -228,6 +228,7 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, "add value if not exists 'grammar_studied'");
     expectSqlToContain(migration, 'create or replace function public.mark_grammar_studied(');
     expectSqlToContain(migration, 'order by random()');
+    expectSqlToContain(migration, 'order by case when i.total_words > 0 then 0 else 1 end');
     expectSqlToContain(migration, 'where not q.is_new;');
     expect(normalized).toContain('grant execute on function public.build_review_queue_mode(text, uuid, public.learning_skill, integer) to authenticated');
     expect(normalized).toContain('drop function if exists public.build_review_queue(uuid, public.learning_skill, integer, text)');

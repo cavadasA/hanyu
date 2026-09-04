@@ -77,4 +77,20 @@ describe('deriveUnits', () => {
 
     expect(duplicateUnits[0].word_ids).toEqual([11]);
   });
+
+  it('usa el candidato más cercano si el sílabo pide un sentido ausente', () => {
+    const fallbackUnits = deriveUnits([
+      {
+        code: '2.8.1', hsk_level: 1, group: '词类', category: '连词',
+        detail: '连接词语或短语', title: '连接词语或短语', items: ['还2、和2'],
+      },
+    ], [
+      { id: 20, hanzi: '还', hsk_level: 1, sense_index: null },
+      { id: 21, hanzi: '还', hsk_level: 3, sense_index: null },
+      { id: 22, hanzi: '和', hsk_level: 1, sense_index: 1 },
+    ]);
+
+    expect(fallbackUnits[0].word_ids).toEqual([20, 22]);
+    expect(fallbackUnits[0].patterns).toEqual([]);
+  });
 });

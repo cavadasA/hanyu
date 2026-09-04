@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { generateExercise } from './exercises';
-import { getGrammar, markGrammarStudied } from './grammar';
+import { getGrammar, getGrammarStudyState, markGrammarStudied } from './grammar';
 import { getReadings } from './readings';
 import { getWords } from './words';
 
@@ -165,5 +165,14 @@ describe('mobile content repository contracts', () => {
 
     await expect(markGrammarStudied(42, client as never)).resolves.toBeUndefined();
     expect(client.rpc).toHaveBeenCalledWith('mark_grammar_studied', { p_grammar_id: 42 });
+  });
+
+  it('recupera el estado persistido de estudio de un punto de gramática', async () => {
+    const rows = queryResult({ data: { stability: 21, suspended: false }, error: null });
+    const client = { from: vi.fn(() => rows) };
+
+    await expect(getGrammarStudyState(42, client as never)).resolves.toBe(true);
+    expect(client.from).toHaveBeenCalledWith('learner_skill_state');
+    expect(rows.eq).toHaveBeenCalledWith('target_id', 42);
   });
 });

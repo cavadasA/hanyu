@@ -28,6 +28,10 @@ export function unavailableToText(
       return kind === 'reading'
         ? 'Todavía no hay lecturas disponibles'
         : 'Todavía no hay ejercicios disponibles';
+    case 'no_suitable_content':
+      return kind === 'reading'
+        ? 'Hay lecturas, pero ninguna encaja con tu nivel ahora'
+        : 'Hay ejercicios, pero ninguno encaja con tu nivel ahora';
     case 'no_exam_date':
       return 'Añade una fecha de examen en tu perfil para activar este formato';
     case 'daily_limit_reached':

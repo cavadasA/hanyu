@@ -86,6 +86,29 @@ describe('getSettings', () => {
     await expect(getSettings(client as never)).resolves.toMatchObject({ exam_date: '2026-12-01' });
   });
 
+  it('rechaza fechas de examen imposibles antes de persistirlas', async () => {
+    const client = clientFor({
+      data: {
+        user_id: 'u1',
+        theme: 'light',
+        support_language: 'es',
+        current_level: 2,
+        new_cards_per_day: 10,
+        review_limit_per_day: 200,
+        session_size: 20,
+        request_retention: 0.9,
+        card_order: 'due',
+        exam_date: null,
+      },
+      error: null,
+    });
+
+    await expect(updateSettings({ exam_date: '2026-13-45' }, client as never)).rejects.toThrow(
+      'fecha válida',
+    );
+    expect(client.chains.user_settings.upsert).not.toHaveBeenCalled();
+  });
+
   it('expone los cuatro límites por separado', async () => {
     const client = clientFor({
       data: {

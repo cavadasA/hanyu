@@ -157,7 +157,11 @@ as $$
       on req.hsk_level = gp.requires_level and req.code = gp.requires_code
     where gp.hsk_level = i.hsk_level and gp.code = i.code
   )
-  order by i.hsk_level, i.order_idx
+  -- Las palabras pueden avanzar en paralelo: las unidades de gramática
+  -- siguen dentro del grafo y sus prerrequisitos continúan bloqueando lo
+  -- que corresponda, pero no dejan a un usuario nuevo sin tarjetas.
+  order by case when i.total_words > 0 then 0 else 1 end,
+    i.hsk_level, i.order_idx
   limit 1;
 $$;
 

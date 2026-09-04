@@ -69,3 +69,27 @@ export async function markGrammarStudied(
     throw createRepositoryError(error, 'Failed to save grammar progress');
   }
 }
+
+export async function getGrammarStudyState(
+  id: number | string,
+  client: HanyuClient,
+): Promise<boolean> {
+  const numericId = parseInt(String(id), 10);
+  if (Number.isNaN(numericId)) {
+    throw new Error('Invalid grammar parameters');
+  }
+
+  const { data, error } = await client
+    .from('learner_skill_state')
+    .select('stability, suspended')
+    .eq('target_kind', 'grammar')
+    .eq('target_id', numericId)
+    .eq('skill', 'recognition')
+    .maybeSingle();
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load grammar progress');
+  }
+
+  return Number(data?.stability ?? 0) >= 21 || Boolean(data?.suspended);
+}

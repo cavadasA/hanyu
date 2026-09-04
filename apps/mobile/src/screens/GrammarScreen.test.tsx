@@ -4,6 +4,7 @@ import { GrammarScreen } from './GrammarScreen';
 
 const mockGetGrammar = jest.fn();
 const mockGetGrammarPoint = jest.fn();
+const mockGetGrammarStudyState = jest.fn();
 const mockMarkGrammarStudied = jest.fn();
 const mockPush = jest.fn();
 let mockParams: Record<string, string> = {};
@@ -18,6 +19,7 @@ jest.mock('../lib/data', () => ({
     grammar: {
       getGrammar: (...args: unknown[]) => mockGetGrammar(...args),
       getGrammarPoint: (...args: unknown[]) => mockGetGrammarPoint(...args),
+      getGrammarStudyState: (...args: unknown[]) => mockGetGrammarStudyState(...args),
       markGrammarStudied: (...args: unknown[]) => mockMarkGrammarStudied(...args),
     },
   }),
@@ -27,9 +29,11 @@ describe('Grammar screens', () => {
   beforeEach(() => {
     mockGetGrammar.mockReset();
     mockGetGrammarPoint.mockReset();
+    mockGetGrammarStudyState.mockReset();
     mockMarkGrammarStudied.mockReset();
     mockPush.mockReset();
     mockParams = {};
+    mockGetGrammarStudyState.mockResolvedValue(false);
   });
 
   it('filters grammar points and navigates with the selected level', async () => {
@@ -84,5 +88,26 @@ describe('Grammar screens', () => {
     expect(mockGetGrammarPoint).toHaveBeenCalledWith(2, 3);
     await fireEvent.press(view.getByText('Mark as studied'));
     expect(mockMarkGrammarStudied).toHaveBeenCalledWith(3);
+    await waitFor(() => expect(view.getByText('Studied')).toBeTruthy());
+  });
+
+  it('muestra el estado persistido y evita marcar dos veces', async () => {
+    mockParams = { id: '3', level: '2' };
+    mockGetGrammarPoint.mockResolvedValue({
+      id: 3,
+      hsk_level: 2,
+      title: '因为...所以...',
+      pattern: null,
+      explanation: null,
+      examples: [],
+    });
+    mockGetGrammarStudyState.mockResolvedValue(true);
+
+    const view = await render(<GrammarDetailScreen />);
+
+    await waitFor(() => expect(view.getByText('Studied')).toBeTruthy());
+    const studiedButton = view.getByRole('button', { name: 'Studied' });
+    expect(studiedButton).toBeDisabled();
+    expect(mockMarkGrammarStudied).not.toHaveBeenCalled();
   });
 });

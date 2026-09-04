@@ -22,6 +22,24 @@ function splitItemRefs(item) {
     });
 }
 
+function selectWordCandidate(candidates, senseIndex, unitLevel) {
+  if (candidates.length === 0) return undefined;
+
+  if (senseIndex === null) {
+    return candidates[0];
+  }
+
+  const exact = candidates.find((word) => word.sense_index === senseIndex);
+  if (exact) return exact;
+  if (candidates.length === 1) return candidates[0];
+
+  return candidates.reduce((closest, candidate) => {
+    const closestDistance = Math.abs(Number(closest.hsk_level ?? unitLevel) - unitLevel);
+    const candidateDistance = Math.abs(Number(candidate.hsk_level ?? unitLevel) - unitLevel);
+    return candidateDistance < closestDistance ? candidate : closest;
+  });
+}
+
 export function splitItem(item) {
   return splitItemRefs(item).map((fragment) => fragment.value);
 }
@@ -42,9 +60,7 @@ export function deriveUnits(grammar, words) {
       for (const item of point.items ?? []) {
         for (const fragment of splitItemRefs(item)) {
           const candidates = byHanzi.get(fragment.value) ?? [];
-          const candidate = candidates.find((word) =>
-            fragment.sense_index === null || word.sense_index === fragment.sense_index,
-          ) ?? (candidates.length === 1 && candidates[0].sense_index == null ? candidates[0] : undefined);
+          const candidate = selectWordCandidate(candidates, fragment.sense_index, point.hsk_level);
           if (candidate) {
             if (!wordIds.includes(candidate.id)) wordIds.push(candidate.id);
           } else {

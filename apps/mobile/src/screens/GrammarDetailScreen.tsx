@@ -21,6 +21,7 @@ export function GrammarDetailScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [studied, setStudied] = useState(false);
 
   async function load() {
     if (!id || !level) {
@@ -32,7 +33,14 @@ export function GrammarDetailScreen() {
     setLoading(true);
     setError(null);
     try {
-      setPoint(await grammarApi.current.getGrammarPoint(level, id));
+      const loadedPoint = await grammarApi.current.getGrammarPoint(level, id);
+      setPoint(loadedPoint);
+      try {
+        setStudied(await grammarApi.current.getGrammarStudyState(id));
+      } catch {
+        // El contenido sigue siendo útil aunque el estado aún no esté disponible.
+        setStudied(false);
+      }
     } catch (caught) {
       setError(toUserMessage(caught));
     } finally {
@@ -41,11 +49,12 @@ export function GrammarDetailScreen() {
   }
 
   async function markStudied() {
-    if (!point || saving) return;
+    if (!point || saving || studied) return;
     setSaving(true);
     setError(null);
     try {
       await getData().grammar.markGrammarStudied(point.id);
+      setStudied(true);
     } catch (caught) {
       setError(toUserMessage(caught));
     } finally {
@@ -77,10 +86,10 @@ export function GrammarDetailScreen() {
           </View>
           <Badge label={`HSK ${point.hsk_level}`} />
           <Button
-            label={saving ? 'Saving...' : 'Mark as studied'}
+            label={saving ? 'Saving...' : studied ? 'Studied' : 'Mark as studied'}
             variant="outline"
             onPress={() => void markStudied()}
-            disabled={saving}
+            disabled={saving || studied}
           />
 
           {point.pattern ? (

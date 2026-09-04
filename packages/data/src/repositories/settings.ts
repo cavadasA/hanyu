@@ -51,8 +51,42 @@ function normalizeSettings(row: any) {
   };
 }
 
+export function isValidExamDate(value: unknown): value is string {
+  if (typeof value !== 'string') {
+    return false;
+  }
+
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) {
+    return false;
+  }
+
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (month < 1 || month > 12 || day < 1) {
+    return false;
+  }
+
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const daysInMonth = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return day <= daysInMonth[month - 1];
+}
+
 function normalizeExamDate(value: unknown): string | null {
-  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : null;
+  return isValidExamDate(value) ? value : null;
+}
+
+function sanitizeExamDate(value: unknown): string | null {
+  if (value === null || value === undefined || value === '') {
+    return null;
+  }
+
+  if (!isValidExamDate(value)) {
+    throw new Error('La fecha del examen debe ser una fecha válida con formato YYYY-MM-DD');
+  }
+
+  return value;
 }
 
 function clampNumber(value: any, min: number, max: number, fallback: number) {
@@ -126,7 +160,7 @@ function sanitizeUpdates(data: Record<string, unknown>) {
   }
 
   if (data.exam_date !== undefined) {
-    updates.exam_date = normalizeExamDate(data.exam_date);
+    updates.exam_date = sanitizeExamDate(data.exam_date);
   }
 
   return updates;

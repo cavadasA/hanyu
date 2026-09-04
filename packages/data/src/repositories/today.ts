@@ -18,15 +18,46 @@ function countFromRpc(payload: unknown) {
   return Number(row?.count || 0);
 }
 
+async function optionalRpc(
+  client: HanyuClient,
+  rpcName: string,
+  args: Record<string, unknown>,
+) {
+  try {
+    return await callRpcVariants(client, rpcName, [args]);
+  } catch {
+    return null;
+  }
+}
+
+async function loadLearnQueue(client: HanyuClient) {
+  const modeQueue = await optionalRpc(client, 'build_review_queue_mode', {
+    p_mode: 'learn',
+    p_deck_id: null,
+    p_skill: 'recognition',
+    p_limit: null,
+  });
+
+  if (modeQueue !== null) {
+    return modeQueue;
+  }
+
+  return optionalRpc(client, 'build_review_queue', {
+    p_deck_id: null,
+    p_skill: 'recognition',
+    p_limit: null,
+  });
+}
+
 export async function getToday(client: HanyuClient) {
   const [userId, settings] = await Promise.all([getRequiredUserId(client), getSettings(client)]);
   const today = toDateString();
   const currentLevel = Number(settings.current_level ?? 2);
 
-  const [deckSizeRpc, dueRpc, dueStateRpc, statsResult, readingResult, unitRpc, queueRpc] = await Promise.all([
+  const [deckSizeRpc, dueRpc, dueStateRpc, statsResult, readingResult, unitData, queueData] = await Promise.all([
     callRpcVariants(client, 'count_deck_cards', [{ p_deck_id: null, p_due_only: false }]),
     callRpcVariants(client, 'count_deck_cards', [{ p_deck_id: null, p_due_only: true }]),
-    callRpcVariants(client, 'count_due_cards_by_state', [{ p_deck_id: null, p_skill: 'recognition' }]),
+    optionalRpc(client, 'count_due_cards_by_state', { p_deck_id: null, p_skill: 'recognition' }),
     client.from('user_stats').select('*').eq('user_id', userId).eq('date', today).maybeSingle(),
     client
       .from('reading')
@@ -37,12 +68,8 @@ export async function getToday(client: HanyuClient) {
       .order('slug', { ascending: true })
       .limit(1)
       .maybeSingle(),
-    client.rpc('active_unit', {}),
-    client.rpc('build_review_queue', {
-      p_deck_id: null,
-      p_skill: 'recognition',
-      p_limit: null,
-    }),
+    optionalRpc(client, 'active_unit', {}),
+    loadLearnQueue(client),
   ]);
 
   if (statsResult.error) {
@@ -51,14 +78,6 @@ export async function getToday(client: HanyuClient) {
 
   if (readingResult.error) {
     throw createRepositoryError(readingResult.error, 'Failed to load next reading');
-  }
-
-  if (unitRpc.error) {
-    throw createRepositoryError(unitRpc.error, 'Failed to load active unit');
-  }
-
-  if (queueRpc.error) {
-    throw createRepositoryError(queueRpc.error, 'Failed to build today review queue');
   }
 
   const todayStats = {
@@ -72,15 +91,15 @@ export async function getToday(client: HanyuClient) {
     Number((todayStats as any).readings_done || 0) >= 1,
   ];
 
-  const unitRow = Array.isArray(unitRpc.data) ? unitRpc.data[0] : unitRpc.data;
+  const unitRow = Array.isArray(unitData) ? unitData[0] : unitData;
   const dueStateRow = (Array.isArray(dueStateRpc) ? dueStateRpc[0] : dueStateRpc) as {
     regular_due_count?: number;
     relearning_count?: number;
   } | null;
-  const queue = (queueRpc.data ?? []) as Array<{ is_new: boolean; fsrs_state: string }>;
+  const queue = (queueData ?? []) as Array<{ is_new: boolean; fsrs_state: string }>;
   const plan = buildDailyPlan({
-    due_reviews: Number(dueStateRow?.regular_due_count ?? 0),
-    relearning: Number(dueStateRow?.relearning_count ?? 0),
+    due_reviews: dueStateRow ? Number(dueStateRow.regular_due_count ?? 0) : countFromRpc(dueRpc),
+    relearning: dueStateRow ? Number(dueStateRow.relearning_count ?? 0) : 0,
     review_completed: Number((todayStats as any).cards_reviewed || 0),
     review_target: Number(settings.review_limit_per_day ?? 200),
     active_unit: unitRow

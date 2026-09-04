@@ -16,6 +16,7 @@ export type PlanStepKind =
 export type PlanStepReason =
   | 'nothing_due'
   | 'no_content'
+  | 'no_suitable_content'
   | 'no_exam_date'
   | 'daily_limit_reached'
   | 'unit_unavailable';
@@ -118,19 +119,21 @@ export function buildDailyPlan(input: DailyPlanInput): { steps: PlanStep[] } {
         unit_progress: `${activeUnit.settled_items ?? 0}/${activeUnit.total_items ?? 1}`,
       },
     });
+  } else if (!activeUnit) {
+    steps.push({ kind: 'new_items', status: 'unavailable', reason: 'unit_unavailable' });
   } else if (input.new_allowance <= 0) {
     steps.push({ kind: 'new_items', status: 'unavailable', reason: 'daily_limit_reached' });
-  } else if (!input.active_unit) {
-    steps.push({ kind: 'new_items', status: 'unavailable', reason: 'unit_unavailable' });
   } else {
+    const settledItems = activeUnit.settled_items ?? activeUnit.settled_words;
+    const totalItems = activeUnit.total_items ?? activeUnit.total_words;
     steps.push({
       kind: 'new_items',
       status: 'ready',
       payload: {
         count: input.new_allowance,
-        unit_code: input.active_unit.code,
-        unit_title: input.active_unit.title,
-        unit_progress: `${input.active_unit.settled_words}/${input.active_unit.total_words}`,
+        unit_code: activeUnit.code,
+        unit_title: activeUnit.title,
+        unit_progress: `${settledItems}/${totalItems}`,
       },
     });
   }
@@ -139,14 +142,22 @@ export function buildDailyPlan(input: DailyPlanInput): { steps: PlanStep[] } {
   steps.push(
     reading
       ? { kind: 'reading', status: 'ready', why: reading.reasons, payload: { id: reading.item.id } }
-      : { kind: 'reading', status: 'unavailable', reason: 'no_content' },
+      : {
+          kind: 'reading',
+          status: 'unavailable',
+          reason: input.readings.length > 0 ? 'no_suitable_content' : 'no_content',
+        },
   );
 
   const exercise = best(input.exercises, learner);
   steps.push(
     exercise
       ? { kind: 'exercises', status: 'ready', why: exercise.reasons, payload: { id: exercise.item.id } }
-      : { kind: 'exercises', status: 'unavailable', reason: 'no_content' },
+      : {
+          kind: 'exercises',
+          status: 'unavailable',
+          reason: input.exercises.length > 0 ? 'no_suitable_content' : 'no_content',
+        },
   );
 
   steps.push(
