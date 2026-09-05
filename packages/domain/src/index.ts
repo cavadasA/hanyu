@@ -16,3 +16,4 @@ export * from './planner/rank';
 export * from './planner/plan';
 export * from './analytics/retention';
 export * from './analytics/mastery';
+export * from './analytics/reading';
