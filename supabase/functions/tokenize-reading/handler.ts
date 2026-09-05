@@ -68,6 +68,9 @@ export async function handleTokenizeReading(
     ? (result.data ? [result.data] : [])
     : (Array.isArray(result.data) ? result.data : []);
   if (result.error || readings.length !== readingIds.length) {
+    if (result.error) {
+      console.error('Failed to load reading:', result.error);
+    }
     return jsonResponse({ error: 'Reading not found' }, 404);
   }
 
@@ -84,6 +87,7 @@ export async function handleTokenizeReading(
     ]);
 
   if (wordsError || cardsError) {
+    console.error('Failed to prepare reading words:', { wordsError, cardsError });
     return jsonResponse({ error: 'Failed to prepare reading words' }, 500);
   }
 

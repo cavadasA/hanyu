@@ -341,5 +341,18 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'grant execute on function public.add_deck_from_template(uuid) to authenticated;');
     expectSqlToContain(migration, 'grant execute on function public.submit_diagnostic(jsonb) to authenticated;');
   });
+
+  it('concede permisos completos a service_role, authenticated y lectura publica a anon', () => {
+    const migration = readMigration('2026090605_grant_service_role_permissions.sql');
+
+    expectSqlToContain(migration, 'grant usage on schema public to anon, authenticated, service_role;');
+    expectSqlToContain(migration, 'grant all on all tables in schema public to service_role;');
+    expectSqlToContain(migration, 'grant all on all sequences in schema public to service_role;');
+    expectSqlToContain(migration, 'grant all on all routines in schema public to service_role;');
+    expectSqlToContain(migration, 'alter default privileges in schema public grant all on tables to service_role;');
+    expectSqlToContain(migration, 'grant select, insert, update, delete on all tables in schema public to authenticated;');
+    expectSqlToContain(migration, 'alter default privileges in schema public grant select, insert, update, delete on tables to authenticated;');
+    expectSqlToContain(migration, 'grant select on public.words, public.grammar_points, public.reading');
+  });
 });
 
