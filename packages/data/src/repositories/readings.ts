@@ -6,6 +6,7 @@ import type {
   ReadingDetail,
   ReadingFormat,
   ReadingGrammarTarget,
+  MarkReadOptions,
   ReadingProgress,
   ReadingResult,
   ReadingSentence,
@@ -22,7 +23,7 @@ const VALID_FORMATS = new Set(['short_text', 'story', 'dialogue']);
 const KNOWN_MIN_STABILITY_DAYS = 30;
 const READING_SELECT =
   'slug, hsk_level, format, title, topic, series, series_index, sentences, questions, target_words, target_grammar, audio_kind, audio_url';
-const READING_PROGRESS_SELECT = 'reading_slug, bookmarked, last_sentence, started_at, finished_at, updated_at';
+const READING_PROGRESS_SELECT = 'reading_slug, bookmarked, last_sentence, started_at, finished_at, pinyin_shown, updated_at';
 
 function normalizeQuestions(questions: unknown) {
   return (Array.isArray(questions) ? questions : []).map((question: any, index: number) => ({
@@ -617,6 +618,7 @@ function normalizeProgress(slug: string, row: any): ReadingProgress {
     last_sentence: Math.max(0, Number(row?.last_sentence ?? 0)),
     started_at: row?.started_at ? String(row.started_at) : null,
     finished_at: row?.finished_at ? String(row.finished_at) : null,
+    pinyin_shown: typeof row?.pinyin_shown === 'boolean' ? row.pinyin_shown : null,
     updated_at: String(row?.updated_at ?? new Date().toISOString()),
   };
 }
@@ -649,6 +651,7 @@ async function saveProgress(
       last_sentence: progress.last_sentence,
       started_at: progress.started_at ?? null,
       finished_at: progress.finished_at,
+      pinyin_shown: progress.pinyin_shown ?? null,
       updated_at: progress.updated_at,
     },
     { onConflict: 'user_id,reading_slug' },
@@ -698,7 +701,22 @@ export async function saveReadingProgress(
   );
 }
 
-export async function markRead(slug: string, client: HanyuClient): Promise<ReadingProgress> {
+export type { MarkReadOptions };
+
+export async function markRead(
+  slug: string,
+  clientOrOptions?: HanyuClient | MarkReadOptions,
+  maybeClient?: HanyuClient,
+): Promise<ReadingProgress> {
+  const options: MarkReadOptions =
+    clientOrOptions && typeof clientOrOptions === 'object' && 'from' in clientOrOptions
+      ? {}
+      : ((clientOrOptions as MarkReadOptions) ?? {});
+  const client: HanyuClient =
+    clientOrOptions && typeof clientOrOptions === 'object' && 'from' in clientOrOptions
+      ? (clientOrOptions as HanyuClient)
+      : maybeClient!;
+
   const userId = await getRequiredUserId(client);
   const current = await loadProgress(slug, userId, client);
   if (current.finished_at) {
@@ -710,7 +728,13 @@ export async function markRead(slug: string, client: HanyuClient): Promise<Readi
   const progress = await saveProgress(
     slug,
     userId,
-    { ...current, started_at: current.started_at ?? finishedAt, finished_at: finishedAt, updated_at: finishedAt },
+    {
+      ...current,
+      started_at: current.started_at ?? finishedAt,
+      finished_at: finishedAt,
+      pinyin_shown: typeof options.pinyinShown === 'boolean' ? options.pinyinShown : (current.pinyin_shown ?? null),
+      updated_at: finishedAt,
+    },
     client,
   );
 

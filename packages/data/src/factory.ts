@@ -45,6 +45,7 @@ import {
   getReadingProgress,
   getReadings,
   markRead,
+  type MarkReadOptions,
   saveReadingProgress,
   toggleBookmark,
 } from './repositories/readings';
@@ -267,7 +268,7 @@ export function createHanyuData(config: HanyuDataConfig) {
       },
       getReadingProgress: (slug: string) => getReadingProgress(slug, client),
       saveReadingProgress: (slug: string, lastSentence: number) => saveReadingProgress(slug, lastSentence, client),
-      markRead: (slug: string) => markRead(slug, client),
+      markRead: (slug: string, options?: MarkReadOptions) => markRead(slug, options, client),
       toggleBookmark: (slug: string) => toggleBookmark(slug, client),
       completeReading: (slug: string, answers: Record<string, string>) =>
         completeReading(slug, answers, client),

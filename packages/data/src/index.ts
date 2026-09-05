@@ -49,6 +49,7 @@ export type {
   ReadingGrammarTarget,
   ReadingQuestion,
   ReadingProgress,
+  MarkReadOptions,
   ReadingSentence,
   ReadingAudioKind,
   ReadingResult,

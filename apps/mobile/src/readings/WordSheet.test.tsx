@@ -4,6 +4,7 @@ import { WordSheet } from './WordSheet';
 
 const mockAddCard = jest.fn();
 const mockGetSettings = jest.fn();
+const mockRecordEvent = jest.fn();
 
 jest.mock('../lib/data', () => ({
   getData: () => ({
@@ -12,6 +13,9 @@ jest.mock('../lib/data', () => ({
     },
     settings: {
       getSettings: () => mockGetSettings(),
+    },
+    events: {
+      recordEvent: (...args: unknown[]) => mockRecordEvent(...args),
     },
   }),
 }));
@@ -36,6 +40,7 @@ describe('WordSheet', () => {
   beforeEach(() => {
     mockAddCard.mockReset();
     mockGetSettings.mockReset();
+    mockRecordEvent.mockReset();
   });
 
   it('muestra la glosa española cuando el idioma de apoyo es español', async () => {
@@ -125,5 +130,37 @@ describe('WordSheet', () => {
     });
 
     expect(screen.getAllByLabelText(/acepción/)[0].props.accessibilityLabel).toContain('hái');
+  });
+
+  it('registra la consulta al abrir la ficha de una palabra', async () => {
+    // "Consultas por 100 tokens" mide cuánto te cuesta leer. Sin este evento la
+    // métrica no existe, y era la única de las once sin emisor.
+    mockGetSettings.mockResolvedValue({ support_language: 'es' });
+
+    await render(<WordSheet text="还" senses={[huan]} readingLevel={2} sentence={null} readingId="r1" onClose={() => {}} />);
+
+    await waitFor(() =>
+      expect(mockRecordEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          kind: 'word_looked_up',
+          target_kind: 'word',
+          payload: expect.objectContaining({ reading_slug: 'r1' }),
+        }),
+      ),
+    );
+  });
+
+  it('no registra la consulta dos veces al re-renderizar', async () => {
+    // Un efecto sin dependencias correctas inflaría la métrica en silencio.
+    mockGetSettings.mockResolvedValue({ support_language: 'es' });
+
+    const view = await render(
+      <WordSheet text="还" senses={[huan]} readingLevel={2} sentence={null} readingId="r1" onClose={() => {}} />,
+    );
+    await view.rerender(
+      <WordSheet text="还" senses={[huan]} readingLevel={2} sentence={null} readingId="r1" onClose={() => {}} />,
+    );
+
+    await waitFor(() => expect(mockRecordEvent).toHaveBeenCalledTimes(1));
   });
 });

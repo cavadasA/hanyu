@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { toUserMessage, type Word, type WordContext } from '@hanyu/data';
 import { getData } from '../lib/data';
@@ -51,6 +51,23 @@ export function WordSheet({
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(() => new Set(senses.filter(sense => sense.in_srs).map(sense => sense.id)));
   const [error, setError] = useState<string | null>(null);
+  const looked = useRef<string | null>(null);
+
+  useEffect(() => {
+    const first = senses[0];
+    // La clave es la palabra, no el render: sin esto, cualquier re-render
+    // volvería a contar la consulta e inflaría la métrica en silencio.
+    if (!first || looked.current === String(first.id)) return;
+    looked.current = String(first.id);
+
+    void getData().events?.recordEvent?.({
+      kind: 'word_looked_up',
+      target_kind: 'word',
+      target_id: first.id,
+      skill: 'reading',
+      payload: { reading_slug: readingId, form: text },
+    });
+  }, [senses, readingId, text]);
 
   async function addCard(sense: ReadingSense) {
     if (added.has(sense.id) || adding) {

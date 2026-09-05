@@ -127,7 +127,7 @@ describe('ReadingDetailScreen', () => {
     expect(mockGetReading).toHaveBeenCalledWith('reading-1');
     expect(mockCompleteReading).toHaveBeenCalledTimes(1);
     expect(mockCompleteReading).toHaveBeenCalledWith('reading-1', { q1: 'B' });
-    expect(mockMarkRead).toHaveBeenCalledWith('reading-1');
+    expect(mockMarkRead).toHaveBeenCalledWith('reading-1', { pinyinShown: true });
   });
 
   it('avisa de que el audio es sintético cuando lo es', async () => {
@@ -299,7 +299,7 @@ describe('ReadingDetailScreen', () => {
     await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
     await fireEvent.press(view.getByRole('button', { name: 'Marcar como leída' }));
 
-    await waitFor(() => expect(mockMarkRead).toHaveBeenCalledWith('reading-1'));
+    await waitFor(() => expect(mockMarkRead).toHaveBeenCalledWith('reading-1', { pinyinShown: false }));
   });
 
   it('muestra el error al fallar el marcador', async () => {

@@ -139,7 +139,7 @@ export function ReadingDetailScreen() {
     setIsMarkingRead(true);
     setError(null);
     try {
-      setProgress(await readingsApi.current.markRead(id));
+      setProgress(await readingsApi.current.markRead(id, { pinyinShown: showPinyin }));
     } catch (caught) {
       setError(toUserMessage(caught));
     } finally {
@@ -159,7 +159,7 @@ export function ReadingDetailScreen() {
       const completion = await readingsApi.current.completeReading(id, answers);
       setResult(completion);
       if (typeof readingsApi.current.markRead === 'function') {
-        await readingsApi.current.markRead(id);
+        await readingsApi.current.markRead(id, { pinyinShown: showPinyin });
       }
     } catch (caught) {
       setError(toUserMessage(caught));

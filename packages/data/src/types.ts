@@ -303,7 +303,12 @@ export interface ReadingProgress {
   last_sentence: number;
   started_at?: string | null;
   finished_at: string | null;
+  pinyin_shown?: boolean | null;
   updated_at: string;
+}
+
+export interface MarkReadOptions {
+  pinyinShown?: boolean | null;
 }
 
 export interface ReadingDetail extends ReadingSummary {

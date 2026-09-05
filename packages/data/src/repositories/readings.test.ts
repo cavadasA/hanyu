@@ -234,6 +234,17 @@ describe('readings repository', () => {
     );
   });
 
+  it('guarda si el pinyin estaba visible al terminar la lectura', async () => {
+    const client = progressClient();
+
+    await markRead('shop-01-tea-and-coffee', { pinyinShown: true }, client as never);
+
+    expect((client as any).chains.reading_progress.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({ pinyin_shown: true }),
+      expect.anything(),
+    );
+  });
+
   it('el marcador se puede quitar', async () => {
     const client = progressClient({ bookmarked: true });
 
