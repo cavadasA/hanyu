@@ -14,3 +14,4 @@ export { coverageOf, type Coverage, type CoverageToken } from './reading/coverag
 export { validateReading, type IssueKind, type ReadingGrammarTarget, type ReadingQuestion, type ReadingSentence, type ReadingSource, type ValidationContext, type ValidationIssue } from './reading/validate';
 export * from './planner/rank';
 export * from './planner/plan';
+export * from './analytics/retention';
