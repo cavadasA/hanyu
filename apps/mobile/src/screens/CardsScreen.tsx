@@ -62,7 +62,7 @@ interface SessionStats {
 
 export default function CardsScreen() {
   const { colors } = useTheme();
-  const { service, ready, requestRetention } = useOfflineReview();
+  const { service, ready, requestRetention, sync } = useOfflineReview();
   const router = useRouter();
   const { deckId } = useLocalSearchParams<{ deckId?: string }>();
   const focusedDeckId = typeof deckId === 'string' && deckId.length > 0 ? deckId : null;
@@ -391,6 +391,25 @@ export default function CardsScreen() {
       void clearReviewSession();
       setPhase('complete');
 
+      if (sync) {
+        void Promise.resolve(sync())
+          .then(async () => {
+            try {
+              const dashboard = await getData().stats.getDashboard();
+              setByStatus(dashboard.cards?.by_status ?? {});
+              if (!focusedDeckId) {
+                setDeckSize(dashboard.cards?.total ?? 0);
+              }
+              setDeckTotal(dashboard.cards?.total ?? 0);
+            } catch {
+              // non-blocking
+            }
+          })
+          .catch(() => {
+            // non-blocking
+          });
+      }
+
       if (studyMode !== 'learn') {
         try {
           await getData().stats.logTime(Date.now() - sessionStartedAt.current);
@@ -468,8 +487,27 @@ export default function CardsScreen() {
           </Card>
 
           <View style={styles.completeActions}>
-            <Button label="Review again" variant="outline" onPress={() => void load()} />
-            <Button label="Back to Today" variant="primary" onPress={() => router.push('/today')} />
+            <Button
+              label="Review again"
+              variant="outline"
+              onPress={() => {
+                if (sync) {
+                  void Promise.resolve(sync())
+                    .then(() => void load())
+                    .catch(() => void load());
+                } else {
+                  void load();
+                }
+              }}
+            />
+            <Button
+              label="Back to Today"
+              variant="primary"
+              onPress={() => {
+                if (sync) void Promise.resolve(sync()).catch(() => {});
+                router.push('/today');
+              }}
+            />
             {focusedDeckId ? (
               <Button
                 label="Back to deck"

@@ -64,7 +64,7 @@ jest.mock('../offline/OfflineReviewProvider', () => ({
     requestRetention: mockRequestRetention,
     pendingCount: 0,
     refreshPendingCount: jest.fn(),
-    sync: jest.fn(),
+    sync: jest.fn().mockResolvedValue(null),
     syncing: false,
     lastSummary: null,
   }),

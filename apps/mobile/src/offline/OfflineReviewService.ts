@@ -43,6 +43,8 @@ export interface OfflineReviewServiceDeps {
    * resto de la E/S para que el servicio siga siendo probable en Node puro.
    */
   revertReviewOnline: (reviewId: string) => Promise<{ outcome: RevertOutcome; card: VersionedCard | null }>;
+  /** Optional callback fired synchronously after a review is enqueued in the offline store. */
+  onEnqueued?: () => void;
 }
 
 export class OfflineReviewService {
@@ -59,6 +61,7 @@ export class OfflineReviewService {
   private readonly revertReviewOnline: (
     reviewId: string,
   ) => Promise<{ outcome: RevertOutcome; card: VersionedCard | null }>;
+  private readonly onEnqueued?: () => void;
   /** Per-card-id synchronous double-tap guard. */
   private readonly inFlight = new Set<string>();
   private _lastDeckSize: number | null = null;
@@ -80,6 +83,7 @@ export class OfflineReviewService {
     this.uuid = deps.uuid;
     this.params = deps.params;
     this.revertReviewOnline = deps.revertReviewOnline;
+    this.onEnqueued = deps.onEnqueued;
   }
 
   /**
@@ -185,6 +189,7 @@ export class OfflineReviewService {
       // Do not return / mutate screen state until the store write succeeds.
       // If enqueueAndProject throws, we let the error propagate unchanged.
       await this.store.enqueueAndProject(event, projected);
+      this.onEnqueued?.();
       return { card: projected, reviewId: event.review_id };
     } finally {
       // Always release the guard — whether the write succeeded or threw.

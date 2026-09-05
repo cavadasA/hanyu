@@ -24,6 +24,7 @@ import {
   loadReviewSession,
   type ReviewSessionSnapshot,
 } from '../lib/reviewSessionStore';
+import { useOfflineReview } from '../offline/OfflineReviewProvider';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 import { ActiveSessionBanner } from '../ui/ActiveSessionBanner';
@@ -221,6 +222,7 @@ function Reveal({ index = 0, children }: { index?: number; children: ReactNode }
 
 export default function TodayScreen() {
   const { colors } = useTheme();
+  const { sync } = useOfflineReview();
   const router = useRouter();
   const [today, setToday] = useState<TodayPayload | null>(null);
   const [streak, setStreak] = useState<StreakPayload>({ current: 0, longest: 0 });
@@ -233,6 +235,14 @@ export default function TodayScreen() {
 
   const load = useCallback(async () => {
     setError('');
+
+    if (sync) {
+      try {
+        await sync();
+      } catch {
+        // Offline or sync failure shouldn't block Today load
+      }
+    }
 
     const data = getData();
 
@@ -259,7 +269,7 @@ export default function TodayScreen() {
 
     setSessionSnapshot(await loadReviewSession());
     setLoading(false);
-  }, []);
+  }, [sync]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);

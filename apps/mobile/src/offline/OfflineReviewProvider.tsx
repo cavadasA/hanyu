@@ -109,6 +109,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
     if (loading) return; // Wait for session to resolve before doing anything.
 
     let cancelled = false;
+    let syncTimer: any = null;
 
     if (!userId) {
       // No user — nothing to open; just ensure state is reset.
@@ -148,6 +149,23 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
         return;
       }
 
+      const engine = new ReviewSyncEngine({
+        store: store as ReviewStore,
+        reviewCardEvent: (event) => getData().flashcards.reviewCardEvent(event),
+      });
+      syncEngineRef.current = engine;
+
+      const triggerAutoSync = () => {
+        if (syncTimer) clearTimeout(syncTimer);
+        syncTimer = setTimeout(() => {
+          void engine.sync().then(async (summary) => {
+            setLastSummary(summary);
+            const count = await svc.pendingCount();
+            setPendingCount(count);
+          }).catch(() => undefined);
+        }, 150);
+      };
+
       const svc = new OfflineReviewService({
         store,
         buildQueueOnline: ({ skill, deckId, mode }) =>
@@ -157,12 +175,9 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
         uuid: () => randomUUID(),
         params: () => paramsRef.current,
         revertReviewOnline: (reviewId: string) => getData().flashcards.revertReview(reviewId),
+        onEnqueued: triggerAutoSync,
       });
       reviewStoreRef.current = store as ReviewStore;
-      syncEngineRef.current = new ReviewSyncEngine({
-        store: store as ReviewStore,
-        reviewCardEvent: (event) => getData().flashcards.reviewCardEvent(event),
-      });
       serviceRef.current = svc;
       setReadingCacheStore(store as ReviewStore);
       setService(svc);
@@ -174,6 +189,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
 
     return () => {
       cancelled = true;
+      if (syncTimer) clearTimeout(syncTimer);
 
       const svc = serviceRef.current;
       if (!svc) return;
