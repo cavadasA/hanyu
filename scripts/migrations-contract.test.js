@@ -329,4 +329,17 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'grant execute on function public.build_review_queue_mode(text, uuid, public.learning_skill, integer) to authenticated;');
     expectSqlToContain(migration, 'grant execute on function public.unit_progress(numeric) to authenticated;');
   });
+
+  it('desambigua referencias a deck_id en create_study_plan y add_deck_from_template', () => {
+    const migration = readMigration('2026090604_fix_ambiguous_deck_id.sql');
+
+    expectSqlToContain(migration, '#variable_conflict use_column');
+    expectSqlToContain(migration, 'create or replace function public.create_study_plan(p_levels int[] default array[1, 2])');
+    expectSqlToContain(migration, 'create or replace function public.add_deck_from_template(p_template_id uuid)');
+    expectSqlToContain(migration, 'create or replace function public.submit_diagnostic(p_results jsonb)');
+    expectSqlToContain(migration, 'grant execute on function public.create_study_plan(int[]) to authenticated;');
+    expectSqlToContain(migration, 'grant execute on function public.add_deck_from_template(uuid) to authenticated;');
+    expectSqlToContain(migration, 'grant execute on function public.submit_diagnostic(jsonb) to authenticated;');
+  });
 });
+
