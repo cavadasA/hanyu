@@ -306,7 +306,17 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 **Cierra:** §6 gaps 5–15; §6 mejoras 4–7; §10 P3.2, P3.4–P3.7.
 
 ## Plan 9 — Analítica de aprendizaje
-**Tamaño:** M · **Depende de:** Planes 4, 5, 6, 8
+**Tamaño:** M · **Depende de:** todos los anteriores, todos ejecutados
+
+> **Escrito:** `docs/superpowers/plans/2026-09-02-plan-9-analitica.md`, 6 tareas. **Es el último.** Con él, los catorce documentos ejecutables están escritos.
+>
+> Se escribió el último a propósito: su valor entero está en medir lo que los demás producen, y hasta que 6 y 8 no emitieron sus eventos, más de la mitad de las métricas habrían devuelto cero por construcción.
+>
+> **Al verificar el estado apareció el único hueco de recogida que quedaba:** `word_looked_up` estaba en el enum desde el Plan 1C y **no lo emitía nadie**, así que «consultas por 100 tokens» no existía. Va como Tarea 1, junto con `reading_progress.pinyin_shown`: sin esa columna, «velocidad de lectura sin pinyin» promedia leer hanzi con leer una transcripción y no mide ninguna de las dos.
+>
+> De las once métricas del §12, **nueve salen enteras, una necesitaba ese evento, y una no se puede medir**: la comprensión inferencial no existe porque el validador del Plan 7 exige evidencia textual en toda pregunta, lo que las hace todas literales por construcción. La pantalla lo dice en vez de mostrar un hueco.
+>
+> Regla que atraviesa el plan: **ninguna métrica sin datos muestra un cero**. Cero repasos no es cero retención, y un 0 % se lee como «lo haces mal» en vez de como «no lo mido».
 
 Sustituir "actividades completadas" por métricas que representan aprendizaje: retención observada a 7 y 30 días; vocabulario HSK 2 demostrado por habilidad; gramática demostrada en input y en producción; porcentaje conocido de cada lectura; velocidad de lectura sin pinyin; consultas por 100 tokens; comprensión literal e inferencial; precisión de dictado y producción; errores recurrentes; cobertura del syllabus; rendimiento en simulacros.
 
