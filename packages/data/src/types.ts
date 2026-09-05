@@ -461,3 +461,39 @@ export interface TodayPayload {
   };
   steps: PlanStep[];
 }
+
+export interface LearningReportReview {
+  occurred_at: string;
+  grade: string;
+  skill: string;
+  phase_before: string | null;
+}
+
+export interface LearningReportAttempt {
+  occurred_at: string;
+  skill: string;
+  correct: boolean;
+  mode: string | null;
+}
+
+export interface LearningReportReadingSession {
+  slug: string;
+  seconds: number;
+  pinyin_shown: boolean | null;
+}
+
+export interface LearningReportSkillState {
+  target_id: number;
+  skill: string;
+  stability: number | null;
+  suspended: boolean;
+  last_reviewed_at: string | null;
+}
+
+export interface LearningReport {
+  reviews: LearningReportReview[];
+  attempts: LearningReportAttempt[];
+  lookups: number;
+  reading_sessions: LearningReportReadingSession[];
+  skill_states: LearningReportSkillState[];
+}

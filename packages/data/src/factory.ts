@@ -57,7 +57,7 @@ import {
   setSkillSuspended,
   upsertSkillState,
 } from './repositories/skills';
-import { getDashboard, getStreak, logTime } from './repositories/stats';
+import { getDashboard, getLearningReport, getStreak, logTime } from './repositories/stats';
 import { getToday } from './repositories/today';
 import { getWord, getWords } from './repositories/words';
 import type {
@@ -279,6 +279,7 @@ export function createHanyuData(config: HanyuDataConfig) {
     },
     stats: {
       getDashboard: () => getDashboard(client),
+      getLearningReport: (days?: number) => getLearningReport(client, days),
       getStreak: () => getStreak(client),
       logTime: (ms: number) => logTime(ms, client),
     },

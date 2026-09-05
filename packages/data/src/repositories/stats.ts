@@ -1,5 +1,6 @@
 import type { HanyuClient } from '../client';
 import type { Database } from '../database.types';
+import type { LearningReport } from '../types';
 import { getFlashcardStats } from './flashcards';
 import {
   callRpcVariants,
@@ -295,4 +296,23 @@ export async function logTime(ms: number, client: HanyuClient) {
   }
 
   return { time_spent_ms: safeMs };
+}
+
+export async function getLearningReport(
+  client: HanyuClient,
+  days: number = 90,
+): Promise<LearningReport> {
+  const { data, error } = await (client.rpc as any)('learning_report', { p_days: days });
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load learning report');
+  }
+
+  const payload = (typeof data === 'object' && data !== null ? data : {}) as Record<string, any>;
+  return {
+    reviews: Array.isArray(payload.reviews) ? payload.reviews : [],
+    attempts: Array.isArray(payload.attempts) ? payload.attempts : [],
+    lookups: typeof payload.lookups === 'number' ? payload.lookups : Number(payload.lookups || 0),
+    reading_sessions: Array.isArray(payload.reading_sessions) ? payload.reading_sessions : [],
+    skill_states: Array.isArray(payload.skill_states) ? payload.skill_states : [],
+  };
 }
