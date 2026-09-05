@@ -193,7 +193,7 @@ describe('ReadingDetailScreen', () => {
     expect(view.getByTestId('sentence-0').props.accessibilityState.selected).toBe(true);
   });
 
-  it('guarda la última frase que realmente empezó a sonar', async () => {
+  it('guarda la última frase que realmente empezó a sonar sin retroceder', async () => {
     const sentenceCallbacks: Array<{ onSentence(index: number | null): void }> = [];
     mockGetReading.mockResolvedValue(readingForAudio());
     mockSpeakSentences.mockImplementation((_sentences, fromIndex, options) => {
@@ -207,9 +207,14 @@ describe('ReadingDetailScreen', () => {
     await fireEvent.press(view.getByLabelText('Reproducir'));
     await act(async () => {
       sentenceCallbacks[0].onSentence(1);
+      sentenceCallbacks[0].onSentence(0);
     });
 
     expect(mockSaveReadingProgress).toHaveBeenCalledWith('reading-1', 1);
+    expect(mockSaveReadingProgress.mock.calls).toEqual([
+      ['reading-1', 0],
+      ['reading-1', 1],
+    ]);
   });
 
   it('empieza por la frase que se toca y aplica la velocidad elegida', async () => {

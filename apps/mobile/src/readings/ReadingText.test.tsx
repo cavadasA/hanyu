@@ -99,4 +99,27 @@ describe('ReadingText', () => {
     expect(view.getAllByRole('button', { name: /Añadir acepción/ })[0].props.accessibilityLabel)
       .toContain('hái');
   });
+
+  it('reinicia el estado de la ficha al cambiar de palabra', async () => {
+    const first = { ...tokens[0], word: { ...tokens[0].word!, in_srs: false } };
+    const second = {
+      id: 't5',
+      text: '谢谢',
+      type: 'word' as const,
+      word: { ...tokens[0].word!, id: 2, hanzi: '谢谢', pinyin: 'xie xie', in_srs: true },
+    };
+    const view = await render(
+      <ReadingText
+        sentences={[{ zh: '你好谢谢', pinyin: '', es: '', tokens: [first, second] }]}
+        showPinyin={false}
+        readingId="reading-1"
+      />,
+    );
+
+    await fireEvent.press(view.getByRole('button', { name: '你好' }));
+    await fireEvent.press(view.getByRole('button', { name: '谢谢' }));
+
+    expect(view.getByRole('button', { name: /Añadir acepción 1: xie xie/ }).props.accessibilityState)
+      .toMatchObject({ disabled: true });
+  });
 });

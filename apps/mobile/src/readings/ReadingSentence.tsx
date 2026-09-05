@@ -40,8 +40,39 @@ export function ReadingSentence({
       accessibilityState={{ selected: active }}
       style={styles.sentence}
     >
+      <View style={styles.line}>
+        {sentenceTokens.map((token) =>
+          token.type === 'punctuation' ? (
+            <Text key={token.id} style={[styles.token, { color: colors.text }]}>
+              {token.text}
+            </Text>
+          ) : (
+            <Pressable
+              key={token.id}
+              accessibilityRole="button"
+              accessibilityLabel={token.text}
+              accessibilityHint={
+                token.status === 'unknown' || token.type === 'unknown'
+                  ? 'Esta palabra no está en tus tarjetas.'
+                  : undefined
+              }
+              onPress={() => onSelectToken(token)}
+            >
+              <Text
+                style={[
+                  styles.token,
+                  { color: colorForToken(token, colors) },
+                  token.status === 'unknown' || token.type === 'unknown' ? styles.unknown : null,
+                ]}
+              >
+                {token.text}
+              </Text>
+            </Pressable>
+          ),
+        )}
+      </View>
+
       <Pressable
-        accessible={false}
         accessibilityRole="button"
         accessibilityLabel="Traducir la frase"
         accessibilityState={{ selected: translated }}
@@ -50,37 +81,7 @@ export function ReadingSentence({
           setTranslated(value => !value);
         }}
       >
-        <View style={styles.line}>
-          {sentenceTokens.map((token) =>
-            token.type === 'punctuation' ? (
-              <Text key={token.id} style={[styles.token, { color: colors.text }]}>
-                {token.text}
-              </Text>
-            ) : (
-              <Pressable
-                key={token.id}
-                accessibilityRole="button"
-                accessibilityLabel={token.text}
-                accessibilityHint={
-                  token.status === 'unknown' || token.type === 'unknown'
-                    ? 'Esta palabra no está en tus tarjetas.'
-                    : undefined
-                }
-                onPress={() => onSelectToken(token)}
-              >
-                <Text
-                  style={[
-                    styles.token,
-                    { color: colorForToken(token, colors) },
-                    token.status === 'unknown' || token.type === 'unknown' ? styles.unknown : null,
-                  ]}
-                >
-                  {token.text}
-                </Text>
-              </Pressable>
-            ),
-          )}
-        </View>
+        <Text style={[styles.translate, { color: colors.textMuted }]}>Traducir</Text>
       </Pressable>
 
       {onPlay ? (
@@ -126,6 +127,7 @@ const styles = StyleSheet.create({
   line: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end' },
   token: { fontSize: t.fontSize.xl, lineHeight: 38, marginRight: t.spacing.xs },
   unknown: { textDecorationLine: 'underline', textDecorationStyle: 'dotted' },
+  translate: { fontSize: t.fontSize.xs, marginTop: t.spacing.xs, fontWeight: '700' },
   play: { fontSize: t.fontSize.xs, marginTop: t.spacing.xs, fontWeight: '700' },
   pinyin: { fontSize: t.fontSize.xs, marginTop: 2 },
   translation: { fontSize: t.fontSize.md, lineHeight: 22, marginTop: t.spacing.xs },

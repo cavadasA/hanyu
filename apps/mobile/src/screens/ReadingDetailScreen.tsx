@@ -88,17 +88,18 @@ export function ReadingDetailScreen() {
   }
 
   function saveSentenceProgress(index: number) {
+    const nextIndex = Math.max(progress?.last_sentence ?? 0, progressSaveIndex.current ?? 0, index);
     const updatedAt = new Date().toISOString();
     setProgress(current => current ? {
       ...current,
-      last_sentence: index,
+      last_sentence: Math.max(current.last_sentence, nextIndex),
       started_at: current.started_at ?? updatedAt,
       updated_at: updatedAt,
     } : current);
     if (!id || typeof readingsApi.current.saveReadingProgress !== 'function') return;
-    if (progressSaveIndex.current === index) return;
-    progressSaveIndex.current = index;
-    void Promise.resolve(readingsApi.current.saveReadingProgress(id, index)).catch(caught => {
+    if (progressSaveIndex.current === nextIndex) return;
+    progressSaveIndex.current = nextIndex;
+    void Promise.resolve(readingsApi.current.saveReadingProgress(id, nextIndex)).catch(caught => {
       setError(toUserMessage(caught));
     });
   }

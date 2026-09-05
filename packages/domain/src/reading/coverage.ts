@@ -14,11 +14,11 @@ export function coverageOf(tokens: readonly CoverageToken[], known: ReadonlySet<
   const forms = new Set<number>();
   const unknownForms = new Set<string>();
 
-  for (const token of tokens) {
+  for (const [index, token] of tokens.entries()) {
     if (token.type === 'punctuation') continue;
 
     if (token.word_id === null) {
-      unknownForms.add(token.form ?? token.type);
+      unknownForms.add(token.form ?? `unknown:${index}`);
       continue;
     }
 

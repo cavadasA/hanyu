@@ -42,6 +42,7 @@ export function ReadingText({
 
       {selected ? (
         <WordSheet
+          key={selected.token.id}
           text={selected.token.text}
           senses={(selected.token.senses ?? (selected.token.word ? [selected.token.word] : [])) as ReadingSense[]}
           sentence={{ text: selected.sentence.zh, tokens: selected.sentence.tokens }}

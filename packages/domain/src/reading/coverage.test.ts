@@ -40,6 +40,19 @@ describe('coverageOf', () => {
     });
   });
 
+  it('no colapsa tokens desconocidos cuando no traen forma', () => {
+    const unknown = [
+      { word_id: null, type: 'unknown' as const },
+      { word_id: null, type: 'unknown' as const },
+    ];
+
+    expect(coverageOf(unknown, new Set())).toEqual({
+      ratio: 0,
+      known_count: 0,
+      unknown_count: 2,
+    });
+  });
+
   it('devuelve cobertura cero sin reventar en un texto sin palabras', () => {
     expect(coverageOf([{ word_id: null, type: 'punctuation' }], new Set()).ratio).toBe(0);
   });
