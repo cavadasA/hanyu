@@ -549,6 +549,22 @@ export default function TodayScreen() {
           </Reveal>
 
           <Reveal index={2}>
+            <Card style={{ gap: tokens.spacing.sm }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Progreso real</Text>
+                <Button
+                  label="Ver analítica"
+                  variant="outline"
+                  onPress={() => router.push('/progress')}
+                />
+              </View>
+              <Text style={[styles.taskSub, { color: colors.textMuted }]}>
+                Retención observada, dominio por habilidad y velocidad de lectura.
+              </Text>
+            </Card>
+          </Reveal>
+
+          <Reveal index={3}>
             <Card>
               <Text style={[styles.sectionTitle, { color: colors.text }]}>Deck breakdown</Text>
               <StatusBarChart byStatus={cards} total={cardTotal} />
