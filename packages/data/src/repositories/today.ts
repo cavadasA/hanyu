@@ -1,7 +1,37 @@
 import type { HanyuClient } from '../client';
-import { buildDailyPlan } from '@hanyu/domain';
+import { buildDailyPlan, type LearnerModel } from '@hanyu/domain';
+import type { HskLevel } from '../types';
+import { getReadingPlannerInput } from './readings';
 import { getSettings } from './settings';
 import { callRpcVariants, createRepositoryError, getRequiredUserId, toDateString } from './shared';
+
+// El planificador necesita el catálogo entero para puntuarlo, pero la respuesta
+// de Today solo publica la ficha de la siguiente lectura. Se proyecta a las
+// mismas columnas de antes para no arrastrar sus frases y preguntas completas
+// en cada carga de la pantalla de inicio.
+const NEXT_READING_FIELDS = [
+  'slug',
+  'title',
+  'hsk_level',
+  'format',
+  'topic',
+  'series',
+  'series_index',
+  'audio_kind',
+  'audio_url',
+] as const;
+
+function toNextReading(row: Record<string, unknown> | null | undefined) {
+  if (!row) return null;
+
+  const next: Record<string, unknown> = {};
+  for (const field of NEXT_READING_FIELDS) {
+    if (row[field] !== undefined) {
+      next[field] = row[field];
+    }
+  }
+  return next;
+}
 
 function defaultTodayStats() {
   return {
@@ -66,30 +96,18 @@ export async function getToday(client: HanyuClient) {
   const today = toDateString();
   const currentLevel = Number(settings.current_level ?? 2);
 
-  const [deckSizeRpc, dueRpc, dueStateRpc, statsResult, readingResult, unitData, queueData] = await Promise.all([
+  const [deckSizeRpc, dueRpc, dueStateRpc, statsResult, readingInput, unitData, queueData] = await Promise.all([
     callRpcVariants(client, 'count_deck_cards', [{ p_deck_id: null, p_due_only: false }]),
     callRpcVariants(client, 'count_deck_cards', [{ p_deck_id: null, p_due_only: true }]),
     optionalRpc(client, 'count_due_cards_by_state', { p_deck_id: null, p_skill: 'recognition' }),
     client.from('user_stats').select('*').eq('user_id', userId).eq('date', today).maybeSingle(),
-    client
-      .from('reading')
-      .select('slug, title, hsk_level, format, topic, series, series_index, audio_kind, audio_url')
-      .eq('hsk_level', currentLevel)
-      .order('series', { ascending: true, nullsFirst: false })
-      .order('series_index', { ascending: true, nullsFirst: false })
-      .order('slug', { ascending: true })
-      .limit(1)
-      .maybeSingle(),
+    getReadingPlannerInput(currentLevel as HskLevel, userId, client),
     optionalRpc(client, 'active_unit', {}),
     loadLearnQueue(client),
   ]);
 
   if (statsResult.error) {
     throw createRepositoryError(statsResult.error, 'Failed to load daily stats');
-  }
-
-  if (readingResult.error) {
-    throw createRepositoryError(readingResult.error, 'Failed to load next reading');
   }
 
   const todayStats = {
@@ -108,7 +126,20 @@ export async function getToday(client: HanyuClient) {
     regular_due_count?: number;
     relearning_count?: number;
   } | null;
-  const queue = (queueData ?? []) as Array<{ is_new: boolean; fsrs_state: string }>;
+  const queue = (queueData ?? []) as Array<{ is_new: boolean; fsrs_state: string; word_id?: number }>;
+
+  // Lo que se está aprendiendo ahora sale de la cola de aprendizaje, que ya
+  // está cargada: son las tarjetas que el usuario tiene abiertas hoy. La unidad
+  // activa daría el temario, no lo que de verdad está en juego esta sesión.
+  const learner: LearnerModel = {
+    target_word_ids: [...new Set(
+      queue.map(row => Number(row.word_id)).filter(id => Number.isFinite(id)),
+    )],
+    known_word_ids: readingInput.known_word_ids,
+    recent_content_ids: readingInput.recent_content_ids,
+    covered_topics: readingInput.covered_topics,
+  };
+
   const plan = buildDailyPlan({
     due_reviews: dueStateRow ? Number(dueStateRow.regular_due_count ?? 0) : countFromRpc(dueRpc),
     relearning: dueStateRow ? Number(dueStateRow.relearning_count ?? 0) : 0,
@@ -129,12 +160,26 @@ export async function getToday(client: HanyuClient) {
         }
       : null,
     new_allowance: queue.filter((row) => row.is_new).length,
-    // El catálogo de contenido se consulta aquí cuando exista; mientras tanto
-    // el planificador devuelve el hueco declarado en vez de inventar material.
-    readings: [],
+    readings: readingInput.rankable,
+    // Hay catálogo pero no se ha podido puntuar: el paso lo dice en vez de
+    // afirmar que no hay lecturas.
+    readings_unavailable: readingInput.rows.length > 0 && readingInput.rankable.length === 0,
+    // El banco de ejercicios todavía no se rankea: ese paso sigue declarando su
+    // hueco en vez de inventar material.
     exercises: [],
     exam_date: (settings as { exam_date?: string | null }).exam_date ?? null,
+    learner,
   });
+
+  const chosen = plan.steps.find(step => step.kind === 'reading' && step.status === 'ready');
+  const chosenSlug = chosen ? String((chosen.payload as { id?: unknown })?.id ?? '') : '';
+  // La tarjeta de hoy enseña la lectura que el plan eligió. Cuando el plan no
+  // tiene ninguna, la primera sin terminar; una lectura ya leída no vuelve a
+  // ofrecerse como "la siguiente".
+  const nextReading =
+    readingInput.rows.find(row => String(row.slug) === chosenSlug) ??
+    readingInput.rows.find(row => !readingInput.finished_slugs.includes(String(row.slug))) ??
+    null;
 
   return {
     profile: {
@@ -155,7 +200,7 @@ export async function getToday(client: HanyuClient) {
       target: 1,
       completed: Number((todayStats as any).readings_done || 0),
       level: currentLevel,
-      next: readingResult.data || null,
+      next: toNextReading(nextReading),
     },
     progress: {
       completed_blocks: blocks.filter(Boolean).length,

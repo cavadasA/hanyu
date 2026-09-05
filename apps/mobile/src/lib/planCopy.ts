@@ -32,6 +32,10 @@ export function unavailableToText(
       return kind === 'reading'
         ? 'Hay lecturas, pero ninguna encaja con tu nivel ahora'
         : 'Hay ejercicios, pero ninguno encaja con tu nivel ahora';
+    case 'content_unavailable':
+      return kind === 'reading'
+        ? 'No se ha podido preparar el catálogo de lecturas ahora mismo'
+        : 'No se ha podido preparar el catálogo de ejercicios ahora mismo';
     case 'no_exam_date':
       return 'Añade una fecha de examen en tu perfil para activar este formato';
     case 'daily_limit_reached':

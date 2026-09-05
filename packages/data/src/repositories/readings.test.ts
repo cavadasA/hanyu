@@ -1,5 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
-import { completeReading, getReading, getReadingProgress, getReadings, markRead, toggleBookmark } from './readings';
+import {
+  completeReading,
+  getReading,
+  getReadingPlannerInput,
+  getReadingProgress,
+  getReadings,
+  markRead,
+  toggleBookmark,
+} from './readings';
 
 function readingClient(rows: unknown[]) {
   const query: Record<string, any> = {
@@ -304,3 +312,133 @@ function progressClient(progress: Record<string, unknown> = {}) {
     from: vi.fn((table: string) => chains[table]),
   };
 }
+
+function plannerClient(options: {
+  readings?: any[];
+  tokensByReading?: Record<string, any[]>;
+  states?: any[];
+  progress?: any[];
+  events?: any[];
+} = {}) {
+  const table = (rows: unknown[]) => {
+    const query: Record<string, any> = {
+      select: vi.fn(() => query),
+      eq: vi.fn(() => query),
+      in: vi.fn(() => query),
+      gte: vi.fn(() => query),
+      order: vi.fn(() => query),
+      limit: vi.fn(() => query),
+      then: (resolve: (value: unknown) => unknown) =>
+        Promise.resolve({ data: rows, error: null }).then(resolve),
+    };
+    return query;
+  };
+
+  const chains: Record<string, any> = {
+    reading: table(options.readings ?? []),
+    learner_skill_state: table(options.states ?? []),
+    reading_progress: table(options.progress ?? []),
+    learning_event: table(options.events ?? []),
+  };
+
+  return {
+    chains,
+    from: vi.fn((name: string) => chains[name]),
+    functions: {
+      invoke: vi.fn().mockResolvedValue({
+        data: { tokens_by_reading: options.tokensByReading ?? {} },
+        error: null,
+      }),
+    },
+  };
+}
+
+describe('getReadingPlannerInput', () => {
+  const catalog = [
+    { slug: 'r1', hsk_level: 2, title: 'Té y café', topic: 'compras', target_words: ['比'], sentences: [] },
+    { slug: 'r2', hsk_level: 2, title: 'La biblioteca', topic: 'lugares', target_words: [], sentences: [] },
+  ];
+
+  it('da al planificador el vocabulario real de cada lectura, sin repetir formas', async () => {
+    // rankContent divide sobre word_ids.length: contar 我 tres veces bajaría la
+    // comprensibilidad de un texto que en realidad usa dos palabras distintas.
+    const client = plannerClient({
+      readings: catalog,
+      tokensByReading: {
+        r1: [
+          { id: 't0', text: '我', type: 'word', word: { id: 1, hanzi: '我' } },
+          { id: 't1', text: '我', type: 'word', word: { id: 1, hanzi: '我' } },
+          { id: 't2', text: '比', type: 'word', word: { id: 2, hanzi: '比' } },
+          { id: 't3', text: '。', type: 'punctuation', word: null },
+        ],
+        r2: [{ id: 't0', text: '书', type: 'word', word: { id: 3, hanzi: '书' } }],
+      },
+    });
+
+    const input = await getReadingPlannerInput(2, 'u1', client as never);
+
+    expect(input.rankable).toEqual([
+      { id: 'r1', topic: 'compras', word_ids: [1, 2] },
+      { id: 'r2', topic: 'lugares', word_ids: [3] },
+    ]);
+  });
+
+  it('define conocido igual que la cobertura de la lista', async () => {
+    // La lista dice "94 % conocido" con el umbral de estabilidad; si el
+    // planificador usara otro, propondría una lectura contradiciendo su etiqueta.
+    const client = plannerClient({
+      readings: catalog,
+      tokensByReading: {
+        r1: [
+          { id: 't0', text: '我', type: 'word', word: { id: 1, hanzi: '我' } },
+          { id: 't1', text: '书', type: 'word', word: { id: 3, hanzi: '书' } },
+        ],
+      },
+      states: [{ target_id: 1, stability: 31 }, { target_id: 3, stability: 4 }],
+    });
+
+    const input = await getReadingPlannerInput(2, 'u1', client as never);
+
+    expect(input.known_word_ids).toEqual([1]);
+  });
+
+  it('saca las lecturas vistas hace poco del evento que markRead escribe', async () => {
+    const client = plannerClient({
+      readings: catalog,
+      tokensByReading: { r1: [], r2: [] },
+      events: [{ payload: { reading_slug: 'r1' } }, { payload: { reading_slug: 'r1' } }],
+    });
+
+    const input = await getReadingPlannerInput(2, 'u1', client as never);
+
+    expect(input.recent_content_ids).toEqual(['r1']);
+  });
+
+  it('cuenta como cubierto el tema de una lectura terminada, no el de una empezada', async () => {
+    const client = plannerClient({
+      readings: catalog,
+      tokensByReading: { r1: [], r2: [] },
+      progress: [
+        { reading_slug: 'r1', finished_at: '2026-09-04T10:00:00Z' },
+        { reading_slug: 'r2', finished_at: null },
+      ],
+    });
+
+    const input = await getReadingPlannerInput(2, 'u1', client as never);
+
+    expect(input.finished_slugs).toEqual(['r1']);
+    expect(input.covered_topics).toEqual(['compras']);
+  });
+
+  it('no inventa vocabulario cuando el tokenizador no responde', async () => {
+    // Sin word_ids no se puede rankear. Rankear con la lista vacía daría valor
+    // cero a todas y el planificador elegiría por orden alfabético.
+    const client = plannerClient({ readings: catalog });
+    client.functions.invoke = vi.fn().mockResolvedValue({ data: null, error: { message: 'down' } });
+
+    const input = await getReadingPlannerInput(2, 'u1', client as never);
+
+    expect(input.rankable).toEqual([]);
+    expect(input.rows).toHaveLength(2);
+  });
+});

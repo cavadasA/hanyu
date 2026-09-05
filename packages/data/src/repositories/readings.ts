@@ -346,6 +346,165 @@ async function incrementReadingStat(client: HanyuClient, userId: string) {
   }
 }
 
+//
+// Lo que el planificador del Plan 5B necesita para decidir si hoy toca leer, y
+// cuál. Vive aquí y no en `today` porque las tres definiciones que usa —el
+// vocabulario de una lectura, qué cuenta como palabra conocida, y qué lectura
+// se dio por terminada— ya viven aquí y tienen que seguir significando lo
+// mismo: la etiqueta que el usuario lee en la lista sale de estas mismas
+// funciones. Duplicarlas dejaría que la cifra mostrada y la decisión tomada
+// divergieran sobre la misma lectura.
+const RECENT_READING_WINDOW_DAYS = 30;
+
+export interface ReadingPlannerInput {
+  /** Las filas del catálogo, en el orden del catálogo. */
+  rows: any[];
+  /** Lo que `rankContent` puntúa. Vacío si no se pudo tokenizar. */
+  rankable: Array<{ id: string; topic: string | null; word_ids: number[] }>;
+  known_word_ids: number[];
+  recent_content_ids: string[];
+  covered_topics: string[];
+  finished_slugs: string[];
+}
+
+const EMPTY_PLANNER_INPUT: ReadingPlannerInput = {
+  rows: [],
+  rankable: [],
+  known_word_ids: [],
+  recent_content_ids: [],
+  covered_topics: [],
+  finished_slugs: [],
+};
+
+/** Las lecturas terminadas y sus temas, para no volver a proponer lo hecho. */
+async function getFinishedReadings(userId: string, client: HanyuClient): Promise<string[]> {
+  const query: any = (client.from as any)('reading_progress');
+  if (!query || typeof query.select !== 'function') return [];
+
+  const scoped = query.select('reading_slug, finished_at');
+  if (!scoped || typeof scoped.eq !== 'function') return [];
+
+  const { data, error } = await scoped.eq('user_id', userId);
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load reading progress');
+  }
+
+  return (data ?? [])
+    .filter((row: any) => Boolean(row?.finished_at))
+    .map((row: any) => String(row.reading_slug));
+}
+
+/**
+ * Las lecturas terminadas hace poco, leídas del `learning_event` que escribe
+ * `markRead`. Es la única lectura de ese evento en todo el sistema: sin esto
+ * `seen_recently` no tendría de dónde salir y el evento sería de solo escritura.
+ */
+async function getRecentlyCompletedReadings(userId: string, client: HanyuClient): Promise<string[]> {
+  const query: any = (client.from as any)('learning_event');
+  if (!query || typeof query.select !== 'function') return [];
+
+  const scoped = query.select('payload, occurred_at');
+  if (!scoped || typeof scoped.eq !== 'function') return [];
+
+  let filtered = scoped.eq('user_id', userId);
+  if (typeof filtered.eq !== 'function') return [];
+  filtered = filtered.eq('kind', 'reading_completed');
+
+  if (typeof filtered.gte === 'function') {
+    const since = new Date(Date.now() - RECENT_READING_WINDOW_DAYS * 86400000);
+    filtered = filtered.gte('occurred_at', since.toISOString());
+  }
+
+  const { data, error } = await filtered;
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load completed readings');
+  }
+
+  const slugs: string[] = [];
+  for (const row of data ?? []) {
+    const slug = (row as any)?.payload?.reading_slug;
+    if (typeof slug === 'string' && slug && !slugs.includes(slug)) {
+      slugs.push(slug);
+    }
+  }
+  return slugs;
+}
+
+export async function getReadingPlannerInput(
+  level: HskLevel,
+  userId: string,
+  client: HanyuClient,
+): Promise<ReadingPlannerInput> {
+  const query: any = client
+    .from('reading')
+    .select(READING_SELECT)
+    .eq('hsk_level', level)
+    .order('series', { ascending: true, nullsFirst: false })
+    .order('series_index', { ascending: true, nullsFirst: false })
+    .order('slug');
+
+  const { data, error } = await query;
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load next reading');
+  }
+
+  const rows = (data ?? []) as any[];
+  if (rows.length === 0) {
+    return EMPTY_PLANNER_INPUT;
+  }
+
+  const summaries = rows.map(normalizeSummary);
+  const [tokenized, finished, recent] = await Promise.all([
+    tokenizeReadings(summaries, client),
+    getFinishedReadings(userId, client),
+    getRecentlyCompletedReadings(userId, client),
+  ]);
+
+  const known = new Set<number>();
+  const rankable: ReadingPlannerInput['rankable'] = [];
+
+  for (const summary of summaries) {
+    const tokens = tokenized?.get(summary.slug);
+    if (!tokens) continue;
+
+    for (const id of knownFromTokens(tokens)) {
+      known.add(id);
+    }
+
+    // Por forma distinta y no por aparición: `rankContent` divide sobre la
+    // longitud de esta lista, así que repetir una palabra la haría pesar como
+    // vocabulario nuevo que no es.
+    rankable.push({
+      id: summary.slug,
+      topic: summary.topic || null,
+      word_ids: [...new Set(
+        tokens
+          .filter(token => token.type !== 'punctuation' && token.word)
+          .map(token => token.word!.id),
+      )],
+    });
+  }
+
+  const finishedSlugs = finished.filter(slug => rows.some(row => String(row.slug) === slug));
+  const topicBySlug = new Map(rows.map(row => [String(row.slug), String(row.topic ?? '')]));
+  const coveredTopics: string[] = [];
+  for (const slug of finishedSlugs) {
+    const topic = topicBySlug.get(slug);
+    if (topic && !coveredTopics.includes(topic)) {
+      coveredTopics.push(topic);
+    }
+  }
+
+  return {
+    rows,
+    rankable,
+    known_word_ids: [...known],
+    recent_content_ids: recent,
+    covered_topics: coveredTopics,
+    finished_slugs: finishedSlugs,
+  };
+}
+
 export async function getReadings(
   params: { level?: HskLevel; topic?: string; format?: ReadingFormat } = {},
   client: HanyuClient,

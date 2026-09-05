@@ -39,9 +39,14 @@ export interface LearnerModel {
 /**
  * Rango de comprensibilidad. Por debajo de 0,92 la lectura se descifra en vez
  * de leerse; por encima de 0,98 no queda nada que aprender.
+ *
+ * Se exporta porque la lista de lecturas etiqueta cada una con este mismo
+ * rango antes de abrirla. Con dos copias del umbral, la etiqueta que ve el
+ * usuario y el valor que usa el planificador podrían discrepar sobre la misma
+ * lectura, que es justo la incoherencia que la etiqueta debería evitar.
  */
-const MIN_COMPREHENSIBLE = 0.92;
-const MAX_COMPREHENSIBLE = 0.98;
+export const COMPREHENSIBLE_MIN = 0.92;
+export const COMPREHENSIBLE_MAX = 0.98;
 
 export function rankContent(
   item: RankableContent,
@@ -65,14 +70,14 @@ export function rankContent(
   const comprehensible =
     item.word_ids.filter((id) => known.has(id) || targets.has(id)).length / item.word_ids.length;
 
-  if (comprehensible >= MIN_COMPREHENSIBLE && comprehensible <= MAX_COMPREHENSIBLE) {
+  if (comprehensible >= COMPREHENSIBLE_MIN && comprehensible <= COMPREHENSIBLE_MAX) {
     value += 10;
     reasons.push({ kind: 'comprehensible', ratio: comprehensible });
-  } else if (comprehensible < MIN_COMPREHENSIBLE) {
-    value -= (MIN_COMPREHENSIBLE - comprehensible) * 40;
+  } else if (comprehensible < COMPREHENSIBLE_MIN) {
+    value -= (COMPREHENSIBLE_MIN - comprehensible) * 40;
     reasons.push({ kind: 'too_many_unknown', ratio: comprehensible });
   } else {
-    value -= (comprehensible - MAX_COMPREHENSIBLE) * 80;
+    value -= (comprehensible - COMPREHENSIBLE_MAX) * 80;
     reasons.push({ kind: 'too_easy', ratio: comprehensible });
   }
 

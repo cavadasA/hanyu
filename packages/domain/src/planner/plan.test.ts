@@ -168,4 +168,15 @@ describe('buildDailyPlan', () => {
 
     expect(reading?.payload?.id).toBe('a');
   });
+
+  it('distingue no tener lecturas de no haber podido mirarlas', () => {
+    // "Todavía no hay lecturas" y "no he podido leer el catálogo" piden cosas
+    // distintas al usuario. Colapsarlas en no_content esconde una avería.
+    const plan = buildDailyPlan({ ...base, readings: [], readings_unavailable: true });
+    const reading = plan.steps.find((step) => step.kind === 'reading');
+
+    expect(reading?.status).toBe('unavailable');
+    expect(reading?.reason).toBe('content_unavailable');
+  });
+
 });

@@ -10,9 +10,28 @@ function rpcError(failure: RpcFailure | undefined) {
     : { code: '42501', message: 'Network or permission failure' };
 }
 
+function tableQuery(rows: unknown[]) {
+  const query: Record<string, any> = {
+    select: vi.fn(() => query),
+    eq: vi.fn(() => query),
+    in: vi.fn(() => query),
+    gte: vi.fn(() => query),
+    order: vi.fn(() => query),
+    limit: vi.fn(() => query),
+    then: (resolve: (value: unknown) => unknown) =>
+      Promise.resolve({ data: rows, error: null }).then(resolve),
+  };
+  return query;
+}
+
 function clientFor(options: {
   settings?: Record<string, unknown>;
   reading?: unknown;
+  readings?: unknown[];
+  tokensByReading?: Record<string, unknown[]>;
+  states?: unknown[];
+  progress?: unknown[];
+  events?: unknown[];
   dueCount?: number;
   dueState?: { regular_due_count: number; relearning_count: number };
   queue?: unknown[];
@@ -80,26 +99,55 @@ function clientFor(options: {
     }
 
     if (table === 'reading') {
-      const s = { select: vi.fn() };
-      const readingQuery: any = {
-        eq: vi.fn(() => readingQuery),
-        order: vi.fn(() => readingQuery),
-        limit: vi.fn(() => readingQuery),
-        maybeSingle: vi.fn().mockResolvedValue({ data: options.reading ?? null, error: null }),
-      };
-      s.select.mockReturnValue(readingQuery);
-      return s;
+      const rows = options.readings ?? (options.reading ? [options.reading] : []);
+      return tableQuery(rows);
     }
+
+    if (table === 'reading_progress') return tableQuery(options.progress ?? []);
+    if (table === 'learning_event') return tableQuery(options.events ?? []);
+    if (table === 'learner_skill_state') return tableQuery(options.states ?? []);
 
     return { select: vi.fn(() => ({ data: [], error: null })) };
   });
 
-  return {
+  const client: Record<string, any> = {
     rpc,
     from,
     auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
-  } as never;
+  };
+
+  if (options.tokensByReading) {
+    client.functions = {
+      invoke: vi.fn().mockResolvedValue({
+        data: { tokens_by_reading: options.tokensByReading },
+        error: null,
+      }),
+    };
+  }
+
+  return client as never;
 }
+
+const CATALOG = [
+  { slug: 'r1', hsk_level: 2, title: 'Té y café', topic: 'compras', format: 'short_text', target_words: [], sentences: [] },
+  { slug: 'r2', hsk_level: 2, title: 'La biblioteca', topic: 'lugares', format: 'short_text', target_words: [], sentences: [] },
+];
+
+function tokensFor(ids: number[]) {
+  return ids.map((id, index) => ({
+    id: `t${index}`,
+    text: `w${id}`,
+    type: 'word',
+    word: { id, hanzi: `w${id}` },
+  }));
+}
+
+/** Doce conocidas de trece: 92,3 %, dentro del rango cómodo del planificador. */
+const COMFORTABLE = tokensFor([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
+/** Dos conocidas de cuatro: 50 %, se descifra en vez de leerse. */
+const TOO_HARD = tokensFor([1, 2, 90, 91]);
+const KNOWN_STATES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  .map(id => ({ target_id: id, stability: 40 }));
 
 describe('getToday', () => {
   it('counts due and deck size via the scoped count RPC', async () => {
@@ -234,4 +282,84 @@ describe('getToday', () => {
       'Network or permission failure',
     );
   });
+
+  it('propone la lectura del catálogo en vez de declarar que no hay ninguna', async () => {
+    const client = clientFor({
+      readings: CATALOG,
+      tokensByReading: { r1: COMFORTABLE, r2: TOO_HARD },
+      states: KNOWN_STATES,
+    });
+
+    const today = await getToday(client);
+    const reading = today.steps.find(step => step.kind === 'reading');
+
+    expect(reading).toMatchObject({ status: 'ready', payload: { id: 'r1' } });
+  });
+
+  it('explica por qué propone esa lectura', async () => {
+    const client = clientFor({
+      readings: CATALOG,
+      tokensByReading: { r1: COMFORTABLE },
+      states: KNOWN_STATES,
+    });
+
+    const today = await getToday(client);
+    const reading = today.steps.find(step => step.kind === 'reading');
+
+    expect(reading?.why?.map(r => r.kind)).toContain('comprehensible');
+  });
+
+  it('deja de proponer una lectura terminada', async () => {
+    // El criterio del Plan 8: terminarla escribe un learning_event y el
+    // planificador deja de ofrecerla.
+    const client = clientFor({
+      readings: CATALOG,
+      tokensByReading: { r1: COMFORTABLE, r2: COMFORTABLE },
+      states: KNOWN_STATES,
+      progress: [{ reading_slug: 'r1', finished_at: '2026-09-04T10:00:00Z' }],
+      events: [{ payload: { reading_slug: 'r1' } }],
+    });
+
+    const today = await getToday(client);
+    const reading = today.steps.find(step => step.kind === 'reading');
+
+    expect(reading).toMatchObject({ status: 'ready', payload: { id: 'r2' } });
+    expect((today.reading.next as any)?.slug).toBe('r2');
+  });
+
+  it('la tarjeta de hoy muestra la lectura que el plan eligió', async () => {
+    const client = clientFor({
+      readings: CATALOG,
+      tokensByReading: { r1: TOO_HARD, r2: COMFORTABLE },
+      states: KNOWN_STATES,
+    });
+
+    const today = await getToday(client);
+
+    expect((today.reading.next as any)?.slug).toBe('r2');
+  });
+
+  it('no finge que el catálogo está vacío cuando no ha podido leerlo', async () => {
+    const client = clientFor({ readings: CATALOG });
+
+    const today = await getToday(client);
+    const reading = today.steps.find(step => step.kind === 'reading');
+
+    expect(reading).toMatchObject({ status: 'unavailable', reason: 'content_unavailable' });
+    expect((today.reading.next as any)?.slug).toBe('r1');
+  });
+
+  it('toma como objetivo lo que se está aprendiendo ahora', async () => {
+    const client = clientFor({
+      readings: CATALOG,
+      queue: [{ is_new: true, fsrs_state: 'new', word_id: 50 }],
+      tokensByReading: { r1: tokensFor([50]) },
+    });
+
+    const today = await getToday(client);
+    const reading = today.steps.find(step => step.kind === 'reading');
+
+    expect(reading?.why?.map(r => r.kind)).toContain('reinforces_targets');
+  });
+
 });

@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
-import type { HskLevel, ReadingFormat } from '@hanyu/data';
+import { COMPREHENSIBLE_MAX, COMPREHENSIBLE_MIN, type HskLevel, type ReadingFormat } from '@hanyu/data';
 import { useReadings } from '../readings/useReadings';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
@@ -131,9 +131,12 @@ function formatLabel(format: ReadingFormat) {
   return FORMAT_LABELS[format] ?? format;
 }
 
+// El mismo rango que el planificador usa para decidir qué lectura proponer, y
+// no una copia suya: la etiqueta que se lee antes de abrir tiene que significar
+// lo mismo que el motivo que se lee en el plan del día.
 function coverageLabel(ratio: number) {
-  if (ratio < 0.92) return 'Difficult';
-  if (ratio <= 0.97) return 'Comfortable';
+  if (ratio < COMPREHENSIBLE_MIN) return 'Difficult';
+  if (ratio <= COMPREHENSIBLE_MAX) return 'Comfortable';
   return 'Easy';
 }
 

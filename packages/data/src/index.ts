@@ -5,6 +5,9 @@ export type { HanyuData } from './factory';
 export { resolveGloss } from './gloss';
 export { toUserMessage } from './errors';
 export { isValidExamDate } from './repositories/settings';
+// El rango de comprensibilidad viaja hasta la app para que la etiqueta de la
+// lista y el motivo del planificador salgan del mismo umbral.
+export { COMPREHENSIBLE_MAX, COMPREHENSIBLE_MIN } from '@hanyu/domain';
 export type {
   BuildQueueInput,
   CardOrder,

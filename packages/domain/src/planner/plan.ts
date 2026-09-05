@@ -17,6 +17,9 @@ export type PlanStepReason =
   | 'nothing_due'
   | 'no_content'
   | 'no_suitable_content'
+  // Hay catálogo, pero no se ha podido resolver su vocabulario. Rankear sin él
+  // ordenaría por desempate alfabético fingiendo una decisión que no se tomó.
+  | 'content_unavailable'
   | 'no_exam_date'
   | 'daily_limit_reached'
   | 'unit_unavailable';
@@ -48,6 +51,8 @@ export interface DailyPlanInput {
   } | null;
   new_allowance: number;
   readings: RankableContent[];
+  /** El catálogo existe pero no se ha podido puntuar. Ver `content_unavailable`. */
+  readings_unavailable?: boolean;
   exercises: RankableContent[];
   exam_date: string | null;
   learner?: LearnerModel;
@@ -145,7 +150,11 @@ export function buildDailyPlan(input: DailyPlanInput): { steps: PlanStep[] } {
       : {
           kind: 'reading',
           status: 'unavailable',
-          reason: input.readings.length > 0 ? 'no_suitable_content' : 'no_content',
+          reason: input.readings.length > 0
+            ? 'no_suitable_content'
+            : input.readings_unavailable
+              ? 'content_unavailable'
+              : 'no_content',
         },
   );
 
