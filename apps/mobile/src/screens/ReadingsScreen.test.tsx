@@ -55,4 +55,30 @@ describe('ReadingsScreen', () => {
     expect(view.queryByRole('button', { name: 'HSK 1' })).toBeNull();
     expect(view.queryByRole('button', { name: 'HSK 3' })).toBeNull();
   });
+
+  it('muestra cobertura y estado de progreso sin ocultar lecturas difíciles', async () => {
+    mockGetReadings.mockResolvedValue([
+      {
+        id: 'reading-1',
+        slug: 'reading-1',
+        title: 'Una lectura difícil',
+        hsk_level: 2,
+        format: 'short_text',
+        topic: 'compras',
+        series: null,
+        series_index: null,
+        audio_kind: 'tts',
+        audio_url: null,
+        coverage: { ratio: 0.5, known_count: 1, unknown_count: 1 },
+        progress: { reading_slug: 'reading-1', bookmarked: true, last_sentence: 2, finished_at: null, updated_at: '2026-09-05T00:00:00Z' },
+      },
+    ]);
+
+    const view = await render(<ReadingsScreen />);
+
+    await waitFor(() => expect(view.getByText('50% known · 1 new words')).toBeTruthy());
+    expect(view.getByText('Difficult')).toBeTruthy();
+    expect(view.getByText('Started')).toBeTruthy();
+    expect(view.getByText('Bookmarked')).toBeTruthy();
+  });
 });

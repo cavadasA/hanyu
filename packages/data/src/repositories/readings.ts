@@ -6,6 +6,7 @@ import type {
   ReadingDetail,
   ReadingFormat,
   ReadingGrammarTarget,
+  ReadingProgress,
   ReadingResult,
   ReadingSentence,
   ReadingSummary,
@@ -21,6 +22,7 @@ const VALID_FORMATS = new Set(['short_text', 'story', 'dialogue']);
 const KNOWN_MIN_STABILITY_DAYS = 30;
 const READING_SELECT =
   'slug, hsk_level, format, title, topic, series, series_index, sentences, questions, target_words, target_grammar, audio_kind, audio_url';
+const READING_PROGRESS_SELECT = 'reading_slug, bookmarked, last_sentence, finished_at, updated_at';
 
 function normalizeQuestions(questions: unknown) {
   return (Array.isArray(questions) ? questions : []).map((question: any, index: number) => ({
@@ -158,6 +160,32 @@ async function coverageForReading(summary: ReadingSummary, client: HanyuClient) 
   );
 
   return coverageOf(tokens, known);
+}
+
+async function getReadingProgressMap(
+  summaries: ReadingSummary[],
+  client: HanyuClient,
+): Promise<Map<string, ReadingProgress>> {
+  const progress = new Map<string, ReadingProgress>();
+  if (summaries.length === 0 || !(client as any).auth?.getUser) {
+    return progress;
+  }
+
+  const userId = await getRequiredUserId(client);
+  let query: any = (client.from as any)('reading_progress').select(READING_PROGRESS_SELECT).eq('user_id', userId);
+  if (typeof query.in !== 'function') return progress;
+
+  const { data, error } = await query.in('reading_slug', summaries.map(summary => summary.slug));
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load reading progress');
+  }
+
+  for (const row of data ?? []) {
+    if (row?.reading_slug) {
+      progress.set(String(row.reading_slug), normalizeProgress(String(row.reading_slug), row));
+    }
+  }
+  return progress;
 }
 
 function statusTokens(
@@ -305,10 +333,15 @@ export async function getReadings(
   }
 
   const summaries = (data || []).map(normalizeSummary);
-  return Promise.all(summaries.map(async summary => ({
+  const withCoverage = await Promise.all(summaries.map(async summary => ({
     ...summary,
     coverage: await coverageForReading(summary, client),
   })));
+  const progress = await getReadingProgressMap(summaries, client);
+  return withCoverage.map(summary => ({
+    ...summary,
+    progress: progress.get(summary.slug) ?? null,
+  }));
 }
 
 function normalizeSummary(row: any): ReadingSummary {
@@ -331,6 +364,117 @@ function normalizeSummary(row: any): ReadingSummary {
     audio_url: row.audio_url === null || row.audio_url === undefined ? null : String(row.audio_url),
     ...(row.created_at ? { created_at: String(row.created_at) } : {}),
   };
+}
+
+function normalizeProgress(slug: string, row: any): ReadingProgress {
+  return {
+    reading_slug: String(row?.reading_slug ?? slug),
+    bookmarked: Boolean(row?.bookmarked),
+    last_sentence: Math.max(0, Number(row?.last_sentence ?? 0)),
+    finished_at: row?.finished_at ? String(row.finished_at) : null,
+    updated_at: String(row?.updated_at ?? new Date().toISOString()),
+  };
+}
+
+async function loadProgress(slug: string, userId: string, client: HanyuClient) {
+  const { data, error } = await (client.from as any)('reading_progress')
+    .select(READING_PROGRESS_SELECT)
+    .eq('user_id', userId)
+    .eq('reading_slug', slug)
+    .maybeSingle();
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load reading progress');
+  }
+
+  return normalizeProgress(slug, data);
+}
+
+async function saveProgress(
+  slug: string,
+  userId: string,
+  progress: ReadingProgress,
+  client: HanyuClient,
+) {
+  const { error } = await (client.from as any)('reading_progress').upsert(
+    {
+      user_id: userId,
+      reading_slug: slug,
+      bookmarked: progress.bookmarked,
+      last_sentence: progress.last_sentence,
+      finished_at: progress.finished_at,
+      updated_at: progress.updated_at,
+    },
+    { onConflict: 'user_id,reading_slug' },
+  );
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to save reading progress');
+  }
+
+  return progress;
+}
+
+export async function getReadingProgress(slug: string, client: HanyuClient): Promise<ReadingProgress> {
+  const userId = await getRequiredUserId(client);
+  return loadProgress(slug, userId, client);
+}
+
+export async function toggleBookmark(slug: string, client: HanyuClient): Promise<ReadingProgress> {
+  const userId = await getRequiredUserId(client);
+  const current = await loadProgress(slug, userId, client);
+  return saveProgress(
+    slug,
+    userId,
+    { ...current, bookmarked: !current.bookmarked, updated_at: new Date().toISOString() },
+    client,
+  );
+}
+
+export async function saveReadingProgress(
+  slug: string,
+  lastSentence: number,
+  client: HanyuClient,
+): Promise<ReadingProgress> {
+  const userId = await getRequiredUserId(client);
+  const current = await loadProgress(slug, userId, client);
+  return saveProgress(
+    slug,
+    userId,
+    { ...current, last_sentence: Math.max(0, Math.floor(lastSentence)), updated_at: new Date().toISOString() },
+    client,
+  );
+}
+
+export async function markRead(slug: string, client: HanyuClient): Promise<ReadingProgress> {
+  const userId = await getRequiredUserId(client);
+  const reading = await loadReadingRow(slug, client);
+  const current = await loadProgress(slug, userId, client);
+  const finishedAt = new Date().toISOString();
+  const progress = await saveProgress(
+    slug,
+    userId,
+    { ...current, finished_at: finishedAt, updated_at: finishedAt },
+    client,
+  );
+
+  const { error } = await (client.from as any)('learning_event').insert({
+    user_id: userId,
+    kind: 'reading_completed',
+    target_kind: null,
+    target_id: null,
+    skill: 'reading',
+    payload: {
+      reading_slug: slug,
+      target_words: Array.isArray(reading.target_words) ? reading.target_words : [],
+    },
+  });
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to record completed reading');
+  }
+
+  return progress;
 }
 
 async function loadReadingRow(slug: string, client: HanyuClient) {

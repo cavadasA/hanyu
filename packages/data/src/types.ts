@@ -282,9 +282,18 @@ export interface ReadingSummary {
   audio_kind: ReadingAudioKind;
   audio_url: string | null;
   coverage?: Coverage | null;
+  progress?: ReadingProgress | null;
   created_at?: string;
   /** Compatibility alias retained for clients that still display this field. */
   generated_at?: string;
+}
+
+export interface ReadingProgress {
+  reading_slug: string;
+  bookmarked: boolean;
+  last_sentence: number;
+  finished_at: string | null;
+  updated_at: string;
 }
 
 export interface ReadingDetail extends ReadingSummary {

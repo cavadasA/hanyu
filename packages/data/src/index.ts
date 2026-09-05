@@ -44,6 +44,7 @@ export type {
   ReadingFormat,
   ReadingGrammarTarget,
   ReadingQuestion,
+  ReadingProgress,
   ReadingSentence,
   ReadingAudioKind,
   ReadingResult,

@@ -42,7 +42,11 @@ import { getEvents, recordEvent } from './repositories/events';
 import {
   completeReading,
   getReading,
+  getReadingProgress,
   getReadings,
+  markRead,
+  saveReadingProgress,
+  toggleBookmark,
 } from './repositories/readings';
 import { getSettings, updateSettings } from './repositories/settings';
 import {
@@ -63,6 +67,33 @@ import type {
   MockExamScope,
   WordContext,
 } from './types';
+
+const READING_CACHE_PREFIX = 'hanyu.reading-cache:';
+
+async function readReadingCache<T>(storage: HanyuDataConfig['storage'], key: string): Promise<T | null> {
+  if (!storage) return null;
+
+  try {
+    const raw = await storage.getItem(key);
+    return raw ? (JSON.parse(raw) as T) : null;
+  } catch {
+    return null;
+  }
+}
+
+async function writeReadingCache(
+  storage: HanyuDataConfig['storage'],
+  key: string,
+  value: unknown,
+): Promise<void> {
+  if (!storage) return;
+
+  try {
+    await storage.setItem(key, JSON.stringify(value));
+  } catch {
+    // La caché es una mejora offline y nunca debe romper una respuesta online.
+  }
+}
 
 export function createHanyuData(config: HanyuDataConfig) {
   const client = createSupabaseClient(config);
@@ -146,8 +177,42 @@ export function createHanyuData(config: HanyuDataConfig) {
       clearLeech: (input: Parameters<typeof clearLeech>[0]) => clearLeech(input, client),
     },
     readings: {
-      getReadings: (params: Parameters<typeof getReadings>[0] = {}) => getReadings(params, client),
-      getReading: (slug: string) => getReading(slug, client),
+      getReadings: async (params: Parameters<typeof getReadings>[0] = {}) => {
+        const cacheKey = `${READING_CACHE_PREFIX}list:${JSON.stringify(params)}`;
+
+        try {
+          const readings = await getReadings(params, client);
+          await writeReadingCache(config.storage, cacheKey, readings);
+          return readings;
+        } catch (error) {
+          const cached = await readReadingCache<Awaited<ReturnType<typeof getReadings>>>(
+            config.storage,
+            cacheKey,
+          );
+          if (cached !== null) return cached;
+          throw error;
+        }
+      },
+      getReading: async (slug: string) => {
+        const cacheKey = `${READING_CACHE_PREFIX}detail:${slug}`;
+
+        try {
+          const reading = await getReading(slug, client);
+          await writeReadingCache(config.storage, cacheKey, reading);
+          return reading;
+        } catch (error) {
+          const cached = await readReadingCache<Awaited<ReturnType<typeof getReading>>>(
+            config.storage,
+            cacheKey,
+          );
+          if (cached !== null) return cached;
+          throw error;
+        }
+      },
+      getReadingProgress: (slug: string) => getReadingProgress(slug, client),
+      saveReadingProgress: (slug: string, lastSentence: number) => saveReadingProgress(slug, lastSentence, client),
+      markRead: (slug: string) => markRead(slug, client),
+      toggleBookmark: (slug: string) => toggleBookmark(slug, client),
       completeReading: (slug: string, answers: Record<string, string>) =>
         completeReading(slug, answers, client),
     },

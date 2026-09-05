@@ -3,6 +3,9 @@ import { ReadingDetailScreen } from './ReadingDetailScreen';
 
 const mockGetReading = jest.fn();
 const mockCompleteReading = jest.fn();
+const mockMarkRead = jest.fn();
+const mockGetReadingProgress = jest.fn();
+const mockToggleBookmark = jest.fn();
 const mockSpeakSentences = jest.fn();
 const mockStop = jest.fn();
 
@@ -15,6 +18,9 @@ jest.mock('../lib/data', () => ({
     readings: {
       getReading: (...args: unknown[]) => mockGetReading(...args),
       completeReading: (...args: unknown[]) => mockCompleteReading(...args),
+      markRead: (...args: unknown[]) => mockMarkRead(...args),
+      getReadingProgress: (...args: unknown[]) => mockGetReadingProgress(...args),
+      toggleBookmark: (...args: unknown[]) => mockToggleBookmark(...args),
     },
     flashcards: {
       addCard: jest.fn(),
@@ -33,6 +39,9 @@ describe('ReadingDetailScreen', () => {
   beforeEach(() => {
     mockGetReading.mockReset();
     mockCompleteReading.mockReset();
+    mockMarkRead.mockReset();
+    mockGetReadingProgress.mockReset();
+    mockToggleBookmark.mockReset();
     mockSpeakSentences.mockReset();
     mockStop.mockReset();
   });
@@ -113,6 +122,7 @@ describe('ReadingDetailScreen', () => {
     expect(mockGetReading).toHaveBeenCalledWith('reading-1');
     expect(mockCompleteReading).toHaveBeenCalledTimes(1);
     expect(mockCompleteReading).toHaveBeenCalledWith('reading-1', { q1: 'B' });
+    expect(mockMarkRead).toHaveBeenCalledWith('reading-1');
   });
 
   it('avisa de que el audio es sintético cuando lo es', async () => {
@@ -207,6 +217,27 @@ describe('ReadingDetailScreen', () => {
     view.unmount();
 
     expect(mockStop).toHaveBeenCalled();
+  });
+
+  it('muestra el marcador y permite quitarlo', async () => {
+    mockGetReading.mockResolvedValue(readingForAudio());
+    mockGetReadingProgress.mockResolvedValue({
+      reading_slug: 'reading-1',
+      bookmarked: true,
+      last_sentence: 1,
+      finished_at: null,
+      updated_at: '2026-09-05T00:00:00Z',
+    });
+    mockToggleBookmark.mockResolvedValue({ bookmarked: false });
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
+    expect(view.getByText('Quitar marcador')).toBeTruthy();
+    expect(view.getByText('Continuar')).toBeTruthy();
+
+    await fireEvent.press(view.getByText('Quitar marcador'));
+
+    expect(mockToggleBookmark).toHaveBeenCalledWith('reading-1');
   });
 });
 

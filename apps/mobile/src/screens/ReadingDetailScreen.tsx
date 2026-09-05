@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import { toUserMessage, type ReadingDetail, type ReadingResult } from '@hanyu/data';
+import { toUserMessage, type ReadingDetail, type ReadingProgress, type ReadingResult } from '@hanyu/data';
 import { getData } from '../lib/data';
 import { useSpeech } from '../audio/useSpeech';
 import { ReadingQuestions } from '../readings/ReadingQuestions';
@@ -31,6 +31,7 @@ export function ReadingDetailScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [progress, setProgress] = useState<ReadingProgress | null>(null);
   const [activeSentenceIndex, setActiveSentenceIndex] = useState<number | null>(null);
   const [speechRate, setSpeechRate] = useState(1);
 
@@ -46,6 +47,11 @@ export function ReadingDetailScreen() {
     try {
       const detail = await readingsApi.current.getReading(id);
       setReading(detail);
+      if (typeof readingsApi.current.getReadingProgress === 'function') {
+        setProgress(await readingsApi.current.getReadingProgress(id));
+      } else {
+        setProgress(null);
+      }
       setAnswers({});
       setResult(null);
     } catch (caught) {
@@ -67,6 +73,9 @@ export function ReadingDetailScreen() {
 
   function playFrom(index: number) {
     if (!reading) return;
+    if (id && typeof readingsApi.current.saveReadingProgress === 'function') {
+      void readingsApi.current.saveReadingProgress(id, index);
+    }
     speechCancel.current?.();
     speechCancel.current = speech.speakSentences(
       reading.sentences.map(sentence => sentence.zh),
@@ -82,6 +91,12 @@ export function ReadingDetailScreen() {
     speech.stop();
   }
 
+  async function changeBookmark() {
+    if (!id || typeof readingsApi.current.toggleBookmark !== 'function') return;
+    const next = await readingsApi.current.toggleBookmark(id);
+    setProgress(next);
+  }
+
   async function submit() {
     if (!id || !reading || submitting.current || result || !allAnswered(reading, answers)) {
       return;
@@ -93,6 +108,9 @@ export function ReadingDetailScreen() {
     try {
       const completion = await readingsApi.current.completeReading(id, answers);
       setResult(completion);
+      if (typeof readingsApi.current.markRead === 'function') {
+        await readingsApi.current.markRead(id);
+      }
     } catch (caught) {
       setError(toUserMessage(caught));
     } finally {
@@ -155,6 +173,16 @@ export function ReadingDetailScreen() {
         )}
         {reading.audio_kind === 'tts' ? (
           <Text style={[styles.audioNote, { color: colors.textMuted }]}>Voz sintética</Text>
+        ) : null}
+        {progress ? (
+          <Button
+            label={progress.bookmarked ? 'Quitar marcador' : 'Marcar marcador'}
+            variant="secondary"
+            onPress={() => void changeBookmark()}
+          />
+        ) : null}
+        {progress && progress.last_sentence > 0 && !progress.finished_at ? (
+          <Button label="Continuar" variant="secondary" onPress={() => playFrom(progress.last_sentence)} />
         ) : null}
         {reading.sentences.some(sentence => Boolean(sentence.pinyin)) ? (
           <Button

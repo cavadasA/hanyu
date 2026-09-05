@@ -110,6 +110,16 @@ export function ReadingsScreen() {
                 <Badge label={reading.coverage.ratio < 0.92 ? 'Difficult' : 'Comfortable'} />
               </View>
             ) : null}
+            <View style={styles.progress}>
+              <Text style={{ color: colors.textMuted }}>
+                {reading.progress?.finished_at
+                  ? 'Read'
+                  : reading.progress && reading.progress.last_sentence > 0
+                    ? 'Started'
+                    : 'Not started'}
+              </Text>
+              {reading.progress?.bookmarked ? <Badge label="Bookmarked" /> : null}
+            </View>
           </Card>
         </Pressable>
       ))}
@@ -163,5 +173,10 @@ const styles = StyleSheet.create({
   },
   coverage: {
     gap: tokens.spacing.xs,
+  },
+  progress: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: tokens.spacing.sm,
   },
 });
