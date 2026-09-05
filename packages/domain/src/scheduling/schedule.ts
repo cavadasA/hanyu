@@ -130,6 +130,7 @@ export function retrievability(
 // Supabase migration; both client previews and server persistence use it.
 export const LEECH_LAPSES = 8;
 export const MASTERED_MIN_STABILITY_DAYS = 30;
+export const MASTERED_STABILITY_DAYS = MASTERED_MIN_STABILITY_DAYS;
 
 export function isLeech(state: SchedulingState): boolean {
   return state.lapses >= LEECH_LAPSES;
