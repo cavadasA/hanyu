@@ -8,16 +8,10 @@ on:
     paths:
       - 'supabase/**'
       - '.github/workflows/supabase-deploy.yml'
-      - 'scripts/supabase-conditional-seed.sh'
   workflow_dispatch:
     inputs:
       reset_database:
         description: 'ATENCIÓN: Resetear base de datos remota antes de migrar (supabase db reset --linked)'
-        type: boolean
-        required: false
-        default: false
-      force_seed:
-        description: 'Forzar ejecución de seed.sql aunque la base de datos ya contenga datos'
         type: boolean
         required: false
         default: false
@@ -48,15 +42,6 @@ jobs:
         with:
           version: 2.110.0
 
-      - name: Verify PostgreSQL client
-        run: |
-          if ! command -v psql >/dev/null 2>&1; then
-            echo "Installing postgresql-client..."
-            sudo apt-get update && sudo apt-get install -y postgresql-client
-          else
-            echo "psql is already available: $(psql --version)"
-          fi
-
       - name: Link project
         run: |
           supabase link --project-ref "$SUPABASE_PROJECT_ID" --password "$SUPABASE_DB_PASSWORD"
@@ -66,17 +51,10 @@ jobs:
         run: |
           echo "y" | supabase db reset --linked --password "$SUPABASE_DB_PASSWORD"
 
-      - name: Push Database Migrations
+      - name: Push Database Migrations & Seed
         if: ${{ github.event.inputs.reset_database != 'true' }}
         run: |
           supabase db push --password "$SUPABASE_DB_PASSWORD"
-
-      - name: Conditional Database Seed
-        if: ${{ github.event.inputs.reset_database != 'true' }}
-        env:
-          FORCE_SEED: ${{ github.event.inputs.force_seed || 'false' }}
-        run: |
-          ./scripts/supabase-conditional-seed.sh
 
       - name: Deploy Edge Function - generate-exercise
         run: |

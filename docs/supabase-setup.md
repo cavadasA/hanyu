@@ -60,21 +60,15 @@ Para que las Edge Functions (`generate-exercise`) funcionen en Supabase con IA:
 
 ## 4. Despliegue de Migraciones y Funciones
 
-### Primer Despliegue (Manual)
+### Despliegue Automático
+El pipeline de GitHub Actions se ejecuta automáticamente ante cualquier `push` a las ramas `main` o `master` que modifique `supabase/**` o `.github/workflows/supabase-deploy.yml`:
+1. Vincula el proyecto de forma segura en el runner con las credenciales de GitHub Secrets.
+2. Ejecuta `supabase db push`, aplicando ordenadamente todas las migraciones (incluyendo el seed inicial de corpus `2026090602_seed_initial_corpus.sql`).
+3. Despliega las Edge Functions `generate-exercise` y `tokenize-reading`.
+4. Valida la correcta generación de tipos TypeScript.
 
-Una vez configurados los secretos:
-
+### Despliegue Manual (workflow_dispatch)
+También puedes disparar el despliegue manualmente cuando desees:
 1. Ve a la pestaña **Actions** en GitHub: [github.com/cavadasA/hanyu/actions](https://github.com/cavadasA/hanyu/actions).
-2. Selecciona el workflow **Deploy Supabase (Migrations & Functions)**.
-3. Pulsa **Run workflow** sobre la rama `master` o `main`.
-   - **Nota sobre `force_seed`**: El workflow incluye un parámetro opcional `force_seed` (por defecto desmarcado/`false`). Si la base de datos ya contiene datos en `hsk_characters`, el script omite el seed automáticamente para proteger los datos. Marca `force_seed` solo si deseas forzar la re-ejecución del script `supabase/seed.sql`.
-4. El workflow:
-   - Aplicará secuencialmente las migraciones pendientes.
-   - Detectará si la tabla `public.hsk_characters` tiene 0 filas (o si `force_seed` está activo) y ejecutará `supabase/seed.sql`.
-   - Desplegará las Edge Functions `generate-exercise` y `tokenize-reading`.
-   - Validará la generación de tipos TypeScript.
-
-### Despliegues Posteriores (Auto-deploy on push)
-
-- Una vez completado el primer despliegue, el workflow se ejecutará automáticamente ante cualquier `push` a las ramas `main` o `master` que contenga modificaciones en `supabase/**`, `.github/workflows/supabase-deploy.yml` o `scripts/supabase-conditional-seed.sh`.
-- En despliegues automáticos por push, `force_seed` se mantiene en `false` por seguridad.
+2. Selecciona **Deploy Supabase (Migrations & Functions)**.
+3. Pulsa **Run workflow**. Opcionalmente puedes marcar la casilla de reseteo si necesitas restaurar la base de datos a un estado limpio.
