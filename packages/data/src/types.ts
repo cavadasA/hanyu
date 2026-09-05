@@ -519,6 +519,5 @@ export interface LearningReport {
   reading_attempts: LearningReportReadingAttempt[];
   mistakes_count: number;
   syllabus_words_count: number;
-  syllabus_word_ids: number[];
   units: LearningReportUnit[];
 }

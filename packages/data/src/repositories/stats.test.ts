@@ -26,7 +26,6 @@ describe('getLearningReport', () => {
     expect(report.attempts).toEqual([]);
     expect(report.reading_attempts).toEqual([]);
     expect(report.units).toEqual([]);
-    expect(report.syllabus_word_ids).toEqual([]);
     expect(report.syllabus_words_count).toBe(0);
     expect(report.mistakes_count).toBe(0);
   });
@@ -48,7 +47,6 @@ describe('getLearningReport', () => {
       ],
       mistakes_count: 3,
       syllabus_words_count: 300,
-      syllabus_word_ids: [1, 2, 3],
       units: [
         { code: 'U1', title: 'Unidad 1', hsk_level: 1, total_words: 0, settled_words: 0, total_items: 1, settled_items: 1, completed: true },
       ],
@@ -63,7 +61,6 @@ describe('getLearningReport', () => {
     expect(report.reading_attempts[0]?.score).toBe(4);
     expect(report.mistakes_count).toBe(3);
     expect(report.syllabus_words_count).toBe(300);
-    expect(report.syllabus_word_ids).toEqual([1, 2, 3]);
     expect(report.units[0]?.completed).toBe(true);
   });
 });

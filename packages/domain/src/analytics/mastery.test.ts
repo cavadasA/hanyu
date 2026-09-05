@@ -68,6 +68,18 @@ describe('syllabusCoverage', () => {
     expect(coverage.demonstrated).toBe(1);
     expect(coverage.percent_demonstrated).toBe(10);
   });
+
+  it('deduplica ids si el alcance se proporciona como array con duplicados', () => {
+    const scopeWithDups = [1, 1, 2, 2, 3];
+    const states = [state(1, 'recognition', 200), state(2, 'recognition', 3)];
+
+    const coverage = syllabusCoverage(states, scopeWithDups, now);
+
+    expect(coverage.in_scope).toBe(3);
+    expect(coverage.started).toBe(2);
+    expect(coverage.demonstrated).toBe(1);
+    expect(coverage.percent_demonstrated).toBe(33);
+  });
 });
 
 describe('isDemonstrated', () => {

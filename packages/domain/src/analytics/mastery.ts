@@ -26,6 +26,8 @@ export interface SkillMastery {
 
 const SKILLS = ['recognition', 'recall', 'listening', 'reading', 'production'] as const;
 
+const defaultFsrs = fsrs();
+
 export function isDemonstrated(
   state: SkillStateRow,
   now: Date,
@@ -50,7 +52,7 @@ export function isDemonstrated(
     state: State.Review,
     last_review: lastReview,
   };
-  const currentRetrievability = fsrs({ request_retention: targetRetention }).get_retrievability(
+  const currentRetrievability = defaultFsrs.get_retrievability(
     card,
     now,
     false,
@@ -92,8 +94,8 @@ export function syllabusCoverage(
   now: Date,
   targetRetention: number = 0.9,
 ): { in_scope: number; started: number; demonstrated: number; percent_demonstrated: number } {
-  const inScopeCount = typeof scope === 'number' ? scope : scope.length;
   const inScopeSet = typeof scope === 'number' ? null : new Set(scope);
+  const inScopeCount = typeof scope === 'number' ? scope : inScopeSet!.size;
 
   const relevant = states.filter((state) => {
     if (state.skill !== 'recognition') return false;

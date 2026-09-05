@@ -25,7 +25,6 @@ function reportWith(overrides: Partial<LearningReport> = {}): LearningReport {
     reading_attempts: [],
     mistakes_count: 0,
     syllabus_words_count: 0,
-    syllabus_word_ids: [],
     units: [],
     ...overrides,
   };
@@ -155,7 +154,6 @@ describe('ProgressScreen', () => {
     mockGetReport.mockResolvedValue(
       reportWith({
         syllabus_words_count: 2,
-        syllabus_word_ids: [1, 2],
         skill_states: [
           { target_id: 1, skill: 'recognition', stability: 200, suspended: false, last_reviewed_at: '2026-09-01T00:00:00Z', in_scope: true },
         ],

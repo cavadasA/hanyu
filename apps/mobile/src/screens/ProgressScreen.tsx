@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   RefreshControl,
@@ -14,7 +14,7 @@ import {
   type LearningReportSkillState,
 } from '@hanyu/data';
 import {
-  lookupsPer100Tokens,
+  lookupsPer100Chars,
   masteryBySkill,
   observedRetention,
   readingSpeed,
@@ -102,6 +102,93 @@ export function ProgressScreen() {
     void loadData();
   }, [loadData]);
 
+  const metrics = useMemo(() => {
+    if (!report) return null;
+    const now = new Date();
+
+    // Bloque 1: Memoria (retención observada a 7 y 30 días)
+    const retentionReviews: RetentionReview[] = (report.reviews ?? []).map((r: LearningReportReview) => ({
+      occurred_at: r.occurred_at,
+      grade: r.grade,
+      phase_before: r.phase_before ?? '',
+    }));
+    const retention7 = observedRetention(retentionReviews, now, 7, targetRetention);
+    const retention30 = observedRetention(retentionReviews, now, 30, targetRetention);
+
+    // Bloque 2: Vocabulario y sílabo
+    const skillStates: SkillStateRow[] = (report.skill_states ?? []).map((s: LearningReportSkillState) => ({
+      target_id: s.target_id,
+      skill: s.skill,
+      stability: s.stability,
+      suspended: s.suspended,
+      last_reviewed_at: s.last_reviewed_at,
+      in_scope: s.in_scope,
+    }));
+    const mastery = masteryBySkill(skillStates, now, targetRetention);
+    const coverageScope = report.syllabus_words_count ?? 0;
+    const coverage = syllabusCoverage(skillStates, coverageScope, now, targetRetention);
+
+    // Bloque 3: Gramática
+    const units = report.units ?? [];
+    const completedUnits = units.filter((u) => u.completed).length;
+    const totalUnits = units.length;
+
+    // Bloque 4: Habilidades activas y evaluación
+    const attempts = report.attempts ?? [];
+    const dictationAttempts = attempts.filter((a) => a.skill === 'listening');
+    const dictationCorrect = dictationAttempts.filter((a) => a.correct).length;
+    const dictationTotal = dictationAttempts.length;
+
+    const prodAttempts = attempts.filter((a) => a.skill === 'production' || a.skill === 'recall');
+    const prodCorrect = prodAttempts.filter((a) => a.correct).length;
+    const prodTotal = prodAttempts.length;
+
+    const examAttempts = attempts.filter((a) => a.mode === 'exam');
+    const examCorrect = examAttempts.filter((a) => a.correct).length;
+    const examTotal = examAttempts.length;
+
+    const mistakesCount = report.mistakes_count ?? 0;
+
+    // Bloque 5: Lectura y esfuerzo
+    const rawSessions = report.reading_sessions ?? [];
+    const readingSessions: ReadingSession[] = rawSessions.map((s) => ({
+      chars: s.chars,
+      seconds: s.seconds,
+      pinyin_shown: s.pinyin_shown,
+    }));
+    const speed = readingSpeed(readingSessions);
+    const totalTokens = rawSessions.reduce((acc, s) => acc + s.chars, 0);
+    const lookups = report.lookups ?? 0;
+    const lookupRate = totalTokens > 0 ? lookupsPer100Chars(lookups, totalTokens) : null;
+
+    // Comprensión literal (preguntas de comprensión de textos en reading_attempts)
+    const readingAttempts = report.reading_attempts ?? [];
+    const literalCorrect = readingAttempts.reduce((acc, a) => acc + a.score, 0);
+    const literalTotal = readingAttempts.reduce((acc, a) => acc + a.total, 0);
+
+    return {
+      retention7,
+      retention30,
+      mastery,
+      coverage,
+      completedUnits,
+      totalUnits,
+      dictationCorrect,
+      dictationTotal,
+      prodCorrect,
+      prodTotal,
+      examCorrect,
+      examTotal,
+      mistakesCount,
+      speed,
+      totalTokens,
+      lookups,
+      lookupRate,
+      literalCorrect,
+      literalTotal,
+    };
+  }, [report, targetRetention]);
+
   if (loading) {
     return (
       <Screen>
@@ -130,67 +217,31 @@ export function ProgressScreen() {
     );
   }
 
-  const now = new Date();
+  if (!metrics) {
+    return null;
+  }
 
-  // Bloque 1: Memoria (retención observada a 7 y 30 días)
-  const retentionReviews: RetentionReview[] = (report?.reviews ?? []).map((r: LearningReportReview) => ({
-    occurred_at: r.occurred_at,
-    grade: r.grade,
-    phase_before: r.phase_before ?? '',
-  }));
-  const retention7 = observedRetention(retentionReviews, now, 7, targetRetention);
-  const retention30 = observedRetention(retentionReviews, now, 30, targetRetention);
-
-  // Bloque 2: Vocabulario y sílabo
-  const skillStates: SkillStateRow[] = (report?.skill_states ?? []).map((s: LearningReportSkillState) => ({
-    target_id: s.target_id,
-    skill: s.skill,
-    stability: s.stability,
-    suspended: s.suspended,
-    last_reviewed_at: s.last_reviewed_at,
-    in_scope: s.in_scope,
-  }));
-  const mastery = masteryBySkill(skillStates, now, targetRetention);
-  const coverageScope = report?.syllabus_words_count || (report?.syllabus_word_ids ?? []);
-  const coverage = syllabusCoverage(skillStates, coverageScope, now, targetRetention);
-
-  // Bloque 3: Gramática
-  const units = report?.units ?? [];
-  const completedUnits = units.filter((u) => u.completed).length;
-  const totalUnits = units.length;
-
-  // Bloque 4: Habilidades activas y evaluación
-  const attempts = report?.attempts ?? [];
-  const dictationAttempts = attempts.filter((a) => a.skill === 'listening');
-  const dictationCorrect = dictationAttempts.filter((a) => a.correct).length;
-  const dictationTotal = dictationAttempts.length;
-
-  const prodAttempts = attempts.filter((a) => a.skill === 'production' || a.skill === 'recall');
-  const prodCorrect = prodAttempts.filter((a) => a.correct).length;
-  const prodTotal = prodAttempts.length;
-
-  const examAttempts = attempts.filter((a) => a.mode === 'exam');
-  const examCorrect = examAttempts.filter((a) => a.correct).length;
-  const examTotal = examAttempts.length;
-
-  const mistakesCount = report?.mistakes_count ?? 0;
-
-  // Bloque 5: Lectura y esfuerzo
-  const rawSessions = report?.reading_sessions ?? [];
-  const readingSessions: ReadingSession[] = rawSessions.map((s) => ({
-    chars: s.chars,
-    seconds: s.seconds,
-    pinyin_shown: s.pinyin_shown,
-  }));
-  const speed = readingSpeed(readingSessions);
-  const totalTokens = rawSessions.reduce((acc, s) => acc + s.chars, 0);
-  const lookups = report?.lookups ?? 0;
-  const lookupRate = totalTokens > 0 ? lookupsPer100Tokens(lookups, totalTokens) : null;
-
-  // Comprensión literal (preguntas de comprensión de textos en reading_attempts)
-  const readingAttempts = report?.reading_attempts ?? [];
-  const literalCorrect = readingAttempts.reduce((acc, a) => acc + a.score, 0);
-  const literalTotal = readingAttempts.reduce((acc, a) => acc + a.total, 0);
+  const {
+    retention7,
+    retention30,
+    mastery,
+    coverage,
+    completedUnits,
+    totalUnits,
+    dictationCorrect,
+    dictationTotal,
+    prodCorrect,
+    prodTotal,
+    examCorrect,
+    examTotal,
+    mistakesCount,
+    speed,
+    totalTokens,
+    lookups,
+    lookupRate,
+    literalCorrect,
+    literalTotal,
+  } = metrics;
 
   return (
     <Screen>

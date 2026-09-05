@@ -318,44 +318,6 @@ $$;
 revoke all on function public.active_unit(numeric) from public;
 grant execute on function public.active_unit(numeric) to authenticated;
 
--- Conteo exacto y sin tope artificial de la cola de errores pendientes.
-create or replace function public.mistake_queue_count()
-returns integer
-language sql
-security definer
-set search_path = public
-as $$
-  with attempts as (
-    select
-      e.target_id,
-      e.occurred_at,
-      (e.payload->>'correct')::boolean as correct,
-      max(case when (e.payload->>'correct')::boolean is false then e.occurred_at end)
-        over (partition by e.target_id) as last_miss
-    from public.learning_event e
-    where e.user_id = auth.uid()
-      and e.kind = 'exercise_attempted'
-      and e.target_kind = 'word'
-      and e.target_id is not null
-      and jsonb_typeof(e.payload->'correct') = 'boolean'
-  )
-  select count(*)::integer
-  from (
-    select a.target_id
-    from attempts a
-    join public.words w on w.id = a.target_id
-    where a.last_miss is not null
-    group by a.target_id
-    having count(*) filter (where a.correct and a.occurred_at > a.last_miss) < 2
-        or count(distinct date(a.occurred_at)) filter (
-             where a.correct and a.occurred_at > a.last_miss
-           ) < 2
-  ) sub;
-$$;
-
-revoke all on function public.mistake_queue_count() from public;
-grant execute on function public.mistake_queue_count() to authenticated;
-
 -- Devuelve el historial que la analítica necesita, sin calcular ninguna
 -- métrica: el cálculo vive en packages/domain, probado con fixtures.
 create or replace function public.learning_report(p_days integer default 90)
@@ -411,9 +373,10 @@ as $$
         'slug', p.reading_slug,
         'seconds', extract(epoch from (p.finished_at - p.started_at)),
         'pinyin_shown', p.pinyin_shown,
-        -- Cuenta caracteres chinos reales (CJK), ignorando signos de puntuación
+        -- Cuenta caracteres chinos reales (CJK), ignorando signos de puntuación.
+        -- Se usa E'...' para que el lexer de Postgres interprete los escapes \u a UTF-8.
         'chars', coalesce((
-          select sum(length(regexp_replace(s->>'zh', '[^\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]', '', 'g')))::integer
+          select sum(length(regexp_replace(s->>'zh', E'[^\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]', '', 'g')))::integer
           from jsonb_array_elements(r.sentences) as s
         ), 0)
       ))
@@ -455,7 +418,9 @@ as $$
       where a.user_id = auth.uid()
         and a.created_at >= now() - make_interval(days => p_days)
     ), '[]'::jsonb),
-    'mistakes_count', public.mistake_queue_count(),
+    'mistakes_count', (
+      select count(*)::integer from public.mistake_queue(2147483647)
+    ),
     'syllabus_words_count', (
       select count(*)::integer
       from public.words w
@@ -465,15 +430,6 @@ as $$
         where us.user_id = auth.uid()
       )
     ),
-    'syllabus_word_ids', coalesce((
-      select jsonb_agg(w.id)
-      from public.words w
-      where w.hsk_level <= (
-        select coalesce(us.current_level, 1)
-        from public.user_settings us
-        where us.user_id = auth.uid()
-      )
-    ), '[]'::jsonb),
     'units', coalesce((
       select jsonb_agg(jsonb_build_object(
         'code', p.code,

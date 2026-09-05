@@ -329,7 +329,6 @@ export async function getLearningReport(
   const rawReadingAttempts = Array.isArray(payload.reading_attempts) ? payload.reading_attempts : [];
   const rawUnits = Array.isArray(payload.units) ? payload.units : [];
   const rawSkillStates = Array.isArray(payload.skill_states) ? payload.skill_states : [];
-  const rawWordIds = Array.isArray(payload.syllabus_word_ids) ? payload.syllabus_word_ids.map(Number) : [];
 
   return {
     reviews: rawReviews.map((r: any) => ({
@@ -363,8 +362,7 @@ export async function getLearningReport(
     mistakes_count: typeof payload.mistakes_count === 'number' ? payload.mistakes_count : Number(payload.mistakes_count || 0),
     syllabus_words_count: typeof payload.syllabus_words_count === 'number'
       ? payload.syllabus_words_count
-      : rawWordIds.length,
-    syllabus_word_ids: rawWordIds,
+      : 0,
     units: rawUnits.map((u: any) => ({
       code: String(u.code ?? ''),
       title: String(u.title ?? ''),
