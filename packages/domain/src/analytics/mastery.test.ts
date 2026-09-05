@@ -1,5 +1,5 @@
 // packages/domain/src/analytics/mastery.test.ts
-import { masteryBySkill, syllabusCoverage } from './mastery';
+import { isDemonstrated, masteryBySkill, syllabusCoverage } from './mastery';
 
 const now = new Date('2026-09-05T00:00:00.000Z');
 
@@ -52,5 +52,17 @@ describe('syllabusCoverage', () => {
 
   it('no divide por cero con un alcance vacío', () => {
     expect(syllabusCoverage([], [], now).percent_demonstrated).toBe(0);
+  });
+});
+
+describe('isDemonstrated', () => {
+  it('requiere que la retención actual no haya decaído por debajo del umbral', () => {
+    // Estabilidad 40 días pero sin repasar en 60 días: retención < 0.90, ya no está demostrada
+    const decayed = state(1, 'recognition', 40, 60);
+    expect(isDemonstrated(decayed, now)).toBe(false);
+
+    // Estabilidad 40 días repasada hace 10 días: retención >= 0.90, demostrada
+    const fresh = state(1, 'recognition', 40, 10);
+    expect(isDemonstrated(fresh, now)).toBe(true);
   });
 });

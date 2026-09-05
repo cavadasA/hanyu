@@ -187,9 +187,7 @@ grant execute on function public.apply_review(
 ) to authenticated;
 
 -- Devuelve el historial que la analítica necesita, sin calcular ninguna
--- métrica: el cálculo vive en packages/domain, probado con fixtures. Duplicarlo
--- aquí sería la tercera vez que este proyecto mantiene dos implementaciones de
--- la misma fórmula, y las dos anteriores costaron un plan entero cada una.
+-- métrica: el cálculo vive en packages/domain, probado con fixtures.
 create or replace function public.learning_report(p_days integer default 90)
 returns jsonb
 language sql
@@ -200,13 +198,21 @@ as $$
     'reviews', coalesce((
       select jsonb_agg(jsonb_build_object(
         'occurred_at', e.occurred_at,
-        'grade', e.payload->>'grade',
+        'grade', case e.payload->>'grade'
+          when '1' then 'again'
+          when '2' then 'hard'
+          when '3' then 'good'
+          when '4' then 'easy'
+          else e.payload->>'grade'
+        end,
         'skill', e.skill,
         'phase_before', e.payload->>'phase_before'
       ))
       from public.learning_event e
       where e.user_id = auth.uid()
         and e.kind = 'review_rated'
+        and e.payload->>'grade' is not null
+        and e.payload->>'phase_before' is not null
         and e.occurred_at >= now() - make_interval(days => p_days)
     ), '[]'::jsonb),
     'attempts', coalesce((
@@ -231,12 +237,18 @@ as $$
       select jsonb_agg(jsonb_build_object(
         'slug', p.reading_slug,
         'seconds', extract(epoch from (p.finished_at - p.started_at)),
-        'pinyin_shown', p.pinyin_shown
+        'pinyin_shown', p.pinyin_shown,
+        'chars', coalesce((
+          select sum(length(s->>'zh'))::integer
+          from jsonb_array_elements(r.sentences) as s
+        ), 0)
       ))
       from public.reading_progress p
+      left join public.reading r on r.slug = p.reading_slug
       where p.user_id = auth.uid()
         and p.finished_at is not null
         and p.started_at is not null
+        and p.finished_at >= now() - make_interval(days => p_days)
     ), '[]'::jsonb),
     'skill_states', coalesce((
       select jsonb_agg(jsonb_build_object(
@@ -248,6 +260,65 @@ as $$
       ))
       from public.learner_skill_state s
       where s.user_id = auth.uid() and s.target_kind = 'word'
+    ), '[]'::jsonb),
+    'reading_attempts', coalesce((
+      select jsonb_agg(jsonb_build_object(
+        'created_at', a.created_at,
+        'reading_slug', a.reading_slug,
+        'score', a.score,
+        'total', a.total
+      ))
+      from public.reading_attempts a
+      where a.user_id = auth.uid()
+        and a.created_at >= now() - make_interval(days => p_days)
+    ), '[]'::jsonb),
+    'mistakes_count', (
+      select count(*)::integer from public.mistake_queue(100)
+    ),
+    'syllabus_word_ids', coalesce((
+      select jsonb_agg(w.id)
+      from public.words w
+      where w.hsk_level <= (
+        select coalesce(us.current_level, 1)
+        from public.user_settings us
+        where us.user_id = auth.uid()
+      )
+    ), '[]'::jsonb),
+    'units', coalesce((
+      with progress as (
+        select
+          u.hsk_level,
+          u.code,
+          u.title,
+          u.order_idx,
+          count(uw.word_id)::integer as total_words,
+          count(*) filter (
+            where uw.word_id is not null
+              and (coalesce(s.stability, 0) >= public.unit_completion_stability_days() or coalesce(s.suspended, false))
+          )::integer as settled_words
+        from public.unit u
+        left join public.unit_word uw on uw.hsk_level = u.hsk_level and uw.code = u.code
+        left join public.learner_skill_state s
+          on s.user_id = auth.uid()
+         and s.target_kind = 'word'
+         and s.target_id = uw.word_id
+         and s.skill = 'recognition'
+        where u.hsk_level <= (
+          select coalesce(us.current_level, 1)
+          from public.user_settings us
+          where us.user_id = auth.uid()
+        )
+        group by u.hsk_level, u.code, u.title, u.order_idx
+      )
+      select jsonb_agg(jsonb_build_object(
+        'code', p.code,
+        'title', p.title,
+        'hsk_level', p.hsk_level,
+        'total_words', p.total_words,
+        'settled_words', p.settled_words,
+        'completed', p.total_words > 0 and p.settled_words >= p.total_words
+      ) order by p.hsk_level, p.order_idx)
+      from progress p
     ), '[]'::jsonb)
   );
 $$;

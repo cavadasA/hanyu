@@ -60,13 +60,15 @@ export function WordSheet({
     if (!first || looked.current === String(first.id)) return;
     looked.current = String(first.id);
 
-    void getData().events?.recordEvent?.({
-      kind: 'word_looked_up',
-      target_kind: 'word',
-      target_id: first.id,
-      skill: 'reading',
-      payload: { reading_slug: readingId, form: text },
-    });
+    void Promise.resolve(
+      getData().events.recordEvent({
+        kind: 'word_looked_up',
+        target_kind: 'word',
+        target_id: first.id,
+        skill: 'reading',
+        payload: { reading_slug: readingId, form: text },
+      }),
+    ).catch(() => {});
   }, [senses, readingId, text]);
 
   async function addCard(sense: ReadingSense) {

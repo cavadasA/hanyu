@@ -298,6 +298,15 @@ export async function logTime(ms: number, client: HanyuClient) {
   return { time_spent_ms: safeMs };
 }
 
+function normalizeReportGrade(grade: any): string {
+  const g = String(grade ?? '').trim().toLowerCase();
+  if (g === '1' || g === 'again') return 'again';
+  if (g === '2' || g === 'hard') return 'hard';
+  if (g === '3' || g === 'good') return 'good';
+  if (g === '4' || g === 'easy') return 'easy';
+  return g;
+}
+
 export async function getLearningReport(
   client: HanyuClient,
   days: number = 90,
@@ -308,11 +317,42 @@ export async function getLearningReport(
   }
 
   const payload = (typeof data === 'object' && data !== null ? data : {}) as Record<string, any>;
+  const rawReviews = Array.isArray(payload.reviews) ? payload.reviews : [];
+  const rawReadingSessions = Array.isArray(payload.reading_sessions) ? payload.reading_sessions : [];
+  const rawReadingAttempts = Array.isArray(payload.reading_attempts) ? payload.reading_attempts : [];
+  const rawUnits = Array.isArray(payload.units) ? payload.units : [];
+
   return {
-    reviews: Array.isArray(payload.reviews) ? payload.reviews : [],
+    reviews: rawReviews.map((r: any) => ({
+      occurred_at: String(r.occurred_at ?? ''),
+      grade: normalizeReportGrade(r.grade),
+      skill: String(r.skill ?? ''),
+      phase_before: r.phase_before != null ? String(r.phase_before) : null,
+    })),
     attempts: Array.isArray(payload.attempts) ? payload.attempts : [],
     lookups: typeof payload.lookups === 'number' ? payload.lookups : Number(payload.lookups || 0),
-    reading_sessions: Array.isArray(payload.reading_sessions) ? payload.reading_sessions : [],
+    reading_sessions: rawReadingSessions.map((s: any) => ({
+      slug: String(s.slug ?? ''),
+      seconds: Number(s.seconds || 0),
+      pinyin_shown: typeof s.pinyin_shown === 'boolean' ? s.pinyin_shown : null,
+      chars: Number(s.chars || 0),
+    })),
     skill_states: Array.isArray(payload.skill_states) ? payload.skill_states : [],
+    reading_attempts: rawReadingAttempts.map((a: any) => ({
+      created_at: String(a.created_at ?? ''),
+      reading_slug: String(a.reading_slug ?? ''),
+      score: Number(a.score || 0),
+      total: Number(a.total || 0),
+    })),
+    mistakes_count: typeof payload.mistakes_count === 'number' ? payload.mistakes_count : Number(payload.mistakes_count || 0),
+    syllabus_word_ids: Array.isArray(payload.syllabus_word_ids) ? payload.syllabus_word_ids.map(Number) : [],
+    units: rawUnits.map((u: any) => ({
+      code: String(u.code ?? ''),
+      title: String(u.title ?? ''),
+      hsk_level: Number(u.hsk_level || 0),
+      total_words: Number(u.total_words || 0),
+      settled_words: Number(u.settled_words || 0),
+      completed: Boolean(u.completed),
+    })),
   };
 }

@@ -4,7 +4,7 @@ import { WordSheet } from './WordSheet';
 
 const mockAddCard = jest.fn();
 const mockGetSettings = jest.fn();
-const mockRecordEvent = jest.fn();
+const mockRecordEvent = jest.fn().mockResolvedValue({ id: 1 });
 
 jest.mock('../lib/data', () => ({
   getData: () => ({
@@ -40,7 +40,7 @@ describe('WordSheet', () => {
   beforeEach(() => {
     mockAddCard.mockReset();
     mockGetSettings.mockReset();
-    mockRecordEvent.mockReset();
+    mockRecordEvent.mockReset().mockResolvedValue({ id: 1 });
   });
 
   it('muestra la glosa española cuando el idioma de apoyo es español', async () => {

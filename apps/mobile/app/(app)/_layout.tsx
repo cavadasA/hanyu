@@ -73,6 +73,18 @@ export default function AppLayout() {
           }}
         />
       ))}
+      <Tabs.Screen
+        name="progress"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="diagnostic"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

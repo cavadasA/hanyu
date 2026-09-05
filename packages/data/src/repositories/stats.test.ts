@@ -24,5 +24,39 @@ describe('getLearningReport', () => {
 
     expect(report.reviews).toEqual([]);
     expect(report.attempts).toEqual([]);
+    expect(report.reading_attempts).toEqual([]);
+    expect(report.units).toEqual([]);
+    expect(report.syllabus_word_ids).toEqual([]);
+    expect(report.mistakes_count).toBe(0);
+  });
+
+  it('normaliza las calificaciones numéricas de reviews a strings ("1" -> "again", "3" -> "good")', async () => {
+    const client = reportClient({
+      reviews: [
+        { occurred_at: '2026-09-01T00:00:00Z', grade: '1', skill: 'recognition', phase_before: 'review' },
+        { occurred_at: '2026-09-01T00:01:00Z', grade: 3, skill: 'recognition', phase_before: 'review' },
+      ],
+      reading_sessions: [
+        { slug: 'text-1', seconds: 120, pinyin_shown: false, chars: 150 },
+      ],
+      reading_attempts: [
+        { created_at: '2026-09-01T00:00:00Z', reading_slug: 'text-1', score: 4, total: 5 },
+      ],
+      mistakes_count: 3,
+      syllabus_word_ids: [1, 2, 3],
+      units: [
+        { code: 'U1', title: 'Unidad 1', hsk_level: 1, total_words: 10, settled_words: 10, completed: true },
+      ],
+    });
+
+    const report = await getLearningReport(client);
+
+    expect(report.reviews[0]?.grade).toBe('again');
+    expect(report.reviews[1]?.grade).toBe('good');
+    expect(report.reading_sessions[0]?.chars).toBe(150);
+    expect(report.reading_attempts[0]?.score).toBe(4);
+    expect(report.mistakes_count).toBe(3);
+    expect(report.syllabus_word_ids).toEqual([1, 2, 3]);
+    expect(report.units[0]?.completed).toBe(true);
   });
 });

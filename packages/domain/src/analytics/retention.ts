@@ -5,7 +5,7 @@
 // preferencia, no un control.
 export interface RetentionReview {
   occurred_at: string;
-  grade: string;
+  grade: string | number;
   /** Fase de la tarjeta ANTES del repaso. */
   phase_before: string;
 }
@@ -15,6 +15,10 @@ export interface Retention {
   rate: number | null;
   sample: number;
   target_gap: number | null;
+}
+
+function isAgain(grade: string | number): boolean {
+  return grade === 'again' || grade === '1' || grade === 1;
 }
 
 export function observedRetention(
@@ -34,7 +38,7 @@ export function observedRetention(
     return { rate: null, sample: 0, target_gap: null };
   }
 
-  const recalled = eligible.filter((review) => review.grade !== 'again').length;
+  const recalled = eligible.filter((review) => !isAgain(review.grade)).length;
   const rate = recalled / eligible.length;
 
   return {

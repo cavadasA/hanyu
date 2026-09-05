@@ -18,6 +18,12 @@ describe('observedRetention', () => {
     expect(observedRetention(reviews, now, 7).rate).toBeCloseTo(0.75);
   });
 
+  it('funciona con notas numéricas de la base de datos (1=again, 2=hard, 3=good, 4=easy)', () => {
+    const reviews = [review(1, '3'), review(2, '2'), review(3, '1'), review(4, '4')];
+
+    expect(observedRetention(reviews, now, 7).rate).toBeCloseTo(0.75);
+  });
+
   it('excluye las tarjetas que estaban en aprendizaje', () => {
     // Fallar algo que ves por segunda vez en diez minutos no dice nada sobre
     // tu retención a treinta días.

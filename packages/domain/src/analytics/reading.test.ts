@@ -21,6 +21,19 @@ describe('readingSpeed', () => {
     expect(speed.with_pinyin_chars_per_minute).toBe(60);
   });
 
+  it('excluye sesiones con pinyin_shown null de ambos cubos', () => {
+    // Si la lectura terminó antes de migrar la columna, no sabemos si tenía pinyin
+    // o no. No debe caer en "sin pinyin" por defecto.
+    const sessions = [
+      { chars: 90, seconds: 180, pinyin_shown: null },
+    ];
+
+    const speed = readingSpeed(sessions);
+
+    expect(speed.chars_per_minute).toBeNull();
+    expect(speed.with_pinyin_chars_per_minute).toBeNull();
+  });
+
   it('descarta sesiones absurdamente rápidas', () => {
     // Abrir y cerrar una lectura no es haberla leído; contarlo dispararía la
     // media y haría la métrica inútil.

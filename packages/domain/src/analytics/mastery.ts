@@ -22,8 +22,17 @@ export interface SkillMastery {
 
 const SKILLS = ['recognition', 'recall', 'listening', 'reading', 'production'] as const;
 
-function isDemonstrated(state: SkillStateRow): boolean {
-  return !state.suspended && (state.stability ?? 0) >= MASTERED_STABILITY_DAYS;
+export function isDemonstrated(state: SkillStateRow, now?: Date): boolean {
+  if (state.suspended || (state.stability ?? 0) < MASTERED_STABILITY_DAYS) {
+    return false;
+  }
+  if (now && state.last_reviewed_at) {
+    const elapsedDays = Math.max(0, (now.getTime() - Date.parse(state.last_reviewed_at)) / 86_400_000);
+    if (elapsedDays > (state.stability ?? 0)) {
+      return false;
+    }
+  }
+  return true;
 }
 
 export function masteryBySkill(
@@ -34,7 +43,7 @@ export function masteryBySkill(
 
   for (const skill of SKILLS) {
     const mine = states.filter((state) => state.skill === skill);
-    const demonstrated = mine.filter(isDemonstrated);
+    const demonstrated = mine.filter((state) => isDemonstrated(state, now));
 
     let oldest: number | null = null;
     for (const state of demonstrated) {
@@ -62,7 +71,7 @@ export function syllabusCoverage(
   const relevant = states.filter(
     (state) => state.skill === 'recognition' && inScope.has(state.target_id),
   );
-  const demonstrated = relevant.filter(isDemonstrated).length;
+  const demonstrated = relevant.filter((state) => isDemonstrated(state, now)).length;
 
   return {
     in_scope: inScope.size,

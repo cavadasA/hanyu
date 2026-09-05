@@ -480,6 +480,23 @@ export interface LearningReportReadingSession {
   slug: string;
   seconds: number;
   pinyin_shown: boolean | null;
+  chars: number;
+}
+
+export interface LearningReportReadingAttempt {
+  created_at: string;
+  reading_slug: string;
+  score: number;
+  total: number;
+}
+
+export interface LearningReportUnit {
+  code: string;
+  title: string;
+  hsk_level: number;
+  total_words: number;
+  settled_words: number;
+  completed: boolean;
 }
 
 export interface LearningReportSkillState {
@@ -496,4 +513,8 @@ export interface LearningReport {
   lookups: number;
   reading_sessions: LearningReportReadingSession[];
   skill_states: LearningReportSkillState[];
+  reading_attempts: LearningReportReadingAttempt[];
+  mistakes_count: number;
+  syllabus_word_ids: number[];
+  units: LearningReportUnit[];
 }

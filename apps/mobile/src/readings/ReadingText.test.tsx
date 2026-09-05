@@ -9,6 +9,9 @@ jest.mock('../lib/data', () => ({
     flashcards: {
       addCard: (...args: unknown[]) => mockAddCard(...args),
     },
+    events: {
+      recordEvent: jest.fn().mockResolvedValue({ id: 1 }),
+    },
   }),
 }));
 

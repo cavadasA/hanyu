@@ -18,6 +18,7 @@ import {
   masteryBySkill,
   observedRetention,
   readingSpeed,
+  syllabusCoverage,
   type ReadingSession,
   type Retention,
   type RetentionReview,
@@ -28,6 +29,7 @@ import { getData } from '../lib/data';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 import { Badge } from '../ui/Badge';
+import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { ErrorBanner } from '../ui/ErrorBanner';
 import { Screen } from '../ui/Screen';
@@ -110,6 +112,24 @@ export function ProgressScreen() {
     );
   }
 
+  if (error && !report) {
+    return (
+      <Screen>
+        <View style={styles.centerContainer}>
+          <ErrorBanner message={error} />
+          <Button
+            label="Reintentar"
+            onPress={() => {
+              setLoading(true);
+              void loadData();
+            }}
+            variant="primary"
+          />
+        </View>
+      </Screen>
+    );
+  }
+
   const now = new Date();
 
   // Bloque 1: Memoria (retención observada a 7 y 30 días)
@@ -121,7 +141,7 @@ export function ProgressScreen() {
   const retention7 = observedRetention(retentionReviews, now, 7, targetRetention);
   const retention30 = observedRetention(retentionReviews, now, 30, targetRetention);
 
-  // Bloque 2: Competencias (dominio demostrado por habilidad)
+  // Bloque 2: Vocabulario y sílabo
   const skillStates: SkillStateRow[] = (report?.skill_states ?? []).map((s: LearningReportSkillState) => ({
     target_id: s.target_id,
     skill: s.skill,
@@ -130,23 +150,45 @@ export function ProgressScreen() {
     last_reviewed_at: s.last_reviewed_at,
   }));
   const mastery = masteryBySkill(skillStates, now);
+  const coverage = syllabusCoverage(skillStates, report?.syllabus_word_ids ?? [], now);
 
-  // Bloque 3: Lectura
+  // Bloque 3: Gramática
+  const units = report?.units ?? [];
+  const completedUnits = units.filter((u) => u.completed).length;
+  const totalUnits = units.length;
+
+  // Bloque 4: Habilidades activas y evaluación
+  const attempts = report?.attempts ?? [];
+  const dictationAttempts = attempts.filter((a) => a.skill === 'listening');
+  const dictationCorrect = dictationAttempts.filter((a) => a.correct).length;
+  const dictationTotal = dictationAttempts.length;
+
+  const prodAttempts = attempts.filter((a) => a.skill === 'production' || a.skill === 'recall');
+  const prodCorrect = prodAttempts.filter((a) => a.correct).length;
+  const prodTotal = prodAttempts.length;
+
+  const examAttempts = attempts.filter((a) => a.mode === 'exam');
+  const examCorrect = examAttempts.filter((a) => a.correct).length;
+  const examTotal = examAttempts.length;
+
+  const mistakesCount = report?.mistakes_count ?? 0;
+
+  // Bloque 5: Lectura y esfuerzo
   const rawSessions = report?.reading_sessions ?? [];
   const readingSessions: ReadingSession[] = rawSessions.map((s) => ({
-    chars: (s as any).chars ?? 100,
+    chars: s.chars,
     seconds: s.seconds,
     pinyin_shown: s.pinyin_shown,
   }));
   const speed = readingSpeed(readingSessions);
-  const totalTokens = rawSessions.reduce((acc, s) => acc + ((s as any).chars ?? 100), 0);
+  const totalTokens = rawSessions.reduce((acc, s) => acc + s.chars, 0);
   const lookups = report?.lookups ?? 0;
   const lookupRate = totalTokens > 0 ? lookupsPer100Tokens(lookups, totalTokens) : null;
 
-  // Comprensión literal
-  const readingAttempts = (report?.attempts ?? []).filter((a) => a.skill === 'reading');
-  const literalCorrect = readingAttempts.filter((a) => a.correct).length;
-  const literalTotal = readingAttempts.length;
+  // Comprensión literal (preguntas de comprensión de textos en reading_attempts)
+  const readingAttempts = report?.reading_attempts ?? [];
+  const literalCorrect = readingAttempts.reduce((acc, a) => acc + a.score, 0);
+  const literalTotal = readingAttempts.reduce((acc, a) => acc + a.total, 0);
 
   return (
     <Screen>
@@ -236,15 +278,39 @@ export function ProgressScreen() {
           </View>
         </Card>
 
-        {/* BLOQUE 2: COMPETENCIAS */}
+        {/* BLOQUE 2: VOCABULARIO Y SÍLABO */}
         <Card style={styles.sectionCard}>
           <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Vocabulario demostrado</Text>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>Vocabulario y sílabo</Text>
             <Badge label="Estabilidad ≥ 30 días" />
           </View>
           <Text style={[styles.sectionCaption, { color: colors.textMuted }]}>
             Demostrado por competencia individual con la fecha del repaso más antiguo.
           </Text>
+
+          {/* Cobertura del sílabo */}
+          <View style={[styles.metricRow, { borderBottomColor: colors.border }]}>
+            <View style={styles.metricTextContainer}>
+              <Text style={[styles.metricName, { color: colors.text }]}>Cobertura del sílabo</Text>
+              {coverage.in_scope > 0 ? (
+                <>
+                  <Text style={[styles.metricValue, { color: colors.text }]}>
+                    {coverage.percent_demonstrated} %{' '}
+                    <Text style={[styles.sampleText, { color: colors.textMuted }]}>
+                      ({coverage.demonstrated} de {coverage.in_scope} palabras demostradas)
+                    </Text>
+                  </Text>
+                  <Text style={[styles.gapText, { color: colors.textMuted }]}>
+                    {coverage.started} palabras en estudio activo
+                  </Text>
+                </>
+              ) : (
+                <Text style={[styles.emptyNotice, { color: colors.textMuted }]}>
+                  No hay palabras registradas en el alcance del nivel actual.
+                </Text>
+              )}
+            </View>
+          </View>
 
           {Object.entries(SKILL_LABELS).map(([skillKey, skillName]) => {
             const m: SkillMastery | undefined = mastery[skillKey];
@@ -279,7 +345,112 @@ export function ProgressScreen() {
           })}
         </Card>
 
-        {/* BLOQUE 3: LECTURA */}
+        {/* BLOQUE 3: GRAMÁTICA */}
+        <Card style={styles.sectionCard}>
+          <View style={styles.sectionHeader}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>Gramática y unidades</Text>
+          </View>
+          <Text style={[styles.sectionCaption, { color: colors.textMuted }]}>
+            Unidades gramaticales con todo su vocabulario consolidado.
+          </Text>
+
+          <View style={styles.metricRow}>
+            <View style={styles.metricTextContainer}>
+              <Text style={[styles.metricName, { color: colors.text }]}>Unidades completadas</Text>
+              {totalUnits > 0 ? (
+                <Text style={[styles.metricValue, { color: colors.text }]}>
+                  {completedUnits} de {totalUnits} unidades{' '}
+                  <Text style={[styles.sampleText, { color: colors.textMuted }]}>
+                    ({Math.round((completedUnits / totalUnits) * 100)} %)
+                  </Text>
+                </Text>
+              ) : (
+                <Text style={[styles.emptyNotice, { color: colors.textMuted }]}>
+                  Aún no hay unidades registradas en el nivel actual.
+                </Text>
+              )}
+            </View>
+          </View>
+        </Card>
+
+        {/* BLOQUE 4: PRECISIÓN Y EVALUACIÓN */}
+        <Card style={styles.sectionCard}>
+          <View style={styles.sectionHeader}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>Precisión y evaluación</Text>
+          </View>
+
+          {/* Precisión de dictado */}
+          <View style={[styles.metricRow, { borderBottomColor: colors.border }]}>
+            <View style={styles.metricTextContainer}>
+              <Text style={[styles.metricName, { color: colors.text }]}>Precisión de dictado</Text>
+              {dictationTotal > 0 ? (
+                <Text style={[styles.metricValue, { color: colors.text }]}>
+                  {Math.round((dictationCorrect / dictationTotal) * 100)} %{' '}
+                  <Text style={[styles.sampleText, { color: colors.textMuted }]}>
+                    ({dictationCorrect} de {dictationTotal} ejercicios)
+                  </Text>
+                </Text>
+              ) : (
+                <Text style={[styles.emptyNotice, { color: colors.textMuted }]}>
+                  Aún no hay ejercicios de escucha realizados.
+                </Text>
+              )}
+            </View>
+          </View>
+
+          {/* Precisión de producción */}
+          <View style={[styles.metricRow, { borderBottomColor: colors.border }]}>
+            <View style={styles.metricTextContainer}>
+              <Text style={[styles.metricName, { color: colors.text }]}>Precisión de producción</Text>
+              {prodTotal > 0 ? (
+                <Text style={[styles.metricValue, { color: colors.text }]}>
+                  {Math.round((prodCorrect / prodTotal) * 100)} %{' '}
+                  <Text style={[styles.sampleText, { color: colors.textMuted }]}>
+                    ({prodCorrect} de {prodTotal} ejercicios)
+                  </Text>
+                </Text>
+              ) : (
+                <Text style={[styles.emptyNotice, { color: colors.textMuted }]}>
+                  Aún no hay ejercicios de producción realizados.
+                </Text>
+              )}
+            </View>
+          </View>
+
+          {/* Rendimiento en simulacros */}
+          <View style={[styles.metricRow, { borderBottomColor: colors.border }]}>
+            <View style={styles.metricTextContainer}>
+              <Text style={[styles.metricName, { color: colors.text }]}>Rendimiento en simulacros</Text>
+              {examTotal > 0 ? (
+                <Text style={[styles.metricValue, { color: colors.text }]}>
+                  {Math.round((examCorrect / examTotal) * 100)} %{' '}
+                  <Text style={[styles.sampleText, { color: colors.textMuted }]}>
+                    ({examCorrect} de {examTotal} preguntas de examen)
+                  </Text>
+                </Text>
+              ) : (
+                <Text style={[styles.emptyNotice, { color: colors.textMuted }]}>
+                  Aún no has realizado simulacros de examen.
+                </Text>
+              )}
+            </View>
+          </View>
+
+          {/* Errores recurrentes */}
+          <View style={styles.metricRow}>
+            <View style={styles.metricTextContainer}>
+              <Text style={[styles.metricName, { color: colors.text }]}>Errores recurrentes pendientes</Text>
+              <Text style={[styles.metricValue, { color: colors.text }]}>
+                {mistakesCount}{' '}
+                <Text style={[styles.sampleText, { color: colors.textMuted }]}>
+                  {mistakesCount === 1 ? 'error en cola de consolidación' : 'errores en cola de consolidación'}
+                </Text>
+              </Text>
+            </View>
+          </View>
+        </Card>
+
+        {/* BLOQUE 5: LECTURA Y ESFUERZO */}
         <Card style={styles.sectionCard}>
           <View style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Lectura y esfuerzo</Text>
@@ -381,6 +552,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: tokens.spacing.xl,
+    gap: tokens.spacing.md,
   },
   header: {
     gap: tokens.spacing.xs,

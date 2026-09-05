@@ -33,8 +33,9 @@ export function readingSpeed(sessions: readonly ReadingSession[]): {
 } {
   return {
     // Sin pinyin es la métrica que importa: con él se lee una transcripción.
-    chars_per_minute: average(sessions.filter((session) => !session.pinyin_shown)),
-    with_pinyin_chars_per_minute: average(sessions.filter((session) => session.pinyin_shown)),
+    // NULL debe excluirse de ambos cubos porque se desconoce si tenía pinyin o no.
+    chars_per_minute: average(sessions.filter((session) => session.pinyin_shown === false)),
+    with_pinyin_chars_per_minute: average(sessions.filter((session) => session.pinyin_shown === true)),
   };
 }
 
