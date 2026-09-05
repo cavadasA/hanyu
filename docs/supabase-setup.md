@@ -32,24 +32,32 @@ En tu repositorio de GitHub ([github.com/cavadasA/hanyu](https://github.com/cava
 
 ## 3. Configurar Secretos de Edge Functions (Supabase Dashboard)
 
-Para que las Edge Functions (`generate-exercise`) funcionen en Supabase:
+Para que las Edge Functions (`generate-exercise`) funcionen en Supabase con IA:
 
 1. En el dashboard de Supabase, ve a **Project Settings** -> **Edge Functions** -> **Secrets**.
-2. Añade:
-   - `DEEPSEEK_API_KEY`: Tu clave de DeepSeek.
-   - `GEMINI_API_KEY`: Tu clave de Gemini.
+2. Añade las claves correspondientes al proveedor de IA que utilices (ambas son opcionales según tu configuración):
+   - `DEEPSEEK_API_KEY`: Tu clave de DeepSeek (opcional si usas Gemini).
+   - `GEMINI_API_KEY`: Tu clave de Gemini (opcional si usas DeepSeek).
 
 ---
 
-## 4. Primer Despliegue
+## 4. Despliegue de Migraciones y Funciones
+
+### Primer Despliegue (Manual)
 
 Una vez configurados los secretos:
 
 1. Ve a la pestaña **Actions** en GitHub: [github.com/cavadasA/hanyu/actions](https://github.com/cavadasA/hanyu/actions).
 2. Selecciona el workflow **Deploy Supabase (Migrations & Functions)**.
 3. Pulsa **Run workflow** sobre la rama `master` o `main`.
+   - **Nota sobre `force_seed`**: El workflow incluye un parámetro opcional `force_seed` (por defecto desmarcado/`false`). Si la base de datos ya contiene datos en `hsk_characters`, el script omite el seed automáticamente para proteger los datos. Marca `force_seed` solo si deseas forzar la re-ejecución del script `supabase/seed.sql`.
 4. El workflow:
-   - Aplicará secuencialmente las 33 migraciones.
-   - Detectará que la tabla `public.hsk_characters` tiene 0 filas y ejecutará automáticamente `supabase/seed.sql`.
+   - Aplicará secuencialmente las migraciones pendientes.
+   - Detectará si la tabla `public.hsk_characters` tiene 0 filas (o si `force_seed` está activo) y ejecutará `supabase/seed.sql`.
    - Desplegará las Edge Functions `generate-exercise` y `tokenize-reading`.
    - Validará la generación de tipos TypeScript.
+
+### Despliegues Posteriores (Auto-deploy on push)
+
+- Una vez completado el primer despliegue, el workflow se ejecutará automáticamente ante cualquier `push` a las ramas `main` o `master` que contenga modificaciones en `supabase/**`, `.github/workflows/supabase-deploy.yml` o `scripts/supabase-conditional-seed.sh`.
+- En despliegues automáticos por push, `force_seed` se mantiene en `false` por seguridad.

@@ -94,7 +94,7 @@ URLs por defecto:
 
 La ruta de produccion es Supabase-first. Consulta:
 
-- `docs/supabase-setup.md` (Puesta en marcha con CI/CD en GitHub Actions y reseteo inicial)
+- [`docs/supabase-setup.md`](docs/supabase-setup.md) (Puesta en marcha con CI/CD en GitHub Actions y reseteo inicial)
 - `docs/deployment-supabase.md`
 
 ## Flujo de produccion local
