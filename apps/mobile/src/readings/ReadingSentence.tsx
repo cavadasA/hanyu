@@ -41,6 +41,7 @@ export function ReadingSentence({
       style={styles.sentence}
     >
       <Pressable
+        accessible={false}
         accessibilityRole="button"
         accessibilityLabel="Traducir la frase"
         accessibilityState={{ selected: translated }}

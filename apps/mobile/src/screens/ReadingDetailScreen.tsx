@@ -84,6 +84,10 @@ export function ReadingDetailScreen() {
 
   function recordSentenceProgress(index: number) {
     setActiveSentenceIndex(index);
+    saveSentenceProgress(index);
+  }
+
+  function saveSentenceProgress(index: number) {
     const updatedAt = new Date().toISOString();
     setProgress(current => current ? {
       ...current,
@@ -101,9 +105,6 @@ export function ReadingDetailScreen() {
 
   function playFrom(index: number) {
     if (!reading) return;
-    if (id && typeof readingsApi.current.saveReadingProgress === 'function') {
-      void readingsApi.current.saveReadingProgress(id, index);
-    }
     speechCancel.current?.();
     speechCancel.current = speech.speakSentences(
       reading.sentences.map(sentence => sentence.zh),
@@ -255,7 +256,7 @@ export function ReadingDetailScreen() {
           readingId={reading.id}
           activeSentenceIndex={activeSentenceIndex}
           onPlaySentence={playFrom}
-          onSentenceRead={recordSentenceProgress}
+          onSentenceRead={saveSentenceProgress}
           readingLevel={reading.hsk_level}
         />
       </Card>

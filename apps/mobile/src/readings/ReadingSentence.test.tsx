@@ -45,7 +45,9 @@ describe('ReadingSentence', () => {
 
     expect(screen.queryByText('El café es más caro que el té.')).toBeNull();
 
-    await fireEvent.press(screen.getByLabelText('Traducir la frase'));
+    const translationButton = screen.getByLabelText('Traducir la frase');
+    expect(translationButton.props.accessible).toBe(false);
+    await fireEvent.press(translationButton);
 
     expect(screen.getByText('El café es más caro que el té.')).toBeTruthy();
   });

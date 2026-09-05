@@ -229,6 +229,21 @@ describe('ReadingDetailScreen', () => {
       0,
       expect.objectContaining({ rate: 0.75 }),
     );
+    expect(mockSaveReadingProgress).toHaveBeenCalledTimes(1);
+  });
+
+  it('traducir una frase guarda progreso sin marcarla como activa', async () => {
+    mockGetReading.mockResolvedValue(readingForAudio());
+    mockSpeakSentences.mockReturnValue(jest.fn());
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
+    await fireEvent.press(view.getAllByLabelText('Traducir la frase')[0]);
+
+    expect(view.getByTestId('sentence-0').props.accessibilityState.selected).toBe(false);
+    expect(view.getByRole('button', { name: 'Reproducir' })).toBeTruthy();
+    expect(mockSaveReadingProgress).toHaveBeenCalledWith('reading-1', 0);
+    expect(mockSpeakSentences).not.toHaveBeenCalled();
   });
 
   it('para el audio al salir de la pantalla', async () => {
