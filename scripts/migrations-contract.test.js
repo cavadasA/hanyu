@@ -314,4 +314,19 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, "where source_model = 'seed'");
     expect(normalized).toContain("duplicate.prompt->>'slug' = keeper.prompt->>'slug'");
   });
+
+  it('desambigua referencias a user_id y concede permisos sobre reading_progress y decks', () => {
+    const migration = readMigration('2026090603_fix_ambiguous_user_id.sql');
+
+    expectSqlToContain(migration, 'grant select, insert, update, delete on public.reading_progress to authenticated;');
+    expectSqlToContain(migration, 'grant select, insert, update, delete on public.decks to authenticated;');
+    expectSqlToContain(migration, 'grant select, insert, update, delete on public.deck_cards to authenticated;');
+    expectSqlToContain(migration, '#variable_conflict use_column');
+    expectSqlToContain(migration, 'from public.user_settings us where us.user_id = v_user_id');
+    expectSqlToContain(migration, 'from public.user_stats ust where ust.user_id = v_user_id');
+    expectSqlToContain(migration, 'from public.user_settings us where us.user_id = auth.uid()');
+    expectSqlToContain(migration, 'grant execute on function public.build_review_queue(uuid, public.learning_skill, integer) to authenticated;');
+    expectSqlToContain(migration, 'grant execute on function public.build_review_queue_mode(text, uuid, public.learning_skill, integer) to authenticated;');
+    expectSqlToContain(migration, 'grant execute on function public.unit_progress(numeric) to authenticated;');
+  });
 });
