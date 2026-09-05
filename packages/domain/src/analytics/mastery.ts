@@ -100,7 +100,7 @@ export function syllabusCoverage(
   const relevant = states.filter((state) => {
     if (state.skill !== 'recognition') return false;
     if (inScopeSet) return inScopeSet.has(state.target_id);
-    return state.in_scope ?? true;
+    return state.in_scope ?? false;
   });
   const demonstrated = relevant.filter((state) => isDemonstrated(state, now, targetRetention)).length;
 

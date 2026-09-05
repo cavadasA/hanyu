@@ -80,6 +80,21 @@ describe('syllabusCoverage', () => {
     expect(coverage.demonstrated).toBe(1);
     expect(coverage.percent_demonstrated).toBe(33);
   });
+
+  it('no asume in_scope como true cuando el alcance es numérico para evitar pasar del 100 %', () => {
+    // Si un estado no tiene in_scope marcado explícitamente como true,
+    // no debe contarse dentro del alcance numérico.
+    const states = [
+      { ...state(1, 'recognition', 200), in_scope: true },
+      state(2, 'recognition', 200), // in_scope ausente (undefined)
+    ];
+
+    const coverage = syllabusCoverage(states, 1, now);
+
+    expect(coverage.in_scope).toBe(1);
+    expect(coverage.demonstrated).toBe(1);
+    expect(coverage.percent_demonstrated).toBe(100);
+  });
 });
 
 describe('isDemonstrated', () => {

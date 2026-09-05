@@ -199,11 +199,11 @@ export function ProgressScreen() {
     );
   }
 
-  if (error && !report) {
+  if ((error && !report) || !metrics) {
     return (
       <Screen>
         <View style={styles.centerContainer}>
-          <ErrorBanner message={error} />
+          <ErrorBanner message={error ?? 'No se pudieron cargar los datos de progreso.'} />
           <Button
             label="Reintentar"
             onPress={() => {
@@ -215,10 +215,6 @@ export function ProgressScreen() {
         </View>
       </Screen>
     );
-  }
-
-  if (!metrics) {
-    return null;
   }
 
   const {

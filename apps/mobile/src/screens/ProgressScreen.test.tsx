@@ -115,6 +115,18 @@ describe('ProgressScreen', () => {
     expect(screen.queryByText('Memoria y retención')).toBeNull();
   });
 
+  it('muestra ErrorBanner y reintentar si el reporte viene vacío o no genera métricas en lugar de pantalla en blanco', async () => {
+    mockGetReport.mockResolvedValue(null);
+
+    await renderProgress();
+
+    await waitFor(() => {
+      expect(screen.getByText('No se pudieron cargar los datos de progreso.')).toBeTruthy();
+      expect(screen.getByRole('button', { name: 'Reintentar' })).toBeTruthy();
+    });
+    expect(screen.queryByText('Progreso real')).toBeNull();
+  });
+
   it('calcula comprensión literal a partir de reading_attempts', async () => {
     mockGetReport.mockResolvedValue(
       reportWith({
