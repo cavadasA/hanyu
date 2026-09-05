@@ -15,21 +15,21 @@ export function MatchingExercise({
 }: ExerciseRendererProps<Prompt>) {
   const { colors } = useTheme();
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
+  const [selectedRight, setSelectedRight] = useState<string | null>(null);
   const matches = value.kind === 'matching' ? value.pairs : {};
 
-  const selectRight = (right: string) => {
-    if (!selectedLeft) {
-      return;
+  // Reverse lookup: right string -> left string
+  const rightToLeft = useMemo(() => {
+    const reverse: Record<string, string> = {};
+    for (const [left, right] of Object.entries(matches)) {
+      reverse[right] = left;
     }
-    onChange({ kind: 'matching', pairs: { ...matches, [selectedLeft]: right } });
-    setSelectedLeft(null);
-  };
+    return reverse;
+  }, [matches]);
 
-  // La columna derecha se pintaba en el mismo orden que la izquierda, así que
-  // el ejercicio se resolvía emparejando fila con fila sin leer nada. Se baraja
-  // de forma determinista a partir del propio contenido —el orden no cambia
-  // entre renderizados— y se fuerza un desarreglo: ningún significado queda
-  // en la posición original cuando las etiquetas son distintas.
+  // La columna derecha se baraja de forma determinista a partir del propio
+  // contenido para que el orden no cambie entre renderizados y ningún
+  // significado quede en la posición original cuando las etiquetas son distintas.
   const rightColumn = useMemo(() => {
     const rights = prompt.pairs.map((pair) => pair.right);
     if (rights.length < 2) {
@@ -40,39 +40,153 @@ export function MatchingExercise({
     return rights.map((_, index) => rights[(index + offset) % rights.length]);
   }, [prompt.pairs]);
 
+  const pairUp = (left: string, right: string) => {
+    const nextPairs: Record<string, string> = {};
+    for (const [k, v] of Object.entries(matches)) {
+      if (k !== left && v !== right) {
+        nextPairs[k] = v;
+      }
+    }
+    nextPairs[left] = right;
+    onChange({ kind: 'matching', pairs: nextPairs });
+    setSelectedLeft(null);
+    setSelectedRight(null);
+  };
+
+  const handlePressLeft = (left: string) => {
+    if (disabled) return;
+
+    if (selectedRight) {
+      pairUp(left, selectedRight);
+      return;
+    }
+
+    if (selectedLeft === left) {
+      setSelectedLeft(null);
+      return;
+    }
+
+    if (matches[left]) {
+      const nextPairs = { ...matches };
+      delete nextPairs[left];
+      onChange({ kind: 'matching', pairs: nextPairs });
+      setSelectedLeft(null);
+      setSelectedRight(null);
+      return;
+    }
+
+    setSelectedLeft(left);
+    setSelectedRight(null);
+  };
+
+  const handlePressRight = (right: string) => {
+    if (disabled) return;
+
+    if (selectedLeft) {
+      pairUp(selectedLeft, right);
+      return;
+    }
+
+    if (selectedRight === right) {
+      setSelectedRight(null);
+      return;
+    }
+
+    const matchedLeft = rightToLeft[right];
+    if (matchedLeft) {
+      const nextPairs = { ...matches };
+      delete nextPairs[matchedLeft];
+      onChange({ kind: 'matching', pairs: nextPairs });
+      setSelectedLeft(null);
+      setSelectedRight(null);
+      return;
+    }
+
+    setSelectedRight(right);
+    setSelectedLeft(null);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={{ color: colors.textMuted }}>Select a Chinese word, then its meaning</Text>
       <View style={styles.columns}>
         <View style={styles.column}>
-          {prompt.pairs.map(pair => (
-            <Pressable
-              key={pair.left}
-              accessibilityRole="button"
-              accessibilityLabel={`Select ${pair.left}`}
-              accessibilityState={{ selected: selectedLeft === pair.left, disabled }}
-              disabled={disabled}
-              onPress={() => setSelectedLeft(pair.left)}
-              style={[styles.item, { borderColor: colors.border }]}
-            >
-              <Text style={{ color: colors.text }}>{pair.left}</Text>
-            </Pressable>
-          ))}
+          {prompt.pairs.map((pair) => {
+            const isSelected = selectedLeft === pair.left;
+            const isMatched = Boolean(matches[pair.left]);
+            const border = isSelected
+              ? colors.vermilion
+              : isMatched
+                ? colors.success
+                : colors.border;
+            const borderWidth = isSelected || isMatched ? 2 : 1;
+
+            return (
+              <Pressable
+                key={pair.left}
+                accessibilityRole="button"
+                accessibilityLabel={`Select ${pair.left}`}
+                accessibilityState={{ selected: isSelected, disabled: Boolean(disabled) }}
+                disabled={disabled}
+                onPress={() => handlePressLeft(pair.left)}
+                style={[
+                  styles.item,
+                  {
+                    borderColor: border,
+                    borderWidth,
+                    backgroundColor: colors.surface,
+                    opacity: disabled ? 0.6 : 1,
+                  },
+                ]}
+              >
+                <View style={styles.itemContent}>
+                  <Text style={[styles.itemText, { color: colors.text }]}>{pair.left}</Text>
+                  {isMatched ? (
+                    <Text style={[styles.badge, { color: colors.success }]}>✓</Text>
+                  ) : null}
+                </View>
+              </Pressable>
+            );
+          })}
         </View>
         <View style={styles.column}>
-          {rightColumn.map(right => (
-            <Pressable
-              key={right}
-              accessibilityRole="button"
-              accessibilityLabel={`Match ${right}`}
-              accessibilityState={{ disabled: disabled || !selectedLeft }}
-              disabled={disabled || !selectedLeft}
-              onPress={() => selectRight(right)}
-              style={[styles.item, { borderColor: colors.border }]}
-            >
-              <Text style={{ color: colors.text }}>{right}</Text>
-            </Pressable>
-          ))}
+          {rightColumn.map((right) => {
+            const isSelected = selectedRight === right;
+            const isMatched = Boolean(rightToLeft[right]);
+            const border = isSelected
+              ? colors.vermilion
+              : isMatched
+                ? colors.success
+                : colors.border;
+            const borderWidth = isSelected || isMatched ? 2 : 1;
+
+            return (
+              <Pressable
+                key={right}
+                accessibilityRole="button"
+                accessibilityLabel={`Match ${right}`}
+                accessibilityState={{ selected: isSelected, disabled: Boolean(disabled) }}
+                disabled={disabled}
+                onPress={() => handlePressRight(right)}
+                style={[
+                  styles.item,
+                  {
+                    borderColor: border,
+                    borderWidth,
+                    backgroundColor: colors.surface,
+                    opacity: disabled ? 0.6 : 1,
+                  },
+                ]}
+              >
+                <View style={styles.itemContent}>
+                  <Text style={[styles.itemText, { color: colors.text }]}>{right}</Text>
+                  {isMatched ? (
+                    <Text style={[styles.badge, { color: colors.success }]}>✓</Text>
+                  ) : null}
+                </View>
+              </Pressable>
+            );
+          })}
         </View>
       </View>
     </View>
@@ -84,9 +198,24 @@ const styles = StyleSheet.create({
   columns: { flexDirection: 'row', gap: tokens.spacing.md },
   column: { flex: 1, gap: tokens.spacing.sm },
   item: {
-    borderWidth: 1,
     borderRadius: tokens.radius.md,
     padding: tokens.spacing.md,
+    justifyContent: 'center',
+    minHeight: 48,
+  },
+  itemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: tokens.spacing.xs,
+  },
+  itemText: {
+    fontSize: tokens.fontSize.md,
+    flexShrink: 1,
+  },
+  badge: {
+    fontSize: tokens.fontSize.md,
+    fontWeight: 'bold',
   },
 });
 

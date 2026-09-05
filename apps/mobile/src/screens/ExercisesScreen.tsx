@@ -61,7 +61,9 @@ export function ExercisesScreen() {
 
   const busy = session.status === 'loading' || session.status === 'checking' || mockLoading;
   const canCheck = session.status === 'answering' && session.complete;
-  const hasExercise = Boolean(session.exercise) && session.status !== 'complete';
+  const isSessionActive =
+    session.status === 'answering' || session.status === 'checking' || session.status === 'checked';
+  const hasExercise = Boolean(session.exercise) && isSessionActive;
   const isLast = session.index === session.exercises.length - 1;
   const mockSection = mockExam?.sections[mockSectionIndex] ?? null;
   const currentMockExercise = examExercise(mockSection?.exercises[mockExerciseIndex]);
@@ -218,7 +220,7 @@ export function ExercisesScreen() {
         </Card>
       ) : null}
 
-      {!mockExam ? (
+      {!mockExam && !isSessionActive ? (
         <Card>
           <Text style={[styles.unitLabel, { color: colors.textMuted }]}>Práctica de examen</Text>
           <Text style={[styles.unitMeta, { color: colors.textMuted }]}>{mockLevelLabel}</Text>
