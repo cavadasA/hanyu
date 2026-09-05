@@ -11,6 +11,11 @@ on:
       - 'scripts/supabase-conditional-seed.sh'
   workflow_dispatch:
     inputs:
+      reset_database:
+        description: 'ATENCIÓN: Resetear base de datos remota antes de migrar (supabase db reset --linked)'
+        type: boolean
+        required: false
+        default: false
       force_seed:
         description: 'Forzar ejecución de seed.sql aunque la base de datos ya contenga datos'
         type: boolean
@@ -56,11 +61,18 @@ jobs:
         run: |
           supabase link --project-ref "$SUPABASE_PROJECT_ID" --password "$SUPABASE_DB_PASSWORD"
 
+      - name: Reset Remote Database (if requested via workflow_dispatch)
+        if: ${{ github.event.inputs.reset_database == 'true' }}
+        run: |
+          echo "y" | supabase db reset --linked --password "$SUPABASE_DB_PASSWORD"
+
       - name: Push Database Migrations
+        if: ${{ github.event.inputs.reset_database != 'true' }}
         run: |
           supabase db push --password "$SUPABASE_DB_PASSWORD"
 
       - name: Conditional Database Seed
+        if: ${{ github.event.inputs.reset_database != 'true' }}
         env:
           FORCE_SEED: ${{ github.event.inputs.force_seed || 'false' }}
         run: |

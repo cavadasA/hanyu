@@ -6,12 +6,29 @@ Esta guía describe cómo inicializar la base de datos de Hanyu de forma limpia 
 
 ## 1. Resetear la Base de Datos Remota (One-Time)
 
-Dado que las migraciones anteriores se aplicaron a mano:
+El panel web de Supabase no dispone de un botón "Reset Database" para proyectos remotos alojados en la nube. Puedes dejar la base de datos limpia de dos formas muy sencillas sin usar tu terminal local:
 
-1. Accede al [Dashboard de Supabase](https://supabase.com/dashboard/project/ycchpixzhlsvivzloyvh).
-2. Ve a **Project Settings** -> **Database**.
-3. En la sección **Database Password**, asegúrate de conocer la contraseña o pulsa **Reset Database Password** para definir una nueva (guárdala para el paso 2).
-4. En la parte inferior, localiza la sección **Reset database** y confirma el reseteo. Esto limpiará todas las tablas y dejará PostgreSQL listo para recibir las 33 migraciones ordenadas.
+### Método A: Desde el SQL Editor de Supabase (Recomendado, 10 segundos)
+1. Accede a tu panel de Supabase: [SQL Editor](https://supabase.com/dashboard/project/ycchpixzhlsvivzloyvh/sql).
+2. Haz clic en **New query**, pega el siguiente código y pulsa **Run**:
+   ```sql
+   DROP SCHEMA IF EXISTS public CASCADE;
+   CREATE SCHEMA public;
+   GRANT ALL ON SCHEMA public TO postgres, anon, authenticated, service_role;
+   GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres, anon, authenticated, service_role;
+   GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO postgres, anon, authenticated, service_role;
+   GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, service_role;
+
+   DROP SCHEMA IF EXISTS supabase_migrations CASCADE;
+   ```
+3. Esto elimina instantáneamente cualquier tabla residual y el historial manual previo de migraciones, dejando PostgreSQL como nuevo.
+
+### Método B: Automáticamente vía GitHub Actions
+Configura los secretos en GitHub (Paso 2) y, al ejecutar el workflow en la pestaña **Actions**, marca la casilla:
+`ATENCIÓN: Resetear base de datos remota antes de migrar (supabase db reset --linked)`
+El runner ejecutará el reseteo remoto de forma aislada.
+
+> **Nota sobre la contraseña**: Si no recuerdas la contraseña de la base de datos Postgres, ve a [Project Settings -> Database](https://supabase.com/dashboard/project/ycchpixzhlsvivzloyvh/settings/database) y pulsa **Reset Database Password** para establecer una nueva (la necesitarás para el secreto `SUPABASE_DB_PASSWORD`).
 
 ---
 
