@@ -70,7 +70,9 @@ import type {
 
 const READING_CACHE_PREFIX = 'hanyu.reading-cache:';
 
-async function readReadingCache<T>(storage: HanyuDataConfig['storage'], key: string): Promise<T | null> {
+type ReadingCacheStorage = HanyuDataConfig['storage'] | HanyuDataConfig['readingCache'];
+
+async function readReadingCache<T>(storage: ReadingCacheStorage, key: string): Promise<T | null> {
   if (!storage) return null;
 
   try {
@@ -82,7 +84,7 @@ async function readReadingCache<T>(storage: HanyuDataConfig['storage'], key: str
 }
 
 async function writeReadingCache(
-  storage: HanyuDataConfig['storage'],
+  storage: ReadingCacheStorage,
   key: string,
   value: unknown,
 ): Promise<void> {
@@ -93,6 +95,49 @@ async function writeReadingCache(
   } catch {
     // La caché es una mejora offline y nunca debe romper una respuesta online.
   }
+}
+
+async function readingCacheScope(client: ReturnType<typeof createSupabaseClient>): Promise<string | null> {
+  const getSession = (client as any).auth?.getSession;
+  if (typeof getSession === 'function') {
+    try {
+      const { data, error } = await getSession();
+      if (data?.session?.user?.id) return String(data.session.user.id);
+      if (error) return null;
+      return 'anonymous';
+    } catch {
+      return null;
+    }
+  }
+
+  const getUser = (client as any).auth?.getUser;
+  if (typeof getUser !== 'function') return 'anonymous';
+
+  try {
+    const { data, error } = await getUser();
+    if (error) return null;
+    return data?.user?.id ? String(data.user.id) : 'anonymous';
+  } catch {
+    return null;
+  }
+}
+
+function isNetworkError(error: unknown) {
+  if (!error || typeof error !== 'object') return false;
+  const candidate = error as { status?: unknown; code?: unknown; message?: unknown };
+  const status = Number(candidate.status);
+  if ((candidate.status !== undefined && status !== 0) || candidate.code === 'PGRST116') return false;
+  const message = String(candidate.message ?? '');
+  return /network|fetch failed|failed to fetch|timeout|timed out|offline|econn|enetunreach|enotfound/i.test(message);
+}
+
+function readingCacheKey(scope: string, kind: 'list' | 'detail', id: string) {
+  return `${READING_CACHE_PREFIX}${encodeURIComponent(scope)}:${kind}:${encodeURIComponent(id)}`;
+}
+
+function offlineDetailFromSummary(summary: any) {
+  if (!summary?.offline) return null;
+  return { ...summary, ...summary.offline };
 }
 
 export function createHanyuData(config: HanyuDataConfig) {
@@ -178,34 +223,45 @@ export function createHanyuData(config: HanyuDataConfig) {
     },
     readings: {
       getReadings: async (params: Parameters<typeof getReadings>[0] = {}) => {
-        const cacheKey = `${READING_CACHE_PREFIX}list:${JSON.stringify(params)}`;
+        const scope = await readingCacheScope(client);
+        const cacheKey = scope ? readingCacheKey(scope, 'list', JSON.stringify(params)) : null;
 
         try {
           const readings = await getReadings(params, client);
-          await writeReadingCache(config.storage, cacheKey, readings);
+          if (cacheKey) {
+            const cache = config.readingCache ?? config.storage;
+            await writeReadingCache(cache, cacheKey, readings);
+            await Promise.all(readings.map(reading => {
+              const detailKey = readingCacheKey(scope!, 'detail', reading.slug);
+              const detail = offlineDetailFromSummary(reading);
+              return detail ? writeReadingCache(cache, detailKey, detail) : Promise.resolve();
+            }));
+          }
           return readings;
         } catch (error) {
-          const cached = await readReadingCache<Awaited<ReturnType<typeof getReadings>>>(
-            config.storage,
-            cacheKey,
-          );
-          if (cached !== null) return cached;
+          if (isNetworkError(error) && cacheKey) {
+            const cached = await readReadingCache<Awaited<ReturnType<typeof getReadings>>>(config.readingCache ?? config.storage, cacheKey);
+            if (cached !== null) return cached;
+          }
           throw error;
         }
       },
       getReading: async (slug: string) => {
-        const cacheKey = `${READING_CACHE_PREFIX}detail:${slug}`;
+        const scope = await readingCacheScope(client);
+        const cacheKey = scope ? readingCacheKey(scope, 'detail', slug) : null;
 
         try {
           const reading = await getReading(slug, client);
-          await writeReadingCache(config.storage, cacheKey, reading);
+          if (cacheKey) {
+            await writeReadingCache(config.readingCache ?? config.storage, cacheKey, reading);
+          }
           return reading;
         } catch (error) {
-          const cached = await readReadingCache<Awaited<ReturnType<typeof getReading>>>(
-            config.storage,
-            cacheKey,
-          );
-          if (cached !== null) return cached;
+          if (isNetworkError(error) && cacheKey) {
+            const cache = config.readingCache ?? config.storage;
+            const cached = await readReadingCache<Awaited<ReturnType<typeof getReading>>>(cache, cacheKey);
+            if (cached !== null) return cached;
+          }
           throw error;
         }
       },

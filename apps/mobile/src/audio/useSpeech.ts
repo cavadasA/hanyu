@@ -2,6 +2,7 @@ import * as Speech from 'expo-speech';
 import { setAudioModeAsync } from 'expo-audio';
 
 let audioModeReady: Promise<void> | null = null;
+let activeSentenceRun = 0;
 
 /**
  * On iOS, AVSpeechSynthesizer's own audio session routes speech through the
@@ -44,9 +45,12 @@ const speech = {
     options: { rate: number; onSentence(index: number | null): void },
   ) {
     let cancelled = false;
+    const run = ++activeSentenceRun;
+    const isCurrent = () => !cancelled && activeSentenceRun === run;
 
     const next = (index: number) => {
-      if (cancelled || index >= sentences.length) {
+      if (!isCurrent()) return;
+      if (index >= sentences.length) {
         options.onSentence(null);
         return;
       }
@@ -57,21 +61,28 @@ const speech = {
         rate: options.rate,
         useApplicationAudioSession: true,
         onDone: () => next(index + 1),
-        onStopped: () => options.onSentence(null),
-        onError: () => options.onSentence(null),
+        onStopped: () => {
+          if (isCurrent()) options.onSentence(null);
+        },
+        onError: () => {
+          if (isCurrent()) options.onSentence(null);
+        },
       });
     };
 
     void ensureMediaAudioSession().then(() => {
-      if (cancelled) return;
+      if (!isCurrent()) return;
       Speech.stop();
       next(fromIndex);
     });
 
     return () => {
       cancelled = true;
-      Speech.stop();
-      options.onSentence(null);
+      if (activeSentenceRun === run) {
+        activeSentenceRun += 1;
+        Speech.stop();
+        options.onSentence(null);
+      }
     };
   },
 };

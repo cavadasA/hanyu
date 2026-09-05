@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { completeReading, getReadingProgress, getReadings, markRead, toggleBookmark } from './readings';
+import { completeReading, getReading, getReadingProgress, getReadings, markRead, toggleBookmark } from './readings';
 
 function readingClient(rows: unknown[]) {
   const query: Record<string, any> = {
@@ -130,6 +130,92 @@ describe('readings repository', () => {
     expect(readings[0].coverage).toEqual({ ratio: 0.5, known_count: 1, unknown_count: 1 });
   });
 
+  it('tokeniza el catálogo completo con una sola invocación bulk', async () => {
+    const catalog = readingClient([
+      { slug: 'reading-1', title: 'Una lectura', sentences: [] },
+      { slug: 'reading-2', title: 'Otra lectura', sentences: [] },
+    ]);
+    const skillQuery: Record<string, any> = {
+      select: vi.fn(() => skillQuery),
+      eq: vi.fn(() => skillQuery),
+      in: vi.fn(() => skillQuery),
+      then: (resolve: (value: unknown) => unknown) => Promise.resolve({
+        data: [{ target_id: 1, stability: 31 }],
+        error: null,
+      }).then(resolve),
+    };
+    const invoke = vi.fn().mockResolvedValue({
+      data: {
+        tokens_by_reading: {
+          'reading-1': [{ id: 't0', text: '我', type: 'word', word: { id: 1 } }],
+          'reading-2': [{ id: 't0', text: '龘', type: 'unknown', word: null }],
+        },
+      },
+      error: null,
+    });
+    const client = {
+      ...catalog,
+      from: vi.fn((table: string) => table === 'learner_skill_state' ? skillQuery : (catalog as any).from()),
+      functions: { invoke },
+    };
+
+    const readings = await getReadings({ level: 2 }, client as never);
+
+    expect(invoke).toHaveBeenCalledTimes(1);
+    expect(invoke).toHaveBeenCalledWith('tokenize-reading', {
+      body: { reading_ids: ['reading-1', 'reading-2'] },
+    });
+    expect(readings.map(reading => reading.coverage?.ratio)).toEqual([1, 0]);
+  });
+
+  it('reparte los tokens entre todas las frases de una lectura', async () => {
+    const readingQuery: any = {
+      select: vi.fn(() => readingQuery),
+      eq: vi.fn(() => readingQuery),
+      single: vi.fn().mockResolvedValue({
+        data: {
+          slug: 'reading-1', hsk_level: 2, format: 'short_text', title: 'Dos frases',
+          topic: 'estudio', series: null, series_index: null,
+          sentences: JSON.stringify([
+            { zh: '你好。', pinyin: 'Nǐ hǎo.', es: 'Hola.' },
+            { zh: '谢谢。', pinyin: 'Xièxie.', es: 'Gracias.' },
+          ]),
+          questions: [], target_words: [], target_grammar: [], audio_kind: 'tts', audio_url: null,
+        },
+        error: null,
+      }),
+    };
+    const stateQuery: any = {
+      select: vi.fn(() => stateQuery),
+      eq: vi.fn(() => stateQuery),
+      in: vi.fn(() => stateQuery),
+      then: (resolve: (value: unknown) => unknown) => Promise.resolve({ data: [], error: null }).then(resolve),
+    };
+    const client = {
+      from: vi.fn((table: string) => table === 'reading' ? readingQuery : stateQuery),
+      functions: {
+        invoke: vi.fn().mockResolvedValue({
+          data: {
+            tokens: [
+              { id: 't0', text: '你好', type: 'word', word: { id: 1, hanzi: '你好', in_srs: false } },
+              { id: 't2', text: '。', type: 'punctuation', word: null },
+              { id: 't3', text: '谢谢', type: 'word', word: { id: 2, hanzi: '谢谢', in_srs: false } },
+              { id: 't5', text: '。', type: 'punctuation', word: null },
+            ],
+          },
+          error: null,
+        }),
+      },
+    };
+
+    const reading = await getReading('reading-1', client as never);
+
+    expect(reading.sentences.map(sentence => sentence.tokens.map(token => token.text))).toEqual([
+      ['你好', '。'],
+      ['谢谢', '。'],
+    ]);
+  });
+
   it('marcar como leída registra el evento que el planificador consulta', async () => {
     const client = progressClient();
 
@@ -149,6 +235,15 @@ describe('readings repository', () => {
       expect.objectContaining({ bookmarked: false }),
       expect.anything(),
     );
+  });
+
+  it('no duplica el evento al volver a marcar una lectura terminada', async () => {
+    const client = progressClient({ finished_at: '2026-09-05T00:00:00Z' });
+
+    await markRead('shop-01-tea-and-coffee', client as never);
+
+    expect(client.chains.learning_event.insert).not.toHaveBeenCalled();
+    expect(client.chains.reading_progress.upsert).not.toHaveBeenCalled();
   });
 
   it('recuerda por qué frase se iba', async () => {

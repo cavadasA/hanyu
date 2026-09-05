@@ -7,26 +7,23 @@ import { WordSheet, type ReadingSense } from './WordSheet';
 
 export function ReadingText({
   sentences,
-  tokens: legacyTokens,
   showPinyin,
   readingId,
+  readingLevel,
   activeSentenceIndex = null,
   onPlaySentence,
+  onSentenceRead,
 }: {
   sentences?: Sentence[];
-  tokens?: ReadingToken[];
   showPinyin: boolean;
   readingId: string;
+  readingLevel?: number;
   activeSentenceIndex?: number | null;
   onPlaySentence?: (index: number) => void;
+  onSentenceRead?: (index: number) => void;
 }) {
   const [selected, setSelected] = useState<{ token: ReadingToken; sentence: Sentence } | null>(null);
-  const displaySentences = sentences ?? (legacyTokens ? [{
-    zh: legacyTokens.map(token => token.text).join(''),
-    pinyin: '',
-    es: '',
-    tokens: legacyTokens,
-  }] : []);
+  const displaySentences = sentences ?? [];
 
   return (
     <View style={styles.container}>
@@ -37,6 +34,7 @@ export function ReadingText({
           showPinyin={showPinyin}
           active={activeSentenceIndex === index}
           onPlay={onPlaySentence ? () => onPlaySentence(index) : undefined}
+          onSentenceRead={onSentenceRead ? () => onSentenceRead(index) : undefined}
           testID={`sentence-${index}`}
           onSelectToken={token => setSelected({ token, sentence })}
         />
@@ -47,7 +45,7 @@ export function ReadingText({
           text={selected.token.text}
           senses={(selected.token.senses ?? (selected.token.word ? [selected.token.word] : [])) as ReadingSense[]}
           sentence={{ text: selected.sentence.zh, tokens: selected.sentence.tokens }}
-          readingLevel={selected.token.word?.hsk_level}
+          readingLevel={readingLevel}
           readingId={readingId}
           onClose={() => setSelected(null)}
         />

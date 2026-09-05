@@ -67,4 +67,20 @@ describe('useSpeech', () => {
     cancel();
     expect(Speech.stop).toHaveBeenCalled();
   });
+
+  it('ignora el callback de una frase detenida cuando ya empezó otra reproducción', async () => {
+    const firstOnSentence = jest.fn();
+    const secondOnSentence = jest.fn();
+    useSpeech().speakSentences(['第一句。'], 0, { rate: 1, onSentence: firstOnSentence });
+    await Promise.resolve();
+    const firstOptions = (Speech.speak as jest.Mock).mock.calls[0][1];
+
+    useSpeech().speakSentences(['第二句。'], 0, { rate: 1, onSentence: secondOnSentence });
+    await Promise.resolve();
+    secondOnSentence.mockClear();
+
+    firstOptions.onStopped();
+
+    expect(secondOnSentence).not.toHaveBeenCalledWith(null);
+  });
 });

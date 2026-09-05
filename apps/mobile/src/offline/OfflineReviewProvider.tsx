@@ -24,6 +24,7 @@ import { getData } from '../lib/data';
 import { schedulingParams } from '@hanyu/domain';
 import { useSession } from '../session/SessionProvider';
 import { openReviewStore } from './openReviewStore';
+import { setReadingCacheStore } from './readingCache';
 import { OfflineReviewService } from './OfflineReviewService';
 import { ReviewSyncEngine, type SyncSummary } from './ReviewSyncEngine';
 import type { ReviewStore } from './ReviewStore';
@@ -118,6 +119,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
       setSyncing(false);
       setLastSummary(null);
       reviewStoreRef.current = null;
+      setReadingCacheStore(null);
       paramsRef.current = schedulingParams({});
       cardOrderRef.current = 'due';
       syncEngineRef.current = null;
@@ -162,6 +164,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
         reviewCardEvent: (event) => getData().flashcards.reviewCardEvent(event),
       });
       serviceRef.current = svc;
+      setReadingCacheStore(store as ReviewStore);
       setService(svc);
       setReady(true);
       setLastSummary(null);
@@ -180,6 +183,7 @@ export function OfflineReviewProvider({ children }: { children: ReactNode }) {
       serviceRef.current = null;
       reviewStoreRef.current = null;
       syncEngineRef.current = null;
+      setReadingCacheStore(null);
       setService(null);
       setReady(false);
       setPendingCount(0);

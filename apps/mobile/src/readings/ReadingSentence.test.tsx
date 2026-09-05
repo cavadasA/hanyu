@@ -89,4 +89,27 @@ describe('ReadingSentence', () => {
 
     expect(screen.getByLabelText('图书馆').props.accessibilityHint).toMatch(/no está/i);
   });
+
+  it('avisa también cuando una palabra del diccionario no tiene tarjeta', async () => {
+    const dictionaryWord = {
+      ...sentence,
+      tokens: [{
+        id: 't3',
+        text: '图书馆',
+        type: 'word' as const,
+        status: 'unknown' as const,
+        word: { id: 8, hanzi: '图书馆', pinyin: 'túshūguǎn' },
+      }],
+    };
+
+    await render(<ReadingSentence sentence={dictionaryWord} showPinyin={false} onSelectToken={jest.fn()} />);
+
+    expect(screen.getByLabelText('图书馆').props.accessibilityHint).toMatch(/no está/i);
+    expect(screen.getByText('图书馆').props.style).toEqual(
+      expect.arrayContaining([expect.objectContaining({
+        textDecorationLine: 'underline',
+        textDecorationStyle: 'dotted',
+      })]),
+    );
+  });
 });

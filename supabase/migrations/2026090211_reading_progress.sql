@@ -4,6 +4,7 @@ create table if not exists public.reading_progress (
   reading_slug text not null references public.reading(slug) on delete cascade,
   bookmarked boolean not null default false,
   last_sentence integer not null default 0,
+  started_at timestamptz,
   finished_at timestamptz,
   updated_at timestamptz not null default now(),
   primary key (user_id, reading_slug)

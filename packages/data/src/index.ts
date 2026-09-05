@@ -1,5 +1,5 @@
 export { createSupabaseClient } from './client';
-export type { HanyuDataConfig, SessionStorage } from './client';
+export type { HanyuDataConfig, ReadingCache, SessionStorage } from './client';
 export { createHanyuData } from './factory';
 export type { HanyuData } from './factory';
 export { resolveGloss } from './gloss';
@@ -41,6 +41,7 @@ export type {
   MockExamSection,
   MockExamUnsupported,
   ReadingDetail,
+  ReadingOfflineDetail,
   ReadingFormat,
   ReadingGrammarTarget,
   ReadingQuestion,

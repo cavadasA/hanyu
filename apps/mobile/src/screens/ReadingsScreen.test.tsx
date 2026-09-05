@@ -76,9 +76,32 @@ describe('ReadingsScreen', () => {
 
     const view = await render(<ReadingsScreen />);
 
-    await waitFor(() => expect(view.getByText('50% known · 1 new words')).toBeTruthy());
+    await waitFor(() => expect(view.getByText('50% known · 1 not yet known')).toBeTruthy());
     expect(view.getByText('Difficult')).toBeTruthy();
     expect(view.getByText('Started')).toBeTruthy();
     expect(view.getByText('Bookmarked')).toBeTruthy();
+  });
+
+  it('distingue una cobertura confortable de una cobertura casi completa', async () => {
+    mockGetReadings.mockResolvedValue([
+      {
+        id: 'reading-1', slug: 'reading-1', title: 'Confortable', hsk_level: 2,
+        format: 'short_text', topic: 'compras', series: null, series_index: null,
+        audio_kind: 'tts', audio_url: null,
+        coverage: { ratio: 0.93, known_count: 93, unknown_count: 7 },
+      },
+      {
+        id: 'reading-2', slug: 'reading-2', title: 'Casi completa', hsk_level: 2,
+        format: 'short_text', topic: 'compras', series: null, series_index: null,
+        audio_kind: 'tts', audio_url: null,
+        coverage: { ratio: 0.99, known_count: 99, unknown_count: 1 },
+      },
+    ]);
+
+    const view = await render(<ReadingsScreen />);
+
+    await waitFor(() => expect(view.getByText('Casi completa')).toBeTruthy());
+    expect(view.getByText('Comfortable')).toBeTruthy();
+    expect(view.getByText('Easy')).toBeTruthy();
   });
 });

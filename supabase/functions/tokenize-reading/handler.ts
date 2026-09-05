@@ -14,6 +14,18 @@ interface TokenizerClient {
   from(table: string): any;
 }
 
+function readingSentences(value: unknown): Array<{ zh?: unknown }> {
+  if (typeof value === 'string') {
+    try {
+      value = JSON.parse(value);
+    } catch {
+      return [];
+    }
+  }
+
+  return Array.isArray(value) ? value : [];
+}
+
 export async function handleTokenizeReading(
   request: Request,
   supabase: TokenizerClient,
@@ -41,17 +53,21 @@ export async function handleTokenizeReading(
   }
 
   const body = await request.json().catch(() => ({}));
-  const readingId = String(body?.reading_id || '').trim();
-  if (!readingId) {
+  const readingIds = Array.isArray(body?.reading_ids)
+    ? [...new Set(body.reading_ids.map((id: unknown) => String(id).trim()).filter(Boolean))]
+    : [String(body?.reading_id || '').trim()].filter(Boolean);
+  if (readingIds.length === 0) {
     return jsonResponse({ error: 'reading_id is required' }, 400);
   }
 
-  const { data: reading, error: readingError } = await supabase
-    .from('reading')
-    .select('sentences')
-    .eq('slug', readingId)
-    .single();
-  if (readingError || !reading) {
+  let readingQuery = supabase.from('reading').select('slug, sentences');
+  const result = readingIds.length === 1
+    ? await readingQuery.eq('slug', readingIds[0]).single()
+    : await readingQuery.in('slug', readingIds);
+  const readings = readingIds.length === 1
+    ? (result.data ? [result.data] : [])
+    : (Array.isArray(result.data) ? result.data : []);
+  if (result.error || readings.length !== readingIds.length) {
     return jsonResponse({ error: 'Reading not found' }, 404);
   }
 
@@ -88,12 +104,19 @@ export async function handleTokenizeReading(
     in_srs: cardWordIds.has(Number(word.id)),
   }));
 
-  return jsonResponse({
-    tokens: tokenizeReading(
-      (Array.isArray(reading.sentences) ? reading.sentences : [])
-        .map((sentence: any) => String(sentence?.zh ?? ''))
+  const tokensByReading = Object.fromEntries(readings.map((reading: any) => [
+    String(reading.slug ?? readingIds[0]),
+    tokenizeReading(
+      readingSentences(reading.sentences)
+        .map(sentence => String(sentence?.zh ?? ''))
         .join(''),
       dictionary,
     ),
-  });
+  ]));
+
+  return jsonResponse(
+    readingIds.length === 1
+      ? { tokens: tokensByReading[readingIds[0]] }
+      : { tokens_by_reading: tokensByReading },
+  );
 }

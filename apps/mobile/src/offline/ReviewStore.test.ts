@@ -147,7 +147,7 @@ describe('deriveDbName', () => {
 });
 
 describe('schema migration', () => {
-  test('fresh open sets PRAGMA user_version to 2 and creates all three tables', async () => {
+  test('fresh open sets PRAGMA user_version to 3 and creates the reading cache table', async () => {
     const nativeDb = new DatabaseSync(':memory:');
     const handle = makeTestHandle(nativeDb);
 
@@ -159,7 +159,7 @@ describe('schema migration', () => {
 
     // After migration
     const after = await handle.getFirstAsync<{ user_version: number }>('PRAGMA user_version', []);
-    expect(after?.user_version).toBe(2);
+    expect(after?.user_version).toBe(3);
 
     // All three tables exist
     const tables = await handle.getAllAsync<{ name: string }>(
@@ -167,7 +167,7 @@ describe('schema migration', () => {
       [],
     );
     const names = tables.map(t => t.name).sort();
-    expect(names).toEqual(['cached_cards', 'pending_reviews', 'sync_meta']);
+    expect(names).toEqual(['cached_cards', 'cached_readings', 'pending_reviews', 'sync_meta']);
   });
 
   test('applySchema is idempotent (calling twice does not break)', async () => {
@@ -176,7 +176,7 @@ describe('schema migration', () => {
     await applySchema(handle);
     await expect(applySchema(handle)).resolves.not.toThrow();
     const row = await handle.getFirstAsync<{ user_version: number }>('PRAGMA user_version', []);
-    expect(row?.user_version).toBe(2);
+    expect(row?.user_version).toBe(3);
   });
 
   test('migrates a v1 queue from quality to FSRS grade', async () => {
@@ -303,6 +303,18 @@ describe('cacheCards', () => {
     expect(serverData.version).toBe(serverRefresh.version); // 2
     // server_json must NOT contain the locally-projected due time
     expect(serverData.scheduling.due).toBe(serverRefresh.scheduling.due);
+  });
+});
+
+describe('reading cache', () => {
+  test('persists and reads a cached reading in the user-scoped SQLite store', async () => {
+    const { store } = await createStore();
+    const reading = JSON.stringify({ id: 'reading-1', title: 'Una lectura' });
+
+    await store.setReadingCache('detail:reading-1', reading);
+
+    await expect(store.getReadingCache('detail:reading-1')).resolves.toBe(reading);
+    await expect(store.getReadingCache('detail:missing')).resolves.toBeNull();
   });
 });
 

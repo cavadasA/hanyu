@@ -9,10 +9,16 @@ export interface SessionStorage {
   removeItem(key: string): void | Promise<void>;
 }
 
+export interface ReadingCache {
+  getItem(key: string): string | null | Promise<string | null>;
+  setItem(key: string, value: string): void | Promise<void>;
+}
+
 export interface HanyuDataConfig {
   supabaseUrl: string;
   supabaseAnonKey: string;
   storage?: SessionStorage;
+  readingCache?: ReadingCache;
   detectSessionInUrl?: boolean;
   passwordResetRedirectTo?: string;
 }

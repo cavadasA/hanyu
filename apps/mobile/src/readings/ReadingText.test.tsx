@@ -71,4 +71,32 @@ describe('ReadingText', () => {
     expect(view.getByText('Unknown word')).toBeTruthy();
     expect(view.queryByRole('button', { name: '，' })).toBeNull();
   });
+
+  it('ordena las acepciones por el nivel de la lectura, no por la acepción elegida', async () => {
+    const senses = [
+      { id: 2, hanzi: '还', pinyin: 'huán', meaning_es: 'devolver', hsk_level: 3 },
+      { id: 1, hanzi: '还', pinyin: 'hái', meaning_es: 'todavía', hsk_level: 1 },
+    ];
+    const sentenceTokens: ReadingToken[] = [{
+      id: 't0',
+      text: '还',
+      type: 'word',
+      word: senses[0] as ReadingToken['word'],
+      senses: senses as ReadingToken['senses'],
+    }];
+
+    const view = await render(
+      <ReadingText
+        sentences={[{ zh: '还', pinyin: '', es: '', tokens: sentenceTokens }]}
+        showPinyin={false}
+        readingId="reading-1"
+        readingLevel={2}
+      />,
+    );
+
+    await fireEvent.press(view.getByRole('button', { name: '还' }));
+
+    expect(view.getAllByRole('button', { name: /Añadir acepción/ })[0].props.accessibilityLabel)
+      .toContain('hái');
+  });
 });

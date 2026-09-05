@@ -283,15 +283,25 @@ export interface ReadingSummary {
   audio_url: string | null;
   coverage?: Coverage | null;
   progress?: ReadingProgress | null;
+  offline?: ReadingOfflineDetail;
   created_at?: string;
   /** Compatibility alias retained for clients that still display this field. */
   generated_at?: string;
+}
+
+export interface ReadingOfflineDetail {
+  sentences: ReadingSentence[];
+  content: string;
+  grammar_points: GrammarPoint[];
+  questions: ReadingQuestion[];
+  tokens: ReadingToken[];
 }
 
 export interface ReadingProgress {
   reading_slug: string;
   bookmarked: boolean;
   last_sentence: number;
+  started_at?: string | null;
   finished_at: string | null;
   updated_at: string;
 }

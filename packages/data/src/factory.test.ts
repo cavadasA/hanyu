@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-const fakeClient = { auth: {} };
+const fakeClient = { auth: {} as Record<string, unknown> };
 
 vi.mock('@supabase/supabase-js', () => ({
   createClient: () => fakeClient,
@@ -92,5 +92,61 @@ describe('createHanyuData', () => {
     await expect(data.readings.getReading('reading-1')).resolves.toEqual(reading);
     expect(storage.setItem).toHaveBeenCalled();
     expect(getReadingMock).toHaveBeenCalledTimes(2);
+  });
+
+  it('no sustituye un error HTTP por contenido cacheado', async () => {
+    const storage = {
+      getItem: vi.fn((key: string) => key ? JSON.stringify({ id: 'cached' }) : null),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
+    };
+    const data = createHanyuData({ ...config, storage });
+    getReadingMock.mockRejectedValue(Object.assign(new Error('Reading not found'), { status: 404 }));
+
+    await expect(data.readings.getReading('reading-404')).rejects.toMatchObject({ status: 404 });
+  });
+
+  it('separa la caché de lecturas por usuario', async () => {
+    const values = new Map<string, string>();
+    const storage = {
+      getItem: vi.fn((key: string) => values.get(key) ?? null),
+      setItem: vi.fn((key: string, value: string) => { values.set(key, value); }),
+      removeItem: vi.fn(),
+    };
+    const getUser = vi.fn().mockResolvedValue({ data: { user: { id: 'user-a' } }, error: null });
+    fakeClient.auth.getUser = getUser;
+    const reading = { id: 'reading-1', sentences: [{ zh: '你好。' }] };
+    getReadingMock.mockResolvedValueOnce(reading).mockRejectedValueOnce(new Error('Failed to fetch'));
+    const data = createHanyuData({ ...config, storage });
+
+    await expect(data.readings.getReading('reading-1')).resolves.toEqual(reading);
+    getUser.mockResolvedValueOnce({ data: { user: { id: 'user-b' } }, error: null });
+    await expect(data.readings.getReading('reading-1')).rejects.toThrow('Failed to fetch');
+
+    delete fakeClient.auth.getUser;
+  });
+
+  it('cachea el catálogo completo para poder abrir una lectura no visitada offline', async () => {
+    const values = new Map<string, string>();
+    const storage = {
+      getItem: vi.fn((key: string) => values.get(key) ?? null),
+      setItem: vi.fn((key: string, value: string) => { values.set(key, value); }),
+      removeItem: vi.fn(),
+    };
+    getReadingsMock.mockResolvedValue([{
+      id: 'reading-1', slug: 'reading-1', title: 'Una lectura',
+      offline: {
+        sentences: [{ zh: '你好。', pinyin: 'Nǐ hǎo.', es: 'Hola.', tokens: [] }],
+        content: '你好。', grammar_points: [], questions: [], tokens: [],
+      },
+    }]);
+    const data = createHanyuData({ ...config, storage });
+    await data.readings.getReadings({ level: 2 });
+    getReadingMock.mockRejectedValue(new Error('Failed to fetch'));
+
+    await expect(data.readings.getReading('reading-1')).resolves.toMatchObject({
+      id: 'reading-1',
+      sentences: [{ zh: '你好。' }],
+    });
   });
 });

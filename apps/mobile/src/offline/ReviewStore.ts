@@ -31,6 +31,8 @@ export type QueuedReviewEvent = ReviewEvent & {
 
 export interface ReviewStore {
   cacheCards(cards: VersionedCard[]): Promise<void>;
+  getReadingCache(key: string): Promise<string | null>;
+  setReadingCache(key: string, value: string): Promise<void>;
   /** Updates the FSRS parameters used when projecting pending events. */
   setParams(params: FSRSParameters): void;
   getDueProjectedCards(now: string, limit: number): Promise<VersionedCard[]>;
@@ -148,6 +150,14 @@ const UPDATE_CARD_PROJECTED = `
   UPDATE cached_cards SET projected_json = ?, updated_at = ? WHERE card_id = ?
 `;
 
+const UPSERT_READING_CACHE = `
+  INSERT INTO cached_readings (cache_key, value_json, updated_at)
+  VALUES (?, ?, ?)
+  ON CONFLICT(cache_key) DO UPDATE SET
+    value_json = excluded.value_json,
+    updated_at = excluded.updated_at
+`;
+
 export class ReviewStoreImpl implements ReviewStore {
   private params: FSRSParameters;
 
@@ -184,6 +194,18 @@ export class ReviewStoreImpl implements ReviewStore {
         ]);
       }
     });
+  }
+
+  async getReadingCache(key: string): Promise<string | null> {
+    const row = await this.db.getFirstAsync<{ value_json: string }>(
+      'SELECT value_json FROM cached_readings WHERE cache_key = ?',
+      [key],
+    );
+    return row?.value_json ?? null;
+  }
+
+  async setReadingCache(key: string, value: string): Promise<void> {
+    await this.db.runAsync(UPSERT_READING_CACHE, [key, value, new Date().toISOString()]);
   }
 
   async getDueProjectedCards(now: string, limit: number): Promise<VersionedCard[]> {

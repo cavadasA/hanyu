@@ -1,6 +1,6 @@
 import type { DbHandle } from './ReviewStore';
 
-const TARGET_USER_VERSION = 2;
+const TARGET_USER_VERSION = 3;
 
 const SCHEMA_V2_DDL = `
 create table if not exists cached_cards (
@@ -28,6 +28,19 @@ create table if not exists pending_reviews (
 create table if not exists sync_meta (key text primary key, value text not null);
 create index if not exists pending_reviews_card_sequence
   on pending_reviews(card_id, queue_sequence);
+create table if not exists cached_readings (
+  cache_key text primary key,
+  value_json text not null,
+  updated_at text not null
+);
+`;
+
+const READING_CACHE_DDL = `
+create table if not exists cached_readings (
+  cache_key text primary key,
+  value_json text not null,
+  updated_at text not null
+);
 `;
 
 const MIGRATE_V1_TO_V2 = `
@@ -70,6 +83,10 @@ export async function applySchema(db: DbHandle): Promise<void> {
     await db.execAsync(`PRAGMA user_version = ${TARGET_USER_VERSION}`);
   } else if (current === 1) {
     await db.execAsync(MIGRATE_V1_TO_V2);
+    await db.execAsync(READING_CACHE_DDL);
+    await db.execAsync(`PRAGMA user_version = ${TARGET_USER_VERSION}`);
+  } else if (current === 2) {
+    await db.execAsync(READING_CACHE_DDL);
     await db.execAsync(`PRAGMA user_version = ${TARGET_USER_VERSION}`);
   }
 }

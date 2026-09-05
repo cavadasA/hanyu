@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import { ReadingDetailScreen } from './ReadingDetailScreen';
 
 const mockGetReading = jest.fn();
@@ -6,11 +6,13 @@ const mockCompleteReading = jest.fn();
 const mockMarkRead = jest.fn();
 const mockGetReadingProgress = jest.fn();
 const mockToggleBookmark = jest.fn();
+const mockSaveReadingProgress = jest.fn();
 const mockSpeakSentences = jest.fn();
 const mockStop = jest.fn();
+let mockReadingId = 'reading-1';
 
 jest.mock('expo-router', () => ({
-  useLocalSearchParams: () => ({ id: 'reading-1' }),
+  useLocalSearchParams: () => ({ id: mockReadingId }),
 }));
 
 jest.mock('../lib/data', () => ({
@@ -21,6 +23,7 @@ jest.mock('../lib/data', () => ({
       markRead: (...args: unknown[]) => mockMarkRead(...args),
       getReadingProgress: (...args: unknown[]) => mockGetReadingProgress(...args),
       toggleBookmark: (...args: unknown[]) => mockToggleBookmark(...args),
+      saveReadingProgress: (...args: unknown[]) => mockSaveReadingProgress(...args),
     },
     flashcards: {
       addCard: jest.fn(),
@@ -42,8 +45,10 @@ describe('ReadingDetailScreen', () => {
     mockMarkRead.mockReset();
     mockGetReadingProgress.mockReset();
     mockToggleBookmark.mockReset();
+    mockSaveReadingProgress.mockReset();
     mockSpeakSentences.mockReset();
     mockStop.mockReset();
+    mockReadingId = 'reading-1';
   });
 
   it('loads a reading, toggles pinyin, and submits answers once', async () => {
@@ -188,6 +193,25 @@ describe('ReadingDetailScreen', () => {
     expect(view.getByTestId('sentence-0').props.accessibilityState.selected).toBe(true);
   });
 
+  it('guarda la última frase que realmente empezó a sonar', async () => {
+    const sentenceCallbacks: Array<{ onSentence(index: number | null): void }> = [];
+    mockGetReading.mockResolvedValue(readingForAudio());
+    mockSpeakSentences.mockImplementation((_sentences, fromIndex, options) => {
+      sentenceCallbacks.push(options);
+      options.onSentence(fromIndex);
+      return jest.fn();
+    });
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
+    await fireEvent.press(view.getByLabelText('Reproducir'));
+    await act(async () => {
+      sentenceCallbacks[0].onSentence(1);
+    });
+
+    expect(mockSaveReadingProgress).toHaveBeenCalledWith('reading-1', 1);
+  });
+
   it('empieza por la frase que se toca y aplica la velocidad elegida', async () => {
     mockGetReading.mockResolvedValue(readingForAudio());
     mockSpeakSentences.mockImplementation((_sentences, fromIndex, options) => {
@@ -238,6 +262,59 @@ describe('ReadingDetailScreen', () => {
     await fireEvent.press(view.getByText('Quitar marcador'));
 
     expect(mockToggleBookmark).toHaveBeenCalledWith('reading-1');
+  });
+
+  it('permite marcar como leída una lectura sin preguntas', async () => {
+    mockGetReading.mockResolvedValue(readingForAudio());
+    mockGetReadingProgress.mockResolvedValue({
+      reading_slug: 'reading-1', bookmarked: false, last_sentence: 0, finished_at: null,
+      updated_at: '2026-09-05T00:00:00Z',
+    });
+    mockMarkRead.mockResolvedValue({
+      reading_slug: 'reading-1', bookmarked: false, last_sentence: 0,
+      finished_at: '2026-09-05T00:00:00Z', updated_at: '2026-09-05T00:00:00Z',
+    });
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
+    await fireEvent.press(view.getByRole('button', { name: 'Marcar como leída' }));
+
+    await waitFor(() => expect(mockMarkRead).toHaveBeenCalledWith('reading-1'));
+  });
+
+  it('muestra el error al fallar el marcador', async () => {
+    mockGetReading.mockResolvedValue(readingForAudio());
+    mockGetReadingProgress.mockResolvedValue({
+      reading_slug: 'reading-1', bookmarked: true, last_sentence: 0, finished_at: null,
+      updated_at: '2026-09-05T00:00:00Z',
+    });
+    mockToggleBookmark.mockRejectedValue(new Error('Failed to fetch'));
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('Quitar marcador')).toBeTruthy());
+    await fireEvent.press(view.getByRole('button', { name: 'Quitar marcador' }));
+
+    await waitFor(() => expect(view.getByText('No connection. Check your network and try again.')).toBeTruthy());
+  });
+
+  it('detiene el audio al cambiar de lectura en la misma ruta', async () => {
+    mockGetReading.mockImplementation((readingId: string) => Promise.resolve({
+      ...readingForAudio(), id: readingId, slug: readingId, title: readingId,
+    }));
+    mockSpeakSentences.mockReturnValue(jest.fn());
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('reading-1')).toBeTruthy());
+    await fireEvent.press(view.getByLabelText('Reproducir'));
+    mockReadingId = 'reading-2';
+    await act(async () => {
+      view.rerender(<ReadingDetailScreen />);
+      await Promise.resolve();
+    });
+
+    await waitFor(() => expect(view.getByText('reading-2')).toBeTruthy());
+    expect(mockGetReading).toHaveBeenCalledWith('reading-2');
+    expect(mockStop).toHaveBeenCalled();
   });
 });
 

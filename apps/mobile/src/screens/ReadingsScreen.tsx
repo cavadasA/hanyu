@@ -105,9 +105,9 @@ export function ReadingsScreen() {
             {reading.coverage ? (
               <View style={styles.coverage}>
                 <Text style={{ color: colors.textMuted }}>
-                  {Math.round(reading.coverage.ratio * 100)}% known · {reading.coverage.unknown_count} new words
+                  {Math.round(reading.coverage.ratio * 100)}% known · {reading.coverage.unknown_count} not yet known
                 </Text>
-                <Badge label={reading.coverage.ratio < 0.92 ? 'Difficult' : 'Comfortable'} />
+                <Badge label={coverageLabel(reading.coverage.ratio)} />
               </View>
             ) : null}
             <View style={styles.progress}>
@@ -129,6 +129,12 @@ export function ReadingsScreen() {
 
 function formatLabel(format: ReadingFormat) {
   return FORMAT_LABELS[format] ?? format;
+}
+
+function coverageLabel(ratio: number) {
+  if (ratio < 0.92) return 'Difficult';
+  if (ratio <= 0.97) return 'Comfortable';
+  return 'Easy';
 }
 
 const styles = StyleSheet.create({

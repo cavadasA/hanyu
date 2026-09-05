@@ -97,4 +97,49 @@ describe('handleTokenizeReading', () => {
       ],
     });
   });
+
+  it('acepta frases JSON y puede tokenizar varias lecturas en una sola llamada', async () => {
+    const reading = queryResult({
+      data: [
+        { slug: 'reading-1', sentences: JSON.stringify([{ zh: '你好。' }]) },
+        { slug: 'reading-2', sentences: [{ zh: '龘。' }] },
+      ],
+      error: null,
+    });
+    const words = queryResult({ data: [], error: null });
+    const cards = queryResult({ data: [], error: null });
+    const client = {
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'user-1' } }, error: null }) },
+      from: vi.fn((table: string) => {
+        if (table === 'reading') return reading;
+        if (table === 'words') return words;
+        if (table === 'srs_cards') return cards;
+        throw new Error(`Unexpected table ${table}`);
+      }),
+    };
+
+    const response = await handleTokenizeReading(
+      new Request('https://functions.local/tokenize-reading', {
+        method: 'POST',
+        headers: { Authorization: 'Bearer valid-token' },
+        body: JSON.stringify({ reading_ids: ['reading-1', 'reading-2'] }),
+      }),
+      client as never,
+    );
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({
+      tokens_by_reading: {
+        'reading-1': [
+          { id: 't0', text: '你', type: 'unknown', word: null },
+          { id: 't1', text: '好', type: 'unknown', word: null },
+          { id: 't2', text: '。', type: 'punctuation', word: null },
+        ],
+        'reading-2': [
+          { id: 't0', text: '龘', type: 'unknown', word: null },
+          { id: 't1', text: '。', type: 'punctuation', word: null },
+        ],
+      },
+    });
+  });
 });

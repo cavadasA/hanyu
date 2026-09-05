@@ -1,4 +1,4 @@
-import { coverageOf, type CoverageToken } from '@hanyu/domain';
+import { coverageOf, type Coverage, type CoverageToken } from '@hanyu/domain';
 import type { HanyuClient } from '../client';
 import type {
   HskLevel,
@@ -22,7 +22,7 @@ const VALID_FORMATS = new Set(['short_text', 'story', 'dialogue']);
 const KNOWN_MIN_STABILITY_DAYS = 30;
 const READING_SELECT =
   'slug, hsk_level, format, title, topic, series, series_index, sentences, questions, target_words, target_grammar, audio_kind, audio_url';
-const READING_PROGRESS_SELECT = 'reading_slug, bookmarked, last_sentence, finished_at, updated_at';
+const READING_PROGRESS_SELECT = 'reading_slug, bookmarked, last_sentence, started_at, finished_at, updated_at';
 
 function normalizeQuestions(questions: unknown) {
   return (Array.isArray(questions) ? questions : []).map((question: any, index: number) => ({
@@ -88,6 +88,35 @@ async function getReadingGrammarPoints(
     .filter(point => targetKeys.has(`${point.code}:${point.hsk_level}`));
 }
 
+async function getReadingGrammarPointMap(
+  summaries: ReadingSummary[],
+  client: HanyuClient,
+): Promise<Map<string, GrammarPoint[]>> {
+  const pointsByReading = new Map<string, GrammarPoint[]>();
+  const targets = summaries.flatMap(summary => summary.target_grammar);
+  const codes = [...new Set(targets.map(target => target.code))];
+  if (codes.length === 0) return pointsByReading;
+
+  const { data, error } = await client
+    .from('grammar_points')
+    .select('id, hsk_level, code, "group", category, detail, title, pattern, explanation, items, examples, order_idx')
+    .in('code', codes);
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load reading grammar points');
+  }
+
+  const normalized = (data ?? []).map(normalizeGrammarPoint);
+  for (const summary of summaries) {
+    const targetKeys = new Set(summary.target_grammar.map(target => `${target.code}:${target.level}`));
+    pointsByReading.set(
+      summary.slug,
+      normalized.filter(point => targetKeys.has(`${point.code}:${point.hsk_level}`)),
+    );
+  }
+
+  return pointsByReading;
+}
+
 function normalizeQuestionId(question: any, index: number) {
   return question.id || `q${index}`;
 }
@@ -134,32 +163,46 @@ async function getRecognitionStates(wordIds: number[], client: HanyuClient) {
   return states;
 }
 
-async function coverageForReading(summary: ReadingSummary, client: HanyuClient) {
+async function tokenizeReadings(
+  summaries: ReadingSummary[],
+  client: HanyuClient,
+): Promise<Map<string, ReadingDetail['tokens']> | null> {
+  if (summaries.length === 0) return new Map();
   const functions = (client as any).functions;
   if (!functions || typeof functions.invoke !== 'function') {
     return null;
   }
 
   const { data, error } = await functions.invoke('tokenize-reading', {
-    body: { reading_id: summary.slug },
+    body: { reading_ids: summaries.map(summary => summary.slug) },
   });
-  if (error || !Array.isArray(data?.tokens)) {
+  if (error) {
     return null;
   }
 
-  const tokens: CoverageToken[] = data.tokens.map((token: any) => ({
-    word_id: typeof token.word?.id === 'number' ? token.word.id : null,
-    type: token.type,
-  }));
-  const ids = [...new Set(tokens.map(token => token.word_id).filter((id): id is number => id !== null))];
-  const states = await getRecognitionStates(ids, client);
-  const known = new Set(
-    [...states.entries()]
-      .filter(([, stability]) => stability !== null && stability !== undefined && stability >= KNOWN_MIN_STABILITY_DAYS)
-      .map(([id]) => id),
-  );
+  const tokensByReading = new Map<string, any[]>();
+  if (data?.tokens_by_reading && typeof data.tokens_by_reading === 'object') {
+    for (const summary of summaries) {
+      const tokens = data.tokens_by_reading[summary.slug];
+      tokensByReading.set(summary.slug, Array.isArray(tokens) ? tokens : []);
+    }
+  } else if (summaries.length === 1 && Array.isArray(data?.tokens)) {
+    tokensByReading.set(summaries[0].slug, data.tokens);
+  } else {
+    return null;
+  }
 
-  return coverageOf(tokens, known);
+  const ids = [...new Set(
+    [...tokensByReading.values()]
+      .flat()
+      .map((token: any) => token.word?.id)
+      .filter((id: unknown): id is number => typeof id === 'number'),
+  )];
+  const states = await getRecognitionStates(ids, client);
+  return new Map(summaries.map(summary => [
+    summary.slug,
+    statusTokens(tokensByReading.get(summary.slug) ?? [], summary.target_words, states),
+  ]));
 }
 
 async function getReadingProgressMap(
@@ -333,10 +376,28 @@ export async function getReadings(
   }
 
   const summaries = (data || []).map(normalizeSummary);
-  const withCoverage = await Promise.all(summaries.map(async summary => ({
-    ...summary,
-    coverage: await coverageForReading(summary, client),
-  })));
+  const tokenized = await tokenizeReadings(summaries, client);
+  const grammarPoints = await getReadingGrammarPointMap(summaries, client);
+  const withCoverage = summaries.map(summary => {
+    const tokens = tokenized?.get(summary.slug) ?? [];
+    const coverageTokens: CoverageToken[] = tokens.map(token => ({
+      word_id: token.word?.id ?? null,
+      type: token.type,
+      form: token.text,
+    }));
+
+    return {
+      ...summary,
+      coverage: tokenized?.has(summary.slug) ? coverageOf(coverageTokens, knownFromTokens(tokens)) : null,
+      offline: summary.offline ? {
+        ...summary.offline,
+        content: summary.offline.sentences.map(sentence => sentence.zh).join(''),
+        grammar_points: grammarPoints.get(summary.slug) ?? [],
+        sentences: tokensBySentence(summary.offline.sentences, tokens),
+        tokens,
+      } : undefined,
+    };
+  });
   const progress = await getReadingProgressMap(summaries, client);
   return withCoverage.map(summary => ({
     ...summary,
@@ -344,8 +405,25 @@ export async function getReadings(
   }));
 }
 
+function knownFromTokens(tokens: ReadingDetail['tokens']) {
+  return new Set(tokens
+    .filter(token => token.status === 'known' && token.word)
+    .map(token => token.word!.id));
+}
+
+function normalizeSentences(value: unknown): ReadingSentence[] {
+  const sentences = parseJsonField(value, []);
+  return (Array.isArray(sentences) ? sentences : []).map((sentence: any) => ({
+    zh: String(sentence?.zh ?? ''),
+    pinyin: String(sentence?.pinyin ?? ''),
+    es: String(sentence?.es ?? ''),
+    tokens: [],
+  }));
+}
+
 function normalizeSummary(row: any): ReadingSummary {
   const slug = String(row.slug);
+  const sentences = normalizeSentences(row.sentences);
 
   return {
     id: slug,
@@ -362,6 +440,13 @@ function normalizeSummary(row: any): ReadingSummary {
     target_grammar: normalizeGrammarTargets(row.target_grammar),
     audio_kind: row.audio_kind === 'human' ? 'human' : 'tts',
     audio_url: row.audio_url === null || row.audio_url === undefined ? null : String(row.audio_url),
+    offline: {
+      sentences,
+      content: sentences.map(sentence => sentence.zh).join(''),
+      grammar_points: [],
+      questions: normalizeQuestions(row.questions),
+      tokens: [],
+    },
     ...(row.created_at ? { created_at: String(row.created_at) } : {}),
   };
 }
@@ -371,6 +456,7 @@ function normalizeProgress(slug: string, row: any): ReadingProgress {
     reading_slug: String(row?.reading_slug ?? slug),
     bookmarked: Boolean(row?.bookmarked),
     last_sentence: Math.max(0, Number(row?.last_sentence ?? 0)),
+    started_at: row?.started_at ? String(row.started_at) : null,
     finished_at: row?.finished_at ? String(row.finished_at) : null,
     updated_at: String(row?.updated_at ?? new Date().toISOString()),
   };
@@ -402,6 +488,7 @@ async function saveProgress(
       reading_slug: slug,
       bookmarked: progress.bookmarked,
       last_sentence: progress.last_sentence,
+      started_at: progress.started_at ?? null,
       finished_at: progress.finished_at,
       updated_at: progress.updated_at,
     },
@@ -438,23 +525,33 @@ export async function saveReadingProgress(
 ): Promise<ReadingProgress> {
   const userId = await getRequiredUserId(client);
   const current = await loadProgress(slug, userId, client);
+  const updatedAt = new Date().toISOString();
   return saveProgress(
     slug,
     userId,
-    { ...current, last_sentence: Math.max(0, Math.floor(lastSentence)), updated_at: new Date().toISOString() },
+    {
+      ...current,
+      last_sentence: Math.max(0, Math.floor(lastSentence)),
+      started_at: current.started_at ?? updatedAt,
+      updated_at: updatedAt,
+    },
     client,
   );
 }
 
 export async function markRead(slug: string, client: HanyuClient): Promise<ReadingProgress> {
   const userId = await getRequiredUserId(client);
-  const reading = await loadReadingRow(slug, client);
   const current = await loadProgress(slug, userId, client);
+  if (current.finished_at) {
+    return current;
+  }
+
+  const reading = await loadReadingRow(slug, client);
   const finishedAt = new Date().toISOString();
   const progress = await saveProgress(
     slug,
     userId,
-    { ...current, finished_at: finishedAt, updated_at: finishedAt },
+    { ...current, started_at: current.started_at ?? finishedAt, finished_at: finishedAt, updated_at: finishedAt },
     client,
   );
 
@@ -499,11 +596,14 @@ export async function getReading(slug: string, client: HanyuClient): Promise<Rea
   );
 
   if (tokenError || !Array.isArray(tokenData?.tokens)) {
+    const tokenMessage = String((tokenError as any)?.message ?? '');
     throw createRepositoryError(
       {
         status: (tokenError as any)?.status,
         code: (tokenError as any)?.code,
-        message: 'Failed to prepare reading words',
+        message: /network|fetch failed|failed to fetch|timeout|timed out/i.test(tokenMessage)
+          ? tokenMessage
+          : 'Failed to prepare reading words',
       },
       'Failed to prepare reading words',
     );
@@ -517,9 +617,10 @@ export async function getReading(slug: string, client: HanyuClient): Promise<Rea
   const tokens = statusTokens(tokenData.tokens, normalizeSummary(data).target_words, recognitionStates);
   const tokenizedSentences = tokensBySentence(sentences, tokens);
   const targetGrammar = normalizeGrammarTargets(data.target_grammar);
+  const { offline: _offline, ...summary } = normalizeSummary(data);
 
   return {
-    ...normalizeSummary(data),
+    ...summary,
     sentences: tokenizedSentences,
     content: sentences.map(sentence => sentence.zh).join(''),
     grammar_points: await getReadingGrammarPoints(targetGrammar, client),

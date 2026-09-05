@@ -26,6 +26,20 @@ describe('coverageOf', () => {
     expect(coverageOf(repeated, new Set([1])).ratio).toBeCloseTo(0.5);
   });
 
+  it('cuenta cada forma desconocida fuera de diccionario una sola vez', () => {
+    const repeatedUnknown = [
+      { word_id: null, type: 'unknown' as const, form: '龘' },
+      { word_id: null, type: 'unknown' as const, form: '龘' },
+      { word_id: 1, type: 'word' as const },
+    ];
+
+    expect(coverageOf(repeatedUnknown, new Set([1]))).toEqual({
+      ratio: 0.5,
+      known_count: 1,
+      unknown_count: 1,
+    });
+  });
+
   it('devuelve cobertura cero sin reventar en un texto sin palabras', () => {
     expect(coverageOf([{ word_id: null, type: 'punctuation' }], new Set()).ratio).toBe(0);
   });

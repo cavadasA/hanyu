@@ -34,6 +34,8 @@ export function ReadingDetailScreen() {
   const [progress, setProgress] = useState<ReadingProgress | null>(null);
   const [activeSentenceIndex, setActiveSentenceIndex] = useState<number | null>(null);
   const [speechRate, setSpeechRate] = useState(1);
+  const [isMarkingRead, setIsMarkingRead] = useState(false);
+  const progressSaveIndex = useRef<number | null>(null);
 
   async function load() {
     if (!id) {
@@ -54,6 +56,7 @@ export function ReadingDetailScreen() {
       }
       setAnswers({});
       setResult(null);
+      progressSaveIndex.current = null;
     } catch (caught) {
       setError(toUserMessage(caught));
     } finally {
@@ -65,11 +68,36 @@ export function ReadingDetailScreen() {
     void load();
   }, [id]);
 
-  useEffect(() => () => {
+  useEffect(() => {
     speechCancel.current?.();
     speechCancel.current = null;
     speech.stop();
-  }, [speech]);
+    setActiveSentenceIndex(null);
+    progressSaveIndex.current = null;
+
+    return () => {
+      speechCancel.current?.();
+      speechCancel.current = null;
+      speech.stop();
+    };
+  }, [id]);
+
+  function recordSentenceProgress(index: number) {
+    setActiveSentenceIndex(index);
+    const updatedAt = new Date().toISOString();
+    setProgress(current => current ? {
+      ...current,
+      last_sentence: index,
+      started_at: current.started_at ?? updatedAt,
+      updated_at: updatedAt,
+    } : current);
+    if (!id || typeof readingsApi.current.saveReadingProgress !== 'function') return;
+    if (progressSaveIndex.current === index) return;
+    progressSaveIndex.current = index;
+    void Promise.resolve(readingsApi.current.saveReadingProgress(id, index)).catch(caught => {
+      setError(toUserMessage(caught));
+    });
+  }
 
   function playFrom(index: number) {
     if (!reading) return;
@@ -80,7 +108,10 @@ export function ReadingDetailScreen() {
     speechCancel.current = speech.speakSentences(
       reading.sentences.map(sentence => sentence.zh),
       index,
-      { rate: speechRate, onSentence: setActiveSentenceIndex },
+      {
+        rate: speechRate,
+        onSentence: value => value === null ? setActiveSentenceIndex(null) : recordSentenceProgress(value),
+      },
     );
   }
 
@@ -93,8 +124,25 @@ export function ReadingDetailScreen() {
 
   async function changeBookmark() {
     if (!id || typeof readingsApi.current.toggleBookmark !== 'function') return;
-    const next = await readingsApi.current.toggleBookmark(id);
-    setProgress(next);
+    try {
+      const next = await readingsApi.current.toggleBookmark(id);
+      setProgress(next);
+    } catch (caught) {
+      setError(toUserMessage(caught));
+    }
+  }
+
+  async function markReadingRead() {
+    if (!id || typeof readingsApi.current.markRead !== 'function' || progress?.finished_at) return;
+    setIsMarkingRead(true);
+    setError(null);
+    try {
+      setProgress(await readingsApi.current.markRead(id));
+    } catch (caught) {
+      setError(toUserMessage(caught));
+    } finally {
+      setIsMarkingRead(false);
+    }
   }
 
   async function submit() {
@@ -181,7 +229,14 @@ export function ReadingDetailScreen() {
             onPress={() => void changeBookmark()}
           />
         ) : null}
-        {progress && progress.last_sentence > 0 && !progress.finished_at ? (
+        <Button
+          label={progress?.finished_at ? 'Leída' : 'Marcar como leída'}
+          variant="secondary"
+          disabled={Boolean(progress?.finished_at)}
+          busy={isMarkingRead}
+          onPress={() => void markReadingRead()}
+        />
+        {progress && (progress.started_at || progress.last_sentence > 0) && !progress.finished_at ? (
           <Button label="Continuar" variant="secondary" onPress={() => playFrom(progress.last_sentence)} />
         ) : null}
         {reading.sentences.some(sentence => Boolean(sentence.pinyin)) ? (
@@ -200,6 +255,8 @@ export function ReadingDetailScreen() {
           readingId={reading.id}
           activeSentenceIndex={activeSentenceIndex}
           onPlaySentence={playFrom}
+          onSentenceRead={recordSentenceProgress}
+          readingLevel={reading.hsk_level}
         />
       </Card>
 
