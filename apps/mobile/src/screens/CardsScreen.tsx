@@ -107,10 +107,21 @@ export default function CardsScreen() {
     [currentCard, previewNow, scheduling],
   );
 
+  const loadSeq = useRef(0);
+
   const load = useCallback(async (
-    selectedSkill: ReviewSkill = skill,
-    selectedMode: StudyMode = studyMode,
+    selectedSkill?: unknown,
+    selectedMode?: unknown,
   ) => {
+    const validSkill: ReviewSkill =
+      typeof selectedSkill === 'string' && SKILLS.includes(selectedSkill as ReviewSkill)
+        ? (selectedSkill as ReviewSkill)
+        : skill;
+    const validMode: StudyMode =
+      typeof selectedMode === 'string' && STUDY_MODES.includes(selectedMode as StudyMode)
+        ? (selectedMode as StudyMode)
+        : studyMode;
+    const seq = ++loadSeq.current;
     setLoading(true);
     setError('');
 
@@ -123,7 +134,8 @@ export default function CardsScreen() {
         return;
       }
 
-      const cards = await service.loadQueue(selectedSkill, focusedDeckId, selectedMode);
+      const cards = await service.loadQueue(validSkill, focusedDeckId, validMode);
+      if (seq !== loadSeq.current) return;
       if (service.lastQueueError) {
         setError(toUserMessage(new Error(service.lastQueueError)));
       }
@@ -142,6 +154,7 @@ export default function CardsScreen() {
       const data = getData();
       try {
         const dashboard = await data.stats.getDashboard();
+        if (seq !== loadSeq.current) return;
         setByStatus(dashboard.cards?.by_status ?? {});
         if (!focusedDeckId) {
           setDeckSize(dashboard.cards?.total ?? 0);
@@ -151,9 +164,13 @@ export default function CardsScreen() {
         // non-blocking for cards load
       }
     } catch (caught) {
-      setError(toUserMessage(caught));
+      if (seq === loadSeq.current) {
+        setError(toUserMessage(caught));
+      }
     } finally {
-      setLoading(false);
+      if (seq === loadSeq.current) {
+        setLoading(false);
+      }
     }
   }, [focusedDeckId, ready, service, skill, studyMode]);
 
@@ -451,7 +468,7 @@ export default function CardsScreen() {
           </Card>
 
           <View style={styles.completeActions}>
-            <Button label="Review again" variant="outline" onPress={load} />
+            <Button label="Review again" variant="outline" onPress={() => void load()} />
             <Button label="Back to Today" variant="primary" onPress={() => router.push('/today')} />
             {focusedDeckId ? (
               <Button
@@ -483,7 +500,7 @@ export default function CardsScreen() {
         </View>
 
         {error ? (
-          <ErrorBanner message={error} onRetry={load} />
+          <ErrorBanner message={error} onRetry={() => void load()} />
         ) : null}
 
         {resumable ? (
@@ -504,7 +521,6 @@ export default function CardsScreen() {
             value={studyMode}
             onChange={(selectedMode) => {
               setStudyMode(selectedMode);
-              void load(skill, selectedMode);
             }}
           />
           <Text style={[styles.sectionTitle, styles.skillTitle, { color: colors.text }]}>Skill</Text>
@@ -513,7 +529,6 @@ export default function CardsScreen() {
             value={skill}
             onChange={(selectedSkill) => {
               setSkill(selectedSkill);
-              void load(selectedSkill, studyMode);
             }}
           />
         </Card>
@@ -603,7 +618,7 @@ export default function CardsScreen() {
       {error ? (
         <ErrorBanner
           message={error}
-          onRetry={retryGrade === null ? load : () => rate(retryGrade)}
+          onRetry={retryGrade === null ? () => void load() : () => rate(retryGrade)}
         />
       ) : null}
 

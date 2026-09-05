@@ -101,11 +101,17 @@ export async function buildQueue(
   input: BuildQueueInput,
   client: HanyuClient,
 ): Promise<{ cards: VersionedCard[]; deck_size: number | null }> {
+  const validSkills = ['recognition', 'recall', 'listening', 'reading', 'production'];
+  const validModes = ['learn', 'review', 'exam'];
   const queueArgs = {
-    p_deck_id: input.deckId ?? null,
-    p_skill: input.skill ?? 'recognition',
-    p_limit: input.limit ?? null,
-    p_mode: input.mode ?? 'review',
+    p_deck_id: typeof input.deckId === 'string' ? input.deckId : null,
+    p_skill: (typeof input.skill === 'string' && validSkills.includes(input.skill)
+      ? input.skill
+      : 'recognition') as LearningSkill,
+    p_limit: typeof input.limit === 'number' ? input.limit : null,
+    p_mode: typeof input.mode === 'string' && validModes.includes(input.mode)
+      ? input.mode
+      : 'review',
   };
   const { data, error } = await client.rpc('build_review_queue_mode', queueArgs);
 
