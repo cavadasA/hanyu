@@ -1,0 +1,80 @@
+name: Deploy Supabase (Migrations & Functions)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'supabase/**'
+      - '.github/workflows/supabase-deploy.yml'
+      - 'scripts/supabase-conditional-seed.sh'
+  workflow_dispatch:
+    inputs:
+      force_seed:
+        description: 'Forzar ejecución de seed.sql aunque la base de datos ya contenga datos'
+        type: boolean
+        required: false
+        default: false
+
+concurrency:
+  group: supabase-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy Migrations, Seed and Functions
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Verify PostgreSQL client
+        run: |
+          if ! command -v psql >/dev/null 2>&1; then
+            echo "Installing postgresql-client..."
+            sudo apt-get update && sudo apt-get install -y postgresql-client
+          else
+            echo "psql is already available: $(psql --version)"
+          fi
+
+      - name: Link project
+        run: |
+          supabase link --project-ref "$SUPABASE_PROJECT_ID" --password "$SUPABASE_DB_PASSWORD"
+
+      - name: Push Database Migrations
+        run: |
+          supabase db push --password "$SUPABASE_DB_PASSWORD"
+
+      - name: Conditional Database Seed
+        env:
+          FORCE_SEED: ${{ github.event.inputs.force_seed || 'false' }}
+        run: |
+          ./scripts/supabase-conditional-seed.sh
+
+      - name: Deploy Edge Function - generate-exercise
+        run: |
+          supabase functions deploy generate-exercise --project-ref "$SUPABASE_PROJECT_ID"
+
+      - name: Deploy Edge Function - tokenize-reading
+        run: |
+          supabase functions deploy tokenize-reading --project-ref "$SUPABASE_PROJECT_ID"
+
+      - name: Verify TypeScript Types Generation
+        run: |
+          supabase gen types typescript --project-id "$SUPABASE_PROJECT_ID" > /tmp/database.types.ts
+          if [ -s /tmp/database.types.ts ]; then
+            echo "TypeScript types generated successfully ($(wc -l < /tmp/database.types.ts) lines)."
+          else
+            echo "::warning::Types generation resulted in empty file."
+          fi

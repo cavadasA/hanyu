@@ -16,7 +16,7 @@
     "gen:types": "supabase gen types typescript --linked > packages/data/src/database.types.ts",
     "supabase:link": "echo \"ERROR: El enlace a proyectos remotos se realiza en el runner de GitHub Actions para evitar colisiones entre organizaciones locales.\" && exit 1",
     "supabase:push": "echo \"ERROR: Las migraciones remotas se aplican exclusivamente mediante GitHub Actions para evitar contaminar entornos de otras organizaciones. Haz commit y push a main o usa workflow_dispatch.\" && exit 1",
-    "supabase:deploy-functions": "npx supabase functions deploy",
+    "supabase:deploy-functions": "echo \"ERROR: El despliegue de Edge Functions se realiza mediante GitHub Actions para evitar colisiones con otras organizaciones locales.\" && exit 1",
     "build-readings": "node scripts/build-readings.js",
     "build-exercises": "node scripts/build-exercises.js",
     "build:supabase-seed": "node scripts/build-supabase-seed.js",
