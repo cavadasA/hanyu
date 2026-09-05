@@ -52,6 +52,21 @@ describe('syllabusCoverage', () => {
 
   it('no divide por cero con un alcance vacío', () => {
     expect(syllabusCoverage([], [], now).percent_demonstrated).toBe(0);
+    expect(syllabusCoverage([], 0, now).percent_demonstrated).toBe(0);
+  });
+
+  it('soporta el conteo de alcance como número sin tener que serializar arrays de ids', () => {
+    const states = [
+      { ...state(1, 'recognition', 200), in_scope: true },
+      { ...state(2, 'recognition', 3), in_scope: true },
+    ];
+
+    const coverage = syllabusCoverage(states, 10, now);
+
+    expect(coverage.in_scope).toBe(10);
+    expect(coverage.started).toBe(2);
+    expect(coverage.demonstrated).toBe(1);
+    expect(coverage.percent_demonstrated).toBe(10);
   });
 });
 
@@ -64,5 +79,22 @@ describe('isDemonstrated', () => {
     // Estabilidad 40 días repasada hace 10 días: retención >= 0.90, demostrada
     const fresh = state(1, 'recognition', 40, 10);
     expect(isDemonstrated(fresh, now)).toBe(true);
+  });
+
+  it('respeta la retención objetivo configurada (0.95 vs 0.90)', () => {
+    // Con estabilidad 40 días y repasada hace 32 días:
+    // A 0.90 de retención objetivo aún está por encima del umbral
+    // A 0.95 de retención objetivo ya ha decaído por debajo de 0.95
+    const card = state(1, 'recognition', 40, 32);
+    expect(isDemonstrated(card, now, 0.90)).toBe(true);
+    expect(isDemonstrated(card, now, 0.95)).toBe(false);
+  });
+
+  it('descarta estados sin fecha de repaso o suspendidos', () => {
+    const noDate = { ...state(1, 'recognition', 40, 10), last_reviewed_at: null };
+    expect(isDemonstrated(noDate, now)).toBe(false);
+
+    const suspended = { ...state(1, 'recognition', 40, 10), suspended: true };
+    expect(isDemonstrated(suspended, now)).toBe(false);
   });
 });

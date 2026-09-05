@@ -298,6 +298,13 @@ export async function logTime(ms: number, client: HanyuClient) {
   return { time_spent_ms: safeMs };
 }
 
+// Jerarquía del mapeo 1 ↔ again:
+// 1. Canónica: en la BD apply_review guarda grade como 1..4 (types.ts:395).
+// 2. Frontera API: la RPC learning_report() mapea 1..4 a 'again'..'easy'.
+// 3. Repositorio (aquí): normalizeReportGrade garantiza que si una llamada
+//    directa, cliente desactualizado o mock devuelve '1'..'4', el cliente
+//    reciba siempre strings canónicos.
+// 4. Dominio: isAgain actúa como salvaguarda adicional de cálculo en retention.ts.
 function normalizeReportGrade(grade: any): string {
   const g = String(grade ?? '').trim().toLowerCase();
   if (g === '1' || g === 'again') return 'again';
@@ -321,6 +328,8 @@ export async function getLearningReport(
   const rawReadingSessions = Array.isArray(payload.reading_sessions) ? payload.reading_sessions : [];
   const rawReadingAttempts = Array.isArray(payload.reading_attempts) ? payload.reading_attempts : [];
   const rawUnits = Array.isArray(payload.units) ? payload.units : [];
+  const rawSkillStates = Array.isArray(payload.skill_states) ? payload.skill_states : [];
+  const rawWordIds = Array.isArray(payload.syllabus_word_ids) ? payload.syllabus_word_ids.map(Number) : [];
 
   return {
     reviews: rawReviews.map((r: any) => ({
@@ -337,7 +346,14 @@ export async function getLearningReport(
       pinyin_shown: typeof s.pinyin_shown === 'boolean' ? s.pinyin_shown : null,
       chars: Number(s.chars || 0),
     })),
-    skill_states: Array.isArray(payload.skill_states) ? payload.skill_states : [],
+    skill_states: rawSkillStates.map((s: any) => ({
+      target_id: Number(s.target_id),
+      skill: String(s.skill ?? ''),
+      stability: s.stability !== null && s.stability !== undefined ? Number(s.stability) : null,
+      suspended: Boolean(s.suspended),
+      last_reviewed_at: s.last_reviewed_at ? String(s.last_reviewed_at) : null,
+      in_scope: s.in_scope !== undefined ? Boolean(s.in_scope) : undefined,
+    })),
     reading_attempts: rawReadingAttempts.map((a: any) => ({
       created_at: String(a.created_at ?? ''),
       reading_slug: String(a.reading_slug ?? ''),
@@ -345,13 +361,18 @@ export async function getLearningReport(
       total: Number(a.total || 0),
     })),
     mistakes_count: typeof payload.mistakes_count === 'number' ? payload.mistakes_count : Number(payload.mistakes_count || 0),
-    syllabus_word_ids: Array.isArray(payload.syllabus_word_ids) ? payload.syllabus_word_ids.map(Number) : [],
+    syllabus_words_count: typeof payload.syllabus_words_count === 'number'
+      ? payload.syllabus_words_count
+      : rawWordIds.length,
+    syllabus_word_ids: rawWordIds,
     units: rawUnits.map((u: any) => ({
       code: String(u.code ?? ''),
       title: String(u.title ?? ''),
       hsk_level: Number(u.hsk_level || 0),
       total_words: Number(u.total_words || 0),
       settled_words: Number(u.settled_words || 0),
+      total_items: Number(u.total_items ?? u.total_words ?? 0),
+      settled_items: Number(u.settled_items ?? u.settled_words ?? 0),
       completed: Boolean(u.completed),
     })),
   };

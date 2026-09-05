@@ -496,6 +496,8 @@ export interface LearningReportUnit {
   hsk_level: number;
   total_words: number;
   settled_words: number;
+  total_items: number;
+  settled_items: number;
   completed: boolean;
 }
 
@@ -505,6 +507,7 @@ export interface LearningReportSkillState {
   stability: number | null;
   suspended: boolean;
   last_reviewed_at: string | null;
+  in_scope?: boolean;
 }
 
 export interface LearningReport {
@@ -515,6 +518,7 @@ export interface LearningReport {
   skill_states: LearningReportSkillState[];
   reading_attempts: LearningReportReadingAttempt[];
   mistakes_count: number;
+  syllabus_words_count: number;
   syllabus_word_ids: number[];
   units: LearningReportUnit[];
 }

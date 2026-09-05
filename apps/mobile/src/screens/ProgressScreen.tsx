@@ -148,9 +148,11 @@ export function ProgressScreen() {
     stability: s.stability,
     suspended: s.suspended,
     last_reviewed_at: s.last_reviewed_at,
+    in_scope: s.in_scope,
   }));
-  const mastery = masteryBySkill(skillStates, now);
-  const coverage = syllabusCoverage(skillStates, report?.syllabus_word_ids ?? [], now);
+  const mastery = masteryBySkill(skillStates, now, targetRetention);
+  const coverageScope = report?.syllabus_words_count || (report?.syllabus_word_ids ?? []);
+  const coverage = syllabusCoverage(skillStates, coverageScope, now, targetRetention);
 
   // Bloque 3: Gramática
   const units = report?.units ?? [];
@@ -212,7 +214,8 @@ export function ProgressScreen() {
             <Badge label={`Objetivo: ${Math.round(targetRetention * 100)} %`} />
           </View>
           <Text style={[styles.sectionCaption, { color: colors.textMuted }]}>
-            Medido exclusivamente sobre tarjetas en fase de repaso consolidado.
+            Medido exclusivamente sobre repasos con registro de fase (los repasos anteriores a la migración
+            quedan excluidos para no mezclar aprendizaje con repaso consolidado).
           </Text>
 
           {/* Ventana a 7 días */}
@@ -281,23 +284,23 @@ export function ProgressScreen() {
         {/* BLOQUE 2: VOCABULARIO Y SÍLABO */}
         <Card style={styles.sectionCard}>
           <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Vocabulario y sílabo</Text>
-            <Badge label="Estabilidad ≥ 30 días" />
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>Vocabulario demostrado</Text>
+            <Badge label="Estabilidad ≥ 30 d y retención activa" />
           </View>
           <Text style={[styles.sectionCaption, { color: colors.textMuted }]}>
-            Demostrado por competencia individual con la fecha del repaso más antiguo.
+            Demostrado por competencia individual con retención vigente según tu objetivo ({Math.round(targetRetention * 100)} %).
           </Text>
 
-          {/* Cobertura del sílabo */}
+          {/* Cobertura del vocabulario */}
           <View style={[styles.metricRow, { borderBottomColor: colors.border }]}>
             <View style={styles.metricTextContainer}>
-              <Text style={[styles.metricName, { color: colors.text }]}>Cobertura del sílabo</Text>
+              <Text style={[styles.metricName, { color: colors.text }]}>Cobertura del vocabulario</Text>
               {coverage.in_scope > 0 ? (
                 <>
                   <Text style={[styles.metricValue, { color: colors.text }]}>
                     {coverage.percent_demonstrated} %{' '}
                     <Text style={[styles.sampleText, { color: colors.textMuted }]}>
-                      ({coverage.demonstrated} de {coverage.in_scope} palabras demostradas)
+                      ({coverage.demonstrated} de {coverage.in_scope} palabras del catálogo en este nivel)
                     </Text>
                   </Text>
                   <Text style={[styles.gapText, { color: colors.textMuted }]}>
@@ -351,7 +354,7 @@ export function ProgressScreen() {
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Gramática y unidades</Text>
           </View>
           <Text style={[styles.sectionCaption, { color: colors.textMuted }]}>
-            Unidades gramaticales con todo su vocabulario consolidado.
+            Unidades del nivel con su vocabulario y gramática consolidados.
           </Text>
 
           <View style={styles.metricRow}>
@@ -490,12 +493,12 @@ export function ProgressScreen() {
           {/* Consultas de vocabulario */}
           <View style={[styles.metricRow, { borderBottomColor: colors.border }]}>
             <View style={styles.metricTextContainer}>
-              <Text style={[styles.metricName, { color: colors.text }]}>Consultas por 100 tokens</Text>
+              <Text style={[styles.metricName, { color: colors.text }]}>Consultas por 100 caracteres</Text>
               {lookupRate !== null ? (
                 <Text style={[styles.metricValue, { color: colors.text }]}>
-                  {lookupRate} consultas / 100 tokens{' '}
+                  {lookupRate} consultas / 100 car.{' '}
                   <Text style={[styles.sampleText, { color: colors.textMuted }]}>
-                    ({lookups} consultas en {totalTokens} tokens leídos)
+                    ({lookups} consultas en {totalTokens} caracteres chinos leídos)
                   </Text>
                 </Text>
               ) : (

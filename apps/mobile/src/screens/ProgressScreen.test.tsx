@@ -24,6 +24,7 @@ function reportWith(overrides: Partial<LearningReport> = {}): LearningReport {
     skill_states: [],
     reading_attempts: [],
     mistakes_count: 0,
+    syllabus_words_count: 0,
     syllabus_word_ids: [],
     units: [],
     ...overrides,
@@ -146,20 +147,21 @@ describe('ProgressScreen', () => {
 
     await waitFor(() => {
       expect(screen.getByText('180 car./min')).toBeTruthy();
-      expect(screen.getByText(/1\.7 consultas \/ 100 tokens/)).toBeTruthy();
+      expect(screen.getByText(/1\.7 consultas \/ 100 car\./)).toBeTruthy();
     });
   });
 
   it('muestra cobertura del sílabo, unidades y métricas de evaluación', async () => {
     mockGetReport.mockResolvedValue(
       reportWith({
+        syllabus_words_count: 2,
         syllabus_word_ids: [1, 2],
         skill_states: [
-          { target_id: 1, skill: 'recognition', stability: 200, suspended: false, last_reviewed_at: '2026-09-01T00:00:00Z' },
+          { target_id: 1, skill: 'recognition', stability: 200, suspended: false, last_reviewed_at: '2026-09-01T00:00:00Z', in_scope: true },
         ],
         units: [
-          { code: 'U1', title: 'Unidad 1', hsk_level: 1, total_words: 10, settled_words: 10, completed: true },
-          { code: 'U2', title: 'Unidad 2', hsk_level: 1, total_words: 10, settled_words: 5, completed: false },
+          { code: 'U1', title: 'Unidad 1', hsk_level: 1, total_words: 10, settled_words: 10, total_items: 10, settled_items: 10, completed: true },
+          { code: 'U2', title: 'Unidad 2', hsk_level: 1, total_words: 10, settled_words: 5, total_items: 10, settled_items: 5, completed: false },
         ],
         attempts: [
           { occurred_at: '2026-09-01T00:00:00Z', skill: 'listening', correct: true, mode: 'practice' },
@@ -173,7 +175,7 @@ describe('ProgressScreen', () => {
     await renderProgress();
 
     await waitFor(() => {
-      expect(screen.getByText(/\(1 de 2 palabras demostradas\)/)).toBeTruthy();
+      expect(screen.getByText(/\(1 de 2 palabras del catálogo en este nivel\)/)).toBeTruthy();
       expect(screen.getByText(/1 de 2 unidades/)).toBeTruthy();
       expect(screen.getByText('Precisión de dictado')).toBeTruthy();
       expect(screen.getByText('Precisión de producción')).toBeTruthy();

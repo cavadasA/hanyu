@@ -27,6 +27,7 @@ describe('getLearningReport', () => {
     expect(report.reading_attempts).toEqual([]);
     expect(report.units).toEqual([]);
     expect(report.syllabus_word_ids).toEqual([]);
+    expect(report.syllabus_words_count).toBe(0);
     expect(report.mistakes_count).toBe(0);
   });
 
@@ -36,6 +37,9 @@ describe('getLearningReport', () => {
         { occurred_at: '2026-09-01T00:00:00Z', grade: '1', skill: 'recognition', phase_before: 'review' },
         { occurred_at: '2026-09-01T00:01:00Z', grade: 3, skill: 'recognition', phase_before: 'review' },
       ],
+      skill_states: [
+        { target_id: 1, skill: 'recognition', stability: 200, suspended: false, last_reviewed_at: null, in_scope: true },
+      ],
       reading_sessions: [
         { slug: 'text-1', seconds: 120, pinyin_shown: false, chars: 150 },
       ],
@@ -43,9 +47,10 @@ describe('getLearningReport', () => {
         { created_at: '2026-09-01T00:00:00Z', reading_slug: 'text-1', score: 4, total: 5 },
       ],
       mistakes_count: 3,
+      syllabus_words_count: 300,
       syllabus_word_ids: [1, 2, 3],
       units: [
-        { code: 'U1', title: 'Unidad 1', hsk_level: 1, total_words: 10, settled_words: 10, completed: true },
+        { code: 'U1', title: 'Unidad 1', hsk_level: 1, total_words: 0, settled_words: 0, total_items: 1, settled_items: 1, completed: true },
       ],
     });
 
@@ -53,9 +58,11 @@ describe('getLearningReport', () => {
 
     expect(report.reviews[0]?.grade).toBe('again');
     expect(report.reviews[1]?.grade).toBe('good');
+    expect(report.skill_states[0]?.in_scope).toBe(true);
     expect(report.reading_sessions[0]?.chars).toBe(150);
     expect(report.reading_attempts[0]?.score).toBe(4);
     expect(report.mistakes_count).toBe(3);
+    expect(report.syllabus_words_count).toBe(300);
     expect(report.syllabus_word_ids).toEqual([1, 2, 3]);
     expect(report.units[0]?.completed).toBe(true);
   });

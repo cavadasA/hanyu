@@ -17,6 +17,12 @@ export interface Retention {
   target_gap: number | null;
 }
 
+// Jerarquía del mapeo 1 ↔ again:
+// 1. Canónica: en la BD apply_review guarda grade como 1..4 (types.ts:395).
+// 2. Frontera API: la RPC learning_report() mapea 1..4 a 'again'..'easy'.
+// 3. Repositorio: stats.ts (normalizeReportGrade) normaliza como salvaguarda ante payloads directos/mocks.
+// 4. Dominio (aquí): isAgain actúa como defensa en profundidad pura para que revisiones
+//    históricas o fixtures sin normalizar nunca cuenten '1' como un acierto.
 function isAgain(grade: string | number): boolean {
   return grade === 'again' || grade === '1' || grade === 1;
 }

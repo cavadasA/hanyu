@@ -186,6 +186,176 @@ grant execute on function public.apply_review(
   uuid, uuid, timestamptz, bigint, smallint, public.learning_skill, jsonb, jsonb, integer
 ) to authenticated;
 
+-- Función compartida de progreso de unidades: unifica la definición de completitud
+-- tanto para unidades con vocabulario como puramente gramaticales (patterns).
+create or replace function public.unit_progress(
+  p_stability_days numeric default public.unit_completion_stability_days()
+)
+returns table(
+  hsk_level integer,
+  code text,
+  title text,
+  order_idx integer,
+  grammar_id bigint,
+  total_words integer,
+  word_count integer,
+  settled_words integer,
+  pattern_count integer,
+  total_items integer,
+  settled_items integer,
+  completed boolean
+)
+language sql
+security definer
+set search_path = public
+as $$
+  select
+    u.hsk_level,
+    u.code,
+    u.title,
+    u.order_idx,
+    gp.id as grammar_id,
+    count(uw.word_id)::integer as total_words,
+    count(uw.word_id)::integer as word_count,
+    count(*) filter (
+      where uw.word_id is not null
+        and (coalesce(s.stability, 0) >= p_stability_days or coalesce(s.suspended, false))
+    )::integer as settled_words,
+    cardinality(u.patterns)::integer as pattern_count,
+    (
+      count(uw.word_id)::integer + case when cardinality(u.patterns) > 0 then 1 else 0 end
+    )::integer as total_items,
+    (
+      count(*) filter (
+        where uw.word_id is not null
+          and (coalesce(s.stability, 0) >= p_stability_days or coalesce(s.suspended, false))
+      )::integer
+      + case when cardinality(u.patterns) > 0 and exists (
+          select 1
+          from public.learner_skill_state gs
+          where gs.user_id = auth.uid()
+            and gs.target_kind = 'grammar'
+            and gs.target_id = gp.id
+            and gs.skill = 'recognition'
+            and (coalesce(gs.stability, 0) >= p_stability_days or coalesce(gs.suspended, false))
+        ) then 1 else 0 end
+    )::integer as settled_items,
+    (
+      (count(uw.word_id)::integer + case when cardinality(u.patterns) > 0 then 1 else 0 end) > 0
+      and
+      (
+        count(*) filter (
+          where uw.word_id is not null
+            and (coalesce(s.stability, 0) >= p_stability_days or coalesce(s.suspended, false))
+        )::integer
+        + case when cardinality(u.patterns) > 0 and exists (
+            select 1
+            from public.learner_skill_state gs
+            where gs.user_id = auth.uid()
+              and gs.target_kind = 'grammar'
+              and gs.target_id = gp.id
+              and gs.skill = 'recognition'
+              and (coalesce(gs.stability, 0) >= p_stability_days or coalesce(gs.suspended, false))
+          ) then 1 else 0 end
+      ) >= (count(uw.word_id)::integer + case when cardinality(u.patterns) > 0 then 1 else 0 end)
+    ) as completed
+  from public.unit u
+  left join public.unit_word uw on uw.hsk_level = u.hsk_level and uw.code = u.code
+  left join public.grammar_points gp on gp.hsk_level = u.hsk_level and gp.code = u.code
+  left join public.learner_skill_state s
+    on s.user_id = auth.uid()
+   and s.target_kind = 'word'
+   and s.target_id = uw.word_id
+   and s.skill = 'recognition'
+  where u.hsk_level <= (
+    select coalesce(current_level, 1) from public.user_settings where user_id = auth.uid()
+  )
+  group by u.hsk_level, u.code, u.title, u.order_idx, gp.id, u.patterns;
+$$;
+
+revoke all on function public.unit_progress(numeric) from public;
+grant execute on function public.unit_progress(numeric) to authenticated;
+
+-- active_unit consume exactamente la misma lógica de progreso de unidad.
+create or replace function public.active_unit(
+  p_stability_days numeric default public.unit_completion_stability_days()
+)
+returns table(
+  hsk_level integer,
+  code text,
+  title text,
+  total_words integer,
+  settled_words integer,
+  word_count integer,
+  pattern_count integer,
+  grammar_id bigint,
+  total_items integer,
+  settled_items integer
+)
+language sql
+security definer
+set search_path = public
+as $$
+  with incomplete as (
+    select * from public.unit_progress(p_stability_days)
+    where not completed and total_items > 0
+  )
+  select i.hsk_level, i.code, i.title, i.total_words, i.settled_words,
+    i.word_count, i.pattern_count, i.grammar_id, i.total_items, i.settled_items
+  from incomplete i
+  where not exists (
+    select 1
+    from public.grammar_prerequisite gp
+    join incomplete req
+      on req.hsk_level = gp.requires_level and req.code = gp.requires_code
+    where gp.hsk_level = i.hsk_level and gp.code = i.code
+  )
+  order by case when i.total_words > 0 then 0 else 1 end,
+    i.hsk_level, i.order_idx
+  limit 1;
+$$;
+
+revoke all on function public.active_unit(numeric) from public;
+grant execute on function public.active_unit(numeric) to authenticated;
+
+-- Conteo exacto y sin tope artificial de la cola de errores pendientes.
+create or replace function public.mistake_queue_count()
+returns integer
+language sql
+security definer
+set search_path = public
+as $$
+  with attempts as (
+    select
+      e.target_id,
+      e.occurred_at,
+      (e.payload->>'correct')::boolean as correct,
+      max(case when (e.payload->>'correct')::boolean is false then e.occurred_at end)
+        over (partition by e.target_id) as last_miss
+    from public.learning_event e
+    where e.user_id = auth.uid()
+      and e.kind = 'exercise_attempted'
+      and e.target_kind = 'word'
+      and e.target_id is not null
+      and jsonb_typeof(e.payload->'correct') = 'boolean'
+  )
+  select count(*)::integer
+  from (
+    select a.target_id
+    from attempts a
+    join public.words w on w.id = a.target_id
+    where a.last_miss is not null
+    group by a.target_id
+    having count(*) filter (where a.correct and a.occurred_at > a.last_miss) < 2
+        or count(distinct date(a.occurred_at)) filter (
+             where a.correct and a.occurred_at > a.last_miss
+           ) < 2
+  ) sub;
+$$;
+
+revoke all on function public.mistake_queue_count() from public;
+grant execute on function public.mistake_queue_count() to authenticated;
+
 -- Devuelve el historial que la analítica necesita, sin calcular ninguna
 -- métrica: el cálculo vive en packages/domain, probado con fixtures.
 create or replace function public.learning_report(p_days integer default 90)
@@ -198,6 +368,9 @@ as $$
     'reviews', coalesce((
       select jsonb_agg(jsonb_build_object(
         'occurred_at', e.occurred_at,
+        -- Mapeo canónico: en la base apply_review guarda grade como 1..4.
+        -- La RPC lo transforma a nombres canónicos ('again'..'easy') para la API.
+        -- Como defensa en profundidad, stats.ts y retention.ts también soportan '1' por seguridad.
         'grade', case e.payload->>'grade'
           when '1' then 'again'
           when '2' then 'hard'
@@ -238,8 +411,9 @@ as $$
         'slug', p.reading_slug,
         'seconds', extract(epoch from (p.finished_at - p.started_at)),
         'pinyin_shown', p.pinyin_shown,
+        -- Cuenta caracteres chinos reales (CJK), ignorando signos de puntuación
         'chars', coalesce((
-          select sum(length(s->>'zh'))::integer
+          select sum(length(regexp_replace(s->>'zh', '[^\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]', '', 'g')))::integer
           from jsonb_array_elements(r.sentences) as s
         ), 0)
       ))
@@ -256,7 +430,16 @@ as $$
         'skill', s.skill,
         'stability', s.stability,
         'suspended', s.suspended,
-        'last_reviewed_at', s.last_reviewed_at
+        'last_reviewed_at', s.last_reviewed_at,
+        'in_scope', exists (
+          select 1 from public.words w
+          where w.id = s.target_id
+            and w.hsk_level <= (
+              select coalesce(us.current_level, 1)
+              from public.user_settings us
+              where us.user_id = auth.uid()
+            )
+        )
       ))
       from public.learner_skill_state s
       where s.user_id = auth.uid() and s.target_kind = 'word'
@@ -272,8 +455,15 @@ as $$
       where a.user_id = auth.uid()
         and a.created_at >= now() - make_interval(days => p_days)
     ), '[]'::jsonb),
-    'mistakes_count', (
-      select count(*)::integer from public.mistake_queue(100)
+    'mistakes_count', public.mistake_queue_count(),
+    'syllabus_words_count', (
+      select count(*)::integer
+      from public.words w
+      where w.hsk_level <= (
+        select coalesce(us.current_level, 1)
+        from public.user_settings us
+        where us.user_id = auth.uid()
+      )
     ),
     'syllabus_word_ids', coalesce((
       select jsonb_agg(w.id)
@@ -285,40 +475,17 @@ as $$
       )
     ), '[]'::jsonb),
     'units', coalesce((
-      with progress as (
-        select
-          u.hsk_level,
-          u.code,
-          u.title,
-          u.order_idx,
-          count(uw.word_id)::integer as total_words,
-          count(*) filter (
-            where uw.word_id is not null
-              and (coalesce(s.stability, 0) >= public.unit_completion_stability_days() or coalesce(s.suspended, false))
-          )::integer as settled_words
-        from public.unit u
-        left join public.unit_word uw on uw.hsk_level = u.hsk_level and uw.code = u.code
-        left join public.learner_skill_state s
-          on s.user_id = auth.uid()
-         and s.target_kind = 'word'
-         and s.target_id = uw.word_id
-         and s.skill = 'recognition'
-        where u.hsk_level <= (
-          select coalesce(us.current_level, 1)
-          from public.user_settings us
-          where us.user_id = auth.uid()
-        )
-        group by u.hsk_level, u.code, u.title, u.order_idx
-      )
       select jsonb_agg(jsonb_build_object(
         'code', p.code,
         'title', p.title,
         'hsk_level', p.hsk_level,
         'total_words', p.total_words,
         'settled_words', p.settled_words,
-        'completed', p.total_words > 0 and p.settled_words >= p.total_words
+        'total_items', p.total_items,
+        'settled_items', p.settled_items,
+        'completed', p.completed
       ) order by p.hsk_level, p.order_idx)
-      from progress p
+      from public.unit_progress() p
     ), '[]'::jsonb)
   );
 $$;

@@ -43,3 +43,5 @@ export function lookupsPer100Tokens(lookups: number, tokens: number): number | n
   if (tokens <= 0) return null;
   return Math.round((lookups / tokens) * 100 * 10) / 10;
 }
+
+export const lookupsPer100Chars = lookupsPer100Tokens;
