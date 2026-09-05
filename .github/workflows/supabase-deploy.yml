@@ -18,13 +18,17 @@ on:
         default: false
 
 concurrency:
-  group: supabase-deploy-${{ github.ref }}
+  group: supabase-deploy
   cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
   deploy:
     name: Deploy Migrations, Seed and Functions
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
@@ -37,7 +41,7 @@ jobs:
       - name: Setup Supabase CLI
         uses: supabase/setup-cli@v1
         with:
-          version: latest
+          version: 2.110.0
 
       - name: Verify PostgreSQL client
         run: |
@@ -76,5 +80,6 @@ jobs:
           if [ -s /tmp/database.types.ts ]; then
             echo "TypeScript types generated successfully ($(wc -l < /tmp/database.types.ts) lines)."
           else
-            echo "::warning::Types generation resulted in empty file."
+            echo "::error::Types generation resulted in empty file."
+            exit 1
           fi
