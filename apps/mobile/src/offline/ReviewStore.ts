@@ -39,7 +39,8 @@ export interface ReviewStore {
   enqueueAndProject(event: ReviewEvent, projected: VersionedCard): Promise<void>;
   listPending(): Promise<QueuedReviewEvent[]>;
   acknowledge(reviewId: string, serverCard: VersionedCard): Promise<void>;
-  rebase(card: VersionedCard, events: QueuedReviewEvent[]): Promise<void>;
+  /** Rewrites the pending queue for a card on top of the server state after a conflict. */
+  rebase(serverCard: VersionedCard, events: QueuedReviewEvent[]): Promise<QueuedReviewEvent[]>;
   markPermanentError(reviewId: string, message: string): Promise<void>;
   /** Atomically claims a pending event for network submission. */
   markSyncing(reviewId: string): Promise<boolean>;
@@ -309,18 +310,55 @@ export class ReviewStoreImpl implements ReviewStore {
     });
   }
 
-  async rebase(card: VersionedCard, events: QueuedReviewEvent[]): Promise<void> {
+  /**
+   * Reancla la cola local sobre el estado real del servidor tras un conflicto.
+   *
+   * El servidor rechaza un evento cuando su `expected_version` ya no coincide:
+   * alguna valoración se aplicó antes. Reintentarlo tal cual falla siempre, así
+   * que hay que rehacerlo sobre la versión buena. Los eventos se replayean en
+   * orden encima de `serverCard`: el `prior` de cada uno pasa a ser el estado
+   * acumulado, su `state` el resultado de aplicar su nota, y su
+   * `expected_version` la que tendrá la tarjeta cuando le toque, o sea la del
+   * servidor más los eventos que van delante.
+   *
+   * `serverCard` se guarda como instantánea de servidor —`discardPending` la
+   * necesita para deshacer sin red— y la proyección visible es el replay
+   * completo encima de ella.
+   *
+   * Devuelve los eventos reescritos para que quien sincroniza pueda reintentar
+   * en la misma pasada sin volver a leer la cola.
+   */
+  async rebase(
+    serverCard: VersionedCard,
+    events: QueuedReviewEvent[],
+  ): Promise<QueuedReviewEvent[]> {
+    const rebased: QueuedReviewEvent[] = [];
+    let scheduling = serverCard.scheduling;
+
+    events.forEach((ev, offset) => {
+      const prior = scheduling;
+      const outcome = applyReview(prior, GRADE_NAME[ev.grade], new Date(ev.reviewed_at), this.params);
+      scheduling = outcome.state;
+      rebased.push({
+        ...ev,
+        prior,
+        state: outcome.state,
+        expected_version: serverCard.version + offset,
+      });
+    });
+
+    const projected: VersionedCard = { ...serverCard, scheduling };
+
     await this.db.withTransactionAsync(async () => {
-      // Treat the provided card as the new authoritative projection.
       await this.db.runAsync(UPSERT_CARD_FULL, [
-        card.id,
-        card.version,
-        JSON.stringify(card),
-        JSON.stringify(card),
+        serverCard.id,
+        serverCard.version,
+        JSON.stringify(serverCard),
+        JSON.stringify(projected),
         new Date().toISOString(),
       ]);
       // Persist all mutable event fields (primarily expected_version rewrite after conflict).
-      for (const ev of events) {
+      for (const ev of rebased) {
         await this.db.runAsync(
           `UPDATE pending_reviews
            SET grade = ?, skill = ?, state_json = ?, prior_json = ?, time_ms = ?, reviewed_at = ?, expected_version = ?,
@@ -331,6 +369,8 @@ export class ReviewStoreImpl implements ReviewStore {
         );
       }
     });
+
+    return rebased;
   }
 
   async markPermanentError(reviewId: string, message: string): Promise<void> {

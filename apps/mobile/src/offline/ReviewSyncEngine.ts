@@ -2,7 +2,8 @@
  * ReviewSyncEngine – single-flight FIFO worker that drains the pending review queue.
  *
  * Pure TypeScript with injected store, reviewCardEvent, and sleep for testability.
- * Conflict rebase wiring is Task 7; conflicts are counted and left pending here.
+ * A conflicted event is rebased onto the server card and retried in the same pass;
+ * a card whose rebased retry conflicts again is left pending for the next sync.
  */
 
 import type { ReviewEvent, ReviewSyncResult } from '@hanyu/data';
@@ -117,14 +118,20 @@ export class ReviewSyncEngine {
     // A syncing row may be a claim left by a previous process that crashed
     // during the request. It is safe to retry it; permanent errors are the only
     // rows that must stay out of the worker.
-    const pending = allPending.filter((ev) => ev.queue_state !== 'permanent_error');
-    let remaining = pending.length;
-    // Skip remaining events for a card after a conflict this run — expected_versions
-    // are stale until Task 7 rebase rewrites them.
+    const queue = allPending.filter((ev) => ev.queue_state !== 'permanent_error');
+    let remaining = queue.length;
+    // A card is rebased at most once per pass. If the rebased retry conflicts
+    // again the disagreement is real, so the card is left pending and the rest
+    // of its events are skipped rather than applied out of order.
+    const rebasedCards = new Set<string>();
     const conflictedCards = new Set<string>();
 
-    for (const ev of pending) {
+    let index = 0;
+    while (index < queue.length) {
+      const ev = queue[index];
+
       if (conflictedCards.has(ev.card_id)) {
+        index += 1;
         continue;
       }
 
@@ -132,6 +139,7 @@ export class ReviewSyncEngine {
       if (!claimed) {
         // Undo won the transaction race and removed the event locally.
         remaining -= 1;
+        index += 1;
         continue;
       }
 
@@ -142,27 +150,49 @@ export class ReviewSyncEngine {
       }
       if (result === 'transient_exhausted') {
         await this.store.markPending(ev.review_id);
+        index += 1;
         continue;
       }
       if (result === 'permanent_error') {
         remaining -= 1;
+        index += 1;
         continue;
       }
 
       const { outcome } = result;
+      if (outcome === 'conflict') {
+        summary.conflicts += 1;
+        await this.store.markPending(ev.review_id);
+
+        if (rebasedCards.has(ev.card_id)) {
+          conflictedCards.add(ev.card_id);
+          index += 1;
+          continue;
+        }
+
+        rebasedCards.add(ev.card_id);
+        const forCard = queue.slice(index).filter((row) => row.card_id === ev.card_id);
+        const rewritten = await this.store.rebase(result.card, forCard);
+        const byReviewId = new Map(rewritten.map((row) => [row.review_id, row]));
+        for (let ahead = index; ahead < queue.length; ahead += 1) {
+          const replacement = byReviewId.get(queue[ahead].review_id);
+          if (replacement) {
+            queue[ahead] = replacement;
+          }
+        }
+        // Retry this same event, now rebased onto the live server version.
+        continue;
+      }
+
       if (outcome === 'applied') {
         summary.applied += 1;
       } else if (outcome === 'duplicate') {
         summary.duplicates += 1;
-      } else if (outcome === 'conflict') {
-        summary.conflicts += 1;
-        conflictedCards.add(ev.card_id);
-        await this.store.markPending(ev.review_id);
-        continue;
       }
 
       await this.store.acknowledge(ev.review_id, result.card);
       remaining -= 1;
+      index += 1;
     }
 
     summary.remaining = remaining;

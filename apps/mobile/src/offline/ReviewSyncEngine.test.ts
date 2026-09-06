@@ -72,7 +72,7 @@ function makeFakeStore(overrides: Partial<ReviewStore> = {}): jest.Mocked<Review
     enqueueAndProject: jest.fn().mockResolvedValue(undefined),
     listPending: jest.fn().mockResolvedValue([]),
     acknowledge: jest.fn().mockResolvedValue(undefined),
-    rebase: jest.fn().mockResolvedValue(undefined),
+    rebase: jest.fn().mockResolvedValue([]),
     markPermanentError: jest.fn().mockResolvedValue(undefined),
     pendingCount: jest.fn().mockResolvedValue(0),
     close: jest.fn().mockResolvedValue(undefined),
@@ -397,38 +397,82 @@ describe('ReviewSyncEngine – permanent error', () => {
 });
 
 describe('ReviewSyncEngine – conflict', () => {
-  test('counts conflict without acknowledge and skips remaining events for that card', async () => {
-    const ev1 = makeQueuedEvent({
-      card_id: 'card-1',
-      queue_sequence: 1,
-      expected_version: 1,
-    });
-    const ev2 = makeQueuedEvent({
-      card_id: 'card-1',
-      queue_sequence: 2,
-      expected_version: 2,
-    });
-    const ev3 = makeQueuedEvent({ card_id: 'card-2', queue_sequence: 3 });
-    const conflictCard = makeCard({ id: 'card-1', version: 5 });
-    const card2 = makeCard({ id: 'card-2', version: 2 });
+  test('rebases the queue onto the server card and retries the conflicted event', async () => {
+    const ev1 = makeQueuedEvent({ card_id: 'card-1', queue_sequence: 1, expected_version: 1 });
+    const ev2 = makeQueuedEvent({ card_id: 'card-1', queue_sequence: 2, expected_version: 1 });
+    const serverCard = makeCard({ id: 'card-1', version: 5 });
+    const appliedCard = makeCard({ id: 'card-1', version: 6 });
+    const rebased = [
+      { ...ev1, expected_version: 5 },
+      { ...ev2, expected_version: 6 },
+    ];
     const store = makeFakeStore({
-      listPending: jest.fn().mockResolvedValue([ev1, ev2, ev3]),
+      listPending: jest.fn().mockResolvedValue([ev1, ev2]),
+      rebase: jest.fn().mockResolvedValue(rebased),
       pendingCount: jest.fn().mockResolvedValue(2),
     });
     const reviewCardEvent = jest
       .fn()
-      .mockResolvedValueOnce(makeSyncResult('conflict', conflictCard))
+      .mockResolvedValueOnce(makeSyncResult('conflict', serverCard))
+      .mockResolvedValueOnce(makeSyncResult('applied', appliedCard))
+      .mockResolvedValueOnce(makeSyncResult('applied', appliedCard));
+    const { engine } = makeEngine({ store, reviewCardEvent });
+
+    const summary = await engine.sync();
+
+    expect(store.rebase).toHaveBeenCalledTimes(1);
+    expect(store.rebase).toHaveBeenCalledWith(serverCard, [ev1, ev2]);
+    // El evento en conflicto se reintenta ya reanclado, y el siguiente de la
+    // misma tarjeta sale con la versión reescrita en vez de saltarse.
+    expect(reviewCardEvent).toHaveBeenNthCalledWith(2, toReviewEvent(rebased[0]));
+    expect(reviewCardEvent).toHaveBeenNthCalledWith(3, toReviewEvent(rebased[1]));
+    expect(summary).toEqual({ applied: 2, duplicates: 0, conflicts: 1, remaining: 0 });
+  });
+
+  test('gives up on a card whose rebased retry conflicts again, without looping', async () => {
+    const ev1 = makeQueuedEvent({ card_id: 'card-1', queue_sequence: 1, expected_version: 1 });
+    const ev2 = makeQueuedEvent({ card_id: 'card-1', queue_sequence: 2, expected_version: 1 });
+    const ev3 = makeQueuedEvent({ card_id: 'card-2', queue_sequence: 3 });
+    const serverCard = makeCard({ id: 'card-1', version: 5 });
+    const card2 = makeCard({ id: 'card-2', version: 2 });
+    const rebased = [
+      { ...ev1, expected_version: 5 },
+      { ...ev2, expected_version: 6 },
+    ];
+    const store = makeFakeStore({
+      listPending: jest.fn().mockResolvedValue([ev1, ev2, ev3]),
+      rebase: jest.fn().mockResolvedValue(rebased),
+      pendingCount: jest.fn().mockResolvedValue(2),
+    });
+    const reviewCardEvent = jest
+      .fn()
+      .mockResolvedValueOnce(makeSyncResult('conflict', serverCard))
+      .mockResolvedValueOnce(makeSyncResult('conflict', serverCard))
       .mockResolvedValueOnce(makeSyncResult('applied', card2));
     const { engine } = makeEngine({ store, reviewCardEvent });
 
     const summary = await engine.sync();
 
-    expect(summary).toEqual({ applied: 1, duplicates: 0, conflicts: 1, remaining: 2 });
-    expect(reviewCardEvent).toHaveBeenCalledTimes(2);
-    expect(reviewCardEvent).toHaveBeenNthCalledWith(1, toReviewEvent(ev1));
-    expect(reviewCardEvent).toHaveBeenNthCalledWith(2, toReviewEvent(ev3));
+    expect(store.rebase).toHaveBeenCalledTimes(1);
+    expect(reviewCardEvent).toHaveBeenCalledTimes(3);
+    expect(reviewCardEvent).toHaveBeenNthCalledWith(3, toReviewEvent(ev3));
+    expect(store.markPending).toHaveBeenCalledWith(ev1.review_id);
     expect(store.acknowledge).toHaveBeenCalledTimes(1);
     expect(store.acknowledge).toHaveBeenCalledWith(ev3.review_id, card2);
+    expect(summary).toEqual({ applied: 1, duplicates: 0, conflicts: 2, remaining: 2 });
+  });
+
+  test('does not rebase a card that never conflicted', async () => {
+    const ev = makeQueuedEvent({ card_id: 'card-1', queue_sequence: 1 });
+    const store = makeFakeStore({
+      listPending: jest.fn().mockResolvedValue([ev]),
+      pendingCount: jest.fn().mockResolvedValue(1),
+    });
+    const reviewCardEvent = jest.fn().mockResolvedValue(makeSyncResult('applied', makeCard()));
+    const { engine } = makeEngine({ store, reviewCardEvent });
+
+    await engine.sync();
+
     expect(store.rebase).not.toHaveBeenCalled();
   });
 });

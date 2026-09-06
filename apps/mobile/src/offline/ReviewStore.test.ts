@@ -652,38 +652,76 @@ describe('discardPending', () => {
 });
 
 describe('rebase', () => {
-  test('updates cached card and rewrites expected_version on pending events', async () => {
+  test('renumbers expected_version from the server version, one per event in order', async () => {
     const { store } = await createStore();
-    const card = makeCard({
-      version: 1,
-      scheduling: { ...makeCard().scheduling, scheduled_days: 1 },
-    });
+    const card = makeCard({ version: 1 });
     await store.cacheCards([card]);
 
-    const event = makeEvent(card.id, 'easy', { expected_version: 1 });
-    await store.enqueueAndProject(event, {
-      ...card,
-      scheduling: { ...card.scheduling, scheduled_days: 6 },
-    });
+    // Dos valoraciones de la misma tarjeta en la misma sesión: ambas salieron
+    // con expected_version 1 porque la proyección local no incrementa versión.
+    await store.enqueueAndProject(makeEvent(card.id, 'good', { expected_version: 1 }), card);
+    await store.enqueueAndProject(makeEvent(card.id, 'good', { expected_version: 1 }), card);
 
-    const rebasedCard = {
-      ...card,
-      version: 3,
-      scheduling: { ...card.scheduling, scheduled_days: 10 },
-    };
-    const pending = await store.listPending();
-    const rebasedEvents = pending.map(e => ({ ...e, expected_version: 3 }));
+    const serverCard = { ...card, version: 7 };
+    const rebased = await store.rebase(serverCard, await store.listPending());
 
-    await store.rebase(rebasedCard, rebasedEvents);
+    expect(rebased.map(e => e.expected_version)).toEqual([7, 8]);
+    expect((await store.listPending()).map(e => e.expected_version)).toEqual([7, 8]);
+  });
 
-    // cached_cards must reflect the rebased card
+  test('recomputes prior and state by replaying the events onto the server card', async () => {
+    const { store } = await createStore();
+    const card = makeCard({ version: 1 });
+    await store.cacheCards([card]);
+    await store.enqueueAndProject(makeEvent(card.id, 'good', { expected_version: 1 }), card);
+    await store.enqueueAndProject(makeEvent(card.id, 'good', { expected_version: 1 }), card);
+
+    const serverScheduling = applyReview(
+      card.scheduling,
+      'again',
+      new Date('2026-07-31T09:00:00.000Z'),
+      schedulingParams({}),
+    ).state;
+    const serverCard = { ...card, version: 7, scheduling: serverScheduling };
+
+    const rebased = await store.rebase(serverCard, await store.listPending());
+
+    const params = schedulingParams({});
+    const first = applyReview(serverScheduling, 'good', new Date(rebased[0].reviewed_at), params).state;
+    const second = applyReview(first, 'good', new Date(rebased[1].reviewed_at), params).state;
+
+    expect(rebased[0].prior).toEqual(serverScheduling);
+    expect(rebased[0].state).toEqual(first);
+    expect(rebased[1].prior).toEqual(first);
+    expect(rebased[1].state).toEqual(second);
+
+    // La proyección visible es el replay completo, no la tarjeta del servidor.
     const due = await store.getDueProjectedCards('2099-01-01T00:00:00.000Z', 10);
-    expect(due[0].version).toBe(3);
-    expect(due[0].scheduling.scheduled_days).toBe(10);
+    expect(due[0].version).toBe(7);
+    expect(due[0].scheduling).toEqual(second);
+  });
 
-    // pending_reviews must have updated expected_version
-    const afterRebase = await store.listPending();
-    expect(afterRebase[0].expected_version).toBe(3);
+  test('stores the server card as the server snapshot so undo still works', async () => {
+    const { store } = await createStore();
+    const card = makeCard({ version: 1 });
+    await store.cacheCards([card]);
+    const event = makeEvent(card.id, 'good', { expected_version: 1 });
+    await store.enqueueAndProject(event, card);
+
+    const serverScheduling = applyReview(
+      card.scheduling,
+      'again',
+      new Date('2026-07-31T09:00:00.000Z'),
+      schedulingParams({}),
+    ).state;
+    const serverCard = { ...card, version: 7, scheduling: serverScheduling };
+    await store.rebase(serverCard, await store.listPending());
+
+    // Deshacer el único evento pendiente debe devolver el estado del servidor,
+    // no la proyección reanclada.
+    const restored = await store.discardPending(event.review_id);
+    expect(restored?.scheduling).toEqual(serverScheduling);
+    expect(restored?.version).toBe(7);
   });
 
   test('does not insert or delete rows in pending_reviews', async () => {
@@ -694,8 +732,7 @@ describe('rebase', () => {
     await store.enqueueAndProject(event, card);
 
     const before = await store.pendingCount();
-    const pending = await store.listPending();
-    await store.rebase({ ...card, version: 2 }, pending);
+    await store.rebase({ ...card, version: 2 }, await store.listPending());
     const after = await store.pendingCount();
 
     expect(after).toBe(before);

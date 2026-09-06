@@ -181,9 +181,15 @@ export class OfflineReviewService {
         prior: card.scheduling,
       };
 
+      // La versión avanza con la valoración. El servidor incrementa la suya en
+      // uno por cada evento que aplica, y los eventos locales se envían en
+      // orden, así que la siguiente valoración de esta misma tarjeta —volver a
+      // verla dentro de la sesión, sin ir más lejos— debe declarar 43 y no 42.
+      // Repetir la versión vieja es un conflicto garantizado.
       const projected: VersionedCard = {
         ...card,
         scheduling: outcome.state,
+        version: card.version + 1,
       };
 
       // Do not return / mutate screen state until the store write succeeds.

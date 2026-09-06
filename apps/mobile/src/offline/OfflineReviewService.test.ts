@@ -440,6 +440,26 @@ describe('rateCard – UUID/time injection', () => {
     );
   });
 
+  test('advances the projected version so a second rating in the same session is not stale', async () => {
+    const card = makeCard({ version: 42 });
+    const store = makeFakeStore();
+    const service = makeService({ store });
+
+    const first = await service.rateCard(card, 'good', null);
+    // La valoración encolada incrementará la versión del servidor en uno, así
+    // que la proyección tiene que reflejarlo: enviar 42 otra vez sería un
+    // conflicto seguro que el servidor rechaza y la cola se traga.
+    expect(first.card.version).toBe(43);
+
+    await service.rateCard(first.card, 'good', null);
+
+    expect(store.enqueueAndProject).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({ expected_version: 43, card_id: card.id }),
+      expect.objectContaining({ version: 44 }),
+    );
+  });
+
   test('passes the FSRS grade and time_ms through to the ReviewEvent', async () => {
     const card = makeCard();
     const store = makeFakeStore();
