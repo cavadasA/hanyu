@@ -9,7 +9,13 @@ import {
   type StudyMode,
   type VersionedCard,
 } from '@hanyu/data';
-import { cardPhase, previewIntervals, schedulingParams, type Grade } from '@hanyu/domain';
+import {
+  cardPhase,
+  previewIntervals,
+  schedulingParams,
+  shouldRequeueInSession,
+  type Grade,
+} from '@hanyu/domain';
 import { getData } from '../lib/data';
 import {
   clearReviewSession,
@@ -42,8 +48,6 @@ const SKILL_OPTIONS: SegmentedOption<ReviewSkill>[] = SKILLS.map((value) => ({
   value,
   label: value[0].toUpperCase() + value.slice(1),
 }));
-
-const INTRA_SESSION_HORIZON_MS = 30 * 60 * 1000;
 
 type ScreenPhase = 'pre-session' | 'reviewing' | 'complete';
 interface UndoEntry {
@@ -374,9 +378,16 @@ export default function CardsScreen() {
     };
     setStats(nextStats);
 
-    const dueAt = Date.parse(ratedCard.scheduling.due);
+    // Cada aparición de la tarjeta en la sesión es una entrada en activeCards,
+    // así que contarlas da las veces que se ha mostrado sin llevar estado
+    // aparte: sobrevive a reanudar la sesión y a deshacer, que quitan y ponen
+    // esas mismas entradas.
+    const shown = activeCards.reduce(
+      (count, entry) => (entry.id === current.id ? count + 1 : count),
+      0,
+    );
     const requeueIntraday = studyMode !== 'exam' &&
-      Number.isFinite(dueAt) && dueAt - Date.now() < INTRA_SESSION_HORIZON_MS;
+      shouldRequeueInSession({ state: ratedCard.scheduling, shown });
     const nextCards = requeueIntraday ? [...activeCards, ratedCard] : activeCards;
 
     if (reviewId) {

@@ -4,7 +4,7 @@ import {
   buildResponderReleaseEvent,
 } from '@testing-library/react-native/dist/event-builder';
 import CardsScreen from './CardsScreen';
-import { emptyState } from '@hanyu/domain';
+import { applyReview, emptyState, schedulingParams, MAX_SESSION_SHOWINGS } from '@hanyu/domain';
 import {
   clearReviewSession,
   loadReviewSession,
@@ -356,15 +356,10 @@ describe('CardsScreen', () => {
 
   it('vuelve a presentar dentro de la sesión una tarjeta fallada', async () => {
     mockLoadQueue.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
-    mockRateCard.mockImplementation(async (input: any, grade: string) => ({
+    mockRateCard.mockImplementation(async (input: any, grade: any) => ({
       card: {
         ...input,
-        scheduling: {
-          ...input.scheduling,
-          due: grade === 'again'
-            ? new Date(Date.now() + 60_000).toISOString()
-            : new Date(Date.now() + 86_400_000).toISOString(),
-        },
+        scheduling: applyReview(input.scheduling, grade, new Date(), schedulingParams({})).state,
       },
       reviewId: `r-${grade}`,
     }));
@@ -379,6 +374,30 @@ describe('CardsScreen', () => {
 
     expect(screen.queryByText('Session complete')).toBeNull();
     expect(screen.getByText('你好')).toBeTruthy();
+  });
+
+  it('deja de reencolar una tarjeta al llegar al tope de pases de la sesión', async () => {
+    // Hard sobre una tarjeta en learning es un punto fijo de FSRS: devuelve
+    // siempre el mismo paso. Sin tope la sesión no terminaría nunca.
+    mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
+    mockRateCard.mockImplementation(async (input: any, grade: any) => ({
+      card: {
+        ...input,
+        scheduling: applyReview(input.scheduling, grade, new Date(), schedulingParams({})).state,
+      },
+      reviewId: `r-${grade}`,
+    }));
+
+    await renderCards();
+    await fireEvent.press(screen.getByText('Start review'));
+
+    for (let pass = 0; pass < MAX_SESSION_SHOWINGS; pass += 1) {
+      await fireEvent.press(screen.getByText('Show answer'));
+      await fireEvent.press(screen.getByText('Hard'));
+    }
+
+    expect(screen.getByText('Session complete')).toBeTruthy();
+    expect(mockRateCard).toHaveBeenCalledTimes(MAX_SESSION_SHOWINGS);
   });
 
   it('reanuda en la siguiente tarjeta guardada aunque las anteriores ya no estén vencidas', async () => {
@@ -406,13 +425,10 @@ describe('CardsScreen', () => {
 
   it('removes a requeued Again card when Undo returns to it', async () => {
     mockLoadQueue.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
-    mockRateCard.mockImplementation(async (input: any, grade: string) => ({
+    mockRateCard.mockImplementation(async (input: any, grade: any) => ({
       card: {
         ...input,
-        scheduling: {
-          ...input.scheduling,
-          due: new Date(Date.now() + (grade === 'again' ? 60_000 : 86_400_000)).toISOString(),
-        },
+        scheduling: applyReview(input.scheduling, grade, new Date(), schedulingParams({})).state,
       },
       reviewId: `r-${grade}`,
     }));
