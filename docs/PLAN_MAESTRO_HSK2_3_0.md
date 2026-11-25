@@ -325,6 +325,20 @@ Sustituir "actividades completadas" por métricas que representan aprendizaje: r
 
 ---
 
+## Remediación (25 de noviembre de 2026)
+
+Tres huecos quedaron abiertos tras ejecutar los planes 6 y 7. Cada uno tiene su plan:
+
+| Hueco | Plan |
+|---|---|
+| 10 lecturas sin series completas ni audio propio (objetivo 40–60) | `docs/superpowers/plans/2026-11-25-plan-10-lecturas-corpus-y-audio.md` |
+| 159 de 165 puntos gramaticales sin explicación ni ejemplos | `docs/superpowers/plans/2026-11-25-plan-11-gramatica-con-contenido.md` |
+| Simulacro con 2 de 8 partes, y esas 2 sin el formato real | `docs/superpowers/plans/2026-11-25-plan-12-simulacro-hsk2-completo.md` |
+
+El Plan 12 depende del pipeline de medios y de la síntesis de audio del Plan 10; el 11 es independiente. **Cambio de decisión pendiente de confirmar:** el Plan 10 propone voz neuronal (Azure AI Speech) en lugar de audio grabado por personas.
+
+---
+
 ## Mapa de cobertura: ningún hallazgo sin plan
 
 | Hallazgo de la auditoría | Plan |
