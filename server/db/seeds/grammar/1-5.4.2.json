@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "5.4.2",
+  "pattern": "frase 1，(sujeto +) 也 + … · frase 1，还 + …",
+  "explanation": "Para añadir una segunda idea del mismo tipo, la segunda frase lleva 也 o 还 delante del verbo. 也 «también» repite lo mismo con otro sujeto o en otro aspecto: 我是学生，他也是学生. 还 «además» suma algo nuevo a lo que hace el mismo sujeto: 我买了苹果，还买了面包. Los dos van detrás del sujeto, nunca al principio de la segunda frase.",
+  "markers": ["也","还"],
+  "examples": [
+    {"zh":"我是学生，他也是学生。","pinyin":"Wǒ shì xuésheng, tā yě shì xuésheng.","es":"Yo soy estudiante y él también."},
+    {"zh":"她会说汉语，也会写汉字。","pinyin":"Tā huì shuō Hànyǔ, yě huì xiě Hànzì.","es":"Sabe hablar chino y también escribir caracteres."},
+    {"zh":"我买了苹果，还买了面包。","pinyin":"Wǒ mǎi le píngguǒ, hái mǎi le miànbāo.","es":"Compré manzanas y además pan."},
+    {"zh":"他喜欢看电影，还喜欢听歌。","pinyin":"Tā xǐhuan kàn diànyǐng, hái xǐhuan tīng gē.","es":"Le gusta ver películas y además escuchar música."}
+  ],
+  "common_errors": [
+    {"wrong":"我是学生，也他是学生。","right":"我是学生，他也是学生。","why":"也 va detrás del sujeto de la segunda frase, no delante."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.5"}]
+}

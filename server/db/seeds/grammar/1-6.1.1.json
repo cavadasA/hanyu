@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "6.1.1",
+  "pattern": "verbo + 了 + (cantidad +) objeto · verbo + 了 + objeto + otra acción",
+  "explanation": "了 detrás del verbo marca la acción como terminada. Encaja sobre todo cuando el objeto lleva una cantidad (买了三个苹果) o cuando después viene otra acción: 下了课我们去吃饭. Por eso también sirve para el futuro: 明天下了班我去找你 «mañana, cuando salga del trabajo, te busco». Las costumbres, aunque sean pasadas, no llevan 了.",
+  "markers": ["了"],
+  "examples": [
+    {"zh":"我买了三个苹果。","pinyin":"Wǒ mǎi le sān gè píngguǒ.","es":"Compré tres manzanas."},
+    {"zh":"他看了两个小时电视。","pinyin":"Tā kàn le liǎng gè xiǎoshí diànshì.","es":"Vio la tele dos horas."},
+    {"zh":"下了课我们去吃饭。","pinyin":"Xià le kè wǒmen qù chī fàn.","es":"Después de clase vamos a comer."},
+    {"zh":"明天下了班我去找你。","pinyin":"Míngtiān xià le bān wǒ qù zhǎo nǐ.","es":"Mañana, al salir del trabajo, voy a buscarte."},
+    {"zh":"昨天我只睡了五个小时。","pinyin":"Zuótiān wǒ zhǐ shuì le wǔ gè xiǎoshí.","es":"Ayer solo dormí cinco horas."}
+  ],
+  "common_errors": [
+    {"wrong":"我每天早上吃了早饭。","right":"我每天早上吃早饭。","why":"Una costumbre no lleva 了: 了 marca una acción concreta terminada."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.9.2"},{"hsk_level":1,"code":"6.1.2"}]
+}

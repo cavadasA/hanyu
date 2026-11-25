@@ -2442,7 +2442,48 @@
       "……，也……",
       "……，还……"
     ],
-    "order_idx": 44
+    "order_idx": 44,
+    "pattern": "frase 1，(sujeto +) 也 + … · frase 1，还 + …",
+    "explanation": "Para añadir una segunda idea del mismo tipo, la segunda frase lleva 也 o 还 delante del verbo. 也 «también» repite lo mismo con otro sujeto o en otro aspecto: 我是学生，他也是学生. 还 «además» suma algo nuevo a lo que hace el mismo sujeto: 我买了苹果，还买了面包. Los dos van detrás del sujeto, nunca al principio de la segunda frase.",
+    "markers": [
+      "也",
+      "还"
+    ],
+    "examples": [
+      {
+        "zh": "我是学生，他也是学生。",
+        "pinyin": "Wǒ shì xuésheng, tā yě shì xuésheng.",
+        "es": "Yo soy estudiante y él también."
+      },
+      {
+        "zh": "她会说汉语，也会写汉字。",
+        "pinyin": "Tā huì shuō Hànyǔ, yě huì xiě Hànzì.",
+        "es": "Sabe hablar chino y también escribir caracteres."
+      },
+      {
+        "zh": "我买了苹果，还买了面包。",
+        "pinyin": "Wǒ mǎi le píngguǒ, hái mǎi le miànbāo.",
+        "es": "Compré manzanas y además pan."
+      },
+      {
+        "zh": "他喜欢看电影，还喜欢听歌。",
+        "pinyin": "Tā xǐhuan kàn diànyǐng, hái xǐhuan tīng gē.",
+        "es": "Le gusta ver películas y además escuchar música."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我是学生，也他是学生。",
+        "right": "我是学生，他也是学生。",
+        "why": "也 va detrás del sujeto de la segunda frase, no delante."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.6.5"
+      }
+    ]
   },
   {
     "code": "6.1.1",
@@ -2454,7 +2495,56 @@
     "items": [
       "用动态助词“了1”表示"
     ],
-    "order_idx": 45
+    "order_idx": 45,
+    "pattern": "verbo + 了 + (cantidad +) objeto · verbo + 了 + objeto + otra acción",
+    "explanation": "了 detrás del verbo marca la acción como terminada. Encaja sobre todo cuando el objeto lleva una cantidad (买了三个苹果) o cuando después viene otra acción: 下了课我们去吃饭. Por eso también sirve para el futuro: 明天下了班我去找你 «mañana, cuando salga del trabajo, te busco». Las costumbres, aunque sean pasadas, no llevan 了.",
+    "markers": [
+      "了"
+    ],
+    "examples": [
+      {
+        "zh": "我买了三个苹果。",
+        "pinyin": "Wǒ mǎi le sān gè píngguǒ.",
+        "es": "Compré tres manzanas."
+      },
+      {
+        "zh": "他看了两个小时电视。",
+        "pinyin": "Tā kàn le liǎng gè xiǎoshí diànshì.",
+        "es": "Vio la tele dos horas."
+      },
+      {
+        "zh": "下了课我们去吃饭。",
+        "pinyin": "Xià le kè wǒmen qù chī fàn.",
+        "es": "Después de clase vamos a comer."
+      },
+      {
+        "zh": "明天下了班我去找你。",
+        "pinyin": "Míngtiān xià le bān wǒ qù zhǎo nǐ.",
+        "es": "Mañana, al salir del trabajo, voy a buscarte."
+      },
+      {
+        "zh": "昨天我只睡了五个小时。",
+        "pinyin": "Zuótiān wǒ zhǐ shuì le wǔ gè xiǎoshí.",
+        "es": "Ayer solo dormí cinco horas."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我每天早上吃了早饭。",
+        "right": "我每天早上吃早饭。",
+        "why": "Una costumbre no lleva 了: 了 marca una acción concreta terminada."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.9.2"
+      },
+      {
+        "hsk_level": 1,
+        "code": "6.1.2"
+      }
+    ]
   },
   {
     "code": "6.1.2",
@@ -2466,7 +2556,56 @@
     "items": [
       "用动态助词“了2”表示"
     ],
-    "order_idx": 46
+    "order_idx": 46,
+    "pattern": "frase + 了",
+    "explanation": "了 al final de la frase indica que la situación ha cambiado o que algo es nuevo: 下雪了 «se ha puesto a nevar», 我女儿六岁了 «mi hija ya tiene seis años». Con negación dice que algo ha dejado de ser: 我不想去了 «ya no quiero ir». A diferencia del 了 pegado al verbo, no dice que una acción terminó, sino que ahora las cosas son distintas.",
+    "markers": [
+      "了"
+    ],
+    "examples": [
+      {
+        "zh": "下雪了。",
+        "pinyin": "Xià xuě le.",
+        "es": "Se ha puesto a nevar."
+      },
+      {
+        "zh": "我女儿六岁了。",
+        "pinyin": "Wǒ nǚ’ér liù suì le.",
+        "es": "Mi hija ya tiene seis años."
+      },
+      {
+        "zh": "他是大学生了。",
+        "pinyin": "Tā shì dàxuéshēng le.",
+        "es": "Ya es universitario."
+      },
+      {
+        "zh": "我不想去了。",
+        "pinyin": "Wǒ bù xiǎng qù le.",
+        "es": "Ya no quiero ir."
+      },
+      {
+        "zh": "天气冷了。",
+        "pinyin": "Tiānqì lěng le.",
+        "es": "Ya hace frío."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我不想去。（para decir «ya no quiero ir»）",
+        "right": "我不想去了。",
+        "why": "El «ya no» de un cambio de idea necesita 了 al final; sin él solo dices que no quieres ir."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.9.3"
+      },
+      {
+        "hsk_level": 1,
+        "code": "6.1.1"
+      }
+    ]
   },
   {
     "code": "6.1.3",
@@ -2480,7 +2619,52 @@
       "（2）……在/正在+动词……+呢",
       "（3）……呢"
     ],
-    "order_idx": 47
+    "order_idx": 47,
+    "pattern": "在 / 正在 + verbo (+ 呢) · verbo + 呢",
+    "explanation": "Para decir que algo está pasando ahora, se pone 在 o 正在 delante del verbo: 他在睡觉. 呢 al final refuerza la idea y puede ir solo, sin 在: 他们看电视呢. Se niega con 没(在): 他没在睡觉. No sirve para planes futuros como el «mañana me voy» español.",
+    "markers": [
+      "在",
+      "呢"
+    ],
+    "examples": [
+      {
+        "zh": "他在睡觉。",
+        "pinyin": "Tā zài shuìjiào.",
+        "es": "Está durmiendo."
+      },
+      {
+        "zh": "我正在写汉字呢。",
+        "pinyin": "Wǒ zhèngzài xiě Hànzì ne.",
+        "es": "Estoy escribiendo caracteres."
+      },
+      {
+        "zh": "他们看电视呢。",
+        "pinyin": "Tāmen kàn diànshì ne.",
+        "es": "Están viendo la tele."
+      },
+      {
+        "zh": "他没在睡觉，他在看书。",
+        "pinyin": "Tā méi zài shuìjiào, tā zài kàn shū.",
+        "es": "No está durmiendo, está leyendo."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "明天我在去中国。",
+        "right": "明天我去中国。",
+        "why": "在 + verbo describe lo que ocurre ahora; para un plan se usa el verbo solo o con 要."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.6.3"
+      },
+      {
+        "hsk_level": 2,
+        "code": "7.1.1"
+      }
+    ]
   },
   {
     "code": "7.1",
@@ -2493,7 +2677,59 @@
       "钱数表示法",
       "序数表达法1：第+数词"
     ],
-    "order_idx": 48
+    "order_idx": 48,
+    "pattern": "número + 块 / 元 (+ 钱) · 第 + número",
+    "explanation": "El dinero se cuenta con 元 por escrito y con 块 al hablar: 十五块, 三百元. Delante de 块, «dos» es 两: 两块钱. 钱 al final es opcional. Para preguntar el precio se dice 多少钱？ Los ordinales se forman con 第 delante del número: 第一, 第三.",
+    "markers": [
+      "块",
+      "元",
+      "第",
+      "钱"
+    ],
+    "examples": [
+      {
+        "zh": "这本书十五块。",
+        "pinyin": "Zhè běn shū shíwǔ kuài.",
+        "es": "Este libro cuesta quince yuanes."
+      },
+      {
+        "zh": "一个苹果两块钱。",
+        "pinyin": "Yí gè píngguǒ liǎng kuài qián.",
+        "es": "Una manzana cuesta dos yuanes."
+      },
+      {
+        "zh": "这件衣服三百元。",
+        "pinyin": "Zhè jiàn yīfu sānbǎi yuán.",
+        "es": "Esta ropa cuesta trescientos yuanes."
+      },
+      {
+        "zh": "这个多少钱？",
+        "pinyin": "Zhège duōshao qián?",
+        "es": "¿Cuánto cuesta esto?"
+      },
+      {
+        "zh": "他是第一个来的。",
+        "pinyin": "Tā shì dì yī gè lái de.",
+        "es": "Fue el primero en llegar."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "一个苹果二块钱。",
+        "right": "一个苹果两块钱。",
+        "why": "Delante de 块 «dos» se dice 两."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "1.1"
+      },
+      {
+        "hsk_level": 1,
+        "code": "2.4"
+      }
+    ]
   },
   {
     "code": "7.2",
@@ -2506,7 +2742,54 @@
       "（1）年、月、日、星期表示法",
       "（2）钟点表示法"
     ],
-    "order_idx": 49
+    "order_idx": 49,
+    "pattern": "año + 月 + 号 + 星期 · (上午 / 下午 / 晚上) + 点 + 分",
+    "explanation": "Las fechas van de lo grande a lo pequeño: año, mes, día y día de la semana (2026年11月25号，星期三). La hora sigue el mismo orden: primero la parte del día y después la hora: 下午三点半. Los meses son número + 月 y los días de la semana, 星期 + número, salvo el domingo: 星期天. Fecha y hora van delante del verbo.",
+    "markers": [
+      "月",
+      "号",
+      "星期",
+      "点"
+    ],
+    "examples": [
+      {
+        "zh": "今天是十一月二十五号，星期三。",
+        "pinyin": "Jīntiān shì shíyī yuè èrshíwǔ hào, xīngqīsān.",
+        "es": "Hoy es miércoles, veinticinco de noviembre."
+      },
+      {
+        "zh": "现在下午三点半。",
+        "pinyin": "Xiànzài xiàwǔ sān diǎn bàn.",
+        "es": "Son las tres y media de la tarde."
+      },
+      {
+        "zh": "我们星期天上午十点见。",
+        "pinyin": "Wǒmen xīngqītiān shàngwǔ shí diǎn jiàn.",
+        "es": "Nos vemos el domingo a las diez de la mañana."
+      },
+      {
+        "zh": "他晚上十一点睡觉。",
+        "pinyin": "Tā wǎnshang shíyī diǎn shuìjiào.",
+        "es": "Se acuesta a las once de la noche."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我们见十点星期天。",
+        "right": "我们星期天十点见。",
+        "why": "La fecha y la hora van delante del verbo, de lo más grande a lo más pequeño."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.5.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "5.2"
+      }
+    ]
   },
   {
     "code": "1.1",

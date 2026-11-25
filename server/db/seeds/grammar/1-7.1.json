@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "7.1",
+  "pattern": "número + 块 / 元 (+ 钱) · 第 + número",
+  "explanation": "El dinero se cuenta con 元 por escrito y con 块 al hablar: 十五块, 三百元. Delante de 块, «dos» es 两: 两块钱. 钱 al final es opcional. Para preguntar el precio se dice 多少钱？ Los ordinales se forman con 第 delante del número: 第一, 第三.",
+  "markers": ["块","元","第","钱"],
+  "examples": [
+    {"zh":"这本书十五块。","pinyin":"Zhè běn shū shíwǔ kuài.","es":"Este libro cuesta quince yuanes."},
+    {"zh":"一个苹果两块钱。","pinyin":"Yí gè píngguǒ liǎng kuài qián.","es":"Una manzana cuesta dos yuanes."},
+    {"zh":"这件衣服三百元。","pinyin":"Zhè jiàn yīfu sānbǎi yuán.","es":"Esta ropa cuesta trescientos yuanes."},
+    {"zh":"这个多少钱？","pinyin":"Zhège duōshao qián?","es":"¿Cuánto cuesta esto?"},
+    {"zh":"他是第一个来的。","pinyin":"Tā shì dì yī gè lái de.","es":"Fue el primero en llegar."}
+  ],
+  "common_errors": [
+    {"wrong":"一个苹果二块钱。","right":"一个苹果两块钱。","why":"Delante de 块 «dos» se dice 两."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"1.1"},{"hsk_level":1,"code":"2.4"}]
+}

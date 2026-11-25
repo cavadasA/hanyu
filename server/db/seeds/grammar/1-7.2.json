@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "7.2",
+  "pattern": "año + 月 + 号 + 星期 · (上午 / 下午 / 晚上) + 点 + 分",
+  "explanation": "Las fechas van de lo grande a lo pequeño: año, mes, día y día de la semana (2026年11月25号，星期三). La hora sigue el mismo orden: primero la parte del día y después la hora: 下午三点半. Los meses son número + 月 y los días de la semana, 星期 + número, salvo el domingo: 星期天. Fecha y hora van delante del verbo.",
+  "markers": ["月","号","星期","点"],
+  "examples": [
+    {"zh":"今天是十一月二十五号，星期三。","pinyin":"Jīntiān shì shíyī yuè èrshíwǔ hào, xīngqīsān.","es":"Hoy es miércoles, veinticinco de noviembre."},
+    {"zh":"现在下午三点半。","pinyin":"Xiànzài xiàwǔ sān diǎn bàn.","es":"Son las tres y media de la tarde."},
+    {"zh":"我们星期天上午十点见。","pinyin":"Wǒmen xīngqītiān shàngwǔ shí diǎn jiàn.","es":"Nos vemos el domingo a las diez de la mañana."},
+    {"zh":"他晚上十一点睡觉。","pinyin":"Tā wǎnshang shíyī diǎn shuìjiào.","es":"Se acuesta a las once de la noche."}
+  ],
+  "common_errors": [
+    {"wrong":"我们见十点星期天。","right":"我们星期天十点见。","why":"La fecha y la hora van delante del verbo, de lo más grande a lo más pequeño."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.5.2"},{"hsk_level":2,"code":"5.2"}]
+}

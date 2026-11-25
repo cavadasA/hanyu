@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "6.1.2",
+  "pattern": "frase + 了",
+  "explanation": "了 al final de la frase indica que la situación ha cambiado o que algo es nuevo: 下雪了 «se ha puesto a nevar», 我女儿六岁了 «mi hija ya tiene seis años». Con negación dice que algo ha dejado de ser: 我不想去了 «ya no quiero ir». A diferencia del 了 pegado al verbo, no dice que una acción terminó, sino que ahora las cosas son distintas.",
+  "markers": ["了"],
+  "examples": [
+    {"zh":"下雪了。","pinyin":"Xià xuě le.","es":"Se ha puesto a nevar."},
+    {"zh":"我女儿六岁了。","pinyin":"Wǒ nǚ’ér liù suì le.","es":"Mi hija ya tiene seis años."},
+    {"zh":"他是大学生了。","pinyin":"Tā shì dàxuéshēng le.","es":"Ya es universitario."},
+    {"zh":"我不想去了。","pinyin":"Wǒ bù xiǎng qù le.","es":"Ya no quiero ir."},
+    {"zh":"天气冷了。","pinyin":"Tiānqì lěng le.","es":"Ya hace frío."}
+  ],
+  "common_errors": [
+    {"wrong":"我不想去。（para decir «ya no quiero ir»）","right":"我不想去了。","why":"El «ya no» de un cambio de idea necesita 了 al final; sin él solo dices que no quieres ir."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.9.3"},{"hsk_level":1,"code":"6.1.1"}]
+}

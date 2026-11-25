@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "6.1.3",
+  "pattern": "在 / 正在 + verbo (+ 呢) · verbo + 呢",
+  "explanation": "Para decir que algo está pasando ahora, se pone 在 o 正在 delante del verbo: 他在睡觉. 呢 al final refuerza la idea y puede ir solo, sin 在: 他们看电视呢. Se niega con 没(在): 他没在睡觉. No sirve para planes futuros como el «mañana me voy» español.",
+  "markers": ["在","呢"],
+  "examples": [
+    {"zh":"他在睡觉。","pinyin":"Tā zài shuìjiào.","es":"Está durmiendo."},
+    {"zh":"我正在写汉字呢。","pinyin":"Wǒ zhèngzài xiě Hànzì ne.","es":"Estoy escribiendo caracteres."},
+    {"zh":"他们看电视呢。","pinyin":"Tāmen kàn diànshì ne.","es":"Están viendo la tele."},
+    {"zh":"他没在睡觉，他在看书。","pinyin":"Tā méi zài shuìjiào, tā zài kàn shū.","es":"No está durmiendo, está leyendo."}
+  ],
+  "common_errors": [
+    {"wrong":"明天我在去中国。","right":"明天我去中国。","why":"在 + verbo describe lo que ocurre ahora; para un plan se usa el verbo solo o con 要."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.3"},{"hsk_level":2,"code":"7.1.1"}]
+}
