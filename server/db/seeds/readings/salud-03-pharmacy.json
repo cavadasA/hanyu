@@ -1,0 +1,103 @@
+{
+  "slug": "salud-03-pharmacy",
+  "title": "去药店",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "salud",
+  "series": "salud",
+  "series_index": 3,
+  "target_words": [
+    "药店",
+    "洗",
+    "手"
+  ],
+  "target_grammar": [
+    {
+      "code": "3.1.2",
+      "level": 2
+    },
+    {
+      "code": "2.7.5",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "第二天，陈东的药快要吃完了。",
+      "pinyin": "Dì èr tiān, Chén Dōng de yào kuàiyào chī wán le.",
+      "es": "Al día siguiente, a Chen Dong ya casi se le habían acabado las medicinas."
+    },
+    {
+      "zh": "小丽去药店买药，陈东在家里睡觉。",
+      "pinyin": "Xiǎolì qù yàodiàn mǎi yào, Chén Dōng zài jiā lǐ shuìjiào.",
+      "es": "Xiaoli fue a la farmacia a comprar medicinas y Chen Dong se quedó durmiendo en casa."
+    },
+    {
+      "zh": "药店离他们家不远，走路五分钟就到了。",
+      "pinyin": "Yàodiàn lí tāmen jiā bù yuǎn, zǒulù wǔ fēnzhōng jiù dào le.",
+      "es": "La farmacia no está lejos de su casa: andando se llega en cinco minutos."
+    },
+    {
+      "zh": "药店的人说这个药很好，但是别吃得太多。",
+      "pinyin": "Yàodiàn de rén shuō zhège yào hěn hǎo, dànshì bié chī de tài duō.",
+      "es": "En la farmacia le dijeron que esta medicina es muy buena, pero que no se tome demasiada."
+    },
+    {
+      "zh": "回家的路上，小丽还买了一些水果和面条儿。",
+      "pinyin": "Huí jiā de lùshang, Xiǎolì hái mǎi le yìxiē shuǐguǒ hé miàntiáor.",
+      "es": "De camino a casa, Xiaoli compró además algo de fruta y fideos."
+    },
+    {
+      "zh": "中午，她做了陈东最喜欢吃的面条儿。",
+      "pinyin": "Zhōngwǔ, tā zuò le Chén Dōng zuì xǐhuan chī de miàntiáor.",
+      "es": "A mediodía preparó los fideos que más le gustan a Chen Dong."
+    },
+    {
+      "zh": "吃饭前，小丽让陈东去洗手。",
+      "pinyin": "Chī fàn qián, Xiǎolì ràng Chén Dōng qù xǐ shǒu.",
+      "es": "Antes de comer, Xiaoli le dijo a Chen Dong que fuera a lavarse las manos."
+    },
+    {
+      "zh": "陈东洗完手，坐下来吃了很多。",
+      "pinyin": "Chén Dōng xǐ wán shǒu, zuò xiàlái chī le hěn duō.",
+      "es": "Chen Dong se lavó las manos, se sentó y comió mucho."
+    },
+    {
+      "zh": "他说吃了药，睡了一个上午，现在头已经不疼了。",
+      "pinyin": "Tā shuō chī le yào, shuì le yí gè shàngwǔ, xiànzài tóu yǐjīng bù téng le.",
+      "es": "Dijo que, después de tomar la medicina y dormir toda la mañana, ya no le dolía la cabeza."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "小丽去哪儿买药？",
+      "options": [
+        "医院",
+        "药店",
+        "超市"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "药店的人说什么？",
+      "options": [
+        "别吃得太多",
+        "一天吃五次",
+        "药不好"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "吃饭前，小丽让陈东做什么？",
+      "options": [
+        "睡觉",
+        "吃药",
+        "洗手"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 6
+    }
+  ]
+}

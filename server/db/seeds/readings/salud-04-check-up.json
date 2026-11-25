@@ -1,0 +1,103 @@
+{
+  "slug": "salud-04-check-up",
+  "title": "医生说要运动",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "salud",
+  "series": "salud",
+  "series_index": 4,
+  "target_words": [
+    "运动",
+    "动",
+    "前面"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.7.6",
+      "level": 2
+    },
+    {
+      "code": "6.2.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "一个星期后，陈东再去医院看医生。",
+      "pinyin": "Yí gè xīngqī hòu, Chén Dōng zài qù yīyuàn kàn yīshēng.",
+      "es": "Una semana después, Chen Dong volvió al hospital a ver a la médica."
+    },
+    {
+      "zh": "医生：你好，这几天身体怎么样？",
+      "pinyin": "Yīshēng: Nǐhǎo, zhè jǐ tiān shēntǐ zěnmeyàng?",
+      "es": "Médica: Hola, ¿qué tal estos días?"
+    },
+    {
+      "zh": "陈东：好多了，头不疼了，晚上也睡得很好。",
+      "pinyin": "Chén Dōng: Hǎo duō le, tóu bù téng le, wǎnshang yě shuì de hěn hǎo.",
+      "es": "Chen Dong: Mucho mejor; ya no me duele la cabeza y por las noches duermo bien."
+    },
+    {
+      "zh": "医生：很好。你每天工作几个小时？",
+      "pinyin": "Yīshēng: Hěn hǎo. Nǐ měi tiān gōngzuò jǐ gè xiǎoshí?",
+      "es": "Médica: Muy bien. ¿Cuántas horas trabajas al día?"
+    },
+    {
+      "zh": "陈东：十个小时，我每天都坐在电脑前面。",
+      "pinyin": "Chén Dōng: Shí gè xiǎoshí, wǒ měi tiān dōu zuò zài diànnǎo qiánmiàn.",
+      "es": "Chen Dong: Diez horas; me paso el día sentado delante del ordenador."
+    },
+    {
+      "zh": "医生：别坐那么长时间，要经常站起来动一动。",
+      "pinyin": "Yīshēng: Bié zuò nàme cháng shíjiān, yào jīngcháng zhàn qǐlái dòng yi dòng.",
+      "es": "Médica: No estés sentado tanto tiempo; tienes que levantarte a menudo y moverte un poco."
+    },
+    {
+      "zh": "陈东：好的。我还要吃药吗？",
+      "pinyin": "Chén Dōng: Hǎo de. Wǒ hái yào chī yào ma?",
+      "es": "Chen Dong: De acuerdo. ¿Tengo que seguir tomando la medicina?"
+    },
+    {
+      "zh": "医生：不要吃了。你要每天运动半个小时。",
+      "pinyin": "Yīshēng: Búyào chī le. Nǐ yào měi tiān yùndòng bàn gè xiǎoshí.",
+      "es": "Médica: Ya no hace falta. Tienes que hacer media hora de ejercicio cada día."
+    },
+    {
+      "zh": "陈东：好，明天早上我就开始跑步。",
+      "pinyin": "Chén Dōng: Hǎo, míngtiān zǎoshang wǒ jiù kāishǐ pǎobù.",
+      "es": "Chen Dong: Bien; mañana por la mañana empiezo a correr."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "陈东现在晚上睡得怎么样？",
+      "options": [
+        "睡不好",
+        "睡得很好",
+        "不睡觉"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "陈东每天工作几个小时？",
+      "options": [
+        "十个小时",
+        "八个小时",
+        "五个小时"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "医生让陈东每天做什么？",
+      "options": [
+        "吃三次药",
+        "多睡觉",
+        "运动半个小时"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}

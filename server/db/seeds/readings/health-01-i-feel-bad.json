@@ -1,26 +1,103 @@
 {
   "slug": "health-01-i-feel-bad",
-  "title": "身体不太好",
+  "title": "头疼",
   "hsk_level": 2,
   "format": "dialogue",
   "topic": "salud",
   "series": "salud",
   "series_index": 1,
-  "target_words": ["身体", "药", "休息"],
-  "target_grammar": [{"code": "6.4.2", "level": 2}],
+  "target_words": [
+    "头",
+    "疼",
+    "妻子"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.2.1",
+      "level": 2
+    },
+    {
+      "code": "6.1.1",
+      "level": 2
+    }
+  ],
   "sentences": [
-    { "zh": "我叫陈东。", "pinyin": "Wǒ jiào Chén Dōng.", "es": "Me llamo Chen Dong." },
-    { "zh": "今天早上我觉得身体不太好。", "pinyin": "Jīntiān zǎoshang wǒ juéde shēntǐ bú tài hǎo.", "es": "Esta mañana no me encontraba muy bien." },
-    { "zh": "我告诉妈妈我的头有一点儿疼。", "pinyin": "Wǒ gàosu māma wǒ de tóu yǒu yìdiǎnr téng.", "es": "Le digo a mamá que me duele un poco la cabeza." },
-    { "zh": "妈妈和我去医院看医生。", "pinyin": "Māma hé wǒ qù yīyuàn kàn yīshēng.", "es": "Mamá y yo vamos al hospital a ver al médico." },
-    { "zh": "医生说我多喝水，也要休息。", "pinyin": "Yīshēng shuō wǒ duō hē shuǐ, yě yào xiūxi.", "es": "El médico dice que debo beber más agua y descansar." },
-    { "zh": "他给我一些药。", "pinyin": "Tā gěi wǒ yìxiē yào.", "es": "Me da algo de medicina." },
-    { "zh": "虽然我不想休息，但是妈妈说身体很好。", "pinyin": "Suīrán wǒ bù xiǎng xiūxi, dànshì māma shuō shēntǐ hěn hǎo.", "es": "Aunque no quiero descansar, mamá dice que mi cuerpo está bien." },
-    { "zh": "下午我吃了药，已经好一点儿了。", "pinyin": "Xiàwǔ wǒ chī le yào, yǐjīng hǎo yìdiǎnr le.", "es": "Por la tarde tomo la medicina y ya estoy algo mejor." }
+    {
+      "zh": "陈东和他的妻子小丽住在一起。",
+      "pinyin": "Chén Dōng hé tā de qīzi Xiǎolì zhù zài yìqǐ.",
+      "es": "Chen Dong vive con su mujer, Xiaoli."
+    },
+    {
+      "zh": "小丽：陈东，七点了，你怎么还不起床？",
+      "pinyin": "Xiǎolì: Chén Dōng, qī diǎn le, nǐ zěnme hái bù qǐchuáng?",
+      "es": "Xiaoli: Chen Dong, ya son las siete; ¿cómo es que todavía no te levantas?"
+    },
+    {
+      "zh": "陈东：我头很疼，身体也不舒服。",
+      "pinyin": "Chén Dōng: Wǒ tóu hěn téng, shēntǐ yě bù shūfu.",
+      "es": "Chen Dong: Me duele mucho la cabeza y tampoco me encuentro bien."
+    },
+    {
+      "zh": "小丽：你昨天晚上几点睡的？",
+      "pinyin": "Xiǎolì: Nǐ zuótiān wǎnshang jǐ diǎn shuì de?",
+      "es": "Xiaoli: ¿A qué hora te acostaste anoche?"
+    },
+    {
+      "zh": "陈东：两点多。昨天工作太多了。",
+      "pinyin": "Chén Dōng: Liǎng diǎn duō. Zuótiān gōngzuò tài duō le.",
+      "es": "Chen Dong: Pasadas las dos. Ayer tenía demasiado trabajo."
+    },
+    {
+      "zh": "小丽：你最近每天都睡得很晚。",
+      "pinyin": "Xiǎolì: Nǐ zuì jìn měi tiān dōu shuì de hěn wǎn.",
+      "es": "Xiaoli: Últimamente te acuestas tarde todos los días."
+    },
+    {
+      "zh": "陈东：我休息休息就好了。",
+      "pinyin": "Chén Dōng: Wǒ xiūxi xiūxi jiù hǎo le.",
+      "es": "Chen Dong: Con descansar un poco se me pasa."
+    },
+    {
+      "zh": "小丽：别这样，我们今天去医院看看。",
+      "pinyin": "Xiǎolì: Bié zhèyàng, wǒmen jīntiān qù yīyuàn kàn kàn.",
+      "es": "Xiaoli: No digas eso; hoy vamos al hospital a que te vean."
+    },
+    {
+      "zh": "陈东：好吧，我给公司打个电话。",
+      "pinyin": "Chén Dōng: Hǎo ba, wǒ gěi gōngsī dǎ gè diànhuà.",
+      "es": "Chen Dong: Está bien; llamo a la empresa."
+    }
   ],
   "questions": [
-    { "prompt": "我哪里疼？", "options": ["手", "头", "眼睛"], "answer_index": 1, "evidence_sentence": 2 },
-    { "prompt": "医生让我做什么？", "options": ["喝水和休息", "看电影", "买衣服"], "answer_index": 0, "evidence_sentence": 4 },
-    { "prompt": "谁给我药？", "options": ["爸爸", "朋友", "医生"], "answer_index": 2, "evidence_sentence": 5 }
+    {
+      "prompt": "陈东哪儿不舒服？",
+      "options": [
+        "手",
+        "头",
+        "眼睛"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "陈东昨天几点睡的？",
+      "options": [
+        "两点多",
+        "十点",
+        "七点"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "小丽让陈东做什么？",
+      "options": [
+        "去公司",
+        "多睡觉",
+        "去医院看看"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
   ]
 }

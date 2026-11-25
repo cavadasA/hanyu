@@ -1,0 +1,103 @@
+{
+  "slug": "salud-02-hospital",
+  "title": "在医院",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "salud",
+  "series": "salud",
+  "series_index": 2,
+  "target_words": [
+    "药",
+    "次",
+    "累"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.6.2",
+      "level": 2
+    },
+    {
+      "code": "2.8.4",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "上午九点，陈东和小丽到了医院。",
+      "pinyin": "Shàngwǔ jiǔ diǎn, Chén Dōng hé Xiǎolì dào le yīyuàn.",
+      "es": "A las nueve de la mañana, Chen Dong y Xiaoli llegaron al hospital."
+    },
+    {
+      "zh": "医院里人很多，他们等了四十分钟。",
+      "pinyin": "Yīyuàn lǐ rén hěn duō, tāmen děng le sìshí fēnzhōng.",
+      "es": "En el hospital había mucha gente y esperaron cuarenta minutos."
+    },
+    {
+      "zh": "医生是一位女医生，她问陈东哪儿不舒服。",
+      "pinyin": "Yīshēng shì yí wèi nǚ yīshēng, tā wèn Chén Dōng nǎr bù shūfu.",
+      "es": "La médica le preguntó a Chen Dong qué le pasaba."
+    },
+    {
+      "zh": "陈东说他头疼，晚上也睡不好。",
+      "pinyin": "Chén Dōng shuō tā tóu téng, wǎnshang yě shuì bù hǎo.",
+      "es": "Chen Dong dijo que le duele la cabeza y que por las noches tampoco duerme bien."
+    },
+    {
+      "zh": "医生说没有大问题，是因为太累了。",
+      "pinyin": "Yīshēng shuō méiyǒu dà wèntí, shì yīnwèi tài lèi le.",
+      "es": "La médica dijo que no era nada grave, que era porque estaba demasiado cansado."
+    },
+    {
+      "zh": "她给了陈东一些药，让他一天吃三次。",
+      "pinyin": "Tā gěi le Chén Dōng yìxiē yào, ràng tā yì tiān chī sān cì.",
+      "es": "Le dio unas medicinas a Chen Dong y le dijo que las tomara tres veces al día."
+    },
+    {
+      "zh": "医生还说，他要多休息，晚上十一点前睡觉。",
+      "pinyin": "Yīshēng hái shuō, tā yào duō xiūxi, wǎnshang shíyī diǎn qián shuìjiào.",
+      "es": "La médica también le dijo que tiene que descansar más y acostarse antes de las once."
+    },
+    {
+      "zh": "从医院出来，小丽说这几天她来做饭。",
+      "pinyin": "Cóng yīyuàn chūlái, Xiǎolì shuō zhè jǐ tiān tā lái zuòfàn.",
+      "es": "Al salir del hospital, Xiaoli dijo que estos días cocinaría ella."
+    },
+    {
+      "zh": "陈东觉得有这样的妻子真好。",
+      "pinyin": "Chén Dōng juéde yǒu zhèyàng de qīzi zhēn hǎo.",
+      "es": "Chen Dong piensa que tener una mujer así es estupendo."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "他们在医院等了多长时间？",
+      "options": [
+        "十分钟",
+        "四十分钟",
+        "两个小时"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "医生说陈东为什么不舒服？",
+      "options": [
+        "因为太累了",
+        "因为吃得太多",
+        "因为天气冷"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "药一天吃几次？",
+      "options": [
+        "一次",
+        "两次",
+        "三次"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 5
+    }
+  ]
+}

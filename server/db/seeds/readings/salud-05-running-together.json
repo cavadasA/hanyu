@@ -1,0 +1,103 @@
+{
+  "slug": "salud-05-running-together",
+  "title": "丈夫和妻子一起跑步",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "salud",
+  "series": "salud",
+  "series_index": 5,
+  "target_words": [
+    "丈夫",
+    "跑步",
+    "身体"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.4.1",
+      "level": 2
+    },
+    {
+      "code": "6.3.4",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "现在陈东每天早上六点半起床去跑步。",
+      "pinyin": "Xiànzài Chén Dōng měi tiān zǎoshang liù diǎn bàn qǐchuáng qù pǎobù.",
+      "es": "Ahora Chen Dong se levanta cada mañana a las seis y media para ir a correr."
+    },
+    {
+      "zh": "小丽说她也想跑，所以丈夫和妻子一起去。",
+      "pinyin": "Xiǎolì shuō tā yě xiǎng pǎo, suǒyǐ zhàngfu hé qīzi yìqǐ qù.",
+      "es": "Xiaoli dice que ella también quiere correr, así que van juntos marido y mujer."
+    },
+    {
+      "zh": "第一天，他们跑了十分钟就很累了。",
+      "pinyin": "Dì yī tiān, tāmen pǎo le shí fēnzhōng jiù hěn lèi le.",
+      "es": "El primer día, a los diez minutos ya estaban muy cansados."
+    },
+    {
+      "zh": "他们慢慢跑，一个星期后可以跑半个小时了。",
+      "pinyin": "Tāmen màn màn pǎo, yí gè xīngqī hòu kěyǐ pǎo bàn gè xiǎoshí le.",
+      "es": "Fueron corriendo despacio y, una semana después, ya podían correr media hora."
+    },
+    {
+      "zh": "跑步后，他们一起吃早饭，说说今天要做的事情。",
+      "pinyin": "Pǎobù hòu, tāmen yìqǐ chī zǎofàn, shuō shuō jīntiān yào zuò de shìqing.",
+      "es": "Después de correr desayunan juntos y hablan de lo que tienen que hacer ese día."
+    },
+    {
+      "zh": "陈东觉得自己的身体比上个月好多了。",
+      "pinyin": "Chén Dōng juéde zìjǐ de shēntǐ bǐ shàng gè yuè hǎo duō le.",
+      "es": "Chen Dong siente que está mucho mejor que el mes pasado."
+    },
+    {
+      "zh": "他晚上十一点前就睡觉，工作的时候也经常站起来动一动。",
+      "pinyin": "Tā wǎnshang shíyī diǎn qián jiù shuìjiào, gōngzuò de shíhou yě jīngcháng zhàn qǐlái dòng yi dòng.",
+      "es": "Se acuesta antes de las once y, cuando trabaja, se levanta a menudo a moverse un poco."
+    },
+    {
+      "zh": "小丽说她丈夫现在很少生病了。",
+      "pinyin": "Xiǎolì shuō tā zhàngfu xiànzài hěn shǎo shēngbìng le.",
+      "es": "Xiaoli dice que ahora su marido casi no se pone enfermo."
+    },
+    {
+      "zh": "他们希望每天都能一起跑步。",
+      "pinyin": "Tāmen xīwàng měi tiān dōu néng yìqǐ pǎobù.",
+      "es": "Esperan poder correr juntos todos los días."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "陈东每天早上几点起床？",
+      "options": [
+        "六点",
+        "六点半",
+        "七点"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "第一天，他们跑了多长时间？",
+      "options": [
+        "十分钟",
+        "半个小时",
+        "一个小时"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "跑步后，他们一起做什么？",
+      "options": [
+        "去公司",
+        "去医院",
+        "吃早饭"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 4
+    }
+  ]
+}
