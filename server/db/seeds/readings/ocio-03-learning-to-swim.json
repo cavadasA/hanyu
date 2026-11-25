@@ -98,6 +98,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 5
+    },
+    {
+      "kind": "inferential",
+      "prompt": "下个星期，方方可能去做什么？",
+      "options": [
+        "看小飞踢足球",
+        "一个人去游泳",
+        "去外国旅游"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        6,
+        8
+      ],
+      "rationale_es": "Xiaofei la invita a ver su partido de fútbol y ella se lo ha pasado muy bien con él: lo más probable es que vaya a verlo."
     }
   ]
 }

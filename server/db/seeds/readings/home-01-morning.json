@@ -68,6 +68,15 @@
       "es": "Xiaoxue y yo estamos muy contentos; vamos a preparar una habitación para la abuela."
     }
   ],
+  "senses": [
+    {
+      "sentence": 1,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "谁快要来小明家住？",
@@ -98,6 +107,21 @@
       ],
       "answer_index": 0,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "奶奶来了以后，小明家有几个人？",
+      "options": [
+        "四个人",
+        "五个人",
+        "六个人"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        0,
+        5
+      ],
+      "rationale_es": "Ahora son cuatro en casa y la abuela viene a vivir con ellos: serán cinco."
     }
   ]
 }

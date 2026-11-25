@@ -68,6 +68,22 @@
       "es": "Creo que, con la abuela en casa, todos somos muy felices."
     }
   ],
+  "senses": [
+    {
+      "sentence": 1,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 7,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "奶奶每天几点起床？",
@@ -98,6 +114,21 @@
       ],
       "answer_index": 0,
       "evidence_sentence": 6
+    },
+    {
+      "kind": "inferential",
+      "prompt": "小雪是跟谁学做菜的？",
+      "options": [
+        "跟妈妈",
+        "跟奶奶",
+        "跟爸爸"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        5,
+        7
+      ],
+      "rationale_es": "La abuela le enseña a cocinar por las tardes y ahora Xiaoxue ya sabe hacer algún plato: ha aprendido con ella."
     }
   ]
 }

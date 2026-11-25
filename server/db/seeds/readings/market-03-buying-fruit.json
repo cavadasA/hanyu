@@ -98,6 +98,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 4
+    },
+    {
+      "kind": "inferential",
+      "prompt": "小林为什么上网买书包？",
+      "options": [
+        "小美说网上的东西便宜",
+        "商店不开门",
+        "他没有时间"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        1,
+        2
+      ],
+      "rationale_es": "Xiaomei le dice que en internet hay muchas cosas y son baratas, y esa misma noche Xiaolin se pone a buscar mochilas en internet."
     }
   ]
 }

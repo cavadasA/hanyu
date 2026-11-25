@@ -68,6 +68,29 @@
       "es": "Está un poco cansada pero muy contenta; espera hacerlo bien en la empresa nueva."
     }
   ],
+  "senses": [
+    {
+      "sentence": 3,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 4,
+      "hanzi": "站",
+      "occurrence": 0,
+      "hsk_level": 3,
+      "sense_index": 2
+    },
+    {
+      "sentence": 5,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "张红坐什么去公司？",
@@ -98,6 +121,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 6
+    },
+    {
+      "kind": "inferential",
+      "prompt": "从家到公司楼下，张红一共用了多长时间？",
+      "options": [
+        "一个小时",
+        "一个半小时",
+        "两个小时"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        3,
+        5
+      ],
+      "rationale_es": "Salió de casa a las siete y llegó al pie del edificio a las ocho y media: en total, hora y media."
     }
   ]
 }

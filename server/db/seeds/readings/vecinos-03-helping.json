@@ -68,6 +68,15 @@
       "es": "Así que la abuela Li les dio una manzana a cada uno."
     }
   ],
+  "senses": [
+    {
+      "sentence": 4,
+      "hanzi": "过去",
+      "occurrence": 0,
+      "hsk_level": 2,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "安安家在哪儿？",
@@ -98,6 +107,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "李奶奶为什么给他们苹果？",
+      "options": [
+        "因为他们不要钱",
+        "因为她不喜欢苹果",
+        "因为苹果很贵"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        7,
+        8
+      ],
+      "rationale_es": "Quiso pagarles por la ayuda, pero no aceptaron el dinero; por eso les dio una manzana a cada uno."
     }
   ]
 }

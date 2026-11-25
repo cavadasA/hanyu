@@ -98,6 +98,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "小林和小美买的茶，谁的贵？",
+      "options": [
+        "小林的",
+        "小美的",
+        "一样贵"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        4,
+        5
+      ],
+      "rationale_es": "Xiaolin compra té verde y Xiaomei té con leche, que cuesta dos yuanes más: lo de Xiaomei es más caro."
     }
   ]
 }

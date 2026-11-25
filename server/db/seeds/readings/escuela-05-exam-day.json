@@ -68,6 +68,29 @@
       "es": "La profesora Wang dijo que ya es el alumno extranjero de la clase que mejor escribe los caracteres."
     }
   ],
+  "senses": [
+    {
+      "sentence": 2,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 3,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 4,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "考试几点开始？",
@@ -98,6 +121,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "大卫考试用了多长时间？",
+      "options": [
+        "半个小时",
+        "一个小时",
+        "两个小时"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        2,
+        4
+      ],
+      "rationale_es": "El examen empezó a las nueve y a las diez ya había terminado: tardó una hora."
     }
   ]
 }

@@ -98,6 +98,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "小林以前见过这位先生吗？",
+      "options": [
+        "见过很多次",
+        "没见过",
+        "他是小林的老师"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        1,
+        2
+      ],
+      "rationale_es": "El dependiente tiene que preguntar si él es Xiaolin, y Xiaolin le pregunta si viene de la tienda: no se conocían."
     }
   ]
 }

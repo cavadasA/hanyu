@@ -68,6 +68,29 @@
       "es": "Gao Fei: ¡Estupendo! ¡Muchas gracias!"
     }
   ],
+  "senses": [
+    {
+      "sentence": 5,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 5,
+      "hanzi": "会",
+      "occurrence": 1,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 6,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "高飞为什么不回家过年？",
@@ -98,6 +121,22 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "今年高飞在哪儿过年？",
+      "options": [
+        "回自己家",
+        "一个人在学校",
+        "在小雨家"
+      ],
+      "answer_index": 2,
+      "evidence_sentences": [
+        4,
+        7,
+        8
+      ],
+      "rationale_es": "Xiaoyu lo invita, su madre dice que vaya y Gao Fei acepta encantado: pasará el Año Nuevo en casa de Xiaoyu."
     }
   ]
 }

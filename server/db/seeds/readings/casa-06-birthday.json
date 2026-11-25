@@ -98,6 +98,21 @@
       ],
       "answer_index": 0,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "奶奶喜欢这块手表吗？",
+      "options": [
+        "很喜欢",
+        "不太喜欢",
+        "不喜欢"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        4,
+        5
+      ],
+      "rationale_es": "Sonríe tanto que se le cierran los ojos y piensa usarlo mañana al correr: le gusta mucho."
     }
   ]
 }

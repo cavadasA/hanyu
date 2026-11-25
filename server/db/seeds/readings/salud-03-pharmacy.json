@@ -98,6 +98,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 6
+    },
+    {
+      "kind": "inferential",
+      "prompt": "中午的面条儿是从哪儿来的？",
+      "options": [
+        "小丽买回来的",
+        "饭馆送来的",
+        "陈东自己买的"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        4,
+        5
+      ],
+      "rationale_es": "De vuelta de la farmacia Xiaoli compró fideos y a mediodía preparó los fideos favoritos de Chen Dong: son los que ella compró."
     }
   ]
 }

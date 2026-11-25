@@ -103,6 +103,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 6
+    },
+    {
+      "kind": "inferential",
+      "prompt": "这次以前，大山坐过几次飞机？",
+      "options": [
+        "没坐过",
+        "坐过一次",
+        "坐过很多次"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        8,
+        9
+      ],
+      "rationale_es": "Xiaoyue le pregunta cuántas veces ha volado y Dashan dice que esta es la segunda: antes había volado una sola vez."
     }
   ]
 }

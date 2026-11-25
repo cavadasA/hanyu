@@ -98,6 +98,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "他们为什么星期六去，不明天去？",
+      "options": [
+        "明天高飞没有时间",
+        "星期六天气好",
+        "酒店明天不开门"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        7,
+        8
+      ],
+      "rationale_es": "Xiaoyu propone el sábado justo al comentar que mañana estará nublado y el sábado hará sol: eligen el día de buen tiempo."
     }
   ]
 }

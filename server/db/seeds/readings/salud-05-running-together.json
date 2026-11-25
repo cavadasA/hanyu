@@ -68,6 +68,29 @@
       "es": "Esperan poder correr juntos todos los días."
     }
   ],
+  "senses": [
+    {
+      "sentence": 0,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 6,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 6,
+      "hanzi": "站",
+      "occurrence": 0,
+      "hsk_level": 3,
+      "sense_index": 2
+    }
+  ],
   "questions": [
     {
       "prompt": "陈东每天早上几点起床？",
@@ -98,6 +121,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 4
+    },
+    {
+      "kind": "inferential",
+      "prompt": "一个星期后，他们比第一天多跑多长时间？",
+      "options": [
+        "十分钟",
+        "二十分钟",
+        "半个小时"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        2,
+        3
+      ],
+      "rationale_es": "El primer día aguantaron diez minutos y una semana después corren media hora: veinte minutos más."
     }
   ]
 }

@@ -68,6 +68,22 @@
       "es": "Profesora Wang: Que estudiéis juntos está muy bien. No olvidéis vuestros cuadernos y bolígrafos."
     }
   ],
+  "senses": [
+    {
+      "sentence": 6,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 7,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "考试是什么时候？",
@@ -98,6 +114,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "星期六，大卫什么时候到教室？",
+      "options": [
+        "九点以前",
+        "九点半",
+        "十点"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        6,
+        7
+      ],
+      "rationale_es": "Han quedado a las nueve y David dice que irá un poco antes: llegará antes de las nueve."
     }
   ]
 }

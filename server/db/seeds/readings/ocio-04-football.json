@@ -68,6 +68,15 @@
       "es": "De vuelta a casa, Fangfang pensó en invitar a Xiaofei al cine."
     }
   ],
+  "senses": [
+    {
+      "sentence": 7,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "小飞穿着什么颜色的衣服？",
@@ -98,6 +107,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "下个星期，方方会去打篮球吗？",
+      "options": [
+        "会去打篮球",
+        "去看，不打",
+        "不去"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        6,
+        7
+      ],
+      "rationale_es": "La invitan a jugar al baloncesto, pero dice que no sabe jugar y que puede ir a mirar: irá, pero solo a verlos."
     }
   ]
 }

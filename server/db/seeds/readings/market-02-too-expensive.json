@@ -102,6 +102,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "白色的裤子比黑色的便宜多少？",
+      "options": [
+        "八十块",
+        "一百八十块",
+        "两百块"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        2,
+        4
+      ],
+      "rationale_es": "Los negros cuestan trescientos ochenta yuanes y los blancos doscientos: son ciento ochenta yuanes más baratos."
     }
   ]
 }

@@ -68,6 +68,15 @@
       "es": "Gao Fei dijo que ha sido el Año Nuevo más feliz que ha pasado."
     }
   ],
+  "senses": [
+    {
+      "sentence": 7,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "吃完饭，小孩儿们在做什么？",
@@ -98,6 +107,22 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "高飞跟谁一起跳舞了？",
+      "options": [
+        "小雨和爷爷",
+        "小孩儿们",
+        "小雨妈妈"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        4,
+        5,
+        6
+      ],
+      "rationale_es": "El abuelo quería bailar y Xiaoyu le pidió a Gao Fei que bailara con ella y con el abuelo; Gao Fei bailó, aunque no muy bien."
     }
   ]
 }

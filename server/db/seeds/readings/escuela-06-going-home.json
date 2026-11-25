@@ -68,6 +68,22 @@
       "es": "Todos esperamos que David vuelva pronto."
     }
   ],
+  "senses": [
+    {
+      "sentence": 3,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 7,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "大卫为什么要回国？",
@@ -98,6 +114,22 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 6
+    },
+    {
+      "kind": "inferential",
+      "prompt": "明年，李文可能去哪儿？",
+      "options": [
+        "去大卫的国家",
+        "在家学习",
+        "去医院工作"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        5,
+        6,
+        7
+      ],
+      "rationale_es": "Li Wen siempre ha querido viajar al extranjero y acepta la invitación de David: el año que viene seguramente irá a su país."
     }
   ]
 }

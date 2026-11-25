@@ -68,6 +68,15 @@
       "es": "Chen Dong: Bien; mañana por la mañana empiezo a correr."
     }
   ],
+  "senses": [
+    {
+      "sentence": 5,
+      "hanzi": "站",
+      "occurrence": 0,
+      "hsk_level": 3,
+      "sense_index": 2
+    }
+  ],
   "questions": [
     {
       "prompt": "陈东现在晚上睡得怎么样？",
@@ -98,6 +107,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "医生为什么让陈东经常站起来？",
+      "options": [
+        "因为他每天坐十个小时",
+        "因为他头疼",
+        "因为他喜欢跑步"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        4,
+        5
+      ],
+      "rationale_es": "Chen Dong pasa diez horas al día sentado delante del ordenador, y la médica le dice que no esté sentado tanto tiempo: por eso debe levantarse."
     }
   ]
 }

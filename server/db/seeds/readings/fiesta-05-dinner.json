@@ -68,6 +68,29 @@
       "es": "La madre de Xiaoyu dijo que el año que viene Gao Fei tiene que volver a su casa en Año Nuevo."
     }
   ],
+  "senses": [
+    {
+      "sentence": 1,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 2,
+      "hanzi": "花",
+      "occurrence": 0,
+      "hsk_level": 2,
+      "sense_index": 1
+    },
+    {
+      "sentence": 3,
+      "hanzi": "花",
+      "occurrence": 0,
+      "hsk_level": 2,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "高飞在门口拿着什么？",
@@ -98,6 +121,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "小雨妈妈喜欢高飞吗？",
+      "options": [
+        "很喜欢",
+        "不太喜欢",
+        "不认识他"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        4,
+        8
+      ],
+      "rationale_es": "Dice que Gao Fei es un chico muy bueno y quiere que vuelva a su casa el próximo Año Nuevo: le cae muy bien."
     }
   ]
 }

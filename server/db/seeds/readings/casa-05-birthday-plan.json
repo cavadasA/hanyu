@@ -98,6 +98,21 @@
       ],
       "answer_index": 0,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "奶奶知道他们要送她手表吗？",
+      "options": [
+        "知道",
+        "不知道",
+        "已经看见了"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        1,
+        7
+      ],
+      "rationale_es": "Xiaoxue le pide a mamá que no se lo cuente a la abuela: el reloj es una sorpresa y ella no lo sabe."
     }
   ]
 }

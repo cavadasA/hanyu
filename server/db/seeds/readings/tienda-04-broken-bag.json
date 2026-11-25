@@ -68,6 +68,15 @@
       "es": "Xiaolin dijo que no pasaba nada; espera la mochila nueva en casa."
     }
   ],
+  "senses": [
+    {
+      "sentence": 5,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "书包到了，小林做了什么？",
@@ -98,6 +107,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "今天小林能用新书包吗？",
+      "options": [
+        "能用",
+        "不能用",
+        "明天才坏"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        3,
+        7
+      ],
+      "rationale_es": "La mochila que ha llegado está rota por el lado derecho y la de repuesto no llegará hasta mañana: hoy no puede usarla."
     }
   ]
 }

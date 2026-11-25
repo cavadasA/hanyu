@@ -68,6 +68,22 @@
       "es": "Me parece muy interesante conocer a un amigo extranjero."
     }
   ],
+  "senses": [
+    {
+      "sentence": 4,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 4,
+      "hanzi": "会",
+      "occurrence": 1,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "新同学是从哪儿来的？",
@@ -98,6 +114,21 @@
       ],
       "answer_index": 0,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "下课的时候，大卫为什么去问李文？",
+      "options": [
+        "她坐在大卫旁边",
+        "她是王老师",
+        "她也是外国人"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        5,
+        6
+      ],
+      "rationale_es": "La profesora sentó a David al lado de Li Wen; por eso, en el descanso, es a ella a quien pregunta."
     }
   ]
 }

@@ -102,6 +102,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "大山和小月的门票一共多少钱？",
+      "options": [
+        "一百二十块",
+        "两百四十块",
+        "三百六十块"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        0,
+        2
+      ],
+      "rationale_es": "Van los dos, Dashan y Xiaoyue, y cada entrada cuesta ciento veinte yuanes: entre los dos, doscientos cuarenta."
     }
   ]
 }

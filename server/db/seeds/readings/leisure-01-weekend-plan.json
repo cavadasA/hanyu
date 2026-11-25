@@ -68,6 +68,22 @@
       "es": "Xiaofei dice que quiere que haga deporte con él."
     }
   ],
+  "senses": [
+    {
+      "sentence": 4,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 5,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "方方的爱好是什么？",
@@ -98,6 +114,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 6
+    },
+    {
+      "kind": "inferential",
+      "prompt": "方方和小飞的爱好一样吗？",
+      "options": [
+        "一样",
+        "不一样",
+        "都喜欢运动"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        0,
+        2
+      ],
+      "rationale_es": "A Fangfang le gustan el cine y la lectura, y a Xiaofei sobre todo el deporte: sus aficiones son distintas."
     }
   ]
 }

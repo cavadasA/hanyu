@@ -98,6 +98,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 4
+    },
+    {
+      "kind": "inferential",
+      "prompt": "明年，大山可能做什么？",
+      "options": [
+        "再来中国",
+        "在家学习",
+        "去别的国家"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        6,
+        7
+      ],
+      "rationale_es": "A Dashan le ha encantado China y dice que quiere volver el año que viene, y Xiaoyue también lo espera: probablemente volverá."
     }
   ]
 }

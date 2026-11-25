@@ -98,6 +98,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "电影票是谁买的？",
+      "options": [
+        "小飞买的",
+        "方方买的",
+        "他们一起买的"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        5,
+        6
+      ],
+      "rationale_es": "Xiaofei se ofrece a comprar las entradas por internet, pero Fangfang dice que invita ella y que las compra ella."
     }
   ]
 }

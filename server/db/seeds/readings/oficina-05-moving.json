@@ -68,6 +68,15 @@
       "es": "Llama a su madre y le dice que aquí es muy feliz."
     }
   ],
+  "senses": [
+    {
+      "sentence": 2,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "张红现在走路去公司要多长时间？",
@@ -98,6 +107,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 5
+    },
+    {
+      "kind": "inferential",
+      "prompt": "张红现在早上为什么能去运动？",
+      "options": [
+        "她家离公司近了",
+        "她不上班了",
+        "公司让她运动"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        1,
+        2
+      ],
+      "rationale_es": "Ahora llega al trabajo andando en diez minutos; por eso, aunque se levanta a las siete y media, aún le da tiempo a salir a hacer ejercicio."
     }
   ]
 }

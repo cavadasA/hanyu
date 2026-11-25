@@ -68,6 +68,15 @@
       "es": "Xiaoyue: ¡Estupendo, entremos! Ya tengo ganas de comer."
     }
   ],
+  "senses": [
+    {
+      "sentence": 6,
+      "hanzi": "过去",
+      "occurrence": 0,
+      "hsk_level": 2,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "他们走了多长时间？",
@@ -98,6 +107,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "他们最后是怎么找到饭馆的？",
+      "options": [
+        "看手机",
+        "问别人",
+        "回去再走一次"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        6,
+        7
+      ],
+      "rationale_es": "En vez de volver, Xiaoyue mira el móvil, que indica girar a la derecha, y allí está el restaurante: lo encuentran gracias al móvil."
     }
   ]
 }

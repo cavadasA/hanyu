@@ -68,6 +68,15 @@
       "es": "Aquella noche Dashan estaba muy cansado y a las diez ya se había dormido."
     }
   ],
+  "senses": [
+    {
+      "sentence": 8,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "他们怎么去酒店？",
@@ -98,6 +107,22 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 6
+    },
+    {
+      "kind": "inferential",
+      "prompt": "明天早上，大山可能去做什么？",
+      "options": [
+        "去大学看鸟",
+        "去机场",
+        "在房间睡觉"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        5,
+        6,
+        7
+      ],
+      "rationale_es": "Le encanta mirar pájaros, hay muchos sobre la universidad y Xiaoyue propone bajar allí a pasear por la mañana: seguramente irá a verlos."
     }
   ]
 }

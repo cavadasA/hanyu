@@ -102,6 +102,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 6
+    },
+    {
+      "kind": "inferential",
+      "prompt": "马力在哪儿工作？",
+      "options": [
+        "在白先生的公司",
+        "在医院",
+        "在学校"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        2,
+        6
+      ],
+      "rationale_es": "Ma Li le propone a Zhang Hong recorrer juntos «nuestra» empresa, y la empresa es del señor Bai: trabaja en la empresa del señor Bai."
     }
   ]
 }

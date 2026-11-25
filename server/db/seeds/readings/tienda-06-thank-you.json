@@ -98,6 +98,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "下次小林和小美还会来这个商店吗？",
+      "options": [
+        "会来",
+        "不会来",
+        "商店不开了"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        7,
+        8
+      ],
+      "rationale_es": "El dependiente les promete un precio mejor la próxima vez y a Xiaolin le gusta comprar en tiendas así: seguramente volverán."
     }
   ]
 }

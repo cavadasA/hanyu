@@ -72,6 +72,15 @@
       "es": "La profesora Wang miró su cuaderno y dijo que escribe muy bien."
     }
   ],
+  "senses": [
+    {
+      "sentence": 7,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "他们每天在哪儿学习？",
@@ -102,6 +111,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "大卫觉得汉字不好写，他学得怎么样？",
+      "options": [
+        "学得很快",
+        "不想学了",
+        "一个字也不会写"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        1,
+        7
+      ],
+      "rationale_es": "Le parecen difíciles los caracteres, pero en una sola semana ya sabe escribir más de cincuenta: aprende rápido."
     }
   ]
 }

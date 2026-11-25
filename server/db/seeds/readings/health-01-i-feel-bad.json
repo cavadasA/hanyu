@@ -68,6 +68,29 @@
       "es": "Chen Dong: Está bien; llamo a la empresa."
     }
   ],
+  "senses": [
+    {
+      "sentence": 1,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 3,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 4,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "陈东哪儿不舒服？",
@@ -98,6 +121,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "今天陈东去上班吗？",
+      "options": [
+        "按时去上班",
+        "不去上班",
+        "晚上去上班"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        7,
+        8
+      ],
+      "rationale_es": "Hoy van al hospital y Chen Dong dice que llamará a la empresa para avisar: hoy no irá a trabajar."
     }
   ]
 }

@@ -98,6 +98,22 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 6
+    },
+    {
+      "kind": "inferential",
+      "prompt": "星期二，大卫会来上课吗？",
+      "options": [
+        "会来",
+        "不会来",
+        "下午来"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        0,
+        4,
+        5
+      ],
+      "rationale_es": "El lunes no vino y el médico le mandó descansar dos días, los dos días de clase de los que habla la profesora: el martes tampoco irá."
     }
   ]
 }

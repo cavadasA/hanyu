@@ -72,6 +72,15 @@
       "es": "Papá dice que, cuando la abuela vea este dibujo, se pondrá muy contenta."
     }
   ],
+  "senses": [
+    {
+      "sentence": 8,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "奶奶的房间在哪儿？",
@@ -102,6 +111,22 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "小雪的画现在在谁的房间里？",
+      "options": [
+        "小明的房间",
+        "奶奶要住的房间",
+        "爸爸妈妈的房间"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        0,
+        1,
+        7
+      ],
+      "rationale_es": "Están preparando la habitación de la abuela y, al terminar, el dibujo queda sobre la mesa de ese cuarto: el de la abuela."
     }
   ]
 }

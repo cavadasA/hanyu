@@ -68,6 +68,22 @@
       "es": "Por la noche los jiaozi están hechos: hay más de doscientos."
     }
   ],
+  "senses": [
+    {
+      "sentence": 2,
+      "hanzi": "花",
+      "occurrence": 0,
+      "hsk_level": 2,
+      "sense_index": 1
+    },
+    {
+      "sentence": 2,
+      "hanzi": "花",
+      "occurrence": 1,
+      "hsk_level": 2,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "小雨妈妈去超市买了什么？",
@@ -98,6 +114,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 8
+    },
+    {
+      "kind": "inferential",
+      "prompt": "高飞以前做过饺子吗？",
+      "options": [
+        "做过很多次",
+        "没做过",
+        "每年都做"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        6,
+        7
+      ],
+      "rationale_es": "Sus jiaozi no quedan bonitos y el abuelo dice que la primera vez siempre salen así: nunca los había hecho."
     }
   ]
 }

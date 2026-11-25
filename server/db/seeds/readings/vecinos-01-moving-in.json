@@ -98,6 +98,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 6
+    },
+    {
+      "kind": "inferential",
+      "prompt": "李奶奶的家在小平家的哪儿？",
+      "options": [
+        "在小平家上面",
+        "在小平家下面",
+        "在别的楼"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        2,
+        5
+      ],
+      "rationale_es": "Xiaoping vive en el quinto piso y la abuela Li en el sexto: vive justo en el piso de arriba."
     }
   ]
 }

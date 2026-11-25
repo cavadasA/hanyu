@@ -98,6 +98,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "李奶奶的儿子十六岁时，有多高？",
+      "options": [
+        "跟小平现在一样高",
+        "比小平高很多",
+        "跟李奶奶一样高"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        4,
+        5
+      ],
+      "rationale_es": "Xiaoping ya es tan alto como su padre y la abuela Li dice que su hijo, a los dieciséis, era así de alto: tan alto como Xiaoping ahora."
     }
   ]
 }

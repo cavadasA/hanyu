@@ -68,6 +68,15 @@
       "es": "Xiaoping y Anan se alegraron mucho."
     }
   ],
+  "senses": [
+    {
+      "sentence": 1,
+      "hanzi": "会",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "李奶奶为什么来找小平？",
@@ -98,6 +107,22 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "小平为什么叫安安来？",
+      "options": [
+        "请安安教李奶奶用手机",
+        "请安安吃饭",
+        "安安想去李奶奶家玩"
+      ],
+      "answer_index": 0,
+      "evidence_sentences": [
+        1,
+        2,
+        4
+      ],
+      "rationale_es": "La abuela Li no sabe ver a su hijo por el móvil; Xiaoping llama a Anan y es ella quien le enseña: la llamó para que ayudara con el móvil."
     }
   ]
 }

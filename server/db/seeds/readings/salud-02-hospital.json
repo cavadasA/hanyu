@@ -68,6 +68,22 @@
       "es": "Chen Dong piensa que tener una mujer así es estupendo."
     }
   ],
+  "senses": [
+    {
+      "sentence": 0,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    },
+    {
+      "sentence": 6,
+      "hanzi": "点",
+      "occurrence": 0,
+      "hsk_level": 1,
+      "sense_index": 1
+    }
+  ],
   "questions": [
     {
       "prompt": "他们在医院等了多长时间？",
@@ -98,6 +114,22 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 5
+    },
+    {
+      "kind": "inferential",
+      "prompt": "陈东大概几点见到医生？",
+      "options": [
+        "九点",
+        "九点四十",
+        "十点四十"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        0,
+        1,
+        2
+      ],
+      "rationale_es": "Llegaron a las nueve y esperaron cuarenta minutos antes de que la médica los atendiera: hacia las nueve y cuarenta."
     }
   ]
 }

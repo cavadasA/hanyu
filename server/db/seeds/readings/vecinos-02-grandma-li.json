@@ -103,6 +103,21 @@
       ],
       "answer_index": 2,
       "evidence_sentence": 7
+    },
+    {
+      "kind": "inferential",
+      "prompt": "李奶奶的儿子小时候在哪儿上学？",
+      "options": [
+        "在外国",
+        "在小平上学的高中",
+        "在大学"
+      ],
+      "answer_index": 1,
+      "evidence_sentences": [
+        4,
+        5
+      ],
+      "rationale_es": "Xiaoping estudia en el instituto de al lado y la abuela Li dice que su hijo también estudió allí de pequeño: el mismo instituto."
     }
   ]
 }
