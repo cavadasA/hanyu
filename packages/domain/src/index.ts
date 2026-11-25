@@ -26,3 +26,5 @@ export { comparePinyin, parsePinyinSyllables, INTELLIGIBLE_RATIO, type PinyinCom
 export * from './exam/types';
 export * from './exam/validate';
 export * from './exam/score';
+export { checkAnswerRules, checkAnswerShape, hanziLength, markerSegments, type AnswerRuleReason, type AnswerRulesResult, type CommunicativeContext, type CommunicativeTask } from './expression/check-answer';
+export { validateCommunicativeTask, type TaskIssue, type TaskIssueKind } from './expression/validate-task';
