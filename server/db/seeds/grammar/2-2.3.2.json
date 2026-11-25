@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.3.2",
+  "pattern": "Pronombre + 自己 + verbo · 自己的 + nombre",
+  "explanation": "自己 significa «uno mismo» y no cambia con la persona. Detrás del sujeto subraya que es él y no otro quien hace la acción, o que la hace sin ayuda: 我自己去, 他自己做饭. También puede ser objeto (只想自己) o posesivo con 的 (自己的房间). Va siempre delante del verbo cuando significa «yo mismo», nunca al final.",
+  "markers": ["自己"],
+  "examples": [
+    {"zh":"我自己去吧。","pinyin":"Wǒ zìjǐ qù ba.","es":"Ya voy yo."},
+    {"zh":"他每天自己做饭。","pinyin":"Tā měi tiān zìjǐ zuò fàn.","es":"Se hace la comida él solo todos los días."},
+    {"zh":"这是我自己的房间。","pinyin":"Zhè shì wǒ zìjǐ de fángjiān.","es":"Esta es mi propia habitación."},
+    {"zh":"你不能只想自己。","pinyin":"Nǐ bù néng zhǐ xiǎng zìjǐ.","es":"No puedes pensar solo en ti."}
+  ],
+  "common_errors": [
+    {"wrong":"我去自己。","right":"我自己去。","why":"Para «voy yo mismo», 自己 va pegado al sujeto y delante del verbo, no al final como en español."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.3.2"}]
+}

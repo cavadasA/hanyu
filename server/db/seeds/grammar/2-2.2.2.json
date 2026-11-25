@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.2.2",
+  "pattern": "可能 + verbo / frase · 不可能",
+  "explanation": "可能 expresa probabilidad: algo que quizá pase o quizá sea cierto, como «puede que» o «a lo mejor». Va delante del verbo o al principio de la frase (可能他不来了). No sirve para la capacidad ni para el permiso: «sé / puedo hablar chino» se dice con 会 o 能, y para pedir permiso se usa 可以. 不可能 significa «es imposible».",
+  "markers": ["可能"],
+  "examples": [
+    {"zh":"明天可能下雨。","pinyin":"Míngtiān kěnéng xià yǔ.","es":"Puede que mañana llueva."},
+    {"zh":"他可能不来了。","pinyin":"Tā kěnéng bù lái le.","es":"A lo mejor ya no viene."},
+    {"zh":"可能他已经回家了。","pinyin":"Kěnéng tā yǐjīng huí jiā le.","es":"Quizá ya ha vuelto a casa."},
+    {"zh":"这不可能！","pinyin":"Zhè bù kěnéng!","es":"¡Eso es imposible!"}
+  ],
+  "common_errors": [
+    {"wrong":"我可能说汉语。","right":"我会说汉语。","why":"可能 no es el «poder» de saber hacer algo; para eso se usa 会. 可能 solo dice que algo es probable."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.2.1"}]
+}

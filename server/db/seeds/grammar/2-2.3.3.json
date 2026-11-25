@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "2.3.3",
+  "pattern": "这么 / 那么 + adjetivo · 这样 / 那样 + verbo · 每 + clasificador + nombre (+ 都)",
+  "explanation": "这么 y 那么 van delante de un adjetivo y equivalen a «tan»: 这么贵. 这样 y 那样 significan «así, de esta manera»: delante de un verbo (这样写) o, con 的, delante de un nombre (那样的人). Con 这 se señala lo cercano o lo que se acaba de decir; con 那, lo lejano. 每 «cada» va con un clasificador (每个人, 每天) y casi siempre se refuerza con 都 delante del verbo.",
+  "markers": ["这么","那么","这样","那样","每"],
+  "examples": [
+    {"zh":"这件衣服这么贵！","pinyin":"Zhè jiàn yīfu zhème guì!","es":"¡Esta ropa es tan cara!"},
+    {"zh":"你不要那么说。","pinyin":"Nǐ búyào nàme shuō.","es":"No lo digas así."},
+    {"zh":"这个字要这样写。","pinyin":"Zhège zì yào zhèyàng xiě.","es":"Este carácter se escribe así."},
+    {"zh":"我不喜欢那样的人。","pinyin":"Wǒ bù xǐhuan nàyàng de rén.","es":"No me gusta la gente así."},
+    {"zh":"他每天都跑步。","pinyin":"Tā měi tiān dōu pǎobù.","es":"Corre todos los días."}
+  ],
+  "common_errors": [
+    {"wrong":"这件衣服很这么贵。","right":"这件衣服这么贵。","why":"这么 ya hace de «tan»; no se combina con 很."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.3.3"}]
+}

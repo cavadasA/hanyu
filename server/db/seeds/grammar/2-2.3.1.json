@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "2.3.1",
+  "pattern": "Sujeto + 为什么 + verbo？",
+  "explanation": "为什么 pregunta por la causa, como «¿por qué?». Va detrás del sujeto y delante del verbo, no al final de la frase: 你为什么不去？ La respuesta suele empezar con 因为. Como la frase ya es una pregunta, no se añade 吗.",
+  "markers": ["为什么"],
+  "examples": [
+    {"zh":"你为什么不去？","pinyin":"Nǐ wèishénme bú qù?","es":"¿Por qué no vas?"},
+    {"zh":"他为什么没来上课？","pinyin":"Tā wèishénme méi lái shàngkè?","es":"¿Por qué no vino a clase?"},
+    {"zh":"为什么你每天都这么累？","pinyin":"Wèishénme nǐ měi tiān dōu zhème lèi?","es":"¿Por qué estás tan cansado todos los días?"},
+    {"zh":"“你为什么学汉语？”“因为我喜欢中国。”","pinyin":"“Nǐ wèishénme xué Hànyǔ?” “Yīnwèi wǒ xǐhuan Zhōngguó.”","es":"—¿Por qué estudias chino? —Porque me gusta China."}
+  ],
+  "common_errors": [
+    {"wrong":"你不去为什么？","right":"你为什么不去？","why":"为什么 va delante del verbo; no se deja al final como en «no vas, ¿por qué?»."},
+    {"wrong":"你为什么不去吗？","right":"你为什么不去？","why":"Con 为什么 la frase ya es una pregunta; 吗 sobra."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.3.1"}]
+}

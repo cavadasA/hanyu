@@ -1,0 +1,19 @@
+{
+  "hsk_level": 2,
+  "code": "2.5",
+  "pattern": "一万 / 十万 · 好多 + nombre · número + 多 (+ clasificador)",
+  "explanation": "万 es la unidad de diez mil: el chino agrupa de diez mil en diez mil, así que cien mil es 十万. 好多 significa «muchísimos» y va delante del nombre, como 很多 pero más coloquial. 多 detrás de un número añade «y pico»: con decenas va delante del clasificador (二十多岁, «veintitantos años»); con unidades, detrás (一个多小时, «más de una hora»).",
+  "markers": ["万","好多","多"],
+  "examples": [
+    {"zh":"我们学校有一万个学生。","pinyin":"Wǒmen xuéxiào yǒu yíwàn gè xuésheng.","es":"Nuestro colegio tiene diez mil estudiantes."},
+    {"zh":"商店里有好多人。","pinyin":"Shāngdiàn li yǒu hǎoduō rén.","es":"En la tienda hay muchísima gente."},
+    {"zh":"他二十多岁。","pinyin":"Tā èrshí duō suì.","es":"Tiene veintitantos años."},
+    {"zh":"我等了一个多小时。","pinyin":"Wǒ děng le yí gè duō xiǎoshí.","es":"Esperé más de una hora."},
+    {"zh":"这个手机三千多块钱。","pinyin":"Zhège shǒujī sānqiān duō kuài qián.","es":"Este móvil cuesta tres mil y pico yuanes."}
+  ],
+  "common_errors": [
+    {"wrong":"我们学校有十千个学生。","right":"我们学校有一万个学生。","why":"«十千» no existe: a partir de diez mil se cuenta con 万."},
+    {"wrong":"我等了一个小时多。","right":"我等了一个多小时。","why":"Con unidades, 多 va entre el clasificador y el nombre: 一个多小时, no al final."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.4"}]
+}

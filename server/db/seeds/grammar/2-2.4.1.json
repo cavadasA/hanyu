@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "2.4.1",
+  "pattern": "AA(的 / 地) · AABB(的 / 地)",
+  "explanation": "Repetir un adjetivo lo hace más vivo y expresivo, como «bien grande» o un diminutivo en español. Los de una sílaba se repiten AA (大大的, 慢慢地) y los de dos, AABB (高高兴兴). La forma repetida ya lleva la intensidad, así que no admite 很 ni 非常 delante. Suele terminar en 的 cuando describe un nombre y en 地 cuando acompaña a un verbo.",
+  "markers": ["大大","慢慢","高高兴兴","漂漂亮亮"],
+  "examples": [
+    {"zh":"她的眼睛大大的。","pinyin":"Tā de yǎnjing dàdà de.","es":"Tiene los ojos bien grandes."},
+    {"zh":"你慢慢地说。","pinyin":"Nǐ mànmàn de shuō.","es":"Habla despacito."},
+    {"zh":"孩子高高兴兴地回家了。","pinyin":"Háizi gāogāoxìngxìng de huí jiā le.","es":"El niño volvió a casa muy contento."},
+    {"zh":"她今天穿得漂漂亮亮的。","pinyin":"Tā jīntiān chuān de piàopiaoliàngliàng de.","es":"Hoy va muy arreglada."}
+  ],
+  "common_errors": [
+    {"wrong":"她的眼睛很大大的。","right":"她的眼睛大大的。","why":"La repetición ya intensifica; añadir 很 sobra."},
+    {"wrong":"孩子高兴高兴地回家了。","right":"孩子高高兴兴地回家了。","why":"Los adjetivos de dos sílabas se repiten AABB; ABAB es la forma de los verbos (休息休息)."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.2.1"}]
+}

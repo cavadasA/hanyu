@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.1.1",
+  "pattern": "lugar + 左边 / 右边 · 往左 / 往右 + verbo",
+  "explanation": "左 «izquierda» y 右 «derecha» casi nunca van solos como lugar: se usan como 左边 y 右边. Siguen la misma regla que 上 o 里: primero el objeto de referencia y después la posición, 学校右边 «a la derecha del colegio». Para indicar una dirección se combinan con 往: 往右走 «gira a la derecha».",
+  "markers": ["左","右"],
+  "examples": [
+    {"zh":"我家左边是一个超市。","pinyin":"Wǒ jiā zuǒbian shì yí gè chāoshì.","es":"A la izquierda de mi casa hay un supermercado."},
+    {"zh":"医院在学校右边。","pinyin":"Yīyuàn zài xuéxiào yòubian.","es":"El hospital está a la derecha del colegio."},
+    {"zh":"你往右走。","pinyin":"Nǐ wǎng yòu zǒu.","es":"Gira a la derecha."},
+    {"zh":"坐在我左边的是我朋友。","pinyin":"Zuò zài wǒ zuǒbian de shì wǒ péngyou.","es":"Quien está sentado a mi izquierda es mi amigo."}
+  ],
+  "common_errors": [
+    {"wrong":"医院在右边学校。","right":"医院在学校右边。","why":"右边 va detrás del lugar de referencia; el orden de «a la derecha del colegio» se invierte."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.1.1"}]
+}

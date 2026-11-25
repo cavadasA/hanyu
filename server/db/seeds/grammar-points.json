@@ -738,7 +738,60 @@
     "items": [
       "面"
     ],
-    "order_idx": 1
+    "order_idx": 1,
+    "pattern": "前 / 后 / 里 / 外 / 上 / 下 + 面",
+    "explanation": "面 se pega a una palabra de posición y forma un sustantivo de lugar: 前面 «delante», 里面 «dentro», 上面 «encima». Funciona igual que 边 (前边, 里边) y casi siempre se pueden intercambiar. Como son sustantivos, pueden ir solos como sujeto (外面下雨了) o detrás de un nombre, sin 的: 桌子上面. Al revés que en español, primero va el objeto de referencia y después la posición: «encima de la mesa» es 桌子上面.",
+    "markers": [
+      "前面",
+      "后面",
+      "里面",
+      "外面",
+      "上面"
+    ],
+    "examples": [
+      {
+        "zh": "医院在商店前面。",
+        "pinyin": "Yīyuàn zài shāngdiàn qiánmiàn.",
+        "es": "El hospital está delante de la tienda."
+      },
+      {
+        "zh": "学校后面有一个饭馆。",
+        "pinyin": "Xuéxiào hòumiàn yǒu yí gè fànguǎn.",
+        "es": "Detrás del colegio hay un restaurante."
+      },
+      {
+        "zh": "书包里面有什么？",
+        "pinyin": "Shūbāo lǐmiàn yǒu shénme?",
+        "es": "¿Qué hay dentro de la mochila?"
+      },
+      {
+        "zh": "外面下雨了。",
+        "pinyin": "Wàimiàn xià yǔ le.",
+        "es": "Fuera está lloviendo."
+      },
+      {
+        "zh": "你的手机在桌子上面。",
+        "pinyin": "Nǐ de shǒujī zài zhuōzi shàngmiàn.",
+        "es": "Tu móvil está encima de la mesa."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你的手机在上面桌子。",
+        "right": "你的手机在桌子上面。",
+        "why": "La posición va detrás del objeto de referencia, no delante como en «encima de la mesa»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "1.2"
+      },
+      {
+        "hsk_level": 1,
+        "code": "2.1.1"
+      }
+    ]
   },
   {
     "code": "2.1.1",
@@ -750,7 +803,48 @@
     "items": [
       "左、右"
     ],
-    "order_idx": 2
+    "order_idx": 2,
+    "pattern": "lugar + 左边 / 右边 · 往左 / 往右 + verbo",
+    "explanation": "左 «izquierda» y 右 «derecha» casi nunca van solos como lugar: se usan como 左边 y 右边. Siguen la misma regla que 上 o 里: primero el objeto de referencia y después la posición, 学校右边 «a la derecha del colegio». Para indicar una dirección se combinan con 往: 往右走 «gira a la derecha».",
+    "markers": [
+      "左",
+      "右"
+    ],
+    "examples": [
+      {
+        "zh": "我家左边是一个超市。",
+        "pinyin": "Wǒ jiā zuǒbian shì yí gè chāoshì.",
+        "es": "A la izquierda de mi casa hay un supermercado."
+      },
+      {
+        "zh": "医院在学校右边。",
+        "pinyin": "Yīyuàn zài xuéxiào yòubian.",
+        "es": "El hospital está a la derecha del colegio."
+      },
+      {
+        "zh": "你往右走。",
+        "pinyin": "Nǐ wǎng yòu zǒu.",
+        "es": "Gira a la derecha."
+      },
+      {
+        "zh": "坐在我左边的是我朋友。",
+        "pinyin": "Zuò zài wǒ zuǒbian de shì wǒ péngyou.",
+        "es": "Quien está sentado a mi izquierda es mi amigo."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "医院在右边学校。",
+        "right": "医院在学校右边。",
+        "why": "右边 va detrás del lugar de referencia; el orden de «a la derecha del colegio» se invierte."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.1.1"
+      }
+    ]
   },
   {
     "code": "2.2.1",
@@ -762,7 +856,60 @@
     "items": [
       "AA、A一A、A了A、ABAB"
     ],
-    "order_idx": 3
+    "order_idx": 3,
+    "pattern": "V + V · V + 一 + V · V + 了 + V · AB + AB",
+    "explanation": "Repetir un verbo suaviza la acción: indica que dura poco, que se hace sin esfuerzo o que solo se intenta. Por eso sirve para pedir algo con cortesía (你看看) o proponer (我们休息休息吧). Con 了 en medio (想了想) cuenta una acción breve que ya se hizo. Los verbos de dos sílabas se repiten enteros, ABAB, nunca AABB. No encaja con una duración larga ni con verbos que no son acciones, como 是 o 有.",
+    "markers": [
+      "看看",
+      "想一想",
+      "想了想",
+      "休息休息"
+    ],
+    "examples": [
+      {
+        "zh": "你看看这本书。",
+        "pinyin": "Nǐ kànkan zhè běn shū.",
+        "es": "Échale un vistazo a este libro."
+      },
+      {
+        "zh": "晚上我看看书，也喝茶。",
+        "pinyin": "Wǎnshang wǒ kànkan shū, yě hē chá.",
+        "es": "Por la noche leo un rato y tomo té."
+      },
+      {
+        "zh": "这个问题你再想一想。",
+        "pinyin": "Zhège wèntí nǐ zài xiǎng yi xiǎng.",
+        "es": "Piensa un poco más en esta pregunta."
+      },
+      {
+        "zh": "他想了想，说：“好吧。”",
+        "pinyin": "Tā xiǎng le xiǎng, shuō: “Hǎo ba.”",
+        "es": "Lo pensó un momento y dijo: «Vale»."
+      },
+      {
+        "zh": "我们休息休息吧。",
+        "pinyin": "Wǒmen xiūxi xiūxi ba.",
+        "es": "Descansemos un poco."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我看看了三个小时书。",
+        "right": "我看了三个小时书。",
+        "why": "La repetición indica que la acción es breve; no encaja con una duración larga."
+      },
+      {
+        "wrong": "我们休休息息吧。",
+        "right": "我们休息休息吧。",
+        "why": "Los verbos de dos sílabas se repiten como bloque (ABAB); AABB es la forma de los adjetivos."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.4.1"
+      }
+    ]
   },
   {
     "code": "2.2.2",
@@ -774,7 +921,47 @@
     "items": [
       "可能"
     ],
-    "order_idx": 4
+    "order_idx": 4,
+    "pattern": "可能 + verbo / frase · 不可能",
+    "explanation": "可能 expresa probabilidad: algo que quizá pase o quizá sea cierto, como «puede que» o «a lo mejor». Va delante del verbo o al principio de la frase (可能他不来了). No sirve para la capacidad ni para el permiso: «sé / puedo hablar chino» se dice con 会 o 能, y para pedir permiso se usa 可以. 不可能 significa «es imposible».",
+    "markers": [
+      "可能"
+    ],
+    "examples": [
+      {
+        "zh": "明天可能下雨。",
+        "pinyin": "Míngtiān kěnéng xià yǔ.",
+        "es": "Puede que mañana llueva."
+      },
+      {
+        "zh": "他可能不来了。",
+        "pinyin": "Tā kěnéng bù lái le.",
+        "es": "A lo mejor ya no viene."
+      },
+      {
+        "zh": "可能他已经回家了。",
+        "pinyin": "Kěnéng tā yǐjīng huí jiā le.",
+        "es": "Quizá ya ha vuelto a casa."
+      },
+      {
+        "zh": "这不可能！",
+        "pinyin": "Zhè bù kěnéng!",
+        "es": "¡Eso es imposible!"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我可能说汉语。",
+        "right": "我会说汉语。",
+        "why": "可能 no es el «poder» de saber hacer algo; para eso se usa 会. 可能 solo dice que algo es probable."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.2.1"
+      }
+    ]
   },
   {
     "code": "2.2.3",
@@ -786,7 +973,55 @@
     "items": [
       "帮忙、游泳、跳舞、跑步"
     ],
-    "order_idx": 5
+    "order_idx": 5,
+    "pattern": "V + (了 / 过 / duración / 的…) + O: 帮我的忙 · 游了一个小时泳",
+    "explanation": "Estos verbos son un verbo y su objeto pegados, así que se pueden separar: 了, 过, una duración o un posesivo van en medio. Por eso no admiten otro objeto detrás: «ayudarte» no es «帮忙你», sino 帮你的忙 o simplemente 帮你. La duración también se mete en medio: 跑了半个小时步. Sin separar, se usan como un verbo sin objeto: 她喜欢跳舞.",
+    "markers": [
+      "帮",
+      "游",
+      "跳舞",
+      "跑"
+    ],
+    "examples": [
+      {
+        "zh": "你能帮我一个忙吗？",
+        "pinyin": "Nǐ néng bāng wǒ yí gè máng ma?",
+        "es": "¿Me puedes hacer un favor?"
+      },
+      {
+        "zh": "我昨天游了一个小时泳。",
+        "pinyin": "Wǒ zuótiān yóu le yí gè xiǎoshí yǒng.",
+        "es": "Ayer nadé una hora."
+      },
+      {
+        "zh": "她很喜欢跳舞。",
+        "pinyin": "Tā hěn xǐhuan tiàowǔ.",
+        "es": "Le encanta bailar."
+      },
+      {
+        "zh": "我每天早上跑半个小时步。",
+        "pinyin": "Wǒ měi tiān zǎoshang pǎo bàn gè xiǎoshí bù.",
+        "es": "Cada mañana corro media hora."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你能帮忙我吗？",
+        "right": "你能帮我的忙吗？",
+        "why": "帮忙 ya lleva su objeto (忙): la persona va en medio, 帮我的忙, o se usa solo 帮: 帮我."
+      },
+      {
+        "wrong": "我游泳了一个小时。",
+        "right": "我游了一个小时泳。",
+        "why": "La duración se mete entre el verbo y su objeto interno, no detrás del verbo entero."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.2.2"
+      }
+    ]
   },
   {
     "code": "2.3.1",
@@ -798,7 +1033,52 @@
     "items": [
       "为什么"
     ],
-    "order_idx": 6
+    "order_idx": 6,
+    "pattern": "Sujeto + 为什么 + verbo？",
+    "explanation": "为什么 pregunta por la causa, como «¿por qué?». Va detrás del sujeto y delante del verbo, no al final de la frase: 你为什么不去？ La respuesta suele empezar con 因为. Como la frase ya es una pregunta, no se añade 吗.",
+    "markers": [
+      "为什么"
+    ],
+    "examples": [
+      {
+        "zh": "你为什么不去？",
+        "pinyin": "Nǐ wèishénme bú qù?",
+        "es": "¿Por qué no vas?"
+      },
+      {
+        "zh": "他为什么没来上课？",
+        "pinyin": "Tā wèishénme méi lái shàngkè?",
+        "es": "¿Por qué no vino a clase?"
+      },
+      {
+        "zh": "为什么你每天都这么累？",
+        "pinyin": "Wèishénme nǐ měi tiān dōu zhème lèi?",
+        "es": "¿Por qué estás tan cansado todos los días?"
+      },
+      {
+        "zh": "“你为什么学汉语？”“因为我喜欢中国。”",
+        "pinyin": "“Nǐ wèishénme xué Hànyǔ?” “Yīnwèi wǒ xǐhuan Zhōngguó.”",
+        "es": "—¿Por qué estudias chino? —Porque me gusta China."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你不去为什么？",
+        "right": "你为什么不去？",
+        "why": "为什么 va delante del verbo; no se deja al final como en «no vas, ¿por qué?»."
+      },
+      {
+        "wrong": "你为什么不去吗？",
+        "right": "你为什么不去？",
+        "why": "Con 为什么 la frase ya es una pregunta; 吗 sobra."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.3.1"
+      }
+    ]
   },
   {
     "code": "2.3.2",
@@ -810,7 +1090,47 @@
     "items": [
       "自己"
     ],
-    "order_idx": 7
+    "order_idx": 7,
+    "pattern": "Pronombre + 自己 + verbo · 自己的 + nombre",
+    "explanation": "自己 significa «uno mismo» y no cambia con la persona. Detrás del sujeto subraya que es él y no otro quien hace la acción, o que la hace sin ayuda: 我自己去, 他自己做饭. También puede ser objeto (只想自己) o posesivo con 的 (自己的房间). Va siempre delante del verbo cuando significa «yo mismo», nunca al final.",
+    "markers": [
+      "自己"
+    ],
+    "examples": [
+      {
+        "zh": "我自己去吧。",
+        "pinyin": "Wǒ zìjǐ qù ba.",
+        "es": "Ya voy yo."
+      },
+      {
+        "zh": "他每天自己做饭。",
+        "pinyin": "Tā měi tiān zìjǐ zuò fàn.",
+        "es": "Se hace la comida él solo todos los días."
+      },
+      {
+        "zh": "这是我自己的房间。",
+        "pinyin": "Zhè shì wǒ zìjǐ de fángjiān.",
+        "es": "Esta es mi propia habitación."
+      },
+      {
+        "zh": "你不能只想自己。",
+        "pinyin": "Nǐ bù néng zhǐ xiǎng zìjǐ.",
+        "es": "No puedes pensar solo en ti."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我去自己。",
+        "right": "我自己去。",
+        "why": "Para «voy yo mismo», 自己 va pegado al sujeto y delante del verbo, no al final como en español."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.3.2"
+      }
+    ]
   },
   {
     "code": "2.3.3",
@@ -822,7 +1142,56 @@
     "items": [
       "那么、那样、这么、这样、每"
     ],
-    "order_idx": 8
+    "order_idx": 8,
+    "pattern": "这么 / 那么 + adjetivo · 这样 / 那样 + verbo · 每 + clasificador + nombre (+ 都)",
+    "explanation": "这么 y 那么 van delante de un adjetivo y equivalen a «tan»: 这么贵. 这样 y 那样 significan «así, de esta manera»: delante de un verbo (这样写) o, con 的, delante de un nombre (那样的人). Con 这 se señala lo cercano o lo que se acaba de decir; con 那, lo lejano. 每 «cada» va con un clasificador (每个人, 每天) y casi siempre se refuerza con 都 delante del verbo.",
+    "markers": [
+      "这么",
+      "那么",
+      "这样",
+      "那样",
+      "每"
+    ],
+    "examples": [
+      {
+        "zh": "这件衣服这么贵！",
+        "pinyin": "Zhè jiàn yīfu zhème guì!",
+        "es": "¡Esta ropa es tan cara!"
+      },
+      {
+        "zh": "你不要那么说。",
+        "pinyin": "Nǐ búyào nàme shuō.",
+        "es": "No lo digas así."
+      },
+      {
+        "zh": "这个字要这样写。",
+        "pinyin": "Zhège zì yào zhèyàng xiě.",
+        "es": "Este carácter se escribe así."
+      },
+      {
+        "zh": "我不喜欢那样的人。",
+        "pinyin": "Wǒ bù xǐhuan nàyàng de rén.",
+        "es": "No me gusta la gente así."
+      },
+      {
+        "zh": "他每天都跑步。",
+        "pinyin": "Tā měi tiān dōu pǎobù.",
+        "es": "Corre todos los días."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "这件衣服很这么贵。",
+        "right": "这件衣服这么贵。",
+        "why": "这么 ya hace de «tan»; no se combina con 很."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.3.3"
+      }
+    ]
   },
   {
     "code": "2.4.1",
@@ -834,7 +1203,55 @@
     "items": [
       "AA、AABB"
     ],
-    "order_idx": 9
+    "order_idx": 9,
+    "pattern": "AA(的 / 地) · AABB(的 / 地)",
+    "explanation": "Repetir un adjetivo lo hace más vivo y expresivo, como «bien grande» o un diminutivo en español. Los de una sílaba se repiten AA (大大的, 慢慢地) y los de dos, AABB (高高兴兴). La forma repetida ya lleva la intensidad, así que no admite 很 ni 非常 delante. Suele terminar en 的 cuando describe un nombre y en 地 cuando acompaña a un verbo.",
+    "markers": [
+      "大大",
+      "慢慢",
+      "高高兴兴",
+      "漂漂亮亮"
+    ],
+    "examples": [
+      {
+        "zh": "她的眼睛大大的。",
+        "pinyin": "Tā de yǎnjing dàdà de.",
+        "es": "Tiene los ojos bien grandes."
+      },
+      {
+        "zh": "你慢慢地说。",
+        "pinyin": "Nǐ mànmàn de shuō.",
+        "es": "Habla despacito."
+      },
+      {
+        "zh": "孩子高高兴兴地回家了。",
+        "pinyin": "Háizi gāogāoxìngxìng de huí jiā le.",
+        "es": "El niño volvió a casa muy contento."
+      },
+      {
+        "zh": "她今天穿得漂漂亮亮的。",
+        "pinyin": "Tā jīntiān chuān de piàopiaoliàngliàng de.",
+        "es": "Hoy va muy arreglada."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "她的眼睛很大大的。",
+        "right": "她的眼睛大大的。",
+        "why": "La repetición ya intensifica; añadir 很 sobra."
+      },
+      {
+        "wrong": "孩子高兴高兴地回家了。",
+        "right": "孩子高高兴兴地回家了。",
+        "why": "Los adjetivos de dos sílabas se repiten AABB; ABAB es la forma de los verbos (休息休息)."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.2.1"
+      }
+    ]
   },
   {
     "code": "2.5",
@@ -846,7 +1263,59 @@
     "items": [
       "万、好多、多"
     ],
-    "order_idx": 10
+    "order_idx": 10,
+    "pattern": "一万 / 十万 · 好多 + nombre · número + 多 (+ clasificador)",
+    "explanation": "万 es la unidad de diez mil: el chino agrupa de diez mil en diez mil, así que cien mil es 十万. 好多 significa «muchísimos» y va delante del nombre, como 很多 pero más coloquial. 多 detrás de un número añade «y pico»: con decenas va delante del clasificador (二十多岁, «veintitantos años»); con unidades, detrás (一个多小时, «más de una hora»).",
+    "markers": [
+      "万",
+      "好多",
+      "多"
+    ],
+    "examples": [
+      {
+        "zh": "我们学校有一万个学生。",
+        "pinyin": "Wǒmen xuéxiào yǒu yíwàn gè xuésheng.",
+        "es": "Nuestro colegio tiene diez mil estudiantes."
+      },
+      {
+        "zh": "商店里有好多人。",
+        "pinyin": "Shāngdiàn li yǒu hǎoduō rén.",
+        "es": "En la tienda hay muchísima gente."
+      },
+      {
+        "zh": "他二十多岁。",
+        "pinyin": "Tā èrshí duō suì.",
+        "es": "Tiene veintitantos años."
+      },
+      {
+        "zh": "我等了一个多小时。",
+        "pinyin": "Wǒ děng le yí gè duō xiǎoshí.",
+        "es": "Esperé más de una hora."
+      },
+      {
+        "zh": "这个手机三千多块钱。",
+        "pinyin": "Zhège shǒujī sānqiān duō kuài qián.",
+        "es": "Este móvil cuesta tres mil y pico yuanes."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我们学校有十千个学生。",
+        "right": "我们学校有一万个学生。",
+        "why": "«十千» no existe: a partir de diez mil se cuenta con 万."
+      },
+      {
+        "wrong": "我等了一个小时多。",
+        "right": "我等了一个多小时。",
+        "why": "Con unidades, 多 va entre el clasificador y el nombre: 一个多小时, no al final."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.4"
+      }
+    ]
   },
   {
     "code": "2.6.1",

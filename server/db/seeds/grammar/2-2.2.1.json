@@ -1,0 +1,19 @@
+{
+  "hsk_level": 2,
+  "code": "2.2.1",
+  "pattern": "V + V · V + 一 + V · V + 了 + V · AB + AB",
+  "explanation": "Repetir un verbo suaviza la acción: indica que dura poco, que se hace sin esfuerzo o que solo se intenta. Por eso sirve para pedir algo con cortesía (你看看) o proponer (我们休息休息吧). Con 了 en medio (想了想) cuenta una acción breve que ya se hizo. Los verbos de dos sílabas se repiten enteros, ABAB, nunca AABB. No encaja con una duración larga ni con verbos que no son acciones, como 是 o 有.",
+  "markers": ["看看","想一想","想了想","休息休息"],
+  "examples": [
+    {"zh":"你看看这本书。","pinyin":"Nǐ kànkan zhè běn shū.","es":"Échale un vistazo a este libro."},
+    {"zh":"晚上我看看书，也喝茶。","pinyin":"Wǎnshang wǒ kànkan shū, yě hē chá.","es":"Por la noche leo un rato y tomo té."},
+    {"zh":"这个问题你再想一想。","pinyin":"Zhège wèntí nǐ zài xiǎng yi xiǎng.","es":"Piensa un poco más en esta pregunta."},
+    {"zh":"他想了想，说：“好吧。”","pinyin":"Tā xiǎng le xiǎng, shuō: “Hǎo ba.”","es":"Lo pensó un momento y dijo: «Vale»."},
+    {"zh":"我们休息休息吧。","pinyin":"Wǒmen xiūxi xiūxi ba.","es":"Descansemos un poco."}
+  ],
+  "common_errors": [
+    {"wrong":"我看看了三个小时书。","right":"我看了三个小时书。","why":"La repetición indica que la acción es breve; no encaja con una duración larga."},
+    {"wrong":"我们休休息息吧。","right":"我们休息休息吧。","why":"Los verbos de dos sílabas se repiten como bloque (ABAB); AABB es la forma de los adjetivos."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.4.1"}]
+}

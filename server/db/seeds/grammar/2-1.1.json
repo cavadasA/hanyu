@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "1.1",
+  "pattern": "前 / 后 / 里 / 外 / 上 / 下 + 面",
+  "explanation": "面 se pega a una palabra de posición y forma un sustantivo de lugar: 前面 «delante», 里面 «dentro», 上面 «encima». Funciona igual que 边 (前边, 里边) y casi siempre se pueden intercambiar. Como son sustantivos, pueden ir solos como sujeto (外面下雨了) o detrás de un nombre, sin 的: 桌子上面. Al revés que en español, primero va el objeto de referencia y después la posición: «encima de la mesa» es 桌子上面.",
+  "markers": ["前面","后面","里面","外面","上面"],
+  "examples": [
+    {"zh":"医院在商店前面。","pinyin":"Yīyuàn zài shāngdiàn qiánmiàn.","es":"El hospital está delante de la tienda."},
+    {"zh":"学校后面有一个饭馆。","pinyin":"Xuéxiào hòumiàn yǒu yí gè fànguǎn.","es":"Detrás del colegio hay un restaurante."},
+    {"zh":"书包里面有什么？","pinyin":"Shūbāo lǐmiàn yǒu shénme?","es":"¿Qué hay dentro de la mochila?"},
+    {"zh":"外面下雨了。","pinyin":"Wàimiàn xià yǔ le.","es":"Fuera está lloviendo."},
+    {"zh":"你的手机在桌子上面。","pinyin":"Nǐ de shǒujī zài zhuōzi shàngmiàn.","es":"Tu móvil está encima de la mesa."}
+  ],
+  "common_errors": [
+    {"wrong":"你的手机在上面桌子。","right":"你的手机在桌子上面。","why":"La posición va detrás del objeto de referencia, no delante como en «encima de la mesa»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"1.2"},{"hsk_level":1,"code":"2.1.1"}]
+}

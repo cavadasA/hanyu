@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "2.2.3",
+  "pattern": "V + (了 / 过 / duración / 的…) + O: 帮我的忙 · 游了一个小时泳",
+  "explanation": "Estos verbos son un verbo y su objeto pegados, así que se pueden separar: 了, 过, una duración o un posesivo van en medio. Por eso no admiten otro objeto detrás: «ayudarte» no es «帮忙你», sino 帮你的忙 o simplemente 帮你. La duración también se mete en medio: 跑了半个小时步. Sin separar, se usan como un verbo sin objeto: 她喜欢跳舞.",
+  "markers": ["帮","游","跳舞","跑"],
+  "examples": [
+    {"zh":"你能帮我一个忙吗？","pinyin":"Nǐ néng bāng wǒ yí gè máng ma?","es":"¿Me puedes hacer un favor?"},
+    {"zh":"我昨天游了一个小时泳。","pinyin":"Wǒ zuótiān yóu le yí gè xiǎoshí yǒng.","es":"Ayer nadé una hora."},
+    {"zh":"她很喜欢跳舞。","pinyin":"Tā hěn xǐhuan tiàowǔ.","es":"Le encanta bailar."},
+    {"zh":"我每天早上跑半个小时步。","pinyin":"Wǒ měi tiān zǎoshang pǎo bàn gè xiǎoshí bù.","es":"Cada mañana corro media hora."}
+  ],
+  "common_errors": [
+    {"wrong":"你能帮忙我吗？","right":"你能帮我的忙吗？","why":"帮忙 ya lleva su objeto (忙): la persona va en medio, 帮我的忙, o se usa solo 帮: 帮我."},
+    {"wrong":"我游泳了一个小时。","right":"我游了一个小时泳。","why":"La duración se mete entre el verbo y su objeto interno, no detrás del verbo entero."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.2.2"}]
+}
