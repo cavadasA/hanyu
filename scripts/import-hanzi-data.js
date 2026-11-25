@@ -1,5 +1,5 @@
-// Extrae de Make Me a Hanzi (https://github.com/skishore/makemeahanzi) la descomposición y
-// los trazos de los caracteres de HSK 1–2 y los escribe en
+// Extrae de Make Me a Hanzi (https://github.com/skishore/makemeahanzi) la descomposición,
+// los trazos y sus medianas de los caracteres de HSK 1–2 y los escribe en
 // server/db/seeds/hanzi-decomposition.json. Los ficheros de origen no se guardan en el
 // repositorio; se descargan aparte y se pasan por argumento:
 //
@@ -30,8 +30,9 @@ export function buildHanziData(dictionaryRows, graphicsRows, wanted) {
   for (const char of [...wanted].sort()) {
     const entry = dictionary.get(char);
     const strokes = graphics.get(char)?.strokes;
-    if (!entry || !strokes) throw new Error(`Make Me a Hanzi no trae ${char}`);
-    out[char] = { decomposition: entry.decomposition, matches: entry.matches, strokes };
+    const medians = graphics.get(char)?.medians;
+    if (!entry || !strokes || !medians) throw new Error(`Make Me a Hanzi no trae ${char}`);
+    out[char] = { decomposition: entry.decomposition, matches: entry.matches, strokes, medians };
   }
   return out;
 }

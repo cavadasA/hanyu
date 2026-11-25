@@ -8,7 +8,7 @@ Subconjunto, para los caracteres de HSK 1–2, de **Make Me a Hanzi**
 
 - `decomposition` y `matches` vienen de `dictionary.txt`, derivado de Unihan y CJKlib.
   Se distribuye bajo la **GNU Lesser General Public License (LGPL)**, versión 3 o posterior.
-- `strokes` viene de `graphics.txt`, derivado de las fuentes Arphic PL KaitiM GB y Arphic PL UKai.
+- `strokes` y `medians` vienen de `graphics.txt`, derivado de las fuentes Arphic PL KaitiM GB y Arphic PL UKai.
   Se distribuye bajo la **Arphic Public License**: http://ftp.gnu.org/non-gnu/chinese-fonts-truetype/LICENSE
 
 El subconjunto conserva los valores originales sin modificarlos; solo se seleccionan

@@ -27,6 +27,9 @@ describe('datos de caracteres (Make Me a Hanzi)', () => {
       expect(entry.decomposition, char).toMatch(/^\S+$/u);
       expect(entry.strokes.length, char).toBeGreaterThan(0);
       expect(entry.matches, char).toHaveLength(entry.strokes.length);
+      // Medianas: la línea central de cada trazo, con la que se reconoce la escritura a mano.
+      expect(entry.medians, char).toHaveLength(entry.strokes.length);
+      for (const median of entry.medians) expect(median.length, char).toBeGreaterThanOrEqual(2);
     }
   });
 
