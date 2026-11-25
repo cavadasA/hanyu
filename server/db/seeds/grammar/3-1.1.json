@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "1.1",
+  "pattern": "老 + apellido · 老 + nombre (palabra fija)",
+  "explanation": "老 delante de un apellido de una sílaba sirve para llamar con confianza a alguien de nuestra edad o mayor, igual que 小 se usa con los más jóvenes. También forma palabras fijas en las que ya no significa «viejo»: 老师 «profesor». Delante de 朋友 indica que la amistad viene de lejos: 老朋友 «un amigo de toda la vida», aunque la persona sea joven. Como prefijo va pegado, sin 的.",
+  "markers": ["老"],
+  "examples": [
+    {"zh":"他是我的老朋友。","pinyin":"Tā shì wǒ de lǎo péngyou.","es":"Es un amigo de toda la vida."},
+    {"zh":"我们的老师很好。","pinyin":"Wǒmen de lǎoshī hěn hǎo.","es":"Nuestro profesor es muy bueno."},
+    {"zh":"我老家在南方。","pinyin":"Wǒ lǎojiā zài nánfāng.","es":"Mi pueblo natal está en el sur."},
+    {"zh":"这位老人每天都去公园。","pinyin":"Zhè wèi lǎorén měi tiān dōu qù gōngyuán.","es":"Este anciano va al parque todos los días."}
+  ],
+  "common_errors": [
+    {"wrong":"他是我的老的朋友。","right":"他是我的老朋友。","why":"Como prefijo, 老 va pegado y sin 的; 老的 hablaría de la edad de la persona."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"1.1"}]
+}

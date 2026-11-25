@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "2.4.2",
+  "pattern": "verbo + número + 遍 / 回 / 声 / 口",
+  "explanation": "Cuentan las veces de una acción, como 次, cada uno con su matiz. 遍 cuenta una acción hecha de principio a fin: 这本书我看了三遍 «me lo he leído entero tres veces». 回 es casi igual que 次, más oral. 声 cuenta sonidos o llamadas de voz (叫了一声) y 口, bocados o tragos (喝了一口水). Como 次, van detrás del verbo.",
+  "markers": ["遍","回","声","口"],
+  "examples": [
+    {"zh":"这本书我看了三遍。","pinyin":"Zhè běn shū wǒ kàn le sān biàn.","es":"Me he leído este libro entero tres veces."},
+    {"zh":"那个地方我去过两回。","pinyin":"Nàge dìfang wǒ qùguo liǎng huí.","es":"He estado dos veces en ese sitio."},
+    {"zh":"他叫了我一声。","pinyin":"Tā jiào le wǒ yì shēng.","es":"Me llamó en voz alta."},
+    {"zh":"我喝了一口水。","pinyin":"Wǒ hē le yì kǒu shuǐ.","es":"Bebí un trago de agua."},
+    {"zh":"请再说一遍。","pinyin":"Qǐng zài shuō yí biàn.","es":"Repítelo, por favor."}
+  ],
+  "common_errors": [
+    {"wrong":"我三遍看了这本书。","right":"这本书我看了三遍。","why":"Las veces van detrás del verbo, igual que con 次."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.6.2"}]
+}

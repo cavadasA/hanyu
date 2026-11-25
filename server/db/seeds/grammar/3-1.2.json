@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "1.2",
+  "pattern": "actividad + 家 · puesto + 员 · raíz + 子",
+  "explanation": "家 detrás de una actividad designa a quien la ejerce como profesión o con maestría: 画家 «pintor». 员 designa a quien ocupa un puesto o forma parte de un grupo: 运动员 «deportista», 服务员 «camarero». 子 no aporta significado propio y forma muchos nombres comunes: 桌子, 杯子, 儿子. Ninguno de los tres se separa de la palabra a la que va unido.",
+  "markers": ["家","员","子"],
+  "examples": [
+    {"zh":"他爸爸是一个画家。","pinyin":"Tā bàba shì yí gè huàjiā.","es":"Su padre es pintor."},
+    {"zh":"她是一个很有名的运动员。","pinyin":"Tā shì yí gè hěn yǒumíng de yùndòngyuán.","es":"Es una deportista muy famosa."},
+    {"zh":"服务员，我们要两碗米饭。","pinyin":"Fúwùyuán, wǒmen yào liǎng wǎn mǐfàn.","es":"Camarero, queremos dos cuencos de arroz."},
+    {"zh":"桌子上有一个杯子。","pinyin":"Zhuōzi shang yǒu yí gè bēizi.","es":"Encima de la mesa hay un vaso."}
+  ],
+  "common_errors": [
+    {"wrong":"他是一个画人。","right":"他是一个画家。","why":"La profesión se forma con el sufijo 家 (画家), no con «persona que pinta»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"1.2"},{"hsk_level":2,"code":"1.1"}]
+}

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "2.3.3",
+  "pattern": "别的 (+ nombre) · 其他 (+ 的) + nombre",
+  "explanation": "Los dos significan «otro(s)» en el sentido de «distinto de lo que ya se ha mencionado»: 你还要别的吗？ 别的 es más oral y puede ir solo como objeto; 其他 es algo más formal y suele referirse al resto de un grupo conocido: 其他同学都回家了 «los demás compañeros se fueron». Ninguno sirve para «otro más del mismo», que se dice con 还 o 再.",
+  "markers": ["别的","其他"],
+  "examples": [
+    {"zh":"你还要别的吗？","pinyin":"Nǐ hái yào biéde ma?","es":"¿Quieres algo más?"},
+    {"zh":"我不喜欢这个，有别的吗？","pinyin":"Wǒ bù xǐhuan zhège, yǒu biéde ma?","es":"Este no me gusta, ¿hay otros?"},
+    {"zh":"其他同学都回家了。","pinyin":"Qítā tóngxué dōu huí jiā le.","es":"Los demás compañeros se han ido a casa."},
+    {"zh":"除了他，其他人都来了。","pinyin":"Chúle tā, qítā rén dōu lái le.","es":"Han venido todos menos él."}
+  ],
+  "common_errors": [
+    {"wrong":"我还要一碗别的米饭。（para pedir otro igual）","right":"我还要一碗米饭。","why":"别的 es «otro distinto»; para «otro más del mismo» basta con 还 o 再."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.3.3"}]
+}

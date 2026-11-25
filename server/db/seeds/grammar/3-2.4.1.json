@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "2.4.1",
+  "pattern": "número + 双 / 张 / 辆 / 节 / 种 / 把… + nombre · número + 碗 / 盘 + comida",
+  "explanation": "Cada clasificador agrupa nombres por su forma o su uso. 张 es para cosas planas (一张纸, 一张桌子), 把 para objetos con mango o asiento (一把椅子), 双 para pares (一双鞋), 辆 para vehículos, 节 para clases, 封 para cartas y 种 para tipos de algo. Las medidas (公斤, 米) y los recipientes prestados (一碗米饭, 一盘菜) van en el mismo sitio, entre el número y el nombre.",
+  "markers": ["双","张","辆","节","碗"],
+  "examples": [
+    {"zh":"我买了一双鞋。","pinyin":"Wǒ mǎi le yì shuāng xié.","es":"Me compré un par de zapatos."},
+    {"zh":"桌子上有一张纸。","pinyin":"Zhuōzi shang yǒu yì zhāng zhǐ.","es":"Encima de la mesa hay una hoja de papel."},
+    {"zh":"他家有两辆车。","pinyin":"Tā jiā yǒu liǎng liàng chē.","es":"En su casa tienen dos coches."},
+    {"zh":"我们下午有两节课。","pinyin":"Wǒmen xiàwǔ yǒu liǎng jié kè.","es":"Por la tarde tenemos dos clases."},
+    {"zh":"我要一碗米饭和一盘菜。","pinyin":"Wǒ yào yì wǎn mǐfàn hé yì pán cài.","es":"Quiero un cuenco de arroz y un plato de verdura."}
+  ],
+  "common_errors": [
+    {"wrong":"我买了一个鞋。","right":"我买了一双鞋。","why":"Los pares de cosas (zapatos, palillos) se cuentan con 双, no con 个."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.5.1"},{"hsk_level":2,"code":"2.6.1"}]
+}

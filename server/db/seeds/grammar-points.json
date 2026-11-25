@@ -6227,7 +6227,47 @@
     "items": [
       "老—"
     ],
-    "order_idx": 1
+    "order_idx": 1,
+    "pattern": "老 + apellido · 老 + nombre (palabra fija)",
+    "explanation": "老 delante de un apellido de una sílaba sirve para llamar con confianza a alguien de nuestra edad o mayor, igual que 小 se usa con los más jóvenes. También forma palabras fijas en las que ya no significa «viejo»: 老师 «profesor». Delante de 朋友 indica que la amistad viene de lejos: 老朋友 «un amigo de toda la vida», aunque la persona sea joven. Como prefijo va pegado, sin 的.",
+    "markers": [
+      "老"
+    ],
+    "examples": [
+      {
+        "zh": "他是我的老朋友。",
+        "pinyin": "Tā shì wǒ de lǎo péngyou.",
+        "es": "Es un amigo de toda la vida."
+      },
+      {
+        "zh": "我们的老师很好。",
+        "pinyin": "Wǒmen de lǎoshī hěn hǎo.",
+        "es": "Nuestro profesor es muy bueno."
+      },
+      {
+        "zh": "我老家在南方。",
+        "pinyin": "Wǒ lǎojiā zài nánfāng.",
+        "es": "Mi pueblo natal está en el sur."
+      },
+      {
+        "zh": "这位老人每天都去公园。",
+        "pinyin": "Zhè wèi lǎorén měi tiān dōu qù gōngyuán.",
+        "es": "Este anciano va al parque todos los días."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他是我的老的朋友。",
+        "right": "他是我的老朋友。",
+        "why": "Como prefijo, 老 va pegado y sin 的; 老的 hablaría de la edad de la persona."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "1.1"
+      }
+    ]
   },
   {
     "code": "1.2",
@@ -6239,7 +6279,53 @@
     "items": [
       "—家、—子、—员"
     ],
-    "order_idx": 2
+    "order_idx": 2,
+    "pattern": "actividad + 家 · puesto + 员 · raíz + 子",
+    "explanation": "家 detrás de una actividad designa a quien la ejerce como profesión o con maestría: 画家 «pintor». 员 designa a quien ocupa un puesto o forma parte de un grupo: 运动员 «deportista», 服务员 «camarero». 子 no aporta significado propio y forma muchos nombres comunes: 桌子, 杯子, 儿子. Ninguno de los tres se separa de la palabra a la que va unido.",
+    "markers": [
+      "家",
+      "员",
+      "子"
+    ],
+    "examples": [
+      {
+        "zh": "他爸爸是一个画家。",
+        "pinyin": "Tā bàba shì yí gè huàjiā.",
+        "es": "Su padre es pintor."
+      },
+      {
+        "zh": "她是一个很有名的运动员。",
+        "pinyin": "Tā shì yí gè hěn yǒumíng de yùndòngyuán.",
+        "es": "Es una deportista muy famosa."
+      },
+      {
+        "zh": "服务员，我们要两碗米饭。",
+        "pinyin": "Fúwùyuán, wǒmen yào liǎng wǎn mǐfàn.",
+        "es": "Camarero, queremos dos cuencos de arroz."
+      },
+      {
+        "zh": "桌子上有一个杯子。",
+        "pinyin": "Zhuōzi shang yǒu yí gè bēizi.",
+        "es": "Encima de la mesa hay un vaso."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他是一个画人。",
+        "right": "他是一个画家。",
+        "why": "La profesión se forma con el sufijo 家 (画家), no con «persona que pinta»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "1.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "1.1"
+      }
+    ]
   },
   {
     "code": "2.1.1",
@@ -6251,7 +6337,54 @@
     "items": [
       "东、南、西、北、北方、东方、南方、西方、中间"
     ],
-    "order_idx": 3
+    "order_idx": 3,
+    "pattern": "东 / 南 / 西 / 北 + 边 / 方 · A 和 B + 中间",
+    "explanation": "Con 边, los puntos cardinales indican un lado de un lugar (学校东边); con 方, regiones o grandes zonas: 北方 «el norte», 西方 «Occidente». En los puntos intermedios el este y el oeste van primero: 东南 «sudeste», 西北 «noroeste», al revés que en español. 中间 es «en medio»: 他们两个人中间.",
+    "markers": [
+      "东",
+      "北方",
+      "南方",
+      "中间"
+    ],
+    "examples": [
+      {
+        "zh": "银行在学校东边。",
+        "pinyin": "Yínháng zài xuéxiào dōngbian.",
+        "es": "El banco está al este del colegio."
+      },
+      {
+        "zh": "我是北方人。",
+        "pinyin": "Wǒ shì běifāng rén.",
+        "es": "Soy del norte."
+      },
+      {
+        "zh": "南方的冬天不太冷。",
+        "pinyin": "Nánfāng de dōngtiān bú tài lěng.",
+        "es": "En el sur el invierno no es muy frío."
+      },
+      {
+        "zh": "我坐在他们两个人中间。",
+        "pinyin": "Wǒ zuò zài tāmen liǎng gè rén zhōngjiān.",
+        "es": "Me senté entre los dos."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我住在南东边。",
+        "right": "我住在东南边。",
+        "why": "En los puntos intermedios el este o el oeste van primero: 东南, no «南东»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.1.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.1.1"
+      }
+    ]
   },
   {
     "code": "2.2.1",
@@ -6263,7 +6396,60 @@
     "items": [
       "需要、该、应该、愿意、得"
     ],
-    "order_idx": 4
+    "order_idx": 4,
+    "pattern": "应该 / 该 / 得 / 需要 / 愿意 + verbo",
+    "explanation": "应该 y 该 expresan lo que conviene o es correcto, «deberías»: 你应该多休息. 得 (děi) es una obligación práctica, «tener que», muy oral: 我得走了. 需要 es «hacer falta» y admite un verbo o un nombre. 愿意 es «estar dispuesto, querer de buena gana». La negación de 得 no es «不得», sino 不用: 你不用去.",
+    "markers": [
+      "应该",
+      "得",
+      "需要",
+      "愿意",
+      "该"
+    ],
+    "examples": [
+      {
+        "zh": "你应该多休息。",
+        "pinyin": "Nǐ yīnggāi duō xiūxi.",
+        "es": "Deberías descansar más."
+      },
+      {
+        "zh": "太晚了，我得走了。",
+        "pinyin": "Tài wǎn le, wǒ děi zǒu le.",
+        "es": "Es muy tarde, me tengo que ir."
+      },
+      {
+        "zh": "你不需要买新的。",
+        "pinyin": "Nǐ bù xūyào mǎi xīn de.",
+        "es": "No hace falta que compres uno nuevo."
+      },
+      {
+        "zh": "他不愿意跟我说话。",
+        "pinyin": "Tā bú yuànyì gēn wǒ shuōhuà.",
+        "es": "No quiere hablar conmigo."
+      },
+      {
+        "zh": "我该回家了。",
+        "pinyin": "Wǒ gāi huí jiā le.",
+        "es": "Ya es hora de que vuelva a casa."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你不得去。",
+        "right": "你不用去。",
+        "why": "La negación de 得 («tener que») es 不用: «no hace falta que vayas»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.2.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.2.2"
+      }
+    ]
   },
   {
     "code": "2.2.2",
@@ -6276,7 +6462,65 @@
       "动宾式离合词：放假、见面、结婚、洗澡",
       "动补式离合词：离开、完成、分开"
     ],
-    "order_idx": 5
+    "order_idx": 5,
+    "pattern": "跟 + persona + 见面 / 结婚 · 见了一面 · 离开 + lugar · 离不开",
+    "explanation": "Los de tipo verbo + objeto (见面, 结婚, 洗澡, 放假) no admiten otro objeto detrás: la persona va delante con 跟 o 和 (我跟他见面) y otras palabras pueden ir en medio (放了三天假). Los de tipo verbo + resultado (离开, 完成, 分开) sí llevan objeto detrás (离开家) y admiten 得 o 不 en medio para decir si algo es posible: 离不开.",
+    "markers": [
+      "见面",
+      "结婚",
+      "放了三天假",
+      "离开",
+      "离不开"
+    ],
+    "examples": [
+      {
+        "zh": "我明天跟朋友见面。",
+        "pinyin": "Wǒ míngtiān gēn péngyou jiànmiàn.",
+        "es": "Mañana quedo con un amigo."
+      },
+      {
+        "zh": "他们去年结婚了。",
+        "pinyin": "Tāmen qùnián jiéhūn le.",
+        "es": "Se casaron el año pasado."
+      },
+      {
+        "zh": "我们放了三天假。",
+        "pinyin": "Wǒmen fàng le sān tiān jià.",
+        "es": "Tuvimos tres días de vacaciones."
+      },
+      {
+        "zh": "他离开家已经两年了。",
+        "pinyin": "Tā líkāi jiā yǐjīng liǎng nián le.",
+        "es": "Hace ya dos años que se fue de casa."
+      },
+      {
+        "zh": "现在我们离不开手机。",
+        "pinyin": "Xiànzài wǒmen lí bu kāi shǒujī.",
+        "es": "Hoy no podemos vivir sin el móvil."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我想见面你。",
+        "right": "我想跟你见面。",
+        "why": "见面 ya lleva su objeto (面): la persona va delante, con 跟 o 和."
+      },
+      {
+        "wrong": "他结婚她了。",
+        "right": "他跟她结婚了。",
+        "why": "结婚 tampoco admite objeto: «casarse con alguien» es 跟 + persona + 结婚."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.2.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.2.3"
+      }
+    ]
   },
   {
     "code": "2.3.1",
@@ -6290,7 +6534,60 @@
       "疑问代词的非疑问用法：（1）任指用法：①疑问代词+都……②疑问代词+疑问代词",
       "（2）不定指用法"
     ],
-    "order_idx": 6
+    "order_idx": 6,
+    "pattern": "怎样 + verbo？ · interrogativo + 都 / 也 · interrogativo … interrogativo · interrogativo = «algo»",
+    "explanation": "怎样 pregunta la manera, como 怎么, en un registro algo más formal: 这个字怎样写？ Las palabras interrogativas también se usan sin preguntar. Con 都 o 也 significan «todos» o, con negación, «nada, nadie»: 谁都知道, 什么也不想吃. Repetidas en dos partes se refieren a lo mismo: 你想去哪儿就去哪儿 «ve adonde quieras». Y en afirmaciones pueden significar «algo»: 我想喝一点儿什么.",
+    "markers": [
+      "怎样",
+      "谁都",
+      "什么也",
+      "哪儿就去哪儿",
+      "什么"
+    ],
+    "examples": [
+      {
+        "zh": "这个字怎样写？",
+        "pinyin": "Zhège zì zěnyàng xiě?",
+        "es": "¿Cómo se escribe este carácter?"
+      },
+      {
+        "zh": "这件事谁都知道。",
+        "pinyin": "Zhè jiàn shì shéi dōu zhīdào.",
+        "es": "Esto lo sabe todo el mundo."
+      },
+      {
+        "zh": "我今天什么也不想吃。",
+        "pinyin": "Wǒ jīntiān shénme yě bù xiǎng chī.",
+        "es": "Hoy no quiero comer nada."
+      },
+      {
+        "zh": "你想去哪儿就去哪儿。",
+        "pinyin": "Nǐ xiǎng qù nǎr jiù qù nǎr.",
+        "es": "Ve adonde quieras."
+      },
+      {
+        "zh": "我想喝一点儿什么。",
+        "pinyin": "Wǒ xiǎng hē yìdiǎnr shénme.",
+        "es": "Me apetece beber algo."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我不想吃什么都。",
+        "right": "我什么都不想吃。",
+        "why": "El interrogativo con 都 o 也 va delante del verbo, no al final como «no quiero comer nada»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.3.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.3.1"
+      }
+    ]
   },
   {
     "code": "2.3.2",
@@ -6302,7 +6599,52 @@
     "items": [
       "别人、咱们"
     ],
-    "order_idx": 7
+    "order_idx": 7,
+    "pattern": "咱们 (incluye al oyente) · 别人 (los demás)",
+    "explanation": "咱们 es un «nosotros» que siempre incluye a quien escucha: «tú y yo», «todos los aquí presentes». 我们 puede incluirlo o no, así que 咱们 suena más cercano y coloquial. 别人 significa «los demás, otra gente», en oposición a uno mismo: 别人的东西 «lo ajeno». No se usa para una persona concreta que ya se ha mencionado.",
+    "markers": [
+      "咱们",
+      "别人"
+    ],
+    "examples": [
+      {
+        "zh": "咱们一起去吧。",
+        "pinyin": "Zánmen yìqǐ qù ba.",
+        "es": "Vamos juntos."
+      },
+      {
+        "zh": "别人都走了，咱们也走吧。",
+        "pinyin": "Biérén dōu zǒu le, zánmen yě zǒu ba.",
+        "es": "Los demás ya se han ido; vámonos nosotros también."
+      },
+      {
+        "zh": "不要拿别人的东西。",
+        "pinyin": "Búyào ná biérén de dōngxi.",
+        "es": "No cojas las cosas de los demás."
+      },
+      {
+        "zh": "他不太听别人的话。",
+        "pinyin": "Tā bú tài tīng biérén de huà.",
+        "es": "No suele hacer caso a los demás."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "（a la profesora）咱们是学生，您是老师。",
+        "right": "我们是学生，您是老师。",
+        "why": "咱们 incluye siempre a quien escucha; si lo excluyes, se dice 我们."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.3.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.3.2"
+      }
+    ]
   },
   {
     "code": "2.3.3",
@@ -6314,7 +6656,48 @@
     "items": [
       "别的、其他"
     ],
-    "order_idx": 8
+    "order_idx": 8,
+    "pattern": "别的 (+ nombre) · 其他 (+ 的) + nombre",
+    "explanation": "Los dos significan «otro(s)» en el sentido de «distinto de lo que ya se ha mencionado»: 你还要别的吗？ 别的 es más oral y puede ir solo como objeto; 其他 es algo más formal y suele referirse al resto de un grupo conocido: 其他同学都回家了 «los demás compañeros se fueron». Ninguno sirve para «otro más del mismo», que se dice con 还 o 再.",
+    "markers": [
+      "别的",
+      "其他"
+    ],
+    "examples": [
+      {
+        "zh": "你还要别的吗？",
+        "pinyin": "Nǐ hái yào biéde ma?",
+        "es": "¿Quieres algo más?"
+      },
+      {
+        "zh": "我不喜欢这个，有别的吗？",
+        "pinyin": "Wǒ bù xǐhuan zhège, yǒu biéde ma?",
+        "es": "Este no me gusta, ¿hay otros?"
+      },
+      {
+        "zh": "其他同学都回家了。",
+        "pinyin": "Qítā tóngxué dōu huí jiā le.",
+        "es": "Los demás compañeros se han ido a casa."
+      },
+      {
+        "zh": "除了他，其他人都来了。",
+        "pinyin": "Chúle tā, qítā rén dōu lái le.",
+        "es": "Han venido todos menos él."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我还要一碗别的米饭。（para pedir otro igual）",
+        "right": "我还要一碗米饭。",
+        "why": "别的 es «otro distinto»; para «otro más del mismo» basta con 还 o 再."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.3.3"
+      }
+    ]
   },
   {
     "code": "2.4.1",
@@ -6327,7 +6710,60 @@
       "（1）专用名量词：把、双、张、种、层、封、页、辆、节、所、班、段、头、句公斤、斤、角、毛、刻、米",
       "（2）借用名量词：碗、盘"
     ],
-    "order_idx": 9
+    "order_idx": 9,
+    "pattern": "número + 双 / 张 / 辆 / 节 / 种 / 把… + nombre · número + 碗 / 盘 + comida",
+    "explanation": "Cada clasificador agrupa nombres por su forma o su uso. 张 es para cosas planas (一张纸, 一张桌子), 把 para objetos con mango o asiento (一把椅子), 双 para pares (一双鞋), 辆 para vehículos, 节 para clases, 封 para cartas y 种 para tipos de algo. Las medidas (公斤, 米) y los recipientes prestados (一碗米饭, 一盘菜) van en el mismo sitio, entre el número y el nombre.",
+    "markers": [
+      "双",
+      "张",
+      "辆",
+      "节",
+      "碗"
+    ],
+    "examples": [
+      {
+        "zh": "我买了一双鞋。",
+        "pinyin": "Wǒ mǎi le yì shuāng xié.",
+        "es": "Me compré un par de zapatos."
+      },
+      {
+        "zh": "桌子上有一张纸。",
+        "pinyin": "Zhuōzi shang yǒu yì zhāng zhǐ.",
+        "es": "Encima de la mesa hay una hoja de papel."
+      },
+      {
+        "zh": "他家有两辆车。",
+        "pinyin": "Tā jiā yǒu liǎng liàng chē.",
+        "es": "En su casa tienen dos coches."
+      },
+      {
+        "zh": "我们下午有两节课。",
+        "pinyin": "Wǒmen xiàwǔ yǒu liǎng jié kè.",
+        "es": "Por la tarde tenemos dos clases."
+      },
+      {
+        "zh": "我要一碗米饭和一盘菜。",
+        "pinyin": "Wǒ yào yì wǎn mǐfàn hé yì pán cài.",
+        "es": "Quiero un cuenco de arroz y un plato de verdura."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我买了一个鞋。",
+        "right": "我买了一双鞋。",
+        "why": "Los pares de cosas (zapatos, palillos) se cuentan con 双, no con 个."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.5.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.6.1"
+      }
+    ]
   },
   {
     "code": "2.4.2",
@@ -6339,7 +6775,55 @@
     "items": [
       "口、回、遍、声"
     ],
-    "order_idx": 10
+    "order_idx": 10,
+    "pattern": "verbo + número + 遍 / 回 / 声 / 口",
+    "explanation": "Cuentan las veces de una acción, como 次, cada uno con su matiz. 遍 cuenta una acción hecha de principio a fin: 这本书我看了三遍 «me lo he leído entero tres veces». 回 es casi igual que 次, más oral. 声 cuenta sonidos o llamadas de voz (叫了一声) y 口, bocados o tragos (喝了一口水). Como 次, van detrás del verbo.",
+    "markers": [
+      "遍",
+      "回",
+      "声",
+      "口"
+    ],
+    "examples": [
+      {
+        "zh": "这本书我看了三遍。",
+        "pinyin": "Zhè běn shū wǒ kàn le sān biàn.",
+        "es": "Me he leído este libro entero tres veces."
+      },
+      {
+        "zh": "那个地方我去过两回。",
+        "pinyin": "Nàge dìfang wǒ qùguo liǎng huí.",
+        "es": "He estado dos veces en ese sitio."
+      },
+      {
+        "zh": "他叫了我一声。",
+        "pinyin": "Tā jiào le wǒ yì shēng.",
+        "es": "Me llamó en voz alta."
+      },
+      {
+        "zh": "我喝了一口水。",
+        "pinyin": "Wǒ hē le yì kǒu shuǐ.",
+        "es": "Bebí un trago de agua."
+      },
+      {
+        "zh": "请再说一遍。",
+        "pinyin": "Qǐng zài shuō yí biàn.",
+        "es": "Repítelo, por favor."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我三遍看了这本书。",
+        "right": "这本书我看了三遍。",
+        "why": "Las veces van detrás del verbo, igual que con 次."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.6.2"
+      }
+    ]
   },
   {
     "code": "2.4.3",

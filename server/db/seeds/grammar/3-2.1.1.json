@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "2.1.1",
+  "pattern": "东 / 南 / 西 / 北 + 边 / 方 · A 和 B + 中间",
+  "explanation": "Con 边, los puntos cardinales indican un lado de un lugar (学校东边); con 方, regiones o grandes zonas: 北方 «el norte», 西方 «Occidente». En los puntos intermedios el este y el oeste van primero: 东南 «sudeste», 西北 «noroeste», al revés que en español. 中间 es «en medio»: 他们两个人中间.",
+  "markers": ["东","北方","南方","中间"],
+  "examples": [
+    {"zh":"银行在学校东边。","pinyin":"Yínháng zài xuéxiào dōngbian.","es":"El banco está al este del colegio."},
+    {"zh":"我是北方人。","pinyin":"Wǒ shì běifāng rén.","es":"Soy del norte."},
+    {"zh":"南方的冬天不太冷。","pinyin":"Nánfāng de dōngtiān bú tài lěng.","es":"En el sur el invierno no es muy frío."},
+    {"zh":"我坐在他们两个人中间。","pinyin":"Wǒ zuò zài tāmen liǎng gè rén zhōngjiān.","es":"Me senté entre los dos."}
+  ],
+  "common_errors": [
+    {"wrong":"我住在南东边。","right":"我住在东南边。","why":"En los puntos intermedios el este o el oeste van primero: 东南, no «南东»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.1.1"},{"hsk_level":2,"code":"2.1.1"}]
+}

@@ -1,0 +1,19 @@
+{
+  "hsk_level": 3,
+  "code": "2.2.2",
+  "pattern": "跟 + persona + 见面 / 结婚 · 见了一面 · 离开 + lugar · 离不开",
+  "explanation": "Los de tipo verbo + objeto (见面, 结婚, 洗澡, 放假) no admiten otro objeto detrás: la persona va delante con 跟 o 和 (我跟他见面) y otras palabras pueden ir en medio (放了三天假). Los de tipo verbo + resultado (离开, 完成, 分开) sí llevan objeto detrás (离开家) y admiten 得 o 不 en medio para decir si algo es posible: 离不开.",
+  "markers": ["见面","结婚","放了三天假","离开","离不开"],
+  "examples": [
+    {"zh":"我明天跟朋友见面。","pinyin":"Wǒ míngtiān gēn péngyou jiànmiàn.","es":"Mañana quedo con un amigo."},
+    {"zh":"他们去年结婚了。","pinyin":"Tāmen qùnián jiéhūn le.","es":"Se casaron el año pasado."},
+    {"zh":"我们放了三天假。","pinyin":"Wǒmen fàng le sān tiān jià.","es":"Tuvimos tres días de vacaciones."},
+    {"zh":"他离开家已经两年了。","pinyin":"Tā líkāi jiā yǐjīng liǎng nián le.","es":"Hace ya dos años que se fue de casa."},
+    {"zh":"现在我们离不开手机。","pinyin":"Xiànzài wǒmen lí bu kāi shǒujī.","es":"Hoy no podemos vivir sin el móvil."}
+  ],
+  "common_errors": [
+    {"wrong":"我想见面你。","right":"我想跟你见面。","why":"见面 ya lleva su objeto (面): la persona va delante, con 跟 o 和."},
+    {"wrong":"他结婚她了。","right":"他跟她结婚了。","why":"结婚 tampoco admite objeto: «casarse con alguien» es 跟 + persona + 结婚."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.2.2"},{"hsk_level":2,"code":"2.2.3"}]
+}

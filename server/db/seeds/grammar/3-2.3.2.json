@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "2.3.2",
+  "pattern": "咱们 (incluye al oyente) · 别人 (los demás)",
+  "explanation": "咱们 es un «nosotros» que siempre incluye a quien escucha: «tú y yo», «todos los aquí presentes». 我们 puede incluirlo o no, así que 咱们 suena más cercano y coloquial. 别人 significa «los demás, otra gente», en oposición a uno mismo: 别人的东西 «lo ajeno». No se usa para una persona concreta que ya se ha mencionado.",
+  "markers": ["咱们","别人"],
+  "examples": [
+    {"zh":"咱们一起去吧。","pinyin":"Zánmen yìqǐ qù ba.","es":"Vamos juntos."},
+    {"zh":"别人都走了，咱们也走吧。","pinyin":"Biérén dōu zǒu le, zánmen yě zǒu ba.","es":"Los demás ya se han ido; vámonos nosotros también."},
+    {"zh":"不要拿别人的东西。","pinyin":"Búyào ná biérén de dōngxi.","es":"No cojas las cosas de los demás."},
+    {"zh":"他不太听别人的话。","pinyin":"Tā bú tài tīng biérén de huà.","es":"No suele hacer caso a los demás."}
+  ],
+  "common_errors": [
+    {"wrong":"（a la profesora）咱们是学生，您是老师。","right":"我们是学生，您是老师。","why":"咱们 incluye siempre a quien escucha; si lo excluyes, se dice 我们."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.3.2"},{"hsk_level":2,"code":"2.3.2"}]
+}

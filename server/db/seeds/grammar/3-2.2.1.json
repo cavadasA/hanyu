@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "2.2.1",
+  "pattern": "应该 / 该 / 得 / 需要 / 愿意 + verbo",
+  "explanation": "应该 y 该 expresan lo que conviene o es correcto, «deberías»: 你应该多休息. 得 (děi) es una obligación práctica, «tener que», muy oral: 我得走了. 需要 es «hacer falta» y admite un verbo o un nombre. 愿意 es «estar dispuesto, querer de buena gana». La negación de 得 no es «不得», sino 不用: 你不用去.",
+  "markers": ["应该","得","需要","愿意","该"],
+  "examples": [
+    {"zh":"你应该多休息。","pinyin":"Nǐ yīnggāi duō xiūxi.","es":"Deberías descansar más."},
+    {"zh":"太晚了，我得走了。","pinyin":"Tài wǎn le, wǒ děi zǒu le.","es":"Es muy tarde, me tengo que ir."},
+    {"zh":"你不需要买新的。","pinyin":"Nǐ bù xūyào mǎi xīn de.","es":"No hace falta que compres uno nuevo."},
+    {"zh":"他不愿意跟我说话。","pinyin":"Tā bú yuànyì gēn wǒ shuōhuà.","es":"No quiere hablar conmigo."},
+    {"zh":"我该回家了。","pinyin":"Wǒ gāi huí jiā le.","es":"Ya es hora de que vuelva a casa."}
+  ],
+  "common_errors": [
+    {"wrong":"你不得去。","right":"你不用去。","why":"La negación de 得 («tener que») es 不用: «no hace falta que vayas»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.2.1"},{"hsk_level":2,"code":"2.2.2"}]
+}

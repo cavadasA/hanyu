@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "2.3.1",
+  "pattern": "怎样 + verbo？ · interrogativo + 都 / 也 · interrogativo … interrogativo · interrogativo = «algo»",
+  "explanation": "怎样 pregunta la manera, como 怎么, en un registro algo más formal: 这个字怎样写？ Las palabras interrogativas también se usan sin preguntar. Con 都 o 也 significan «todos» o, con negación, «nada, nadie»: 谁都知道, 什么也不想吃. Repetidas en dos partes se refieren a lo mismo: 你想去哪儿就去哪儿 «ve adonde quieras». Y en afirmaciones pueden significar «algo»: 我想喝一点儿什么.",
+  "markers": ["怎样","谁都","什么也","哪儿就去哪儿","什么"],
+  "examples": [
+    {"zh":"这个字怎样写？","pinyin":"Zhège zì zěnyàng xiě?","es":"¿Cómo se escribe este carácter?"},
+    {"zh":"这件事谁都知道。","pinyin":"Zhè jiàn shì shéi dōu zhīdào.","es":"Esto lo sabe todo el mundo."},
+    {"zh":"我今天什么也不想吃。","pinyin":"Wǒ jīntiān shénme yě bù xiǎng chī.","es":"Hoy no quiero comer nada."},
+    {"zh":"你想去哪儿就去哪儿。","pinyin":"Nǐ xiǎng qù nǎr jiù qù nǎr.","es":"Ve adonde quieras."},
+    {"zh":"我想喝一点儿什么。","pinyin":"Wǒ xiǎng hē yìdiǎnr shénme.","es":"Me apetece beber algo."}
+  ],
+  "common_errors": [
+    {"wrong":"我不想吃什么都。","right":"我什么都不想吃。","why":"El interrogativo con 都 o 也 va delante del verbo, no al final como «no quiero comer nada»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.3.1"},{"hsk_level":2,"code":"2.3.1"}]
+}
