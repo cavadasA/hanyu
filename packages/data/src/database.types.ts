@@ -693,6 +693,7 @@ export type Database = {
         Row: {
           category: string | null
           code: string | null
+          common_errors: Json
           created_at: string
           detail: string | null
           examples: Json
@@ -701,13 +702,16 @@ export type Database = {
           hsk_level: number
           id: number
           items: string[] | null
+          markers: string[]
           order_idx: number | null
           pattern: string | null
+          see_also: Json
           title: string
         }
         Insert: {
           category?: string | null
           code?: string | null
+          common_errors?: Json
           created_at?: string
           detail?: string | null
           examples?: Json
@@ -716,13 +720,16 @@ export type Database = {
           hsk_level: number
           id?: number
           items?: string[] | null
+          markers?: string[]
           order_idx?: number | null
           pattern?: string | null
+          see_also?: Json
           title: string
         }
         Update: {
           category?: string | null
           code?: string | null
+          common_errors?: Json
           created_at?: string
           detail?: string | null
           examples?: Json
@@ -731,8 +738,10 @@ export type Database = {
           hsk_level?: number
           id?: number
           items?: string[] | null
+          markers?: string[]
           order_idx?: number | null
           pattern?: string | null
+          see_also?: Json
           title?: string
         }
         Relationships: []

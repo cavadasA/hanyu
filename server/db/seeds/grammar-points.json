@@ -205,25 +205,53 @@
       "不、没（有）、不要"
     ],
     "order_idx": 17,
-    "pattern": "不 + Verb/Adjective",
-    "explanation": "Place 不 (bù) before a verb or adjective to negate it. Note: 有 (yǒu) uses 没 (méi) for negation instead.",
+    "pattern": "不 + verbo/adjetivo · 没(有) + verbo · 不要 + verbo",
+    "explanation": "Hay tres negaciones y no son intercambiables. 不 niega lo habitual, lo que uno quiere hacer y los adjetivos: 我不喝茶 («no bebo té»). 没 o 没有 niega que algo haya pasado o que se tenga: 我没去 («no fui»), 我没有钱. El verbo 有 nunca se niega con 不. 不要 delante de un verbo pide a alguien que no haga algo: 不要说话.",
+    "markers": [
+      "不",
+      "没",
+      "不要"
+    ],
     "examples": [
-      {
-        "zh": "我不喝咖啡。",
-        "pinyin": "Wǒ bù hē kāfēi.",
-        "en": "I don't drink coffee."
-      },
       {
         "zh": "她不是老师。",
         "pinyin": "Tā bú shì lǎoshī.",
-        "en": "She is not a teacher."
+        "es": "Ella no es profesora."
+      },
+      {
+        "zh": "我不喝茶。",
+        "pinyin": "Wǒ bù hē chá.",
+        "es": "No bebo té."
+      },
+      {
+        "zh": "我昨天没去学校。",
+        "pinyin": "Wǒ zuótiān méi qù xuéxiào.",
+        "es": "Ayer no fui al colegio."
       },
       {
         "zh": "我没有钱。",
         "pinyin": "Wǒ méiyǒu qián.",
-        "en": "I don't have money."
+        "es": "No tengo dinero."
+      },
+      {
+        "zh": "不要说话。",
+        "pinyin": "Bú yào shuōhuà.",
+        "es": "No hables."
       }
-    ]
+    ],
+    "common_errors": [
+      {
+        "wrong": "我不有钱。",
+        "right": "我没有钱。",
+        "why": "有 solo se niega con 没: «不有» no existe."
+      },
+      {
+        "wrong": "我昨天不去学校。",
+        "right": "我昨天没去学校。",
+        "why": "Para negar algo que no ocurrió se usa 没. En español «no» sirve para todo; en chino hay que elegir según si hablas de un hecho pasado o de un hábito."
+      }
+    ],
+    "see_also": []
   },
   {
     "code": "2.7.1",
@@ -296,25 +324,49 @@
       "吧1、了2 、吗、呢1、呢2、呢3"
     ],
     "order_idx": 23,
-    "pattern": "Statement + 吗?",
-    "explanation": "To turn a statement into a yes/no question, add 吗 (ma) at the end. The word order stays the same.",
+    "pattern": "frase + 吗 / 吧 / 呢 / 了",
+    "explanation": "Estas partículas van al final de la frase y cambian su intención sin tocar el orden de las palabras. 吗 convierte una afirmación en una pregunta de sí o no. 吧 propone algo o pide confirmación. 呢 detrás de un nombre pregunta «¿y…?» (你呢？), y con 在 subraya que algo está pasando ahora. 了 al final indica que la situación ha cambiado: 下雨了 («ya llueve»). Si la frase ya tiene una palabra interrogativa (什么, 哪儿, 谁), no se añade 吗.",
+    "markers": [
+      "吗",
+      "吧",
+      "呢",
+      "了"
+    ],
     "examples": [
       {
-        "zh": "你好吗？",
-        "pinyin": "Nǐ hǎo ma?",
-        "en": "How are you?"
-      },
-      {
         "zh": "你是学生吗？",
-        "pinyin": "Nǐ shì xuéshēng ma?",
-        "en": "Are you a student?"
+        "pinyin": "Nǐ shì xuésheng ma?",
+        "es": "¿Eres estudiante?"
       },
       {
-        "zh": "他喜欢中国吗？",
-        "pinyin": "Tā xǐhuān Zhōngguó ma?",
-        "en": "Does he like China?"
+        "zh": "我们去吃饭吧。",
+        "pinyin": "Wǒmen qù chīfàn ba.",
+        "es": "Vamos a comer."
+      },
+      {
+        "zh": "我很好，你呢？",
+        "pinyin": "Wǒ hěn hǎo, nǐ ne?",
+        "es": "Yo estoy bien, ¿y tú?"
+      },
+      {
+        "zh": "他在看书呢。",
+        "pinyin": "Tā zài kàn shū ne.",
+        "es": "Está leyendo."
+      },
+      {
+        "zh": "下雨了。",
+        "pinyin": "Xià yǔ le.",
+        "es": "Ya está lloviendo."
       }
-    ]
+    ],
+    "common_errors": [
+      {
+        "wrong": "你去哪儿吗？",
+        "right": "你去哪儿？",
+        "why": "Con una palabra interrogativa como 哪儿 la frase ya es una pregunta; añadir 吗 sobra."
+      }
+    ],
+    "see_also": []
   },
   {
     "code": "2.10",
@@ -342,25 +394,44 @@
       "（4）主谓短语"
     ],
     "order_idx": 25,
-    "pattern": "Subject + Verb + Object",
-    "explanation": "Chinese follows a Subject-Verb-Object word order, similar to English. The subject comes first, followed by the verb, and then the object.",
+    "pattern": "A + 和 + B · modificador + núcleo · verbo + objeto · sujeto + predicado",
+    "explanation": "Las frases chinas se construyen con cuatro piezas. Unión: dos palabras del mismo tipo, a menudo con 和 (爸爸和妈妈). Modificador y núcleo: lo que describe va siempre delante (中国朋友, 很冷). Verbo y objeto: el objeto va detrás del verbo (喝茶). Sujeto y predicado: quién hace algo o cómo es (我喝茶, 今天很冷). A diferencia del español, el modificador nunca va detrás: «un amigo chino» es 一个中国朋友.",
+    "markers": [
+      "和",
+      "中国朋友",
+      "喝茶",
+      "很冷"
+    ],
     "examples": [
+      {
+        "zh": "爸爸和妈妈都在家。",
+        "pinyin": "Bàba hé māma dōu zài jiā.",
+        "es": "Papá y mamá están en casa."
+      },
+      {
+        "zh": "他是我的中国朋友。",
+        "pinyin": "Tā shì wǒ de Zhōngguó péngyou.",
+        "es": "Es mi amigo chino."
+      },
       {
         "zh": "我喝茶。",
         "pinyin": "Wǒ hē chá.",
-        "en": "I drink tea."
+        "es": "Bebo té."
       },
       {
-        "zh": "她看书。",
-        "pinyin": "Tā kàn shū.",
-        "en": "She reads books."
-      },
-      {
-        "zh": "他吃饭。",
-        "pinyin": "Tā chī fàn.",
-        "en": "He eats food."
+        "zh": "今天很冷。",
+        "pinyin": "Jīntiān hěn lěng.",
+        "es": "Hoy hace mucho frío."
       }
-    ]
+    ],
+    "common_errors": [
+      {
+        "wrong": "我有一个朋友中国。",
+        "right": "我有一个中国朋友。",
+        "why": "El modificador va delante del núcleo: «amigo chino» se dice 中国朋友, al revés que en español."
+      }
+    ],
+    "see_also": []
   },
   {
     "code": "3.1.2",
@@ -1178,23 +1249,52 @@
       "主谓句4：主谓谓语句"
     ],
     "order_idx": 43,
-    "pattern": "Verb + 了",
-    "explanation": "Place 了 (le) after a verb to indicate a completed action. It does not directly translate to past tense - it marks completion.",
+    "pattern": "Sujeto + [sujeto 2 + predicado]",
+    "explanation": "El predicado es a su vez una frase pequeña con su propio sujeto. En 他身体很好 se habla de «él» y, dentro de él, de su salud: «él está bien de salud». El primer sujeto es el tema y el segundo, la parte concreta de la que se dice algo. Es la forma normal de hablar de salud, aspecto o rasgos de algo: 我头疼, 这个饭馆菜很好吃. No hace falta 有 ni 的.",
+    "markers": [
+      "身体",
+      "头疼",
+      "菜很好吃",
+      "工作很忙"
+    ],
     "examples": [
       {
-        "zh": "我吃了午饭。",
-        "pinyin": "Wǒ chī le wǔfàn.",
-        "en": "I ate lunch."
+        "zh": "他身体很好。",
+        "pinyin": "Tā shēntǐ hěn hǎo.",
+        "es": "Él está bien de salud."
       },
       {
-        "zh": "她买了一本书。",
-        "pinyin": "Tā mǎi le yì běn shū.",
-        "en": "She bought a book."
+        "zh": "我今天头疼。",
+        "pinyin": "Wǒ jīntiān tóu téng.",
+        "es": "Hoy me duele la cabeza."
       },
       {
-        "zh": "我们看了电影。",
-        "pinyin": "Wǒmen kàn le diànyǐng.",
-        "en": "We watched a movie."
+        "zh": "这个饭馆菜很好吃。",
+        "pinyin": "Zhège fànguǎn cài hěn hǎochī.",
+        "es": "En este restaurante la comida está muy rica."
+      },
+      {
+        "zh": "我工作很忙。",
+        "pinyin": "Wǒ gōngzuò hěn máng.",
+        "es": "Estoy muy ocupado con el trabajo."
+      },
+      {
+        "zh": "我妈妈身体不太好。",
+        "pinyin": "Wǒ māma shēntǐ bú tài hǎo.",
+        "es": "Mi madre no está muy bien de salud."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我有头疼。",
+        "right": "我头疼。",
+        "why": "En chino no se «tiene» dolor de cabeza: la parte del cuerpo es el sujeto de su propio predicado."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "3.1.1"
       }
     ]
   },
@@ -1344,20 +1444,42 @@
       "因为……，所以……"
     ],
     "order_idx": 55,
-    "pattern": "因为 + reason，所以 + result",
-    "explanation": "Use 因为 (yīnwèi) to state the cause and 所以 (suǒyǐ) to state the result. You can use both together or just one.",
+    "pattern": "因为 + causa，所以 + resultado",
+    "explanation": "因为 presenta la causa y 所以 la consecuencia. Pueden ir los dos o solo uno, pero el orden es fijo: 所以 siempre introduce el resultado. Si quieres dar la causa al final, como el «porque» español, pon 因为 en la segunda parte y ningún 所以: 我没去，因为下雨了.",
+    "markers": [
+      "因为",
+      "所以"
+    ],
     "examples": [
       {
         "zh": "因为下雨，所以我没去。",
         "pinyin": "Yīnwèi xià yǔ, suǒyǐ wǒ méi qù.",
-        "en": "Because it rained, I didn't go."
+        "es": "Como llovía, no fui."
       },
       {
         "zh": "因为他生病了，所以没来上课。",
         "pinyin": "Yīnwèi tā shēngbìng le, suǒyǐ méi lái shàngkè.",
-        "en": "Because he was sick, he didn't come to class."
+        "es": "Como estaba enfermo, no vino a clase."
+      },
+      {
+        "zh": "我今天很累，所以想去睡觉。",
+        "pinyin": "Wǒ jīntiān hěn lèi, suǒyǐ xiǎng qù shuìjiào.",
+        "es": "Hoy estoy muy cansado, así que quiero irme a dormir."
+      },
+      {
+        "zh": "我没去，因为下雨了。",
+        "pinyin": "Wǒ méi qù, yīnwèi xià yǔ le.",
+        "es": "No fui porque llovía."
       }
-    ]
+    ],
+    "common_errors": [
+      {
+        "wrong": "所以我没去，因为下雨了。",
+        "right": "因为下雨，所以我没去。",
+        "why": "所以 introduce el resultado y va detrás de la causa; si la causa va al final, se usa solo 因为."
+      }
+    ],
+    "see_also": []
   },
   {
     "code": "6.4.4",
@@ -1930,25 +2052,51 @@
       "（3）主语+把+宾语+动词+结果补语/趋向补语/状态补语"
     ],
     "order_idx": 41,
-    "pattern": "Subject + 把 + Object + Verb + Complement",
-    "explanation": "The 把 (bǎ) structure is used to emphasize the result or effect of an action on a specific object. Pattern: Subject + 把 + Object + Verb + Complement.",
+    "pattern": "Sujeto + 把 + objeto + verbo + 在/到 + lugar · + 给 + persona · + complemento",
+    "explanation": "把 adelanta el objeto delante del verbo para contar qué le pasa: dónde acaba, a quién llega o en qué estado queda. El objeto es algo concreto que ya se conoce (este libro, la puerta), nunca «uno cualquiera». El verbo no puede quedarse solo: detrás necesita un lugar con 在/到, un destinatario con 给 o un complemento de resultado o de dirección (完, 上). La negación y los verbos como 要 o 能 van delante de 把, no del verbo.",
+    "markers": [
+      "把"
+    ],
     "examples": [
       {
+        "zh": "我把书放在桌子上了。",
+        "pinyin": "Wǒ bǎ shū fàng zài zhuōzi shang le.",
+        "es": "He dejado el libro encima de la mesa."
+      },
+      {
         "zh": "请把门关上。",
-        "pinyin": "Qǐng bǎ mén guān shàng.",
-        "en": "Please close the door."
+        "pinyin": "Qǐng bǎ mén guānshang.",
+        "es": "Cierra la puerta, por favor."
       },
       {
         "zh": "他把作业做完了。",
-        "pinyin": "Tā bǎ zuòyè zuò wán le.",
-        "en": "He finished his homework."
+        "pinyin": "Tā bǎ zuòyè zuòwán le.",
+        "es": "Ha terminado los deberes."
       },
       {
-        "zh": "我把书放在桌子上了。",
-        "pinyin": "Wǒ bǎ shū fàng zài zhuōzi shàng le.",
-        "en": "I put the book on the table."
+        "zh": "你把这本书给他吧。",
+        "pinyin": "Nǐ bǎ zhè běn shū gěi tā ba.",
+        "es": "Dale este libro a él."
+      },
+      {
+        "zh": "我把车开到学校了。",
+        "pinyin": "Wǒ bǎ chē kāidào xuéxiào le.",
+        "es": "He llevado el coche hasta el colegio."
       }
-    ]
+    ],
+    "common_errors": [
+      {
+        "wrong": "我把书看。",
+        "right": "我把书看完了。",
+        "why": "Con 把 el verbo no puede ir solo: hay que decir qué resultado tiene la acción (看完), adónde va el objeto o a quién se da."
+      },
+      {
+        "wrong": "我把一本书放在桌子上。",
+        "right": "我把那本书放在桌子上了。",
+        "why": "El objeto de 把 tiene que ser algo concreto y conocido; con «un libro cualquiera» no se usa 把."
+      }
+    ],
+    "see_also": []
   },
   {
     "code": "6.2.2",

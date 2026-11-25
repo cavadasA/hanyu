@@ -353,6 +353,7 @@ export interface GrammarPoint {
   pattern: string | null;
   explanation: string | null;
   items: string[];
+  markers: string[];
   examples: GrammarExample[];
   common_errors: GrammarError[];
   see_also: Array<{ hsk_level: HskLevel; code: string }>;

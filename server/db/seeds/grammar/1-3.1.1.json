@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "3.1.1",
+  "pattern": "A + 和 + B · modificador + núcleo · verbo + objeto · sujeto + predicado",
+  "explanation": "Las frases chinas se construyen con cuatro piezas. Unión: dos palabras del mismo tipo, a menudo con 和 (爸爸和妈妈). Modificador y núcleo: lo que describe va siempre delante (中国朋友, 很冷). Verbo y objeto: el objeto va detrás del verbo (喝茶). Sujeto y predicado: quién hace algo o cómo es (我喝茶, 今天很冷). A diferencia del español, el modificador nunca va detrás: «un amigo chino» es 一个中国朋友.",
+  "markers": ["和","中国朋友","喝茶","很冷"],
+  "examples": [
+    {"zh":"爸爸和妈妈都在家。","pinyin":"Bàba hé māma dōu zài jiā.","es":"Papá y mamá están en casa."},
+    {"zh":"他是我的中国朋友。","pinyin":"Tā shì wǒ de Zhōngguó péngyou.","es":"Es mi amigo chino."},
+    {"zh":"我喝茶。","pinyin":"Wǒ hē chá.","es":"Bebo té."},
+    {"zh":"今天很冷。","pinyin":"Jīntiān hěn lěng.","es":"Hoy hace mucho frío."}
+  ],
+  "common_errors": [
+    {"wrong":"我有一个朋友中国。","right":"我有一个中国朋友。","why":"El modificador va delante del núcleo: «amigo chino» se dice 中国朋友, al revés que en español."}
+  ],
+  "see_also": []
+}

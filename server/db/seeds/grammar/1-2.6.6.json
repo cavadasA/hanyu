@@ -1,0 +1,19 @@
+{
+  "hsk_level": 1,
+  "code": "2.6.6",
+  "pattern": "不 + verbo/adjetivo · 没(有) + verbo · 不要 + verbo",
+  "explanation": "Hay tres negaciones y no son intercambiables. 不 niega lo habitual, lo que uno quiere hacer y los adjetivos: 我不喝茶 («no bebo té»). 没 o 没有 niega que algo haya pasado o que se tenga: 我没去 («no fui»), 我没有钱. El verbo 有 nunca se niega con 不. 不要 delante de un verbo pide a alguien que no haga algo: 不要说话.",
+  "markers": ["不","没","不要"],
+  "examples": [
+    {"zh":"她不是老师。","pinyin":"Tā bú shì lǎoshī.","es":"Ella no es profesora."},
+    {"zh":"我不喝茶。","pinyin":"Wǒ bù hē chá.","es":"No bebo té."},
+    {"zh":"我昨天没去学校。","pinyin":"Wǒ zuótiān méi qù xuéxiào.","es":"Ayer no fui al colegio."},
+    {"zh":"我没有钱。","pinyin":"Wǒ méiyǒu qián.","es":"No tengo dinero."},
+    {"zh":"不要说话。","pinyin":"Bú yào shuōhuà.","es":"No hables."}
+  ],
+  "common_errors": [
+    {"wrong":"我不有钱。","right":"我没有钱。","why":"有 solo se niega con 没: «不有» no existe."},
+    {"wrong":"我昨天不去学校。","right":"我昨天没去学校。","why":"Para negar algo que no ocurrió se usa 没. En español «no» sirve para todo; en chino hay que elegir según si hablas de un hecho pasado o de un hábito."}
+  ],
+  "see_also": []
+}

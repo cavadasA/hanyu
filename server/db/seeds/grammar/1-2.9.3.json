@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "2.9.3",
+  "pattern": "frase + 吗 / 吧 / 呢 / 了",
+  "explanation": "Estas partículas van al final de la frase y cambian su intención sin tocar el orden de las palabras. 吗 convierte una afirmación en una pregunta de sí o no. 吧 propone algo o pide confirmación. 呢 detrás de un nombre pregunta «¿y…?» (你呢？), y con 在 subraya que algo está pasando ahora. 了 al final indica que la situación ha cambiado: 下雨了 («ya llueve»). Si la frase ya tiene una palabra interrogativa (什么, 哪儿, 谁), no se añade 吗.",
+  "markers": ["吗","吧","呢","了"],
+  "examples": [
+    {"zh":"你是学生吗？","pinyin":"Nǐ shì xuésheng ma?","es":"¿Eres estudiante?"},
+    {"zh":"我们去吃饭吧。","pinyin":"Wǒmen qù chīfàn ba.","es":"Vamos a comer."},
+    {"zh":"我很好，你呢？","pinyin":"Wǒ hěn hǎo, nǐ ne?","es":"Yo estoy bien, ¿y tú?"},
+    {"zh":"他在看书呢。","pinyin":"Tā zài kàn shū ne.","es":"Está leyendo."},
+    {"zh":"下雨了。","pinyin":"Xià yǔ le.","es":"Ya está lloviendo."}
+  ],
+  "common_errors": [
+    {"wrong":"你去哪儿吗？","right":"你去哪儿？","why":"Con una palabra interrogativa como 哪儿 la frase ya es una pregunta; añadir 吗 sobra."}
+  ],
+  "see_also": []
+}

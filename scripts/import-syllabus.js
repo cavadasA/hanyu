@@ -9,6 +9,7 @@ import { loadOfficialCharacters } from './lib/official-terms.js';
 import { loadOfficialGrammar } from './lib/official-grammar.js';
 import { deriveGrammarPrerequisites } from './lib/grammar-prerequisites.js';
 import { deriveUnits } from './lib/derive-units.js';
+import { applyGrammarContent, loadGrammarFiles } from './build-grammar.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
@@ -33,29 +34,12 @@ for (const level of [1, 2, 3]) {
 
 /**
  * El sílabo enumera los puntos de gramática pero no los explica ni los
- * ejemplifica. Lo curado a mano vive en grammar-examples.json y se superpone
- * al generado, igual que sense-glosses-es.json hace con las glosas españolas.
- * Sin esto, cada regeneración borra el trabajo editorial.
+ * ejemplifica. Ese contenido vive en grammar/<nivel>-<código>.json, validado
+ * por build-grammar.js, y se superpone aquí por (nivel, código), igual que
+ * sense-glosses-es.json hace con las glosas españolas. Sin esto, cada
+ * regeneración borra el trabajo editorial.
  */
-const curatedGrammar = JSON.parse(
-  readFileSync(join(seedDir, 'grammar-examples.json'), 'utf-8'),
-);
-
-for (const point of grammar) {
-  const curated = curatedGrammar.find(
-    (entry) =>
-      entry.hsk_level === point.hsk_level &&
-      (entry.code === point.code ||
-        entry.title === point.title ||
-        entry.title === point.detail),
-  );
-
-  if (!curated) continue;
-
-  point.pattern = curated.pattern ?? point.pattern ?? null;
-  point.explanation = curated.explanation ?? point.explanation ?? null;
-  point.examples = curated.examples ?? [];
-}
+applyGrammarContent(grammar, loadGrammarFiles().map(({ entry }) => entry));
 
 writeFileSync(
   join(seedDir, 'grammar-points.json'),

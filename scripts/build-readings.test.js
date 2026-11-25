@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { loadReadings, validateCatalog } from './build-readings.js';
+import { loadDictionary, loadReadings, validateCatalog } from './build-readings.js';
 
 describe('catálogo de lecturas', () => {
   it('carga las lecturas del directorio', () => {
@@ -41,6 +41,13 @@ describe('catálogo de lecturas', () => {
     );
 
     expect(predictable).toEqual([]);
+  });
+
+  it('el diccionario incluye las variantes oficiales en su nivel (没 de 没（有）, 有时 de 有时（候）)', () => {
+    const dictionary = loadDictionary();
+
+    expect(dictionary).toContainEqual(expect.objectContaining({ hanzi: '没', hsk_level: 1 }));
+    expect(dictionary).toContainEqual(expect.objectContaining({ hanzi: '有时', hsk_level: 2 }));
   });
 
   it('todas las lecturas del catálogo pasan los validadores', () => {

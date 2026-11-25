@@ -19,6 +19,7 @@
     "supabase:deploy-functions": "echo \"ERROR: El despliegue de Edge Functions se realiza mediante GitHub Actions para evitar colisiones con otras organizaciones locales.\" && exit 1",
     "build-readings": "node scripts/build-readings.js",
     "build-exercises": "node scripts/build-exercises.js",
+    "build-grammar": "node scripts/build-grammar.js",
     "build:supabase-seed": "node scripts/build-supabase-seed.js",
     "migrate": "node server/db/migrate.js",
     "seed": "node server/db/seed.js",

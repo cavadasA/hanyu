@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "6.1.1",
+  "pattern": "Sujeto + [sujeto 2 + predicado]",
+  "explanation": "El predicado es a su vez una frase pequeña con su propio sujeto. En 他身体很好 se habla de «él» y, dentro de él, de su salud: «él está bien de salud». El primer sujeto es el tema y el segundo, la parte concreta de la que se dice algo. Es la forma normal de hablar de salud, aspecto o rasgos de algo: 我头疼, 这个饭馆菜很好吃. No hace falta 有 ni 的.",
+  "markers": ["身体","头疼","菜很好吃","工作很忙"],
+  "examples": [
+    {"zh":"他身体很好。","pinyin":"Tā shēntǐ hěn hǎo.","es":"Él está bien de salud."},
+    {"zh":"我今天头疼。","pinyin":"Wǒ jīntiān tóu téng.","es":"Hoy me duele la cabeza."},
+    {"zh":"这个饭馆菜很好吃。","pinyin":"Zhège fànguǎn cài hěn hǎochī.","es":"En este restaurante la comida está muy rica."},
+    {"zh":"我工作很忙。","pinyin":"Wǒ gōngzuò hěn máng.","es":"Estoy muy ocupado con el trabajo."},
+    {"zh":"我妈妈身体不太好。","pinyin":"Wǒ māma shēntǐ bú tài hǎo.","es":"Mi madre no está muy bien de salud."}
+  ],
+  "common_errors": [
+    {"wrong":"我有头疼。","right":"我头疼。","why":"En chino no se «tiene» dolor de cabeza: la parte del cuerpo es el sujeto de su propio predicado."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"3.1.1"}]
+}

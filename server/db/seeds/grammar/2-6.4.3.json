@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "6.4.3",
+  "pattern": "因为 + causa，所以 + resultado",
+  "explanation": "因为 presenta la causa y 所以 la consecuencia. Pueden ir los dos o solo uno, pero el orden es fijo: 所以 siempre introduce el resultado. Si quieres dar la causa al final, como el «porque» español, pon 因为 en la segunda parte y ningún 所以: 我没去，因为下雨了.",
+  "markers": ["因为","所以"],
+  "examples": [
+    {"zh":"因为下雨，所以我没去。","pinyin":"Yīnwèi xià yǔ, suǒyǐ wǒ méi qù.","es":"Como llovía, no fui."},
+    {"zh":"因为他生病了，所以没来上课。","pinyin":"Yīnwèi tā shēngbìng le, suǒyǐ méi lái shàngkè.","es":"Como estaba enfermo, no vino a clase."},
+    {"zh":"我今天很累，所以想去睡觉。","pinyin":"Wǒ jīntiān hěn lèi, suǒyǐ xiǎng qù shuìjiào.","es":"Hoy estoy muy cansado, así que quiero irme a dormir."},
+    {"zh":"我没去，因为下雨了。","pinyin":"Wǒ méi qù, yīnwèi xià yǔ le.","es":"No fui porque llovía."}
+  ],
+  "common_errors": [
+    {"wrong":"所以我没去，因为下雨了。","right":"因为下雨，所以我没去。","why":"所以 introduce el resultado y va detrás de la causa; si la causa va al final, se usa solo 因为."}
+  ],
+  "see_also": []
+}

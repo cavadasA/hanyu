@@ -7,6 +7,7 @@ export function normalizeGrammarPoint(point: any): GrammarPoint {
     ...point,
     pattern: point.pattern ?? null,
     items: point.items ?? [],
+    markers: point.markers ?? [],
     examples: parseJsonField(point.examples, []),
     common_errors: parseJsonField(point.common_errors, []),
     see_also: parseJsonField(point.see_also, []),
@@ -45,7 +46,7 @@ export async function getGrammarPoint(
 
   const { data, error } = await client
     .from('grammar_points')
-    .select('id, hsk_level, code, "group", category, detail, title, pattern, explanation, items, examples, order_idx')
+    .select('id, hsk_level, code, "group", category, detail, title, pattern, explanation, items, examples, order_idx, markers, common_errors, see_also')
     .eq('id', numericId)
     .eq('hsk_level', numericLevel)
     .single();

@@ -40,13 +40,20 @@ export function loadReadings() {
     });
 }
 
-function loadDictionary() {
+export function loadDictionary() {
   const dictionary = [];
   for (const level of [1, 2, 3]) {
     for (const word of JSON.parse(
       readFileSync(join(seedDir, `hsk${level}-words.json`), 'utf8'),
     )) {
       dictionary.push({ hanzi: word.hanzi, pinyin: word.pinyin, hsk_level: level });
+      // El sílabo da formas alternativas en la misma entrada: 没（有）, 有时（候）.
+      // Ambas son vocabulario del nivel.
+      for (const variant of word.variants ?? []) {
+        if (variant !== word.hanzi) {
+          dictionary.push({ hanzi: variant, pinyin: word.pinyin, hsk_level: level });
+        }
+      }
     }
   }
   return dictionary;

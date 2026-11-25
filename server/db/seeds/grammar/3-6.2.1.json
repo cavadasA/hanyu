@@ -1,0 +1,19 @@
+{
+  "hsk_level": 3,
+  "code": "6.2.1",
+  "pattern": "Sujeto + 把 + objeto + verbo + 在/到 + lugar · + 给 + persona · + complemento",
+  "explanation": "把 adelanta el objeto delante del verbo para contar qué le pasa: dónde acaba, a quién llega o en qué estado queda. El objeto es algo concreto que ya se conoce (este libro, la puerta), nunca «uno cualquiera». El verbo no puede quedarse solo: detrás necesita un lugar con 在/到, un destinatario con 给 o un complemento de resultado o de dirección (完, 上). La negación y los verbos como 要 o 能 van delante de 把, no del verbo.",
+  "markers": ["把"],
+  "examples": [
+    {"zh":"我把书放在桌子上了。","pinyin":"Wǒ bǎ shū fàng zài zhuōzi shang le.","es":"He dejado el libro encima de la mesa."},
+    {"zh":"请把门关上。","pinyin":"Qǐng bǎ mén guānshang.","es":"Cierra la puerta, por favor."},
+    {"zh":"他把作业做完了。","pinyin":"Tā bǎ zuòyè zuòwán le.","es":"Ha terminado los deberes."},
+    {"zh":"你把这本书给他吧。","pinyin":"Nǐ bǎ zhè běn shū gěi tā ba.","es":"Dale este libro a él."},
+    {"zh":"我把车开到学校了。","pinyin":"Wǒ bǎ chē kāidào xuéxiào le.","es":"He llevado el coche hasta el colegio."}
+  ],
+  "common_errors": [
+    {"wrong":"我把书看。","right":"我把书看完了。","why":"Con 把 el verbo no puede ir solo: hay que decir qué resultado tiene la acción (看完), adónde va el objeto o a quién se da."},
+    {"wrong":"我把一本书放在桌子上。","right":"我把那本书放在桌子上了。","why":"El objeto de 把 tiene que ser algo concreto y conocido; con «un libro cualquiera» no se usa 把."}
+  ],
+  "see_also": []
+}

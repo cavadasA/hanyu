@@ -18,6 +18,14 @@ function expectSqlToContain(sql, fragment) {
 }
 
 describe('contratos de migraciones', () => {
+  it('añade a grammar_points las columnas del contenido gramatical', () => {
+    const migration = readMigration('2026112502_grammar_content.sql');
+
+    expectSqlToContain(migration, "add column if not exists common_errors jsonb not null default '[]'::jsonb");
+    expectSqlToContain(migration, "add column if not exists see_also jsonb not null default '[]'::jsonb");
+    expectSqlToContain(migration, "add column if not exists markers text[] not null default '{}'::text[]");
+  });
+
   it('protege ambos extremos de grammar_prerequisite con claves foráneas', () => {
     const migration = readMigration('2026090203_progress_model.sql');
 

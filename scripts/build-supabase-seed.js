@@ -101,6 +101,9 @@ function buildGrammarRows() {
     sqlJson(point.examples || []),
     sqlTextArray(point.items),
     sqlInteger(point.order_idx ?? null),
+    point.markers?.length ? sqlTextArray(point.markers) : "'{}'::text[]",
+    sqlJson(point.common_errors || []),
+    sqlJson(point.see_also || []),
   ]);
 }
 
@@ -364,9 +367,9 @@ export function buildSeedSql() {
     ),
     buildInsert(
       'grammar_points',
-      ['hsk_level', 'code', '"group"', 'category', 'detail', 'title', 'pattern', 'explanation', 'examples', 'items', 'order_idx'],
+      ['hsk_level', 'code', '"group"', 'category', 'detail', 'title', 'pattern', 'explanation', 'examples', 'items', 'order_idx', 'markers', 'common_errors', 'see_also'],
       grammarRows,
-      'on conflict (hsk_level, code) do update set "group" = excluded."group", category = excluded.category, detail = excluded.detail, title = excluded.title, pattern = excluded.pattern, explanation = excluded.explanation, examples = excluded.examples, items = excluded.items, order_idx = excluded.order_idx',
+      'on conflict (hsk_level, code) do update set "group" = excluded."group", category = excluded.category, detail = excluded.detail, title = excluded.title, pattern = excluded.pattern, explanation = excluded.explanation, examples = excluded.examples, items = excluded.items, order_idx = excluded.order_idx, markers = excluded.markers, common_errors = excluded.common_errors, see_also = excluded.see_also',
     ),
     buildInsert(
       'grammar_prerequisite',

@@ -7,6 +7,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadOfficialWords } from './lib/official-terms.js';
+import { loadGrammarFiles } from './build-grammar.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
@@ -304,33 +305,27 @@ describe('contrato del corpus', () => {
     }
   });
 
-  it('conserva las frases de ejemplo curadas al regenerar la gramática', () => {
-    // El sílabo enumera los puntos pero no los ejemplifica. Regenerar sin
-    // arrastrar lo curado borró 17 frases escritas a mano; esta prueba impide
-    // que vuelva a pasar.
-    const curated = JSON.parse(
-      readFileSync(join(seedDir, 'grammar-examples.json'), 'utf8'),
-    );
+  it('conserva el contenido de grammar/*.json al regenerar la gramática', () => {
+    // El sílabo enumera los puntos pero no los explica. Regenerar sin
+    // superponer lo escrito a mano borró 17 frases una vez; esta prueba impide
+    // que vuelva a pasar, y casa por (nivel, código) porque 47 códigos se
+    // repiten entre niveles.
     const grammar = JSON.parse(readFileSync(join(seedDir, 'grammar-points.json'), 'utf8'));
 
-    const missing = [];
-    for (const entry of curated) {
-      if (entry.examples.length === 0) continue;
-
+    const drift = [];
+    for (const { file, entry } of loadGrammarFiles()) {
       const point = grammar.find(
-        (candidate) =>
-          candidate.hsk_level === entry.hsk_level &&
-          (candidate.code === entry.code ||
-            candidate.title === entry.title ||
-            candidate.detail === entry.title),
+        (candidate) => candidate.hsk_level === entry.hsk_level && candidate.code === entry.code,
       );
 
-      if (!point || !Array.isArray(point.examples) || point.examples.length === 0) {
-        missing.push(`L${entry.hsk_level} ${entry.title}`);
+      for (const field of ['pattern', 'explanation', 'markers', 'examples', 'common_errors', 'see_also']) {
+        if (JSON.stringify(point?.[field]) !== JSON.stringify(entry[field])) {
+          drift.push(`${file}: ${field}`);
+        }
       }
     }
 
-    expect(missing).toEqual([]);
+    expect(drift).toEqual([]);
   });
 
   it('deriva una unidad por cada punto de gramática, con contenido', () => {

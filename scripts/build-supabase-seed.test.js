@@ -51,10 +51,17 @@ describe('buildSeedSql', () => {
 
   it('emite la jerarquía y los ítems de gramática oficial', () => {
     expect(sql).toContain(
-      'insert into public.grammar_points (hsk_level, code, "group", category, detail, title, pattern, explanation, examples, items, order_idx)',
+      'insert into public.grammar_points (hsk_level, code, "group", category, detail, title, pattern, explanation, examples, items, order_idx, markers, common_errors, see_also)',
     );
+    expect(sql).toContain('markers = excluded.markers, common_errors = excluded.common_errors, see_also = excluded.see_also');
     expect(sql).toContain("'2.2.1'");
     expect(sql).toContain("array['AA、A一A、A了A、ABAB']::text[]");
+  });
+
+  it('emite marcadores, errores típicos y see_also del contenido de gramática', () => {
+    expect(sql).toContain("array['因为', '所以']::text[]");
+    expect(sql).toContain('"wrong":"我有头疼。"');
+    expect(sql).toContain(`'[{"hsk_level":1,"code":"3.1.1"}]'::jsonb`);
   });
 
   it('lleva el corpus completo', () => {

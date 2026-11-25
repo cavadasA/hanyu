@@ -61,6 +61,7 @@ function normalizeGrammarPoint(point: any): GrammarPoint {
     explanation: point.explanation ?? null,
     items: parseJsonField(point.items, []),
     examples: parseJsonField(point.examples, []),
+    markers: point.markers ?? [],
     common_errors: parseJsonField(point.common_errors, []),
     see_also: parseJsonField(point.see_also, []),
     ...(point.order_idx === undefined ? {} : { order_idx: point.order_idx }),
