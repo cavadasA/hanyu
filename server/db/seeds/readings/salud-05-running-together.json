@@ -48,14 +48,14 @@
       "es": "Después de correr desayunan juntos y hablan de lo que tienen que hacer ese día."
     },
     {
-      "zh": "陈东觉得自己的身体比上个月好多了。",
-      "pinyin": "Chén Dōng juéde zìjǐ de shēntǐ bǐ shàng gè yuè hǎo duō le.",
+      "zh": "陈东觉得自己的身体比上个月好了很多。",
+      "pinyin": "Chén Dōng juéde zìjǐ de shēntǐ bǐ shàng gè yuè hǎo le hěn duō.",
       "es": "Chen Dong siente que está mucho mejor que el mes pasado."
     },
     {
-      "zh": "他晚上十一点前就睡觉，工作的时候也经常站起来动一动。",
-      "pinyin": "Tā wǎnshang shíyī diǎn qián jiù shuìjiào, gōngzuò de shíhou yě jīngcháng zhàn qǐlái dòng yi dòng.",
-      "es": "Se acuesta antes de las once y, cuando trabaja, se levanta a menudo a moverse un poco."
+      "zh": "他晚上十一点前就睡觉，工作的时候也经常起来走一走。",
+      "pinyin": "Tā wǎnshang shíyī diǎn qián jiù shuìjiào, gōngzuò de shíhou yě jīngcháng qǐlái zǒu yi zǒu.",
+      "es": "Se acuesta antes de las once y, cuando trabaja, se levanta a menudo a caminar un poco."
     },
     {
       "zh": "小丽说她丈夫现在很少生病了。",
@@ -82,13 +82,6 @@
       "occurrence": 0,
       "hsk_level": 1,
       "sense_index": 1
-    },
-    {
-      "sentence": 6,
-      "hanzi": "站",
-      "occurrence": 0,
-      "hsk_level": 3,
-      "sense_index": 2
     }
   ],
   "questions": [

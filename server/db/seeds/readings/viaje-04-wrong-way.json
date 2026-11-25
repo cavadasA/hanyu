@@ -43,9 +43,9 @@
       "es": "Dashan: ¿No nos habremos equivocado de camino?"
     },
     {
-      "zh": "小月：可能是，因为我们在那个路口往左走了。",
-      "pinyin": "Xiǎoyuè: Kěnéng shì, yīnwèi wǒmen zài nàge lù kǒu wǎng zuǒ zǒu le.",
-      "es": "Xiaoyue: Puede ser, porque en aquel cruce giramos a la izquierda."
+      "zh": "小月：可能是，因为我们没有往右走，往左走了。",
+      "pinyin": "Xiǎoyuè: Kěnéng shì, yīnwèi wǒmen méiyǒu wǎng yòu zǒu, wǎng zuǒ zǒu le.",
+      "es": "Xiaoyue: Puede ser, porque no giramos a la derecha, sino a la izquierda."
     },
     {
       "zh": "大山：那我们回去吧。",
@@ -91,7 +91,7 @@
     {
       "prompt": "他们为什么走错了？",
       "options": [
-        "在路口往左走了",
+        "往左走了",
         "没有手机",
         "下雨了"
       ],

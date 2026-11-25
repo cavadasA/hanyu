@@ -43,9 +43,9 @@
       "es": "Por eso salió de casa ya a las siete."
     },
     {
-      "zh": "公交车上人很多，她站了一个小时。",
-      "pinyin": "Gōngjiāochē shàng rén hěn duō, tā zhàn le yí gè xiǎoshí.",
-      "es": "En el autobús había mucha gente y estuvo una hora de pie."
+      "zh": "公交车上人很多，她一个小时都没有坐。",
+      "pinyin": "Gōngjiāochē shang rén hěn duō, tā yí gè xiǎoshí dōu méiyǒu zuò.",
+      "es": "En el autobús había mucha gente y no pudo sentarse en toda la hora."
     },
     {
       "zh": "八点半，她到了公司的楼下。",
@@ -75,13 +75,6 @@
       "occurrence": 0,
       "hsk_level": 1,
       "sense_index": 1
-    },
-    {
-      "sentence": 4,
-      "hanzi": "站",
-      "occurrence": 0,
-      "hsk_level": 3,
-      "sense_index": 2
     },
     {
       "sentence": 5,

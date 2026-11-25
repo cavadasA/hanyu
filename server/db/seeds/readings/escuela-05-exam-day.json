@@ -58,14 +58,14 @@
       "es": "Tres días después, la profesora Wang dijo a todos cómo les había ido."
     },
     {
-      "zh": "大卫考得比上次好多了。",
-      "pinyin": "Dàwèi kǎo de bǐ shàng cì hǎo duō le.",
-      "es": "A David le salió mucho mejor que la vez anterior."
+      "zh": "大卫这次考得比上次好很多。",
+      "pinyin": "Dàwèi zhè cì kǎo de bǐ shàng cì hǎo hěn duō.",
+      "es": "A David esta vez le salió mucho mejor que la vez anterior."
     },
     {
-      "zh": "王老师说，他已经是班里汉字写得最好的外国学生了。",
-      "pinyin": "Wáng lǎoshī shuō, tā yǐjīng shì bān lǐ Hànzì xiě de zuì hǎo de wàiguó xuéshēng le.",
-      "es": "La profesora Wang dijo que ya es el alumno extranjero de la clase que mejor escribe los caracteres."
+      "zh": "王老师说，班里的外国学生，汉字都没有他写得好。",
+      "pinyin": "Wáng lǎoshī shuō, bān lǐ de wàiguó xuéshēng, Hànzì dōu méiyǒu tā xiě de hǎo.",
+      "es": "La profesora Wang dijo que ninguno de los alumnos extranjeros de la clase escribe los caracteres tan bien como él."
     }
   ],
   "senses": [
@@ -117,7 +117,7 @@
       "options": [
         "不太好",
         "跟上次一样",
-        "比上次好多了"
+        "比上次好很多"
       ],
       "answer_index": 2,
       "evidence_sentence": 7

@@ -8,7 +8,7 @@
   "series_index": 4,
   "target_words": [
     "周",
-    "面",
+    "手机",
     "见"
   ],
   "target_grammar": [
@@ -28,8 +28,8 @@
       "es": "Este miércoles, la abuela Li vino a buscar a Xiaoping."
     },
     {
-      "zh": "她说她很想儿子，但是不会在手机上跟他见面。",
-      "pinyin": "Tā shuō tā hěn xiǎng érzi, dànshì bú huì zài shǒujī shàng gēn tā jiàn miàn.",
+      "zh": "她说她很想儿子，但是不会在手机上看见他。",
+      "pinyin": "Tā shuō tā hěn xiǎng érzi, dànshì bú huì zài shǒujī shang kànjiàn tā.",
       "es": "Dijo que echa mucho de menos a su hijo, pero que no sabe verlo por el móvil."
     },
     {
@@ -58,9 +58,9 @@
       "es": "Media hora después, vio a su hijo en el móvil."
     },
     {
-      "zh": "李奶奶笑了，她说已经一年没有见面了。",
-      "pinyin": "Lǐ nǎinai xiào le, tā shuō yǐjīng yì nián méiyǒu jiàn miàn le.",
-      "es": "La abuela Li sonrió; dijo que hacía ya un año que no se veían."
+      "zh": "李奶奶笑了，她说已经一年没有看见儿子了。",
+      "pinyin": "Lǐ nǎinai xiào le, tā shuō yǐjīng yì nián méiyǒu kànjiàn érzi le.",
+      "es": "La abuela Li sonrió; dijo que hacía ya un año que no veía a su hijo."
     },
     {
       "zh": "小平和安安都觉得很高兴。",
@@ -82,7 +82,7 @@
       "prompt": "李奶奶为什么来找小平？",
       "options": [
         "想吃包子",
-        "不会在手机上跟儿子见面",
+        "不会在手机上看见儿子",
         "身体不舒服"
       ],
       "answer_index": 1,
@@ -99,7 +99,7 @@
       "evidence_sentence": 4
     },
     {
-      "prompt": "李奶奶和儿子多长时间没有见面了？",
+      "prompt": "李奶奶多长时间没有看见儿子了？",
       "options": [
         "一个星期",
         "一个月",

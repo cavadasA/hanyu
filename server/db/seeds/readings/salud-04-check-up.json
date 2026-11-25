@@ -33,9 +33,9 @@
       "es": "Médica: Hola, ¿qué tal estos días?"
     },
     {
-      "zh": "陈东：好多了，头不疼了，晚上也睡得很好。",
-      "pinyin": "Chén Dōng: Hǎo duō le, tóu bù téng le, wǎnshang yě shuì de hěn hǎo.",
-      "es": "Chen Dong: Mucho mejor; ya no me duele la cabeza y por las noches duermo bien."
+      "zh": "陈东：我好了很多，头不疼了，晚上也睡得很好。",
+      "pinyin": "Chén Dōng: Wǒ hǎo le hěn duō, tóu bù téng le, wǎnshang yě shuì de hěn hǎo.",
+      "es": "Chen Dong: Estoy mucho mejor; ya no me duele la cabeza y por las noches duermo bien."
     },
     {
       "zh": "医生：很好。你每天工作几个小时？",
@@ -48,9 +48,9 @@
       "es": "Chen Dong: Diez horas; me paso el día sentado delante del ordenador."
     },
     {
-      "zh": "医生：别坐那么长时间，要经常站起来动一动。",
-      "pinyin": "Yīshēng: Bié zuò nàme cháng shíjiān, yào jīngcháng zhàn qǐlái dòng yi dòng.",
-      "es": "Médica: No estés sentado tanto tiempo; tienes que levantarte a menudo y moverte un poco."
+      "zh": "医生：别坐那么长时间，要经常起来走一走。",
+      "pinyin": "Yīshēng: Bié zuò nàme cháng shíjiān, yào jīngcháng qǐlái zǒu yi zǒu.",
+      "es": "Médica: No estés sentado tanto tiempo; tienes que levantarte a menudo y caminar un poco."
     },
     {
       "zh": "陈东：好的。我还要吃药吗？",
@@ -66,15 +66,6 @@
       "zh": "陈东：好，明天早上我就开始跑步。",
       "pinyin": "Chén Dōng: Hǎo, míngtiān zǎoshang wǒ jiù kāishǐ pǎobù.",
       "es": "Chen Dong: Bien; mañana por la mañana empiezo a correr."
-    }
-  ],
-  "senses": [
-    {
-      "sentence": 5,
-      "hanzi": "站",
-      "occurrence": 0,
-      "hsk_level": 3,
-      "sense_index": 2
     }
   ],
   "questions": [
@@ -110,7 +101,7 @@
     },
     {
       "kind": "inferential",
-      "prompt": "医生为什么让陈东经常站起来？",
+      "prompt": "医生为什么让陈东经常起来走一走？",
       "options": [
         "因为他每天坐十个小时",
         "因为他头疼",

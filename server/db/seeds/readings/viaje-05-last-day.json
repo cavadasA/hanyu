@@ -43,9 +43,9 @@
       "es": "Lo que más le gustó a Dashan fue la universidad de debajo del hotel; iba a pasear allí todas las mañanas."
     },
     {
-      "zh": "最后一天，他给家人买了茶和衣服。",
-      "pinyin": "Zuì hòu yì tiān, tā gěi jiārén mǎi le chá hé yīfu.",
-      "es": "El último día compró té y ropa para su familia."
+      "zh": "走的那天，他给家人买了茶和衣服。",
+      "pinyin": "Zǒu de nà tiān, tā gěi jiārén mǎi le chá hé yīfu.",
+      "es": "El día que se iba compró té y ropa para su familia."
     },
     {
       "zh": "下午，小月送他去机场。",
@@ -90,7 +90,7 @@
       "evidence_sentence": 3
     },
     {
-      "prompt": "最后一天，大山给家人买了什么？",
+      "prompt": "走的那天，大山给家人买了什么？",
       "options": [
         "手表和书",
         "鱼和肉",

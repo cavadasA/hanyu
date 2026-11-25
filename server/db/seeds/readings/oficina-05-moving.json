@@ -9,7 +9,7 @@
   "target_words": [
     "运动",
     "进去",
-    "最"
+    "近"
   ],
   "target_grammar": [
     {
@@ -53,9 +53,9 @@
       "es": "El señor Bai dice que Zhang Hong lleva un mes y trabaja muy bien."
     },
     {
-      "zh": "他说张红是这个月公司里做得最好的新人。",
-      "pinyin": "Tā shuō Zhāng Hóng shì zhège yuè gōngsī lǐ zuò de zuì hǎo de xīn rén.",
-      "es": "Dice que es la persona nueva que mejor ha trabajado este mes en la empresa."
+      "zh": "他说这个月公司里的新人，没有人比张红做得好。",
+      "pinyin": "Tā shuō zhège yuè gōngsī lǐ de xīn rén, méiyǒu rén bǐ Zhāng Hóng zuò de hǎo.",
+      "es": "Dice que, de las personas nuevas de la empresa este mes, nadie ha trabajado mejor que Zhang Hong."
     },
     {
       "zh": "张红很高兴，她觉得住得近真好。",
