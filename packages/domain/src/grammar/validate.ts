@@ -42,11 +42,24 @@ export interface GrammarEntry {
 export interface GrammarValidationContext {
   dictionary: Array<{ hanzi: string; hsk_level: number }>;
   known_points: GrammarPointRef[];
+  /** Ítems del punto en el sílabo oficial (p. ej. «（2）借用名量词：杯»). */
+  point_items?: string[];
 }
 
 const MIN_EXAMPLES = 3;
 const ENGLISH = /\b(the|is|are|and)\b/i;
 const MEANS = /\(\s*[a-zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ ]+\s*\)\s*means/i;
+
+/**
+ * Las formas que el sílabo lista en el propio punto son vocabulario de ese
+ * nivel aunque la lista de palabras no las traiga sueltas: 杯 es clasificador de
+ * HSK 1 aunque el diccionario solo tenga 杯子. Se toman los tramos de hanzi
+ * entre separadores; los rótulos (借用名量词) también entran, pero no aparecen
+ * en una frase de ejemplo.
+ */
+function itemForms(items: string[]): string[] {
+  return items.flatMap(item => item.match(/\p{Script=Han}+/gu) ?? []);
+}
 
 /** `小—` y `第 —` se buscan como `小` y `第`: el guion marca un hueco, no un carácter. */
 function normalizeMarker(marker: string): string {
@@ -71,9 +84,10 @@ export function validateGrammarEntry(
   ctx: GrammarValidationContext,
 ): GrammarIssue[] {
   const issues: GrammarIssue[] = [];
-  const allowed = ctx.dictionary
-    .filter(word => word.hsk_level <= entry.hsk_level)
-    .map(word => ({ hanzi: word.hanzi, pinyin: '' }));
+  const allowed = [
+    ...ctx.dictionary.filter(word => word.hsk_level <= entry.hsk_level).map(word => word.hanzi),
+    ...itemForms(ctx.point_items ?? []),
+  ].map(hanzi => ({ hanzi, pinyin: '' }));
   const markers = entry.markers.map(normalizeMarker).filter(marker => marker.length > 0);
   const splittable = allowed.map(word => Array.from(word.hanzi)).filter(chars => chars.length === 2);
 

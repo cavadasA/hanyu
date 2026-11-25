@@ -22,6 +22,11 @@ const dictionary = [
   { hanzi: '睡觉', hsk_level: 1 },
   { hanzi: '八', hsk_level: 1 },
   { hanzi: '跳舞', hsk_level: 2 },
+  { hanzi: '喝', hsk_level: 1 },
+  { hanzi: '茶', hsk_level: 1 },
+  { hanzi: '他', hsk_level: 1 },
+  { hanzi: '两', hsk_level: 1 },
+  { hanzi: '杯子', hsk_level: 1 },
 ];
 
 const ctx = {
@@ -191,4 +196,23 @@ describe('validateGrammarEntry', () => {
       { kind: 'unknown_vocabulary', example_index: 1, detail: '舞' },
     ]);
   });
+
+  it('acepta como vocabulario las formas que el propio punto lista en el sílabo (杯 en 1-2.5.1)', () => {
+    const entry = valid();
+    entry.hsk_level = 1;
+    entry.see_also = [];
+    entry.markers = ['杯'];
+    entry.examples = [
+      { zh: '我喝一杯茶。', pinyin: 'x', es: 'x' },
+      { zh: '你喝两杯茶。', pinyin: 'x', es: 'x' },
+      { zh: '他喝三杯茶。', pinyin: 'x', es: 'x' },
+    ];
+    const vocabulary = (items?: string[]) => validateGrammarEntry(entry, { ...ctx, point_items: items })
+      .filter(issue => issue.kind === 'unknown_vocabulary')
+      .map(issue => issue.detail);
+
+    expect(vocabulary()).toEqual(['杯', '杯', '杯']);
+    expect(vocabulary(['（1）专用名量词：本、个', '（2）借用名量词：杯'])).toEqual([]);
+  });
 });
+

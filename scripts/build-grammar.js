@@ -45,7 +45,11 @@ export function loadGrammarFiles(dir = grammarDir) {
 
 export function loadOfficialPoints() {
   return LEVELS.flatMap(level =>
-    loadOfficialGrammar(level).map(point => ({ hsk_level: point.hsk_level, code: point.code })),
+    loadOfficialGrammar(level).map(point => ({
+      hsk_level: point.hsk_level,
+      code: point.code,
+      items: point.items ?? [],
+    })),
   );
 }
 
@@ -73,11 +77,13 @@ export function buildGrammar({
   const issues = [];
 
   for (const { file, entry } of files) {
-    if (!official.some(point => samePoint(point, entry))) {
+    const point = official.find(candidate => samePoint(candidate, entry));
+    if (!point) {
       issues.push({ file, kind: 'unknown_point' });
       continue;
     }
-    for (const issue of validateGrammarEntry(entry, { dictionary, known_points: official })) {
+    const context = { dictionary, known_points: official, point_items: point.items ?? [] };
+    for (const issue of validateGrammarEntry(entry, context)) {
       issues.push({ file, ...issue });
     }
   }

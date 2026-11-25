@@ -83,6 +83,23 @@ describe('build-grammar', () => {
     expect(result.missing).toEqual([{ hsk_level: 2, code: '2.2.1' }]);
   });
 
+  it('pasa al validador los ítems oficiales del punto como vocabulario del nivel', () => {
+    const withItems = [{ hsk_level: 1, code: '2.5.1', items: ['（2）借用名量词：杯'] }];
+    const cup = entry(1, '2.5.1', {
+      markers: ['杯'],
+      examples: [
+        { zh: '我喝一杯茶。', pinyin: 'x', es: 'x' },
+        { zh: '他喝一杯茶。', pinyin: 'x', es: 'x' },
+        { zh: '我不喝茶，我喝一杯水。', pinyin: 'x', es: 'x' },
+      ],
+    });
+    const dir = dirWith({ '1-2.5.1.json': cup });
+
+    const result = buildGrammar({ dir, official: withItems, dictionary: [...dictionary, { hanzi: '水', hsk_level: 1 }, { hanzi: '一', hsk_level: 1 }] });
+
+    expect(result.issues).toEqual([]);
+  });
+
   it('lleva al resultado los problemas del validador con su fichero', () => {
     const dir = dirWith({ '1-2.6.6.json': entry(1, '2.6.6', { markers: [] }) });
 
