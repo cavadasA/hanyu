@@ -1,0 +1,103 @@
+{
+  "slug": "fiesta-01-new-year-plan",
+  "title": "去我家过年吧",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "eventos",
+  "series": "fiesta",
+  "series_index": 1,
+  "target_words": [
+    "过年",
+    "机票",
+    "回去"
+  ],
+  "target_grammar": [
+    {
+      "code": "7.1.2",
+      "level": 2
+    },
+    {
+      "code": "2.8.3",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "小雨：高飞，快要过年了，你回家吗？",
+      "pinyin": "Xiǎoyǔ: Gāo Fēi, kuàiyào guònián le, nǐ huí jiā ma?",
+      "es": "Xiaoyu: Gao Fei, ya casi es Año Nuevo; ¿vuelves a casa?"
+    },
+    {
+      "zh": "高飞：我不回去了，机票太贵了。",
+      "pinyin": "Gāo Fēi: Wǒ bù huíqù le, jīpiào tài guì le.",
+      "es": "Gao Fei: No voy a volver; los billetes de avión son demasiado caros."
+    },
+    {
+      "zh": "小雨：那你一个人在这里过年吗？",
+      "pinyin": "Xiǎoyǔ: Nà nǐ yí gè rén zài zhèlǐ guònián ma?",
+      "es": "Xiaoyu: ¿Entonces vas a pasar el Año Nuevo aquí solo?"
+    },
+    {
+      "zh": "高飞：是啊。我来中国两年了，还没有去过中国人家里。",
+      "pinyin": "Gāo Fēi: Shì a. Wǒ lái Zhōngguó liǎng nián le, hái méiyǒu qùguo Zhōngguó rén jiā lǐ.",
+      "es": "Gao Fei: Sí. Llevo dos años en China y todavía no he estado nunca en una casa china."
+    },
+    {
+      "zh": "小雨：那你来我家过年吧！我家人很多，很快乐。",
+      "pinyin": "Xiǎoyǔ: Nà nǐ lái wǒ jiā guònián ba! Wǒ jiārén hěn duō, hěn kuàilè.",
+      "es": "Xiaoyu: ¡Pues ven a pasarlo a mi casa! Somos mucha gente y es muy alegre."
+    },
+    {
+      "zh": "高飞：真的吗？你妈妈会不会不高兴？",
+      "pinyin": "Gāo Fēi: Zhēn de ma? Nǐ māma huì bu huì bù gāoxìng?",
+      "es": "Gao Fei: ¿De verdad? ¿No le molestará a tu madre?"
+    },
+    {
+      "zh": "小雨：不会，我现在就给她打电话。",
+      "pinyin": "Xiǎoyǔ: Bú huì, wǒ xiànzài jiù gěi tā dǎdiànhuà.",
+      "es": "Xiaoyu: Qué va; ahora mismo la llamo por teléfono."
+    },
+    {
+      "zh": "小雨妈妈：小雨的朋友就是我们的朋友，请他来吧！",
+      "pinyin": "Xiǎoyǔ māma: Xiǎoyǔ de péngyou jiù shì wǒmen de péngyou, qǐng tā lái ba!",
+      "es": "Madre de Xiaoyu: Los amigos de Xiaoyu son nuestros amigos; ¡que venga!"
+    },
+    {
+      "zh": "高飞：太好了！谢谢你们！",
+      "pinyin": "Gāo Fēi: Tài hǎo le! Xièxie nǐmen!",
+      "es": "Gao Fei: ¡Estupendo! ¡Muchas gracias!"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "高飞为什么不回家过年？",
+      "options": [
+        "因为要工作",
+        "因为机票太贵了",
+        "因为身体不好"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "高飞去过中国人家里吗？",
+      "options": [
+        "没有去过",
+        "去过一次",
+        "经常去"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "小雨妈妈说什么？",
+      "options": [
+        "高飞不能来",
+        "让高飞明年来",
+        "请高飞来过年"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}

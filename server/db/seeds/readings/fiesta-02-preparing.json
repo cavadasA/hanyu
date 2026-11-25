@@ -1,0 +1,103 @@
+{
+  "slug": "fiesta-02-preparing",
+  "title": "过年前",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "eventos",
+  "series": "fiesta",
+  "series_index": 2,
+  "target_words": [
+    "花",
+    "肉",
+    "爷爷"
+  ],
+  "target_grammar": [
+    {
+      "code": "3.1.2",
+      "level": 2
+    },
+    {
+      "code": "5.1",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "过年前一个星期，小雨家里非常忙。",
+      "pinyin": "Guònián qián yí gè xīngqī, Xiǎoyǔ jiā lǐ fēicháng máng.",
+      "es": "Una semana antes del Año Nuevo, en casa de Xiaoyu todos están muy ocupados."
+    },
+    {
+      "zh": "小雨妈妈去超市买了很多肉和鱼。",
+      "pinyin": "Xiǎoyǔ māma qù chāoshì mǎi le hěn duō ròu hé yú.",
+      "es": "La madre de Xiaoyu ha ido al supermercado a comprar mucha carne y pescado."
+    },
+    {
+      "zh": "爷爷去商店买花，他说过年家里要有红色的花。",
+      "pinyin": "Yéye qù shāngdiàn mǎi huā, tā shuō guònián jiā lǐ yào yǒu hóngsè de huā.",
+      "es": "El abuelo ha ido a la tienda a comprar flores; dice que en Año Nuevo en casa tiene que haber flores rojas."
+    },
+    {
+      "zh": "小雨和高飞一起帮忙，房间很快就准备好了。",
+      "pinyin": "Xiǎoyǔ hé Gāo Fēi yìqǐ bāngmáng, fángjiān hěn kuài jiù zhǔnbèi hǎo le.",
+      "es": "Xiaoyu y Gao Fei ayudan juntos, y las habitaciones quedan preparadas enseguida."
+    },
+    {
+      "zh": "高飞第一次看见这么多人一起准备过年。",
+      "pinyin": "Gāo Fēi dì yī cì kànjiàn zhème duō rén yìqǐ zhǔnbèi guònián.",
+      "es": "Es la primera vez que Gao Fei ve a tanta gente preparando juntos el Año Nuevo."
+    },
+    {
+      "zh": "他觉得很有意思，也想学做中国菜。",
+      "pinyin": "Tā juéde hěn yǒuyìsi, yě xiǎng xué zuò Zhōngguó cài.",
+      "es": "Le parece muy interesante y también quiere aprender a hacer comida china."
+    },
+    {
+      "zh": "小雨妈妈教他做饺子，他做得不太好看。",
+      "pinyin": "Xiǎoyǔ māma jiāo tā zuò jiǎozi, tā zuò de bú tài hǎokàn.",
+      "es": "La madre de Xiaoyu le enseña a hacer jiaozi; no le salen muy bonitos."
+    },
+    {
+      "zh": "大家都笑了，爷爷说第一次做饺子都是这样。",
+      "pinyin": "Dàjiā dōu xiào le, yéye shuō dì yī cì zuò jiǎozi dōu shì zhèyàng.",
+      "es": "Todos se ríen, y el abuelo dice que la primera vez que se hacen jiaozi siempre salen así."
+    },
+    {
+      "zh": "晚上，饺子做好了，有两百多个。",
+      "pinyin": "Wǎnshang, jiǎozi zuò hǎo le, yǒu liǎngbǎi duō gè.",
+      "es": "Por la noche los jiaozi están hechos: hay más de doscientos."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "小雨妈妈去超市买了什么？",
+      "options": [
+        "花和水果",
+        "肉和鱼",
+        "饺子"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "爷爷说过年家里要有什么？",
+      "options": [
+        "红色的花",
+        "很多钱",
+        "新衣服"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "一共做了多少饺子？",
+      "options": [
+        "二十多个",
+        "一百个",
+        "两百多个"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 8
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "slug": "fiesta-05-dinner",
+  "title": "在酒店吃饭",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "eventos",
+  "series": "fiesta",
+  "series_index": 5,
+  "target_words": [
+    "咖啡",
+    "送",
+    "女孩儿"
+  ],
+  "target_grammar": [
+    {
+      "code": "3.1.1",
+      "level": 2
+    },
+    {
+      "code": "5.3",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "星期六是晴天，天气很好。",
+      "pinyin": "Xīngqīliù shì qíng tiān, tiānqì hěn hǎo.",
+      "es": "El sábado hizo sol; el tiempo era muy bueno."
+    },
+    {
+      "zh": "小雨、小雨妈妈和爷爷中午十二点到了酒店。",
+      "pinyin": "Xiǎoyǔ, Xiǎoyǔ māma hé yéye zhōngwǔ shí'èr diǎn dào le jiǔdiàn.",
+      "es": "Xiaoyu, su madre y el abuelo llegaron al hotel a las doce del mediodía."
+    },
+    {
+      "zh": "高飞已经在门口等他们了，手里拿着花。",
+      "pinyin": "Gāo Fēi yǐjīng zài ménkǒu děng tāmen le, shǒu lǐ ná zhe huā.",
+      "es": "Gao Fei ya los esperaba en la puerta con unas flores en la mano."
+    },
+    {
+      "zh": "他给小雨妈妈送花，说谢谢她过年的时候请他去家里。",
+      "pinyin": "Tā gěi Xiǎoyǔ māma sòng huā, shuō xièxie tā guònián de shíhou qǐng tā qù jiā lǐ.",
+      "es": "Le dio las flores a la madre de Xiaoyu y le agradeció que lo invitara a su casa en Año Nuevo."
+    },
+    {
+      "zh": "小雨妈妈很高兴，说高飞是一个很好的孩子。",
+      "pinyin": "Xiǎoyǔ māma hěn gāoxìng, shuō Gāo Fēi shì yí gè hěn hǎo de háizi.",
+      "es": "La madre de Xiaoyu se puso muy contenta y dijo que Gao Fei es un chico muy bueno."
+    },
+    {
+      "zh": "酒店的菜很好吃，爷爷吃了很多。",
+      "pinyin": "Jiǔdiàn de cài hěn hǎochī, yéye chī le hěn duō.",
+      "es": "La comida del hotel estaba muy buena y el abuelo comió mucho."
+    },
+    {
+      "zh": "吃完饭，他们喝了咖啡，说了很长时间。",
+      "pinyin": "Chī wán fàn, tāmen hē le kāfēi, shuō le hěn cháng shíjiān.",
+      "es": "Después de comer tomaron café y estuvieron hablando mucho rato."
+    },
+    {
+      "zh": "旁边桌子的一个小女孩儿看着高飞笑。",
+      "pinyin": "Pángbiān zhuōzi de yí gè xiǎo nǚháir kàn zhe Gāo Fēi xiào.",
+      "es": "Una niña pequeña de la mesa de al lado miraba a Gao Fei y se reía."
+    },
+    {
+      "zh": "小雨妈妈说，明年过年高飞还要来她家。",
+      "pinyin": "Xiǎoyǔ māma shuō, míngnián guònián Gāo Fēi hái yào lái tā jiā.",
+      "es": "La madre de Xiaoyu dijo que el año que viene Gao Fei tiene que volver a su casa en Año Nuevo."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "高飞在门口拿着什么？",
+      "options": [
+        "咖啡",
+        "花",
+        "手表"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "吃完饭，他们喝了什么？",
+      "options": [
+        "咖啡",
+        "茶",
+        "水"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 6
+    },
+    {
+      "prompt": "小雨妈妈说明年高飞要做什么？",
+      "options": [
+        "回国",
+        "去酒店工作",
+        "还来她家过年"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 8
+    }
+  ]
+}

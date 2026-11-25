@@ -1,0 +1,103 @@
+{
+  "slug": "fiesta-03-new-year-eve",
+  "title": "过年的晚上",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "eventos",
+  "series": "fiesta",
+  "series_index": 3,
+  "target_words": [
+    "小孩儿",
+    "跳舞",
+    "一起"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.4.1",
+      "level": 2
+    },
+    {
+      "code": "2.7.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "过年那天晚上，小雨家来了很多人。",
+      "pinyin": "Guònián nà tiān wǎnshang, Xiǎoyǔ jiā lái le hěn duō rén.",
+      "es": "La noche de Año Nuevo vino mucha gente a casa de Xiaoyu."
+    },
+    {
+      "zh": "桌子上有很多菜，有鱼、有肉，还有饺子。",
+      "pinyin": "Zhuōzi shàng yǒu hěn duō cài, yǒu yú, yǒu ròu, hái yǒu jiǎozi.",
+      "es": "En la mesa había muchos platos: pescado, carne y además jiaozi."
+    },
+    {
+      "zh": "大家坐在一起，慢慢地吃，慢慢地说。",
+      "pinyin": "Dàjiā zuò zài yìqǐ, màn màn de chī, màn màn de shuō.",
+      "es": "Todos se sentaron juntos a comer y a charlar sin prisas."
+    },
+    {
+      "zh": "吃完饭，小孩儿们在外面玩，男孩儿跑来跑去，女孩儿在唱歌。",
+      "pinyin": "Chī wán fàn, xiǎoháir men zài wàimiàn wán, nánháir pǎo lái pǎo qù, nǚháir zài chàng gē.",
+      "es": "Después de cenar, los niños jugaban fuera: los chicos corrían de un lado a otro y las chicas cantaban."
+    },
+    {
+      "zh": "爷爷说他想跳舞，大家都笑了。",
+      "pinyin": "Yéye shuō tā xiǎng tiàowǔ, dàjiā dōu xiào le.",
+      "es": "El abuelo dijo que quería bailar, y todos se rieron."
+    },
+    {
+      "zh": "小雨让高飞和她一起跟爷爷跳舞。",
+      "pinyin": "Xiǎoyǔ ràng Gāo Fēi hé tā yìqǐ gēn yéye tiàowǔ.",
+      "es": "Xiaoyu le pidió a Gao Fei que bailara con ella y con el abuelo."
+    },
+    {
+      "zh": "高飞跳舞不太好看，但是他很快乐。",
+      "pinyin": "Gāo Fēi tiàowǔ bú tài hǎokàn, dànshì tā hěn kuàilè.",
+      "es": "Gao Fei no bailaba muy bien, pero estaba muy feliz."
+    },
+    {
+      "zh": "十二点的时候，大家一起说过年好。",
+      "pinyin": "Shí'èr diǎn de shíhou, dàjiā yìqǐ shuō guònián hǎo.",
+      "es": "A las doce, todos dijeron juntos «¡Feliz Año Nuevo!»."
+    },
+    {
+      "zh": "高飞说这是他过得最快乐的一个年。",
+      "pinyin": "Gāo Fēi shuō zhè shì tā guò de zuì kuàilè de yí gè nián.",
+      "es": "Gao Fei dijo que ha sido el Año Nuevo más feliz que ha pasado."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "吃完饭，小孩儿们在做什么？",
+      "options": [
+        "在睡觉",
+        "在外面玩",
+        "在做饺子"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "谁说想跳舞？",
+      "options": [
+        "爷爷",
+        "小雨妈妈",
+        "高飞"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "高飞觉得这个年过得怎么样？",
+      "options": [
+        "很累",
+        "没意思",
+        "最快乐"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 8
+    }
+  ]
+}

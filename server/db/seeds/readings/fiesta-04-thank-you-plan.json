@@ -1,0 +1,103 @@
+{
+  "slug": "fiesta-04-thank-you-plan",
+  "title": "请小雨家吃饭",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "eventos",
+  "series": "fiesta",
+  "series_index": 4,
+  "target_words": [
+    "酒店",
+    "晴",
+    "阴"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.7.5",
+      "level": 2
+    },
+    {
+      "code": "6.4.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "高飞：小雨，我想请你家人吃饭，谢谢你们。",
+      "pinyin": "Gāo Fēi: Xiǎoyǔ, wǒ xiǎng qǐng nǐ jiārén chī fàn, xièxie nǐmen.",
+      "es": "Gao Fei: Xiaoyu, quiero invitar a tu familia a comer para daros las gracias."
+    },
+    {
+      "zh": "小雨：别这样，你是我们的朋友。",
+      "pinyin": "Xiǎoyǔ: Bié zhèyàng, nǐ shì wǒmen de péngyou.",
+      "es": "Xiaoyu: No hace falta, eres nuestro amigo."
+    },
+    {
+      "zh": "高飞：虽然是朋友，但是我也想谢谢你们。",
+      "pinyin": "Gāo Fēi: Suīrán shì péngyou, dànshì wǒ yě xiǎng xièxie nǐmen.",
+      "es": "Gao Fei: Aunque seamos amigos, también quiero daros las gracias."
+    },
+    {
+      "zh": "小雨：好吧。你想在哪儿吃？",
+      "pinyin": "Xiǎoyǔ: Hǎo ba. Nǐ xiǎng zài nǎr chī?",
+      "es": "Xiaoyu: Está bien. ¿Dónde quieres comer?"
+    },
+    {
+      "zh": "高飞：学校旁边那个酒店的饭很好吃。",
+      "pinyin": "Gāo Fēi: Xuéxiào pángbiān nàge jiǔdiàn de fàn hěn hǎochī.",
+      "es": "Gao Fei: La comida del hotel que hay junto a la universidad está muy buena."
+    },
+    {
+      "zh": "小雨：酒店的饭很贵吧？",
+      "pinyin": "Xiǎoyǔ: Jiǔdiàn de fàn hěn guì ba?",
+      "es": "Xiaoyu: La comida de un hotel será cara, ¿no?"
+    },
+    {
+      "zh": "高飞：没关系，过年的时候我也想请你们。",
+      "pinyin": "Gāo Fēi: Méiguānxi, guònián de shíhou wǒ yě xiǎng qǐng nǐmen.",
+      "es": "Gao Fei: No importa; ya en Año Nuevo quería invitaros."
+    },
+    {
+      "zh": "小雨：那星期六中午吧。明天是阴天，听说星期六是晴天。",
+      "pinyin": "Xiǎoyǔ: Nà xīngqīliù zhōngwǔ ba. Míngtiān shì yīn tiān, tīng shuō xīngqīliù shì qíng tiān.",
+      "es": "Xiaoyu: Entonces el sábado a mediodía. Mañana estará nublado, pero dicen que el sábado hará sol."
+    },
+    {
+      "zh": "高飞：好，星期六我们一起去。",
+      "pinyin": "Gāo Fēi: Hǎo, xīngqīliù wǒmen yìqǐ qù.",
+      "es": "Gao Fei: Bien, el sábado vamos juntos."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "高飞为什么想请小雨家人吃饭？",
+      "options": [
+        "他过生日",
+        "想谢谢他们",
+        "他找到了工作"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "他们在哪儿吃饭？",
+      "options": [
+        "学校旁边的酒店",
+        "小雨家",
+        "公司"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "星期六天气怎么样？",
+      "options": [
+        "下雨",
+        "阴天",
+        "晴天"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}
