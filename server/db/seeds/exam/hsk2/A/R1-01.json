@@ -1,0 +1,56 @@
+{
+  "slug": "a-r1-01",
+  "part": "R1",
+  "images": [
+    "swim",
+    "dance",
+    "write",
+    "breakfast",
+    "clock-12",
+    "umbrella"
+  ],
+  "example": {
+    "stimulus": {
+      "zh": "我每个星期都去游泳。",
+      "pinyin": "Wǒ měi gè xīngqī dōu qù yóuyǒng."
+    },
+    "answer": 0
+  },
+  "items": [
+    {
+      "text": {
+        "zh": "她很喜欢跳舞。",
+        "pinyin": "Tā hěn xǐhuan tiàowǔ."
+      },
+      "answer": 1
+    },
+    {
+      "text": {
+        "zh": "弟弟在写汉字。",
+        "pinyin": "Dìdi zài xiě Hànzì."
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "早上我喝牛奶，吃鸡蛋。",
+        "pinyin": "Zǎoshang wǒ hē niúnǎi, chī jīdàn."
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "中午十二点了，我们去吃饭吧。",
+        "pinyin": "Zhōngwǔ shí'èr diǎn le, wǒmen qù chī fàn ba."
+      },
+      "answer": 4
+    },
+    {
+      "text": {
+        "zh": "下雨了，我们快回家吧。",
+        "pinyin": "Xià yǔ le, wǒmen kuài huí jiā ba."
+      },
+      "answer": 5
+    }
+  ]
+}

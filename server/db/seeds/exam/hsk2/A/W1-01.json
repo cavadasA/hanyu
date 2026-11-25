@@ -1,0 +1,62 @@
+{
+  "slug": "a-w1-01",
+  "part": "W1",
+  "bank": [
+    "亻",
+    "女",
+    "口",
+    "讠",
+    "日",
+    "木"
+  ],
+  "example": {
+    "word": {
+      "zh": "你好",
+      "pinyin": "Nǐ hǎo"
+    },
+    "target_index": 0,
+    "answer": 0
+  },
+  "items": [
+    {
+      "word": {
+        "zh": "妈妈",
+        "pinyin": "Māma"
+      },
+      "target_index": 0,
+      "answer": 1
+    },
+    {
+      "word": {
+        "zh": "喝水",
+        "pinyin": "Hē shuǐ"
+      },
+      "target_index": 0,
+      "answer": 2
+    },
+    {
+      "word": {
+        "zh": "汉语",
+        "pinyin": "Hànyǔ"
+      },
+      "target_index": 1,
+      "answer": 3
+    },
+    {
+      "word": {
+        "zh": "明天",
+        "pinyin": "Míngtiān"
+      },
+      "target_index": 0,
+      "answer": 4
+    },
+    {
+      "word": {
+        "zh": "学校",
+        "pinyin": "Xuéxiào"
+      },
+      "target_index": 1,
+      "answer": 5
+    }
+  ]
+}

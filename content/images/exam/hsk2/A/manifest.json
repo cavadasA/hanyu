@@ -1,0 +1,250 @@
+{
+  "owner": "exam/hsk2/A",
+  "images": [
+    {
+      "key": "apple",
+      "file": "apple.webp",
+      "depicts_es": "una manzana roja",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "ball",
+      "file": "ball.webp",
+      "depicts_es": "un balón de fútbol",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "bed",
+      "file": "bed.webp",
+      "depicts_es": "una cama vacía con almohada y manta",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "bike",
+      "file": "bike.webp",
+      "depicts_es": "una bicicleta",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "book",
+      "file": "book.webp",
+      "depicts_es": "un libro abierto",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "breakfast",
+      "file": "breakfast.webp",
+      "depicts_es": "un desayuno: un huevo frito en un plato y un vaso de leche",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "cat",
+      "file": "cat.webp",
+      "depicts_es": "un gato",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "clock-12",
+      "file": "clock-12.webp",
+      "depicts_es": "un reloj que marca las 12:00",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "clock-3",
+      "file": "clock-3.webp",
+      "depicts_es": "un reloj que marca las 3:00",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "clock-6",
+      "file": "clock-6.webp",
+      "depicts_es": "un reloj que marca las 6:00",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "clock-9",
+      "file": "clock-9.webp",
+      "depicts_es": "un reloj que marca las 9:00",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "coffee",
+      "file": "coffee.webp",
+      "depicts_es": "una taza de café caliente con asa",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "computer",
+      "file": "computer.webp",
+      "depicts_es": "un ordenador portátil",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "dance",
+      "file": "dance.webp",
+      "depicts_es": "una persona bailando con música",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "dog",
+      "file": "dog.webp",
+      "depicts_es": "un perro",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "fish",
+      "file": "fish.webp",
+      "depicts_es": "un pez",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "flower",
+      "file": "flower.webp",
+      "depicts_es": "un ramo de flores",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "gift",
+      "file": "gift.webp",
+      "depicts_es": "un regalo con lazo",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "hospital",
+      "file": "hospital.webp",
+      "depicts_es": "un hospital con una cruz roja",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "milk",
+      "file": "milk.webp",
+      "depicts_es": "una botella de leche y un vaso de leche",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "phone",
+      "file": "phone.webp",
+      "depicts_es": "un teléfono móvil",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "plane",
+      "file": "plane.webp",
+      "depicts_es": "un avión volando",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "rain",
+      "file": "rain.webp",
+      "depicts_es": "una nube con lluvia",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "run",
+      "file": "run.webp",
+      "depicts_es": "una persona corriendo",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "shirt",
+      "file": "shirt.webp",
+      "depicts_es": "una camisa",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "sleep",
+      "file": "sleep.webp",
+      "depicts_es": "una persona durmiendo en la cama",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "snow",
+      "file": "snow.webp",
+      "depicts_es": "copos de nieve",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "sun",
+      "file": "sun.webp",
+      "depicts_es": "un sol brillante",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "swim",
+      "file": "swim.webp",
+      "depicts_es": "una persona nadando",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "taxi",
+      "file": "taxi.webp",
+      "depicts_es": "un taxi amarillo",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "tea",
+      "file": "tea.webp",
+      "depicts_es": "una tetera china sirviendo té en una taza pequeña",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "train",
+      "file": "train.webp",
+      "depicts_es": "un tren sobre las vías",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "tv",
+      "file": "tv.webp",
+      "depicts_es": "un televisor",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "umbrella",
+      "file": "umbrella.webp",
+      "depicts_es": "un paraguas abierto bajo la lluvia",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    },
+    {
+      "key": "write",
+      "file": "write.webp",
+      "depicts_es": "un niño escribiendo en un cuaderno",
+      "source": "svg-propio",
+      "license": "Dibujo propio del proyecto Hanyu, sin material de terceros"
+    }
+  ]
+}

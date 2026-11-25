@@ -1,0 +1,63 @@
+{
+  "slug": "a-r3-02",
+  "part": "R3",
+  "bank": [
+    {
+      "zh": "下个月。",
+      "pinyin": "Xià gè yuè."
+    },
+    {
+      "zh": "对，我很喜欢运动。",
+      "pinyin": "Duì, wǒ hěn xǐhuan yùndòng."
+    },
+    {
+      "zh": "坐出租车来的。",
+      "pinyin": "Zuò chūzūchē lái de."
+    },
+    {
+      "zh": "没关系。",
+      "pinyin": "Méi guānxi."
+    },
+    {
+      "zh": "两个，一个哥哥，一个姐姐。",
+      "pinyin": "Liǎng gè, yí gè gēge, yí gè jiějie."
+    }
+  ],
+  "items": [
+    {
+      "text": {
+        "zh": "你每天都去跑步吗？",
+        "pinyin": "Nǐ měi tiān dōu qù pǎobù ma?"
+      },
+      "answer": 1
+    },
+    {
+      "text": {
+        "zh": "你是怎么来的？",
+        "pinyin": "Nǐ shì zěnme lái de?"
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "对不起，我来晚了。",
+        "pinyin": "Duìbuqǐ, wǒ lái wǎn le."
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "你什么时候去中国？",
+        "pinyin": "Nǐ shénme shíhou qù Zhōngguó?"
+      },
+      "answer": 0
+    },
+    {
+      "text": {
+        "zh": "你有几个哥哥姐姐？",
+        "pinyin": "Nǐ yǒu jǐ gè gēge jiějie?"
+      },
+      "answer": 4
+    }
+  ]
+}

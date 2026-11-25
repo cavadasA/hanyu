@@ -1,0 +1,104 @@
+{
+  "slug": "a-l2-01",
+  "part": "L2",
+  "images": [
+    "phone",
+    "book",
+    "apple",
+    "hospital",
+    "computer",
+    "bed"
+  ],
+  "example": {
+    "stimulus": [
+      {
+        "zh": "你在做什么呢？",
+        "pinyin": "Nǐ zài zuò shénme ne?",
+        "speaker": "M"
+      },
+      {
+        "zh": "我在给妈妈打电话。",
+        "pinyin": "Wǒ zài gěi māma dǎ diànhuà.",
+        "speaker": "F"
+      }
+    ],
+    "answer": 0
+  },
+  "items": [
+    {
+      "audio": [
+        {
+          "zh": "你下午去哪儿？",
+          "pinyin": "Nǐ xiàwǔ qù nǎr?",
+          "speaker": "M"
+        },
+        {
+          "zh": "我身体不舒服，要去医院。",
+          "pinyin": "Wǒ shēntǐ bù shūfu, yào qù yīyuàn.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 3
+    },
+    {
+      "audio": [
+        {
+          "zh": "你想吃什么？",
+          "pinyin": "Nǐ xiǎng chī shénme?",
+          "speaker": "F"
+        },
+        {
+          "zh": "给我一个苹果吧。",
+          "pinyin": "Gěi wǒ yí gè píngguǒ ba.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "你昨天晚上几点睡觉的？",
+          "pinyin": "Nǐ zuótiān wǎnshang jǐ diǎn shuìjiào de?",
+          "speaker": "M"
+        },
+        {
+          "zh": "十一点，我太累了。",
+          "pinyin": "Shíyī diǎn, wǒ tài lèi le.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 5
+    },
+    {
+      "audio": [
+        {
+          "zh": "这本书怎么样？",
+          "pinyin": "Zhè běn shū zěnmeyàng?",
+          "speaker": "F"
+        },
+        {
+          "zh": "很好看，我看了两次。",
+          "pinyin": "Hěn hǎokàn, wǒ kàn le liǎng cì.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "你在电脑上看什么？",
+          "pinyin": "Nǐ zài diànnǎo shàng kàn shénme?",
+          "speaker": "M"
+        },
+        {
+          "zh": "看明天的天气。",
+          "pinyin": "Kàn míngtiān de tiānqì.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 4
+    }
+  ]
+}

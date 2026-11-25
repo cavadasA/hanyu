@@ -1,0 +1,74 @@
+{
+  "slug": "a-r2-01",
+  "part": "R2",
+  "bank": [
+    {
+      "zh": "已经",
+      "pinyin": "Yǐjīng"
+    },
+    {
+      "zh": "离",
+      "pinyin": "Lí"
+    },
+    {
+      "zh": "一起",
+      "pinyin": "Yìqǐ"
+    },
+    {
+      "zh": "准备",
+      "pinyin": "Zhǔnbèi"
+    },
+    {
+      "zh": "因为",
+      "pinyin": "Yīnwèi"
+    },
+    {
+      "zh": "再",
+      "pinyin": "Zài"
+    }
+  ],
+  "example": {
+    "text": {
+      "zh": "我（ ）吃过饭了。",
+      "pinyin": "Wǒ chī guo fàn le."
+    },
+    "answer": 0
+  },
+  "items": [
+    {
+      "text": {
+        "zh": "我家（ ）学校很近。",
+        "pinyin": "Wǒ jiā xuéxiào hěn jìn."
+      },
+      "answer": 1
+    },
+    {
+      "text": {
+        "zh": "明天我们（ ）去看电影吧。",
+        "pinyin": "Míngtiān wǒmen qù kàn diànyǐng ba."
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "你（ ）好了吗？我们要走了。",
+        "pinyin": "Nǐ hǎo le ma? Wǒmen yào zǒu le."
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "（ ）下雨，所以我没去跑步。",
+        "pinyin": "xià yǔ, suǒyǐ wǒ méi qù pǎobù."
+      },
+      "answer": 4
+    },
+    {
+      "text": {
+        "zh": "A：这个字我不会写。B：没关系，你（ ）看看书。",
+        "pinyin": "A: Zhège zì wǒ bú huì xiě. B: Méi guānxi, nǐ kàn kàn shū."
+      },
+      "answer": 5
+    }
+  ]
+}

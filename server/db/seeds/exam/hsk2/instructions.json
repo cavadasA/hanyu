@@ -1,0 +1,42 @@
+{
+  "opening": {
+    "zh": "你好！汉语水平考试二级，听力考试现在开始。",
+    "pinyin": "Nǐ hǎo! Hànyǔ Shuǐpíng Kǎoshì èr jí, tīnglì kǎoshì xiànzài kāishǐ."
+  },
+  "closing": {
+    "zh": "听力考试到这里结束。",
+    "pinyin": "Tīnglì kǎoshì dào zhèlǐ jiéshù."
+  },
+  "parts": {
+    "L1": {
+      "instruction": {
+        "zh": "第一部分，一共五个题。请听句子，选出对应的图片。每个题听两次。例如：",
+        "pinyin": "Dì-yī bùfen, yígòng wǔ gè tí. Qǐng tīng jùzi, xuǎnchū duìyìng de túpiàn. Měi gè tí tīng liǎng cì. Lìrú:"
+      },
+      "start": {
+        "zh": "现在开始第一题。",
+        "pinyin": "Xiànzài kāishǐ dì-yī tí."
+      }
+    },
+    "L2": {
+      "instruction": {
+        "zh": "第二部分，一共十个题。请听对话，选出对应的图片。每个题听两次。例如：",
+        "pinyin": "Dì-èr bùfen, yígòng shí gè tí. Qǐng tīng duìhuà, xuǎnchū duìyìng de túpiàn. Měi gè tí tīng liǎng cì. Lìrú:"
+      },
+      "start": {
+        "zh": "现在开始第六题。",
+        "pinyin": "Xiànzài kāishǐ dì-liù tí."
+      }
+    },
+    "L3": {
+      "instruction": {
+        "zh": "第三部分，一共十个题。请听对话和问题，选出正确答案。每个题听两次。例如：",
+        "pinyin": "Dì-sān bùfen, yígòng shí gè tí. Qǐng tīng duìhuà hé wèntí, xuǎnchū zhèngquè dá'àn. Měi gè tí tīng liǎng cì. Lìrú:"
+      },
+      "start": {
+        "zh": "现在开始第十六题。",
+        "pinyin": "Xiànzài kāishǐ dì-shíliù tí."
+      }
+    }
+  }
+}

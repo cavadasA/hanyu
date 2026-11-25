@@ -1,0 +1,88 @@
+{
+  "slug": "a-l2-02",
+  "part": "L2",
+  "images": [
+    "gift",
+    "flower",
+    "taxi",
+    "shirt",
+    "tv"
+  ],
+  "items": [
+    {
+      "audio": [
+        {
+          "zh": "这是送给你的。",
+          "pinyin": "Zhè shì sòng gěi nǐ de.",
+          "speaker": "F"
+        },
+        {
+          "zh": "谢谢！是什么东西？",
+          "pinyin": "Xièxie! Shì shénme dōngxi?",
+          "speaker": "M"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "这些花真漂亮！",
+          "pinyin": "Zhèxiē huā zhēn piàoliang!",
+          "speaker": "M"
+        },
+        {
+          "zh": "是我朋友送的。",
+          "pinyin": "Shì wǒ péngyou sòng de.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "我们怎么去火车站？",
+          "pinyin": "Wǒmen zěnme qù huǒchē zhàn?",
+          "speaker": "F"
+        },
+        {
+          "zh": "太远了，坐出租车吧。",
+          "pinyin": "Tài yuǎn le, zuò chūzūchē ba.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "这件衣服怎么样？",
+          "pinyin": "Zhè jiàn yīfu zěnmeyàng?",
+          "speaker": "M"
+        },
+        {
+          "zh": "颜色很好，就是有点儿贵。",
+          "pinyin": "Yánsè hěn hǎo, jiù shì yǒudiǎnr guì.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 3
+    },
+    {
+      "audio": [
+        {
+          "zh": "晚上你做什么？",
+          "pinyin": "Wǎnshang nǐ zuò shénme?",
+          "speaker": "F"
+        },
+        {
+          "zh": "在家看电视。",
+          "pinyin": "Zài jiā kàn diànshì.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 4
+    }
+  ]
+}

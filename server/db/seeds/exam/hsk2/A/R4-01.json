@@ -1,0 +1,131 @@
+{
+  "slug": "a-r4-01",
+  "part": "R4",
+  "items": [
+    {
+      "passage": {
+        "zh": "我住在学校旁边，每天走路去上课，十分钟就到了。",
+        "pinyin": "Wǒ zhù zài xuéxiào pángbiān, měi tiān zǒulù qù shàngkè, shí fēnzhōng jiù dào le."
+      },
+      "question": {
+        "zh": "★ 他家离学校：",
+        "pinyin": "★ Tā jiā lí xuéxiào:"
+      },
+      "options": [
+        {
+          "zh": "很远",
+          "pinyin": "Hěn yuǎn"
+        },
+        {
+          "zh": "很近",
+          "pinyin": "Hěn jìn"
+        },
+        {
+          "zh": "不知道",
+          "pinyin": "Bù zhīdào"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "passage": {
+        "zh": "今天是妹妹的生日，爸爸给她买了一个手表。",
+        "pinyin": "Jīntiān shì mèimei de shēngrì, bàba gěi tā mǎi le yí gè shǒubiǎo."
+      },
+      "question": {
+        "zh": "★ 爸爸送给妹妹：",
+        "pinyin": "★ Bàba sòng gěi mèimei:"
+      },
+      "options": [
+        {
+          "zh": "手机",
+          "pinyin": "Shǒujī"
+        },
+        {
+          "zh": "手表",
+          "pinyin": "Shǒubiǎo"
+        },
+        {
+          "zh": "衣服",
+          "pinyin": "Yīfu"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "passage": {
+        "zh": "我昨天没去上班，因为身体不舒服，在家休息了一天。",
+        "pinyin": "Wǒ zuótiān méi qù shàngbān, yīnwèi shēntǐ bù shūfu, zài jiā xiūxi le yì tiān."
+      },
+      "question": {
+        "zh": "★ 他昨天：",
+        "pinyin": "★ Tā zuótiān:"
+      },
+      "options": [
+        {
+          "zh": "去上班了",
+          "pinyin": "Qù shàngbān le"
+        },
+        {
+          "zh": "去医院了",
+          "pinyin": "Qù yīyuàn le"
+        },
+        {
+          "zh": "在家休息",
+          "pinyin": "Zài jiā xiūxi"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "passage": {
+        "zh": "这家饭店的菜很好吃，也不贵，我和朋友每个星期都来这儿。",
+        "pinyin": "Zhè jiā fàndiàn de cài hěn hǎochī, yě bú guì, wǒ hé péngyou měi gè xīngqī dōu lái zhèr."
+      },
+      "question": {
+        "zh": "★ 这家饭店：",
+        "pinyin": "★ Zhè jiā fàndiàn:"
+      },
+      "options": [
+        {
+          "zh": "菜很贵",
+          "pinyin": "Cài hěn guì"
+        },
+        {
+          "zh": "人很少",
+          "pinyin": "Rén hěn shǎo"
+        },
+        {
+          "zh": "菜好吃",
+          "pinyin": "Cài hǎochī"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "passage": {
+        "zh": "我的中国朋友每天教我写汉字，现在我会写很多字了。",
+        "pinyin": "Wǒ de Zhōngguó péngyou měi tiān jiāo wǒ xiě Hànzì, xiànzài wǒ huì xiě hěn duō zì le."
+      },
+      "question": {
+        "zh": "★ 他的中国朋友教他：",
+        "pinyin": "★ Tā de Zhōngguó péngyou jiāo tā:"
+      },
+      "options": [
+        {
+          "zh": "写汉字",
+          "pinyin": "Xiě Hànzì"
+        },
+        {
+          "zh": "说汉语",
+          "pinyin": "Shuō Hànyǔ"
+        },
+        {
+          "zh": "做饭",
+          "pinyin": "Zuò fàn"
+        }
+      ],
+      "answer": 0
+    }
+  ]
+}

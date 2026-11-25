@@ -1,0 +1,74 @@
+{
+  "slug": "a-r3-01",
+  "part": "R3",
+  "bank": [
+    {
+      "zh": "我在看电视呢。",
+      "pinyin": "Wǒ zài kàn diànshì ne."
+    },
+    {
+      "zh": "不要了，谢谢！",
+      "pinyin": "Búyào le, xièxie!"
+    },
+    {
+      "zh": "在桌子上。",
+      "pinyin": "Zài zhuōzi shàng."
+    },
+    {
+      "zh": "八点。",
+      "pinyin": "Bā diǎn."
+    },
+    {
+      "zh": "他是我同学。",
+      "pinyin": "Tā shì wǒ tóngxué."
+    },
+    {
+      "zh": "很好吃，你也吃吧。",
+      "pinyin": "Hěn hǎochī, nǐ yě chī ba."
+    }
+  ],
+  "example": {
+    "text": {
+      "zh": "你在做什么？",
+      "pinyin": "Nǐ zài zuò shénme?"
+    },
+    "answer": 0
+  },
+  "items": [
+    {
+      "text": {
+        "zh": "要不要再喝茶？",
+        "pinyin": "Yào bu yào zài hē chá?"
+      },
+      "answer": 1
+    },
+    {
+      "text": {
+        "zh": "我的手机呢？",
+        "pinyin": "Wǒ de shǒujī ne?"
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "电影几点开始？",
+        "pinyin": "Diànyǐng jǐ diǎn kāishǐ?"
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "那个人是谁？",
+        "pinyin": "Nàge rén shì shéi?"
+      },
+      "answer": 4
+    },
+    {
+      "text": {
+        "zh": "这个菜怎么样？",
+        "pinyin": "Zhège cài zěnmeyàng?"
+      },
+      "answer": 5
+    }
+  ]
+}

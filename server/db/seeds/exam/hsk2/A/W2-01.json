@@ -1,0 +1,41 @@
+{
+  "slug": "a-w2-01",
+  "part": "W2",
+  "items": [
+    {
+      "sentence": {
+        "zh": "你叫什么名（ ）？",
+        "pinyin": "Nǐ jiào shénme míngzi?"
+      },
+      "answer": "字"
+    },
+    {
+      "sentence": {
+        "zh": "我家有四（ ）人。",
+        "pinyin": "Wǒ jiā yǒu sì kǒu rén."
+      },
+      "answer": "口"
+    },
+    {
+      "sentence": {
+        "zh": "他是我的中国同（ ）。",
+        "pinyin": "Tā shì wǒ de Zhōngguó tóngxué."
+      },
+      "answer": "学"
+    },
+    {
+      "sentence": {
+        "zh": "我今（ ）不去学校。",
+        "pinyin": "Wǒ jīntiān bú qù xuéxiào."
+      },
+      "answer": "天"
+    },
+    {
+      "sentence": {
+        "zh": "这个电影很（ ）看。",
+        "pinyin": "Zhège diànyǐng hěn hǎokàn."
+      },
+      "answer": "好"
+    }
+  ]
+}

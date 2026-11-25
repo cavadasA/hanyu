@@ -1,0 +1,96 @@
+{
+  "slug": "a-l1-01",
+  "part": "L1",
+  "example": {
+    "audio": [
+      {
+        "zh": "我坐飞机去中国。",
+        "pinyin": "Wǒ zuò fēijī qù Zhōngguó.",
+        "speaker": "F"
+      }
+    ],
+    "images": [
+      "plane",
+      "train",
+      "bike"
+    ],
+    "answer": 0
+  },
+  "items": [
+    {
+      "audio": [
+        {
+          "zh": "我很喜欢喝咖啡。",
+          "pinyin": "Wǒ hěn xǐhuan hē kāfēi.",
+          "speaker": "M"
+        }
+      ],
+      "images": [
+        "tea",
+        "coffee",
+        "milk"
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "现在九点了，我们走吧。",
+          "pinyin": "Xiànzài jiǔ diǎn le, wǒmen zǒu ba.",
+          "speaker": "F"
+        }
+      ],
+      "images": [
+        "clock-3",
+        "clock-6",
+        "clock-9"
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "这是我家的狗。",
+          "pinyin": "Zhè shì wǒ jiā de gǒu.",
+          "speaker": "M"
+        }
+      ],
+      "images": [
+        "cat",
+        "dog",
+        "fish"
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "今天下雨了，你别出去了。",
+          "pinyin": "Jīntiān xià yǔ le, nǐ bié chūqù le.",
+          "speaker": "F"
+        }
+      ],
+      "images": [
+        "rain",
+        "sun",
+        "snow"
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "他每天早上都去跑步。",
+          "pinyin": "Tā měi tiān zǎoshang dōu qù pǎobù.",
+          "speaker": "M"
+        }
+      ],
+      "images": [
+        "run",
+        "ball",
+        "sleep"
+      ],
+      "answer": 0
+    }
+  ]
+}
