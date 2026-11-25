@@ -1,0 +1,19 @@
+{
+  "hsk_level": 2,
+  "code": "2.7.3",
+  "pattern": "已经 + V + 了 · 还 + V · 有时候 + V · 快(要) + V + 了 · 正 + V (+ 呢)",
+  "explanation": "已经 «ya» marca algo terminado y casi siempre lleva 了: 他已经走了. 还 es «todavía»: la situación sigue igual (他还在睡觉). 有时候, o 有时, es «a veces». 快 y 快要 anuncian que algo va a pasar enseguida y exigen 了 al final: 快下雨了. 正 dice que la acción está en marcha justo en ese momento: 我正吃饭呢.",
+  "markers": ["已经","还","有时","快","正"],
+  "examples": [
+    {"zh":"他已经走了。","pinyin":"Tā yǐjīng zǒu le.","es":"Ya se ha ido."},
+    {"zh":"十点了，他还在睡觉。","pinyin":"Shí diǎn le, tā hái zài shuìjiào.","es":"Son las diez y todavía está durmiendo."},
+    {"zh":"我有时候坐地铁上班。","pinyin":"Wǒ yǒushíhou zuò dìtiě shàngbān.","es":"A veces voy al trabajo en metro."},
+    {"zh":"快下雨了，我们回家吧。","pinyin":"Kuài xià yǔ le, wǒmen huí jiā ba.","es":"Va a llover, volvamos a casa."},
+    {"zh":"他来的时候，我正吃饭呢。","pinyin":"Tā lái de shíhou, wǒ zhèng chī fàn ne.","es":"Cuando llegó, yo estaba comiendo."}
+  ],
+  "common_errors": [
+    {"wrong":"快要下雨。","right":"快要下雨了。","why":"快 y 快要 necesitan 了 al final; sin él la frase queda a medias."},
+    {"wrong":"我已经吃饭。","right":"我已经吃饭了。","why":"已经 presenta algo ya terminado y pide 了."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.3"},{"hsk_level":1,"code":"2.6.5"}]
+}

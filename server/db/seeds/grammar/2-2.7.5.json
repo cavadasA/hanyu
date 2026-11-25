@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.7.5",
+  "pattern": "(你) + 别 + verbo (+ 了)",
+  "explanation": "别 pide a alguien que no haga algo: «no…». Es más directo y coloquial que 不要 y va delante del verbo. Con 了 al final pide que se deje de hacer algo que ya está pasando: 别说了 «deja de hablar». No sirve para negar hechos: «no fui» es 我没去.",
+  "markers": ["别"],
+  "examples": [
+    {"zh":"别走！","pinyin":"Bié zǒu!","es":"¡No te vayas!"},
+    {"zh":"别说了，我知道了。","pinyin":"Bié shuō le, wǒ zhīdào le.","es":"Deja de hablar, ya lo sé."},
+    {"zh":"外面下雨，别出去了。","pinyin":"Wàimiàn xià yǔ, bié chūqu le.","es":"Fuera llueve, no salgas."},
+    {"zh":"你别喝太多。","pinyin":"Nǐ bié hē tài duō.","es":"No bebas demasiado."}
+  ],
+  "common_errors": [
+    {"wrong":"我昨天别去学校。","right":"我昨天没去学校。","why":"别 solo pide que alguien no haga algo; para negar lo que pasó se usa 没."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.6"},{"hsk_level":2,"code":"6.2.2"}]
+}

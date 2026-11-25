@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "2.7.7",
+  "pattern": "都 + tiempo / cantidad + 了 · 就 + verbo / 是 · 还是 + verbo (+ 吧)",
+  "explanation": "Estos adverbios añaden la opinión de quien habla. 都…了 subraya que algo es más tarde o más de lo esperado: 都十点了 «¡si ya son las diez!». 就 insiste en que es exactamente eso: 这就是我的家 «esta es precisamente mi casa». 还是 recomienda la opción que, pensándolo bien, parece mejor: 你还是去吧 «mejor ve».",
+  "markers": ["都","就","还是"],
+  "examples": [
+    {"zh":"都十点了，你怎么还不起床？","pinyin":"Dōu shí diǎn le, nǐ zěnme hái bù qǐchuáng?","es":"¡Si ya son las diez! ¿Cómo es que no te levantas?"},
+    {"zh":"这就是我的家。","pinyin":"Zhè jiù shì wǒ de jiā.","es":"Esta es precisamente mi casa."},
+    {"zh":"我就要这个。","pinyin":"Wǒ jiù yào zhège.","es":"Quiero justo este."},
+    {"zh":"外面很冷，你还是别出去了。","pinyin":"Wàimiàn hěn lěng, nǐ háishi bié chūqu le.","es":"Fuera hace mucho frío; mejor no salgas."},
+    {"zh":"我们还是坐出租车吧。","pinyin":"Wǒmen háishi zuò chūzūchē ba.","es":"Mejor vamos en taxi."}
+  ],
+  "common_errors": [
+    {"wrong":"都十点，你怎么还不起床？","right":"都十点了，你怎么还不起床？","why":"都 con el sentido de «ya» necesita 了 al final."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.2"},{"hsk_level":2,"code":"4.1"}]
+}

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.7.6",
+  "pattern": "V1 (+ 了…) + 再 + V2 · V1 + 了… + 就 + V2",
+  "explanation": "Los dos enlazan dos acciones: la segunda ocurre después de la primera y van delante del segundo verbo. 再 mira hacia lo que aún no ha pasado, a menudo para pedir que se espere: 吃了饭再走 «come y después te vas». 就 subraya que la segunda acción llega enseguida y vale también para lo que ya ocurrió: 他下了课就回家了.",
+  "markers": ["再","就"],
+  "examples": [
+    {"zh":"我们吃了饭再走吧。","pinyin":"Wǒmen chī le fàn zài zǒu ba.","es":"Comamos y después nos vamos."},
+    {"zh":"你休息一下，明天再说。","pinyin":"Nǐ xiūxi yíxià, míngtiān zài shuō.","es":"Descansa un poco; mañana lo hablamos."},
+    {"zh":"他下了课就回家了。","pinyin":"Tā xià le kè jiù huí jiā le.","es":"Al salir de clase se fue directo a casa."},
+    {"zh":"我到了就给你打电话。","pinyin":"Wǒ dào le jiù gěi nǐ dǎ diànhuà.","es":"En cuanto llegue te llamo."}
+  ],
+  "common_errors": [
+    {"wrong":"他下了课再回家了。","right":"他下了课就回家了。","why":"Para lo que ya pasó se usa 就; 再 solo mira hacia lo que todavía no ha ocurrido."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.4"}]
+}

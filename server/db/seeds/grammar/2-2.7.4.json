@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.7.4",
+  "pattern": "Sujeto + 经常 / 常 + verbo",
+  "explanation": "经常 y 常 significan «a menudo» y van delante del verbo, detrás del sujeto. 常 es más breve y algo más escrito; en la conversación se oye sobre todo 经常. No se colocan al final de la frase como en «voy mucho». Para negarlo basta con poner 不 delante: 不经常.",
+  "markers": ["经常"],
+  "examples": [
+    {"zh":"我经常去那个饭馆。","pinyin":"Wǒ jīngcháng qù nàge fànguǎn.","es":"Voy a menudo a ese restaurante."},
+    {"zh":"他经常工作到很晚。","pinyin":"Tā jīngcháng gōngzuò dào hěn wǎn.","es":"A menudo trabaja hasta muy tarde."},
+    {"zh":"你经常运动吗？","pinyin":"Nǐ jīngcháng yùndòng ma?","es":"¿Haces deporte a menudo?"},
+    {"zh":"我不经常看电视。","pinyin":"Wǒ bù jīngcháng kàn diànshì.","es":"No veo mucho la tele."}
+  ],
+  "common_errors": [
+    {"wrong":"我去那个饭馆经常。","right":"我经常去那个饭馆。","why":"经常 va delante del verbo, no al final como en «voy ahí a menudo»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.4"}]
+}

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.8.1",
+  "pattern": "从 + tiempo / lugar (+ 到 + tiempo / lugar) + verbo",
+  "explanation": "从 marca el punto de partida, en el tiempo o en el espacio: «desde», «de». Se combina a menudo con 到 para el final: 从九点到十二点. Todo el grupo va delante del verbo, no detrás: «vengo de China» es 我从中国来.",
+  "markers": ["从"],
+  "examples": [
+    {"zh":"我从中国来。","pinyin":"Wǒ cóng Zhōngguó lái.","es":"Vengo de China."},
+    {"zh":"我们从九点到十二点上课。","pinyin":"Wǒmen cóng jiǔ diǎn dào shí’èr diǎn shàngkè.","es":"Tenemos clase de nueve a doce."},
+    {"zh":"他从明天开始工作。","pinyin":"Tā cóng míngtiān kāishǐ gōngzuò.","es":"Empieza a trabajar a partir de mañana."},
+    {"zh":"从我家到学校很近。","pinyin":"Cóng wǒ jiā dào xuéxiào hěn jìn.","es":"De mi casa al colegio hay muy poco."}
+  ],
+  "common_errors": [
+    {"wrong":"我来从中国。","right":"我从中国来。","why":"El grupo con 从 va delante del verbo; no se copia el orden de «vengo de China»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.7.1"}]
+}

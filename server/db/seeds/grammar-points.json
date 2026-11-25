@@ -1328,7 +1328,56 @@
       "（1）专用名量词：条、位、间、名",
       "（2）借用名量词：包"
     ],
-    "order_idx": 11
+    "order_idx": 11,
+    "pattern": "número / 这 / 那 + 条 / 位 / 间 / 名 / 包 + nombre",
+    "explanation": "Cada clasificador va con un tipo de nombre. 条 cuenta cosas largas y estrechas: calles, ríos, peces, pantalones. 位 cuenta personas con respeto (这位老师) y es más cortés que 个. 间 cuenta habitaciones y aulas, y 名 cuenta personas dentro de un grupo o una lista, como los alumnos de una clase. 包 es un clasificador prestado: «paquete», para lo que viene envasado (一包茶).",
+    "markers": [
+      "条",
+      "位",
+      "间",
+      "名",
+      "包"
+    ],
+    "examples": [
+      {
+        "zh": "这条路很长。",
+        "pinyin": "Zhè tiáo lù hěn cháng.",
+        "es": "Esta calle es muy larga."
+      },
+      {
+        "zh": "这位是我们的老师。",
+        "pinyin": "Zhè wèi shì wǒmen de lǎoshī.",
+        "es": "Este es nuestro profesor."
+      },
+      {
+        "zh": "这间教室很大。",
+        "pinyin": "Zhè jiān jiàoshì hěn dà.",
+        "es": "Esta aula es muy grande."
+      },
+      {
+        "zh": "我们班有三十名学生。",
+        "pinyin": "Wǒmen bān yǒu sānshí míng xuésheng.",
+        "es": "Nuestra clase tiene treinta alumnos."
+      },
+      {
+        "zh": "我买了一包茶和两条鱼。",
+        "pinyin": "Wǒ mǎi le yì bāo chá hé liǎng tiáo yú.",
+        "es": "Compré un paquete de té y dos peces."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "这个路很长。",
+        "right": "这条路很长。",
+        "why": "Las cosas largas y estrechas se cuentan con 条; 个 es el comodín para lo que no tiene clasificador propio."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.5.1"
+      }
+    ]
   },
   {
     "code": "2.6.2",
@@ -1340,7 +1389,47 @@
     "items": [
       "次"
     ],
-    "order_idx": 12
+    "order_idx": 12,
+    "pattern": "verbo + (了 / 过) + número + 次 (+ objeto)",
+    "explanation": "次 cuenta las veces que ocurre una acción, como «vez». Va detrás del verbo y de 了 o 过: 去过两次. Un objeto común suele ir detrás de 次 (上两次课); un lugar o una persona pueden ir antes (去过中国两次). Para preguntar se usa 几次. Al contrario que en español, las veces nunca van delante del verbo.",
+    "markers": [
+      "次"
+    ],
+    "examples": [
+      {
+        "zh": "我去过中国两次。",
+        "pinyin": "Wǒ qùguo Zhōngguó liǎng cì.",
+        "es": "He estado en China dos veces."
+      },
+      {
+        "zh": "这个电影我看了三次。",
+        "pinyin": "Zhège diànyǐng wǒ kàn le sān cì.",
+        "es": "Esta película la he visto tres veces."
+      },
+      {
+        "zh": "你来过几次？",
+        "pinyin": "Nǐ láiguo jǐ cì?",
+        "es": "¿Cuántas veces has venido?"
+      },
+      {
+        "zh": "我们一个星期上两次课。",
+        "pinyin": "Wǒmen yí gè xīngqī shàng liǎng cì kè.",
+        "es": "Tenemos clase dos veces por semana."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我两次去过中国。",
+        "right": "我去过中国两次。",
+        "why": "Las veces van detrás del verbo; delante, como en «dos veces he ido», no funciona."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "4.6.1"
+      }
+    ]
   },
   {
     "code": "2.7.1",
@@ -1352,7 +1441,54 @@
     "items": [
       "多、好、最"
     ],
-    "order_idx": 13
+    "order_idx": 13,
+    "pattern": "最 + adjetivo / verbo · 好 + adjetivo (+ 啊) · 多 + adjetivo (+ 啊)",
+    "explanation": "最 forma el superlativo, «el más»: 最高, 最喜欢. 好 delante de un adjetivo intensifica con emoción, como «qué» o «muy»: 好冷啊！ 多 sirve para exclamar (多漂亮啊！) y para preguntar por una medida: 多大 «qué edad, qué tamaño». Para un «muy» neutro, sin exclamación, se sigue usando 很. El ámbito del superlativo va delante: 我们班最高的.",
+    "markers": [
+      "最",
+      "好",
+      "多"
+    ],
+    "examples": [
+      {
+        "zh": "你最喜欢吃什么？",
+        "pinyin": "Nǐ zuì xǐhuan chī shénme?",
+        "es": "¿Qué es lo que más te gusta comer?"
+      },
+      {
+        "zh": "他是我们班最高的。",
+        "pinyin": "Tā shì wǒmen bān zuì gāo de.",
+        "es": "Es el más alto de nuestra clase."
+      },
+      {
+        "zh": "今天好冷啊！",
+        "pinyin": "Jīntiān hǎo lěng a!",
+        "es": "¡Qué frío hace hoy!"
+      },
+      {
+        "zh": "这里多漂亮啊！",
+        "pinyin": "Zhèlǐ duō piàoliang a!",
+        "es": "¡Qué bonito es esto!"
+      },
+      {
+        "zh": "你今年多大？",
+        "pinyin": "Nǐ jīnnián duō dà?",
+        "es": "¿Cuántos años tienes?"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他是最高在我们班。",
+        "right": "他是我们班最高的。",
+        "why": "El ámbito («de la clase») va delante de 最; no se añade un «en» con 在 al final."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.6.1"
+      }
+    ]
   },
   {
     "code": "2.7.2",
@@ -1364,7 +1500,47 @@
     "items": [
       "一起"
     ],
-    "order_idx": 14
+    "order_idx": 14,
+    "pattern": "Sujeto + (和 / 跟 + persona) + 一起 + verbo",
+    "explanation": "一起 significa «juntos» y va delante del verbo, nunca al final como en «vamos juntos». La persona con la que se hace algo se presenta antes con 和 o 跟: 我和朋友一起去. Para proponer un plan se combina con 吧: 我们一起吃饭吧.",
+    "markers": [
+      "一起"
+    ],
+    "examples": [
+      {
+        "zh": "我们一起去吧。",
+        "pinyin": "Wǒmen yìqǐ qù ba.",
+        "es": "Vamos juntos."
+      },
+      {
+        "zh": "我和朋友一起吃饭。",
+        "pinyin": "Wǒ hé péngyou yìqǐ chī fàn.",
+        "es": "Como con un amigo."
+      },
+      {
+        "zh": "他们每天一起上学。",
+        "pinyin": "Tāmen měi tiān yìqǐ shàngxué.",
+        "es": "Van juntos al colegio todos los días."
+      },
+      {
+        "zh": "你跟我一起走吗？",
+        "pinyin": "Nǐ gēn wǒ yìqǐ zǒu ma?",
+        "es": "¿Te vienes conmigo?"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我们去一起吧。",
+        "right": "我们一起去吧。",
+        "why": "一起 va delante del verbo, no detrás como en «vamos juntos»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.7.2"
+      }
+    ]
   },
   {
     "code": "2.7.3",
@@ -1376,7 +1552,65 @@
     "items": [
       "还2、已经、有时（候）、快、快要、正"
     ],
-    "order_idx": 15
+    "order_idx": 15,
+    "pattern": "已经 + V + 了 · 还 + V · 有时候 + V · 快(要) + V + 了 · 正 + V (+ 呢)",
+    "explanation": "已经 «ya» marca algo terminado y casi siempre lleva 了: 他已经走了. 还 es «todavía»: la situación sigue igual (他还在睡觉). 有时候, o 有时, es «a veces». 快 y 快要 anuncian que algo va a pasar enseguida y exigen 了 al final: 快下雨了. 正 dice que la acción está en marcha justo en ese momento: 我正吃饭呢.",
+    "markers": [
+      "已经",
+      "还",
+      "有时",
+      "快",
+      "正"
+    ],
+    "examples": [
+      {
+        "zh": "他已经走了。",
+        "pinyin": "Tā yǐjīng zǒu le.",
+        "es": "Ya se ha ido."
+      },
+      {
+        "zh": "十点了，他还在睡觉。",
+        "pinyin": "Shí diǎn le, tā hái zài shuìjiào.",
+        "es": "Son las diez y todavía está durmiendo."
+      },
+      {
+        "zh": "我有时候坐地铁上班。",
+        "pinyin": "Wǒ yǒushíhou zuò dìtiě shàngbān.",
+        "es": "A veces voy al trabajo en metro."
+      },
+      {
+        "zh": "快下雨了，我们回家吧。",
+        "pinyin": "Kuài xià yǔ le, wǒmen huí jiā ba.",
+        "es": "Va a llover, volvamos a casa."
+      },
+      {
+        "zh": "他来的时候，我正吃饭呢。",
+        "pinyin": "Tā lái de shíhou, wǒ zhèng chī fàn ne.",
+        "es": "Cuando llegó, yo estaba comiendo."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "快要下雨。",
+        "right": "快要下雨了。",
+        "why": "快 y 快要 necesitan 了 al final; sin él la frase queda a medias."
+      },
+      {
+        "wrong": "我已经吃饭。",
+        "right": "我已经吃饭了。",
+        "why": "已经 presenta algo ya terminado y pide 了."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.6.3"
+      },
+      {
+        "hsk_level": 1,
+        "code": "2.6.5"
+      }
+    ]
   },
   {
     "code": "2.7.4",
@@ -1388,7 +1622,47 @@
     "items": [
       "常、经常"
     ],
-    "order_idx": 16
+    "order_idx": 16,
+    "pattern": "Sujeto + 经常 / 常 + verbo",
+    "explanation": "经常 y 常 significan «a menudo» y van delante del verbo, detrás del sujeto. 常 es más breve y algo más escrito; en la conversación se oye sobre todo 经常. No se colocan al final de la frase como en «voy mucho». Para negarlo basta con poner 不 delante: 不经常.",
+    "markers": [
+      "经常"
+    ],
+    "examples": [
+      {
+        "zh": "我经常去那个饭馆。",
+        "pinyin": "Wǒ jīngcháng qù nàge fànguǎn.",
+        "es": "Voy a menudo a ese restaurante."
+      },
+      {
+        "zh": "他经常工作到很晚。",
+        "pinyin": "Tā jīngcháng gōngzuò dào hěn wǎn.",
+        "es": "A menudo trabaja hasta muy tarde."
+      },
+      {
+        "zh": "你经常运动吗？",
+        "pinyin": "Nǐ jīngcháng yùndòng ma?",
+        "es": "¿Haces deporte a menudo?"
+      },
+      {
+        "zh": "我不经常看电视。",
+        "pinyin": "Wǒ bù jīngcháng kàn diànshì.",
+        "es": "No veo mucho la tele."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我去那个饭馆经常。",
+        "right": "我经常去那个饭馆。",
+        "why": "经常 va delante del verbo, no al final como en «voy ahí a menudo»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.6.4"
+      }
+    ]
   },
   {
     "code": "2.7.5",
@@ -1400,7 +1674,51 @@
     "items": [
       "别"
     ],
-    "order_idx": 17
+    "order_idx": 17,
+    "pattern": "(你) + 别 + verbo (+ 了)",
+    "explanation": "别 pide a alguien que no haga algo: «no…». Es más directo y coloquial que 不要 y va delante del verbo. Con 了 al final pide que se deje de hacer algo que ya está pasando: 别说了 «deja de hablar». No sirve para negar hechos: «no fui» es 我没去.",
+    "markers": [
+      "别"
+    ],
+    "examples": [
+      {
+        "zh": "别走！",
+        "pinyin": "Bié zǒu!",
+        "es": "¡No te vayas!"
+      },
+      {
+        "zh": "别说了，我知道了。",
+        "pinyin": "Bié shuō le, wǒ zhīdào le.",
+        "es": "Deja de hablar, ya lo sé."
+      },
+      {
+        "zh": "外面下雨，别出去了。",
+        "pinyin": "Wàimiàn xià yǔ, bié chūqu le.",
+        "es": "Fuera llueve, no salgas."
+      },
+      {
+        "zh": "你别喝太多。",
+        "pinyin": "Nǐ bié hē tài duō.",
+        "es": "No bebas demasiado."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我昨天别去学校。",
+        "right": "我昨天没去学校。",
+        "why": "别 solo pide que alguien no haga algo; para negar lo que pasó se usa 没."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.6.6"
+      },
+      {
+        "hsk_level": 2,
+        "code": "6.2.2"
+      }
+    ]
   },
   {
     "code": "2.7.6",
@@ -1412,7 +1730,48 @@
     "items": [
       "再2、就1"
     ],
-    "order_idx": 18
+    "order_idx": 18,
+    "pattern": "V1 (+ 了…) + 再 + V2 · V1 + 了… + 就 + V2",
+    "explanation": "Los dos enlazan dos acciones: la segunda ocurre después de la primera y van delante del segundo verbo. 再 mira hacia lo que aún no ha pasado, a menudo para pedir que se espere: 吃了饭再走 «come y después te vas». 就 subraya que la segunda acción llega enseguida y vale también para lo que ya ocurrió: 他下了课就回家了.",
+    "markers": [
+      "再",
+      "就"
+    ],
+    "examples": [
+      {
+        "zh": "我们吃了饭再走吧。",
+        "pinyin": "Wǒmen chī le fàn zài zǒu ba.",
+        "es": "Comamos y después nos vamos."
+      },
+      {
+        "zh": "你休息一下，明天再说。",
+        "pinyin": "Nǐ xiūxi yíxià, míngtiān zài shuō.",
+        "es": "Descansa un poco; mañana lo hablamos."
+      },
+      {
+        "zh": "他下了课就回家了。",
+        "pinyin": "Tā xià le kè jiù huí jiā le.",
+        "es": "Al salir de clase se fue directo a casa."
+      },
+      {
+        "zh": "我到了就给你打电话。",
+        "pinyin": "Wǒ dào le jiù gěi nǐ dǎ diànhuà.",
+        "es": "En cuanto llegue te llamo."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他下了课再回家了。",
+        "right": "他下了课就回家了。",
+        "why": "Para lo que ya pasó se usa 就; 再 solo mira hacia lo que todavía no ha ocurrido."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.6.4"
+      }
+    ]
   },
   {
     "code": "2.7.7",
@@ -1424,7 +1783,58 @@
     "items": [
       "都2、就2、还是1"
     ],
-    "order_idx": 19
+    "order_idx": 19,
+    "pattern": "都 + tiempo / cantidad + 了 · 就 + verbo / 是 · 还是 + verbo (+ 吧)",
+    "explanation": "Estos adverbios añaden la opinión de quien habla. 都…了 subraya que algo es más tarde o más de lo esperado: 都十点了 «¡si ya son las diez!». 就 insiste en que es exactamente eso: 这就是我的家 «esta es precisamente mi casa». 还是 recomienda la opción que, pensándolo bien, parece mejor: 你还是去吧 «mejor ve».",
+    "markers": [
+      "都",
+      "就",
+      "还是"
+    ],
+    "examples": [
+      {
+        "zh": "都十点了，你怎么还不起床？",
+        "pinyin": "Dōu shí diǎn le, nǐ zěnme hái bù qǐchuáng?",
+        "es": "¡Si ya son las diez! ¿Cómo es que no te levantas?"
+      },
+      {
+        "zh": "这就是我的家。",
+        "pinyin": "Zhè jiù shì wǒ de jiā.",
+        "es": "Esta es precisamente mi casa."
+      },
+      {
+        "zh": "我就要这个。",
+        "pinyin": "Wǒ jiù yào zhège.",
+        "es": "Quiero justo este."
+      },
+      {
+        "zh": "外面很冷，你还是别出去了。",
+        "pinyin": "Wàimiàn hěn lěng, nǐ háishi bié chūqu le.",
+        "es": "Fuera hace mucho frío; mejor no salgas."
+      },
+      {
+        "zh": "我们还是坐出租车吧。",
+        "pinyin": "Wǒmen háishi zuò chūzūchē ba.",
+        "es": "Mejor vamos en taxi."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "都十点，你怎么还不起床？",
+        "right": "都十点了，你怎么还不起床？",
+        "why": "都 con el sentido de «ya» necesita 了 al final."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.6.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "4.1"
+      }
+    ]
   },
   {
     "code": "2.8.1",
@@ -1436,7 +1846,47 @@
     "items": [
       "从1"
     ],
-    "order_idx": 20
+    "order_idx": 20,
+    "pattern": "从 + tiempo / lugar (+ 到 + tiempo / lugar) + verbo",
+    "explanation": "从 marca el punto de partida, en el tiempo o en el espacio: «desde», «de». Se combina a menudo con 到 para el final: 从九点到十二点. Todo el grupo va delante del verbo, no detrás: «vengo de China» es 我从中国来.",
+    "markers": [
+      "从"
+    ],
+    "examples": [
+      {
+        "zh": "我从中国来。",
+        "pinyin": "Wǒ cóng Zhōngguó lái.",
+        "es": "Vengo de China."
+      },
+      {
+        "zh": "我们从九点到十二点上课。",
+        "pinyin": "Wǒmen cóng jiǔ diǎn dào shí’èr diǎn shàngkè.",
+        "es": "Tenemos clase de nueve a doce."
+      },
+      {
+        "zh": "他从明天开始工作。",
+        "pinyin": "Tā cóng míngtiān kāishǐ gōngzuò.",
+        "es": "Empieza a trabajar a partir de mañana."
+      },
+      {
+        "zh": "从我家到学校很近。",
+        "pinyin": "Cóng wǒ jiā dào xuéxiào hěn jìn.",
+        "es": "De mi casa al colegio hay muy poco."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我来从中国。",
+        "right": "我从中国来。",
+        "why": "El grupo con 从 va delante del verbo; no se copia el orden de «vengo de China»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.7.1"
+      }
+    ]
   },
   {
     "code": "2.8.2",

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.6.2",
+  "pattern": "verbo + (了 / 过) + número + 次 (+ objeto)",
+  "explanation": "次 cuenta las veces que ocurre una acción, como «vez». Va detrás del verbo y de 了 o 过: 去过两次. Un objeto común suele ir detrás de 次 (上两次课); un lugar o una persona pueden ir antes (去过中国两次). Para preguntar se usa 几次. Al contrario que en español, las veces nunca van delante del verbo.",
+  "markers": ["次"],
+  "examples": [
+    {"zh":"我去过中国两次。","pinyin":"Wǒ qùguo Zhōngguó liǎng cì.","es":"He estado en China dos veces."},
+    {"zh":"这个电影我看了三次。","pinyin":"Zhège diànyǐng wǒ kàn le sān cì.","es":"Esta película la he visto tres veces."},
+    {"zh":"你来过几次？","pinyin":"Nǐ láiguo jǐ cì?","es":"¿Cuántas veces has venido?"},
+    {"zh":"我们一个星期上两次课。","pinyin":"Wǒmen yí gè xīngqī shàng liǎng cì kè.","es":"Tenemos clase dos veces por semana."}
+  ],
+  "common_errors": [
+    {"wrong":"我两次去过中国。","right":"我去过中国两次。","why":"Las veces van detrás del verbo; delante, como en «dos veces he ido», no funciona."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"4.6.1"}]
+}

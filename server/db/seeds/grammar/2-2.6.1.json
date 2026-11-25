@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "2.6.1",
+  "pattern": "número / 这 / 那 + 条 / 位 / 间 / 名 / 包 + nombre",
+  "explanation": "Cada clasificador va con un tipo de nombre. 条 cuenta cosas largas y estrechas: calles, ríos, peces, pantalones. 位 cuenta personas con respeto (这位老师) y es más cortés que 个. 间 cuenta habitaciones y aulas, y 名 cuenta personas dentro de un grupo o una lista, como los alumnos de una clase. 包 es un clasificador prestado: «paquete», para lo que viene envasado (一包茶).",
+  "markers": ["条","位","间","名","包"],
+  "examples": [
+    {"zh":"这条路很长。","pinyin":"Zhè tiáo lù hěn cháng.","es":"Esta calle es muy larga."},
+    {"zh":"这位是我们的老师。","pinyin":"Zhè wèi shì wǒmen de lǎoshī.","es":"Este es nuestro profesor."},
+    {"zh":"这间教室很大。","pinyin":"Zhè jiān jiàoshì hěn dà.","es":"Esta aula es muy grande."},
+    {"zh":"我们班有三十名学生。","pinyin":"Wǒmen bān yǒu sānshí míng xuésheng.","es":"Nuestra clase tiene treinta alumnos."},
+    {"zh":"我买了一包茶和两条鱼。","pinyin":"Wǒ mǎi le yì bāo chá hé liǎng tiáo yú.","es":"Compré un paquete de té y dos peces."}
+  ],
+  "common_errors": [
+    {"wrong":"这个路很长。","right":"这条路很长。","why":"Las cosas largas y estrechas se cuentan con 条; 个 es el comodín para lo que no tiene clasificador propio."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.5.1"}]
+}

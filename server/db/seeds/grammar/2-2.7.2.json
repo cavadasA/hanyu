@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.7.2",
+  "pattern": "Sujeto + (和 / 跟 + persona) + 一起 + verbo",
+  "explanation": "一起 significa «juntos» y va delante del verbo, nunca al final como en «vamos juntos». La persona con la que se hace algo se presenta antes con 和 o 跟: 我和朋友一起去. Para proponer un plan se combina con 吧: 我们一起吃饭吧.",
+  "markers": ["一起"],
+  "examples": [
+    {"zh":"我们一起去吧。","pinyin":"Wǒmen yìqǐ qù ba.","es":"Vamos juntos."},
+    {"zh":"我和朋友一起吃饭。","pinyin":"Wǒ hé péngyou yìqǐ chī fàn.","es":"Como con un amigo."},
+    {"zh":"他们每天一起上学。","pinyin":"Tāmen měi tiān yìqǐ shàngxué.","es":"Van juntos al colegio todos los días."},
+    {"zh":"你跟我一起走吗？","pinyin":"Nǐ gēn wǒ yìqǐ zǒu ma?","es":"¿Te vienes conmigo?"}
+  ],
+  "common_errors": [
+    {"wrong":"我们去一起吧。","right":"我们一起去吧。","why":"一起 va delante del verbo, no detrás como en «vamos juntos»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.7.2"}]
+}

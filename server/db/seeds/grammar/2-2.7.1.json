@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "2.7.1",
+  "pattern": "最 + adjetivo / verbo · 好 + adjetivo (+ 啊) · 多 + adjetivo (+ 啊)",
+  "explanation": "最 forma el superlativo, «el más»: 最高, 最喜欢. 好 delante de un adjetivo intensifica con emoción, como «qué» o «muy»: 好冷啊！ 多 sirve para exclamar (多漂亮啊！) y para preguntar por una medida: 多大 «qué edad, qué tamaño». Para un «muy» neutro, sin exclamación, se sigue usando 很. El ámbito del superlativo va delante: 我们班最高的.",
+  "markers": ["最","好","多"],
+  "examples": [
+    {"zh":"你最喜欢吃什么？","pinyin":"Nǐ zuì xǐhuan chī shénme?","es":"¿Qué es lo que más te gusta comer?"},
+    {"zh":"他是我们班最高的。","pinyin":"Tā shì wǒmen bān zuì gāo de.","es":"Es el más alto de nuestra clase."},
+    {"zh":"今天好冷啊！","pinyin":"Jīntiān hǎo lěng a!","es":"¡Qué frío hace hoy!"},
+    {"zh":"这里多漂亮啊！","pinyin":"Zhèlǐ duō piàoliang a!","es":"¡Qué bonito es esto!"},
+    {"zh":"你今年多大？","pinyin":"Nǐ jīnnián duō dà?","es":"¿Cuántos años tienes?"}
+  ],
+  "common_errors": [
+    {"wrong":"他是最高在我们班。","right":"他是我们班最高的。","why":"El ámbito («de la clase») va delante de 最; no se añade un «en» con 在 al final."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.1"}]
+}
