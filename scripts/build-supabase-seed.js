@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { loadExercises } from './build-exercises.js';
@@ -352,6 +352,27 @@ function buildReadingTeachesSql() {
     `on conflict (content_id, target_kind, target_id) do update set role = excluded.role;\n`;
 }
 
+/** Formas del simulacro (Plan 12) construidas por scripts/build-exam.js. */
+function loadExamForms() {
+  const path = join(sqliteSeedDir, 'exam-forms.json');
+  return existsSync(path) ? JSON.parse(readFileSync(path, 'utf8')) : [];
+}
+
+export function buildExamFormSql(forms = loadExamForms()) {
+  return buildInsert(
+    'exam_form',
+    ['level', 'code', 'content', 'timeline', 'media'],
+    forms.map((form) => [
+      sqlInteger(form.level),
+      sqlString(form.code),
+      sqlJson(form.content),
+      sqlJson(form.timeline),
+      sqlJson(form.media),
+    ]),
+    'on conflict (level, code) do update set content = excluded.content, timeline = excluded.timeline, media = excluded.media',
+  );
+}
+
 export function buildSeedSql() {
   const wordsRows = buildWordsRows();
   const characterRows = buildCharacterRows();
@@ -432,6 +453,7 @@ export function buildSeedSql() {
       'on conflict (source_table, source_id) do update set hsk_level = excluded.hsk_level, title = excluded.title',
     ),
     buildReadingTeachesSql(),
+    buildExamFormSql(),
     buildInsert(
       'communicative_task',
       ['slug', 'hsk_level', 'situation_es', 'mode', 'intent', 'required_markers', 'min_chars', 'max_chars', 'model_answer'],

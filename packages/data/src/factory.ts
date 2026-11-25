@@ -39,6 +39,7 @@ import {
   recordHintUsed,
 } from './repositories/exercises';
 import { getEvents, recordEvent } from './repositories/events';
+import { getExamForm, listExamAttempts, submitExamAttempt, type ExamAttemptInput } from './repositories/exam';
 import {
   completeReading,
   getReading,
@@ -207,6 +208,11 @@ export function createHanyuData(config: HanyuDataConfig) {
       recordHintUsed: (id: string) => recordHintUsed(id, client),
       getExerciseHistory: (limit = 20) => getExerciseHistory(limit, client),
       getMistakes: (limit = 20) => getMistakes(client, limit),
+    },
+    exam: {
+      getExamForm: (level: number, form: string | null = null) => getExamForm(level, form, client),
+      submitExamAttempt: (attempt: ExamAttemptInput) => submitExamAttempt(attempt, client),
+      listExamAttempts: (level: number) => listExamAttempts(level, client),
     },
     events: {
       recordEvent: (input: Parameters<typeof recordEvent>[0]) => recordEvent(input, client),

@@ -15,7 +15,9 @@ import { fileURLToPath } from 'node:url';
 const SKIP_EXIT_CODE = 78;
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
-const testFile = join(rootDir, 'supabase', 'tests', 'exercises_exam_hardening.sql');
+const testFiles = ['exercises_exam_hardening.sql', 'exam_forms.sql'].map((file) =>
+  join(rootDir, 'supabase', 'tests', file),
+);
 const databaseUrl = process.env.SUPABASE_TEST_DATABASE_URL;
 
 if (!databaseUrl) {
@@ -23,9 +25,11 @@ if (!databaseUrl) {
   process.exit(SKIP_EXIT_CODE);
 }
 
-if (!existsSync(testFile)) {
-  console.error(`No existe la prueba SQL: ${testFile}`);
-  process.exit(1);
+for (const testFile of testFiles) {
+  if (!existsSync(testFile)) {
+    console.error(`No existe la prueba SQL: ${testFile}`);
+    process.exit(1);
+  }
 }
 
 const psql = spawnSync('psql', ['--version'], { stdio: 'ignore' });
@@ -34,15 +38,20 @@ if (psql.error || psql.status !== 0) {
   process.exit(1);
 }
 
-const result = spawnSync(
-  'psql',
-  [databaseUrl, '-v', 'ON_ERROR_STOP=1', '-f', testFile],
-  { stdio: 'inherit' },
-);
+for (const testFile of testFiles) {
+  const result = spawnSync(
+    'psql',
+    [databaseUrl, '-v', 'ON_ERROR_STOP=1', '-f', testFile],
+    { stdio: 'inherit' },
+  );
 
-if (result.error) {
-  console.error(result.error.message);
-  process.exit(1);
+  if (result.error) {
+    console.error(result.error.message);
+    process.exit(1);
+  }
+  if (result.status !== 0) {
+    process.exit(result.status ?? 1);
+  }
 }
 
-process.exit(result.status ?? 1);
+process.exit(0);
