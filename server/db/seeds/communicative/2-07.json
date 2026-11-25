@@ -1,0 +1,24 @@
+{
+  "slug": "2-07-cumpleanos-de-una-amiga",
+  "hsk_level": 2,
+  "topic": "eventos",
+  "situation_es": "Hoy es el cumpleaños de tu amiga. Felicítala y dile qué le has comprado.",
+  "mode": "write",
+  "intent": [
+    "felicitarla por su cumpleaños",
+    "decir qué regalo le has comprado"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "6.3.7"
+    }
+  ],
+  "min_chars": 8,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "生日快乐！我给你买了一本书，希望你喜欢。",
+    "pinyin": "Shēngrì kuàilè! Wǒ gěi nǐ mǎi le yì běn shū, xīwàng nǐ xǐhuan.",
+    "es": "¡Feliz cumpleaños! Te he comprado un libro; espero que te guste."
+  }
+}

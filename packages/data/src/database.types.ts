@@ -430,6 +430,42 @@ export type Database = {
         }
         Relationships: []
       }
+      communicative_task: {
+        Row: {
+          hsk_level: number
+          intent: string[]
+          max_chars: number
+          min_chars: number
+          mode: string
+          model_answer: Json
+          required_markers: Json
+          situation_es: string
+          slug: string
+        }
+        Insert: {
+          hsk_level: number
+          intent: string[]
+          max_chars: number
+          min_chars: number
+          mode: string
+          model_answer: Json
+          required_markers: Json
+          situation_es: string
+          slug: string
+        }
+        Update: {
+          hsk_level?: number
+          intent?: string[]
+          max_chars?: number
+          min_chars?: number
+          mode?: string
+          model_answer?: Json
+          required_markers?: Json
+          situation_es?: string
+          slug?: string
+        }
+        Relationships: []
+      }
       content_item: {
         Row: {
           created_at: string

@@ -1,0 +1,24 @@
+{
+  "slug": "2-23-disculparse-por-el-vaso",
+  "hsk_level": 2,
+  "function": "disculparse",
+  "situation_es": "Has roto el vaso de tu compañera de piso. Discúlpate y ofrécele una solución.",
+  "mode": "write",
+  "intent": [
+    "disculparte",
+    "ofrecer una solución"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "2.7.6"
+    }
+  ],
+  "min_chars": 8,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "对不起，我没拿好你的杯子，杯子坏了。明天我再给你买一个。",
+    "pinyin": "Duìbuqǐ, wǒ méi ná hǎo nǐ de bēizi, bēizi huài le. Míngtiān wǒ zài gěi nǐ mǎi yí gè.",
+    "es": "Perdona, se me ha caído tu vaso y se ha roto. Mañana te compro otro."
+  }
+}

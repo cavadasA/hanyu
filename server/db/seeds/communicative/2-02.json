@@ -1,0 +1,24 @@
+{
+  "slug": "2-02-donde-esta-el-movil",
+  "hsk_level": 2,
+  "topic": "vida diaria",
+  "situation_es": "Tu madre no encuentra su móvil. Tú lo has visto hace un momento: dile dónde está.",
+  "mode": "speak",
+  "intent": [
+    "decir dónde está el móvil",
+    "situarlo respecto a otro objeto de la casa"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "1.1"
+    }
+  ],
+  "min_chars": 6,
+  "max_chars": 30,
+  "model_answer": {
+    "zh": "你的手机在桌子上面，电脑的前面。",
+    "pinyin": "Nǐ de shǒujī zài zhuōzi shàngmiàn, diànnǎo de qiánmiàn.",
+    "es": "Tu móvil está encima de la mesa, delante del ordenador."
+  }
+}

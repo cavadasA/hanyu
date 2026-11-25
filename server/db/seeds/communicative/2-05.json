@@ -1,0 +1,24 @@
+{
+  "slug": "2-05-llegar-tarde-al-trabajo",
+  "hsk_level": 2,
+  "topic": "trabajo",
+  "situation_es": "Llegas tarde al trabajo y tu jefe te pregunta qué ha pasado. Explícale por qué llegas tarde.",
+  "mode": "write",
+  "intent": [
+    "reconocer que llegas tarde",
+    "explicar el motivo del retraso"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "6.4.3"
+    }
+  ],
+  "min_chars": 8,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "对不起，我来晚了，因为路上车太多了。",
+    "pinyin": "Duìbuqǐ, wǒ lái wǎn le, yīnwèi lùshang chē tài duō le.",
+    "es": "Perdone, llego tarde porque había demasiado tráfico."
+  }
+}

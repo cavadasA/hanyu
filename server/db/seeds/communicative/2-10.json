@@ -1,0 +1,24 @@
+{
+  "slug": "2-10-cerca-de-tu-casa",
+  "hsk_level": 2,
+  "topic": "lugares",
+  "situation_es": "Un amigo va a venir a visitarte por primera vez. Cuéntale qué hay cerca de tu casa.",
+  "mode": "write",
+  "intent": [
+    "decir qué hay cerca de tu casa",
+    "situar al menos un lugar respecto a otro"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "6.3.2"
+    }
+  ],
+  "min_chars": 10,
+  "max_chars": 50,
+  "model_answer": {
+    "zh": "我家旁边有一个很大的商店，商店后面有一个小饭馆。",
+    "pinyin": "Wǒ jiā pángbiān yǒu yí gè hěn dà de shāngdiàn, shāngdiàn hòumiàn yǒu yí gè xiǎo fànguǎn.",
+    "es": "Al lado de mi casa hay una tienda muy grande, y detrás de la tienda hay un restaurante pequeño."
+  }
+}

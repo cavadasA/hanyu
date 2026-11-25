@@ -1,0 +1,24 @@
+{
+  "slug": "2-03-pedir-ayuda-deberes",
+  "hsk_level": 2,
+  "topic": "estudio",
+  "situation_es": "No entiendes una pregunta de los deberes de chino. Pide ayuda a un compañero de clase y dile qué es lo que no entiendes.",
+  "mode": "write",
+  "intent": [
+    "pedir ayuda al compañero",
+    "decir qué es lo que no entiendes"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "5.4.1"
+    }
+  ],
+  "min_chars": 8,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "这个问题我没看懂，你能帮帮我吗？",
+    "pinyin": "Zhège wèntí wǒ méi kàn dǒng, nǐ néng bāngbang wǒ ma?",
+    "es": "No he entendido esta pregunta, ¿me puedes ayudar?"
+  }
+}

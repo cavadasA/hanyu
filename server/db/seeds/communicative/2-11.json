@@ -1,0 +1,24 @@
+{
+  "slug": "2-11-comprar-pescado",
+  "hsk_level": 2,
+  "topic": "compras",
+  "situation_es": "En el mercado quieres comprar pescado. Pregunta el precio y di cuánto quieres.",
+  "mode": "speak",
+  "intent": [
+    "preguntar el precio",
+    "decir cuánto quieres comprar"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "2.6.1"
+    }
+  ],
+  "min_chars": 6,
+  "max_chars": 30,
+  "model_answer": {
+    "zh": "这条鱼多少钱？我要两条。",
+    "pinyin": "Zhè tiáo yú duōshao qián? Wǒ yào liǎng tiáo.",
+    "es": "¿Cuánto cuesta este pescado? Quiero dos."
+  }
+}

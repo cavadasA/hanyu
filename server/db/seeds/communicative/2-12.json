@@ -1,0 +1,24 @@
+{
+  "slug": "2-12-una-talla-mas-grande",
+  "hsk_level": 2,
+  "topic": "compras",
+  "situation_es": "En una tienda te pruebas una prenda que te gusta, pero te queda pequeña. Díselo al dependiente y pide una más grande.",
+  "mode": "write",
+  "intent": [
+    "decir que te gusta pero te queda pequeña",
+    "pedir una más grande"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "6.4.2"
+    }
+  ],
+  "min_chars": 10,
+  "max_chars": 50,
+  "model_answer": {
+    "zh": "这件衣服虽然很好看，但是太小了，有大一点儿的吗？",
+    "pinyin": "Zhè jiàn yīfu suīrán hěn hǎokàn, dànshì tài xiǎo le, yǒu dà yìdiǎnr de ma?",
+    "es": "Esta prenda es muy bonita, pero me queda pequeña. ¿Tienen una un poco más grande?"
+  }
+}

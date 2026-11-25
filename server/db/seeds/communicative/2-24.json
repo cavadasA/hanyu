@@ -1,0 +1,24 @@
+{
+  "slug": "2-24-describir-a-tu-mejor-amigo",
+  "hsk_level": 2,
+  "function": "describir",
+  "situation_es": "Describe a tu mejor amigo: cómo es y qué le gusta hacer.",
+  "mode": "write",
+  "intent": [
+    "describir cómo es",
+    "decir qué le gusta hacer"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "2.7.1"
+    }
+  ],
+  "min_chars": 10,
+  "max_chars": 50,
+  "model_answer": {
+    "zh": "我最好的朋友个子很高，很爱笑，他最喜欢打篮球。",
+    "pinyin": "Wǒ zuì hǎo de péngyou gèzi hěn gāo, hěn ài xiào, tā zuì xǐhuan dǎ lánqiú.",
+    "es": "Mi mejor amigo es muy alto y se ríe mucho; lo que más le gusta es jugar al baloncesto."
+  }
+}

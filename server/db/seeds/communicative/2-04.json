@@ -1,0 +1,24 @@
+{
+  "slug": "2-04-hablar-o-escribir",
+  "hsk_level": 2,
+  "topic": "estudio",
+  "situation_es": "Tu profesora te pregunta qué te cuesta más en chino: hablar o escribir. Compara las dos cosas.",
+  "mode": "write",
+  "intent": [
+    "comparar hablar y escribir",
+    "decir cuál de las dos te cuesta más"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "6.3.4"
+    }
+  ],
+  "min_chars": 6,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "我觉得写汉字比说汉语累多了，要写很长时间。",
+    "pinyin": "Wǒ juéde xiě Hànzì bǐ shuō Hànyǔ lèi duō le, yào xiě hěn cháng shíjiān.",
+    "es": "Me parece que escribir caracteres cansa mucho más que hablar chino: hay que pasar mucho rato escribiendo."
+  }
+}

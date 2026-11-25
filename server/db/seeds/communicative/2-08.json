@@ -1,0 +1,24 @@
+{
+  "slug": "2-08-como-fue-la-fiesta",
+  "hsk_level": 2,
+  "topic": "eventos",
+  "situation_es": "Ayer fuiste a una fiesta. Un amigo que no pudo ir te pregunta cómo fue.",
+  "mode": "write",
+  "intent": [
+    "decir cómo fue la fiesta",
+    "contar algo concreto que pasó en ella"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "5.4.3"
+    }
+  ],
+  "min_chars": 10,
+  "max_chars": 50,
+  "model_answer": {
+    "zh": "昨天大家玩得很高兴，我们唱歌、跳舞，玩到十一点。",
+    "pinyin": "Zuótiān dàjiā wán de hěn gāoxìng, wǒmen chàng gē, tiào wǔ, wán dào shíyī diǎn.",
+    "es": "Ayer lo pasamos todos muy bien: cantamos y bailamos hasta las once."
+  }
+}

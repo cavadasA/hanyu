@@ -1,0 +1,24 @@
+{
+  "slug": "2-19-saludar-a-un-vecino",
+  "hsk_level": 2,
+  "function": "saludar",
+  "situation_es": "Por la mañana te encuentras en el ascensor con tu vecino mayor. Salúdale y pregúntale cómo está.",
+  "mode": "speak",
+  "intent": [
+    "saludarle",
+    "preguntarle cómo está"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "2.10.3"
+    }
+  ],
+  "min_chars": 6,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "早上好！我去上班，您呢？最近身体好吗？",
+    "pinyin": "Zǎoshang hǎo! Wǒ qù shàngbān, nín ne? Zuìjìn shēntǐ hǎo ma?",
+    "es": "¡Buenos días! Yo voy a trabajar, ¿y usted? ¿Qué tal de salud últimamente?"
+  }
+}

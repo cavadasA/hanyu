@@ -1,0 +1,24 @@
+{
+  "slug": "2-01-manana-antes-de-clase",
+  "hsk_level": 2,
+  "topic": "vida diaria",
+  "situation_es": "Un amigo te pregunta qué haces por las mañanas antes de ir a clase. Cuéntale dos cosas que haces y en qué orden.",
+  "mode": "write",
+  "intent": [
+    "contar al menos dos cosas que haces por la mañana",
+    "dejar claro en qué orden las haces"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "2.7.6"
+    }
+  ],
+  "min_chars": 8,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "我每天早上吃完早饭，再坐公交车去学校。",
+    "pinyin": "Wǒ měitiān zǎoshang chī wán zǎofàn, zài zuò gōngjiāochē qù xuéxiào.",
+    "es": "Todas las mañanas, después de desayunar, voy al colegio en autobús."
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "slug": "2-09-indicar-el-camino",
+  "hsk_level": 2,
+  "topic": "lugares",
+  "situation_es": "Un turista te pregunta cómo llegar a la estación de tren. Explícale el camino.",
+  "mode": "speak",
+  "intent": [
+    "indicar hacia dónde tiene que ir",
+    "decir dónde está la estación al llegar"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "2.8.2"
+    }
+  ],
+  "min_chars": 8,
+  "max_chars": 50,
+  "model_answer": {
+    "zh": "你从这儿往前走，再往右走，火车站就在左边。",
+    "pinyin": "Nǐ cóng zhèr wǎng qián zǒu, zài wǎng yòu zǒu, huǒchēzhàn jiù zài zuǒbian.",
+    "es": "Desde aquí sigue recto y luego gira a la derecha; la estación está a la izquierda."
+  }
+}

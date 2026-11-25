@@ -1,0 +1,24 @@
+{
+  "slug": "2-06-cuanto-llevas-trabajando",
+  "hsk_level": 2,
+  "topic": "trabajo",
+  "situation_es": "Un compañero nuevo te pregunta cuánto tiempo llevas trabajando en la empresa y qué haces. Contéstale.",
+  "mode": "write",
+  "intent": [
+    "decir cuánto tiempo llevas trabajando ahí",
+    "decir en qué consiste tu trabajo"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "5.4.4"
+    }
+  ],
+  "min_chars": 10,
+  "max_chars": 50,
+  "model_answer": {
+    "zh": "我在这里工作了两年，每天都要给很多人打电话。",
+    "pinyin": "Wǒ zài zhèlǐ gōngzuò le liǎng nián, měitiān dōu yào gěi hěn duō rén dǎ diànhuà.",
+    "es": "Llevo dos años trabajando aquí; todos los días tengo que llamar por teléfono a mucha gente."
+  }
+}

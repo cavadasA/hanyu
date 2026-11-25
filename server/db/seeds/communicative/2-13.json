@@ -1,0 +1,24 @@
+{
+  "slug": "2-13-en-el-medico",
+  "hsk_level": 2,
+  "topic": "salud",
+  "situation_es": "Estás en el médico. Dile qué te duele y desde cuándo.",
+  "mode": "speak",
+  "intent": [
+    "decir qué te duele",
+    "decir desde cuándo te duele"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "2.7.3"
+    }
+  ],
+  "min_chars": 6,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "医生，我头疼，已经两天了。",
+    "pinyin": "Yīshēng, wǒ tóu téng, yǐjīng liǎng tiān le.",
+    "es": "Doctor, me duele la cabeza desde hace dos días."
+  }
+}

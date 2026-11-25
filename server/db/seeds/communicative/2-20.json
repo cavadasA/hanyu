@@ -1,0 +1,24 @@
+{
+  "slug": "2-20-pedir-un-numero-de-telefono",
+  "hsk_level": 2,
+  "function": "pedir",
+  "situation_es": "Quieres llamar esta noche a un compañero nuevo para preguntarle algo de la clase de mañana. Pídele su número y dile para qué lo quieres.",
+  "mode": "write",
+  "intent": [
+    "pedirle su número de teléfono",
+    "decir para qué lo quieres"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "2.8.3"
+    }
+  ],
+  "min_chars": 8,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "你能告诉我你的手机号吗？晚上我给你打电话，问问明天上课的事。",
+    "pinyin": "Nǐ néng gàosu wǒ nǐ de shǒujī hào ma? Wǎnshang wǒ gěi nǐ dǎ diànhuà, wènwen míngtiān shàngkè de shì.",
+    "es": "¿Me das tu número de móvil? Te llamo esta noche para preguntarte una cosa de la clase de mañana."
+  }
+}

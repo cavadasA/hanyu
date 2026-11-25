@@ -1,0 +1,24 @@
+{
+  "slug": "2-16-has-estado-en-china",
+  "hsk_level": 2,
+  "topic": "ocio",
+  "situation_es": "Un amigo chino te pregunta si has estado alguna vez en China. Contesta y añade algo sobre el viaje o sobre tus planes.",
+  "mode": "write",
+  "intent": [
+    "decir si has estado o no",
+    "añadir un detalle sobre el viaje o sobre tus planes"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "7.1.2"
+    }
+  ],
+  "min_chars": 6,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "我去过中国，中国菜很好吃。",
+    "pinyin": "Wǒ qù guo Zhōngguó, Zhōngguó cài hěn hǎochī.",
+    "es": "He estado en China; la comida china está muy buena."
+  }
+}

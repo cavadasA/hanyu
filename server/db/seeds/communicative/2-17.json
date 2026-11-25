@@ -1,0 +1,24 @@
+{
+  "slug": "2-17-presentar-a-una-companera",
+  "hsk_level": 2,
+  "topic": "comunicación interpersonal",
+  "situation_es": "Presentas a una compañera de clase a tu profesor. Dile quién es y algo sobre ella.",
+  "mode": "write",
+  "intent": [
+    "presentar a la compañera",
+    "decir algo sobre ella"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "5.4.3"
+    }
+  ],
+  "min_chars": 10,
+  "max_chars": 50,
+  "model_answer": {
+    "zh": "老师，这是我的同学，她是中国人，汉语说得很好。",
+    "pinyin": "Lǎoshī, zhè shì wǒ de tóngxué, tā shì Zhōngguó rén, Hànyǔ shuō de hěn hǎo.",
+    "es": "Profesor, esta es mi compañera de clase; es china y habla muy bien chino."
+  }
+}

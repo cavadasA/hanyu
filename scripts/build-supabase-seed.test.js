@@ -13,6 +13,16 @@ describe('buildSeedSql', () => {
     );
   });
 
+  it('siembra las tareas comunicativas validadas', () => {
+    expect(sql).toContain(
+      'insert into public.communicative_task (slug, hsk_level, situation_es, mode, intent, required_markers, min_chars, max_chars, model_answer)',
+    );
+    expect(sql).toContain("('2-22-rechazar-una-invitacion', 2, ");
+    expect(sql).toContain("array['rechazar la invitación', 'dar un motivo', 'proponer otro día']::text[]");
+    expect(sql).toContain('on conflict (slug) do update set hsk_level = excluded.hsk_level');
+    expect(counts.communicative_tasks).toBe(24);
+  });
+
   it('builds seed SQL for words, grammar, and exercises', () => {
     const generated = { sql, counts };
 

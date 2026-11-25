@@ -3,6 +3,7 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { loadExercises } from './build-exercises.js';
 import { loadReadingAudio, loadReadings } from './build-readings.js';
+import { loadCommunicativeTasks, validateCommunicativeCatalog } from './build-communicative.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = dirname(__dirname);
@@ -298,6 +299,25 @@ function buildReadingTeachingRows() {
   ]);
 }
 
+// Una tarea cuya respuesta modelo no supera sus reglas no entra en el seed.
+function buildCommunicativeRows() {
+  const problems = validateCommunicativeCatalog();
+  if (problems.length > 0) {
+    throw new Error(`Tareas comunicativas inválidas:\n${problems.join('\n')}`);
+  }
+  return loadCommunicativeTasks().map(({ task }) => [
+    sqlString(task.slug),
+    sqlInteger(task.hsk_level),
+    sqlString(task.situation_es),
+    sqlString(task.mode),
+    sqlTextArray(task.intent),
+    sqlJson(task.required_markers),
+    sqlInteger(task.min_chars),
+    sqlInteger(task.max_chars),
+    sqlJson(task.model_answer),
+  ]);
+}
+
 function buildReadingTeachesSql() {
   const rows = buildReadingTeachingRows();
   if (!rows.length) return '-- content_teaches: no rows\n';
@@ -335,6 +355,7 @@ function buildReadingTeachesSql() {
 export function buildSeedSql() {
   const wordsRows = buildWordsRows();
   const characterRows = buildCharacterRows();
+  const communicativeRows = buildCommunicativeRows();
   const examStructureRows = buildExamStructureRows();
   const grammarRows = buildGrammarRows();
   const grammarPrerequisiteRows = buildGrammarPrerequisiteRows();
@@ -411,6 +432,12 @@ export function buildSeedSql() {
       'on conflict (source_table, source_id) do update set hsk_level = excluded.hsk_level, title = excluded.title',
     ),
     buildReadingTeachesSql(),
+    buildInsert(
+      'communicative_task',
+      ['slug', 'hsk_level', 'situation_es', 'mode', 'intent', 'required_markers', 'min_chars', 'max_chars', 'model_answer'],
+      communicativeRows,
+      'on conflict (slug) do update set hsk_level = excluded.hsk_level, situation_es = excluded.situation_es, mode = excluded.mode, intent = excluded.intent, required_markers = excluded.required_markers, min_chars = excluded.min_chars, max_chars = excluded.max_chars, model_answer = excluded.model_answer',
+    ),
     'commit;',
     '',
   ].join('\n');
@@ -429,6 +456,7 @@ export function buildSeedSql() {
       readings: readingRows.length,
       reading_content_items: readingContentRows.length,
       reading_teaches: buildReadingTeachingRows().length,
+      communicative_tasks: communicativeRows.length,
     },
   };
 }

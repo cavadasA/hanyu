@@ -1,0 +1,25 @@
+{
+  "slug": "2-22-rechazar-una-invitacion",
+  "hsk_level": 2,
+  "function": "rechazar",
+  "situation_es": "Tu compañera te invita al cine el sábado. No puedes: explica por qué y propón otro día.",
+  "mode": "write",
+  "intent": [
+    "rechazar la invitación",
+    "dar un motivo",
+    "proponer otro día"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "6.4.3"
+    }
+  ],
+  "min_chars": 10,
+  "max_chars": 50,
+  "model_answer": {
+    "zh": "对不起，星期六我有事，所以不能去。星期天去吧！",
+    "pinyin": "Duìbuqǐ, xīngqīliù wǒ yǒu shì, suǒyǐ bù néng qù. Xīngqītiān qù ba!",
+    "es": "Lo siento, el sábado tengo cosas que hacer, así que no puedo ir. ¡Vamos el domingo!"
+  }
+}

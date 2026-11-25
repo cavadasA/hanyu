@@ -1,0 +1,24 @@
+{
+  "slug": "2-18-animar-a-un-amigo",
+  "hsk_level": 2,
+  "topic": "comunicación interpersonal",
+  "situation_es": "Tu amigo está triste porque le ha salido mal un examen. Anímale.",
+  "mode": "write",
+  "intent": [
+    "quitarle importancia o mostrar que le entiendes",
+    "animarle de cara a la próxima vez"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "2.7.6"
+    }
+  ],
+  "min_chars": 8,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "没关系，下次再好好准备，你能考好的。",
+    "pinyin": "Méi guānxi, xià cì zài hǎohāo zhǔnbèi, nǐ néng kǎo hǎo de.",
+    "es": "No pasa nada; la próxima vez prepáratelo bien y te saldrá bien."
+  }
+}

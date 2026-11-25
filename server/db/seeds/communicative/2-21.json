@@ -1,0 +1,24 @@
+{
+  "slug": "2-21-invitar-a-cenar",
+  "hsk_level": 2,
+  "function": "invitar",
+  "situation_es": "Quieres invitar a tu compañero a cenar en tu casa el sábado. Invítale y dile a qué hora.",
+  "mode": "write",
+  "intent": [
+    "invitarle a cenar",
+    "decir el día y la hora"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "6.3.6"
+    }
+  ],
+  "min_chars": 8,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "星期六晚上我请你来我家吃饭，七点来吧！",
+    "pinyin": "Xīngqīliù wǎnshang wǒ qǐng nǐ lái wǒ jiā chī fàn, qī diǎn lái ba!",
+    "es": "Te invito a cenar a mi casa el sábado por la noche; ¡ven a las siete!"
+  }
+}

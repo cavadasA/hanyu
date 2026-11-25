@@ -1,0 +1,24 @@
+{
+  "slug": "2-14-amigo-enfermo",
+  "hsk_level": 2,
+  "topic": "salud",
+  "situation_es": "Tu amigo está resfriado y quiere ir a jugar al fútbol. Aconséjale que no vaya.",
+  "mode": "write",
+  "intent": [
+    "aconsejarle que no vaya",
+    "darle un motivo o proponerle otra cosa"
+  ],
+  "required_markers": [
+    {
+      "hsk_level": 2,
+      "code": "6.2.2"
+    }
+  ],
+  "min_chars": 8,
+  "max_chars": 40,
+  "model_answer": {
+    "zh": "你生病了，别去踢足球了，在家多休息吧。",
+    "pinyin": "Nǐ shēngbìng le, bié qù tī zúqiú le, zài jiā duō xiūxi ba.",
+    "es": "Estás enfermo; no vayas a jugar al fútbol, quédate en casa y descansa."
+  }
+}
