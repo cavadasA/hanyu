@@ -25,3 +25,4 @@ export { LEARNING_SKILLS, expressionSkillsFor, type ExpressionSkill, type Expres
 export { comparePinyin, parsePinyinSyllables, INTELLIGIBLE_RATIO, type PinyinComparison } from './expression/compare-pinyin';
 export * from './exam/types';
 export * from './exam/validate';
+export * from './exam/score';
