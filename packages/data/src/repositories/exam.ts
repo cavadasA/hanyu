@@ -13,8 +13,8 @@ export type ServedExamGroup = ExamGroup & { slug: string };
 
 export interface ExamMedia {
   /** Clips de 听力 por clave de la línea de tiempo: `media/<sha256>.m4a`. */
-  audio: Record<string, { path: string; duration_ms: number }>;
-  images: Record<string, { path: string }>;
+  audio: Record<string, { path: string; duration_ms: number; url: string }>;
+  images: Record<string, { path: string; url: string }>;
   /** SVG de los caracteres incompletos de 书写 1, por `<slug>:<índice|example>`. */
   characters: Record<string, string>;
 }
@@ -67,7 +67,22 @@ export interface ExamAttempt {
 export async function getExamForm(level: number, form: string | null, client: HanyuClient): Promise<ServedExamForm | null> {
   const { data, error } = await (client.rpc as any)('get_exam_form', { p_level: level, p_form: form });
   if (error) throw createRepositoryError(error, 'No se pudo cargar el simulacro');
-  return (data as ServedExamForm | null) ?? null;
+  if (!data) return null;
+  const served = data as ServedExamForm;
+  const url = (path: string) => {
+    const [bucket, ...object] = path.split('/');
+    return client.storage.from(bucket).getPublicUrl(object.join('/')).data.publicUrl;
+  };
+  const withUrls = <T extends { path: string }>(entries: Record<string, T> | undefined) =>
+    Object.fromEntries(Object.entries(entries ?? {}).map(([key, entry]) => [key, { ...entry, url: url(entry.path) }]));
+  return {
+    ...served,
+    media: {
+      audio: withUrls(served.media?.audio),
+      images: withUrls(served.media?.images),
+      characters: served.media?.characters ?? {},
+    },
+  };
 }
 
 /**

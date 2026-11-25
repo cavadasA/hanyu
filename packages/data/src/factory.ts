@@ -31,7 +31,6 @@ import {
 } from './repositories/flashcards';
 import {
   buildExerciseSession,
-  buildMockExam,
   checkExercise,
   generateExercise,
   getExerciseHistory,
@@ -66,7 +65,6 @@ import type {
   ExerciseType,
   HskLevel,
   LearningSkill,
-  MockExamScope,
   WordContext,
 } from './types';
 
@@ -199,8 +197,6 @@ export function createHanyuData(config: HanyuDataConfig) {
     exercises: {
       buildExerciseSession: (unitCode?: string | null, length = 8, targetWordIds: number[] = []) =>
         buildExerciseSession(unitCode, length, client, targetWordIds),
-      buildMockExam: (level: HskLevel, scope: MockExamScope = 'section', sectionCode?: string | null) =>
-        buildMockExam(level, scope, client, sectionCode),
       generateExercise: (type: ExerciseType, level: HskLevel) =>
         generateExercise(type, level, client),
       checkExercise: (id: string, answer: ExerciseAnswer, options?: { hintUsed?: boolean }) =>

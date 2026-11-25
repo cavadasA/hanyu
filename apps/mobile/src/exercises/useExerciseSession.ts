@@ -5,9 +5,6 @@ import {
   type Exercise,
   type ExerciseCheckResult,
   type ExerciseSession as ExerciseSessionData,
-  type HskLevel,
-  type MockExam,
-  type MockExamScope,
 } from '@hanyu/data';
 import { getData } from '../lib/data';
 
@@ -15,7 +12,6 @@ type Status = 'idle' | 'loading' | 'ready' | 'answering' | 'checking' | 'checked
 
 interface ExerciseApi {
   buildExerciseSession(unitCode?: string | null, length?: number, targetWordIds?: number[]): Promise<ExerciseSessionData>;
-  buildMockExam?(level: HskLevel, scope: MockExamScope, sectionCode?: string | null): Promise<MockExam>;
   checkExercise(id: string, answer: ExerciseAnswer, options?: { hintUsed?: boolean }): Promise<ExerciseCheckResult>;
   recordHintUsed?(id: string): Promise<void>;
 }
@@ -40,7 +36,6 @@ export interface ExerciseSession {
   hintPending: boolean;
   summary: ExerciseSessionSummary | null;
   error: string | null;
-  buildMockExam(level: HskLevel, scope?: MockExamScope, sectionCode?: string | null): Promise<MockExam>;
   load(targetWordIds?: number[]): Promise<void>;
   start(): void;
   setDraft(value: ExerciseAnswer): void;
@@ -154,18 +149,6 @@ export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
     setStatus('answering');
   }, [exercises, index, status]);
 
-  const buildMockExam = useCallback(async (
-    level: HskLevel,
-    scope: MockExamScope = 'section',
-    sectionCode?: string | null,
-  ) => {
-    if (!resolvedApi.buildMockExam) {
-      throw new Error('El simulacro no está disponible todavía.');
-    }
-
-    return resolvedApi.buildMockExam(level, scope, sectionCode);
-  }, [resolvedApi]);
-
   const markHintUsed = useCallback(async () => {
     if (!exercise || status !== 'answering' || hintPending || hintUsed) return;
 
@@ -199,7 +182,6 @@ export function useExerciseSession(api?: ExerciseApi): ExerciseSession {
     hintPending,
     summary,
     error,
-    buildMockExam,
     load,
     start,
     setDraft,

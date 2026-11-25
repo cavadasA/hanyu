@@ -322,11 +322,17 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'v_used_exercise_ids uuid[]');
     expectSqlToContain(migration, "v_section->>'code' = 'listening'");
     expectSqlToContain(migration, 'p_section_code text default null');
-    expectSqlToContain(integrationTest, 'select plan(10);');
+    expectSqlToContain(integrationTest, 'select plan(6);');
     expectSqlToContain(integrationTest, 'public.build_exercise_session(');
-    expectSqlToContain(integrationTest, 'public.build_mock_exam(');
     expectSqlToContain(integrationTest, 'public.mistake_queue(');
     expectSqlToContain(integrationTest, 'select * from finish();');
+  });
+
+  it('retira el simulacro hecho con ejercicios de práctica: lo sustituyen las formas del Plan 12', () => {
+    const migration = readFileSync(join(migrationDir, '2026112503_exam_forms.sql'), 'utf8');
+    const integrationTest = readFileSync(join(rootDir, 'supabase', 'tests', 'exercises_exam_hardening.sql'), 'utf8');
+    expectSqlToContain(migration, 'drop function if exists public.build_mock_exam(integer, text, text);');
+    expect(integrationTest).not.toContain('build_mock_exam');
   });
 
   it('hace idempotente el seed de ejercicios por slug natural', () => {

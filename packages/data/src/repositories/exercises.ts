@@ -9,10 +9,6 @@ import type {
   ExerciseType,
   HskLevel,
   Mistake,
-  MockExam,
-  MockExamScope,
-  MockExamSection,
-  MockExamUnsupported,
 } from '../types';
 import {
   createRepositoryError,
@@ -142,57 +138,6 @@ export async function getMistakes(client: HanyuClient, limit = 20): Promise<Mist
       hits_since: Number(row.hits_since ?? 0),
       distinct_days: Number(row.distinct_days ?? 0),
     }));
-}
-
-function normalizeMockExam(payload: any): MockExam {
-  const exam = parseJsonField(Array.isArray(payload) ? payload[0] : payload, {});
-  const sections = Array.isArray(exam?.sections)
-    ? exam.sections.map((section: any): MockExamSection => ({
-        code: String(section?.code ?? ''),
-        title: String(section?.title ?? section?.code ?? ''),
-        minutes: Number(section?.minutes ?? 0),
-        exercises: Array.isArray(section?.exercises)
-          ? section.exercises.map((exercise: any) => normalizeGeneratedExerciseRow(exercise))
-          : [],
-      }))
-    : [];
-  const unsupported = Array.isArray(exam?.unsupported)
-    ? exam.unsupported.map((part: any): MockExamUnsupported => ({
-        section: String(part?.section ?? ''),
-        ...(part?.part ? { part: String(part.part) } : {}),
-        reason: String(part?.reason ?? 'no_matching_type'),
-      }))
-    : [];
-
-  return {
-    hsk_level: Number(exam?.hsk_level ?? 1) as HskLevel,
-    scope: exam?.scope === 'full' ? 'full' : 'section',
-    sections,
-    unsupported,
-  };
-}
-
-export async function buildMockExam(
-  level: HskLevel,
-  scope: MockExamScope,
-  client: HanyuClient,
-  sectionCode?: string | null,
-): Promise<MockExam> {
-  const safeLevel = Math.min(3, Math.max(1, Math.trunc(Number(level)) || 2)) as HskLevel;
-  const safeScope: MockExamScope = scope === 'full' ? 'full' : 'section';
-  const params: Record<string, unknown> = {
-    p_level: safeLevel,
-    p_scope: safeScope,
-  };
-  if (sectionCode) params.p_section_code = sectionCode;
-
-  const { data, error } = await (client.rpc as any)('build_mock_exam', params);
-
-  if (error) {
-    throw createRepositoryError(error, 'Failed to build mock exam');
-  }
-
-  return normalizeMockExam(data);
 }
 
 async function incrementExerciseDone(client: HanyuClient, userId: string) {

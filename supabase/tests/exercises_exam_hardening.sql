@@ -1,4 +1,5 @@
--- Contratos de las tres RPC de ejercicios del Plan 6.
+-- Contratos de las RPC de ejercicios del Plan 6. El simulacro ya no se arma con
+-- ejercicios de práctica: lo sirven las formas del Plan 12 (supabase/tests/exam_forms.sql).
 --
 -- Ejecutar sobre una base Supabase ya migrada y sembrada:
 --   psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/exercises_exam_hardening.sql
@@ -7,7 +8,7 @@ create extension if not exists pgtap;
 
 begin;
 
-select plan(10);
+select plan(6);
 
 insert into auth.users (id, aud, role, email, created_at, updated_at)
 values (
@@ -43,33 +44,6 @@ select ok(
 select ok(
   (select count(*) from public.generated_exercises where target_word_id is not null) = 90,
   'los ejercicios sembrados tienen una palabra objetivo'
-);
-
-select is(
-  (public.build_mock_exam(2, 'section', 'reading')->'sections'->0->>'code'),
-  'reading',
-  'build_mock_exam permite seleccionar lectura'
-);
-
-select is(
-  jsonb_array_length((public.build_mock_exam(2, 'section', 'listening')->'sections'->0->'exercises')),
-  0,
-  'listening no se rellena con preguntas de lectura'
-);
-
-select ok(
-  jsonb_array_length((public.build_mock_exam(2, 'section', 'listening')->'unsupported')) = 4,
-  'las cuatro partes de listening quedan declaradas como no simulables'
-);
-
-select ok(
-  (
-    select count(*) = count(distinct (item->>'id'))
-    from jsonb_array_elements(
-      jsonb_path_query_array(public.build_mock_exam(2, 'full'), '$.sections[*].exercises[*]')
-    ) item
-  ),
-  'build_mock_exam no repite ejercicios entre partes del simulacro'
 );
 
 insert into public.learning_event (

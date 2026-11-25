@@ -27,6 +27,7 @@ import {
   type SkillMastery,
   type SkillStateRow,
 } from '@hanyu/domain';
+import { ExamReadinessCard } from '../exam/ExamReadinessCard';
 import { getData } from '../lib/data';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
@@ -253,6 +254,8 @@ export function ProgressScreen() {
         </View>
 
         {error ? <ErrorBanner message={error} /> : null}
+
+        <ExamReadinessCard />
 
         {/* BLOQUE 1: MEMORIA */}
         <Card style={styles.sectionCard}>

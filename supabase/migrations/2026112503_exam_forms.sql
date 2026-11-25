@@ -6,6 +6,10 @@
 -- forma con get_exam_form, que quita las respuestas, y la entrega con submit_exam_attempt,
 -- que corrige con las respuestas guardadas. Así el cliente nunca recibe una clave `answer`.
 
+-- El simulacro anterior se armaba con ejercicios de práctica y solo cubría dos partes de
+-- lectura, con un formato que no era el del examen. Lo sustituyen estas formas.
+drop function if exists public.build_mock_exam(integer, text, text);
+
 create table if not exists public.exam_form (
   level int not null,
   code text not null,

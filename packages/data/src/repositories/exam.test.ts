@@ -9,6 +9,11 @@ function client(rpcResult: unknown = null, tableResult: unknown = []) {
   return {
     rpc: vi.fn().mockResolvedValue({ data: rpcResult, error: null }),
     from: vi.fn(() => chain),
+    storage: {
+      from: (bucket: string) => ({
+        getPublicUrl: (object: string) => ({ data: { publicUrl: `https://cdn.test/${bucket}/${object}` } }),
+      }),
+    },
     chain,
   } as any;
 }
@@ -30,11 +35,27 @@ const form = {
 };
 
 describe('getExamForm', () => {
-  it('pide la forma al servidor y la devuelve tal cual, o null si no hay ninguna', async () => {
+  it('pide la forma al servidor y la devuelve, o null si no hay ninguna', async () => {
     const withForm = client(form);
     await expect(getExamForm(2, null, withForm)).resolves.toEqual(form);
     expect(withForm.rpc).toHaveBeenCalledWith('get_exam_form', { p_level: 2, p_form: null });
     await expect(getExamForm(2, 'B', client(null))).resolves.toBeNull();
+  });
+});
+
+describe('getExamForm: medios', () => {
+  it('cada clip e imagen trae su URL pública de Storage', async () => {
+    const withMedia = {
+      ...form,
+      media: {
+        audio: { 'L1-q01': { path: 'media/abc.m4a', duration_ms: 3000 } },
+        images: { 'img-1': { path: 'media/def.webp' } },
+        characters: {},
+      },
+    };
+    const served = await getExamForm(2, null, client(withMedia));
+    expect(served?.media.audio['L1-q01']).toEqual({ path: 'media/abc.m4a', duration_ms: 3000, url: 'https://cdn.test/media/abc.m4a' });
+    expect(served?.media.images['img-1'].url).toBe('https://cdn.test/media/def.webp');
   });
 });
 
