@@ -63,6 +63,16 @@ describe('pinyinMatches', () => {
   it('fuera de 一 y 不, yī/yì siguen siendo distintos', () => {
     expect(pinyinMatches('yī', 'yì', '衣')).toBe(false);
   });
+
+  it('la ü con tono coincide se escriba compuesta o descompuesta', () => {
+    expect(pinyinMatches('nu\u0308\u030c', 'nǚ')).toBe(true);
+  });
+
+  it('con neutral, una sílaba átona de la frase coincide con la tónica del diccionario', () => {
+    expect(pinyinMatches('guòqu', 'guòqù')).toBe(false);
+    expect(pinyinMatches('guòqu', 'guòqù', '过去', { neutral: true })).toBe(true);
+    expect(pinyinMatches('dì', 'de', '地', { neutral: true })).toBe(false);
+  });
 });
 
 describe('resolveSenses', () => {
@@ -203,6 +213,30 @@ describe('resolveSenses', () => {
       { kind: 'annotation_orphan', sentence: 0, hanzi: '好' },
       { kind: 'annotation_orphan', sentence: 0, hanzi: '会' },
     ]);
+  });
+
+  it('地 átono en la frase es la partícula de, no dì', () => {
+    const dict = [
+      { hanzi: '地', pinyin: 'de', hsk_level: 2, sense_index: null, meaning_en: '-ly', meaning_es: 'partícula', pos: 'particle' },
+      { hanzi: '地', pinyin: 'dì', hsk_level: 3, sense_index: null, meaning_en: 'earth', meaning_es: 'tierra', pos: 'noun' },
+    ];
+    const { resolved, issues } = resolveSenses(reading([t('地', 'de')], undefined, 2), dict);
+    expect(issues).toEqual([]);
+    expect(resolved[0]).toMatchObject({ hsk_level: 2, by: 'pinyin' });
+  });
+
+  it('una sílaba átona admite anotar una acepción tónica, y sin anotación sigue sin resolverse', () => {
+    const dict = [
+      { hanzi: '过去', pinyin: 'guòqù', hsk_level: 2, sense_index: 1, meaning_en: 'to go over', meaning_es: 'pasar', pos: 'verb' },
+      { hanzi: '过去', pinyin: 'guòqù', hsk_level: 3, sense_index: 2, meaning_en: 'the past', meaning_es: 'el pasado', pos: 'noun' },
+    ];
+    const annotated = resolveSenses(
+      reading([t('过去', 'guòqu')], [{ sentence: 0, hanzi: '过去', occurrence: 0, hsk_level: 2, sense_index: 1 }], 2),
+      dict,
+    );
+    expect(annotated.issues).toEqual([]);
+    expect(resolveSenses(reading([t('过去', 'guòqu')], undefined, 2), dict).issues)
+      .toEqual([{ kind: 'sense_unresolved', sentence: 0, hanzi: '过去' }]);
   });
 
   it('sin pinyin alineado, una palabra con varias acepciones pide anotación', () => {

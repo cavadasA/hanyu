@@ -2,6 +2,7 @@
 // se valida en la build, no en el móvil: el pinyin de la frase la decide casi
 // siempre, y donde no basta lo decide una anotación explícita.
 import type { DictionaryEntry } from './tokenize.ts';
+import { pinyinLetters, type PinyinLetter } from './pinyin.ts';
 
 /** Clave natural de `words`: (hanzi, hsk_level, sense_index). */
 export interface SenseKey {
@@ -50,17 +51,40 @@ export interface SenseReading {
 
 type LeveledEntry = DictionaryEntry & { hsk_level: number };
 
-function normalizePinyin(pinyin: string, hanzi = ''): string {
-  let normalized = pinyin.normalize('NFC').toLowerCase().replace(/[\s'’·\-.,!?。，？！]/g, '');
-  // 一 y 不 cambian de tono según la sílaba siguiente; el diccionario y la
-  // frase pueden escribir uno u otro y siguen siendo la misma palabra.
-  if (hanzi.includes('一')) normalized = normalized.replace(/y[īíì]/g, 'yi');
-  if (hanzi.includes('不')) normalized = normalized.replace(/b[ùú]/g, 'bu');
-  return normalized;
+/**
+ * 一 y 不 cambian de tono según la sílaba siguiente; el diccionario y la frase
+ * pueden escribir uno u otro y siguen siendo la misma palabra.
+ */
+function withoutSandhi(letters: PinyinLetter[], hanzi: string): PinyinLetter[] {
+  return letters.map((letter, index) => {
+    const previous = letters[index - 1]?.base;
+    const sandhi =
+      (hanzi.includes('一') && previous === 'y' && letter.base === 'i') ||
+      (hanzi.includes('不') && previous === 'b' && letter.base === 'u');
+    return sandhi ? { ...letter, tone: 0 } : letter;
+  });
 }
 
-export function pinyinMatches(left: string, right: string, hanzi = ''): boolean {
-  return normalizePinyin(left, hanzi) === normalizePinyin(right, hanzi);
+/**
+ * ¿Dice la frase (`sentence`) la misma pronunciación que la entrada (`entry`)?
+ * Con `neutral`, una sílaba átona de la frase vale por la tónica de la entrada:
+ * 过去 se lee guòqu como complemento y guòqù como sustantivo.
+ */
+export function pinyinMatches(
+  sentence: string,
+  entry: string,
+  hanzi = '',
+  { neutral = false }: { neutral?: boolean } = {},
+): boolean {
+  const left = withoutSandhi(pinyinLetters(sentence), hanzi);
+  const right = withoutSandhi(pinyinLetters(entry), hanzi);
+  return (
+    left.length === right.length &&
+    left.every((letter, index) =>
+      letter.base === right[index].base &&
+      (letter.tone === right[index].tone || (neutral && letter.tone === 0)),
+    )
+  );
 }
 
 function sameSense(left: DictionaryEntry, right: DictionaryEntry): boolean {
@@ -152,7 +176,7 @@ export function resolveSenses(
           });
           continue;
         }
-        if (token.pinyin !== null && !pinyinMatches(annotated.pinyin, token.pinyin, hanzi)) {
+        if (token.pinyin !== null && !pinyinMatches(token.pinyin, annotated.pinyin, hanzi, { neutral: true })) {
           issues.push({
             kind: 'sense_conflict',
             sentence: sentenceIndex,
@@ -164,9 +188,15 @@ export function resolveSenses(
         chosen = annotated;
         by = 'annotation';
       } else {
-        const byPinyin = token.pinyin === null
+        const sentencePinyin = token.pinyin;
+        const exact = sentencePinyin === null
           ? []
-          : candidates.filter(candidate => pinyinMatches(candidate.pinyin, token.pinyin!, hanzi));
+          : candidates.filter(candidate => pinyinMatches(sentencePinyin, candidate.pinyin, hanzi));
+        // Solo si nada coincide exactamente se admite la sílaba átona: así 地
+        // átono (de) sigue siendo la partícula y no la tónica dì.
+        const byPinyin = exact.length > 0 || sentencePinyin === null
+          ? exact
+          : candidates.filter(candidate => pinyinMatches(sentencePinyin, candidate.pinyin, hanzi, { neutral: true }));
         if (byPinyin.length !== 1) {
           issues.push({ kind: 'sense_unresolved', sentence: sentenceIndex, hanzi });
           continue;
