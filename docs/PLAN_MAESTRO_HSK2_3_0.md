@@ -334,8 +334,12 @@ Tres huecos quedaron abiertos tras ejecutar los planes 6 y 7. Cada uno tiene su 
 | 10 lecturas sin series completas ni audio propio (objetivo 40–60) | `docs/superpowers/plans/2026-11-25-plan-10-lecturas-corpus-y-audio.md` |
 | 159 de 165 puntos gramaticales sin explicación ni ejemplos | `docs/superpowers/plans/2026-11-25-plan-11-gramatica-con-contenido.md` |
 | Simulacro con 2 de 8 partes, y esas 2 sin el formato real | `docs/superpowers/plans/2026-11-25-plan-12-simulacro-hsk2-completo.md` |
+| Expresión: sin pronunciación, escritura de caracteres ni tareas comunicativas (Plan 6) | `docs/superpowers/plans/2026-11-25-plan-13-expresion.md` |
+| Límites aceptados en 8 y 9: el lector muestra todas las acepciones; la comprensión inferencial no se mide | `docs/superpowers/plans/2026-11-25-plan-14-acepcion-e-inferencia.md` |
 
-El Plan 12 depende del pipeline de medios y de la síntesis de audio del Plan 10; el 11 es independiente. **Cambio de decisión pendiente de confirmar:** el Plan 10 propone voz neuronal (Azure AI Speech) en lugar de audio grabado por personas.
+El Plan 12 depende del pipeline de medios y de la síntesis de audio del Plan 10; el 11 es independiente. El 14 necesita las 48 lecturas del 10; el 13 conviene después de 10 y 12, porque toca la cola y el renderizador de ejercicios.
+
+**Cambio de decisión:** voz neuronal en lugar de audio grabado por personas. De momento con edge-tts, de forma provisional, hasta que haya suscripción de Azure. **Decisión reabierta en el Plan 13:** vuelve un proveedor de IA en runtime, pero solo para corregir tareas comunicativas, nunca para generar contenido.
 
 ---
 
