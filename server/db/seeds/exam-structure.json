@@ -1,30 +1,162 @@
 {
   "hsk_level": 2,
-  "source": "H20901",
-  "source_note": "Transcrito a mano de la muestra oficial. El PDF usa fuentes CID y no se puede extraer por script. La muestra indica 3 minutos para pasar respuestas tras listening y 5 minutos para los datos personales; answer_sheet_minutes suma ambos bloques administrativos.",
-  "total_minutes": 55,
-  "answer_sheet_minutes": 8,
+  "format_version": "3.0",
+  "source": "HSK（二级）样卷 (formato 3.0)",
+  "source_note": "Muestra oficial del HSK 2 con formato 3.0: zip «Sample Questions» enlazado desde https://www.chinesetest.cn/syllabus (https://hsk-sample-1409982902.cos.ap-beijing.myqcloud.com/HSK3.0.zip, HTTP 200, 395 322 335 bytes, Last-Modified 2026-09-09). PDF «HSK（二级）样卷.pdf» de 19 páginas, creado el 2026-07-15. Tiempos de la portada; plays y pausas medidos en «音频/HSK（二级）样卷.mp3» (17:48,6). Transcripción completa en docs/hsk/hsk2-3.0-estructura.md. Solo se toma la estructura: ninguna pregunta, imagen ni audio de la muestra.",
+  "total_minutes": 60,
+  "answer_sheet_minutes": 3,
+  "personal_info_minutes": 5,
+  "official_scale": null,
   "sections": [
     {
       "code": "listening",
       "title": "听力",
-      "minutes": 25,
+      "minutes": 17,
+      "measured_audio_ms": 1068600,
       "parts": [
-        { "code": "1", "question_count": 10, "format": "听句子，判断图片是否正确", "our_type": null },
-        { "code": "2", "question_count": 10, "format": "听对话，从图片中选出正确答案", "our_type": null },
-        { "code": "3", "question_count": 10, "format": "听对话和问题，选择正确答案", "our_type": null },
-        { "code": "4", "question_count": 5, "format": "听较长对话和问题，选择正确答案", "our_type": null }
+        {
+          "code": "1",
+          "question_count": 5,
+          "format": "听一句话，选择正确图片",
+          "description_es": "Una frase en audio; elegir entre 3 imágenes propias de la pregunta (A/B/C).",
+          "answer_kind": "image",
+          "has_example": true,
+          "group_shapes": [
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 }
+          ],
+          "plays": 2,
+          "instruction_ms": 12600,
+          "pause_between_plays_ms": 2200,
+          "pause_after_item_ms": 8300
+        },
+        {
+          "code": "2",
+          "question_count": 10,
+          "format": "听对话，选择最匹配的图片",
+          "description_es": "Diálogo corto en audio; elegir la imagen del grupo. Grupo 1: 6 imágenes A–F, el ejemplo gasta una. Grupo 2: 5 imágenes A–E, sin ejemplo.",
+          "answer_kind": "image",
+          "has_example": true,
+          "group_shapes": [
+            { "options": 6, "example_uses": 1, "questions": 5 },
+            { "options": 5, "example_uses": 0, "questions": 5 }
+          ],
+          "plays": 2,
+          "instruction_ms": 12800,
+          "pause_between_plays_ms": 2100,
+          "pause_after_item_ms": 12200
+        },
+        {
+          "code": "3",
+          "question_count": 10,
+          "format": "听对话，选择正确答案",
+          "description_es": "Diálogo de 2 turnos y pregunta en audio; elegir entre 3 respuestas impresas con pinyin (A/B/C). Cada reproducción es diálogo + pregunta.",
+          "answer_kind": "text",
+          "has_example": true,
+          "group_shapes": [
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 }
+          ],
+          "plays": 2,
+          "instruction_ms": 12400,
+          "pause_between_plays_ms": 2100,
+          "question_gap_ms": 2100,
+          "pause_after_item_ms": 15100
+        }
       ]
     },
     {
       "code": "reading",
       "title": "阅读",
-      "minutes": 22,
+      "minutes": 25,
       "parts": [
-        { "code": "1", "question_count": 5, "format": "看句子，选择相应的图片", "our_type": null },
-        { "code": "2", "question_count": 5, "format": "选择词语填空", "our_type": "fill_blank" },
-        { "code": "3", "question_count": 5, "format": "读句子，判断正误", "our_type": null },
-        { "code": "4", "question_count": 10, "format": "读句子，从选项中选择正确答案", "our_type": "matching" }
+        {
+          "code": "1",
+          "question_count": 5,
+          "format": null,
+          "description_es": "Frase escrita con pinyin; elegir la imagen del grupo (6 imágenes A–F, el ejemplo gasta una).",
+          "answer_kind": "image",
+          "has_example": true,
+          "group_shapes": [{ "options": 6, "example_uses": 1, "questions": 5 }]
+        },
+        {
+          "code": "2",
+          "question_count": 5,
+          "format": null,
+          "description_es": "Frase o minidiálogo A/B con un hueco （ ）; elegir la palabra de un banco común de 6 (A–F, el ejemplo gasta una).",
+          "answer_kind": "bank",
+          "has_example": true,
+          "group_shapes": [{ "options": 6, "example_uses": 1, "questions": 5 }]
+        },
+        {
+          "code": "3",
+          "question_count": 10,
+          "format": null,
+          "description_es": "Frase china; elegir su respuesta o continuación china. Grupo 1: 6 opciones A–F, el ejemplo gasta una. Grupo 2: 5 opciones A–E, sin ejemplo.",
+          "answer_kind": "bank",
+          "has_example": true,
+          "group_shapes": [
+            { "options": 6, "example_uses": 1, "questions": 5 },
+            { "options": 5, "example_uses": 0, "questions": 5 }
+          ]
+        },
+        {
+          "code": "4",
+          "question_count": 5,
+          "format": null,
+          "description_es": "Texto corto y pregunta marcada con ★; elegir entre 3 respuestas impresas (A/B/C).",
+          "answer_kind": "text",
+          "has_example": true,
+          "group_shapes": [
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 },
+            { "options": 3, "example_uses": 0, "questions": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "writing",
+      "title": "书写",
+      "minutes": 10,
+      "parts": [
+        {
+          "code": "1",
+          "question_count": 5,
+          "format": null,
+          "description_es": "Palabra de 2 caracteres con pinyin en la que a un carácter le falta un componente; elegir el componente de un banco de 6 (A–F, el ejemplo gasta uno).",
+          "answer_kind": "bank",
+          "has_example": true,
+          "group_shapes": [{ "options": 6, "example_uses": 1, "questions": 5 }]
+        },
+        {
+          "code": "2",
+          "question_count": 5,
+          "format": null,
+          "description_es": "Frase con pinyin completo y un hueco （ ）; escribir a mano el carácter que falta.",
+          "answer_kind": "handwrite",
+          "has_example": true,
+          "group_shapes": [
+            { "options": 1, "example_uses": 0, "questions": 1 },
+            { "options": 1, "example_uses": 0, "questions": 1 },
+            { "options": 1, "example_uses": 0, "questions": 1 },
+            { "options": 1, "example_uses": 0, "questions": 1 },
+            { "options": 1, "example_uses": 0, "questions": 1 }
+          ]
+        }
       ]
     }
   ]
