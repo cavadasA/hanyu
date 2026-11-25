@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "5.3.1",
+  "pattern": "verbo + 到 / 住 / 走 / 上",
+  "explanation": "Más complementos de resultado. 到 dice que se alcanza un objetivo: 买到 «conseguir comprar», 找到 «encontrar». 住 indica que algo queda fijo: 记住 «memorizar». 走 indica que algo se va del lugar: 拿走 «llevarse». 上 indica que algo se cierra o se une: 关上门. Se niegan con 没: 我没买到.",
+  "markers": ["到","住","走","上"],
+  "examples": [
+    {"zh":"我买到火车票了。","pinyin":"Wǒ mǎidào huǒchē piào le.","es":"He conseguido comprar los billetes de tren."},
+    {"zh":"你记住他的名字了吗？","pinyin":"Nǐ jìzhù tā de míngzi le ma?","es":"¿Te has quedado con su nombre?"},
+    {"zh":"谁把我的书拿走了？","pinyin":"Shéi bǎ wǒ de shū názǒu le?","es":"¿Quién se ha llevado mi libro?"},
+    {"zh":"请关上门。","pinyin":"Qǐng guānshang mén.","es":"Cierra la puerta, por favor."}
+  ],
+  "common_errors": [
+    {"wrong":"我买了票，可是没买。","right":"我去买票了，可是没买到。","why":"Para decir que no se consiguió, se niega el resultado: 没买到; 买 solo es intentar comprar."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"5.4.1"}]
+}

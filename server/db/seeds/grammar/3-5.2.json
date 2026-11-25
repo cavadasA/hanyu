@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "5.2",
+  "pattern": "poseedor + demostrativo + número + clasificador + descripción + 的 + nombre",
+  "explanation": "Cuando un nombre lleva varias descripciones, todas van delante en un orden bastante fijo: primero el poseedor, luego el demostrativo, el número y el clasificador, después las descripciones con 的 y, pegadas al nombre, las que no lo llevan: 我的那两件新衣服. Al revés que en español, ninguna va detrás del nombre.",
+  "markers": ["我的那两件","那位","一个很大的","两本新"],
+  "examples": [
+    {"zh":"我的那两件新衣服都很贵。","pinyin":"Wǒ de nà liǎng jiàn xīn yīfu dōu hěn guì.","es":"Esas dos prendas nuevas mías son muy caras."},
+    {"zh":"那位穿白色衣服的老师是我们的老师。","pinyin":"Nà wèi chuān báisè yīfu de lǎoshī shì wǒmen de lǎoshī.","es":"Ese profesor vestido de blanco es nuestro profesor."},
+    {"zh":"我家后边有一个很大的公园。","pinyin":"Wǒ jiā hòubian yǒu yí gè hěn dà de gōngyuán.","es":"Detrás de mi casa hay un parque muy grande."},
+    {"zh":"他送给我两本新的中文书。","pinyin":"Tā sòng gěi wǒ liǎng běn xīn de Zhōngwén shū.","es":"Me regaló dos libros nuevos en chino."}
+  ],
+  "common_errors": [
+    {"wrong":"两件我的新衣服。","right":"我的两件新衣服。","why":"El poseedor va antes del número y el clasificador: 我的两件新衣服."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"3.2.1"},{"hsk_level":1,"code":"4.4"}]
+}

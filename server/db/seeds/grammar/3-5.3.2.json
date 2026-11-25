@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "5.3.2",
+  "pattern": "verbo + 出 / 起 / 下 (resultado) · verbo + 起来 / 上 (comienzo) · verbo + 下去 / 下来 (continuidad)",
+  "explanation": "Los complementos de dirección también tienen usos figurados. 出 y 起 expresan resultado: 想出办法 «dar con una solución», 想起来 «acordarse». 起来 o 上 marcan el comienzo de algo: 笑起来 «echarse a reír», 爱上 «enamorarse». 下去 es seguir haciendo algo, 说下去 «sigue hablando», y 下来, que algo se calma o se mantiene: 安静下来.",
+  "markers": ["想出","想起来","起来","下去","下来"],
+  "examples": [
+    {"zh":"我想出了一个好办法。","pinyin":"Wǒ xiǎngchū le yí gè hǎo bànfǎ.","es":"Se me ha ocurrido una buena idea."},
+    {"zh":"我想起来了，我的手机在桌子上。","pinyin":"Wǒ xiǎng qǐlai le, wǒ de shǒujī zài zhuōzi shang.","es":"Ya me acuerdo: mi móvil está en la mesa."},
+    {"zh":"大家都笑起来了。","pinyin":"Dàjiā dōu xiào qǐlai le.","es":"Todos se echaron a reír."},
+    {"zh":"你说下去，我在听。","pinyin":"Nǐ shuō xiàqu, wǒ zài tīng.","es":"Sigue hablando, te escucho."},
+    {"zh":"教室里安静下来了。","pinyin":"Jiàoshì li ānjìng xiàlai le.","es":"El aula se quedó en silencio."}
+  ],
+  "common_errors": [
+    {"wrong":"我想了，我的手机在桌子上。（para «ya me acuerdo»）","right":"我想起来了，我的手机在桌子上。","why":"想 es «pensar»; para «acordarse» hace falta el complemento 起来."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"5.4.2"}]
+}

@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "6.1.1",
+  "pattern": "怎样 + verbo？",
+  "explanation": "怎样 delante de un verbo pregunta cómo se hace algo: 这个字怎样写？ «¿cómo se escribe este carácter?». Equivale a 怎么 en esta función, con un tono algo más formal o escrito. Como toda palabra interrogativa, ocupa el sitio de la respuesta y la frase no lleva 吗.",
+  "markers": ["怎样"],
+  "examples": [
+    {"zh":"去火车站怎样走？","pinyin":"Qù huǒchēzhàn zěnyàng zǒu?","es":"¿Cómo se va a la estación de tren?"},
+    {"zh":"这个菜怎样做？","pinyin":"Zhège cài zěnyàng zuò?","es":"¿Cómo se prepara este plato?"},
+    {"zh":"你是怎样学汉语的？","pinyin":"Nǐ shì zěnyàng xué Hànyǔ de?","es":"¿Cómo aprendiste chino?"}
+  ],
+  "common_errors": [
+    {"wrong":"怎样去火车站走吗？","right":"去火车站怎样走？","why":"怎样 va delante del verbo que pregunta y la frase no lleva 吗."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"2.3.1"},{"hsk_level":1,"code":"2.3.1"}]
+}

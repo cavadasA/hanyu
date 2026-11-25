@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "5.3.4",
+  "pattern": "adjetivo + 得很 · adjetivo / verbo + 极了 / 坏了",
+  "explanation": "Detrás del adjetivo se puede expresar un grado muy alto. 得很 es «muy» con más énfasis que 很 delante: 好得很. 极了 es «muchísimo» y vale para cosas buenas o malas: 漂亮极了. 坏了 se usa con estados físicos o de ánimo que llegan al límite: 累坏了 «estar molido», 饿坏了 «muerto de hambre». Ninguno lleva 很 delante del adjetivo.",
+  "markers": ["得很","极了","坏了"],
+  "examples": [
+    {"zh":"这里的东西便宜得很。","pinyin":"Zhèlǐ de dōngxi piányi de hěn.","es":"Aquí las cosas son baratísimas."},
+    {"zh":"这个地方漂亮极了。","pinyin":"Zhège dìfang piàoliang jí le.","es":"Este sitio es precioso."},
+    {"zh":"今天我累坏了。","pinyin":"Jīntiān wǒ lèihuài le.","es":"Hoy estoy molido."},
+    {"zh":"孩子们饿坏了。","pinyin":"Háizimen èhuài le.","es":"Los niños están muertos de hambre."}
+  ],
+  "common_errors": [
+    {"wrong":"这个地方很漂亮极了。","right":"这个地方漂亮极了。","why":"极了 ya expresa el grado máximo; no se pone 很 delante del adjetivo."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"5.4.3"},{"hsk_level":3,"code":"2.5.1"}]
+}

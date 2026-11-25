@@ -1,0 +1,20 @@
+{
+  "hsk_level": 3,
+  "code": "4.1",
+  "pattern": "除了…（以外），…还/也/都… · 对…来说 · 一点儿也不… · 越…越… · …以前/以后 · 该…了 · 在…上/中",
+  "explanation": "Moldes fijos que hay que aprender enteros. 除了…以外 con 还 o 也 es «además de», y con 都 es «excepto». 对…来说 da el punto de vista: «para mí». 一点儿也不 es «nada en absoluto». 越…越… dice que una cosa aumenta con otra: 越学越有意思. …以前 y …以后 van detrás de lo que sitúan, al revés que «antes de». 该…了 es «ya toca». 在…上 / 中 marca un ámbito: 在学习上.",
+  "markers": ["除了","对我来说","一点儿也不","越","以前","该"],
+  "examples": [
+    {"zh":"除了茶以外，他还喜欢喝咖啡。","pinyin":"Chúle chá yǐwài, tā hái xǐhuan hē kāfēi.","es":"Además del té, también le gusta el café."},
+    {"zh":"对我来说，这个问题很难。","pinyin":"Duì wǒ lái shuō, zhège wèntí hěn nán.","es":"Para mí esta pregunta es muy difícil."},
+    {"zh":"今天一点儿也不冷。","pinyin":"Jīntiān yìdiǎnr yě bù lěng.","es":"Hoy no hace nada de frío."},
+    {"zh":"汉语越学越有意思。","pinyin":"Hànyǔ yuè xué yuè yǒu yìsi.","es":"Cuanto más estudio chino, más interesante me parece."},
+    {"zh":"吃饭以前要洗手。","pinyin":"Chī fàn yǐqián yào xǐ shǒu.","es":"Antes de comer hay que lavarse las manos."},
+    {"zh":"十一点了，该睡觉了。","pinyin":"Shíyī diǎn le, gāi shuìjiào le.","es":"Son las once, ya toca dormir."}
+  ],
+  "common_errors": [
+    {"wrong":"以前吃饭要洗手。","right":"吃饭以前要洗手。","why":"以前 y 以后 van detrás de lo que sitúan: «antes de comer» es 吃饭以前."},
+    {"wrong":"除了他，我们也都去了。（queriendo decir «menos él»）","right":"除了他，我们都去了。","why":"Con 都 el sentido es «excepto»; con 也 o 还 sería «además de», y mezclarlos no se entiende."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"3.2.2"},{"hsk_level":2,"code":"4.1"}]
+}

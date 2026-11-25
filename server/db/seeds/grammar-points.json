@@ -8015,7 +8015,71 @@
       "该……了",
       "在……上/下/中"
     ],
-    "order_idx": 31
+    "order_idx": 31,
+    "pattern": "除了…（以外），…还/也/都… · 对…来说 · 一点儿也不… · 越…越… · …以前/以后 · 该…了 · 在…上/中",
+    "explanation": "Moldes fijos que hay que aprender enteros. 除了…以外 con 还 o 也 es «además de», y con 都 es «excepto». 对…来说 da el punto de vista: «para mí». 一点儿也不 es «nada en absoluto». 越…越… dice que una cosa aumenta con otra: 越学越有意思. …以前 y …以后 van detrás de lo que sitúan, al revés que «antes de». 该…了 es «ya toca». 在…上 / 中 marca un ámbito: 在学习上.",
+    "markers": [
+      "除了",
+      "对我来说",
+      "一点儿也不",
+      "越",
+      "以前",
+      "该"
+    ],
+    "examples": [
+      {
+        "zh": "除了茶以外，他还喜欢喝咖啡。",
+        "pinyin": "Chúle chá yǐwài, tā hái xǐhuan hē kāfēi.",
+        "es": "Además del té, también le gusta el café."
+      },
+      {
+        "zh": "对我来说，这个问题很难。",
+        "pinyin": "Duì wǒ lái shuō, zhège wèntí hěn nán.",
+        "es": "Para mí esta pregunta es muy difícil."
+      },
+      {
+        "zh": "今天一点儿也不冷。",
+        "pinyin": "Jīntiān yìdiǎnr yě bù lěng.",
+        "es": "Hoy no hace nada de frío."
+      },
+      {
+        "zh": "汉语越学越有意思。",
+        "pinyin": "Hànyǔ yuè xué yuè yǒu yìsi.",
+        "es": "Cuanto más estudio chino, más interesante me parece."
+      },
+      {
+        "zh": "吃饭以前要洗手。",
+        "pinyin": "Chī fàn yǐqián yào xǐ shǒu.",
+        "es": "Antes de comer hay que lavarse las manos."
+      },
+      {
+        "zh": "十一点了，该睡觉了。",
+        "pinyin": "Shíyī diǎn le, gāi shuìjiào le.",
+        "es": "Son las once, ya toca dormir."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "以前吃饭要洗手。",
+        "right": "吃饭以前要洗手。",
+        "why": "以前 y 以后 van detrás de lo que sitúan: «antes de comer» es 吃饭以前."
+      },
+      {
+        "wrong": "除了他，我们也都去了。（queriendo decir «menos él»）",
+        "right": "除了他，我们都去了。",
+        "why": "Con 都 el sentido es «excepto»; con 也 o 还 sería «además de», y mezclarlos no se entiende."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "3.2.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "4.1"
+      }
+    ]
   },
   {
     "code": "5.1",
@@ -8028,7 +8092,54 @@
       "动词或动词性短语、形容词或形容词性短语作主语",
       "主谓短语作主语"
     ],
-    "order_idx": 32
+    "order_idx": 32,
+    "pattern": "grupo verbal / adjetival / frase con sujeto + predicado",
+    "explanation": "Una acción, una cualidad o una frase entera pueden ser el sujeto sin cambiar de forma, porque el chino no tiene infinitivo ni «el hecho de que»: 学汉语很有意思 «estudiar chino es interesante», 健康最重要 «la salud es lo más importante», 他不来没关系 «que él no venga no importa». El predicado que sigue suele ser un adjetivo o 是.",
+    "markers": [
+      "学汉语",
+      "健康",
+      "他不来",
+      "多运动"
+    ],
+    "examples": [
+      {
+        "zh": "学汉语很有意思。",
+        "pinyin": "Xué Hànyǔ hěn yǒu yìsi.",
+        "es": "Estudiar chino es muy interesante."
+      },
+      {
+        "zh": "身体健康最重要。",
+        "pinyin": "Shēntǐ jiànkāng zuì zhòngyào.",
+        "es": "Tener buena salud es lo más importante."
+      },
+      {
+        "zh": "他不来没关系。",
+        "pinyin": "Tā bù lái méi guānxi.",
+        "es": "Que él no venga no importa."
+      },
+      {
+        "zh": "多运动对身体好。",
+        "pinyin": "Duō yùndòng duì shēntǐ hǎo.",
+        "es": "Hacer mucho deporte es bueno para la salud."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "学汉语的事情很有意思。",
+        "right": "学汉语很有意思。",
+        "why": "No hace falta un «el hecho de»: la acción misma puede ser el sujeto."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "3.2.2"
+      },
+      {
+        "hsk_level": 1,
+        "code": "4.1"
+      }
+    ]
   },
   {
     "code": "5.2",
@@ -8040,7 +8151,54 @@
     "items": [
       "多项定语"
     ],
-    "order_idx": 33
+    "order_idx": 33,
+    "pattern": "poseedor + demostrativo + número + clasificador + descripción + 的 + nombre",
+    "explanation": "Cuando un nombre lleva varias descripciones, todas van delante en un orden bastante fijo: primero el poseedor, luego el demostrativo, el número y el clasificador, después las descripciones con 的 y, pegadas al nombre, las que no lo llevan: 我的那两件新衣服. Al revés que en español, ninguna va detrás del nombre.",
+    "markers": [
+      "我的那两件",
+      "那位",
+      "一个很大的",
+      "两本新"
+    ],
+    "examples": [
+      {
+        "zh": "我的那两件新衣服都很贵。",
+        "pinyin": "Wǒ de nà liǎng jiàn xīn yīfu dōu hěn guì.",
+        "es": "Esas dos prendas nuevas mías son muy caras."
+      },
+      {
+        "zh": "那位穿白色衣服的老师是我们的老师。",
+        "pinyin": "Nà wèi chuān báisè yīfu de lǎoshī shì wǒmen de lǎoshī.",
+        "es": "Ese profesor vestido de blanco es nuestro profesor."
+      },
+      {
+        "zh": "我家后边有一个很大的公园。",
+        "pinyin": "Wǒ jiā hòubian yǒu yí gè hěn dà de gōngyuán.",
+        "es": "Detrás de mi casa hay un parque muy grande."
+      },
+      {
+        "zh": "他送给我两本新的中文书。",
+        "pinyin": "Tā sòng gěi wǒ liǎng běn xīn de Zhōngwén shū.",
+        "es": "Me regaló dos libros nuevos en chino."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "两件我的新衣服。",
+        "right": "我的两件新衣服。",
+        "why": "El poseedor va antes del número y el clasificador: 我的两件新衣服."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "3.2.1"
+      },
+      {
+        "hsk_level": 1,
+        "code": "4.4"
+      }
+    ]
   },
   {
     "code": "5.3.1",
@@ -8052,7 +8210,50 @@
     "items": [
       "动词+到/住/走/上"
     ],
-    "order_idx": 34
+    "order_idx": 34,
+    "pattern": "verbo + 到 / 住 / 走 / 上",
+    "explanation": "Más complementos de resultado. 到 dice que se alcanza un objetivo: 买到 «conseguir comprar», 找到 «encontrar». 住 indica que algo queda fijo: 记住 «memorizar». 走 indica que algo se va del lugar: 拿走 «llevarse». 上 indica que algo se cierra o se une: 关上门. Se niegan con 没: 我没买到.",
+    "markers": [
+      "到",
+      "住",
+      "走",
+      "上"
+    ],
+    "examples": [
+      {
+        "zh": "我买到火车票了。",
+        "pinyin": "Wǒ mǎidào huǒchē piào le.",
+        "es": "He conseguido comprar los billetes de tren."
+      },
+      {
+        "zh": "你记住他的名字了吗？",
+        "pinyin": "Nǐ jìzhù tā de míngzi le ma?",
+        "es": "¿Te has quedado con su nombre?"
+      },
+      {
+        "zh": "谁把我的书拿走了？",
+        "pinyin": "Shéi bǎ wǒ de shū názǒu le?",
+        "es": "¿Quién se ha llevado mi libro?"
+      },
+      {
+        "zh": "请关上门。",
+        "pinyin": "Qǐng guānshang mén.",
+        "es": "Cierra la puerta, por favor."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我买了票，可是没买。",
+        "right": "我去买票了，可是没买到。",
+        "why": "Para decir que no se consiguió, se niega el resultado: 没买到; 买 solo es intentar comprar."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "5.4.1"
+      }
+    ]
   },
   {
     "code": "5.3.2",
@@ -8066,7 +8267,56 @@
       "（2）表示动作行为的开始：动词+上/起来",
       "（3）表示动作行为的持续：动词+下去/下来"
     ],
-    "order_idx": 35
+    "order_idx": 35,
+    "pattern": "verbo + 出 / 起 / 下 (resultado) · verbo + 起来 / 上 (comienzo) · verbo + 下去 / 下来 (continuidad)",
+    "explanation": "Los complementos de dirección también tienen usos figurados. 出 y 起 expresan resultado: 想出办法 «dar con una solución», 想起来 «acordarse». 起来 o 上 marcan el comienzo de algo: 笑起来 «echarse a reír», 爱上 «enamorarse». 下去 es seguir haciendo algo, 说下去 «sigue hablando», y 下来, que algo se calma o se mantiene: 安静下来.",
+    "markers": [
+      "想出",
+      "想起来",
+      "起来",
+      "下去",
+      "下来"
+    ],
+    "examples": [
+      {
+        "zh": "我想出了一个好办法。",
+        "pinyin": "Wǒ xiǎngchū le yí gè hǎo bànfǎ.",
+        "es": "Se me ha ocurrido una buena idea."
+      },
+      {
+        "zh": "我想起来了，我的手机在桌子上。",
+        "pinyin": "Wǒ xiǎng qǐlai le, wǒ de shǒujī zài zhuōzi shang.",
+        "es": "Ya me acuerdo: mi móvil está en la mesa."
+      },
+      {
+        "zh": "大家都笑起来了。",
+        "pinyin": "Dàjiā dōu xiào qǐlai le.",
+        "es": "Todos se echaron a reír."
+      },
+      {
+        "zh": "你说下去，我在听。",
+        "pinyin": "Nǐ shuō xiàqu, wǒ zài tīng.",
+        "es": "Sigue hablando, te escucho."
+      },
+      {
+        "zh": "教室里安静下来了。",
+        "pinyin": "Jiàoshì li ānjìng xiàlai le.",
+        "es": "El aula se quedó en silencio."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我想了，我的手机在桌子上。（para «ya me acuerdo»）",
+        "right": "我想起来了，我的手机在桌子上。",
+        "why": "想 es «pensar»; para «acordarse» hace falta el complemento 起来."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "5.4.2"
+      }
+    ]
   },
   {
     "code": "5.3.3",
@@ -8078,7 +8328,60 @@
     "items": [
       "动词+得/不+动词/形容词"
     ],
-    "order_idx": 36
+    "order_idx": 36,
+    "pattern": "verbo + 得 / 不 + resultado o dirección",
+    "explanation": "Un 得 o un 不 entre el verbo y su complemento dicen si algo se puede o no se puede conseguir: 听得懂 «lo entiendo (al oírlo)», 听不懂 «no lo entiendo». La negativa es mucho más frecuente. Se diferencia de 能 + verbo en que habla del resultado: 我听不懂 es «oigo pero no entiendo», no «no puedo oír». No lleva 了 y se pregunta con 吗 o con 得…不…: 听得懂听不懂？",
+    "markers": [
+      "得懂",
+      "不懂",
+      "不完",
+      "得见",
+      "不到"
+    ],
+    "examples": [
+      {
+        "zh": "老师说的话你听得懂吗？",
+        "pinyin": "Lǎoshī shuō de huà nǐ tīng de dǒng ma?",
+        "es": "¿Entiendes lo que dice el profesor?"
+      },
+      {
+        "zh": "他说得太快，我听不懂。",
+        "pinyin": "Tā shuō de tài kuài, wǒ tīng bu dǒng.",
+        "es": "Habla demasiado rápido, no le entiendo."
+      },
+      {
+        "zh": "菜太多了，我吃不完。",
+        "pinyin": "Cài tài duō le, wǒ chī bu wán.",
+        "es": "Hay demasiada comida, no puedo acabármela."
+      },
+      {
+        "zh": "你看得见黑板上的字吗？",
+        "pinyin": "Nǐ kàn de jiàn hēibǎn shang de zì ma?",
+        "es": "¿Ves las letras de la pizarra?"
+      },
+      {
+        "zh": "这本书在这儿买不到。",
+        "pinyin": "Zhè běn shū zài zhèr mǎi bu dào.",
+        "es": "Este libro no se encuentra aquí."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我不能听懂。",
+        "right": "我听不懂。",
+        "why": "Para «no lo entiendo» se usa el complemento potencial 听不懂; 不能 se refiere al permiso o a la posibilidad, no al resultado."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "5.4.1"
+      },
+      {
+        "hsk_level": 3,
+        "code": "5.3.1"
+      }
+    ]
   },
   {
     "code": "5.3.4",
@@ -8091,7 +8394,53 @@
       "（1）形容词+得很",
       "（2）形容词/动词+极了/坏了"
     ],
-    "order_idx": 37
+    "order_idx": 37,
+    "pattern": "adjetivo + 得很 · adjetivo / verbo + 极了 / 坏了",
+    "explanation": "Detrás del adjetivo se puede expresar un grado muy alto. 得很 es «muy» con más énfasis que 很 delante: 好得很. 极了 es «muchísimo» y vale para cosas buenas o malas: 漂亮极了. 坏了 se usa con estados físicos o de ánimo que llegan al límite: 累坏了 «estar molido», 饿坏了 «muerto de hambre». Ninguno lleva 很 delante del adjetivo.",
+    "markers": [
+      "得很",
+      "极了",
+      "坏了"
+    ],
+    "examples": [
+      {
+        "zh": "这里的东西便宜得很。",
+        "pinyin": "Zhèlǐ de dōngxi piányi de hěn.",
+        "es": "Aquí las cosas son baratísimas."
+      },
+      {
+        "zh": "这个地方漂亮极了。",
+        "pinyin": "Zhège dìfang piàoliang jí le.",
+        "es": "Este sitio es precioso."
+      },
+      {
+        "zh": "今天我累坏了。",
+        "pinyin": "Jīntiān wǒ lèihuài le.",
+        "es": "Hoy estoy molido."
+      },
+      {
+        "zh": "孩子们饿坏了。",
+        "pinyin": "Háizimen èhuài le.",
+        "es": "Los niños están muertos de hambre."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "这个地方很漂亮极了。",
+        "right": "这个地方漂亮极了。",
+        "why": "极了 ya expresa el grado máximo; no se pone 很 delante del adjetivo."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "5.4.3"
+      },
+      {
+        "hsk_level": 3,
+        "code": "2.5.1"
+      }
+    ]
   },
   {
     "code": "5.3.5",
@@ -8103,7 +8452,50 @@
     "items": [
       "表示动作结束到某个时间点的间隔时间"
     ],
-    "order_idx": 38
+    "order_idx": 38,
+    "pattern": "verbo (+ objeto) + duración + 了",
+    "explanation": "Con verbos que ocurren de una vez (来, 走, 回国, 离开), la duración detrás no dice cuánto dura la acción, sino cuánto tiempo ha pasado desde que ocurrió: 他来中国三年了 «hace tres años que vino a China». El objeto va antes que la duración y el final lleva 了. En español se dice «hace… que».",
+    "markers": [
+      "三年了",
+      "两个小时了",
+      "一年了",
+      "半年了"
+    ],
+    "examples": [
+      {
+        "zh": "他来中国三年了。",
+        "pinyin": "Tā lái Zhōngguó sān nián le.",
+        "es": "Hace tres años que vino a China."
+      },
+      {
+        "zh": "他走了两个小时了。",
+        "pinyin": "Tā zǒu le liǎng gè xiǎoshí le.",
+        "es": "Hace dos horas que se fue."
+      },
+      {
+        "zh": "他回国一年了。",
+        "pinyin": "Tā huí guó yì nián le.",
+        "es": "Hace un año que volvió a su país."
+      },
+      {
+        "zh": "他离开家半年了。",
+        "pinyin": "Tā líkāi jiā bàn nián le.",
+        "es": "Hace medio año que se fue de casa."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "三年以前他来中国了。（para «hace tres años que está aquí»）",
+        "right": "他来中国三年了。",
+        "why": "Para el tiempo transcurrido desde que algo ocurrió, la duración va detrás del verbo y la frase cierra con 了."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "5.4.4"
+      }
+    ]
   },
   {
     "code": "6.1.1",
@@ -8115,7 +8507,46 @@
     "items": [
       "“怎样+动词”的特指问句"
     ],
-    "order_idx": 39
+    "order_idx": 39,
+    "pattern": "怎样 + verbo？",
+    "explanation": "怎样 delante de un verbo pregunta cómo se hace algo: 这个字怎样写？ «¿cómo se escribe este carácter?». Equivale a 怎么 en esta función, con un tono algo más formal o escrito. Como toda palabra interrogativa, ocupa el sitio de la respuesta y la frase no lleva 吗.",
+    "markers": [
+      "怎样"
+    ],
+    "examples": [
+      {
+        "zh": "去火车站怎样走？",
+        "pinyin": "Qù huǒchēzhàn zěnyàng zǒu?",
+        "es": "¿Cómo se va a la estación de tren?"
+      },
+      {
+        "zh": "这个菜怎样做？",
+        "pinyin": "Zhège cài zěnyàng zuò?",
+        "es": "¿Cómo se prepara este plato?"
+      },
+      {
+        "zh": "你是怎样学汉语的？",
+        "pinyin": "Nǐ shì zěnyàng xué Hànyǔ de?",
+        "es": "¿Cómo aprendiste chino?"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "怎样去火车站走吗？",
+        "right": "去火车站怎样走？",
+        "why": "怎样 va delante del verbo que pregunta y la frase no lleva 吗."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "2.3.1"
+      },
+      {
+        "hsk_level": 1,
+        "code": "2.3.1"
+      }
+    ]
   },
   {
     "code": "6.1.2",
@@ -8127,7 +8558,42 @@
     "items": [
       "用反问句表示强调：不是……吗？"
     ],
-    "order_idx": 40
+    "order_idx": 40,
+    "pattern": "不是 + … + 吗？",
+    "explanation": "Una pregunta con 不是…吗？ no pide información: subraya algo que se considera evidente, a menudo con sorpresa o reproche: 你不是说你会来吗？ «¿no dijiste que venías?». Equivale a «¿no…?» retórico. La respuesta que se espera es «sí», y el tono puede ser fuerte, así que con desconocidos conviene usarla con cuidado.",
+    "markers": [
+      "不是"
+    ],
+    "examples": [
+      {
+        "zh": "你不是说你会来吗？",
+        "pinyin": "Nǐ bú shì shuō nǐ huì lái ma?",
+        "es": "¿No dijiste que venías?"
+      },
+      {
+        "zh": "他不是你的朋友吗？",
+        "pinyin": "Tā bú shì nǐ de péngyou ma?",
+        "es": "¿No es amigo tuyo?"
+      },
+      {
+        "zh": "今天不是星期天吗？你怎么还去上班？",
+        "pinyin": "Jīntiān bú shì xīngqītiān ma? Nǐ zěnme hái qù shàngbān?",
+        "es": "¿No es hoy domingo? ¿Cómo es que vas a trabajar?"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你不是说你会来？",
+        "right": "你不是说你会来吗？",
+        "why": "La pregunta retórica con 不是 necesita 吗 al final."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "5.2.2"
+      }
+    ]
   },
   {
     "code": "6.2.1",

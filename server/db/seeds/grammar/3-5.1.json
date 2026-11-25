@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "5.1",
+  "pattern": "grupo verbal / adjetival / frase con sujeto + predicado",
+  "explanation": "Una acción, una cualidad o una frase entera pueden ser el sujeto sin cambiar de forma, porque el chino no tiene infinitivo ni «el hecho de que»: 学汉语很有意思 «estudiar chino es interesante», 健康最重要 «la salud es lo más importante», 他不来没关系 «que él no venga no importa». El predicado que sigue suele ser un adjetivo o 是.",
+  "markers": ["学汉语","健康","他不来","多运动"],
+  "examples": [
+    {"zh":"学汉语很有意思。","pinyin":"Xué Hànyǔ hěn yǒu yìsi.","es":"Estudiar chino es muy interesante."},
+    {"zh":"身体健康最重要。","pinyin":"Shēntǐ jiànkāng zuì zhòngyào.","es":"Tener buena salud es lo más importante."},
+    {"zh":"他不来没关系。","pinyin":"Tā bù lái méi guānxi.","es":"Que él no venga no importa."},
+    {"zh":"多运动对身体好。","pinyin":"Duō yùndòng duì shēntǐ hǎo.","es":"Hacer mucho deporte es bueno para la salud."}
+  ],
+  "common_errors": [
+    {"wrong":"学汉语的事情很有意思。","right":"学汉语很有意思。","why":"No hace falta un «el hecho de»: la acción misma puede ser el sujeto."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"3.2.2"},{"hsk_level":1,"code":"4.1"}]
+}

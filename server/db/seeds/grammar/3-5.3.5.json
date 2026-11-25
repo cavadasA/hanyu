@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "5.3.5",
+  "pattern": "verbo (+ objeto) + duración + 了",
+  "explanation": "Con verbos que ocurren de una vez (来, 走, 回国, 离开), la duración detrás no dice cuánto dura la acción, sino cuánto tiempo ha pasado desde que ocurrió: 他来中国三年了 «hace tres años que vino a China». El objeto va antes que la duración y el final lleva 了. En español se dice «hace… que».",
+  "markers": ["三年了","两个小时了","一年了","半年了"],
+  "examples": [
+    {"zh":"他来中国三年了。","pinyin":"Tā lái Zhōngguó sān nián le.","es":"Hace tres años que vino a China."},
+    {"zh":"他走了两个小时了。","pinyin":"Tā zǒu le liǎng gè xiǎoshí le.","es":"Hace dos horas que se fue."},
+    {"zh":"他回国一年了。","pinyin":"Tā huí guó yì nián le.","es":"Hace un año que volvió a su país."},
+    {"zh":"他离开家半年了。","pinyin":"Tā líkāi jiā bàn nián le.","es":"Hace medio año que se fue de casa."}
+  ],
+  "common_errors": [
+    {"wrong":"三年以前他来中国了。（para «hace tres años que está aquí»）","right":"他来中国三年了。","why":"Para el tiempo transcurrido desde que algo ocurrió, la duración va detrás del verbo y la frase cierra con 了."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"5.4.4"}]
+}

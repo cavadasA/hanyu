@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "5.3.3",
+  "pattern": "verbo + 得 / 不 + resultado o dirección",
+  "explanation": "Un 得 o un 不 entre el verbo y su complemento dicen si algo se puede o no se puede conseguir: 听得懂 «lo entiendo (al oírlo)», 听不懂 «no lo entiendo». La negativa es mucho más frecuente. Se diferencia de 能 + verbo en que habla del resultado: 我听不懂 es «oigo pero no entiendo», no «no puedo oír». No lleva 了 y se pregunta con 吗 o con 得…不…: 听得懂听不懂？",
+  "markers": ["得懂","不懂","不完","得见","不到"],
+  "examples": [
+    {"zh":"老师说的话你听得懂吗？","pinyin":"Lǎoshī shuō de huà nǐ tīng de dǒng ma?","es":"¿Entiendes lo que dice el profesor?"},
+    {"zh":"他说得太快，我听不懂。","pinyin":"Tā shuō de tài kuài, wǒ tīng bu dǒng.","es":"Habla demasiado rápido, no le entiendo."},
+    {"zh":"菜太多了，我吃不完。","pinyin":"Cài tài duō le, wǒ chī bu wán.","es":"Hay demasiada comida, no puedo acabármela."},
+    {"zh":"你看得见黑板上的字吗？","pinyin":"Nǐ kàn de jiàn hēibǎn shang de zì ma?","es":"¿Ves las letras de la pizarra?"},
+    {"zh":"这本书在这儿买不到。","pinyin":"Zhè běn shū zài zhèr mǎi bu dào.","es":"Este libro no se encuentra aquí."}
+  ],
+  "common_errors": [
+    {"wrong":"我不能听懂。","right":"我听不懂。","why":"Para «no lo entiendo» se usa el complemento potencial 听不懂; 不能 se refiere al permiso o a la posibilidad, no al resultado."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"5.4.1"},{"hsk_level":3,"code":"5.3.1"}]
+}

@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "6.1.2",
+  "pattern": "不是 + … + 吗？",
+  "explanation": "Una pregunta con 不是…吗？ no pide información: subraya algo que se considera evidente, a menudo con sorpresa o reproche: 你不是说你会来吗？ «¿no dijiste que venías?». Equivale a «¿no…?» retórico. La respuesta que se espera es «sí», y el tono puede ser fuerte, así que con desconocidos conviene usarla con cuidado.",
+  "markers": ["不是"],
+  "examples": [
+    {"zh":"你不是说你会来吗？","pinyin":"Nǐ bú shì shuō nǐ huì lái ma?","es":"¿No dijiste que venías?"},
+    {"zh":"他不是你的朋友吗？","pinyin":"Tā bú shì nǐ de péngyou ma?","es":"¿No es amigo tuyo?"},
+    {"zh":"今天不是星期天吗？你怎么还去上班？","pinyin":"Jīntiān bú shì xīngqītiān ma? Nǐ zěnme hái qù shàngbān?","es":"¿No es hoy domingo? ¿Cómo es que vas a trabajar?"}
+  ],
+  "common_errors": [
+    {"wrong":"你不是说你会来？","right":"你不是说你会来吗？","why":"La pregunta retórica con 不是 necesita 吗 al final."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"5.2.2"}]
+}
