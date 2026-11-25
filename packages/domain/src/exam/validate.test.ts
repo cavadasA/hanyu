@@ -171,11 +171,11 @@ describe('validateExamGroup', () => {
     );
   });
 
-  it('L3 con una palabra HSK 3 → unknown_vocabulary', () => {
+  it('L3 con una palabra HSK 3 → word_above_level', () => {
     const l3 = group(formA(), 'L3');
     l3.items[4].audio = [line('你有经验吗？', 'M'), line('没有。')];
     expect(validateExamGroup(l3, ctx)).toContainEqual(
-      expect.objectContaining({ kind: 'unknown_vocabulary', question_index: 4, detail: '经' }),
+      expect.objectContaining({ kind: 'word_above_level', question_index: 4, detail: '经验 (HSK 3)' }),
     );
   });
 
@@ -233,7 +233,7 @@ describe('validateExamGroup', () => {
     );
   });
 
-  it('el ejemplo de L3 también se valida: palabra HSK 3 → unknown_vocabulary sin question_index', () => {
+  it('el ejemplo de L3 también se valida: palabra HSK 3 → word_above_level sin question_index', () => {
     const l3 = group(formA(), 'L3');
     l3.example = {
       audio: [line('你有经验吗？', 'M'), line('有。')],
@@ -241,8 +241,8 @@ describe('validateExamGroup', () => {
       options: [p('书'), p('茶'), p('水')],
       answer: 0,
     };
-    const issue = validateExamGroup(l3, ctx).find(entry => entry.kind === 'unknown_vocabulary');
-    expect(issue).toEqual({ kind: 'unknown_vocabulary', detail: '经' });
+    const issue = validateExamGroup(l3, ctx).find(entry => entry.kind === 'word_above_level');
+    expect(issue).toEqual({ kind: 'word_above_level', detail: '经验 (HSK 3)' });
   });
 
   it('respuesta fuera del banco → answer_out_of_range', () => {

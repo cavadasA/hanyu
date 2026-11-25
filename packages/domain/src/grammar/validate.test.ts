@@ -120,9 +120,9 @@ describe('validateGrammarEntry', () => {
       { zh: '我试一试。', pinyin: 'Wǒ shì yi shì.', es: 'Lo pruebo un momento.' },
       { zh: '我看看。', pinyin: 'Wǒ kànkan.', es: 'Déjame ver.' },
     ];
+    // Tokenizado con todo el diccionario, como el móvil: 已经 es una palabra HSK 2.
     expect(validateGrammarEntry(entry, ctx)).toEqual([
-      { kind: 'unknown_vocabulary', example_index: 0, detail: '已' },
-      { kind: 'unknown_vocabulary', example_index: 0, detail: '经' },
+      { kind: 'word_above_level', example_index: 0, detail: '已经 (HSK 2)' },
     ]);
   });
 

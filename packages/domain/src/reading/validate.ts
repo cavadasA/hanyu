@@ -1,10 +1,12 @@
 // Reglas deterministas. Ninguna usa un modelo: si una regla necesitase juicio
 // no sería un validador sino una revisión, y ésa la hace quien mira el diff.
 // Una lista vacía de problemas es la única condición para publicar.
-import { tokenizeReading, type DictionaryEntry } from './tokenize.ts';
+import type { DictionaryEntry } from './tokenize.ts';
+import { vocabularyFindings } from './vocabulary.ts';
 
 export type IssueKind =
   | 'unknown_vocabulary'
+  | 'word_above_level'
   | 'missing_pinyin'
   | 'missing_translation'
   | 'unsegmented'
@@ -78,6 +80,7 @@ export interface ReadingSource {
 }
 
 export interface ValidationContext {
+  /** Todo el diccionario HSK 1–3: el nivel de cada palabra lo decide max_level. */
   dictionary: (DictionaryEntry & { hsk_level: number })[];
   max_level: number;
   target_word_ids: number[];
@@ -112,10 +115,9 @@ export function validateReading(
 ): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
-  const allowed = context.dictionary.filter(entry => entry.hsk_level <= context.max_level);
-  const allowedForms = new Set(allowed.map(entry => entry.hanzi));
-  const names = (context.proper_nouns ?? []).map(name => ({ hanzi: name, pinyin: '' }));
-  const tokenizable = names.length > 0 ? [...allowed, ...names] : allowed;
+  const allowedForms = new Set(
+    context.dictionary.filter(entry => entry.hsk_level <= context.max_level).map(entry => entry.hanzi),
+  );
 
   reading.sentences.forEach((sentence, index) => {
     if (!sentence.pinyin.trim()) {
@@ -128,10 +130,13 @@ export function validateReading(
       issues.push({ kind: 'unsegmented', sentence_index: index });
     }
 
-    for (const token of tokenizeReading(sentence.zh, tokenizable)) {
-      if (token.type === 'unknown') {
-        issues.push({ kind: 'unknown_vocabulary', detail: token.text, sentence_index: index });
-      }
+    // El diccionario completo (HSK 1–3), como el tokenizador del móvil.
+    for (const finding of vocabularyFindings(sentence.zh, context.dictionary, context.max_level, context.proper_nouns)) {
+      issues.push(
+        finding.kind === 'word_above_level'
+          ? { kind: 'word_above_level', detail: `${finding.text} (HSK ${finding.level})`, sentence_index: index }
+          : { kind: 'unknown_vocabulary', detail: finding.text, sentence_index: index },
+      );
     }
   });
 

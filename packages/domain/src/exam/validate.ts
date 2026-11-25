@@ -2,7 +2,7 @@
 // Como validateReading y validateGrammarEntry, una lista vacía es la única condición
 // para publicar una forma. La forma de cada grupo (cuántas opciones, si hay ejemplo,
 // cuántas preguntas) sale de exam-structure.json, no de constantes de aquí.
-import { tokenizeReading } from '../reading/tokenize.ts';
+import { vocabularyFindings } from '../reading/vocabulary.ts';
 import { directComponents } from './components.ts';
 import {
   EXAM_PART_CODES,
@@ -22,6 +22,7 @@ export type ExamIssueKind =
   | 'answer_reused'
   | 'answer_out_of_range'
   | 'unknown_vocabulary'
+  | 'word_above_level'
   | 'missing_pinyin'
   | 'blank_missing'
   | 'answers_unbalanced'
@@ -59,29 +60,15 @@ const ABC_PARTS: ExamPartCode[] = ['L1', 'L3', 'R4'];
 type Report = (issue: Omit<ExamIssue, 'group'>) => void;
 
 function vocabularyChecker(ctx: ExamValidationContext) {
-  const allowed = ctx.dictionary
-    .filter(word => word.hsk_level <= MAX_LEVEL)
-    .map(word => ({ hanzi: word.hanzi, pinyin: '' }));
-  const splittable = allowed.map(word => Array.from(word.hanzi)).filter(chars => chars.length === 2);
-
-  /**
-   * Un verbo separable del nivel (睡觉) se parte con palabras en medio: sus mitades
-   * cuentan como vocabulario cuando la otra mitad está en su sitio (misma regla
-   * que la gramática).
-   */
-  const isSplitHalf = (sentence: string, offset: number, text: string) =>
-    splittable.some(([first, second]) =>
-      (text === first && sentence.indexOf(second, offset + text.length) !== -1) ||
-      (text === second && offset > 0 && sentence.lastIndexOf(first, offset - 1) !== -1),
-    );
-
+  // Regla común (reading/vocabulary.ts): todo el diccionario, como el móvil,
+  // y las mitades de un verbo separable del nivel cuentan como vocabulario.
   return (zh: string, report: Report, question_index?: number) => {
-    let offset = 0;
-    for (const token of tokenizeReading(zh, allowed)) {
-      if (token.type === 'unknown' && !isSplitHalf(zh, offset, token.text)) {
-        report({ kind: 'unknown_vocabulary', question_index, detail: token.text });
-      }
-      offset += token.text.length;
+    for (const finding of vocabularyFindings(zh, ctx.dictionary, MAX_LEVEL)) {
+      report(
+        finding.kind === 'word_above_level'
+          ? { kind: 'word_above_level', question_index, detail: `${finding.text} (HSK ${finding.level})` }
+          : { kind: 'unknown_vocabulary', question_index, detail: finding.text },
+      );
     }
   };
 }

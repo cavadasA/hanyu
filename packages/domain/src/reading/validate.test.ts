@@ -59,6 +59,15 @@ describe('validateReading', () => {
     expect(validateReading(reading, context).map(i => i.kind)).toContain('unknown_vocabulary');
   });
 
+  it('una palabra que el móvil mostrará como HSK 3 no se cuela partiéndola en palabras del nivel', () => {
+    const reading = { ...valid, sentences: [validSentence] };
+    const withCompound = { ...context, dictionary: [...dictionary, { hanzi: '茶比', pinyin: 'chábǐ', hsk_level: 3 }] };
+
+    expect(validateReading(reading, withCompound).filter(issue => issue.kind === 'word_above_level')).toEqual([
+      { kind: 'word_above_level', sentence_index: 0, detail: '茶比 (HSK 3)' },
+    ]);
+  });
+
   it('exige que cada frase tenga pinyin y traducción', () => {
     const reading = { ...valid, sentences: [{ zh: '我喜欢喝茶。', pinyin: '', es: '' }] };
     const kinds = validateReading(reading, context).map(i => i.kind);
