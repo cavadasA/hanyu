@@ -2,6 +2,7 @@ import { jsonResponse } from '../_shared/cors.ts';
 import {
   tokenizeReading,
   type DictionaryEntry,
+  type ReadingToken,
 } from '../_shared/reading-tokenizer.ts';
 
 interface TokenizerClient {
@@ -14,7 +15,13 @@ interface TokenizerClient {
   from(table: string): any;
 }
 
-function readingSentences(value: unknown): Array<{ zh?: unknown }> {
+interface StoredSentence {
+  zh?: unknown;
+  /** Acepciones resueltas y validadas en la build (scripts/build-readings.js). */
+  senses?: Array<{ hanzi: string; occurrence: number; hsk_level: number; sense_index: number | null }>;
+}
+
+function readingSentences(value: unknown): StoredSentence[] {
   if (typeof value === 'string') {
     try {
       value = JSON.parse(value);
@@ -24,6 +31,51 @@ function readingSentences(value: unknown): Array<{ zh?: unknown }> {
   }
 
   return Array.isArray(value) ? value : [];
+}
+
+/**
+ * El tokenizador no sabe qué acepción usa la frase; la lectura sí, porque se
+ * anotó y validó al escribirla. Cada aparición anotada pasa a tener como
+ * `word` esa acepción, y las demás siguen disponibles en `senses`.
+ */
+function applyResolvedSenses(tokens: ReadingToken[], sentences: StoredSentence[], slug: string) {
+  const ends: number[] = [];
+  let length = 0;
+  for (const sentence of sentences) {
+    length += String(sentence?.zh ?? '').length;
+    ends.push(length);
+  }
+
+  const seen = new Map<string, number>();
+  let sentenceIndex = 0;
+  for (const token of tokens) {
+    const offset = Number(token.id.slice(1));
+    while (sentenceIndex < ends.length - 1 && offset >= ends[sentenceIndex]) {
+      sentenceIndex += 1;
+      seen.clear();
+    }
+    if (token.type !== 'word') continue;
+
+    const occurrence = seen.get(token.text) ?? 0;
+    seen.set(token.text, occurrence + 1);
+
+    const resolved = sentences[sentenceIndex]?.senses?.find(
+      sense => sense.hanzi === token.text && sense.occurrence === occurrence,
+    );
+    if (!resolved) continue;
+
+    const word = (token.senses ?? [token.word]).find(
+      sense => sense?.hsk_level === resolved.hsk_level && (sense?.sense_index ?? null) === (resolved.sense_index ?? null),
+    );
+    if (!word) {
+      // La build garantiza que la acepción existe; si no está, la tabla words
+      // no es la que validó la build. Se registra y el token queda como lo dejó el tokenizador.
+      console.error('Resolved sense missing from words:', { slug, sentence: sentenceIndex, ...resolved });
+      continue;
+    }
+    token.word = word;
+  }
+  return tokens;
 }
 
 export async function handleTokenizeReading(
@@ -108,15 +160,15 @@ export async function handleTokenizeReading(
     in_srs: cardWordIds.has(Number(word.id)),
   }));
 
-  const tokensByReading = Object.fromEntries(readings.map((reading: any) => [
-    String(reading.slug ?? readingIds[0]),
-    tokenizeReading(
-      readingSentences(reading.sentences)
-        .map(sentence => String(sentence?.zh ?? ''))
-        .join(''),
+  const tokensByReading = Object.fromEntries(readings.map((reading: any) => {
+    const slug = String(reading.slug ?? readingIds[0]);
+    const sentences = readingSentences(reading.sentences);
+    const tokens = tokenizeReading(
+      sentences.map(sentence => String(sentence?.zh ?? '')).join(''),
       dictionary,
-    ),
-  ]));
+    );
+    return [slug, applyResolvedSenses(tokens, sentences, slug)];
+  }));
 
   return jsonResponse(
     readingIds.length === 1
