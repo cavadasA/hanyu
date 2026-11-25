@@ -1,0 +1,41 @@
+{
+  "slug": "c-w2-01",
+  "part": "W2",
+  "items": [
+    {
+      "sentence": {
+        "zh": "你（ ）天去学校吗？",
+        "pinyin": "Nǐ jīntiān qù xuéxiào ma?"
+      },
+      "answer": "今"
+    },
+    {
+      "sentence": {
+        "zh": "我很（ ）喝茶。",
+        "pinyin": "Wǒ hěn ài hē chá."
+      },
+      "answer": "爱"
+    },
+    {
+      "sentence": {
+        "zh": "我有一个（ ）姐。",
+        "pinyin": "Wǒ yǒu yí gè jiějie."
+      },
+      "answer": "姐"
+    },
+    {
+      "sentence": {
+        "zh": "这个（ ）字怎么写？",
+        "pinyin": "Zhège Hànzì zěnme xiě?"
+      },
+      "answer": "汉"
+    },
+    {
+      "sentence": {
+        "zh": "我们下（ ）去看电影吧。",
+        "pinyin": "Wǒmen xiàwǔ qù kàn diànyǐng ba."
+      },
+      "answer": "午"
+    }
+  ]
+}

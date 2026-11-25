@@ -1,0 +1,96 @@
+{
+  "slug": "c-l1-01",
+  "part": "L1",
+  "example": {
+    "audio": [
+      {
+        "zh": "我家有一只小狗。",
+        "pinyin": "Wǒ jiā yǒu yì zhī xiǎo gǒu.",
+        "speaker": "F"
+      }
+    ],
+    "images": [
+      "dog",
+      "cat",
+      "fish"
+    ],
+    "answer": 0
+  },
+  "items": [
+    {
+      "audio": [
+        {
+          "zh": "我们坐火车去吧。",
+          "pinyin": "Wǒmen zuò huǒchē qù ba.",
+          "speaker": "M"
+        }
+      ],
+      "images": [
+        "plane",
+        "bus",
+        "train"
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "电影晚上八点开始。",
+          "pinyin": "Diànyǐng wǎnshang bā diǎn kāishǐ.",
+          "speaker": "F"
+        }
+      ],
+      "images": [
+        "clock-8",
+        "clock-6",
+        "clock-12"
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "桌子上有两个鸡蛋。",
+          "pinyin": "Zhuōzi shàng yǒu liǎng gè jīdàn.",
+          "speaker": "M"
+        }
+      ],
+      "images": [
+        "apple",
+        "egg",
+        "rice"
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "外面雪下得很大。",
+          "pinyin": "Wàimiàn xuě xià de hěn dà.",
+          "speaker": "F"
+        }
+      ],
+      "images": [
+        "sun",
+        "rain",
+        "snow"
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "他在房间里唱歌。",
+          "pinyin": "Tā zài fángjiān lǐ chàng gē.",
+          "speaker": "M"
+        }
+      ],
+      "images": [
+        "sing",
+        "swim",
+        "cook"
+      ],
+      "answer": 0
+    }
+  ]
+}

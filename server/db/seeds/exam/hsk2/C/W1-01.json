@@ -1,0 +1,62 @@
+{
+  "slug": "c-w1-01",
+  "part": "W1",
+  "bank": [
+    "口",
+    "日",
+    "亻",
+    "氵",
+    "讠",
+    "扌"
+  ],
+  "example": {
+    "word": {
+      "zh": "叫车",
+      "pinyin": "Jiào chē"
+    },
+    "target_index": 0,
+    "answer": 0
+  },
+  "items": [
+    {
+      "word": {
+        "zh": "时候",
+        "pinyin": "Shíhou"
+      },
+      "target_index": 0,
+      "answer": 1
+    },
+    {
+      "word": {
+        "zh": "他们",
+        "pinyin": "Tāmen"
+      },
+      "target_index": 0,
+      "answer": 2
+    },
+    {
+      "word": {
+        "zh": "汉字",
+        "pinyin": "Hànzì"
+      },
+      "target_index": 0,
+      "answer": 3
+    },
+    {
+      "word": {
+        "zh": "说话",
+        "pinyin": "Shuōhuà"
+      },
+      "target_index": 1,
+      "answer": 4
+    },
+    {
+      "word": {
+        "zh": "找到",
+        "pinyin": "Zhǎo dào"
+      },
+      "target_index": 0,
+      "answer": 5
+    }
+  ]
+}

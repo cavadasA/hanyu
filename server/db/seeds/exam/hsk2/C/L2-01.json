@@ -1,0 +1,104 @@
+{
+  "slug": "c-l2-01",
+  "part": "L2",
+  "images": [
+    "house",
+    "watch",
+    "taxi",
+    "medicine",
+    "book",
+    "coffee"
+  ],
+  "example": {
+    "stimulus": [
+      {
+        "zh": "你家在哪儿？",
+        "pinyin": "Nǐ jiā zài nǎr?",
+        "speaker": "M"
+      },
+      {
+        "zh": "就在前面，那个红色的就是。",
+        "pinyin": "Jiù zài qiánmiàn, nàge hóngsè de jiù shì.",
+        "speaker": "F"
+      }
+    ],
+    "answer": 0
+  },
+  "items": [
+    {
+      "audio": [
+        {
+          "zh": "现在几点了？",
+          "pinyin": "Xiànzài jǐ diǎn le?",
+          "speaker": "F"
+        },
+        {
+          "zh": "我看一下手表，十点二十。",
+          "pinyin": "Wǒ kàn yíxià shǒubiǎo, shí diǎn èrshí.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "我们怎么去医院？",
+          "pinyin": "Wǒmen zěnme qù yīyuàn?",
+          "speaker": "M"
+        },
+        {
+          "zh": "打车吧，快一点儿。",
+          "pinyin": "Dǎchē ba, kuài yìdiǎnr.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "你生病了，要多喝水。",
+          "pinyin": "Nǐ shēngbìng le, yào duō hē shuǐ.",
+          "speaker": "F"
+        },
+        {
+          "zh": "好的，我已经吃药了。",
+          "pinyin": "Hǎo de, wǒ yǐjīng chī yào le.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 3
+    },
+    {
+      "audio": [
+        {
+          "zh": "你在读什么？",
+          "pinyin": "Nǐ zài dú shénme?",
+          "speaker": "M"
+        },
+        {
+          "zh": "一本中文书，很有意思。",
+          "pinyin": "Yì běn Zhōngwén shū, hěn yǒu yìsi.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 4
+    },
+    {
+      "audio": [
+        {
+          "zh": "早上你喝什么？",
+          "pinyin": "Zǎoshang nǐ hē shénme?",
+          "speaker": "F"
+        },
+        {
+          "zh": "我每天早上都喝咖啡。",
+          "pinyin": "Wǒ měi tiān zǎoshang dōu hē kāfēi.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 5
+    }
+  ]
+}

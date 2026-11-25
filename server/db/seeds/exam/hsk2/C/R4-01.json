@@ -1,0 +1,131 @@
+{
+  "slug": "c-r4-01",
+  "part": "R4",
+  "items": [
+    {
+      "passage": {
+        "zh": "我每天晚上都去跑步，跑一个小时，现在身体很好。",
+        "pinyin": "Wǒ měi tiān wǎnshang dōu qù pǎobù, pǎo yí gè xiǎoshí, xiànzài shēntǐ hěn hǎo."
+      },
+      "question": {
+        "zh": "★ 他每天晚上：",
+        "pinyin": "★ Tā měi tiān wǎnshang:"
+      },
+      "options": [
+        {
+          "zh": "去跑步",
+          "pinyin": "Qù pǎobù"
+        },
+        {
+          "zh": "去游泳",
+          "pinyin": "Qù yóuyǒng"
+        },
+        {
+          "zh": "去上班",
+          "pinyin": "Qù shàngbān"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "passage": {
+        "zh": "我妹妹很喜欢猫和狗，家里有两只猫和一只狗。",
+        "pinyin": "Wǒ mèimei hěn xǐhuan māo hé gǒu, jiā lǐ yǒu liǎng zhī māo hé yì zhī gǒu."
+      },
+      "question": {
+        "zh": "★ 妹妹家里有：",
+        "pinyin": "★ Mèimei jiā lǐ yǒu:"
+      },
+      "options": [
+        {
+          "zh": "一只猫",
+          "pinyin": "Yì zhī māo"
+        },
+        {
+          "zh": "两只狗",
+          "pinyin": "Liǎng zhī gǒu"
+        },
+        {
+          "zh": "两只猫",
+          "pinyin": "Liǎng zhī māo"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "passage": {
+        "zh": "今天的考试题很多，我没写完。",
+        "pinyin": "Jīntiān de kǎoshì tí hěn duō, wǒ méi xiě wán."
+      },
+      "question": {
+        "zh": "★ 今天的考试：",
+        "pinyin": "★ Jīntiān de kǎoshì:"
+      },
+      "options": [
+        {
+          "zh": "题很少",
+          "pinyin": "Tí hěn shǎo"
+        },
+        {
+          "zh": "题很多",
+          "pinyin": "Tí hěn duō"
+        },
+        {
+          "zh": "他写完了",
+          "pinyin": "Tā xiě wán le"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "passage": {
+        "zh": "这家商店的东西很便宜，所以买东西的人非常多。",
+        "pinyin": "Zhè jiā shāngdiàn de dōngxi hěn piányi, suǒyǐ mǎi dōngxi de rén fēicháng duō."
+      },
+      "question": {
+        "zh": "★ 这家商店：",
+        "pinyin": "★ Zhè jiā shāngdiàn:"
+      },
+      "options": [
+        {
+          "zh": "东西很贵",
+          "pinyin": "Dōngxi hěn guì"
+        },
+        {
+          "zh": "人很少",
+          "pinyin": "Rén hěn shǎo"
+        },
+        {
+          "zh": "东西便宜",
+          "pinyin": "Dōngxi piányi"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "passage": {
+        "zh": "我上个月去中国旅游了，在那儿认识了很多新朋友。",
+        "pinyin": "Wǒ shàng gè yuè qù Zhōngguó lǚyóu le, zài nàr rènshi le hěn duō xīn péngyou."
+      },
+      "question": {
+        "zh": "★ 他在中国：",
+        "pinyin": "★ Tā zài Zhōngguó:"
+      },
+      "options": [
+        {
+          "zh": "认识了新朋友",
+          "pinyin": "Rènshi le xīn péngyou"
+        },
+        {
+          "zh": "找到了工作",
+          "pinyin": "Zhǎo dào le gōngzuò"
+        },
+        {
+          "zh": "学习汉语",
+          "pinyin": "Xuéxí Hànyǔ"
+        }
+      ],
+      "answer": 0
+    }
+  ]
+}

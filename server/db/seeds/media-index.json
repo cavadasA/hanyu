@@ -2126,5 +2126,151 @@
       "path": "media/b1252aa6e814b483841a433134d63dea5cce302704a073a6a0dc9d3acfc2c980.m4a",
       "duration_ms": 3787
     }
+  },
+  "exam/hsk2/C": {
+    "opening": {
+      "path": "media/aaee61a31d81b1746a2632a60465b3dd82fd79f2d6743f660095d9c9f09043dc.m4a",
+      "duration_ms": 4843
+    },
+    "L1-instruction": {
+      "path": "media/d2c2dd0b1cbc7fd82d25ca3f4a6c00dbccd4588a92513237270c89a278fd9254.m4a",
+      "duration_ms": 7891
+    },
+    "L1-example": {
+      "path": "media/cc30887c9281473f2d859eac5e1da8c933e9b749034fc5926924441ec28ca35e.m4a",
+      "duration_ms": 2059
+    },
+    "L1-start": {
+      "path": "media/fefbe6a964895d5c83fae80ca020b4cc5a82269e94437efe6c8c1b9c7412aefa.m4a",
+      "duration_ms": 1963
+    },
+    "L1-q01": {
+      "path": "media/330e75ff412d3d57c2a643a3e8672a305e02056d4fca5efa16717964f4b594b4.m4a",
+      "duration_ms": 2251
+    },
+    "L1-q02": {
+      "path": "media/2d5dbdcc32b42adca49024b15f1c05d536cd794e57157ca583d37fecce397ea2.m4a",
+      "duration_ms": 2371
+    },
+    "L1-q03": {
+      "path": "media/e98bb7dc2432d90f7c49298ebb228dbc92365b872ce5a6fd7a0e392c3e04971a.m4a",
+      "duration_ms": 2563
+    },
+    "L1-q04": {
+      "path": "media/6a02d1caddea3cd2b167bb5787b8e2dd409446f5d5fce53fa9e7a41c7c91abc0.m4a",
+      "duration_ms": 2083
+    },
+    "L1-q05": {
+      "path": "media/442eef996ea95c5f5c74a9fe281e74c175472d89c48e1fb0bc40d808fc54d7bc.m4a",
+      "duration_ms": 2371
+    },
+    "L2-instruction": {
+      "path": "media/dc0dec3d7f64159904743ac488d2fbd52f996558ceb223d30abb55c6a93ef347.m4a",
+      "duration_ms": 7987
+    },
+    "L2-example": {
+      "path": "media/502bb9956d0bccb0903739024da4a90d3131ac83225795786bfdfdad73a495e2.m4a",
+      "duration_ms": 5411
+    },
+    "L2-start": {
+      "path": "media/c6d5b31f030d927d2fb74323bd2b6063630dc2631e96e76335c37071dc1173a4.m4a",
+      "duration_ms": 1987
+    },
+    "L2-q01": {
+      "path": "media/f00061a707eb62479e7ba54ecc4c0b85abd6c6ddb5c58ef13b9066a9f0170c58.m4a",
+      "duration_ms": 5411
+    },
+    "L2-q02": {
+      "path": "media/1babb0e53fc8e64a27f846f0521c45d6d2fae79d85ba2ef921bc59efba3e7893.m4a",
+      "duration_ms": 4523
+    },
+    "L2-q03": {
+      "path": "media/c1084e3174838a5c86443b7ee6253509b6c06bc8d7a8dc23e54c96b5d2ae3c01.m4a",
+      "duration_ms": 5795
+    },
+    "L2-q04": {
+      "path": "media/9438a330aa820b03307a9a2fd68bc02c78561a93d4539b5e0eba0fc996963fa3.m4a",
+      "duration_ms": 5195
+    },
+    "L2-q05": {
+      "path": "media/14f374587b6ba4ccfeeecb0c558c1548da3c3d273af49fa8762a07a4d57668fa.m4a",
+      "duration_ms": 4955
+    },
+    "L2-q06": {
+      "path": "media/735a74931ed49e421ae470085975cdb2b92cef11e752b80b2a8227dcf168966c.m4a",
+      "duration_ms": 5123
+    },
+    "L2-q07": {
+      "path": "media/f3a398f2c471a6f3abb43c2f3225152a09280a9ae8cb947f7e6415b40c8cd443.m4a",
+      "duration_ms": 4811
+    },
+    "L2-q08": {
+      "path": "media/24cd683b6a2e5c186c38722482e5901f057969e06d832508350653799b1bb7b3.m4a",
+      "duration_ms": 4739
+    },
+    "L2-q09": {
+      "path": "media/efcdff7302292d91d4a9f396b448e423f11feea561949e72c3bcc9a31cb5860c.m4a",
+      "duration_ms": 4931
+    },
+    "L2-q10": {
+      "path": "media/1bb78fbfe0166ed1efd1d58c02518c8f0e703e01236514bbe28de55905f8326a.m4a",
+      "duration_ms": 4979
+    },
+    "L3-instruction": {
+      "path": "media/5cc571b2e6b0fbc7f6968789649cf86132ea5e16459f62e180e16e688362374a.m4a",
+      "duration_ms": 8611
+    },
+    "L3-example": {
+      "path": "media/c8bbbacdc3f4ac7e0ac5ce2579115b6dd7a30a59f4d4eb468a0a785826a35fb6.m4a",
+      "duration_ms": 9503
+    },
+    "L3-start": {
+      "path": "media/f57bcd931177090f6835fc1b01dbfd0543f1d7593443fd7a242ad527a609414b.m4a",
+      "duration_ms": 2179
+    },
+    "L3-q01": {
+      "path": "media/fe8e97a07c1e2f63bffb0e0bebdece6d81bbc408f7b4e53230e136272f67ec1e.m4a",
+      "duration_ms": 9191
+    },
+    "L3-q02": {
+      "path": "media/eda658259df4fe40a8aec586c595ce4a2ddb4807af6b436f57fb46f15a5b4751.m4a",
+      "duration_ms": 8735
+    },
+    "L3-q03": {
+      "path": "media/a2a415af0c8833eb0cba03eb837e152c62dc2e06b08493e90dc6021ca5dc7031.m4a",
+      "duration_ms": 9455
+    },
+    "L3-q04": {
+      "path": "media/08003a854de735f4985d38eeb69e8b79bcd6d8ed1ee3b4025fa4a234717c6685.m4a",
+      "duration_ms": 8807
+    },
+    "L3-q05": {
+      "path": "media/c80bf64ed9d67268ad457d6cb28dae38923c282b55f33f2b22c5e3589349dff7.m4a",
+      "duration_ms": 9791
+    },
+    "L3-q06": {
+      "path": "media/a3927decbbd24a58a3ed3c82d37ee78308841cc9b0e5c0f32965a005318cf814.m4a",
+      "duration_ms": 8927
+    },
+    "L3-q07": {
+      "path": "media/18984b8bd21e514674142f49cb8be7fd084973a820232390d4fb65b05ea63b6e.m4a",
+      "duration_ms": 8807
+    },
+    "L3-q08": {
+      "path": "media/d3454ef5a3e5c0340b5ffb388bc82f7a9785e6ad76d1898e9e32642eee2a52d8.m4a",
+      "duration_ms": 9599
+    },
+    "L3-q09": {
+      "path": "media/3aeaa50ce652ff1f6eda93630762e2e6a852f12ca3258bd0cc3cc578b4159de9.m4a",
+      "duration_ms": 10511
+    },
+    "L3-q10": {
+      "path": "media/5999b5d922e6666cbb010a0c8ba6adb3e4b6016757b124f5791d4b2959eec998.m4a",
+      "duration_ms": 10487
+    },
+    "closing": {
+      "path": "media/bf2e58bb6ad0cdf534783289f85f7955ced1673cbed3c2bcd05f256a91df57be.m4a",
+      "duration_ms": 2227
+    }
   }
 }

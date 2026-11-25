@@ -1,0 +1,74 @@
+{
+  "slug": "c-r3-01",
+  "part": "R3",
+  "bank": [
+    {
+      "zh": "是的，我们是同学。",
+      "pinyin": "Shì de, wǒmen shì tóngxué."
+    },
+    {
+      "zh": "我在学校门口。",
+      "pinyin": "Wǒ zài xuéxiào ménkǒu."
+    },
+    {
+      "zh": "下午三点。",
+      "pinyin": "Xiàwǔ sān diǎn."
+    },
+    {
+      "zh": "不太好，有点儿冷。",
+      "pinyin": "Bú tài hǎo, yǒudiǎnr lěng."
+    },
+    {
+      "zh": "我想喝水。",
+      "pinyin": "Wǒ xiǎng hē shuǐ."
+    },
+    {
+      "zh": "我坐出租车去。",
+      "pinyin": "Wǒ zuò chūzūchē qù."
+    }
+  ],
+  "example": {
+    "text": {
+      "zh": "你们认识吗？",
+      "pinyin": "Nǐmen rènshi ma?"
+    },
+    "answer": 0
+  },
+  "items": [
+    {
+      "text": {
+        "zh": "你在哪儿呢？我怎么看不到你？",
+        "pinyin": "Nǐ zài nǎr ne? Wǒ zěnme kàn bú dào nǐ?"
+      },
+      "answer": 1
+    },
+    {
+      "text": {
+        "zh": "考试是什么时候？",
+        "pinyin": "Kǎoshì shì shénme shíhou?"
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "今天天气怎么样？",
+        "pinyin": "Jīntiān tiānqì zěnmeyàng?"
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "你要吃什么吗？",
+        "pinyin": "Nǐ yào chī shénme ma?"
+      },
+      "answer": 4
+    },
+    {
+      "text": {
+        "zh": "你怎么去机场？",
+        "pinyin": "Nǐ zěnme qù jīchǎng?"
+      },
+      "answer": 5
+    }
+  ]
+}

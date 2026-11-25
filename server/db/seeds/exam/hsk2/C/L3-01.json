@@ -1,0 +1,380 @@
+{
+  "slug": "c-l3-01",
+  "part": "L3",
+  "example": {
+    "audio": [
+      {
+        "zh": "你喜欢喝茶吗？",
+        "pinyin": "Nǐ xǐhuan hē chá ma?",
+        "speaker": "M"
+      },
+      {
+        "zh": "喜欢，我每天都喝。",
+        "pinyin": "Xǐhuan, wǒ měi tiān dōu hē.",
+        "speaker": "F"
+      }
+    ],
+    "question": {
+      "zh": "女的每天喝什么？",
+      "pinyin": "Nǚ de měi tiān hē shénme?",
+      "speaker": "M"
+    },
+    "options": [
+      {
+        "zh": "茶",
+        "pinyin": "Chá"
+      },
+      {
+        "zh": "咖啡",
+        "pinyin": "Kāfēi"
+      },
+      {
+        "zh": "牛奶",
+        "pinyin": "Niúnǎi"
+      }
+    ],
+    "answer": 0
+  },
+  "items": [
+    {
+      "audio": [
+        {
+          "zh": "你明天去公司吗？",
+          "pinyin": "Nǐ míngtiān qù gōngsī ma?",
+          "speaker": "F"
+        },
+        {
+          "zh": "不去，明天是星期六。",
+          "pinyin": "Bú qù, míngtiān shì xīngqī liù.",
+          "speaker": "M"
+        }
+      ],
+      "question": {
+        "zh": "明天星期几？",
+        "pinyin": "Míngtiān xīngqī jǐ?",
+        "speaker": "F"
+      },
+      "options": [
+        {
+          "zh": "星期五",
+          "pinyin": "Xīngqī wǔ"
+        },
+        {
+          "zh": "星期六",
+          "pinyin": "Xīngqī liù"
+        },
+        {
+          "zh": "星期天",
+          "pinyin": "Xīngqītiān"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "这件衣服多少钱？",
+          "pinyin": "Zhè jiàn yīfu duōshao qián?",
+          "speaker": "M"
+        },
+        {
+          "zh": "一百块。",
+          "pinyin": "Yì bǎi kuài.",
+          "speaker": "F"
+        }
+      ],
+      "question": {
+        "zh": "衣服多少钱？",
+        "pinyin": "Yīfu duōshao qián?",
+        "speaker": "M"
+      },
+      "options": [
+        {
+          "zh": "一百块",
+          "pinyin": "Yì bǎi kuài"
+        },
+        {
+          "zh": "两百块",
+          "pinyin": "Liǎng bǎi kuài"
+        },
+        {
+          "zh": "十块",
+          "pinyin": "Shí kuài"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "你为什么学汉语？",
+          "pinyin": "Nǐ wèi shénme xué Hànyǔ?",
+          "speaker": "F"
+        },
+        {
+          "zh": "因为我想去中国工作。",
+          "pinyin": "Yīnwèi wǒ xiǎng qù Zhōngguó gōngzuò.",
+          "speaker": "M"
+        }
+      ],
+      "question": {
+        "zh": "男的为什么学汉语？",
+        "pinyin": "Nán de wèi shénme xué Hànyǔ?",
+        "speaker": "F"
+      },
+      "options": [
+        {
+          "zh": "喜欢中国菜",
+          "pinyin": "Xǐhuan Zhōngguó cài"
+        },
+        {
+          "zh": "朋友是中国人",
+          "pinyin": "Péngyou shì Zhōngguó rén"
+        },
+        {
+          "zh": "想去中国工作",
+          "pinyin": "Xiǎng qù Zhōngguó gōngzuò"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "你弟弟在做什么？",
+          "pinyin": "Nǐ dìdi zài zuò shénme?",
+          "speaker": "M"
+        },
+        {
+          "zh": "他在房间里玩电脑。",
+          "pinyin": "Tā zài fángjiān lǐ wán diànnǎo.",
+          "speaker": "F"
+        }
+      ],
+      "question": {
+        "zh": "弟弟在做什么？",
+        "pinyin": "Dìdi zài zuò shénme?",
+        "speaker": "M"
+      },
+      "options": [
+        {
+          "zh": "看书",
+          "pinyin": "Kàn shū"
+        },
+        {
+          "zh": "玩电脑",
+          "pinyin": "Wán diànnǎo"
+        },
+        {
+          "zh": "睡觉",
+          "pinyin": "Shuìjiào"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "你们学校大吗？",
+          "pinyin": "Nǐmen xuéxiào dà ma?",
+          "speaker": "F"
+        },
+        {
+          "zh": "不大，只有八百个学生。",
+          "pinyin": "Bú dà, zhǐ yǒu bā bǎi gè xuésheng.",
+          "speaker": "M"
+        }
+      ],
+      "question": {
+        "zh": "他们学校有多少学生？",
+        "pinyin": "Tāmen xuéxiào yǒu duōshao xuésheng?",
+        "speaker": "F"
+      },
+      "options": [
+        {
+          "zh": "八十个",
+          "pinyin": "Bāshí gè"
+        },
+        {
+          "zh": "八百个",
+          "pinyin": "Bā bǎi gè"
+        },
+        {
+          "zh": "八千个",
+          "pinyin": "Bā qiān gè"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "你今天怎么这么高兴？",
+          "pinyin": "Nǐ jīntiān zěnme zhème gāoxìng?",
+          "speaker": "M"
+        },
+        {
+          "zh": "我找到工作了！",
+          "pinyin": "Wǒ zhǎo dào gōngzuò le!",
+          "speaker": "F"
+        }
+      ],
+      "question": {
+        "zh": "女的为什么高兴？",
+        "pinyin": "Nǚ de wèi shénme gāoxìng?",
+        "speaker": "M"
+      },
+      "options": [
+        {
+          "zh": "找到工作了",
+          "pinyin": "Zhǎo dào gōngzuò le"
+        },
+        {
+          "zh": "考试考得好",
+          "pinyin": "Kǎoshì kǎo de hǎo"
+        },
+        {
+          "zh": "今天生日",
+          "pinyin": "Jīntiān shēngrì"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "您要喝什么？",
+          "pinyin": "Nín yào hē shénme?",
+          "speaker": "F"
+        },
+        {
+          "zh": "我想喝水，谢谢。",
+          "pinyin": "Wǒ xiǎng hē shuǐ, xièxie.",
+          "speaker": "M"
+        }
+      ],
+      "question": {
+        "zh": "男的要喝什么？",
+        "pinyin": "Nán de yào hē shénme?",
+        "speaker": "F"
+      },
+      "options": [
+        {
+          "zh": "茶",
+          "pinyin": "Chá"
+        },
+        {
+          "zh": "咖啡",
+          "pinyin": "Kāfēi"
+        },
+        {
+          "zh": "水",
+          "pinyin": "Shuǐ"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "你住在几楼？",
+          "pinyin": "Nǐ zhù zài jǐ lóu?",
+          "speaker": "M"
+        },
+        {
+          "zh": "五楼，每天走上走下很累。",
+          "pinyin": "Wǔ lóu, měi tiān zǒu shàng zǒu xià hěn lèi.",
+          "speaker": "F"
+        }
+      ],
+      "question": {
+        "zh": "女的住在几楼？",
+        "pinyin": "Nǚ de zhù zài jǐ lóu?",
+        "speaker": "M"
+      },
+      "options": [
+        {
+          "zh": "三楼",
+          "pinyin": "Sān lóu"
+        },
+        {
+          "zh": "四楼",
+          "pinyin": "Sì lóu"
+        },
+        {
+          "zh": "五楼",
+          "pinyin": "Wǔ lóu"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "医生说你的身体怎么样？",
+          "pinyin": "Yīshēng shuō nǐ de shēntǐ zěnmeyàng?",
+          "speaker": "F"
+        },
+        {
+          "zh": "没什么问题，休息几天就好了。",
+          "pinyin": "Méi shénme wèntí, xiūxi jǐ tiān jiù hǎo le.",
+          "speaker": "M"
+        }
+      ],
+      "question": {
+        "zh": "医生让男的做什么？",
+        "pinyin": "Yīshēng ràng nán de zuò shénme?",
+        "speaker": "F"
+      },
+      "options": [
+        {
+          "zh": "休息几天",
+          "pinyin": "Xiūxi jǐ tiān"
+        },
+        {
+          "zh": "去医院",
+          "pinyin": "Qù yīyuàn"
+        },
+        {
+          "zh": "吃很多药",
+          "pinyin": "Chī hěn duō yào"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "这个星期天你去哪儿玩？",
+          "pinyin": "Zhège xīngqītiān nǐ qù nǎr wán?",
+          "speaker": "M"
+        },
+        {
+          "zh": "我想在家看书，哪儿也不去。",
+          "pinyin": "Wǒ xiǎng zài jiā kàn shū, nǎr yě bú qù.",
+          "speaker": "F"
+        }
+      ],
+      "question": {
+        "zh": "女的星期天要做什么？",
+        "pinyin": "Nǚ de xīngqītiān yào zuò shénme?",
+        "speaker": "M"
+      },
+      "options": [
+        {
+          "zh": "出去玩",
+          "pinyin": "Chūqù wán"
+        },
+        {
+          "zh": "在家看书",
+          "pinyin": "Zài jiā kàn shū"
+        },
+        {
+          "zh": "去朋友家",
+          "pinyin": "Qù péngyou jiā"
+        }
+      ],
+      "answer": 1
+    }
+  ]
+}

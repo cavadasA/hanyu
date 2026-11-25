@@ -1,0 +1,56 @@
+{
+  "slug": "c-r1-01",
+  "part": "R1",
+  "images": [
+    "call",
+    "read",
+    "money",
+    "bed",
+    "flower",
+    "milk"
+  ],
+  "example": {
+    "stimulus": {
+      "zh": "我在给我的老师打电话。",
+      "pinyin": "Wǒ zài gěi wǒ de lǎoshī dǎ diànhuà."
+    },
+    "answer": 0
+  },
+  "items": [
+    {
+      "text": {
+        "zh": "爸爸坐在椅子上看书。",
+        "pinyin": "Bàba zuò zài yǐzi shàng kàn shū."
+      },
+      "answer": 1
+    },
+    {
+      "text": {
+        "zh": "这些钱是我给你的。",
+        "pinyin": "Zhèxiē qián shì wǒ gěi nǐ de."
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "太晚了，快去睡觉吧。",
+        "pinyin": "Tài wǎn le, kuài qù shuìjiào ba."
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "这些花真好看，是谁送的？",
+        "pinyin": "Zhèxiē huā zhēn hǎokàn, shì shéi sòng de?"
+      },
+      "answer": 4
+    },
+    {
+      "text": {
+        "zh": "孩子们每天都要喝牛奶。",
+        "pinyin": "Háizimen měi tiān dōu yào hē niúnǎi."
+      },
+      "answer": 5
+    }
+  ]
+}

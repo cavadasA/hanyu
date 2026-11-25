@@ -83,6 +83,15 @@ describe('buildExam', () => {
     const { issues } = await buildExam();
     expect(issues).toEqual([]);
   });
+
+  it('hay 3 formas (A, B y C) de 60 preguntas cada una: 180, ninguna repetida', async () => {
+    const { forms, issues } = await buildExam();
+    expect(forms.map(form => form.code)).toEqual(['A', 'B', 'C']);
+    for (const form of forms) {
+      expect(form.content.groups.reduce((count, group) => count + group.items.length, 0)).toBe(60);
+    }
+    expect(issues.filter(issue => issue.kind === 'question_repeated')).toEqual([]);
+  });
 });
 
 describe('questionSignatures', () => {

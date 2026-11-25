@@ -1,0 +1,63 @@
+{
+  "slug": "c-r3-02",
+  "part": "R3",
+  "bank": [
+    {
+      "zh": "他去中国了。",
+      "pinyin": "Tā qù Zhōngguó le."
+    },
+    {
+      "zh": "好的，我开车去机场。",
+      "pinyin": "Hǎo de, wǒ kāichē qù jīchǎng."
+    },
+    {
+      "zh": "我也觉得很好看。",
+      "pinyin": "Wǒ yě juéde hěn hǎokàn."
+    },
+    {
+      "zh": "三个人：爸爸、妈妈和我。",
+      "pinyin": "Sān gè rén: bàba, māma hé wǒ."
+    },
+    {
+      "zh": "对不起，我不知道。",
+      "pinyin": "Duìbuqǐ, wǒ bù zhīdào."
+    }
+  ],
+  "items": [
+    {
+      "text": {
+        "zh": "这个电影真好看！",
+        "pinyin": "Zhège diànyǐng zhēn hǎokàn!"
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "你家有几口人？",
+        "pinyin": "Nǐ jiā yǒu jǐ kǒu rén?"
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "请问，火车站在哪儿？",
+        "pinyin": "Qǐngwèn, huǒchē zhàn zài nǎr?"
+      },
+      "answer": 4
+    },
+    {
+      "text": {
+        "zh": "我八点到机场。",
+        "pinyin": "Wǒ bā diǎn dào jīchǎng."
+      },
+      "answer": 1
+    },
+    {
+      "text": {
+        "zh": "你哥哥呢？好长时间没看见他了。",
+        "pinyin": "Nǐ gēge ne? Hǎo cháng shíjiān méi kànjiàn tā le."
+      },
+      "answer": 0
+    }
+  ]
+}

@@ -1,0 +1,261 @@
+{
+  "kind": "neural",
+  "owner": "exam/hsk2/C",
+  "produced_by": "edge-tts:zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural+zh-CN-YunyangNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "opening",
+      "file": "opening.m4a",
+      "duration_ms": 4843,
+      "voice": "zh-CN-YunyangNeural",
+      "source_hash": "24428ded86d74a84094e2dfef735e9f33d8f8f9a684a63d1639337205c3017f2"
+    },
+    {
+      "key": "L1-instruction",
+      "file": "L1-instruction.m4a",
+      "duration_ms": 7891,
+      "voice": "zh-CN-YunyangNeural",
+      "source_hash": "f217fcc6f85228a195fa36e3f20f8486519bebc5de04e6b34b0adc29381309ee"
+    },
+    {
+      "key": "L1-example",
+      "file": "L1-example.m4a",
+      "duration_ms": 2059,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "5a32c032541b6bc301b37836240bc66f0b22b974aee8d7f3f89b0b9a9e5bc78e"
+    },
+    {
+      "key": "L1-start",
+      "file": "L1-start.m4a",
+      "duration_ms": 1963,
+      "voice": "zh-CN-YunyangNeural",
+      "source_hash": "2d2bbbbdf0b400c9fa11ce697aff12cf49e3ac80c161298ceb3ed0120e241fdb"
+    },
+    {
+      "key": "L1-q01",
+      "file": "L1-q01.m4a",
+      "duration_ms": 2251,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "1623ea186838e0ff400c90b4d145d7f90d53a3dc8d218c2aec7f56240e7d05ed"
+    },
+    {
+      "key": "L1-q02",
+      "file": "L1-q02.m4a",
+      "duration_ms": 2371,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "5d21ee25ac31b7cf562b0eb4a3f5ff70eb66f096a04d4379f14d00e0762dd124"
+    },
+    {
+      "key": "L1-q03",
+      "file": "L1-q03.m4a",
+      "duration_ms": 2563,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "924ad2b7a3a88b98b0c22bc96c1c34e58f5ae78e0afa8c19313922a4156ccd4d"
+    },
+    {
+      "key": "L1-q04",
+      "file": "L1-q04.m4a",
+      "duration_ms": 2083,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "2ee155919bf47f39c617d1eed53d2855e4142780a457e8e637d7d074ee06fe80"
+    },
+    {
+      "key": "L1-q05",
+      "file": "L1-q05.m4a",
+      "duration_ms": 2371,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "1b9484ae76d59730e37270b99452067d4583bb5eaadaa42177866d0728b5692d"
+    },
+    {
+      "key": "L2-instruction",
+      "file": "L2-instruction.m4a",
+      "duration_ms": 7987,
+      "voice": "zh-CN-YunyangNeural",
+      "source_hash": "18d28abf10eb2ef63ad36b7682cda5a2be4b85077149535810b85bd21c3a1bf8"
+    },
+    {
+      "key": "L2-example",
+      "file": "L2-example.m4a",
+      "duration_ms": 5411,
+      "voice": "zh-CN-YunxiNeural+zh-CN-XiaoxiaoNeural",
+      "source_hash": "3700d6505369c978e2ab4a05c30eda92273e71348f308cfcea585108dfc4c8ee"
+    },
+    {
+      "key": "L2-start",
+      "file": "L2-start.m4a",
+      "duration_ms": 1987,
+      "voice": "zh-CN-YunyangNeural",
+      "source_hash": "b99445fc9970fe48d680c36fe0ed4b7d5c0212588ce8fc277a6aff4a39d4c729"
+    },
+    {
+      "key": "L2-q01",
+      "file": "L2-q01.m4a",
+      "duration_ms": 5411,
+      "voice": "zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural",
+      "source_hash": "663b4e97915b34540702031ecda9449ea37400d4d1ccf5fbcbfb94acb75659a8"
+    },
+    {
+      "key": "L2-q02",
+      "file": "L2-q02.m4a",
+      "duration_ms": 4523,
+      "voice": "zh-CN-YunxiNeural+zh-CN-XiaoxiaoNeural",
+      "source_hash": "204c70be8ee8f1194a638db14399c5c45de074bab6bf08cc8a4e6a1e8aaccd73"
+    },
+    {
+      "key": "L2-q03",
+      "file": "L2-q03.m4a",
+      "duration_ms": 5795,
+      "voice": "zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural",
+      "source_hash": "3ea61a65835d5336873e294f5bc7a54a949b78f1e82ab1a9ba25cb1dce549f0b"
+    },
+    {
+      "key": "L2-q04",
+      "file": "L2-q04.m4a",
+      "duration_ms": 5195,
+      "voice": "zh-CN-YunxiNeural+zh-CN-XiaoxiaoNeural",
+      "source_hash": "94d8eba750f604d93b0d59b04d0072f971786f5061b39334d70e7b7fbdfe18f9"
+    },
+    {
+      "key": "L2-q05",
+      "file": "L2-q05.m4a",
+      "duration_ms": 4955,
+      "voice": "zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural",
+      "source_hash": "56c6be5d377f2e83a7c326bc118675133d458eff83e44a262b20d7d916b125f6"
+    },
+    {
+      "key": "L2-q06",
+      "file": "L2-q06.m4a",
+      "duration_ms": 5123,
+      "voice": "zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural",
+      "source_hash": "2730e5ec3ad035c6cce1643a72ce594804b0c72352d36eb279bfdd88bd90210c"
+    },
+    {
+      "key": "L2-q07",
+      "file": "L2-q07.m4a",
+      "duration_ms": 4811,
+      "voice": "zh-CN-YunxiNeural+zh-CN-XiaoxiaoNeural",
+      "source_hash": "36f5d73527f93f03b12af4e0f5bed514e6979b9a14f30d86caa02344ce19d7e4"
+    },
+    {
+      "key": "L2-q08",
+      "file": "L2-q08.m4a",
+      "duration_ms": 4739,
+      "voice": "zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural",
+      "source_hash": "a397ac922b91d6a09b1f282ecfb0af742ef6df7647dbc3fdff9d6cd6986e9e89"
+    },
+    {
+      "key": "L2-q09",
+      "file": "L2-q09.m4a",
+      "duration_ms": 4931,
+      "voice": "zh-CN-YunxiNeural+zh-CN-XiaoxiaoNeural",
+      "source_hash": "c236f82ea2ea9b920f87317571d087e260fe9ed81ae9d6bbb337d8cfe99e809c"
+    },
+    {
+      "key": "L2-q10",
+      "file": "L2-q10.m4a",
+      "duration_ms": 4979,
+      "voice": "zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural",
+      "source_hash": "9c27ed1b06b58fdd7610efcaaa8919c5d95283a8812f24f153a18ae90d64c931"
+    },
+    {
+      "key": "L3-instruction",
+      "file": "L3-instruction.m4a",
+      "duration_ms": 8611,
+      "voice": "zh-CN-YunyangNeural",
+      "source_hash": "dca5ad7bd481b692bd82b803e2b3ce1b1942eed99726debe2fe6572caf87e9c5"
+    },
+    {
+      "key": "L3-example",
+      "file": "L3-example.m4a",
+      "duration_ms": 9503,
+      "voice": "zh-CN-YunxiNeural+zh-CN-XiaoxiaoNeural",
+      "source_hash": "28b60968be8d18d9cb815dc05532640cf03cd03c7c9828919ea7ffbeb2bd041c"
+    },
+    {
+      "key": "L3-start",
+      "file": "L3-start.m4a",
+      "duration_ms": 2179,
+      "voice": "zh-CN-YunyangNeural",
+      "source_hash": "f29fb6a769f8834a44ec1d78c388d809054dbc1dafc00919fb8a5d2d40953194"
+    },
+    {
+      "key": "L3-q01",
+      "file": "L3-q01.m4a",
+      "duration_ms": 9191,
+      "voice": "zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural",
+      "source_hash": "217bb3e21d5da2dffb6344349847c1ce01137bb7572e57eca82c6109ed55026a"
+    },
+    {
+      "key": "L3-q02",
+      "file": "L3-q02.m4a",
+      "duration_ms": 8735,
+      "voice": "zh-CN-YunxiNeural+zh-CN-XiaoxiaoNeural",
+      "source_hash": "ff3c8f625b6f07e857aad62b1407e46cb485a08ce654a3e2cfe2065c100a36bd"
+    },
+    {
+      "key": "L3-q03",
+      "file": "L3-q03.m4a",
+      "duration_ms": 9455,
+      "voice": "zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural",
+      "source_hash": "d1a7c2826626dc480b77a1a8247ce5f8fa482ce718369d0d8092e9797756a3b8"
+    },
+    {
+      "key": "L3-q04",
+      "file": "L3-q04.m4a",
+      "duration_ms": 8807,
+      "voice": "zh-CN-YunxiNeural+zh-CN-XiaoxiaoNeural",
+      "source_hash": "8971b653cb348e41e74030747c02cd1ffec302159f7cec72bb457691d476358c"
+    },
+    {
+      "key": "L3-q05",
+      "file": "L3-q05.m4a",
+      "duration_ms": 9791,
+      "voice": "zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural",
+      "source_hash": "b15dccc3163aae98bcbb69062845fd61635c43c4b08ecda021aab52ad7edce98"
+    },
+    {
+      "key": "L3-q06",
+      "file": "L3-q06.m4a",
+      "duration_ms": 8927,
+      "voice": "zh-CN-YunxiNeural+zh-CN-XiaoxiaoNeural",
+      "source_hash": "e9e9fdae456839cf76137955c3070deaa58246797c0e3b22b6a1739f61943c89"
+    },
+    {
+      "key": "L3-q07",
+      "file": "L3-q07.m4a",
+      "duration_ms": 8807,
+      "voice": "zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural",
+      "source_hash": "c6148e9ced51fadd0d01cb19a53ca30111d0d6524d166e2ab966317fc77adbbc"
+    },
+    {
+      "key": "L3-q08",
+      "file": "L3-q08.m4a",
+      "duration_ms": 9599,
+      "voice": "zh-CN-YunxiNeural+zh-CN-XiaoxiaoNeural",
+      "source_hash": "8d68954df2b815cc776592208b3d927a7d6c0f1b0b89eb857aa161661f059651"
+    },
+    {
+      "key": "L3-q09",
+      "file": "L3-q09.m4a",
+      "duration_ms": 10511,
+      "voice": "zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural",
+      "source_hash": "cc61e010b7aca2506be6a6d4e5447dcb67b8500c61c2d478c19a7be1c0df68c0"
+    },
+    {
+      "key": "L3-q10",
+      "file": "L3-q10.m4a",
+      "duration_ms": 10487,
+      "voice": "zh-CN-YunxiNeural+zh-CN-XiaoxiaoNeural",
+      "source_hash": "ae264260450c8b9c0f930c68cb6c09259dc9fc65dbb4b6b16a4d13e948e14ac7"
+    },
+    {
+      "key": "closing",
+      "file": "closing.m4a",
+      "duration_ms": 2227,
+      "voice": "zh-CN-YunyangNeural",
+      "source_hash": "fb4e2e12a3901aa31478f418883abe44853bfba9380528cb3b1efec2604d25f1"
+    }
+  ]
+}

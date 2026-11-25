@@ -1,0 +1,88 @@
+{
+  "slug": "c-l2-02",
+  "part": "L2",
+  "images": [
+    "computer",
+    "chair",
+    "shop",
+    "cake",
+    "umbrella"
+  ],
+  "items": [
+    {
+      "audio": [
+        {
+          "zh": "你的电脑怎么了？",
+          "pinyin": "Nǐ de diànnǎo zěnme le?",
+          "speaker": "F"
+        },
+        {
+          "zh": "不知道，开不了了。",
+          "pinyin": "Bù zhīdào, kāi bù le le.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "这个椅子是新的吗？",
+          "pinyin": "Zhège yǐzi shì xīn de ma?",
+          "speaker": "M"
+        },
+        {
+          "zh": "是，昨天买的。",
+          "pinyin": "Shì, zuótiān mǎi de.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "这个商店卖什么？",
+          "pinyin": "Zhège shāngdiàn mài shénme?",
+          "speaker": "F"
+        },
+        {
+          "zh": "卖水果和牛奶。",
+          "pinyin": "Mài shuǐguǒ hé niúnǎi.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "今天是你的生日吗？",
+          "pinyin": "Jīntiān shì nǐ de shēngrì ma?",
+          "speaker": "M"
+        },
+        {
+          "zh": "对，我二十岁了。",
+          "pinyin": "Duì, wǒ èrshí suì le.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 3
+    },
+    {
+      "audio": [
+        {
+          "zh": "外面下雨了。",
+          "pinyin": "Wàimiàn xià yǔ le.",
+          "speaker": "F"
+        },
+        {
+          "zh": "没关系，我有这个。",
+          "pinyin": "Méi guānxi, wǒ yǒu zhège.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 4
+    }
+  ]
+}

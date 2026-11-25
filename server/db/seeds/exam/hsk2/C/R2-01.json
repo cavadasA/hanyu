@@ -1,0 +1,74 @@
+{
+  "slug": "c-r2-01",
+  "part": "R2",
+  "bank": [
+    {
+      "zh": "最",
+      "pinyin": "Zuì"
+    },
+    {
+      "zh": "件",
+      "pinyin": "Jiàn"
+    },
+    {
+      "zh": "知道",
+      "pinyin": "Zhīdào"
+    },
+    {
+      "zh": "从",
+      "pinyin": "Cóng"
+    },
+    {
+      "zh": "次",
+      "pinyin": "Cì"
+    },
+    {
+      "zh": "真",
+      "pinyin": "Zhēn"
+    }
+  ],
+  "example": {
+    "text": {
+      "zh": "我（ ）喜欢的水果是苹果。",
+      "pinyin": "Wǒ xǐhuan de shuǐguǒ shì píngguǒ."
+    },
+    "answer": 0
+  },
+  "items": [
+    {
+      "text": {
+        "zh": "这（ ）衣服是妈妈给我买的。",
+        "pinyin": "Zhè yīfu shì māma gěi wǒ mǎi de."
+      },
+      "answer": 1
+    },
+    {
+      "text": {
+        "zh": "你（ ）他住在哪儿吗？",
+        "pinyin": "Nǐ tā zhù zài nǎr ma?"
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "他（ ）中国来，是我的新同学。",
+        "pinyin": "Tā Zhōngguó lái, shì wǒ de xīn tóngxué."
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "这个电影我看过两（ ）。",
+        "pinyin": "Zhège diànyǐng wǒ kàn guo liǎng."
+      },
+      "answer": 4
+    },
+    {
+      "text": {
+        "zh": "A：这是我做的菜。B：（ ）好吃！",
+        "pinyin": "A: Zhè shì wǒ zuò de cài. B: Hǎochī!"
+      },
+      "answer": 5
+    }
+  ]
+}
