@@ -12,7 +12,7 @@ let activeSentenceRun = 0;
  * speech through the media channel instead — audible regardless of the mute
  * switch, like music apps.
  */
-function ensureMediaAudioSession(): Promise<void> {
+export function ensureMediaAudioSession(): Promise<void> {
   if (!audioModeReady) {
     audioModeReady = setAudioModeAsync({ playsInSilentMode: true }).catch((error) => {
       audioModeReady = null; // allow a retry on the next speak

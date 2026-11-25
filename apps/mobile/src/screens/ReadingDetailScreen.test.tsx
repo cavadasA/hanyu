@@ -1,4 +1,5 @@
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+import { createAudioPlayer } from 'expo-audio';
 import { ReadingDetailScreen } from './ReadingDetailScreen';
 
 const mockGetReading = jest.fn();
@@ -36,6 +37,7 @@ jest.mock('../audio/useSpeech', () => ({
     speakSentences: (...args: unknown[]) => mockSpeakSentences(...args),
     stop: mockStop,
   }),
+  ensureMediaAudioSession: () => Promise.resolve(),
 }));
 
 describe('ReadingDetailScreen', () => {
@@ -62,7 +64,7 @@ describe('ReadingDetailScreen', () => {
       series: null,
       series_index: null,
       audio_kind: 'tts',
-      audio_url: null,
+      sentence_audio: [null],
       content: '我要茶。',
       pinyin_text: 'wo yao cha.',
       sentences: [{ zh: '我要茶。', pinyin: 'wo yao cha.', es: 'Quiero té.' }],
@@ -141,7 +143,7 @@ describe('ReadingDetailScreen', () => {
       series: null,
       series_index: null,
       audio_kind: 'tts',
-      audio_url: null,
+      sentence_audio: [null],
       content: '我要茶。',
       pinyin_text: null,
       sentences: [{ zh: '我要茶。', pinyin: '', es: 'Quiero té.' }],
@@ -165,7 +167,7 @@ describe('ReadingDetailScreen', () => {
       series: null,
       series_index: null,
       audio_kind: 'human',
-      audio_url: 'https://example.test/market-01.mp3',
+      sentence_audio: [{ url: 'https://example.test/media/a.m4a', duration_ms: 1200 }],
       content: '我要茶。',
       pinyin_text: null,
       sentences: [{ zh: '我要茶。', pinyin: '', es: 'Quiero té.' }],
@@ -177,6 +179,56 @@ describe('ReadingDetailScreen', () => {
 
     await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
     expect(view.queryByText('Voz sintética')).toBeNull();
+    expect(view.queryByText('Voz neuronal')).toBeNull();
+  });
+
+  it('una lectura con voz neuronal tiene reproducción frase a frase, velocidades y su nota', async () => {
+    mockGetReading.mockResolvedValue(readingWithClips());
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
+
+    expect(view.getByLabelText('Reproducir')).toBeTruthy();
+    expect(view.getByText('0.75x')).toBeTruthy();
+    expect(view.getByText('1x')).toBeTruthy();
+    expect(view.getByText('1.25x')).toBeTruthy();
+    expect(view.getByText('Voz neuronal')).toBeTruthy();
+    expect(view.queryByText('Voz sintética')).toBeNull();
+  });
+
+  it('con clips, reproduce el clip de la frase y no la voz del dispositivo', async () => {
+    mockGetReading.mockResolvedValue(readingWithClips());
+    const player = { play: jest.fn(), remove: jest.fn(), setPlaybackRate: jest.fn(), addListener: jest.fn(() => ({ remove: jest.fn() })) };
+    (createAudioPlayer as jest.Mock).mockReturnValue(player);
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
+    await fireEvent.press(view.getByLabelText('Reproducir'));
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    expect(createAudioPlayer).toHaveBeenCalledWith({ uri: 'https://example.test/media/a.m4a' });
+    expect(player.play).toHaveBeenCalled();
+    expect(mockSpeakSentences).not.toHaveBeenCalled();
+    expect(view.getByTestId('sentence-0').props.accessibilityState.selected).toBe(true);
+  });
+
+  it('dice qué frase no tiene el audio descargado en vez de saltarla', async () => {
+    mockGetReading.mockResolvedValue({
+      ...readingWithClips(),
+      sentence_audio: [null, { url: 'file:///audio/b.m4a', duration_ms: 1500 }],
+    });
+
+    const view = await render(<ReadingDetailScreen />);
+    await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
+    await fireEvent.press(view.getByLabelText('Reproducir'));
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    expect(view.getByText('Falta el audio de la frase 1: conéctate para descargarlo.')).toBeTruthy();
+    expect(mockSpeakSentences).not.toHaveBeenCalled();
   });
 
   it('resalta la frase que está sonando', async () => {
@@ -349,7 +401,7 @@ function readingForAudio() {
     series: null,
     series_index: null,
     audio_kind: 'tts',
-    audio_url: null,
+    sentence_audio: [null, null],
     content: '我要茶。咖啡比茶贵。',
     sentences: [
       { zh: '我要茶。', pinyin: 'Wǒ yào chá.', es: 'Quiero té.', tokens: [] },
@@ -360,5 +412,16 @@ function readingForAudio() {
     target_grammar: [],
     tokens: [],
     questions: [],
+  };
+}
+
+function readingWithClips() {
+  return {
+    ...readingForAudio(),
+    audio_kind: 'neural',
+    sentence_audio: [
+      { url: 'https://example.test/media/a.m4a', duration_ms: 1200 },
+      { url: 'https://example.test/media/b.m4a', duration_ms: 1500 },
+    ],
   };
 }

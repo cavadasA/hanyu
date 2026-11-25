@@ -4,12 +4,12 @@ import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { toUserMessage, type ReadingDetail, type ReadingProgress, type ReadingResult } from '@hanyu/data';
 import { getData } from '../lib/data';
 import { useSpeech } from '../audio/useSpeech';
+import { useSentencePlayer, type ReadingRate } from '../readings/useSentencePlayer';
 import { ReadingQuestions } from '../readings/ReadingQuestions';
 import { GrammarNote } from '../readings/GrammarNote';
 import { ReadingText } from '../readings/ReadingText';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
-import { AudioButton } from '../ui/AudioButton';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
@@ -22,7 +22,6 @@ export function ReadingDetailScreen() {
   const { colors } = useTheme();
   const readingsApi = useRef(getData().readings);
   const speech = useSpeech();
-  const speechCancel = useRef<(() => void) | null>(null);
   const submitting = useRef(false);
   const [reading, setReading] = useState<ReadingDetail | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -32,10 +31,17 @@ export function ReadingDetailScreen() {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [progress, setProgress] = useState<ReadingProgress | null>(null);
-  const [activeSentenceIndex, setActiveSentenceIndex] = useState<number | null>(null);
-  const [speechRate, setSpeechRate] = useState(1);
+  const [speechRate, setSpeechRate] = useState<ReadingRate>(1);
   const [isMarkingRead, setIsMarkingRead] = useState(false);
   const progressSaveIndex = useRef<number | null>(null);
+  // El audio por frase: clips si la lectura los tiene, voz del dispositivo si no.
+  const player = useSentencePlayer({
+    sentences: reading?.sentences.map(sentence => sentence.zh) ?? [],
+    clips: reading?.sentence_audio ?? [],
+    rate: speechRate,
+    onSentence: index => saveSentenceProgress(index),
+  });
+  const activeSentenceIndex = player.activeIndex;
 
   async function load() {
     if (!id) {
@@ -69,23 +75,15 @@ export function ReadingDetailScreen() {
   }, [id]);
 
   useEffect(() => {
-    speechCancel.current?.();
-    speechCancel.current = null;
+    player.stop();
     speech.stop();
-    setActiveSentenceIndex(null);
     progressSaveIndex.current = null;
 
     return () => {
-      speechCancel.current?.();
-      speechCancel.current = null;
+      player.stop();
       speech.stop();
     };
   }, [id]);
-
-  function recordSentenceProgress(index: number) {
-    setActiveSentenceIndex(index);
-    saveSentenceProgress(index);
-  }
 
   function saveSentenceProgress(index: number) {
     const nextIndex = Math.max(progress?.last_sentence ?? 0, progressSaveIndex.current ?? 0, index);
@@ -106,22 +104,11 @@ export function ReadingDetailScreen() {
 
   function playFrom(index: number) {
     if (!reading) return;
-    speechCancel.current?.();
-    speechCancel.current = speech.speakSentences(
-      reading.sentences.map(sentence => sentence.zh),
-      index,
-      {
-        rate: speechRate,
-        onSentence: value => value === null ? setActiveSentenceIndex(null) : recordSentenceProgress(value),
-      },
-    );
+    player.playFrom(index);
   }
 
   function stopSpeech() {
-    speechCancel.current?.();
-    speechCancel.current = null;
-    setActiveSentenceIndex(null);
-    speech.stop();
+    player.stop();
   }
 
   async function changeBookmark() {
@@ -202,27 +189,28 @@ export function ReadingDetailScreen() {
       </View>
 
       <View style={styles.actions}>
-        {reading.audio_kind === 'tts' ? (
-          <>
+          <Button
+            label={activeSentenceIndex === null ? 'Reproducir' : 'Detener'}
+            onPress={activeSentenceIndex === null ? () => playFrom(0) : stopSpeech}
+          />
+          {[0.75, 1, 1.25].map(rate => (
             <Button
-              label={activeSentenceIndex === null ? 'Reproducir' : 'Detener'}
-              onPress={activeSentenceIndex === null ? () => playFrom(0) : stopSpeech}
+              key={rate}
+              label={`${rate}x`}
+              variant="secondary"
+              selected={speechRate === rate}
+              onPress={() => setSpeechRate(rate as ReadingRate)}
             />
-            {[0.75, 1, 1.25].map(rate => (
-              <Button
-                key={rate}
-                label={`${rate}x`}
-                variant="secondary"
-                selected={speechRate === rate}
-                onPress={() => setSpeechRate(rate)}
-              />
-            ))}
-          </>
-        ) : (
-          <AudioButton text={reading.content} label="Play reading" />
+          ))}
+        {reading.audio_kind === 'human' ? null : (
+          <Text style={[styles.audioNote, { color: colors.textMuted }]}>
+            {reading.audio_kind === 'neural' ? 'Voz neuronal' : 'Voz sintética'}
+          </Text>
         )}
-        {reading.audio_kind === 'tts' ? (
-          <Text style={[styles.audioNote, { color: colors.textMuted }]}>Voz sintética</Text>
+        {player.missingClip !== null ? (
+          <Text style={[styles.audioNote, { color: colors.textMuted }]}>
+            {`Falta el audio de la frase ${player.missingClip + 1}: conéctate para descargarlo.`}
+          </Text>
         ) : null}
         {progress ? (
           <Button
