@@ -1,0 +1,72 @@
+{
+  "kind": "neural",
+  "owner": "readings/fiesta-01-new-year-plan",
+  "produced_by": "edge-tts:zh-CN-XiaoxiaoNeural+zh-CN-XiaoyiNeural+zh-CN-YunxiNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "00",
+      "file": "00.m4a",
+      "duration_ms": 3451,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "bd3506d0bec1cc2745d1db39bb5163e317697888f8e1306aaf369c5b725ad8a3"
+    },
+    {
+      "key": "01",
+      "file": "01.m4a",
+      "duration_ms": 3091,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "e374aac6a7f8c01d510e4b3ea437be22d1c320c149f6a229f9f7ec19a7f3dbc7"
+    },
+    {
+      "key": "02",
+      "file": "02.m4a",
+      "duration_ms": 2779,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "5bd2ddfc71cb96af5ad2f158a9ef7d7deea6e4b58e5d3e62ce4b5f14c85a98a9"
+    },
+    {
+      "key": "03",
+      "file": "03.m4a",
+      "duration_ms": 5083,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "3a7e9c523c86941518ecf45396c95b5d9d4349cd25241065b9a53532d741c17d"
+    },
+    {
+      "key": "04",
+      "file": "04.m4a",
+      "duration_ms": 4795,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "8761d040bcf07c70636aaab5806f62feeae5af5c45d54f5a99f9ea917fa97e14"
+    },
+    {
+      "key": "05",
+      "file": "05.m4a",
+      "duration_ms": 3547,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "bc37923da2e49652b3e1d7f9a15b7a7625e739cfd6b0058ba5870ad3d87aac34"
+    },
+    {
+      "key": "06",
+      "file": "06.m4a",
+      "duration_ms": 3091,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "4aa7581cbbd6c91a512ea6cd926875652b75509aec854346b8cb2348b9b03cc6"
+    },
+    {
+      "key": "07",
+      "file": "07.m4a",
+      "duration_ms": 3859,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "6a3c4277e6ab708812373c8fad3b42073dd4ae9c8612d5a82d126237c3aa4242"
+    },
+    {
+      "key": "08",
+      "file": "08.m4a",
+      "duration_ms": 2971,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "1b19587488799cdfb1d6e5eb27435c4df12adee133308d72c8712fa865b7e9f7"
+    }
+  ]
+}

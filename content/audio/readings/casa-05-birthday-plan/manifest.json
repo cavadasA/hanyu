@@ -1,0 +1,72 @@
+{
+  "kind": "neural",
+  "owner": "readings/casa-05-birthday-plan",
+  "produced_by": "edge-tts:zh-CN-XiaoxiaoNeural+zh-CN-XiaoyiNeural+zh-CN-YunxiNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "00",
+      "file": "00.m4a",
+      "duration_ms": 3643,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "e4c8439f6aa7387dda541f1a75e641b3c8ec5c127892b8b29390ccf8c7af418e"
+    },
+    {
+      "key": "01",
+      "file": "01.m4a",
+      "duration_ms": 3091,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "bd976f9b00fdaf7e0994c51705f47313b4c49d17098fa2c29a597731ae399fcb"
+    },
+    {
+      "key": "02",
+      "file": "02.m4a",
+      "duration_ms": 3523,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "5c2a7639d0033da453ae6e8ff9a8ac9813953e4061f200544b7898dea14451ae"
+    },
+    {
+      "key": "03",
+      "file": "03.m4a",
+      "duration_ms": 2659,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "b172808e87b15ad50a1d684ba9fa917c205102f639794c629a14e349c04747f3"
+    },
+    {
+      "key": "04",
+      "file": "04.m4a",
+      "duration_ms": 4531,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "b293932e0243ffd84aaee02ec441fe840e24555afcd1e394942359d34b8878de"
+    },
+    {
+      "key": "05",
+      "file": "05.m4a",
+      "duration_ms": 4891,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "4d35223707872de92011f9940fce456ae94cebdc5bd9cc96a5b18dd3c29619cc"
+    },
+    {
+      "key": "06",
+      "file": "06.m4a",
+      "duration_ms": 3571,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "adf803136ce71ac6ac17ad689a311657cc0c1950b74d46b56ce8732d6450ecba"
+    },
+    {
+      "key": "07",
+      "file": "07.m4a",
+      "duration_ms": 4171,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "e3265338246d6b2f9231329e74dc64f68ddc2ffb9f67c1790d299c22a669bdbe"
+    },
+    {
+      "key": "08",
+      "file": "08.m4a",
+      "duration_ms": 4291,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "0bdaef506119b8956048de5f2dbdfd326b0dc15a0d551a7fa2a6fcf7a262a71c"
+    }
+  ]
+}

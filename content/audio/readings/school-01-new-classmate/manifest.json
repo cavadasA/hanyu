@@ -1,0 +1,72 @@
+{
+  "kind": "neural",
+  "owner": "readings/school-01-new-classmate",
+  "produced_by": "edge-tts:zh-CN-XiaoyiNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "00",
+      "file": "00.m4a",
+      "duration_ms": 3115,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "775ad0b305a8e405feaf18942839a9d144eca025430294f1fef491d9f62539ad"
+    },
+    {
+      "key": "01",
+      "file": "01.m4a",
+      "duration_ms": 3883,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "33bcd4213906608bc3864a25a771655892cfc80d0e8515e95c25c341f3e4074a"
+    },
+    {
+      "key": "02",
+      "file": "02.m4a",
+      "duration_ms": 4939,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "b1e05b40b5265edf1469ccd0517a7cae90735a531542dad0bab6160cca6139d7"
+    },
+    {
+      "key": "03",
+      "file": "03.m4a",
+      "duration_ms": 4339,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "8e1c8f2cbebbbabe844e0d6385f12f648222c62955e5c20c91886d8ca2bc9d2f"
+    },
+    {
+      "key": "04",
+      "file": "04.m4a",
+      "duration_ms": 3979,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "2c5e09f3ba69acb7d898157a79324451935adb1092d60a5a8e5ae152956b273f"
+    },
+    {
+      "key": "05",
+      "file": "05.m4a",
+      "duration_ms": 2683,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "a91e67df14efb5cf79ceafe192424566d9415649d41f6f7471090ae106ba2ed5"
+    },
+    {
+      "key": "06",
+      "file": "06.m4a",
+      "duration_ms": 4291,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "ef5f24890bd5e45370992a1f335f45c5d975848789e193c4a6f8d90715a23888"
+    },
+    {
+      "key": "07",
+      "file": "07.m4a",
+      "duration_ms": 3643,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "5e1ca230877e9421548e03c818134d54b5443902f1c7978467546c17a8b4e6ec"
+    },
+    {
+      "key": "08",
+      "file": "08.m4a",
+      "duration_ms": 3931,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "6d552102e3871c0a124a8e4eedea985e0e62f5048c42f945400ff0dc19dd29df"
+    }
+  ]
+}

@@ -290,5 +290,1841 @@
       "path": "media/f90514d078e252450e47f1de0f5a04eabf51ebf8ae1c720811b3322c0743b456.m4a",
       "duration_ms": 2227
     }
+  },
+  "readings/casa-03-grandma-arrives": {
+    "00": {
+      "path": "media/9f2fc6b4838656032fed53df20075c412d903902664a43cc97dd0a5a99602d48.m4a",
+      "duration_ms": 3859
+    },
+    "01": {
+      "path": "media/36ecaa46034c0f7a0dda93f5777f8b2a4b4a05902bbdfce0a4ac401541df246f.m4a",
+      "duration_ms": 3139
+    },
+    "02": {
+      "path": "media/86ec4c5f8f06dc1ddacf0b0889d48ea1056fc71393a91381e6c4d51bb5df3537.m4a",
+      "duration_ms": 3523
+    },
+    "03": {
+      "path": "media/060651d8b30edb7c84e58ecb4789fdf1d20b4dd9d2a40f40b9cfa998c10e417e.m4a",
+      "duration_ms": 2299
+    },
+    "04": {
+      "path": "media/269308e3ce2b612fb44e3ea8cae0f645901d316982a239893149a1325020e012.m4a",
+      "duration_ms": 3667
+    },
+    "05": {
+      "path": "media/d499a62c0b8141ab9cac01ac843a5888cee68bbf9606af8ede90bed80c397469.m4a",
+      "duration_ms": 2587
+    },
+    "06": {
+      "path": "media/b41fa317c6e6d6d7657daba25d5fa0af73374916027a4ca427898621979d8460.m4a",
+      "duration_ms": 3043
+    },
+    "07": {
+      "path": "media/cd790692d472418769c58c118397af68330c5ce360e01283912584ec76471dec.m4a",
+      "duration_ms": 2755
+    },
+    "08": {
+      "path": "media/86f9f431352faa512cc16799a2a1382166c4cb22b7faffca085b9fcb3e4a5bd6.m4a",
+      "duration_ms": 4771
+    },
+    "09": {
+      "path": "media/5f43d119ba14f9c0a3a1b1131b1fdad6574c5c37dbc72730aa11528c2dcf674d.m4a",
+      "duration_ms": 3379
+    }
+  },
+  "readings/casa-04-first-week": {
+    "00": {
+      "path": "media/2a83989eefb5e3b986d258e05fb89cfe004dd9363cbae0738935f8665d078416.m4a",
+      "duration_ms": 3235
+    },
+    "01": {
+      "path": "media/1356dd508228add3deaea5d041b4d3861965b5aadabbe43fba1123868f21f44a.m4a",
+      "duration_ms": 4003
+    },
+    "02": {
+      "path": "media/91f0a01c5c087f7aaf3893526792b4765594fff4361949166fb2a160ca82103e.m4a",
+      "duration_ms": 4243
+    },
+    "03": {
+      "path": "media/b7ff2d2c63408fe733dd2aaf158ab3319c93eed74c03c3eeea632b7d77db0f33.m4a",
+      "duration_ms": 3619
+    },
+    "04": {
+      "path": "media/70c6ebd84c0f93f110e904488d38b147585f0e673ae73888113f470b3f71e239.m4a",
+      "duration_ms": 3547
+    },
+    "05": {
+      "path": "media/2c1962e03ae5c689cc194168cb3d36fe037e8420c6778f93f403524da4cadf01.m4a",
+      "duration_ms": 3211
+    },
+    "06": {
+      "path": "media/3e303e38f909fc3360b190af861940a127ae0760824f8af6cc63e4d40ee782f3.m4a",
+      "duration_ms": 5371
+    },
+    "07": {
+      "path": "media/f19838de46cbdf746c0c19cf23891543249632ad9db5b95811b55515856cc30c.m4a",
+      "duration_ms": 3043
+    },
+    "08": {
+      "path": "media/d4635431d527f19a53f469ad75b14f2696f7ad77bf38768b9c520a263e241c81.m4a",
+      "duration_ms": 3499
+    }
+  },
+  "readings/casa-05-birthday-plan": {
+    "00": {
+      "path": "media/c98cadb7014970a1eebbc20ad977aac890bba5d25aae140fcdb0c2dc779b13bb.m4a",
+      "duration_ms": 3643
+    },
+    "01": {
+      "path": "media/a3f95f0aa93b337cd97f13e90ee95ff6d646c5b2c73a68783430961405eef300.m4a",
+      "duration_ms": 3091
+    },
+    "02": {
+      "path": "media/8c1f6d010c62fba6fa7bb6b75d4f061766d0d9c67aeef4b3887631504d22e2fd.m4a",
+      "duration_ms": 3523
+    },
+    "03": {
+      "path": "media/6c4f4ae9b0f28a63581e50627857afb1961419536980d11406c836be92bd20d1.m4a",
+      "duration_ms": 2659
+    },
+    "04": {
+      "path": "media/fe63c1f22566e5a5f4e5ad0dbbd7cfc2f2ed9665cca042e211bcaa2c3f825cf4.m4a",
+      "duration_ms": 4531
+    },
+    "05": {
+      "path": "media/cf296d0c4a3f8dad83316f34ee669d127242e2c930dfa1cfb8d31f4cbfac8edd.m4a",
+      "duration_ms": 4891
+    },
+    "06": {
+      "path": "media/8b7498e41dff740f161d43e1007f9fbc0a161546981fd03226051184d1fede59.m4a",
+      "duration_ms": 3571
+    },
+    "07": {
+      "path": "media/7cf257eb66b37261f1646c897f5eedac3ad5aab87fda408302367802b01a7b3a.m4a",
+      "duration_ms": 4171
+    },
+    "08": {
+      "path": "media/d1a67dcf8ed1a97c1116bd66661efbfc22fdf21d9940ef9f8cdd7004e7559bcf.m4a",
+      "duration_ms": 4291
+    }
+  },
+  "readings/casa-06-birthday": {
+    "00": {
+      "path": "media/58415cf38930d5e846197de6031a8eab142ce9c2366121587e53051f5398d410.m4a",
+      "duration_ms": 4147
+    },
+    "01": {
+      "path": "media/9000cc3d45bc5f185be690a111e6895ebb51aa52f7129df24b573a9db3e08153.m4a",
+      "duration_ms": 2395
+    },
+    "02": {
+      "path": "media/fabef37699550185c2a0549f1fa2fa50984a091015a3aa67c09e9ec73294baf6.m4a",
+      "duration_ms": 3235
+    },
+    "03": {
+      "path": "media/260348493c4db806c60cc1b79b363028368a0fe35f9c937895b06db6c8809d19.m4a",
+      "duration_ms": 5083
+    },
+    "04": {
+      "path": "media/30a91658cc768812c0fcb933e1cd3f174ef5ff7dcefea5c92df40736aa57d995.m4a",
+      "duration_ms": 3691
+    },
+    "05": {
+      "path": "media/4de425b45a0c7c20866d51bc15650758de7b433e6dd0b9c6ba3931669494de76.m4a",
+      "duration_ms": 4363
+    },
+    "06": {
+      "path": "media/8d93116d7aba4bad8cd4afaf2a7aa536abdd4618d47f69c91e0849cb8eb6dd87.m4a",
+      "duration_ms": 5275
+    },
+    "07": {
+      "path": "media/a0cdd3f0d44dfc990fe4fb961ac9e637c4b756e51ff4277380d687415ef82454.m4a",
+      "duration_ms": 5251
+    },
+    "08": {
+      "path": "media/3f2db87cec09d0e174a38218be0d79704664a3c761d203d94567634261c98b8d.m4a",
+      "duration_ms": 3451
+    }
+  },
+  "readings/escuela-03-characters": {
+    "00": {
+      "path": "media/b2f3f2295142be99781547f65b162ac5f4b3963ca12c7e3dc93304d1d15d8f86.m4a",
+      "duration_ms": 3787
+    },
+    "01": {
+      "path": "media/b0fc4f138973f2f7b2ef7e68d19c1b954fba6a6e80a06cab9a59e77d47e2d92e.m4a",
+      "duration_ms": 3739
+    },
+    "02": {
+      "path": "media/b5259f71642dc9d07156ebdaf3fbd6d04156a00b6e18c9794aa1f9ee27dd86d6.m4a",
+      "duration_ms": 4723
+    },
+    "03": {
+      "path": "media/f666c62185bf87d754cdc25f91b775059209ab99dbd0964e564960ccca0a126c.m4a",
+      "duration_ms": 3187
+    },
+    "04": {
+      "path": "media/67033cc101af934541f605cd349e9398f9f4000f54929bdbe6131b4714a30175.m4a",
+      "duration_ms": 3163
+    },
+    "05": {
+      "path": "media/f0b1dd1ef57ee1e05b0ad5596bfa7027677b762e985591c9dd539a0aebec4f69.m4a",
+      "duration_ms": 3907
+    },
+    "06": {
+      "path": "media/3fef181b074feb15b4368c856f84d08d57e014402e1708344bd47bf464ec5457.m4a",
+      "duration_ms": 3811
+    },
+    "07": {
+      "path": "media/85cd8953a49622a32daab9e30e04089643a1cd70651f8e1197253e86cd54dd2e.m4a",
+      "duration_ms": 4531
+    },
+    "08": {
+      "path": "media/60d3052b24959143fcfad8495d150a81e41d86eb4619a4a9a621bfced86dcb34.m4a",
+      "duration_ms": 3739
+    }
+  },
+  "readings/escuela-04-before-exam": {
+    "00": {
+      "path": "media/e7671a66797ba87513e397db9f347594591699d5403b85462e1fa2ccb14c0062.m4a",
+      "duration_ms": 5227
+    },
+    "01": {
+      "path": "media/819a50bdbf5bdd9c4c11955777473a19e42eaf9ec9a58f089491e66a2fe98b00.m4a",
+      "duration_ms": 3235
+    },
+    "02": {
+      "path": "media/7f900ab3095b9dfb22ba75e9fdebf81412aefa7c4657adf9cc13d3bd30c722e4.m4a",
+      "duration_ms": 3787
+    },
+    "03": {
+      "path": "media/f6a342b57152340f4de089cf0875e320eab4d74a823c5766cfc91f166878a70e.m4a",
+      "duration_ms": 3499
+    },
+    "04": {
+      "path": "media/721f45bc6d0dcb72959085935c6cc6a4bc177b07504c0cc9c0b64bc62dafab21.m4a",
+      "duration_ms": 3643
+    },
+    "05": {
+      "path": "media/70fc0e47729a2101025f4b98e41c9a880a4cc250287fb0ec65dba19f18efa439.m4a",
+      "duration_ms": 3187
+    },
+    "06": {
+      "path": "media/8096627f37899945867b5963ff49ca8010e1caebb459c76c52fa51e3584e7ef6.m4a",
+      "duration_ms": 2875
+    },
+    "07": {
+      "path": "media/4fbdc7202deff011f9fe2059111bbde4c934379569c346193a1c25c4b38a970f.m4a",
+      "duration_ms": 2683
+    },
+    "08": {
+      "path": "media/0e141bdec63f8c4d38437edc866b527753e8d17cab427dec9a9b8f72f7e148d5.m4a",
+      "duration_ms": 4867
+    }
+  },
+  "readings/escuela-05-exam-day": {
+    "00": {
+      "path": "media/3f6b50fabef4d4dc7f7cba9e2598f0a857cd80a35245606e303d0a3f26b339d0.m4a",
+      "duration_ms": 3667
+    },
+    "01": {
+      "path": "media/5a28c5afc708d3e7d12f4575a9cefb3d58582147df3e57e9b9c8a8f91229fd55.m4a",
+      "duration_ms": 3331
+    },
+    "02": {
+      "path": "media/c7a50a746804cee057ea8eebcd9775623adadf7eaec5b39fc32dc6e8d9b07185.m4a",
+      "duration_ms": 2587
+    },
+    "03": {
+      "path": "media/7ea8e6a98972f948c95616d75f59d7df417812f086cd3e876348a8f35924021d.m4a",
+      "duration_ms": 3379
+    },
+    "04": {
+      "path": "media/122766cda54755063e6c0ca465c2ba5aff77a39e67a2324ddef41035d002dbb0.m4a",
+      "duration_ms": 3211
+    },
+    "05": {
+      "path": "media/845d8bde8bd0b877bf5c1a7ca374d2c78b8dc2f191e43b96c6a6f4efed0c1979.m4a",
+      "duration_ms": 4195
+    },
+    "06": {
+      "path": "media/b63777a9c7186b5a5e71bbb2a217bc17e244e545584c0956ed85c7acefd5a5b0.m4a",
+      "duration_ms": 4219
+    },
+    "07": {
+      "path": "media/f1da9e635d1db8bc10efd16bbd68b35af3319b821c90949191521725f2f0e942.m4a",
+      "duration_ms": 2923
+    },
+    "08": {
+      "path": "media/78ce5b649bfb93cbe706fda2bd3119679b19dbbb3cb3d9b679407db97a2bb9b3.m4a",
+      "duration_ms": 5179
+    }
+  },
+  "readings/escuela-06-going-home": {
+    "00": {
+      "path": "media/9c3f1b014937bf676a213bef23d50a80a8e57727e5089a8eb9fae06137873ad6.m4a",
+      "duration_ms": 3523
+    },
+    "01": {
+      "path": "media/4edbf0b0a362a2f070988d332166c52722dacacc8781fca5e391b1b80d66a407.m4a",
+      "duration_ms": 3163
+    },
+    "02": {
+      "path": "media/22521a68501e966514b169cffd691db7dd514d115d2ef0b4bdc473b24868f37b.m4a",
+      "duration_ms": 3979
+    },
+    "03": {
+      "path": "media/2e72517db2af60cc372f916f8842bc86f6a0dc38847860dd7289fd607e1366b3.m4a",
+      "duration_ms": 5203
+    },
+    "04": {
+      "path": "media/195dfcdbf578b93d324a09b2ce13e3fd84e3fcfefb98d46008d19dabad7b5a52.m4a",
+      "duration_ms": 2875
+    },
+    "05": {
+      "path": "media/5d6247ddf5a5c60a569a560b0bfe6433207a74f45e5bf4f332aea14c7708109a.m4a",
+      "duration_ms": 3067
+    },
+    "06": {
+      "path": "media/86d4016b9a65c40dd97e0fdb9d8d3b271ef862b01b661dd8eb6392ff2423a150.m4a",
+      "duration_ms": 5011
+    },
+    "07": {
+      "path": "media/22c6c21c03dcc865b2754e2b06b368dd64097c0158563c4fa960c044b9511578.m4a",
+      "duration_ms": 2515
+    },
+    "08": {
+      "path": "media/476d1bdfee4dfc244e0c824ac99622ea6773a4bd527b45c173f4663892d45a71.m4a",
+      "duration_ms": 2971
+    }
+  },
+  "readings/fiesta-01-new-year-plan": {
+    "00": {
+      "path": "media/cf574daf01a71ebacd9004c1153b4f1eb5b819fce54cad7e50d949a435ef9f57.m4a",
+      "duration_ms": 3451
+    },
+    "01": {
+      "path": "media/ba1fcc2e11886b5f02c04c02040bc4b58276852501cee2aa9c7e6904c7562e40.m4a",
+      "duration_ms": 3091
+    },
+    "02": {
+      "path": "media/034f1f3f68411c909a6b22233583a9634aaf8e333e8843f322ba42aab71ac209.m4a",
+      "duration_ms": 2779
+    },
+    "03": {
+      "path": "media/436cddb6c0a22b2e5d7d860f573bc4065a9dc2f3b7d89ec1a55858a81b7830ac.m4a",
+      "duration_ms": 5083
+    },
+    "04": {
+      "path": "media/cf0c5457592ccb50ce158418d8ecba40dc995890b10d1005759fcc77e53eff1e.m4a",
+      "duration_ms": 4795
+    },
+    "05": {
+      "path": "media/a22731bdeb79d6d3e79765cf6994a95e12df0ca599bf9af84ed2aa610e63e98b.m4a",
+      "duration_ms": 3547
+    },
+    "06": {
+      "path": "media/d1cffc0db5a0f6d813b0c109335500ea7b7f942e1c16af399712e22ac363e030.m4a",
+      "duration_ms": 3091
+    },
+    "07": {
+      "path": "media/0a5f7c1fa6a750850fe7dc72c68195400a6e58a46a5748be7365f70ecfeec466.m4a",
+      "duration_ms": 3859
+    },
+    "08": {
+      "path": "media/3849f9297e5e35bca0f83fe4a24d6cd63e2050270c40cb488ff6c67729a7c22e.m4a",
+      "duration_ms": 2971
+    }
+  },
+  "readings/fiesta-02-preparing": {
+    "00": {
+      "path": "media/e05959aff845e952bf8e452bcf860cef0b1a110ae7bd34efad664fd476190d36.m4a",
+      "duration_ms": 3379
+    },
+    "01": {
+      "path": "media/27f70a4dfa147bc31a9dd629e0418eeeff00f91875ef4e2865558bcbdbc19c74.m4a",
+      "duration_ms": 3283
+    },
+    "02": {
+      "path": "media/556e18a05deb4a3613cb19b4a8ecf43c83d956cfbc7983d7f0dfc52509704974.m4a",
+      "duration_ms": 4771
+    },
+    "03": {
+      "path": "media/2fe4ddcc242ca52d845b60ddc3499a5a019853115c7ec6841519312d34f8f779.m4a",
+      "duration_ms": 4147
+    },
+    "04": {
+      "path": "media/e8332f15b7b16b5b670580df38d62a65802628b497aa154523a757305e9c59b5.m4a",
+      "duration_ms": 3667
+    },
+    "05": {
+      "path": "media/2911e2d7bc1f64aa9d892cd241ac20e5e86449778a62d4ff1afff14c88d8bbb4.m4a",
+      "duration_ms": 3403
+    },
+    "06": {
+      "path": "media/9502f43970aa3874bd7cf44ae8443bb5f3ffb655f4b44fb5fa17fc5802abee57.m4a",
+      "duration_ms": 3667
+    },
+    "07": {
+      "path": "media/e352153ed4aca74cddb30443168c364c6643e59d031de9b0d8e00f61baa21493.m4a",
+      "duration_ms": 4147
+    },
+    "08": {
+      "path": "media/ddef523d5c90da11989228ce8d35a751b6f00069cee369cc8aaeea6fb589e5f4.m4a",
+      "duration_ms": 3259
+    }
+  },
+  "readings/fiesta-03-new-year-eve": {
+    "00": {
+      "path": "media/e28b2482227c02c3c24584c6ad9adcef21555d47c50ec740d44de98e4aba66d6.m4a",
+      "duration_ms": 3451
+    },
+    "01": {
+      "path": "media/19973619570806bf1bb0f72fb756b44e0442e25bdff9bf4c2ca7ccc0f3514df6.m4a",
+      "duration_ms": 4483
+    },
+    "02": {
+      "path": "media/a19aeb1f401517c7bf1dc8b1defa6ec0e4b3b2bd75a40cde2a43efa689213bca.m4a",
+      "duration_ms": 3859
+    },
+    "03": {
+      "path": "media/6d6be9f674ebe0600b19ab84de3f5139f0a053c4b5deca41d20ddec08db5d068.m4a",
+      "duration_ms": 5323
+    },
+    "04": {
+      "path": "media/2d319a39ea681c5273ec68cb8f049a77ce265cc3eff20ce580336bb3a00aedbd.m4a",
+      "duration_ms": 3115
+    },
+    "05": {
+      "path": "media/d87e5cef33e8f732bbf1aad8051dcd939539125f9e509c50227ebb912ee512ed.m4a",
+      "duration_ms": 3307
+    },
+    "06": {
+      "path": "media/8aac447d621ffc7283031c42f17ebafa58b49df4d733b6c56400b6f864d2bd5a.m4a",
+      "duration_ms": 3547
+    },
+    "07": {
+      "path": "media/f5e222f0d72be71873d7905553c3bd3728942f49cb84020b3f8191c9a7c579b5.m4a",
+      "duration_ms": 3379
+    },
+    "08": {
+      "path": "media/0771d4c6bef664ab6b247991bfd8a46c4dbf27ac4348ca1c0de6eb993a2c9cb5.m4a",
+      "duration_ms": 3355
+    }
+  },
+  "readings/fiesta-04-thank-you-plan": {
+    "00": {
+      "path": "media/a1c21dc9c4a000a64514798cc089eb0fca1b6c8fb96a77b60e9d9840628ee437.m4a",
+      "duration_ms": 4027
+    },
+    "01": {
+      "path": "media/86d36128b66cb977347d4474535cfe46837701418fc48d6a6d97507ecd78a93b.m4a",
+      "duration_ms": 2875
+    },
+    "02": {
+      "path": "media/3e5398e37ec2b66836147cf86db0984a44cd5b7e12cf2d8c4afa570e3b255045.m4a",
+      "duration_ms": 3451
+    },
+    "03": {
+      "path": "media/1b66d80bdb3269a6ede5b0202577dccbc02af2d5855256876c980fc8f142c945.m4a",
+      "duration_ms": 2899
+    },
+    "04": {
+      "path": "media/f304b6f9d3fda04f815230960164df996f3e0b797035818ee388c768d5864ce9.m4a",
+      "duration_ms": 3475
+    },
+    "05": {
+      "path": "media/d68f7f69e1950113f1a520695a67073c7bb900fdde92fd72fa96f6b0a61ef207.m4a",
+      "duration_ms": 2419
+    },
+    "06": {
+      "path": "media/811007814f55e7eff9b3cd0d7eb32da6f40488dc8eb0a559b5f56cde1f63a3ba.m4a",
+      "duration_ms": 4027
+    },
+    "07": {
+      "path": "media/a76d95b8d744c06667962e56df820dde81609d17537b0c0f334faa12a7961d5a.m4a",
+      "duration_ms": 5899
+    },
+    "08": {
+      "path": "media/d6973db1a380d2b4118e1f7ab1f33bbc93485f1058b3044ecc2ecd666f391a99.m4a",
+      "duration_ms": 2995
+    }
+  },
+  "readings/fiesta-05-dinner": {
+    "00": {
+      "path": "media/1fc7818e9b39e228772afee640def4248a65289130bf096e410c777287aa4c05.m4a",
+      "duration_ms": 2851
+    },
+    "01": {
+      "path": "media/4dc20d6ecdec5cbf5f1372d859b1b3c3c2cb43a3c13fdd876bc92e407a7edf59.m4a",
+      "duration_ms": 4459
+    },
+    "02": {
+      "path": "media/c203cf0ae99446870be4192b2e278f27f9e14d7177347f0724aa412a81c98320.m4a",
+      "duration_ms": 3763
+    },
+    "03": {
+      "path": "media/ec769556f5811a8ffe912dba85cb04d0daf2554639eaf85a8a146cc523c54bad.m4a",
+      "duration_ms": 4819
+    },
+    "04": {
+      "path": "media/337f2a5d6d85a40b348a65635481905fe74402c4b3e594bdcedffe53b425c2ef.m4a",
+      "duration_ms": 4099
+    },
+    "05": {
+      "path": "media/1659b85478245d5b6b5c68de044e8f3e65e381b9c8ba442873ffc46ccfddc76c.m4a",
+      "duration_ms": 3259
+    },
+    "06": {
+      "path": "media/4351651b7c11d31d40c120a0ba10c66838ba667d9284db6e04f1faccfd6cbdae.m4a",
+      "duration_ms": 3739
+    },
+    "07": {
+      "path": "media/51aa1fde9710206ed4733c4ea12a8636da48b5a73ae87b8c8edd8087c252c907.m4a",
+      "duration_ms": 3499
+    },
+    "08": {
+      "path": "media/35d68fe1b24a2d7a96bc3ba2f098521eefa18c014dd8a5a76d5cf0a3e9633a77.m4a",
+      "duration_ms": 3907
+    }
+  },
+  "readings/health-01-i-feel-bad": {
+    "00": {
+      "path": "media/8ca610fea8557ebedbcb982f873647919f115d187e2e6426e2cf38e6de0c3ec0.m4a",
+      "duration_ms": 3163
+    },
+    "01": {
+      "path": "media/c760be7fe36444101465bc21abc624a665623d877d108054dbea049fa1aed291.m4a",
+      "duration_ms": 3619
+    },
+    "02": {
+      "path": "media/e10f90897774bc0875858c1b90e915048b1756d114dbf23542ff78530df500ca.m4a",
+      "duration_ms": 3115
+    },
+    "03": {
+      "path": "media/63cc8941f884d1fbcd78a35cb98ee0306886465de91a6d90bf53076b8dd330a9.m4a",
+      "duration_ms": 2659
+    },
+    "04": {
+      "path": "media/087c4189e3c6dab23f29d10e9f5de6681d3a1b7c05b1fe6942484a97f235dbeb.m4a",
+      "duration_ms": 3667
+    },
+    "05": {
+      "path": "media/169ffbaedb8abfc40839d797bfbc9065027bac1870cbcb5b4a8d0b7453174c0f.m4a",
+      "duration_ms": 2803
+    },
+    "06": {
+      "path": "media/cf18e2927d68a5ec8d1ad91f45344d357392cebe34e2ba9c8b9c06de397c6897.m4a",
+      "duration_ms": 2275
+    },
+    "07": {
+      "path": "media/e71fa2722cd735704d36cecc4b113f7968266e862357a18b2f9238ec77fe6f7d.m4a",
+      "duration_ms": 3403
+    },
+    "08": {
+      "path": "media/6a6a685e2aa3090315b2057d372b0f0f255593a35fc23338418810e6bd401cbf.m4a",
+      "duration_ms": 3139
+    }
+  },
+  "readings/home-01-morning": {
+    "00": {
+      "path": "media/be43c00f2f61ee4f19b64215aafc9bb111116560917e69bf42a44ef47370aa5b.m4a",
+      "duration_ms": 5851
+    },
+    "01": {
+      "path": "media/715eef8714a5b8d381063520d2f4050954e0aacc5bee66986e40f7aa7f370ebf.m4a",
+      "duration_ms": 3043
+    },
+    "02": {
+      "path": "media/c07bf3ffedd52c29cbd07ed31881a8fa07c4c7742500acb4f7971642285b9e22.m4a",
+      "duration_ms": 3691
+    },
+    "03": {
+      "path": "media/393d87987f505dd16edba0cdaaebb73a457ef65e795820e66026d9e919b443e9.m4a",
+      "duration_ms": 3523
+    },
+    "04": {
+      "path": "media/70f71704b501a39a09274626baf237b78cfff1659550d1fb0de712d7823b91bd.m4a",
+      "duration_ms": 3691
+    },
+    "05": {
+      "path": "media/27eb281c7ad1ab2ecd0d2f12d519ec003376280ae3c30f858d1cf7aa8599db91.m4a",
+      "duration_ms": 2395
+    },
+    "06": {
+      "path": "media/b70ac6748d2607f5f56dcf4fafaeabac63ab1f48c34af2612450b51b0df17faa.m4a",
+      "duration_ms": 3475
+    },
+    "07": {
+      "path": "media/1d8e8f19bbfe30716a61a4faca6cccf1abc867a29cbe250ab3a6e716ab69ff7f.m4a",
+      "duration_ms": 4603
+    },
+    "08": {
+      "path": "media/c5d454b4be0dbb31fdb9330f3570f7f99535b505b1d22879ee7eb50e5dc46730.m4a",
+      "duration_ms": 4243
+    }
+  },
+  "readings/home-02-cooking": {
+    "00": {
+      "path": "media/308cd66c961a6a3857731effe5613736558925a2d669f92288bf73a7ba3f14cf.m4a",
+      "duration_ms": 5323
+    },
+    "01": {
+      "path": "media/989fb8d0c447bb8218de722219d3508fb5ce241d2780979c7f89bfc3a8748671.m4a",
+      "duration_ms": 4435
+    },
+    "02": {
+      "path": "media/8383b86a1e2337a62bf4bbe91771c526465284a60027a8623927d96cb25460ae.m4a",
+      "duration_ms": 4435
+    },
+    "03": {
+      "path": "media/1df84c29b2ca40eed119ec636fdfa8d2c2297112d91a0f9fea610686d7a8d262.m4a",
+      "duration_ms": 3259
+    },
+    "04": {
+      "path": "media/915ba9fc5af5e566bc556a2bf4380c502a2f98db518ae8798b43bb38e4a531fb.m4a",
+      "duration_ms": 3595
+    },
+    "05": {
+      "path": "media/b3f6f1dba19d67f54da869165d64808c8a1abf977de9b1b308e13973eb739e63.m4a",
+      "duration_ms": 3763
+    },
+    "06": {
+      "path": "media/043f06abd57bfe3f3e7505ef5a6c404c0db40ddf95fa7b7787093a46a7404dff.m4a",
+      "duration_ms": 5227
+    },
+    "07": {
+      "path": "media/8788ea88517a330680519442c28bbdb80e5f20d8eb9620646fa0129bf0173e64.m4a",
+      "duration_ms": 4555
+    },
+    "08": {
+      "path": "media/b008b05a3f07c833c85f68bc545c08e2fc6695d929557cedd78d321a14d5443a.m4a",
+      "duration_ms": 4219
+    }
+  },
+  "readings/leisure-01-weekend-plan": {
+    "00": {
+      "path": "media/9651ad48f9604df234db4add4ce235eaf161de75a683f9fa118785af87bc076d.m4a",
+      "duration_ms": 4051
+    },
+    "01": {
+      "path": "media/9ae6499c2b3f7232c8718c44f53748bf2e90f401fe4e94303ea9cd3b3ad73f82.m4a",
+      "duration_ms": 3019
+    },
+    "02": {
+      "path": "media/2913cb7bd4b9c0de264f920a074fe1213e06d60861e040f5950d0c05cb2c6854.m4a",
+      "duration_ms": 2971
+    },
+    "03": {
+      "path": "media/068a35ce60cecdbe52c2a0fe9517b8e4277f56b05ab0c15a5dadd26456b3943a.m4a",
+      "duration_ms": 4195
+    },
+    "04": {
+      "path": "media/72788e5e06bc954536b8872bf454d586af04d3539fa6b5f2ca39f40672a64ef4.m4a",
+      "duration_ms": 3979
+    },
+    "05": {
+      "path": "media/7e0c7ea123a33c784148b88c0dc74a796fd46281badef8a5a912fbdb9b5305c3.m4a",
+      "duration_ms": 3379
+    },
+    "06": {
+      "path": "media/fa1c5561a743bd9d4968fab1e263ae646f036321a2661f6852613cb4ca650532.m4a",
+      "duration_ms": 4051
+    },
+    "07": {
+      "path": "media/db827eec3d5deda497e959dda12f15d36c788a9ee9c2e9eb0d181d3e870ea57f.m4a",
+      "duration_ms": 4435
+    },
+    "08": {
+      "path": "media/93026bc98acc5e490cb545d0207c3b2a42cd08e386f9fb8470098c49723c293f.m4a",
+      "duration_ms": 3691
+    }
+  },
+  "readings/market-02-too-expensive": {
+    "00": {
+      "path": "media/5c598a5132f23811419a7b9b9591c2049b8f6982298062a3ead3abfeadd0b0d6.m4a",
+      "duration_ms": 4387
+    },
+    "01": {
+      "path": "media/d5b8149ed6bf0dca265a27f17030185a721b0769f6eced169a8ffa745d3bacd6.m4a",
+      "duration_ms": 3763
+    },
+    "02": {
+      "path": "media/25db8271648c67819677d947534099ba0288c740209fa3e6d152a92bbe5885ab.m4a",
+      "duration_ms": 1915
+    },
+    "03": {
+      "path": "media/84243216f97d94e979084c144f5cc1f2887ac8ae2c19a7302622d22ba4dbd903.m4a",
+      "duration_ms": 3547
+    },
+    "04": {
+      "path": "media/46bef891ae6f23332bb948529cfbf59fe311068ec84bf8b2697d79094bd807ee.m4a",
+      "duration_ms": 2851
+    },
+    "05": {
+      "path": "media/3f347abb4b93015b7b1ccb0a9e4f9e869a75396358012d855bc8071856a9c943.m4a",
+      "duration_ms": 3019
+    },
+    "06": {
+      "path": "media/986e15885a31ac48eb100f13d23535495808247efd0f29352df39ea0467741fe.m4a",
+      "duration_ms": 3763
+    },
+    "07": {
+      "path": "media/d47267816d4df3f21438d678f030af32eb68b00620cc6f118c316baf27414e9c.m4a",
+      "duration_ms": 2443
+    },
+    "08": {
+      "path": "media/ee0953eeea1c9ceb2764763bb7cd429c2a35f9388489c64eb8de879bc83f0ddb.m4a",
+      "duration_ms": 3715
+    }
+  },
+  "readings/market-03-buying-fruit": {
+    "00": {
+      "path": "media/713079ecdb2724755660724c5070a69cd15d9e18d1116daee93d945875499af4.m4a",
+      "duration_ms": 3499
+    },
+    "01": {
+      "path": "media/3847f8996d18760dea65cada190fa63b0d0bee7289686be42709a8f1507d29ef.m4a",
+      "duration_ms": 4171
+    },
+    "02": {
+      "path": "media/9ebf35654b3f23d7fa6ab9440c44aa1ddb0eb14f52f46bb4c8bba29aedcd9d58.m4a",
+      "duration_ms": 3595
+    },
+    "03": {
+      "path": "media/0198296060ded2e76a4db4f3e6e6dcdafca33dc48abb5a3903e1500589539e46.m4a",
+      "duration_ms": 6331
+    },
+    "04": {
+      "path": "media/fb264cc6654985ee9670a26abd1693d55fadbb64b2773f6ba708a978e3b8e114.m4a",
+      "duration_ms": 4147
+    },
+    "05": {
+      "path": "media/f21795006c0e11e50d0b7edc820f5dd60e862fb7a9a416b03aae2f91b042c265.m4a",
+      "duration_ms": 2227
+    },
+    "06": {
+      "path": "media/eae7cdebafdaa9f1b510191a70c180b45a7ac030a515bce3cd4758b4084e059b.m4a",
+      "duration_ms": 3667
+    },
+    "07": {
+      "path": "media/5237e52fceecca004e806d656ce9ee526b3b62a102279ca775d1af2f24c97102.m4a",
+      "duration_ms": 4843
+    },
+    "08": {
+      "path": "media/d19e8e2b6fbcbf09fe0868d1db9f9c8606cb8b6611483f69c22bebab6a2a2388.m4a",
+      "duration_ms": 2587
+    }
+  },
+  "readings/ocio-02-swimming": {
+    "00": {
+      "path": "media/00af98bf21c220b2001cbac03abafff295846f26044b1f30e09634a8216cebd2.m4a",
+      "duration_ms": 4555
+    },
+    "01": {
+      "path": "media/5354fb573821db502a267cbd4944036bcd2397eec0cb0fe9ee0f1bd6db32b154.m4a",
+      "duration_ms": 2899
+    },
+    "02": {
+      "path": "media/72b1e1224bca45004d5b4cc95d4843e705b855edca8e7a16fd2072d99414d68d.m4a",
+      "duration_ms": 2851
+    },
+    "03": {
+      "path": "media/77dbca190fd4e3c055c9d1f7c666dccdd3d5bcd6536d6b29128941257ee9df98.m4a",
+      "duration_ms": 2755
+    },
+    "04": {
+      "path": "media/cbfb0b476a3481dabc446dc31d66624122bbe09039f36cfecd33f1ad99215bb0.m4a",
+      "duration_ms": 3523
+    },
+    "05": {
+      "path": "media/0474a1fdc3b6ac443d47fa17bd89f1b422de8e988f2762ad187a226cc8b24499.m4a",
+      "duration_ms": 2707
+    },
+    "06": {
+      "path": "media/090dd03a703fe83c81cff7105603bedfcdd5ad7de321485b1d78e5fb42207dc2.m4a",
+      "duration_ms": 2491
+    },
+    "07": {
+      "path": "media/d530f69b1b94f8ba67ea9eb8d206b1333c4ff0b7869b4dd0f4308cdb683feaae.m4a",
+      "duration_ms": 3595
+    },
+    "08": {
+      "path": "media/f34761fadc2870759190d4ad2c6cc457e366aa98369a8d08af61ef5f52acd1fe.m4a",
+      "duration_ms": 4987
+    }
+  },
+  "readings/ocio-03-learning-to-swim": {
+    "00": {
+      "path": "media/c885966fd331b07a1258315122da5c5aab649e35b8a2ecb976b32775f558a9f0.m4a",
+      "duration_ms": 4339
+    },
+    "01": {
+      "path": "media/5b89d6c1aa3323152687fe8e886f3afb90fc26bcfae6c066ef7665b2f4d80cbe.m4a",
+      "duration_ms": 3907
+    },
+    "02": {
+      "path": "media/10fcefd208ea267e2220cc52d89acae92a2873bd187674f87d63d59b0fa5ee6b.m4a",
+      "duration_ms": 2947
+    },
+    "03": {
+      "path": "media/cb2825099b077cdcb79c6aa0a96c805f5415316a0d4009da6ea1eafe5f1dea7f.m4a",
+      "duration_ms": 4099
+    },
+    "04": {
+      "path": "media/c9dd83898dd9c60b9a1bec43fe9645f53eee1c37ae97f89ea6d019deb290a5d1.m4a",
+      "duration_ms": 3091
+    },
+    "05": {
+      "path": "media/43a2568d5488c2bd55aa93428e4b08f3061f2cc52407b756a317ba5ba47d7c79.m4a",
+      "duration_ms": 3523
+    },
+    "06": {
+      "path": "media/e0787f4591d917f30366e57ece091ef2491c6c6254a2b98e83c8ad25660b2638.m4a",
+      "duration_ms": 3499
+    },
+    "07": {
+      "path": "media/23897549d4cf8465d8f592b95521d0fdd9dbb224ba53c4061941554ad7a07608.m4a",
+      "duration_ms": 3451
+    },
+    "08": {
+      "path": "media/ed8edb8508bab705c49cd6f7cf012963d00f9158c5621a3086e2c2a4a01c815a.m4a",
+      "duration_ms": 4483
+    }
+  },
+  "readings/ocio-04-football": {
+    "00": {
+      "path": "media/9a116dda9c975edc66cb6ceffe2eafc166616624b60799345496e22526a49d0c.m4a",
+      "duration_ms": 4603
+    },
+    "01": {
+      "path": "media/a65ae0df016cb87bcb4876d2eaea95d50659aaf7b343684060cd0aa1a0922019.m4a",
+      "duration_ms": 3547
+    },
+    "02": {
+      "path": "media/9c94074a2ac372e0ef1a656c9d1791071d4a688a5460e49b0e20be1a43950c76.m4a",
+      "duration_ms": 3835
+    },
+    "03": {
+      "path": "media/45ee269a0984ada91a56430ddca17149f6e0b67d0417926440704a55891581b8.m4a",
+      "duration_ms": 2419
+    },
+    "04": {
+      "path": "media/2da2b9fbee866abfa4622ac0c6a9cdf6e8044b075d8de014f840151f06eddb5e.m4a",
+      "duration_ms": 4699
+    },
+    "05": {
+      "path": "media/220cacde2dd5971ff0dba3afdc8d07115cb599c57b4275ceba606adaee810c8c.m4a",
+      "duration_ms": 4051
+    },
+    "06": {
+      "path": "media/3e06190dcb950461f5a8cabd8f6a64c6a8a3ff7eaf2bdb63c4dbd3a2a19f51ef.m4a",
+      "duration_ms": 4627
+    },
+    "07": {
+      "path": "media/2a70eb487bd5062e76f8ebd7ad987aea6c028c50fa52a10dab77c1a60ffb27bb.m4a",
+      "duration_ms": 4051
+    },
+    "08": {
+      "path": "media/327f99754b877ace4831320b6d35a57b5bf41482f858d407d551767b8032a55b.m4a",
+      "duration_ms": 4075
+    }
+  },
+  "readings/ocio-05-movie": {
+    "00": {
+      "path": "media/42a1a6f9101d0c683d6abf69376fd04587120ae095a70953199e224cc83392b7.m4a",
+      "duration_ms": 4363
+    },
+    "01": {
+      "path": "media/358116452928a7622719f7f9533d1fa7deb7d65d81d24b1812827e1ded337b56.m4a",
+      "duration_ms": 3739
+    },
+    "02": {
+      "path": "media/c4db9164c98ae8dc08cdf63245f56ce7c93e69f84edcfbd263f8c798e7361dee.m4a",
+      "duration_ms": 4579
+    },
+    "03": {
+      "path": "media/f2d029e02856f739211927bf760a1087b5401311ccc3e3bdccd784e024d9dab1.m4a",
+      "duration_ms": 4915
+    },
+    "04": {
+      "path": "media/e7ff71494df1be6d8012a624a4b8a8f57bbf7f75d91217bd2c4e45d347c3ae20.m4a",
+      "duration_ms": 3883
+    },
+    "05": {
+      "path": "media/0ffcda4f016b076229f8cf10100005e10f9e1b36649b94ce174a90f03207ebea.m4a",
+      "duration_ms": 4291
+    },
+    "06": {
+      "path": "media/3f1a53bf16b9a0d4eb6286d7fb467b6b93096379a2967e6b77a604cdf2de160a.m4a",
+      "duration_ms": 3307
+    },
+    "07": {
+      "path": "media/c40bffa0e7954bc481bd653c408c2e4fb619be3fe9075826e48850d323765472.m4a",
+      "duration_ms": 4531
+    },
+    "08": {
+      "path": "media/bfce7d5ac80b2a7df35e71d80531033e97aba419150c7334cc20fc49bd73e4dd.m4a",
+      "duration_ms": 3019
+    }
+  },
+  "readings/oficina-01-first-day": {
+    "00": {
+      "path": "media/bac11cf7a7f4e6a4028e1fccbef264a68960f11989b9614388db3a8ee311abb7.m4a",
+      "duration_ms": 4075
+    },
+    "01": {
+      "path": "media/055f284b442caf3e99b6554495a66fcc52ed35fbd49f04ff6fe3ee553da114a7.m4a",
+      "duration_ms": 2491
+    },
+    "02": {
+      "path": "media/e8490da698f3e11bbe55eb77ec327be45212b794d9b18340df5d1f4cd415a59e.m4a",
+      "duration_ms": 4243
+    },
+    "03": {
+      "path": "media/68594861802fe1bdf4370bf812b755552950da0cc51f9466bc0c9fa448993c81.m4a",
+      "duration_ms": 2635
+    },
+    "04": {
+      "path": "media/6f46d1b368f0c88b862b56e5935a743650c9e12bb463e88b3c9cb7b523d30ec6.m4a",
+      "duration_ms": 3595
+    },
+    "05": {
+      "path": "media/df0ec99cc21a9036c17128f2a26ad371e04d46228128afa8f4067d4c1799a035.m4a",
+      "duration_ms": 2899
+    },
+    "06": {
+      "path": "media/338b52910b7fe1d6de57444f31b402696c5139456ab59dfb8a4d157bcd5ddd17.m4a",
+      "duration_ms": 3379
+    },
+    "07": {
+      "path": "media/89769550fdf3bc0153119d2ac6093fdaaa5aef5a1f3e868eec6b538544f2bfc2.m4a",
+      "duration_ms": 2731
+    },
+    "08": {
+      "path": "media/d0038bd7c17edba820ac647fcb7b80bf53b4addd383694905d14a25743be361b.m4a",
+      "duration_ms": 4963
+    }
+  },
+  "readings/oficina-02-new-colleague": {
+    "00": {
+      "path": "media/7dee0206ade6e5e6ce24b4dd7bcbc7d1508e0ecf736545937315d0af7a03ad12.m4a",
+      "duration_ms": 4843
+    },
+    "01": {
+      "path": "media/0b6b045270a6d78e032ae22deeec99bb6f640d8b8065e616bd8d96e4f6597e50.m4a",
+      "duration_ms": 3907
+    },
+    "02": {
+      "path": "media/abfd43940ebf3ffbf762d905fd9bb9a76f95f1099d700a2be9e555e721911235.m4a",
+      "duration_ms": 4363
+    },
+    "03": {
+      "path": "media/90b0061227d4b259dc2d150be7c1f63bc0800273927b72e2768bb60cef1e3a15.m4a",
+      "duration_ms": 3739
+    },
+    "04": {
+      "path": "media/6293e57fc09f9696469829fa9b0bbc35c000ec860b93e7f651ae0f00f41d48c8.m4a",
+      "duration_ms": 3883
+    },
+    "05": {
+      "path": "media/20a768e431199c7c6dab04c7a2328327ded7751d3ac53bb323670bd66a690f9e.m4a",
+      "duration_ms": 2539
+    },
+    "06": {
+      "path": "media/e5dac8fbd09546fa7b85a0c547c0f2a2a4634e0db5eb4bff7edb2ca7d7cd812b.m4a",
+      "duration_ms": 3259
+    },
+    "07": {
+      "path": "media/9bba2f883864b0adfd79ff204c8b765fd2be5c09db9aeef269e3bd63daf5f3a1.m4a",
+      "duration_ms": 3811
+    },
+    "08": {
+      "path": "media/f36d0a40abb4f9656e786750a5b315e1c249f66c456d7835fd22b3c67a340a24.m4a",
+      "duration_ms": 2275
+    }
+  },
+  "readings/oficina-03-late": {
+    "00": {
+      "path": "media/5ede5123e4c27cbed7a13c588b5d8539a7bda07d84e09e42e1fb41bce1278393.m4a",
+      "duration_ms": 3667
+    },
+    "01": {
+      "path": "media/2b2af0a8e4b70bebff58a86f63388497832f869d59f410b1dda15f59f52a3cbf.m4a",
+      "duration_ms": 4531
+    },
+    "02": {
+      "path": "media/c6546010df4ba61192a27ed884fc3d86b4e7546c073d4134645017a5ceef8da6.m4a",
+      "duration_ms": 3139
+    },
+    "03": {
+      "path": "media/57d84ee1cb86047547fc833f582a4b85dc42cd172c83c7238a7f749c56a37096.m4a",
+      "duration_ms": 4459
+    },
+    "04": {
+      "path": "media/a23825e1cd41b5bf8074b56b942a129134c3ab08a2b9517239bdc3dba5137ac0.m4a",
+      "duration_ms": 4003
+    },
+    "05": {
+      "path": "media/5a6c581d3f69f258c575380b29ce8736d676f11adc90d9b81b8bb92bf4bc3924.m4a",
+      "duration_ms": 3667
+    },
+    "06": {
+      "path": "media/6440bc4f4683b59966f238f08861e08cb54c96e68a3f66117e7853658dacf9db.m4a",
+      "duration_ms": 3787
+    },
+    "07": {
+      "path": "media/a22389abf16f38fa3e2ba99158c62dfcf0c2c09289255ff65f1a2905ac00ad7d.m4a",
+      "duration_ms": 4987
+    },
+    "08": {
+      "path": "media/08e89926c39d6da76c6764b0bf83c6e3bc069cc5fbd44c5bc047ac7f02061c12.m4a",
+      "duration_ms": 3859
+    }
+  },
+  "readings/oficina-04-lunch": {
+    "00": {
+      "path": "media/64bb0ec55e428ffec88c70967d57c6305ef062e118608e31ee1bd27c2121ad6f.m4a",
+      "duration_ms": 4603
+    },
+    "01": {
+      "path": "media/fe17ad4252e67912c57dc1025691d073e5a35176f75b3fd6791a2eddc43f32d3.m4a",
+      "duration_ms": 3019
+    },
+    "02": {
+      "path": "media/c649fa7c8e76b845ccfcdcd37e52d8874c37f0526620df77653fd1e1f30d6204.m4a",
+      "duration_ms": 3979
+    },
+    "03": {
+      "path": "media/15aadd32f33ab16943381737f1d1a512bb17963e986e104dc35d95e61c6f9513.m4a",
+      "duration_ms": 4291
+    },
+    "04": {
+      "path": "media/ed6a7e8b287cf103c45d6ca489aae402cf527ccc16f3663e23cce73e2443d61f.m4a",
+      "duration_ms": 3763
+    },
+    "05": {
+      "path": "media/3cd4fbf6bfe01cfaccd5224613aec734aad446e5d65e23cc4e1dff5ee7f31319.m4a",
+      "duration_ms": 3691
+    },
+    "06": {
+      "path": "media/ce7a56d82356e84d3186d335535232adbca369c442dbdc98e748f912cf74b365.m4a",
+      "duration_ms": 3907
+    },
+    "07": {
+      "path": "media/1b1fd619f856a60abab9e2ff709bb0f4fc78f784403a5b987cffca85e56ba6ea.m4a",
+      "duration_ms": 4195
+    },
+    "08": {
+      "path": "media/6c1b740b48fdab8594960280eec0f7e206a82da85f77521d4443d54d9a2596b4.m4a",
+      "duration_ms": 3595
+    }
+  },
+  "readings/oficina-05-moving": {
+    "00": {
+      "path": "media/228a52dcd5f647af4d4456a436d038f0d1abeb8ac5fa18f22bb8df6b99711230.m4a",
+      "duration_ms": 5107
+    },
+    "01": {
+      "path": "media/06f7f0d13b8eb989657d9f7a32e7da94d9e2d985f238c00d3d5844dce9f02859.m4a",
+      "duration_ms": 4267
+    },
+    "02": {
+      "path": "media/8ae27d2dc7e57a5ed05538b6eddaf0565868d2a640022ec97b36c7c55c81648f.m4a",
+      "duration_ms": 5059
+    },
+    "03": {
+      "path": "media/3f365de2a08f3749adc33744ddff226d44baa29328911e845d7e015703e98b91.m4a",
+      "duration_ms": 4003
+    },
+    "04": {
+      "path": "media/ab02989fa0a8f073811879642300a639d69ba86d759c8d6fa5a1769508636d77.m4a",
+      "duration_ms": 3427
+    },
+    "05": {
+      "path": "media/273ac0d6854bf0880871cbc28a6b438aa83e38ff369f4636a756051990ae1633.m4a",
+      "duration_ms": 4507
+    },
+    "06": {
+      "path": "media/d0c8ee999c0429e348f2953a0917508e7b9d14c0d47127f93fa23995466cde1b.m4a",
+      "duration_ms": 4147
+    },
+    "07": {
+      "path": "media/e0df5c3ad3d9642dddd28ab15ffb35eb653a4865ef9f8a998886285f55841ae0.m4a",
+      "duration_ms": 3859
+    },
+    "08": {
+      "path": "media/aca6d6a444472e2f080077732fd9974d061512beb6281b64ec8a3ff5ad5ee0e9.m4a",
+      "duration_ms": 3811
+    }
+  },
+  "readings/salud-02-hospital": {
+    "00": {
+      "path": "media/7ea8572d3dbbb5995dc274693f0b058ca93059e85f5085e8e617137d6a439232.m4a",
+      "duration_ms": 3547
+    },
+    "01": {
+      "path": "media/c30bca9955ffb75bb69b1a9d1c7181c1fde21810c3c2cc7475a494363c374b65.m4a",
+      "duration_ms": 3187
+    },
+    "02": {
+      "path": "media/812ffb1505df39f4548ddd4532e4e15e466b6f3dd01cd98918c12a9b8271e10b.m4a",
+      "duration_ms": 3691
+    },
+    "03": {
+      "path": "media/f74056dcabe123b39090b12f339bedb37480869e8f07454e6337c045a9476a30.m4a",
+      "duration_ms": 3067
+    },
+    "04": {
+      "path": "media/1263bd1f22e942cc56934952d0686b79234ca264dbed9a7ecff75989d20d05f5.m4a",
+      "duration_ms": 3427
+    },
+    "05": {
+      "path": "media/83e69f33ea674ff38456146683bf81d543a78abc748ccdb2489912ad3286eedf.m4a",
+      "duration_ms": 3619
+    },
+    "06": {
+      "path": "media/b62b1583ae712bc809d1d3eba6aff235c55450bc91c0170de07a2373ef9e06a0.m4a",
+      "duration_ms": 4195
+    },
+    "07": {
+      "path": "media/a29b2bb6ca4b6f1896f1df44f2f9e50032a9f5ec78d52480cbf6a465479b12c0.m4a",
+      "duration_ms": 3883
+    },
+    "08": {
+      "path": "media/edb264a52f9275afa85d710885b48fd4f7ef0ea1f4dcd09517d8790bbe590487.m4a",
+      "duration_ms": 2947
+    }
+  },
+  "readings/salud-03-pharmacy": {
+    "00": {
+      "path": "media/8f1923c2b1a306b764eadc845da1e0dc5d07afd1facd26300b182da3b6bfbf95.m4a",
+      "duration_ms": 3091
+    },
+    "01": {
+      "path": "media/1b9bf981cf97d09ee434111edafbdadf0b4763a512168e3ad228f85c22b042b9.m4a",
+      "duration_ms": 3691
+    },
+    "02": {
+      "path": "media/f9b8ab5b3b8cdddbf303114a93a6a043c72120f95584af5d9a49c9238737fb9f.m4a",
+      "duration_ms": 3739
+    },
+    "03": {
+      "path": "media/2e1d26302bf36f1227f6bf6decf5548c45006f9596f8d1a2c5aecd0073a958a3.m4a",
+      "duration_ms": 4027
+    },
+    "04": {
+      "path": "media/1ae90847bd73bf35d52f4f0486d90e4f200b958ea592e7830363558c490dfb88.m4a",
+      "duration_ms": 3979
+    },
+    "05": {
+      "path": "media/ce155b51cfed0bb81c65a8fef42023bc47a3437281dd352b71a2d4c9f8d2e46e.m4a",
+      "duration_ms": 3595
+    },
+    "06": {
+      "path": "media/981a6772fa278c0263e1337459c14f8bd1dd939c97b7c28f7856dc56794d2b16.m4a",
+      "duration_ms": 3091
+    },
+    "07": {
+      "path": "media/c7698171e851950bbb1b2aebfa3e80ece061158bf5a2ed908e46e786d36f9747.m4a",
+      "duration_ms": 3187
+    },
+    "08": {
+      "path": "media/f61e6cef25b71e4c1ebedf85e6e5d844bfe77969caef0c1cbf223b744987df90.m4a",
+      "duration_ms": 4339
+    }
+  },
+  "readings/salud-04-check-up": {
+    "00": {
+      "path": "media/7466bd6606d33352761facfe3902e1a3ee253e07b93a99ce9c33fed1bd1b9f2d.m4a",
+      "duration_ms": 3403
+    },
+    "01": {
+      "path": "media/8a405ebdc275fc07110b39b989bddd38b660f0cc77b276d4a93c7c30c214266b.m4a",
+      "duration_ms": 2827
+    },
+    "02": {
+      "path": "media/e8c52ce539a8dc61925d90a01bea3cde24c57200133b327f17fc3ac9ae9458fa.m4a",
+      "duration_ms": 4051
+    },
+    "03": {
+      "path": "media/261ed8336860cc339a75f318fa64331335c8cdcfc9438a2a742ac77360ee9866.m4a",
+      "duration_ms": 3619
+    },
+    "04": {
+      "path": "media/4dd4b0300454c685796f36f8c30472195c66d50e5845be29c074f1e5253bcf15.m4a",
+      "duration_ms": 4411
+    },
+    "05": {
+      "path": "media/265b6f90422a4edcbf0061186593bf791e67b66f453cf5f8e91e8f58957f1f82.m4a",
+      "duration_ms": 3955
+    },
+    "06": {
+      "path": "media/19c91a74904688deb99811c52fc3de5b5cf25e01d29bd41fd5816d84b3641c3d.m4a",
+      "duration_ms": 3259
+    },
+    "07": {
+      "path": "media/5d8198b3f737af3a2c464c3c9d8e710559ebf2819e3c289c9c839fde5d2f2e90.m4a",
+      "duration_ms": 3955
+    },
+    "08": {
+      "path": "media/01840ff2174d9d22802c588a88c6fbc913ca59f876040b25211474df4f68b8a8.m4a",
+      "duration_ms": 3379
+    }
+  },
+  "readings/salud-05-running-together": {
+    "00": {
+      "path": "media/18959dc45c23c8ff4e1cb08526176bd55dc94d6e943990a3001462356b1d4864.m4a",
+      "duration_ms": 3739
+    },
+    "01": {
+      "path": "media/a6ab170441f7243784a201d06ba535ede529871386740992fa76962a4668ec60.m4a",
+      "duration_ms": 4147
+    },
+    "02": {
+      "path": "media/d90309f8f54ccbc13bbf95128b4d0dcf42657ba2542a3866bc8240391bb34abd.m4a",
+      "duration_ms": 3307
+    },
+    "03": {
+      "path": "media/a3c0129953caac903f783f3f881542ea71538bf856418c6827cfbb4b01bd52fd.m4a",
+      "duration_ms": 4003
+    },
+    "04": {
+      "path": "media/0dca0729a8ce1002a501dfcefab79bc779f85724876943d7f3d589f084821ce1.m4a",
+      "duration_ms": 4387
+    },
+    "05": {
+      "path": "media/4758d36e2cfbc1e0de4c042b9f646b6df3a33c985dfcaac841e26cad3d57b6f5.m4a",
+      "duration_ms": 3691
+    },
+    "06": {
+      "path": "media/8761e9eabc6c360d4d8a3e17cf489cb9b74153bb8b5520f9f6699592b984e318.m4a",
+      "duration_ms": 5179
+    },
+    "07": {
+      "path": "media/06e9bf261887859d308e6c794805f14438fb37a181560f7027d12fe0d9dd8dc4.m4a",
+      "duration_ms": 3019
+    },
+    "08": {
+      "path": "media/6385b1b6495974ee1b0a2106e4270971f8701b6aeaf5156a417b7cefe59bd92c.m4a",
+      "duration_ms": 2947
+    }
+  },
+  "readings/school-01-new-classmate": {
+    "00": {
+      "path": "media/788c331d19d2f9355f8936c6272d7775a89a313ffc680b5da24314b5f144a078.m4a",
+      "duration_ms": 3115
+    },
+    "01": {
+      "path": "media/a7f62e2e386749bfe26fbe34092d15e80090da369872c88ea3a91a3c1636e4d9.m4a",
+      "duration_ms": 3883
+    },
+    "02": {
+      "path": "media/6f0f7f489c505c0438837b5b981c6ab79271755f4602d0908e9d29e4e5eaff28.m4a",
+      "duration_ms": 4939
+    },
+    "03": {
+      "path": "media/e9e2a80b7d3086b735fa950554fd6d5eec8d96b5d39e40ef007ae5c75d9c762a.m4a",
+      "duration_ms": 4339
+    },
+    "04": {
+      "path": "media/0588029e9277fcab313a6ba888ce298531f9bd07588752c0fa904f364cd49e3b.m4a",
+      "duration_ms": 3979
+    },
+    "05": {
+      "path": "media/09d26576b2d3dd4b5656aeddaa5d50f363c1c6c957a312243ed9f12e304c1a99.m4a",
+      "duration_ms": 2683
+    },
+    "06": {
+      "path": "media/25da42a76af945a3279c9f2d9d9b9519abc347c410d2a509182cb6f65a3ae76d.m4a",
+      "duration_ms": 4291
+    },
+    "07": {
+      "path": "media/4c919c5840b79e555e91f0dfd26f28d4238b12e85ed7a8b929007052f47e947a.m4a",
+      "duration_ms": 3643
+    },
+    "08": {
+      "path": "media/6172aa9705f18618b02ba2bb61441d2c5cd2f9c1a8ef57c046cb9c6df76fbcd2.m4a",
+      "duration_ms": 3931
+    }
+  },
+  "readings/school-02-forgot-homework": {
+    "00": {
+      "path": "media/ae2c5b5acc3369910937a231142ef8282ed98a65499d5571df95a429336490da.m4a",
+      "duration_ms": 3091
+    },
+    "01": {
+      "path": "media/2cc748259c07b3651aa3dfefc17bcc8268995ca3635385ee085aa1fcf3dc06ed.m4a",
+      "duration_ms": 3307
+    },
+    "02": {
+      "path": "media/81856dea67bb8bf09894803a0ade94a2442c40c832a4ac1bf0d5159670cb6556.m4a",
+      "duration_ms": 3931
+    },
+    "03": {
+      "path": "media/75f1bcded597679b7cb9851047e8690bc9bc72c3533d68dc14cb42e1a55722e5.m4a",
+      "duration_ms": 1915
+    },
+    "04": {
+      "path": "media/f81b478267f28b4868758e1a7533c25fcfacb4139d96d0dfc8e49465fb53e368.m4a",
+      "duration_ms": 3235
+    },
+    "05": {
+      "path": "media/cba43316db067c960125de4290ca68d72103fde5117a7fd392ca2e3200bb3e85.m4a",
+      "duration_ms": 3547
+    },
+    "06": {
+      "path": "media/4bf6ae59e71359986859930cb2af6237d232ff0cc0fbd4c50c7ffd8bd439556c.m4a",
+      "duration_ms": 3475
+    },
+    "07": {
+      "path": "media/e98fc4a1e8074ea4304653a07698141efb5cd4a5a4bb707d57b0290897646c9e.m4a",
+      "duration_ms": 4651
+    },
+    "08": {
+      "path": "media/1f71fa2d5afc681cfc807581fd0a4edb444968e5e99f77e8a36c9c6e3d58b20d.m4a",
+      "duration_ms": 2107
+    }
+  },
+  "readings/shop-01-tea-and-coffee": {
+    "00": {
+      "path": "media/71e36ae24590c2a203077179514b055ae9842608d495d198e305910c08ea58c2.m4a",
+      "duration_ms": 2875
+    },
+    "01": {
+      "path": "media/c6597e7f071c64a0fbc338c27a5aa6f2c63d4f2bce05f66df9f491f9d032ca31.m4a",
+      "duration_ms": 4051
+    },
+    "02": {
+      "path": "media/0166ce6e18c1f88e2b578d061385a89ad07487fc2c59d5e529d0f6f1f34606dc.m4a",
+      "duration_ms": 4219
+    },
+    "03": {
+      "path": "media/b6528d6dde4d135cf0563727cbaf2afe815ef86d6661bf97236acb051861c62e.m4a",
+      "duration_ms": 3427
+    },
+    "04": {
+      "path": "media/bdd08fdf18774f06b3a490bac9c56e2d8ac4694b69238c061b4a2c761e8353b5.m4a",
+      "duration_ms": 3403
+    },
+    "05": {
+      "path": "media/3e661fa4b06010e6206637906178d991028087c78df0b33a1cada46d45dc66fe.m4a",
+      "duration_ms": 2923
+    },
+    "06": {
+      "path": "media/8a7947c1efe0392e70caf52db47071888d6cf2f36591143766fe85ab1c8b8f77.m4a",
+      "duration_ms": 4987
+    },
+    "07": {
+      "path": "media/d17c055ee55e1bd9c789732e00248e111eb09cf7a264fe1e5bc5b93375d6aec8.m4a",
+      "duration_ms": 3955
+    },
+    "08": {
+      "path": "media/bf07be462b534485e214ae501b877634ea20144c4d1b8ed153606ed93f15ca2e.m4a",
+      "duration_ms": 4555
+    }
+  },
+  "readings/tienda-04-broken-bag": {
+    "00": {
+      "path": "media/895821b38f5d1f6835579dead6e28314e39c3c22981deec9165ab8454d0b2b83.m4a",
+      "duration_ms": 3235
+    },
+    "01": {
+      "path": "media/21a805d7a4025bf69837f197075058dd2116e73c7bad8f0b4272f2fde249e4dd.m4a",
+      "duration_ms": 3211
+    },
+    "02": {
+      "path": "media/363f14ea7ceb4d782887a076456665ed45f116d28d64c7fb180d608706eb102f.m4a",
+      "duration_ms": 3043
+    },
+    "03": {
+      "path": "media/41490e8f153001acb77f295497c49260115d3e02014ca26f621da6425a4512af.m4a",
+      "duration_ms": 2323
+    },
+    "04": {
+      "path": "media/ca3dbd0f1490d26a716c63bb6621acc240880700edd3735a3647dfdae83c334e.m4a",
+      "duration_ms": 3667
+    },
+    "05": {
+      "path": "media/27c822438fd5d46f6efa86da9c19b40c6187b61b51689e0cc3712930c8215091.m4a",
+      "duration_ms": 4219
+    },
+    "06": {
+      "path": "media/27e2c57d661d359c44cc9f941ef3b0e318ae97f40f3b185d40441a45e6d8cce0.m4a",
+      "duration_ms": 4603
+    },
+    "07": {
+      "path": "media/7864882b027d8d68ee9948b49af337b7283b83079dde7edeb430bdd18d27c376.m4a",
+      "duration_ms": 5659
+    },
+    "08": {
+      "path": "media/be6c36498950874deec17c5e1f3c169b48dcf0e937485f6c3c75a52ffd321a27.m4a",
+      "duration_ms": 4195
+    }
+  },
+  "readings/tienda-05-new-bag": {
+    "00": {
+      "path": "media/036fb3a107e3963e78605b138cb7de2fb5461aaeb0a6de97ab19d6aee4232b6a.m4a",
+      "duration_ms": 4555
+    },
+    "01": {
+      "path": "media/8f31fee5ff218307ccc69dcd0771114bddf8fb9469ace202813668abccfa5648.m4a",
+      "duration_ms": 3931
+    },
+    "02": {
+      "path": "media/cab31d75265e131d8304af318872548d08a6fee58fc996a03049b2730f46d0ca.m4a",
+      "duration_ms": 3475
+    },
+    "03": {
+      "path": "media/be25be8c90ce251d3a01aaa45c34e6f1ee78b118b443666de7fed2b128de4156.m4a",
+      "duration_ms": 3139
+    },
+    "04": {
+      "path": "media/33998e8da016ead8f075286b109c7140c4d2257f1c72b1647f2c94d28e3188dd.m4a",
+      "duration_ms": 3235
+    },
+    "05": {
+      "path": "media/cf945b428c1f9a027a69391e256e3fe0fdef9a2d6596db3f93ee882fc43bccf8.m4a",
+      "duration_ms": 3739
+    },
+    "06": {
+      "path": "media/b626dd143c39cec5670ad5d1c899c328b4edbd94210fea68ee2818dee6bf8175.m4a",
+      "duration_ms": 2419
+    },
+    "07": {
+      "path": "media/2712b0c624a1d54e888b58038c93bc780bacc9f216ca2a9daa5720eaa846fa8d.m4a",
+      "duration_ms": 5131
+    },
+    "08": {
+      "path": "media/327037b7f76ee8bd940cc5235d6f9ccc9032effc624d6fc29d214f4a2bf84630.m4a",
+      "duration_ms": 3331
+    }
+  },
+  "readings/tienda-06-thank-you": {
+    "00": {
+      "path": "media/c7f2609f2fa6afae36b60fc1563a6a7c8a0f2ce2d9142c74ff16f838626bcb84.m4a",
+      "duration_ms": 4099
+    },
+    "01": {
+      "path": "media/093c7ae045ca959e6acca99af34b9ebc02615b5f0b80d2aa8386baf6efb74a69.m4a",
+      "duration_ms": 2659
+    },
+    "02": {
+      "path": "media/bf4f5235b69ff46dc9ddf6719873c26d00b6f09d790bd38d07abf4d894377fc7.m4a",
+      "duration_ms": 3811
+    },
+    "03": {
+      "path": "media/071cdbc3f26abe69934832ccd8b93d514d49d3d88285ec50d490edd7f396fe8d.m4a",
+      "duration_ms": 5779
+    },
+    "04": {
+      "path": "media/27ce454ff4610187ec10774ead7936f4493938d19e4ddaae8d8b92213d04d1d7.m4a",
+      "duration_ms": 4819
+    },
+    "05": {
+      "path": "media/3c16a2cb5fcc90780d0543969a065b225b474f98f3cb5639a26cef70c30e5673.m4a",
+      "duration_ms": 5443
+    },
+    "06": {
+      "path": "media/623ba7dab484aab59de17be450dff5049e48b89f3d9e2019795d768a3006b3b2.m4a",
+      "duration_ms": 3211
+    },
+    "07": {
+      "path": "media/8fb4145ac2834bbd33bbd23b0604825b5959bd54a34ba54408684d93e68271fc.m4a",
+      "duration_ms": 3811
+    },
+    "08": {
+      "path": "media/bed9ef3594e92fe2fc4374c0927c58a26f0df9ea3c8b7bf7dd4811b04f33f342.m4a",
+      "duration_ms": 4291
+    }
+  },
+  "readings/travel-01-asking-the-way": {
+    "00": {
+      "path": "media/61a0ecb2d7eed3f8eca3552f3ab8b74cfa9e1f834086def36f99a892b04c29a8.m4a",
+      "duration_ms": 3739
+    },
+    "01": {
+      "path": "media/ee6942bf0215a1ad675062ccc2c844eaff5e08bf09dfd05fc761d0d1eaed3a4e.m4a",
+      "duration_ms": 4651
+    },
+    "02": {
+      "path": "media/cd62deffeb65ba834e743a8a71865880c6a65c802a41db90b2feee94a62fac93.m4a",
+      "duration_ms": 3163
+    },
+    "03": {
+      "path": "media/d7f25c2f4c991c47c701e6835a5db5179d414aeaa364a0eee393deec4151f998.m4a",
+      "duration_ms": 3355
+    },
+    "04": {
+      "path": "media/3ceed360a9a2cd65c65416001b5cad35af0841af369a528f3276e3431c235fd4.m4a",
+      "duration_ms": 4363
+    },
+    "05": {
+      "path": "media/76da3a90683118d9d038902b7788b03621f7561ead5a10e7c20fb235e8490c7d.m4a",
+      "duration_ms": 3619
+    },
+    "06": {
+      "path": "media/0bbdb27811788f90f07d54c31fd1136305689228262637d439d644c25532a145.m4a",
+      "duration_ms": 3691
+    },
+    "07": {
+      "path": "media/4a285382838324cf1764863e2ba1f85a59cf507d63bbee929a0919bbf6258628.m4a",
+      "duration_ms": 3907
+    },
+    "08": {
+      "path": "media/603071fd48334e7b38c841ea1eea07a4f6dae001dccd37195e976296acd89dba.m4a",
+      "duration_ms": 3571
+    },
+    "09": {
+      "path": "media/ef08696fce9c041dad45ac2d5cc56793f33d19cf231e5b59e6e19bf7f40f796d.m4a",
+      "duration_ms": 3763
+    }
+  },
+  "readings/vecinos-01-moving-in": {
+    "00": {
+      "path": "media/e24de56de4e7ae287e0346181f8bb0048446b5d24e97b048c96d9959d6422684.m4a",
+      "duration_ms": 3283
+    },
+    "01": {
+      "path": "media/48398167428983b5337772672946a3f8f9630053827bc23a215bb866820eafff.m4a",
+      "duration_ms": 3859
+    },
+    "02": {
+      "path": "media/29d9be68818c4b44d40b693f8b8500f0f7da4912c43d4f0b0e1f0a07b1ec64ec.m4a",
+      "duration_ms": 3019
+    },
+    "03": {
+      "path": "media/3e75d8ab096dc3778f6f95f3a75641bfe4482e1ce9a13199f593df09f8eb8057.m4a",
+      "duration_ms": 3379
+    },
+    "04": {
+      "path": "media/99fe63ede81fae369443be5fc49758a04ad784bfaa4d2f28c5264f91c07e2c74.m4a",
+      "duration_ms": 4435
+    },
+    "05": {
+      "path": "media/9d1c057f320eb6f56bf4e780ffd72356311b418d481e1c67c4c12540279e8288.m4a",
+      "duration_ms": 3883
+    },
+    "06": {
+      "path": "media/7b76bb30c69d2a6fe9b23f687fa2137e43ca72ed18b0290feeb2ababaf455d43.m4a",
+      "duration_ms": 2971
+    },
+    "07": {
+      "path": "media/11bf410d5e8fb462c382d08e034d4fa69a0bb99b4dd0a3ab94bc5736ebb5f0c3.m4a",
+      "duration_ms": 3715
+    },
+    "08": {
+      "path": "media/943b4e8f2c9de71739893f172fe22a87e9560ad0afe45b914cd5eb5bb285951e.m4a",
+      "duration_ms": 2875
+    }
+  },
+  "readings/vecinos-02-grandma-li": {
+    "00": {
+      "path": "media/0e357dc3c51d869dbcd1a457ee0cc28bc7847d3ba47c7e8460c5fd7ceaf257f0.m4a",
+      "duration_ms": 4003
+    },
+    "01": {
+      "path": "media/2bcb29d5ecb52d227ae62bb45149a4af99d73e92851e2809c6f7dde27af46b81.m4a",
+      "duration_ms": 3523
+    },
+    "02": {
+      "path": "media/a83c049d55f349d839a85fdf9237d1ed0886fc484457e0b24f2e3c26c5eda54d.m4a",
+      "duration_ms": 3691
+    },
+    "03": {
+      "path": "media/f71f217d6967130a8d28c3659e58f29dc7a1779204b2767d601aaedeae0afa0c.m4a",
+      "duration_ms": 3211
+    },
+    "04": {
+      "path": "media/3aa9b45669a24ae8d41c07e627b8431842aea6ab3b2f56a34e11fd5963f16a78.m4a",
+      "duration_ms": 3739
+    },
+    "05": {
+      "path": "media/db675a4a8c67fa0a3ebf0a7e5560032faffa4d35a9ca1cd7909ccb58e269b3df.m4a",
+      "duration_ms": 4531
+    },
+    "06": {
+      "path": "media/eaf67c972cf1d136772e677383a225934dfb2c18c9f18a05f6381640b877885c.m4a",
+      "duration_ms": 2995
+    },
+    "07": {
+      "path": "media/bd5897d86e8dc2286007a39ca4a0bb6b78a0b592a04a0f027214db15b82caa92.m4a",
+      "duration_ms": 3187
+    },
+    "08": {
+      "path": "media/025a40458f6f92f90af23e0be619c6ed690eaffff5b93a199fe060e79b2b7681.m4a",
+      "duration_ms": 4363
+    },
+    "09": {
+      "path": "media/3706b442665d1ca033e30c7546bc16b57ebe75a1d2c92d58e3847f09fc045bea.m4a",
+      "duration_ms": 2131
+    }
+  },
+  "readings/vecinos-03-helping": {
+    "00": {
+      "path": "media/8fa9183c3a0655f1f6c1c6d56b86afcc6ab742519666b8365bde11460298fc58.m4a",
+      "duration_ms": 3835
+    },
+    "01": {
+      "path": "media/84d55d930d02a367ba4981f6069dfe8040f007000885e515a8960607040467b3.m4a",
+      "duration_ms": 3067
+    },
+    "02": {
+      "path": "media/8ec32c68c532bce7efff2a81d236882fab178e0abc644a5f9518b21eac2b5f64.m4a",
+      "duration_ms": 3451
+    },
+    "03": {
+      "path": "media/02e5d40b6e909ae517dc2433de62ccabb28b85d29b641ae82912a14d9d00368f.m4a",
+      "duration_ms": 4843
+    },
+    "04": {
+      "path": "media/3e3a5753fb66ed2af94d84be5781ceae0202bd45972e5db8f61c3688782e466b.m4a",
+      "duration_ms": 2971
+    },
+    "05": {
+      "path": "media/1488f5a3ea193946b60b04bb9ba4ff0b22a3a22d0b5f771d03bc9b06c52fa50e.m4a",
+      "duration_ms": 2467
+    },
+    "06": {
+      "path": "media/96325ffe368a1575ff27b53f20b8e81bfa4d2ded20bdb4b95af819dfb0b43388.m4a",
+      "duration_ms": 2971
+    },
+    "07": {
+      "path": "media/d2d0f77aca87d414ffc7d3a71669148cdf19726fbeaaddf975c7527581cf46e1.m4a",
+      "duration_ms": 2875
+    },
+    "08": {
+      "path": "media/509adc56c7f4fa2cdc6de71e8dc763ab656c7db60bfc0781ee4ea9bbedde92f3.m4a",
+      "duration_ms": 3187
+    }
+  },
+  "readings/vecinos-04-phone": {
+    "00": {
+      "path": "media/2fbf14550b413cb6c6a46d1cf22d237bd7672e2059613abb42d2e6c761f79c14.m4a",
+      "duration_ms": 2851
+    },
+    "01": {
+      "path": "media/5d22dc90f29f3cf9986d0d8a8d07619842211117e3e3eec648fca824985b2a62.m4a",
+      "duration_ms": 4363
+    },
+    "02": {
+      "path": "media/3d435ae0eb0813fe33ccc41856ff7debf255628062229d36a4a65e7164448e6b.m4a",
+      "duration_ms": 3907
+    },
+    "03": {
+      "path": "media/46078053b76abb9fe202f0a15cfea5fb6e538c214bf37067eadf9864c1288b17.m4a",
+      "duration_ms": 3979
+    },
+    "04": {
+      "path": "media/2ba8c36d142397ccecbb993ea1dbc49e7b2a01de66b26c12e7e191b2f9859d4d.m4a",
+      "duration_ms": 3979
+    },
+    "05": {
+      "path": "media/e64e6cdb0f38d12449960d3f364855a0b6c2884cb53bca20f1ceb6dda2b6aab8.m4a",
+      "duration_ms": 4003
+    },
+    "06": {
+      "path": "media/202ce742b53d5e48b3d28e154a0646e6ea7745bc2dc94c476aa68def4d82477b.m4a",
+      "duration_ms": 3475
+    },
+    "07": {
+      "path": "media/93e0b666688fe04a744b68f0da12c42b29cef9eb6531eaa5682bd27412adb4a7.m4a",
+      "duration_ms": 3787
+    },
+    "08": {
+      "path": "media/724d851949239b8dbeb64643402a786834ff3ce3fde4385186af88ccc342bb8d.m4a",
+      "duration_ms": 2683
+    }
+  },
+  "readings/vecinos-05-dinner": {
+    "00": {
+      "path": "media/e1f554d7f6a8b88d33bb14a00cde6563ab6d23160fcaaf82584606852edbb448.m4a",
+      "duration_ms": 4363
+    },
+    "01": {
+      "path": "media/8b8ff222b865d798b1bfb3226bdea50787e59d3787772dd2e56ba937bf1b30a8.m4a",
+      "duration_ms": 3667
+    },
+    "02": {
+      "path": "media/1fcdc27ec0722dc104e0ae667339a5284c0f281e796a846a9ee63d6acebd3f8a.m4a",
+      "duration_ms": 4747
+    },
+    "03": {
+      "path": "media/fdd95771ea1a4e239fcb6b42faac671091ebe88d149d95d906d2e480ec2299a4.m4a",
+      "duration_ms": 4171
+    },
+    "04": {
+      "path": "media/75f4c249a39662648105fdba1227b4a07f35f9cfba3192fda7347a3800fff291.m4a",
+      "duration_ms": 2515
+    },
+    "05": {
+      "path": "media/35e572ce5cb4a1eebf659abdde676ab8f3ce07b572d90ffc25741737a168c5ad.m4a",
+      "duration_ms": 3211
+    },
+    "06": {
+      "path": "media/29bee621146f0938b2e6cdf6328b4cc08143f0728fe2c86ff3d1bdb697396680.m4a",
+      "duration_ms": 2587
+    },
+    "07": {
+      "path": "media/f2b37b4426eed09aab382e67e0b85a566af73117096451d30065c76914917677.m4a",
+      "duration_ms": 3595
+    },
+    "08": {
+      "path": "media/2d459c4bee38512a2015a82a2abdc7439807173804bf9f58b1ad3eb0909fb1ce.m4a",
+      "duration_ms": 4531
+    }
+  },
+  "readings/viaje-02-hotel": {
+    "00": {
+      "path": "media/292c5570f4e6ae351167663f7135f4f9fd0f4b92949ece4bdf008f0f8684d942.m4a",
+      "duration_ms": 3379
+    },
+    "01": {
+      "path": "media/cb4c7690cd9fb2085fcd7702d6b20a56304d4b8422901d881db54a51c8fb8118.m4a",
+      "duration_ms": 2755
+    },
+    "02": {
+      "path": "media/9ba8012d09c024b168de56e74c3c29a548a7a2003e022b6ecc643eeb35557d29.m4a",
+      "duration_ms": 4387
+    },
+    "03": {
+      "path": "media/9280881308c9a9fbbe741e59855258aea268c06bd5c644434038edcb83f0bd85.m4a",
+      "duration_ms": 4267
+    },
+    "04": {
+      "path": "media/fff480cf67bc932500f3c190191ae2e2c953e96a0bffa5e56f74cb848c95d97b.m4a",
+      "duration_ms": 4195
+    },
+    "05": {
+      "path": "media/82c062e32bc8b4178603c845b10bea88c0ad3f62619cfed773825797e054ddaa.m4a",
+      "duration_ms": 3235
+    },
+    "06": {
+      "path": "media/d1383b1b0250e9a1b598115807773d5c901bd258b3e65d9216b3227a4e27eff5.m4a",
+      "duration_ms": 2947
+    },
+    "07": {
+      "path": "media/0d70415c409fc2b3ea45c0c9e4ea1b22ccbc196f12470d0169dfd478625e1750.m4a",
+      "duration_ms": 4267
+    },
+    "08": {
+      "path": "media/7aa2998f15571485ccce470393baad190934bbee032216af1fcbf4c609b0036e.m4a",
+      "duration_ms": 3667
+    }
+  },
+  "readings/viaje-03-tall-building": {
+    "00": {
+      "path": "media/9dffa4af215346bd4ec853158065880f8ac9c02be9c749fe6625b9e94741cae9.m4a",
+      "duration_ms": 3859
+    },
+    "01": {
+      "path": "media/3f39fed3eeccff4fef9eb1cd4bd6e8ad005df4d548abc0c995b83673d3a251ab.m4a",
+      "duration_ms": 4123
+    },
+    "02": {
+      "path": "media/1961a3916e0f91b5ffe4e24fac302fe7c732e3e35d6221d0f389b5230940f51d.m4a",
+      "duration_ms": 3115
+    },
+    "03": {
+      "path": "media/28bbbe0f3de5d4c5f15e6e5dddd6cbfb6f5a80568cf90fe21d237794c1f5af17.m4a",
+      "duration_ms": 2083
+    },
+    "04": {
+      "path": "media/9a1e486d9f38840d62fc9ded70ff3f52de2bdc476cdf9fe3535258f4ca84af6b.m4a",
+      "duration_ms": 3643
+    },
+    "05": {
+      "path": "media/ea6544da31a54aef2b1e2bb8c0b9501971bc31a71c3f3552f182054587d0044e.m4a",
+      "duration_ms": 3091
+    },
+    "06": {
+      "path": "media/a2dfe3e09a4dd54644e4c8bd7fb8d7a8624908d58f8a9c77786900bebe2c454d.m4a",
+      "duration_ms": 2563
+    },
+    "07": {
+      "path": "media/8c125a4abeda904b373aeda8519b4022a1b5fe968aeb0304ebc1b981b1a9cea1.m4a",
+      "duration_ms": 3115
+    },
+    "08": {
+      "path": "media/2994967261e9c720f5422408e08fd29c7b05d0c8dde88765e659e6b18f3f0162.m4a",
+      "duration_ms": 3955
+    }
+  },
+  "readings/viaje-04-wrong-way": {
+    "00": {
+      "path": "media/8d4909adb6e21780b62d0255888e7d4f7fe374b5537054595967c4de660ac388.m4a",
+      "duration_ms": 4075
+    },
+    "01": {
+      "path": "media/32590bbaf5821ff6f4b3dfbaecb528fed1d88bc0b20544983235ec39cc4e8435.m4a",
+      "duration_ms": 4459
+    },
+    "02": {
+      "path": "media/75e419fc5a7c9617bccd096c12b2ae20433accc5d186a95407760e9d18b96bab.m4a",
+      "duration_ms": 3787
+    },
+    "03": {
+      "path": "media/003986f8eb12fc9adb3295f3fc45525c734908afa8bc6e7e09479c278e501ff1.m4a",
+      "duration_ms": 2635
+    },
+    "04": {
+      "path": "media/d7d3b608cc4aea3217b5f1f3c0518290f19bfeb1e958847ba9014855b682b901.m4a",
+      "duration_ms": 3835
+    },
+    "05": {
+      "path": "media/00d345bd5f264b102f58234ed554194addcdd61697698b443f44c621433c01a0.m4a",
+      "duration_ms": 2155
+    },
+    "06": {
+      "path": "media/79c3a05c53bb65825bdf6afeae8390971a6c2b781553a06593afb119ba4f2288.m4a",
+      "duration_ms": 4771
+    },
+    "07": {
+      "path": "media/a7058b6800f192b9173240dbcb3bc8adf38216cd5ce20faf43447cdb8a02a13e.m4a",
+      "duration_ms": 5011
+    },
+    "08": {
+      "path": "media/ce29dcfd10b8c3f9356d9afe21bf9133f04c504e72b68d81ca32e56374b1c81f.m4a",
+      "duration_ms": 3475
+    }
+  },
+  "readings/viaje-05-last-day": {
+    "00": {
+      "path": "media/72804ee489c591a8ccda907558078dad2e323a05e83141bdf132e0630a04dfe3.m4a",
+      "duration_ms": 2707
+    },
+    "01": {
+      "path": "media/c1ce537803449089c6651aa5fce1265e23ac9d11c1db9c3cf3dcef1f7db442d3.m4a",
+      "duration_ms": 3787
+    },
+    "02": {
+      "path": "media/592f83bcad03a5b5fc115b57281239fa6711e940cf957ad2426b0864640b5fed.m4a",
+      "duration_ms": 2827
+    },
+    "03": {
+      "path": "media/777f6701a157cad4328e913476899c9d07683869d50898f27ac747e0a01f5d5a.m4a",
+      "duration_ms": 5227
+    },
+    "04": {
+      "path": "media/4ec29bc0f402a290a3af0797fa91051ad1bd95fc407ef732f1822083db6f99a1.m4a",
+      "duration_ms": 3403
+    },
+    "05": {
+      "path": "media/d4e2a44e53da872b46746745f04be917e87dfcc3f12d2cd1f6f33e8a65581df6.m4a",
+      "duration_ms": 2611
+    },
+    "06": {
+      "path": "media/9b5fe7ed0892a8be4ff5f7455013ca26157dc9ba340ebbf235004d63b7703b88.m4a",
+      "duration_ms": 4339
+    },
+    "07": {
+      "path": "media/7273bd607062db970b2a40309d974b2251fa1ae2a4373186f4b9a507b8fd4c45.m4a",
+      "duration_ms": 2995
+    },
+    "08": {
+      "path": "media/b1252aa6e814b483841a433134d63dea5cce302704a073a6a0dc9d3acfc2c980.m4a",
+      "duration_ms": 3787
+    }
   }
 }

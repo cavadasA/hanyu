@@ -1,0 +1,72 @@
+{
+  "kind": "neural",
+  "owner": "readings/escuela-04-before-exam",
+  "produced_by": "edge-tts:zh-CN-XiaoxiaoNeural+zh-CN-XiaoyiNeural+zh-CN-YunjianNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "00",
+      "file": "00.m4a",
+      "duration_ms": 5227,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "04cf0a06ea7e692ab54511104acfa813c7f9b1a137e1f28d68c61d497d215f85"
+    },
+    {
+      "key": "01",
+      "file": "01.m4a",
+      "duration_ms": 3235,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "b19b20bc06fed76925abf67849603520962e7785be61518c8b907b3c4fa0a4db"
+    },
+    {
+      "key": "02",
+      "file": "02.m4a",
+      "duration_ms": 3787,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "ef7b003f6f52adf77e24958b5fa1986a70bb8e352fe92c96d60b9fb052e4f595"
+    },
+    {
+      "key": "03",
+      "file": "03.m4a",
+      "duration_ms": 3499,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "60dee9eec0131b8ce4a02bc459057f7c59d1e5539bc4a39f06d9e54ff6d3d125"
+    },
+    {
+      "key": "04",
+      "file": "04.m4a",
+      "duration_ms": 3643,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "15d5e2f765c9acb22601135534317709d8546758a575da90a103a07000ebd9a7"
+    },
+    {
+      "key": "05",
+      "file": "05.m4a",
+      "duration_ms": 3187,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "d8ca128342e2ffa081542bd9ee23cb4ec1dd77be63e53c72b6712b4ad949b888"
+    },
+    {
+      "key": "06",
+      "file": "06.m4a",
+      "duration_ms": 2875,
+      "voice": "zh-CN-XiaoyiNeural",
+      "source_hash": "943ca0041fe94b36f0c19c105398aff260e07cf5c7cfafc8a99352ee54c52f4e"
+    },
+    {
+      "key": "07",
+      "file": "07.m4a",
+      "duration_ms": 2683,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "e6eb99db36b420a4c8e4fc86a3ac6fa1707f718d74908746b73d29a68db440d8"
+    },
+    {
+      "key": "08",
+      "file": "08.m4a",
+      "duration_ms": 4867,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "031575176f07506719e84425801b8386ba3a127fc3201302a43bc85f42e909cb"
+    }
+  ]
+}

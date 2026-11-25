@@ -1,0 +1,79 @@
+{
+  "kind": "neural",
+  "owner": "readings/vecinos-02-grandma-li",
+  "produced_by": "edge-tts:zh-CN-XiaoxiaoNeural+zh-CN-YunxiNeural+zh-CN-YunyangNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "00",
+      "file": "00.m4a",
+      "duration_ms": 4003,
+      "voice": "zh-CN-YunyangNeural",
+      "source_hash": "576fcef9808308ad69f5cfd4c1382029c72976f6e61388635bec8fbef18c4b00"
+    },
+    {
+      "key": "01",
+      "file": "01.m4a",
+      "duration_ms": 3523,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "44a8d3ca27859be082b0d28a10ed809a86b1028282215f8bcd8fcbc448262cec"
+    },
+    {
+      "key": "02",
+      "file": "02.m4a",
+      "duration_ms": 3691,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "e3a37399969bd88d0502bb5f8ece1dfd350ac8229eafe822748237d535b9b455"
+    },
+    {
+      "key": "03",
+      "file": "03.m4a",
+      "duration_ms": 3211,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "1f842fdb35d57950fc8287eb3ac10d0abad11b018463222d2d4d8771e19e6dd5"
+    },
+    {
+      "key": "04",
+      "file": "04.m4a",
+      "duration_ms": 3739,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "82325d3ce5a38e8a46aa20f81db3efda894b9553773dd7afae1efbf2385fa67f"
+    },
+    {
+      "key": "05",
+      "file": "05.m4a",
+      "duration_ms": 4531,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "2c234fce3a09e7ade023c5efd2ac8655db5e0d946308cb427eb71c7a9d87291e"
+    },
+    {
+      "key": "06",
+      "file": "06.m4a",
+      "duration_ms": 2995,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "65bab6266b20337fcdd1dc7fc63c2dda2add68c535a1bc8bee20fb4f498f8acb"
+    },
+    {
+      "key": "07",
+      "file": "07.m4a",
+      "duration_ms": 3187,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "924b0ee70ceb76b0d21e6d8f649852a1ca3d1cc5b5232bb379549c46c5ccd0dc"
+    },
+    {
+      "key": "08",
+      "file": "08.m4a",
+      "duration_ms": 4363,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "e409833989bdbbaa7bca602120258ce5f239e5ead8f3b448f0b6d0df8b219e79"
+    },
+    {
+      "key": "09",
+      "file": "09.m4a",
+      "duration_ms": 2131,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "cada957143f8a52700f34d98663bbe47dc87e74bf7f1f3016b787698257c6e64"
+    }
+  ]
+}

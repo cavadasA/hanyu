@@ -1,0 +1,79 @@
+{
+  "kind": "neural",
+  "owner": "readings/casa-03-grandma-arrives",
+  "produced_by": "edge-tts:zh-CN-XiaoxiaoNeural+zh-CN-YunjianNeural+zh-CN-YunxiNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "00",
+      "file": "00.m4a",
+      "duration_ms": 3859,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "2fd93d1e9b872656407a5067f5ae284eb1000b9d788212ef81f5d046c714fd9e"
+    },
+    {
+      "key": "01",
+      "file": "01.m4a",
+      "duration_ms": 3139,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "662b51b8f6f4449c34e8f7d9bc84dac110fda56cab4e524ffab1c44c31d2dd39"
+    },
+    {
+      "key": "02",
+      "file": "02.m4a",
+      "duration_ms": 3523,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "64bebf8a27b3aa24f8eac75c41471eb0385052f532a1d4391720740e784c5f99"
+    },
+    {
+      "key": "03",
+      "file": "03.m4a",
+      "duration_ms": 2299,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "d9c079fbe03e0fd61319f30541d36b19262eb75789fb29dee5b97541c7f728f2"
+    },
+    {
+      "key": "04",
+      "file": "04.m4a",
+      "duration_ms": 3667,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "c829f86033a64098d107cfc2e001c3ae2f147d84830a1c1d424037d88e28bf47"
+    },
+    {
+      "key": "05",
+      "file": "05.m4a",
+      "duration_ms": 2587,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "6e5d71cebc71ce18d2208e66591c1a7de24fe4df8c0b4390aae9f8578102eed0"
+    },
+    {
+      "key": "06",
+      "file": "06.m4a",
+      "duration_ms": 3043,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "fd344f0243d1e69671ff58cafb5519edc8f0ed301f145801895f6423b7c09224"
+    },
+    {
+      "key": "07",
+      "file": "07.m4a",
+      "duration_ms": 2755,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "5553bb860289c92366f6c44b47f42f091b7fa8cba3f5f9302571fa7bc48e27aa"
+    },
+    {
+      "key": "08",
+      "file": "08.m4a",
+      "duration_ms": 4771,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "c16dce18beac0e8ff1a9bfcc789492da184c3fcb2b2a17dd71a71b6349a9b4c4"
+    },
+    {
+      "key": "09",
+      "file": "09.m4a",
+      "duration_ms": 3379,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "e3c17dc9b7b8ae6146071e074f3689b517740a73dc83582167c282d8ab2801f1"
+    }
+  ]
+}

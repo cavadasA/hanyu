@@ -1,0 +1,72 @@
+{
+  "kind": "neural",
+  "owner": "readings/tienda-04-broken-bag",
+  "produced_by": "edge-tts:zh-CN-YunxiNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "00",
+      "file": "00.m4a",
+      "duration_ms": 3235,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "b86ce6e68093dfbed88fb4113887f6fbabfa13d0f1c44add161ee0ba856c8330"
+    },
+    {
+      "key": "01",
+      "file": "01.m4a",
+      "duration_ms": 3211,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "5d58d15ab3c602e523e5d67edbfb25ba59a03ca599f20c979b874c744ecc6b9b"
+    },
+    {
+      "key": "02",
+      "file": "02.m4a",
+      "duration_ms": 3043,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "f8e295afffbd228c278636fb5ff0adc62f0447b67b5ebc5aeca3cf84f806f2b7"
+    },
+    {
+      "key": "03",
+      "file": "03.m4a",
+      "duration_ms": 2323,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "be7db99d5b8e5cb568e9ae0b96b4d1233e52ad480cdcd44928f7fef158295fc1"
+    },
+    {
+      "key": "04",
+      "file": "04.m4a",
+      "duration_ms": 3667,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "9a57ffa99958e86bc8f3f153b8679b737dedaf88752043f4016a555a255bafa0"
+    },
+    {
+      "key": "05",
+      "file": "05.m4a",
+      "duration_ms": 4219,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "9719f09db551866e939f4ed5c514a66ddf905053c406b43b7813cf171e738d11"
+    },
+    {
+      "key": "06",
+      "file": "06.m4a",
+      "duration_ms": 4603,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "fdfc22adbb44cf15a706d868582e6b67829b0d59a5cb081fa9afebe010dbdaa7"
+    },
+    {
+      "key": "07",
+      "file": "07.m4a",
+      "duration_ms": 5659,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "a24443cb6bb492abb0ff01d64d3f7cd982e550586080ac5372d643a7313a80ec"
+    },
+    {
+      "key": "08",
+      "file": "08.m4a",
+      "duration_ms": 4195,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "59920302e5d9d8f375f4195b34a14a6c6c49155a35ac41fed5ee7904b3eaf0d8"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "kind": "neural",
+  "owner": "readings/travel-01-asking-the-way",
+  "produced_by": "edge-tts:zh-CN-XiaoxiaoNeural+zh-CN-YunjianNeural+zh-CN-YunyangNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "00",
+      "file": "00.m4a",
+      "duration_ms": 3739,
+      "voice": "zh-CN-YunyangNeural",
+      "source_hash": "a1eb6900a0e95b7aee79c52a598350f6d01fcf642d30f56a5d3967ff163e4cea"
+    },
+    {
+      "key": "01",
+      "file": "01.m4a",
+      "duration_ms": 4651,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "60ace4ab0947ebf9b1d595cffd25d816381237cc79c255d2fb08003a48273dfe"
+    },
+    {
+      "key": "02",
+      "file": "02.m4a",
+      "duration_ms": 3163,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "cf48d3c74ef2619b95ee2ff7fa44e6e7c37f5e64564b4ea324a98cb3fe9a59ae"
+    },
+    {
+      "key": "03",
+      "file": "03.m4a",
+      "duration_ms": 3355,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "ad804631d9f0752bf0100240589ee5dea8005204ceeb93b7713624f74644ce45"
+    },
+    {
+      "key": "04",
+      "file": "04.m4a",
+      "duration_ms": 4363,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "7bbb2da39f05acb9be1262a7758b947f45a8e8e74d6377ce83e5435dda3280bc"
+    },
+    {
+      "key": "05",
+      "file": "05.m4a",
+      "duration_ms": 3619,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "525189f7c5771957dbd87fb7fbeec7fef7bbb2896bd11dc53faec7ba95c6c7cc"
+    },
+    {
+      "key": "06",
+      "file": "06.m4a",
+      "duration_ms": 3691,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "72f1336e131ed6cf56e93d039bd8dd46436ff8c3b991c8f128a06b464a7ac6ce"
+    },
+    {
+      "key": "07",
+      "file": "07.m4a",
+      "duration_ms": 3907,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "d7e4d653b676a6f049cc2ef1d14832e20202a612418bb3dff1a538cf3c5d53d4"
+    },
+    {
+      "key": "08",
+      "file": "08.m4a",
+      "duration_ms": 3571,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "source_hash": "d391793d607fc867543d06bc40fa49b9879eaefaa275f238c1c80868ead1ae92"
+    },
+    {
+      "key": "09",
+      "file": "09.m4a",
+      "duration_ms": 3763,
+      "voice": "zh-CN-YunjianNeural",
+      "source_hash": "8eb92c9660d7b7241efd7a8f92599098b409891e51d5cbe3daa6dbd2a6402d14"
+    }
+  ]
+}

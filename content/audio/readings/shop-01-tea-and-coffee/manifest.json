@@ -1,0 +1,72 @@
+{
+  "kind": "neural",
+  "owner": "readings/shop-01-tea-and-coffee",
+  "produced_by": "edge-tts:zh-CN-YunxiNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "00",
+      "file": "00.m4a",
+      "duration_ms": 2875,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "7dde232691e4acbf8efac996e7c6e79b17a4e089ed14acd6a2665eb4e5da6bb2"
+    },
+    {
+      "key": "01",
+      "file": "01.m4a",
+      "duration_ms": 4051,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "1333637ebeaec2d7d0993659ebfcbccaa53dc37e2307a52b37f767063bb5c655"
+    },
+    {
+      "key": "02",
+      "file": "02.m4a",
+      "duration_ms": 4219,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "4c9375acae45581a387298c5994abc3b8ad217adf032311bfb29aa0bfeef41f0"
+    },
+    {
+      "key": "03",
+      "file": "03.m4a",
+      "duration_ms": 3427,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "db2c01ef275b83751db3333aa01286315112a094091fb13aa7c0391b97c341fa"
+    },
+    {
+      "key": "04",
+      "file": "04.m4a",
+      "duration_ms": 3403,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "1b44f9c73741480be7c3ff333f54fbb073f43af5f9ad3f4ac649efb884248bd8"
+    },
+    {
+      "key": "05",
+      "file": "05.m4a",
+      "duration_ms": 2923,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "45bf2d4f39c24dbf87c697887be111e502d3253317da03b2f9c2fba4734500a0"
+    },
+    {
+      "key": "06",
+      "file": "06.m4a",
+      "duration_ms": 4987,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "eda233fe6987aca0ad7c265fbefe74325ffb0f0026d8109aa8cc45c5fe54fa9c"
+    },
+    {
+      "key": "07",
+      "file": "07.m4a",
+      "duration_ms": 3955,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "d41019ef300e83ab7169434c270ce5a804e9779898170728970f4c26c0d6f0d6"
+    },
+    {
+      "key": "08",
+      "file": "08.m4a",
+      "duration_ms": 4555,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "a7ed810c37042d6bf14dbbc7e5b025960fdcbd33a5340c159f2a37b805cf0baa"
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest';
 import {
   loadDictionary,
   loadReadings,
+  loadReadingAudio,
   loadSeries,
   readingAudio,
   validateCatalog,
@@ -30,16 +31,17 @@ function fixtureCatalog({ series, readingSeries, planned = 1, name = '小林' })
     series_index: 1,
     // Texto propio y sin más nombres que el del personaje: las lecturas reales
     // cambian y nombran a otros personajes de su serie.
+    // El pinyin es el de verdad: la build lo alinea con los hanzi (Plan 14).
     sentences: [
-      `${name}今天去商店。`,
-      '我们学校旁边有一个小商店，东西不贵。',
-      '商店的先生很好，他认识我们。',
-      '奶茶比绿茶贵两块钱。',
-      '我们坐在商店门口喝茶，说了很长时间。',
-      '我买了一些水果和一个面包。',
-      '先生说他们的红茶也很好喝。',
-      '我们下次还想来这个商店买东西。',
-    ].map(zh => ({ zh, pinyin: 'pinyin', es: 'es' })),
+      [`${name}今天去商店。`, 'Xiǎolín jīntiān qù shāngdiàn.'],
+      ['我们学校旁边有一个小商店，东西不贵。', 'Wǒmen xuéxiào pángbiān yǒu yí gè xiǎo shāngdiàn, dōngxi bú guì.'],
+      ['商店的先生很好，他认识我们。', 'Shāngdiàn de xiānsheng hěn hǎo, tā rènshi wǒmen.'],
+      ['奶茶比绿茶贵两块钱。', 'Nǎichá bǐ lǜchá guì liǎng kuài qián.'],
+      ['我们坐在商店门口喝茶，说了很长时间。', 'Wǒmen zuò zài shāngdiàn ménkǒu hē chá, shuō le hěn cháng shíjiān.'],
+      ['我买了一些水果和一个面包。', 'Wǒ mǎi le yìxiē shuǐguǒ hé yí gè miànbāo.'],
+      ['先生说他们的红茶也很好喝。', 'Xiānsheng shuō tāmen de hóngchá yě hěn hǎohē.'],
+      ['我们下次还想来这个商店买东西。', 'Wǒmen xià cì hái xiǎng lái zhège shāngdiàn mǎi dōngxi.'],
+    ].map(([zh, pinyin]) => ({ zh, pinyin, es: 'es' })),
     target_words: ['商店', '奶茶'],
     target_grammar: [],
   };
@@ -117,6 +119,14 @@ describe('catálogo de lecturas', () => {
 
   it('cada lectura pertenece a una serie declarada, con su tema y algún personaje', () => {
     expect(validateCatalogStructure().map(issue => `${issue.kind}: ${issue.detail}`)).toEqual([]);
+  });
+
+  it('el catálogo está completo: sin problemas con --complete y ninguna lectura sin audio grabado', () => {
+    const audioOf = loadReadingAudio();
+
+    expect(validateCatalogStructure({ complete: true }).map(issue => `${issue.kind}: ${issue.detail}`)).toEqual([]);
+    expect(loadReadings().filter(reading => audioOf(reading).audio_kind === 'tts').map(reading => reading.slug))
+      .toEqual([]);
   });
 
   it('las series declaradas suman las 48 lecturas del plan y cubren los nueve temas', () => {

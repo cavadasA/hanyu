@@ -1,0 +1,72 @@
+{
+  "kind": "neural",
+  "owner": "readings/casa-06-birthday",
+  "produced_by": "edge-tts:zh-CN-YunxiNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "00",
+      "file": "00.m4a",
+      "duration_ms": 4147,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "b095cde5eeec2a03d6675973b7683a61ceb79d5adc8b13c56b7a4d754660452c"
+    },
+    {
+      "key": "01",
+      "file": "01.m4a",
+      "duration_ms": 2395,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "f4e5d3431a5bde1598c675b6b69f02d83cc575a571daf604f673503b28bb8007"
+    },
+    {
+      "key": "02",
+      "file": "02.m4a",
+      "duration_ms": 3235,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "630c8c78a6282bbc997be5a88047569f5c95988dd3617fd69b2459b571124921"
+    },
+    {
+      "key": "03",
+      "file": "03.m4a",
+      "duration_ms": 5083,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "6400d9bc6d294004640489773754b8941504e5ac46040a71379892fadc5fc57f"
+    },
+    {
+      "key": "04",
+      "file": "04.m4a",
+      "duration_ms": 3691,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "e263b04460dae7022e4e144e7f95bb703866ce3a294592791a2e70fe78a649b6"
+    },
+    {
+      "key": "05",
+      "file": "05.m4a",
+      "duration_ms": 4363,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "2e54dbecb356f8bf433b36c29e85210295e8d254c2ce04cddc786858ed2ecee4"
+    },
+    {
+      "key": "06",
+      "file": "06.m4a",
+      "duration_ms": 5275,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "5c0f01a816096237d723646fc3557f40e934bb52a3eaf76dd7f2919d290210c1"
+    },
+    {
+      "key": "07",
+      "file": "07.m4a",
+      "duration_ms": 5251,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "6678e8c4f0f52c4dbb2e6f621b0bbd14ef97d632f1f8d36ec73cee4bb83cf280"
+    },
+    {
+      "key": "08",
+      "file": "08.m4a",
+      "duration_ms": 3451,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "372edf8a5cf9882892ac720db3104faa472a50eb152d5ddc15406b89c9e894ed"
+    }
+  ]
+}

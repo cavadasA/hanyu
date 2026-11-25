@@ -1,0 +1,72 @@
+{
+  "kind": "neural",
+  "owner": "readings/home-01-morning",
+  "produced_by": "edge-tts:zh-CN-YunxiNeural",
+  "license": "provisional: edge-tts, no apto para publicar",
+  "provisional": true,
+  "clips": [
+    {
+      "key": "00",
+      "file": "00.m4a",
+      "duration_ms": 5851,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "770725f11f255f1896b5f37a73e9c7e89cd867427157b53449d809e239944496"
+    },
+    {
+      "key": "01",
+      "file": "01.m4a",
+      "duration_ms": 3043,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "a500ed366923cfe88b6b10a1c8d5142e9af591c7ca0798f99be3142080ec77ee"
+    },
+    {
+      "key": "02",
+      "file": "02.m4a",
+      "duration_ms": 3691,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "cbbe9fa9d0383fc59fb0db3378a3aa9b3c3554b5bd09a0f56b70b7e9acbba34e"
+    },
+    {
+      "key": "03",
+      "file": "03.m4a",
+      "duration_ms": 3523,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "0e1643fc26244d29a8150c2bdd15b3d980501ffd87163df6742db5dcc6da630e"
+    },
+    {
+      "key": "04",
+      "file": "04.m4a",
+      "duration_ms": 3691,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "0b94928fcd49955723cf094b845b8aec946a5c2f8498a0f083c0fb4125b1fb8d"
+    },
+    {
+      "key": "05",
+      "file": "05.m4a",
+      "duration_ms": 2395,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "fe54ae8aca8f46e9064a8c31bc1364d1d84ad53e2fe36a8e2128a288db29eac2"
+    },
+    {
+      "key": "06",
+      "file": "06.m4a",
+      "duration_ms": 3475,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "83f472637b51e2b106157f04a8da128c602eab48cb2897abf7ef1b0c03c6593f"
+    },
+    {
+      "key": "07",
+      "file": "07.m4a",
+      "duration_ms": 4603,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "223007930ad6368b935b8f4a6a20793e661a4dc533e5706035a12913cae0938a"
+    },
+    {
+      "key": "08",
+      "file": "08.m4a",
+      "duration_ms": 4243,
+      "voice": "zh-CN-YunxiNeural",
+      "source_hash": "d78e82c68bc907b3e64e095c2d901e4943875089bd6cbbef316ce730f7c25236"
+    }
+  ]
+}
