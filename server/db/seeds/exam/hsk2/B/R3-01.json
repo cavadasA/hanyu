@@ -1,0 +1,74 @@
+{
+  "slug": "b-r3-01",
+  "part": "R3",
+  "bank": [
+    {
+      "zh": "我也很高兴认识你。",
+      "pinyin": "Wǒ yě hěn gāoxìng rènshi nǐ."
+    },
+    {
+      "zh": "明天见！",
+      "pinyin": "Míngtiān jiàn!"
+    },
+    {
+      "zh": "坐飞机去。",
+      "pinyin": "Zuò fēijī qù."
+    },
+    {
+      "zh": "不客气。",
+      "pinyin": "Bú kèqi."
+    },
+    {
+      "zh": "她在房间里睡觉呢。",
+      "pinyin": "Tā zài fángjiān lǐ shuìjiào ne."
+    },
+    {
+      "zh": "一个小时。",
+      "pinyin": "Yí gè xiǎoshí."
+    }
+  ],
+  "example": {
+    "text": {
+      "zh": "认识你很高兴。",
+      "pinyin": "Rènshi nǐ hěn gāoxìng."
+    },
+    "answer": 0
+  },
+  "items": [
+    {
+      "text": {
+        "zh": "我要走了，再见！",
+        "pinyin": "Wǒ yào zǒu le, zàijiàn!"
+      },
+      "answer": 1
+    },
+    {
+      "text": {
+        "zh": "你怎么去中国？",
+        "pinyin": "Nǐ zěnme qù Zhōngguó?"
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "谢谢你帮我。",
+        "pinyin": "Xièxie nǐ bāng wǒ."
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "你妹妹呢？",
+        "pinyin": "Nǐ mèimei ne?"
+      },
+      "answer": 4
+    },
+    {
+      "text": {
+        "zh": "你每天学习多长时间汉语？",
+        "pinyin": "Nǐ měi tiān xuéxí duō cháng shíjiān Hànyǔ?"
+      },
+      "answer": 5
+    }
+  ]
+}

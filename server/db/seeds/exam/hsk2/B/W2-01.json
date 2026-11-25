@@ -1,0 +1,41 @@
+{
+  "slug": "b-w2-01",
+  "part": "W2",
+  "items": [
+    {
+      "sentence": {
+        "zh": "我（ ）你一起去。",
+        "pinyin": "Wǒ hé nǐ yìqǐ qù."
+      },
+      "answer": "和"
+    },
+    {
+      "sentence": {
+        "zh": "你会说汉（ ）吗？",
+        "pinyin": "Nǐ huì shuō Hànyǔ ma?"
+      },
+      "answer": "语"
+    },
+    {
+      "sentence": {
+        "zh": "现在几（ ）了？",
+        "pinyin": "Xiànzài jǐ diǎn le?"
+      },
+      "answer": "点"
+    },
+    {
+      "sentence": {
+        "zh": "我们是（ ）学。",
+        "pinyin": "Wǒmen shì tóngxué."
+      },
+      "answer": "同"
+    },
+    {
+      "sentence": {
+        "zh": "今年我二十（ ）。",
+        "pinyin": "Jīnnián wǒ èrshí suì."
+      },
+      "answer": "岁"
+    }
+  ]
+}

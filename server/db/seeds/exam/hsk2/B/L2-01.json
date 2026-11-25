@@ -1,0 +1,104 @@
+{
+  "slug": "b-l2-01",
+  "part": "L2",
+  "images": [
+    "call",
+    "money",
+    "medicine",
+    "ball",
+    "shop",
+    "door"
+  ],
+  "example": {
+    "stimulus": [
+      {
+        "zh": "你在给谁打电话？",
+        "pinyin": "Nǐ zài gěi shéi dǎ diànhuà?",
+        "speaker": "M"
+      },
+      {
+        "zh": "给我姐姐。",
+        "pinyin": "Gěi wǒ jiějie.",
+        "speaker": "F"
+      }
+    ],
+    "answer": 0
+  },
+  "items": [
+    {
+      "audio": [
+        {
+          "zh": "这个多少钱？",
+          "pinyin": "Zhège duōshao qián?",
+          "speaker": "F"
+        },
+        {
+          "zh": "二十块钱。",
+          "pinyin": "Èrshí kuài qián.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "你生病了吗？",
+          "pinyin": "Nǐ shēngbìng le ma?",
+          "speaker": "M"
+        },
+        {
+          "zh": "是的，医生让我每天吃药。",
+          "pinyin": "Shì de, yīshēng ràng wǒ měi tiān chī yào.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "你喜欢什么运动？",
+          "pinyin": "Nǐ xǐhuan shénme yùndòng?",
+          "speaker": "F"
+        },
+        {
+          "zh": "我最喜欢踢足球。",
+          "pinyin": "Wǒ zuì xǐhuan tī zúqiú.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 3
+    },
+    {
+      "audio": [
+        {
+          "zh": "我们去商店买东西吧。",
+          "pinyin": "Wǒmen qù shāngdiàn mǎi dōngxi ba.",
+          "speaker": "M"
+        },
+        {
+          "zh": "好，我也要买一些水果。",
+          "pinyin": "Hǎo, wǒ yě yào mǎi yìxiē shuǐguǒ.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 4
+    },
+    {
+      "audio": [
+        {
+          "zh": "请开一下门，好吗？",
+          "pinyin": "Qǐng kāi yíxià mén, hǎo ma?",
+          "speaker": "F"
+        },
+        {
+          "zh": "好的，你等一下。",
+          "pinyin": "Hǎo de, nǐ děng yíxià.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 5
+    }
+  ]
+}

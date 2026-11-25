@@ -1,0 +1,56 @@
+{
+  "slug": "b-r1-01",
+  "part": "R1",
+  "images": [
+    "basketball",
+    "egg",
+    "house",
+    "tv",
+    "flower",
+    "run"
+  ],
+  "example": {
+    "stimulus": {
+      "zh": "他们每天下午都打篮球。",
+      "pinyin": "Tāmen měi tiān xiàwǔ dōu dǎ lánqiú."
+    },
+    "answer": 0
+  },
+  "items": [
+    {
+      "text": {
+        "zh": "今天早上我吃了两个鸡蛋。",
+        "pinyin": "Jīntiān zǎoshang wǒ chī le liǎng gè jīdàn."
+      },
+      "answer": 1
+    },
+    {
+      "text": {
+        "zh": "这是我的新家，你来看看吧。",
+        "pinyin": "Zhè shì wǒ de xīn jiā, nǐ lái kàn kàn ba."
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "爷爷每天晚上都看电视。",
+        "pinyin": "Yéye měi tiān wǎnshang dōu kàn diànshì."
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "这些花是我从商店买的。",
+        "pinyin": "Zhèxiē huā shì wǒ cóng shāngdiàn mǎi de."
+      },
+      "answer": 4
+    },
+    {
+      "text": {
+        "zh": "跑了一个小时，我太累了。",
+        "pinyin": "Pǎo le yí gè xiǎoshí, wǒ tài lèi le."
+      },
+      "answer": 5
+    }
+  ]
+}

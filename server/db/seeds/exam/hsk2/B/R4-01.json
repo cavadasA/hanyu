@@ -1,0 +1,131 @@
+{
+  "slug": "b-r4-01",
+  "part": "R4",
+  "items": [
+    {
+      "passage": {
+        "zh": "我姐姐是医生，她每天工作很忙，晚上九点回家。",
+        "pinyin": "Wǒ jiějie shì yīshēng, tā měi tiān gōngzuò hěn máng, wǎnshang jiǔ diǎn huí jiā."
+      },
+      "question": {
+        "zh": "★ 姐姐：",
+        "pinyin": "★ Jiějie:"
+      },
+      "options": [
+        {
+          "zh": "是老师",
+          "pinyin": "Shì lǎoshī"
+        },
+        {
+          "zh": "工作很忙",
+          "pinyin": "Gōngzuò hěn máng"
+        },
+        {
+          "zh": "不回家",
+          "pinyin": "Bù huí jiā"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "passage": {
+        "zh": "昨天我去商店买了一件衣服，但是有点儿小。",
+        "pinyin": "Zuótiān wǒ qù shāngdiàn mǎi le yí jiàn yīfu, dànshì yǒudiǎnr xiǎo."
+      },
+      "question": {
+        "zh": "★ 那件衣服：",
+        "pinyin": "★ Nà jiàn yīfu:"
+      },
+      "options": [
+        {
+          "zh": "有点儿小",
+          "pinyin": "Yǒudiǎnr xiǎo"
+        },
+        {
+          "zh": "很贵",
+          "pinyin": "Hěn guì"
+        },
+        {
+          "zh": "很漂亮",
+          "pinyin": "Hěn piàoliang"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "passage": {
+        "zh": "我们家离公司很远，所以我每天六点就起床了。",
+        "pinyin": "Wǒmen jiā lí gōngsī hěn yuǎn, suǒyǐ wǒ měi tiān liù diǎn jiù qǐchuáng le."
+      },
+      "question": {
+        "zh": "★ 他为什么起床很早？",
+        "pinyin": "★ Tā wèi shénme qǐchuáng hěn zǎo?"
+      },
+      "options": [
+        {
+          "zh": "喜欢跑步",
+          "pinyin": "Xǐhuan pǎobù"
+        },
+        {
+          "zh": "要做饭",
+          "pinyin": "Yào zuò fàn"
+        },
+        {
+          "zh": "公司很远",
+          "pinyin": "Gōngsī hěn yuǎn"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "passage": {
+        "zh": "今天下午我和朋友去打篮球，打了两个小时，非常高兴。",
+        "pinyin": "Jīntiān xiàwǔ wǒ hé péngyou qù dǎ lánqiú, dǎ le liǎng gè xiǎoshí, fēicháng gāoxìng."
+      },
+      "question": {
+        "zh": "★ 他们今天下午：",
+        "pinyin": "★ Tāmen jīntiān xiàwǔ:"
+      },
+      "options": [
+        {
+          "zh": "打篮球",
+          "pinyin": "Dǎ lánqiú"
+        },
+        {
+          "zh": "看电影",
+          "pinyin": "Kàn diànyǐng"
+        },
+        {
+          "zh": "去游泳",
+          "pinyin": "Qù yóuyǒng"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "passage": {
+        "zh": "这个字我不认识，你知道它是什么意思吗？",
+        "pinyin": "Zhège zì wǒ bú rènshi, nǐ zhīdào tā shì shénme yìsi ma?"
+      },
+      "question": {
+        "zh": "★ 说话人想知道：",
+        "pinyin": "★ Shuōhuà rén xiǎng zhīdào:"
+      },
+      "options": [
+        {
+          "zh": "字怎么写",
+          "pinyin": "Zì zěnme xiě"
+        },
+        {
+          "zh": "字的意思",
+          "pinyin": "Zì de yìsi"
+        },
+        {
+          "zh": "谁写的",
+          "pinyin": "Shéi xiě de"
+        }
+      ],
+      "answer": 1
+    }
+  ]
+}

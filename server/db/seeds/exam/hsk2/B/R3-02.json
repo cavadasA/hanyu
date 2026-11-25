@@ -1,0 +1,63 @@
+{
+  "slug": "b-r3-02",
+  "part": "R3",
+  "bank": [
+    {
+      "zh": "有，你要几个？",
+      "pinyin": "Yǒu, nǐ yào jǐ gè?"
+    },
+    {
+      "zh": "因为我生病了。",
+      "pinyin": "Yīnwèi wǒ shēngbìng le."
+    },
+    {
+      "zh": "好啊，几点？",
+      "pinyin": "Hǎo a, jǐ diǎn?"
+    },
+    {
+      "zh": "在那儿，门口旁边。",
+      "pinyin": "Zài nàr, ménkǒu pángbiān."
+    },
+    {
+      "zh": "不是，是我同学的。",
+      "pinyin": "Bú shì, shì wǒ tóngxué de."
+    }
+  ],
+  "items": [
+    {
+      "text": {
+        "zh": "明天晚上一起吃饭吧。",
+        "pinyin": "Míngtiān wǎnshang yìqǐ chī fàn ba."
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "请问，洗手间在哪儿？",
+        "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?"
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "这是你的书吗？",
+        "pinyin": "Zhè shì nǐ de shū ma?"
+      },
+      "answer": 4
+    },
+    {
+      "text": {
+        "zh": "还有电影票吗？",
+        "pinyin": "Hái yǒu diànyǐng piào ma?"
+      },
+      "answer": 0
+    },
+    {
+      "text": {
+        "zh": "你昨天为什么没来上课？",
+        "pinyin": "Nǐ zuótiān wèi shénme méi lái shàngkè?"
+      },
+      "answer": 1
+    }
+  ]
+}

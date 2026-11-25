@@ -1,0 +1,380 @@
+{
+  "slug": "b-l3-01",
+  "part": "L3",
+  "example": {
+    "audio": [
+      {
+        "zh": "你几点下班？",
+        "pinyin": "Nǐ jǐ diǎn xiàbān?",
+        "speaker": "F"
+      },
+      {
+        "zh": "下午五点半。",
+        "pinyin": "Xiàwǔ wǔ diǎn bàn.",
+        "speaker": "M"
+      }
+    ],
+    "question": {
+      "zh": "男的几点下班？",
+      "pinyin": "Nán de jǐ diǎn xiàbān?",
+      "speaker": "F"
+    },
+    "options": [
+      {
+        "zh": "五点半",
+        "pinyin": "Wǔ diǎn bàn"
+      },
+      {
+        "zh": "五点",
+        "pinyin": "Wǔ diǎn"
+      },
+      {
+        "zh": "六点",
+        "pinyin": "Liù diǎn"
+      }
+    ],
+    "answer": 0
+  },
+  "items": [
+    {
+      "audio": [
+        {
+          "zh": "你女儿多大了？",
+          "pinyin": "Nǐ nǚ'ér duō dà le?",
+          "speaker": "M"
+        },
+        {
+          "zh": "她今年七岁，上小学了。",
+          "pinyin": "Tā jīnnián qī suì, shàng xiǎoxué le.",
+          "speaker": "F"
+        }
+      ],
+      "question": {
+        "zh": "她女儿多大了？",
+        "pinyin": "Tā nǚ'ér duō dà le?",
+        "speaker": "M"
+      },
+      "options": [
+        {
+          "zh": "五岁",
+          "pinyin": "Wǔ suì"
+        },
+        {
+          "zh": "六岁",
+          "pinyin": "Liù suì"
+        },
+        {
+          "zh": "七岁",
+          "pinyin": "Qī suì"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "你喜欢吃什么水果？",
+          "pinyin": "Nǐ xǐhuan chī shénme shuǐguǒ?",
+          "speaker": "F"
+        },
+        {
+          "zh": "我最喜欢吃苹果。",
+          "pinyin": "Wǒ zuì xǐhuan chī píngguǒ.",
+          "speaker": "M"
+        }
+      ],
+      "question": {
+        "zh": "男的喜欢什么水果？",
+        "pinyin": "Nán de xǐhuan shénme shuǐguǒ?",
+        "speaker": "F"
+      },
+      "options": [
+        {
+          "zh": "苹果",
+          "pinyin": "Píngguǒ"
+        },
+        {
+          "zh": "牛奶",
+          "pinyin": "Niúnǎi"
+        },
+        {
+          "zh": "鸡蛋",
+          "pinyin": "Jīdàn"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "你怎么还没睡觉？",
+          "pinyin": "Nǐ zěnme hái méi shuìjiào?",
+          "speaker": "M"
+        },
+        {
+          "zh": "明天有考试，我在准备呢。",
+          "pinyin": "Míngtiān yǒu kǎoshì, wǒ zài zhǔnbèi ne.",
+          "speaker": "F"
+        }
+      ],
+      "question": {
+        "zh": "女的为什么还没睡觉？",
+        "pinyin": "Nǚ de wèi shénme hái méi shuìjiào?",
+        "speaker": "M"
+      },
+      "options": [
+        {
+          "zh": "在看电视",
+          "pinyin": "Zài kàn diànshì"
+        },
+        {
+          "zh": "明天考试",
+          "pinyin": "Míngtiān kǎoshì"
+        },
+        {
+          "zh": "身体不好",
+          "pinyin": "Shēntǐ bù hǎo"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "这个房间怎么样？",
+          "pinyin": "Zhège fángjiān zěnmeyàng?",
+          "speaker": "F"
+        },
+        {
+          "zh": "很大，但是有点儿贵。",
+          "pinyin": "Hěn dà, dànshì yǒudiǎnr guì.",
+          "speaker": "M"
+        }
+      ],
+      "question": {
+        "zh": "男的觉得房间怎么样？",
+        "pinyin": "Nán de juéde fángjiān zěnmeyàng?",
+        "speaker": "F"
+      },
+      "options": [
+        {
+          "zh": "很小",
+          "pinyin": "Hěn xiǎo"
+        },
+        {
+          "zh": "很便宜",
+          "pinyin": "Hěn piányi"
+        },
+        {
+          "zh": "有点儿贵",
+          "pinyin": "Yǒudiǎnr guì"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "你昨天去哪儿了？",
+          "pinyin": "Nǐ zuótiān qù nǎr le?",
+          "speaker": "M"
+        },
+        {
+          "zh": "我和朋友去看电影了。",
+          "pinyin": "Wǒ hé péngyou qù kàn diànyǐng le.",
+          "speaker": "F"
+        }
+      ],
+      "question": {
+        "zh": "女的昨天做什么了？",
+        "pinyin": "Nǚ de zuótiān zuò shénme le?",
+        "speaker": "M"
+      },
+      "options": [
+        {
+          "zh": "看电影",
+          "pinyin": "Kàn diànyǐng"
+        },
+        {
+          "zh": "去商店",
+          "pinyin": "Qù shāngdiàn"
+        },
+        {
+          "zh": "去医院",
+          "pinyin": "Qù yīyuàn"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "你的手机呢？",
+          "pinyin": "Nǐ de shǒujī ne?",
+          "speaker": "F"
+        },
+        {
+          "zh": "我忘在家里了。",
+          "pinyin": "Wǒ wàng zài jiā lǐ le.",
+          "speaker": "M"
+        }
+      ],
+      "question": {
+        "zh": "男的手机在哪儿？",
+        "pinyin": "Nán de shǒujī zài nǎr?",
+        "speaker": "F"
+      },
+      "options": [
+        {
+          "zh": "在公司",
+          "pinyin": "Zài gōngsī"
+        },
+        {
+          "zh": "在家里",
+          "pinyin": "Zài jiā lǐ"
+        },
+        {
+          "zh": "在学校",
+          "pinyin": "Zài xuéxiào"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "我们几点在哪儿见？",
+          "pinyin": "Wǒmen jǐ diǎn zài nǎr jiàn?",
+          "speaker": "M"
+        },
+        {
+          "zh": "明天上午九点，在火车站。",
+          "pinyin": "Míngtiān shàngwǔ jiǔ diǎn, zài huǒchē zhàn.",
+          "speaker": "F"
+        }
+      ],
+      "question": {
+        "zh": "他们在哪儿见？",
+        "pinyin": "Tāmen zài nǎr jiàn?",
+        "speaker": "M"
+      },
+      "options": [
+        {
+          "zh": "学校",
+          "pinyin": "Xuéxiào"
+        },
+        {
+          "zh": "饭店",
+          "pinyin": "Fàndiàn"
+        },
+        {
+          "zh": "火车站",
+          "pinyin": "Huǒchē zhàn"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "你哥哥会说汉语吗？",
+          "pinyin": "Nǐ gēge huì shuō Hànyǔ ma?",
+          "speaker": "F"
+        },
+        {
+          "zh": "会一点儿，他在学。",
+          "pinyin": "Huì yìdiǎnr, tā zài xué.",
+          "speaker": "M"
+        }
+      ],
+      "question": {
+        "zh": "男的哥哥汉语说得怎么样？",
+        "pinyin": "Nán de gēge Hànyǔ shuō de zěnmeyàng?",
+        "speaker": "F"
+      },
+      "options": [
+        {
+          "zh": "会一点儿",
+          "pinyin": "Huì yìdiǎnr"
+        },
+        {
+          "zh": "很好",
+          "pinyin": "Hěn hǎo"
+        },
+        {
+          "zh": "不会",
+          "pinyin": "Bú huì"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "外面下雪了！",
+          "pinyin": "Wàimiàn xià xuě le!",
+          "speaker": "M"
+        },
+        {
+          "zh": "真的？我们出去看看吧。",
+          "pinyin": "Zhēn de? Wǒmen chūqù kàn kàn ba.",
+          "speaker": "F"
+        }
+      ],
+      "question": {
+        "zh": "外面天气怎么样？",
+        "pinyin": "Wàimiàn tiānqì zěnmeyàng?",
+        "speaker": "M"
+      },
+      "options": [
+        {
+          "zh": "下雨了",
+          "pinyin": "Xià yǔ le"
+        },
+        {
+          "zh": "下雪了",
+          "pinyin": "Xià xuě le"
+        },
+        {
+          "zh": "很热",
+          "pinyin": "Hěn rè"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "你认识那个人吗？",
+          "pinyin": "Nǐ rènshi nàge rén ma?",
+          "speaker": "F"
+        },
+        {
+          "zh": "认识，他是我们的新老师。",
+          "pinyin": "Rènshi, tā shì wǒmen de xīn lǎoshī.",
+          "speaker": "M"
+        }
+      ],
+      "question": {
+        "zh": "那个人是谁？",
+        "pinyin": "Nàge rén shì shéi?",
+        "speaker": "F"
+      },
+      "options": [
+        {
+          "zh": "新同学",
+          "pinyin": "Xīn tóngxué"
+        },
+        {
+          "zh": "新医生",
+          "pinyin": "Xīn yīshēng"
+        },
+        {
+          "zh": "新老师",
+          "pinyin": "Xīn lǎoshī"
+        }
+      ],
+      "answer": 2
+    }
+  ]
+}

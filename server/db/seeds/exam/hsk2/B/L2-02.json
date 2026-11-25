@@ -1,0 +1,88 @@
+{
+  "slug": "b-l2-02",
+  "part": "L2",
+  "images": [
+    "cake",
+    "bus",
+    "chair",
+    "tea",
+    "plane"
+  ],
+  "items": [
+    {
+      "audio": [
+        {
+          "zh": "生日快乐！",
+          "pinyin": "Shēngrì kuàilè!",
+          "speaker": "M"
+        },
+        {
+          "zh": "谢谢你！你还记得我的生日。",
+          "pinyin": "Xièxie nǐ! Nǐ hái jìde wǒ de shēngrì.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "你每天怎么去公司？",
+          "pinyin": "Nǐ měi tiān zěnme qù gōngsī?",
+          "speaker": "F"
+        },
+        {
+          "zh": "坐车去，车上人很多。",
+          "pinyin": "Zuò chē qù, chē shàng rén hěn duō.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "请坐，请坐！",
+          "pinyin": "Qǐng zuò, qǐng zuò!",
+          "speaker": "M"
+        },
+        {
+          "zh": "谢谢，你家真大。",
+          "pinyin": "Xièxie, nǐ jiā zhēn dà.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "你想喝点什么？",
+          "pinyin": "Nǐ xiǎng hē diǎn shénme?",
+          "speaker": "F"
+        },
+        {
+          "zh": "我想喝茶。",
+          "pinyin": "Wǒ xiǎng hē chá.",
+          "speaker": "M"
+        }
+      ],
+      "answer": 3
+    },
+    {
+      "audio": [
+        {
+          "zh": "你什么时候去中国？",
+          "pinyin": "Nǐ shénme shíhou qù Zhōngguó?",
+          "speaker": "M"
+        },
+        {
+          "zh": "下个星期，我已经买了机票。",
+          "pinyin": "Xià gè xīngqī, wǒ yǐjīng mǎi le jīpiào.",
+          "speaker": "F"
+        }
+      ],
+      "answer": 4
+    }
+  ]
+}

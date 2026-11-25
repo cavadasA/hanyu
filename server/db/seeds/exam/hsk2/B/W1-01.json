@@ -1,0 +1,62 @@
+{
+  "slug": "b-w1-01",
+  "part": "W1",
+  "bank": [
+    "氵",
+    "扌",
+    "讠",
+    "宀",
+    "亻",
+    "女"
+  ],
+  "example": {
+    "word": {
+      "zh": "没有",
+      "pinyin": "Méiyǒu"
+    },
+    "target_index": 0,
+    "answer": 0
+  },
+  "items": [
+    {
+      "word": {
+        "zh": "打车",
+        "pinyin": "Dǎchē"
+      },
+      "target_index": 0,
+      "answer": 1
+    },
+    {
+      "word": {
+        "zh": "请问",
+        "pinyin": "Qǐngwèn"
+      },
+      "target_index": 0,
+      "answer": 2
+    },
+    {
+      "word": {
+        "zh": "回家",
+        "pinyin": "Huí jiā"
+      },
+      "target_index": 1,
+      "answer": 3
+    },
+    {
+      "word": {
+        "zh": "工作",
+        "pinyin": "Gōngzuò"
+      },
+      "target_index": 1,
+      "answer": 4
+    },
+    {
+      "word": {
+        "zh": "她们",
+        "pinyin": "Tāmen"
+      },
+      "target_index": 0,
+      "answer": 5
+    }
+  ]
+}

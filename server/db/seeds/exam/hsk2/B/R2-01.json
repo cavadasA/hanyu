@@ -1,0 +1,74 @@
+{
+  "slug": "b-r2-01",
+  "part": "R2",
+  "bank": [
+    {
+      "zh": "可能",
+      "pinyin": "Kěnéng"
+    },
+    {
+      "zh": "还",
+      "pinyin": "Hái"
+    },
+    {
+      "zh": "慢",
+      "pinyin": "Màn"
+    },
+    {
+      "zh": "得",
+      "pinyin": "De"
+    },
+    {
+      "zh": "经常",
+      "pinyin": "Jīngcháng"
+    },
+    {
+      "zh": "觉得",
+      "pinyin": "Juéde"
+    }
+  ],
+  "example": {
+    "text": {
+      "zh": "明天（ ）会下雨，你别出去了。",
+      "pinyin": "Míngtiān huì xià yǔ, nǐ bié chūqù le."
+    },
+    "answer": 0
+  },
+  "items": [
+    {
+      "text": {
+        "zh": "已经十点了，他（ ）没起床。",
+        "pinyin": "Yǐjīng shí diǎn le, tā méi qǐchuáng."
+      },
+      "answer": 1
+    },
+    {
+      "text": {
+        "zh": "你说得太快了，请说（ ）一点儿。",
+        "pinyin": "Nǐ shuō de tài kuài le, qǐng shuō yìdiǎnr."
+      },
+      "answer": 2
+    },
+    {
+      "text": {
+        "zh": "她唱歌唱（ ）很好听。",
+        "pinyin": "Tā chàng gē chàng hěn hǎotīng."
+      },
+      "answer": 3
+    },
+    {
+      "text": {
+        "zh": "我（ ）去那家饭店吃饭。",
+        "pinyin": "Wǒ qù nà jiā fàndiàn chī fàn."
+      },
+      "answer": 4
+    },
+    {
+      "text": {
+        "zh": "A：这件衣服怎么样？B：我（ ）很漂亮。",
+        "pinyin": "A: Zhè jiàn yīfu zěnmeyàng? B: Wǒ hěn piàoliang."
+      },
+      "answer": 5
+    }
+  ]
+}

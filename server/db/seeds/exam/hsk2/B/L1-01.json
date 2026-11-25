@@ -1,0 +1,96 @@
+{
+  "slug": "b-l1-01",
+  "part": "L1",
+  "example": {
+    "audio": [
+      {
+        "zh": "今天是晴天，天气很好。",
+        "pinyin": "Jīntiān shì qíng tiān, tiānqì hěn hǎo.",
+        "speaker": "M"
+      }
+    ],
+    "images": [
+      "sun",
+      "rain",
+      "snow"
+    ],
+    "answer": 0
+  },
+  "items": [
+    {
+      "audio": [
+        {
+          "zh": "这是爸爸送给我的手表。",
+          "pinyin": "Zhè shì bàba sòng gěi wǒ de shǒubiǎo.",
+          "speaker": "F"
+        }
+      ],
+      "images": [
+        "watch",
+        "phone",
+        "computer"
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "我每天早上七点起床。",
+          "pinyin": "Wǒ měi tiān zǎoshang qī diǎn qǐchuáng.",
+          "speaker": "M"
+        }
+      ],
+      "images": [
+        "clock-12",
+        "clock-7",
+        "clock-3"
+      ],
+      "answer": 1
+    },
+    {
+      "audio": [
+        {
+          "zh": "我女儿很喜欢小猫。",
+          "pinyin": "Wǒ nǚ'ér hěn xǐhuan xiǎo māo.",
+          "speaker": "F"
+        }
+      ],
+      "images": [
+        "cat",
+        "fish",
+        "dog"
+      ],
+      "answer": 0
+    },
+    {
+      "audio": [
+        {
+          "zh": "晚饭我想吃米饭。",
+          "pinyin": "Wǎnfàn wǒ xiǎng chī mǐfàn.",
+          "speaker": "M"
+        }
+      ],
+      "images": [
+        "apple",
+        "breakfast",
+        "rice"
+      ],
+      "answer": 2
+    },
+    {
+      "audio": [
+        {
+          "zh": "妈妈正在做饭呢。",
+          "pinyin": "Māma zhèngzài zuò fàn ne.",
+          "speaker": "F"
+        }
+      ],
+      "images": [
+        "read",
+        "sing",
+        "cook"
+      ],
+      "answer": 2
+    }
+  ]
+}
