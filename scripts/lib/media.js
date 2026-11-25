@@ -50,6 +50,13 @@ export function findManifests(contentDir = defaultContentDir) {
   return found;
 }
 
+/** Dueños cuyo audio es provisional y hay que regenerar antes de publicar. */
+export function provisionalOwners(contentDir = defaultContentDir) {
+  return findManifests(contentDir)
+    .filter(({ manifest }) => manifest.provisional === true)
+    .map(({ owner }) => owner);
+}
+
 /** Cada clip declarado con su fichero local y su ruta en Storage. */
 export function collectMediaFiles(contentDir = defaultContentDir) {
   return findManifests(contentDir).flatMap(({ owner, dir, manifest }) =>

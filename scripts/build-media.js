@@ -12,6 +12,7 @@ import {
   defaultIndexFile,
   fileSha256,
   findManifests,
+  provisionalOwners,
   storagePathFor,
 } from './lib/media.js';
 import { defaultExpectationsFor } from './lib/media-owners.js';
@@ -82,4 +83,10 @@ if (process.argv[1] && process.argv[1].endsWith('build-media.js')) {
   writeFileSync(out, `${JSON.stringify(index, null, 2)}\n`);
   const clips = Object.values(index).reduce((total, keys) => total + Object.keys(keys).length, 0);
   console.log(`${Object.keys(index).length} dueños, ${clips} clips → ${out}`);
+
+  const provisional = provisionalOwners(contentDir);
+  if (provisional.length > 0) {
+    console.log(`\n${provisional.length} con audio provisional (regenerar con --provider azure antes de publicar):`);
+    for (const owner of provisional) console.log(`  ${owner}`);
+  }
 }

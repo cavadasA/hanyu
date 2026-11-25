@@ -25,11 +25,12 @@
 
 No hay suscripción de Azure. Mientras no la haya, el audio se genera con **edge-tts** y es **provisional**:
 
-- Los clips se generan con el paquete Python `edge-tts` (`uvx edge-tts`), voces `zh-CN-XiaoxiaoNeural` (F1) y `zh-CN-YunxiNeural` (M1).
-- `synthesize-audio.js` acepta `--provider edge|azure`. `azure` se implementa tal y como describe la Tarea 6, pero sin clave: solo lo cubren tests con cliente falso.
-- Manifiesto de los clips de edge: `kind: 'neural'`, `produced_by: 'edge-tts:<voz>'`, `license: 'provisional: edge-tts, no apto para publicar'`, `provisional: true`. Un test lista las lecturas provisionales; antes de publicar la app hay que regenerarlas con `--provider azure`.
+- Los clips se generan con el paquete Python `edge-tts` (`uvx edge-tts`). Voces mandarín disponibles en edge: `zh-CN-XiaoxiaoNeural`, `zh-CN-XiaoyiNeural` (mujer), `zh-CN-YunxiNeural`, `zh-CN-YunjianNeural`, `zh-CN-YunyangNeural` (hombre). Cada personaje declara `voice` y cada serie `narrator_voice` en `reading-series.json`. Con solo dos voces de mujer, 奶奶 comparte la de 妈妈 en la serie `casa`; con Azure se le asigna una voz propia.
+- `synthesize-audio.js` acepta `--provider edge|azure` (obligatorio). `azure` se implementa tal y como describe la Tarea 6, pero sin clave: solo lo cubren tests con cliente falso.
+- Manifiesto de los clips de edge: `kind: 'neural'`, `produced_by: 'edge-tts:<voz>[+<voz>…]'`, `license: 'provisional: edge-tts, no apto para publicar'`, `provisional: true`. `provisionalOwners()` (`scripts/lib/media.js`, con test) lista las lecturas provisionales y `npm run build-media` las imprime; antes de publicar la app hay que regenerarlas con `--provider azure` (cambiar de proveedor regenera todos los clips).
 - edge-tts no acepta `<phoneme>`. `sentenceToSsml` se implementa y se testea igual (lo usa Azure). Con edge, `synthesize-audio` escribe en `content/audio/POLIFONOS.md` cada frase con polífonos, para revisarla de oído.
 - La conversión a `.m4a` usa ffmpeg (instalado). Si faltara, se usaría `.mp3` declarándolo en el manifiesto.
+- La alineación hanzi ↔ pinyin de `sentenceToSsml` no usa tablas de sílabas: recorre los tokens del tokenizador de dominio y prueba como prefijo del pinyin normalizado la lectura de cada entrada del diccionario; los hanzi sueltos y los nombres sin entrada usan las lecturas de `pinyin-pro` (devDependency). Un hanzi es polífono si las entradas del diccionario lo leen de más de una forma (sin contar el tono).
 - La revisión humana (nativo o profesor) de las lecturas y del audio queda **pendiente**: la sesión que ejecuta el plan no puede hacerla y lo anota en cada commit de contenido.
 
 ## Review Focus

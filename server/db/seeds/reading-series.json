@@ -4,12 +4,13 @@
     "title": "我们一家",
     "topic": "vida diaria",
     "planned_episodes": 6,
+    "narrator_voice": "zh-CN-YunxiNeural",
     "characters": [
-      { "name": "小明", "role_es": "hijo mayor; cuenta la historia" },
-      { "name": "小雪", "role_es": "hermana pequeña de Xiaoming" },
-      { "name": "妈妈", "role_es": "la madre" },
-      { "name": "爸爸", "role_es": "el padre" },
-      { "name": "奶奶", "role_es": "la abuela, que viene a vivir con ellos" }
+      { "name": "小明", "role_es": "hijo mayor; cuenta la historia", "voice": "zh-CN-YunxiNeural" },
+      { "name": "小雪", "role_es": "hermana pequeña de Xiaoming", "voice": "zh-CN-XiaoyiNeural" },
+      { "name": "妈妈", "role_es": "la madre", "voice": "zh-CN-XiaoxiaoNeural" },
+      { "name": "爸爸", "role_es": "el padre", "voice": "zh-CN-YunjianNeural" },
+      { "name": "奶奶", "role_es": "la abuela, que viene a vivir con ellos", "voice": "zh-CN-XiaoxiaoNeural" }
     ]
   },
   {
@@ -17,10 +18,11 @@
     "title": "新同学",
     "topic": "estudio",
     "planned_episodes": 6,
+    "narrator_voice": "zh-CN-XiaoyiNeural",
     "characters": [
-      { "name": "李文", "role_es": "estudiante; cuenta la historia" },
-      { "name": "大卫", "role_es": "compañero nuevo, extranjero" },
-      { "name": "王老师", "role_es": "profesora de chino" }
+      { "name": "李文", "role_es": "estudiante; cuenta la historia", "voice": "zh-CN-XiaoyiNeural" },
+      { "name": "大卫", "role_es": "compañero nuevo, extranjero", "voice": "zh-CN-YunjianNeural" },
+      { "name": "王老师", "role_es": "profesora de chino", "voice": "zh-CN-XiaoxiaoNeural" }
     ]
   },
   {
@@ -28,10 +30,11 @@
     "title": "新工作",
     "topic": "trabajo",
     "planned_episodes": 5,
+    "narrator_voice": "zh-CN-XiaoxiaoNeural",
     "characters": [
-      { "name": "张红", "role_es": "empieza a trabajar en una empresa" },
-      { "name": "马力", "role_es": "compañero de Zhang Hong" },
-      { "name": "白先生", "role_es": "el jefe" }
+      { "name": "张红", "role_es": "empieza a trabajar en una empresa", "voice": "zh-CN-XiaoyiNeural" },
+      { "name": "马力", "role_es": "compañero de Zhang Hong", "voice": "zh-CN-YunxiNeural" },
+      { "name": "白先生", "role_es": "el jefe", "voice": "zh-CN-YunyangNeural" }
     ]
   },
   {
@@ -39,10 +42,11 @@
     "title": "小雨的生日",
     "topic": "eventos",
     "planned_episodes": 5,
+    "narrator_voice": "zh-CN-YunyangNeural",
     "characters": [
-      { "name": "小雨", "role_es": "cumple años" },
-      { "name": "高飞", "role_es": "amigo de Xiaoyu" },
-      { "name": "小雨妈妈", "role_es": "la madre de Xiaoyu" }
+      { "name": "小雨", "role_es": "cumple años", "voice": "zh-CN-XiaoyiNeural" },
+      { "name": "高飞", "role_es": "amigo de Xiaoyu", "voice": "zh-CN-YunxiNeural" },
+      { "name": "小雨妈妈", "role_es": "la madre de Xiaoyu", "voice": "zh-CN-XiaoxiaoNeural" }
     ]
   },
   {
@@ -50,9 +54,10 @@
     "title": "第一次去中国",
     "topic": "lugares",
     "planned_episodes": 5,
+    "narrator_voice": "zh-CN-YunyangNeural",
     "characters": [
-      { "name": "大山", "role_es": "viaja a China por primera vez" },
-      { "name": "小月", "role_es": "amiga de Dashan, viaja con él" }
+      { "name": "大山", "role_es": "viaja a China por primera vez", "voice": "zh-CN-YunjianNeural" },
+      { "name": "小月", "role_es": "amiga de Dashan, viaja con él", "voice": "zh-CN-XiaoxiaoNeural" }
     ]
   },
   {
@@ -60,10 +65,11 @@
     "title": "小林买东西",
     "topic": "compras",
     "planned_episodes": 6,
+    "narrator_voice": "zh-CN-YunxiNeural",
     "characters": [
-      { "name": "小林", "role_es": "estudiante; cuenta la historia" },
-      { "name": "小美", "role_es": "amiga de Xiaolin" },
-      { "name": "先生", "role_es": "el dependiente de la tienda" }
+      { "name": "小林", "role_es": "estudiante; cuenta la historia", "voice": "zh-CN-YunxiNeural" },
+      { "name": "小美", "role_es": "amiga de Xiaolin", "voice": "zh-CN-XiaoyiNeural" },
+      { "name": "先生", "role_es": "el dependiente de la tienda", "voice": "zh-CN-YunyangNeural" }
     ]
   },
   {
@@ -71,10 +77,11 @@
     "title": "陈东生病了",
     "topic": "salud",
     "planned_episodes": 5,
+    "narrator_voice": "zh-CN-YunyangNeural",
     "characters": [
-      { "name": "陈东", "role_es": "se pone enfermo" },
-      { "name": "小丽", "role_es": "la mujer de Chen Dong" },
-      { "name": "医生", "role_es": "la doctora" }
+      { "name": "陈东", "role_es": "se pone enfermo", "voice": "zh-CN-YunxiNeural" },
+      { "name": "小丽", "role_es": "la mujer de Chen Dong", "voice": "zh-CN-XiaoyiNeural" },
+      { "name": "医生", "role_es": "la doctora", "voice": "zh-CN-XiaoxiaoNeural" }
     ]
   },
   {
@@ -82,9 +89,10 @@
     "title": "周末做什么",
     "topic": "ocio",
     "planned_episodes": 5,
+    "narrator_voice": "zh-CN-XiaoyiNeural",
     "characters": [
-      { "name": "方方", "role_es": "cuenta la historia" },
-      { "name": "小飞", "role_es": "amigo de Fangfang" }
+      { "name": "方方", "role_es": "cuenta la historia", "voice": "zh-CN-XiaoyiNeural" },
+      { "name": "小飞", "role_es": "amigo de Fangfang", "voice": "zh-CN-YunxiNeural" }
     ]
   },
   {
@@ -92,10 +100,11 @@
     "title": "楼上的人",
     "topic": "comunicación interpersonal",
     "planned_episodes": 5,
+    "narrator_voice": "zh-CN-YunyangNeural",
     "characters": [
-      { "name": "小平", "role_es": "se acaba de mudar al edificio" },
-      { "name": "李奶奶", "role_es": "vecina mayor del piso de arriba" },
-      { "name": "安安", "role_es": "amiga de Xiaoping" }
+      { "name": "小平", "role_es": "se acaba de mudar al edificio", "voice": "zh-CN-YunxiNeural" },
+      { "name": "李奶奶", "role_es": "vecina mayor del piso de arriba", "voice": "zh-CN-XiaoxiaoNeural" },
+      { "name": "安安", "role_es": "amiga de Xiaoping", "voice": "zh-CN-XiaoyiNeural" }
     ]
   }
 ]
