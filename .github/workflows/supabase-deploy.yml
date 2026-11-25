@@ -7,6 +7,9 @@ on:
       - master
     paths:
       - 'supabase/**'
+      - 'content/audio/**'
+      - 'scripts/sync-media.js'
+      - 'scripts/lib/media.js'
       - '.github/workflows/supabase-deploy.yml'
   workflow_dispatch:
     inputs:
@@ -45,6 +48,23 @@ jobs:
       - name: Link project
         run: |
           supabase link --project-ref "$SUPABASE_PROJECT_ID" --password "$SUPABASE_DB_PASSWORD"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      # Los clips van antes que el seed: el catálogo nunca apunta a un fichero
+      # que Storage aún no tiene. sync-media crea el bucket si falta, sube los
+      # hashes pendientes y nunca borra. La clave service_role se pide a la API
+      # de gestión con el access token, así que no hace falta otro secreto.
+      - name: Sync media to Storage
+        run: |
+          SUPABASE_SERVICE_ROLE_KEY=$(supabase projects api-keys --project-ref "$SUPABASE_PROJECT_ID" -o json \
+            | node -e 'const keys = JSON.parse(require("fs").readFileSync(0, "utf8")); process.stdout.write(keys.find(k => k.name === "service_role").api_key)')
+          echo "::add-mask::$SUPABASE_SERVICE_ROLE_KEY"
+          export SUPABASE_SERVICE_ROLE_KEY
+          node scripts/sync-media.js
 
       - name: Reset Remote Database (if requested via workflow_dispatch)
         if: ${{ github.event.inputs.reset_database == 'true' }}

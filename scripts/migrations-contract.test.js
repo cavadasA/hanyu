@@ -18,6 +18,15 @@ function expectSqlToContain(sql, fragment) {
 }
 
 describe('contratos de migraciones', () => {
+  it('crea el bucket público media: lectura para todos, escritura sólo service_role', () => {
+    const migration = readMigration('2026112501_media_storage.sql');
+
+    expectSqlToContain(migration, "insert into storage.buckets (id, name, public) values ('media', 'media', true)");
+    expectSqlToContain(migration, 'create policy media_public_read on storage.objects for select to anon, authenticated');
+    expect(normalizeSql(migration)).not.toMatch(/for (insert|update|delete|all) to [^;]*\banon\b/i);
+    expectSqlToContain(migration, 'create policy media_service_write on storage.objects for insert to service_role');
+  });
+
   it('añade a grammar_points las columnas del contenido gramatical', () => {
     const migration = readMigration('2026112502_grammar_content.sql');
 
