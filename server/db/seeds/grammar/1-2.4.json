@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "2.4",
+  "pattern": "número + clasificador + nombre · 两 + clasificador · 二 al contar",
+  "explanation": "Los números se forman sumando: 十二 es diez y dos, 二十 son dos dieces, y 零 marca el hueco: 一百零五 = 105. Delante de un clasificador, «dos» se dice 两 (两个人); al contar, en las cifras y en los ordinales se usa 二 (十二, 第二). 半 es «medio»: 半个小时.",
+  "markers": ["两","十二","千","半","零"],
+  "examples": [
+    {"zh":"我有两个孩子。","pinyin":"Wǒ yǒu liǎng gè háizi.","es":"Tengo dos hijos."},
+    {"zh":"今天是十二号。","pinyin":"Jīntiān shì shí’èr hào.","es":"Hoy es día doce."},
+    {"zh":"这个手机两千块。","pinyin":"Zhège shǒujī liǎngqiān kuài.","es":"Este móvil cuesta dos mil yuanes."},
+    {"zh":"我睡了半个小时。","pinyin":"Wǒ shuì le bàn gè xiǎoshí.","es":"Dormí media hora."},
+    {"zh":"这本书一百零五块。","pinyin":"Zhè běn shū yìbǎi líng wǔ kuài.","es":"Este libro cuesta ciento cinco yuanes."}
+  ],
+  "common_errors": [
+    {"wrong":"我有二个孩子。","right":"我有两个孩子。","why":"Delante de un clasificador «dos» se dice 两, no 二."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.5"}]
+}

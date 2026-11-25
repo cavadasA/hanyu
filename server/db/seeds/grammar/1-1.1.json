@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "1.1",
+  "pattern": "第 + número (+ clasificador) · 小 + nombre",
+  "explanation": "第 delante de un número forma los ordinales: 第一 «primero», 第二天 «el segundo día». 小 delante de un apellido de una sílaba sirve para llamar con confianza a alguien más joven o cercano, y además forma palabras con la idea de «pequeño»: 小朋友, 小学. Los dos son prefijos: van pegados a lo que modifican, sin 的.",
+  "markers": ["第—","小—"],
+  "examples": [
+    {"zh":"这是我的第一本汉语书。","pinyin":"Zhè shì wǒ de dì yī běn Hànyǔ shū.","es":"Este es mi primer libro de chino."},
+    {"zh":"第二天我们去了医院。","pinyin":"Dì èr tiān wǒmen qù le yīyuàn.","es":"Al día siguiente fuimos al hospital."},
+    {"zh":"小朋友，你几岁了？","pinyin":"Xiǎopéngyǒu, nǐ jǐ suì le?","es":"Pequeño, ¿cuántos años tienes?"},
+    {"zh":"我女儿在上小学。","pinyin":"Wǒ nǚ’ér zài shàng xiǎoxué.","es":"Mi hija va a la escuela primaria."}
+  ],
+  "common_errors": [
+    {"wrong":"这是我一本汉语书。","right":"这是我的第一本汉语书。","why":"Sin 第, 一本 es «un libro», no «el primer libro»: el ordinal necesita 第 delante del número."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"8.1"}]
+}

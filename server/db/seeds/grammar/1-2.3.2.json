@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "2.3.2",
+  "pattern": "我 / 你 / 您 / 他 / 她 / 它 (+ 们) · 大家",
+  "explanation": "Los pronombres no cambian según su función: 我 vale para «yo», «me» y «mí». El plural se forma con 们. 您 es el «usted» de cortesía y normalmente no lleva 们. 他, 她 y 它 se pronuncian igual (tā) y solo se distinguen por escrito: hombre, mujer, y animal o cosa. 大家 es «todos»: 大家好.",
+  "markers": ["我","您","它","大家","她们"],
+  "examples": [
+    {"zh":"我喜欢他，他也喜欢我。","pinyin":"Wǒ xǐhuan tā, tā yě xǐhuan wǒ.","es":"Él me gusta y yo le gusto a él."},
+    {"zh":"您好，请坐。","pinyin":"Nín hǎo, qǐng zuò.","es":"Buenos días, siéntese, por favor."},
+    {"zh":"这是我的猫，它很小。","pinyin":"Zhè shì wǒ de māo, tā hěn xiǎo.","es":"Este es mi gato; es muy pequeño."},
+    {"zh":"大家好！","pinyin":"Dàjiā hǎo!","es":"¡Hola a todos!"},
+    {"zh":"她们是我的同学。","pinyin":"Tāmen shì wǒ de tóngxué.","es":"Ellas son mis compañeras de clase."}
+  ],
+  "common_errors": [
+    {"wrong":"您们好！","right":"大家好！","why":"您 casi nunca lleva 们; para saludar a un grupo se dice 大家好 o 你们好."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.3.2"}]
+}

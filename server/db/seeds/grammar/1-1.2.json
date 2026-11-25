@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "1.2",
+  "pattern": "pronombre / persona + 们 · 前 / 后 / 外 / 这 / 那 + 边",
+  "explanation": "们 forma el plural de los pronombres (我们, 你们) y de algunos nombres de persona (同学们). No se usa con cosas ni cuando ya hay un número: 三个朋友, nunca «三个朋友们». 边 se pega a una palabra de posición o a 这 / 那 para formar un lugar: 前边 «delante», 外边 «fuera», 这边 «este lado».",
+  "markers": ["们","边"],
+  "examples": [
+    {"zh":"你们去哪儿？","pinyin":"Nǐmen qù nǎr?","es":"¿Adónde vais?"},
+    {"zh":"同学们，你们好！","pinyin":"Tóngxuémen, nǐmen hǎo!","es":"¡Hola a todos!"},
+    {"zh":"商店在前边。","pinyin":"Shāngdiàn zài qiánbian.","es":"La tienda está delante."},
+    {"zh":"外边下雨了。","pinyin":"Wàibian xià yǔ le.","es":"Fuera está lloviendo."},
+    {"zh":"我们去那边吧。","pinyin":"Wǒmen qù nàbian ba.","es":"Vamos hacia allí."}
+  ],
+  "common_errors": [
+    {"wrong":"我有三个朋友们。","right":"我有三个朋友。","why":"Con un número delante ya se sabe que es plural; 们 sobra."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"1.1"}]
+}

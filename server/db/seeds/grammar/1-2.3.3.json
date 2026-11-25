@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "2.3.3",
+  "pattern": "这 / 那 (+ número) + clasificador + nombre · 这儿 / 那儿 · 有的 + nombre",
+  "explanation": "这 señala lo cercano y 那 lo lejano. Delante de un nombre necesitan un clasificador: 这个人, 那本书; en plural, 这些 y 那些. Para lugares se usan 这儿 y 那儿, o 这里 y 那里. 有的 y 有些 significan «algunos» y van delante del sujeto: 有的人喜欢喝茶.",
+  "markers": ["这","那","有的"],
+  "examples": [
+    {"zh":"这个苹果很好吃。","pinyin":"Zhège píngguǒ hěn hǎochī.","es":"Esta manzana está muy rica."},
+    {"zh":"那本书是我的。","pinyin":"Nà běn shū shì wǒ de.","es":"Ese libro es mío."},
+    {"zh":"你来这儿吧。","pinyin":"Nǐ lái zhèr ba.","es":"Ven aquí."},
+    {"zh":"这些东西都很贵。","pinyin":"Zhèxiē dōngxi dōu hěn guì.","es":"Todas estas cosas son muy caras."},
+    {"zh":"有的人喜欢喝茶，有的人喜欢喝水。","pinyin":"Yǒude rén xǐhuan hē chá, yǒude rén xǐhuan hē shuǐ.","es":"A unos les gusta el té y a otros el agua."}
+  ],
+  "common_errors": [
+    {"wrong":"我喜欢这书。","right":"我喜欢这本书。","why":"这 y 那 necesitan un clasificador antes del nombre."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.3.3"}]
+}

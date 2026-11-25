@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "2.2.1",
+  "pattern": "会 / 能 / 可以 / 想 / 要 + verbo",
+  "explanation": "Van delante de otro verbo. 会 es saber hacer algo que se ha aprendido: 我会说汉语. 能 es poder porque hay capacidad o se dan las circunstancias: 我今天不能去. 可以 es tener permiso: 我可以坐这儿吗？ 想 expresa ganas, «querer», y 要, una intención más firme: 我要喝茶.",
+  "markers": ["会","能","可以","想","要"],
+  "examples": [
+    {"zh":"我会说汉语。","pinyin":"Wǒ huì shuō Hànyǔ.","es":"Sé hablar chino."},
+    {"zh":"今天我很忙，不能去。","pinyin":"Jīntiān wǒ hěn máng, bù néng qù.","es":"Hoy estoy muy ocupado, no puedo ir."},
+    {"zh":"我可以坐这儿吗？","pinyin":"Wǒ kěyǐ zuò zhèr ma?","es":"¿Puedo sentarme aquí?"},
+    {"zh":"我想去中国。","pinyin":"Wǒ xiǎng qù Zhōngguó.","es":"Quiero ir a China."},
+    {"zh":"我要喝茶。","pinyin":"Wǒ yào hē chá.","es":"Quiero té."}
+  ],
+  "common_errors": [
+    {"wrong":"我可以说汉语。","right":"我会说汉语。","why":"Para una habilidad aprendida se usa 会; 可以 es tener permiso, no saber hacer algo."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.2.2"}]
+}

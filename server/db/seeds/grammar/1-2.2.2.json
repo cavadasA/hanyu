@@ -1,0 +1,19 @@
+{
+  "hsk_level": 1,
+  "code": "2.2.2",
+  "pattern": "verbo + (了 / duración) + objeto: 睡了八个小时觉 · 和 + persona + 说话",
+  "explanation": "Estas palabras son un verbo y su objeto unidos, y se pueden separar: 了 o la duración van en medio, como en 睡了八个小时觉 «dormí ocho horas». Por eso no admiten otro objeto detrás: «hablar con él» no es «说话他», sino 和他说话. Sin separar funcionan como un verbo sin objeto: 我们几点下课？",
+  "markers": ["睡","说话","病","下课"],
+  "examples": [
+    {"zh":"我昨天睡了八个小时觉。","pinyin":"Wǒ zuótiān shuì le bā gè xiǎoshí jiào.","es":"Ayer dormí ocho horas."},
+    {"zh":"我想和你说话。","pinyin":"Wǒ xiǎng hé nǐ shuōhuà.","es":"Quiero hablar contigo."},
+    {"zh":"他生病了，今天没上班。","pinyin":"Tā shēngbìng le, jīntiān méi shàngbān.","es":"Está enfermo y hoy no ha ido a trabajar."},
+    {"zh":"我们几点下课？","pinyin":"Wǒmen jǐ diǎn xiàkè?","es":"¿A qué hora terminamos la clase?"},
+    {"zh":"明天我去医院看病。","pinyin":"Míngtiān wǒ qù yīyuàn kànbìng.","es":"Mañana voy al médico."}
+  ],
+  "common_errors": [
+    {"wrong":"我想说话你。","right":"我想和你说话。","why":"说话 ya lleva su objeto (话); la persona con la que hablas va delante, con 和."},
+    {"wrong":"我睡觉了八个小时。","right":"我睡了八个小时觉。","why":"La duración va entre el verbo y su objeto interno."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.2.3"}]
+}

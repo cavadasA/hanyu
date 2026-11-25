@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "2.1.1",
+  "pattern": "nombre + 上 / 下 / 里 / 外 / 前 / 后",
+  "explanation": "Estas palabras van detrás de un nombre para situar algo: 桌子上 «encima de la mesa», 房间里 «en la habitación». El orden es el contrario al español: primero el objeto de referencia y después la posición. Con 在 delante dicen dónde está algo (书在桌子上), y con expresiones de tiempo sitúan antes o después: 吃饭后.",
+  "markers": ["上","里","下","前","后"],
+  "examples": [
+    {"zh":"你的手机在桌子上。","pinyin":"Nǐ de shǒujī zài zhuōzi shang.","es":"Tu móvil está encima de la mesa."},
+    {"zh":"妈妈在房间里。","pinyin":"Māma zài fángjiān li.","es":"Mamá está en la habitación."},
+    {"zh":"椅子下有一只猫。","pinyin":"Yǐzi xià yǒu yì zhī māo.","es":"Debajo de la silla hay un gato."},
+    {"zh":"学校前有一个商店。","pinyin":"Xuéxiào qián yǒu yí gè shāngdiàn.","es":"Delante del colegio hay una tienda."},
+    {"zh":"吃饭后我们去看电影。","pinyin":"Chī fàn hòu wǒmen qù kàn diànyǐng.","es":"Después de comer vamos al cine."}
+  ],
+  "common_errors": [
+    {"wrong":"你的手机在上桌子。","right":"你的手机在桌子上。","why":"La posición va detrás del nombre: 桌子上, no delante como en «encima de la mesa»."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"1.1"},{"hsk_level":2,"code":"2.1.1"}]
+}

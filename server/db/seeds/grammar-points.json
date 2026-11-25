@@ -9,7 +9,48 @@
     "items": [
       "小—、第—"
     ],
-    "order_idx": 1
+    "order_idx": 1,
+    "pattern": "第 + número (+ clasificador) · 小 + nombre",
+    "explanation": "第 delante de un número forma los ordinales: 第一 «primero», 第二天 «el segundo día». 小 delante de un apellido de una sílaba sirve para llamar con confianza a alguien más joven o cercano, y además forma palabras con la idea de «pequeño»: 小朋友, 小学. Los dos son prefijos: van pegados a lo que modifican, sin 的.",
+    "markers": [
+      "第—",
+      "小—"
+    ],
+    "examples": [
+      {
+        "zh": "这是我的第一本汉语书。",
+        "pinyin": "Zhè shì wǒ de dì yī běn Hànyǔ shū.",
+        "es": "Este es mi primer libro de chino."
+      },
+      {
+        "zh": "第二天我们去了医院。",
+        "pinyin": "Dì èr tiān wǒmen qù le yīyuàn.",
+        "es": "Al día siguiente fuimos al hospital."
+      },
+      {
+        "zh": "小朋友，你几岁了？",
+        "pinyin": "Xiǎopéngyǒu, nǐ jǐ suì le?",
+        "es": "Pequeño, ¿cuántos años tienes?"
+      },
+      {
+        "zh": "我女儿在上小学。",
+        "pinyin": "Wǒ nǚ’ér zài shàng xiǎoxué.",
+        "es": "Mi hija va a la escuela primaria."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "这是我一本汉语书。",
+        "right": "这是我的第一本汉语书。",
+        "why": "Sin 第, 一本 es «un libro», no «el primer libro»: el ordinal necesita 第 delante del número."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "8.1"
+      }
+    ]
   },
   {
     "code": "1.2",
@@ -21,7 +62,53 @@
     "items": [
       "—们、—边"
     ],
-    "order_idx": 2
+    "order_idx": 2,
+    "pattern": "pronombre / persona + 们 · 前 / 后 / 外 / 这 / 那 + 边",
+    "explanation": "们 forma el plural de los pronombres (我们, 你们) y de algunos nombres de persona (同学们). No se usa con cosas ni cuando ya hay un número: 三个朋友, nunca «三个朋友们». 边 se pega a una palabra de posición o a 这 / 那 para formar un lugar: 前边 «delante», 外边 «fuera», 这边 «este lado».",
+    "markers": [
+      "们",
+      "边"
+    ],
+    "examples": [
+      {
+        "zh": "你们去哪儿？",
+        "pinyin": "Nǐmen qù nǎr?",
+        "es": "¿Adónde vais?"
+      },
+      {
+        "zh": "同学们，你们好！",
+        "pinyin": "Tóngxuémen, nǐmen hǎo!",
+        "es": "¡Hola a todos!"
+      },
+      {
+        "zh": "商店在前边。",
+        "pinyin": "Shāngdiàn zài qiánbian.",
+        "es": "La tienda está delante."
+      },
+      {
+        "zh": "外边下雨了。",
+        "pinyin": "Wàibian xià yǔ le.",
+        "es": "Fuera está lloviendo."
+      },
+      {
+        "zh": "我们去那边吧。",
+        "pinyin": "Wǒmen qù nàbian ba.",
+        "es": "Vamos hacia allí."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我有三个朋友们。",
+        "right": "我有三个朋友。",
+        "why": "Con un número delante ya se sabe que es plural; 们 sobra."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "1.1"
+      }
+    ]
   },
   {
     "code": "2.1.1",
@@ -33,7 +120,60 @@
     "items": [
       "上、下、里、外、前、后"
     ],
-    "order_idx": 3
+    "order_idx": 3,
+    "pattern": "nombre + 上 / 下 / 里 / 外 / 前 / 后",
+    "explanation": "Estas palabras van detrás de un nombre para situar algo: 桌子上 «encima de la mesa», 房间里 «en la habitación». El orden es el contrario al español: primero el objeto de referencia y después la posición. Con 在 delante dicen dónde está algo (书在桌子上), y con expresiones de tiempo sitúan antes o después: 吃饭后.",
+    "markers": [
+      "上",
+      "里",
+      "下",
+      "前",
+      "后"
+    ],
+    "examples": [
+      {
+        "zh": "你的手机在桌子上。",
+        "pinyin": "Nǐ de shǒujī zài zhuōzi shang.",
+        "es": "Tu móvil está encima de la mesa."
+      },
+      {
+        "zh": "妈妈在房间里。",
+        "pinyin": "Māma zài fángjiān li.",
+        "es": "Mamá está en la habitación."
+      },
+      {
+        "zh": "椅子下有一只猫。",
+        "pinyin": "Yǐzi xià yǒu yì zhī māo.",
+        "es": "Debajo de la silla hay un gato."
+      },
+      {
+        "zh": "学校前有一个商店。",
+        "pinyin": "Xuéxiào qián yǒu yí gè shāngdiàn.",
+        "es": "Delante del colegio hay una tienda."
+      },
+      {
+        "zh": "吃饭后我们去看电影。",
+        "pinyin": "Chī fàn hòu wǒmen qù kàn diànyǐng.",
+        "es": "Después de comer vamos al cine."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你的手机在上桌子。",
+        "right": "你的手机在桌子上。",
+        "why": "La posición va detrás del nombre: 桌子上, no delante como en «encima de la mesa»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "1.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.1.1"
+      }
+    ]
   },
   {
     "code": "2.2.1",
@@ -47,7 +187,56 @@
       "想、要",
       "可以"
     ],
-    "order_idx": 4
+    "order_idx": 4,
+    "pattern": "会 / 能 / 可以 / 想 / 要 + verbo",
+    "explanation": "Van delante de otro verbo. 会 es saber hacer algo que se ha aprendido: 我会说汉语. 能 es poder porque hay capacidad o se dan las circunstancias: 我今天不能去. 可以 es tener permiso: 我可以坐这儿吗？ 想 expresa ganas, «querer», y 要, una intención más firme: 我要喝茶.",
+    "markers": [
+      "会",
+      "能",
+      "可以",
+      "想",
+      "要"
+    ],
+    "examples": [
+      {
+        "zh": "我会说汉语。",
+        "pinyin": "Wǒ huì shuō Hànyǔ.",
+        "es": "Sé hablar chino."
+      },
+      {
+        "zh": "今天我很忙，不能去。",
+        "pinyin": "Jīntiān wǒ hěn máng, bù néng qù.",
+        "es": "Hoy estoy muy ocupado, no puedo ir."
+      },
+      {
+        "zh": "我可以坐这儿吗？",
+        "pinyin": "Wǒ kěyǐ zuò zhèr ma?",
+        "es": "¿Puedo sentarme aquí?"
+      },
+      {
+        "zh": "我想去中国。",
+        "pinyin": "Wǒ xiǎng qù Zhōngguó.",
+        "es": "Quiero ir a China."
+      },
+      {
+        "zh": "我要喝茶。",
+        "pinyin": "Wǒ yào hē chá.",
+        "es": "Quiero té."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我可以说汉语。",
+        "right": "我会说汉语。",
+        "why": "Para una habilidad aprendida se usa 会; 可以 es tener permiso, no saber hacer algo."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.2.2"
+      }
+    ]
   },
   {
     "code": "2.2.2",
@@ -59,7 +248,60 @@
     "items": [
       "看病、睡觉、说话、上课、下课、上班、下班、生病"
     ],
-    "order_idx": 5
+    "order_idx": 5,
+    "pattern": "verbo + (了 / duración) + objeto: 睡了八个小时觉 · 和 + persona + 说话",
+    "explanation": "Estas palabras son un verbo y su objeto unidos, y se pueden separar: 了 o la duración van en medio, como en 睡了八个小时觉 «dormí ocho horas». Por eso no admiten otro objeto detrás: «hablar con él» no es «说话他», sino 和他说话. Sin separar funcionan como un verbo sin objeto: 我们几点下课？",
+    "markers": [
+      "睡",
+      "说话",
+      "病",
+      "下课"
+    ],
+    "examples": [
+      {
+        "zh": "我昨天睡了八个小时觉。",
+        "pinyin": "Wǒ zuótiān shuì le bā gè xiǎoshí jiào.",
+        "es": "Ayer dormí ocho horas."
+      },
+      {
+        "zh": "我想和你说话。",
+        "pinyin": "Wǒ xiǎng hé nǐ shuōhuà.",
+        "es": "Quiero hablar contigo."
+      },
+      {
+        "zh": "他生病了，今天没上班。",
+        "pinyin": "Tā shēngbìng le, jīntiān méi shàngbān.",
+        "es": "Está enfermo y hoy no ha ido a trabajar."
+      },
+      {
+        "zh": "我们几点下课？",
+        "pinyin": "Wǒmen jǐ diǎn xiàkè?",
+        "es": "¿A qué hora terminamos la clase?"
+      },
+      {
+        "zh": "明天我去医院看病。",
+        "pinyin": "Míngtiān wǒ qù yīyuàn kànbìng.",
+        "es": "Mañana voy al médico."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我想说话你。",
+        "right": "我想和你说话。",
+        "why": "说话 ya lleva su objeto (话); la persona con la que hablas va delante, con 和."
+      },
+      {
+        "wrong": "我睡觉了八个小时。",
+        "right": "我睡了八个小时觉。",
+        "why": "La duración va entre el verbo y su objeto interno."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.2.3"
+      }
+    ]
   },
   {
     "code": "2.3.1",
@@ -71,7 +313,56 @@
     "items": [
       "多、多少、几、哪、哪儿、哪里、哪些、什么、谁、怎么、怎么样"
     ],
-    "order_idx": 6
+    "order_idx": 6,
+    "pattern": "La palabra interrogativa ocupa el lugar de la respuesta",
+    "explanation": "En chino la palabra interrogativa no se adelanta: va donde iría la respuesta. 你去哪儿？ → 我去商店. 谁 pregunta por personas, 什么 por cosas, 哪儿 por lugares, 几 por cantidades pequeñas (con clasificador) y 多少 por cualquier cantidad. 怎么 pregunta cómo se hace algo y 怎么样, qué tal está. Con todas ellas la frase ya es pregunta y no lleva 吗.",
+    "markers": [
+      "什么",
+      "谁",
+      "哪",
+      "几",
+      "怎么"
+    ],
+    "examples": [
+      {
+        "zh": "你叫什么名字？",
+        "pinyin": "Nǐ jiào shénme míngzi?",
+        "es": "¿Cómo te llamas?"
+      },
+      {
+        "zh": "他是谁？",
+        "pinyin": "Tā shì shéi?",
+        "es": "¿Quién es él?"
+      },
+      {
+        "zh": "你去哪儿？",
+        "pinyin": "Nǐ qù nǎr?",
+        "es": "¿Adónde vas?"
+      },
+      {
+        "zh": "你家有几口人？",
+        "pinyin": "Nǐ jiā yǒu jǐ kǒu rén?",
+        "es": "¿Cuántas personas sois en tu familia?"
+      },
+      {
+        "zh": "今天天气怎么样？",
+        "pinyin": "Jīntiān tiānqì zěnmeyàng?",
+        "es": "¿Qué tiempo hace hoy?"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "什么你喜欢？",
+        "right": "你喜欢什么？",
+        "why": "La palabra interrogativa no se adelanta como en «¿qué te gusta?»: se queda donde iría la respuesta."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.3.1"
+      }
+    ]
   },
   {
     "code": "2.3.2",
@@ -83,7 +374,56 @@
     "items": [
       "我、你、您、他、她、我们、你们、他们、她们、它、它们、大家"
     ],
-    "order_idx": 7
+    "order_idx": 7,
+    "pattern": "我 / 你 / 您 / 他 / 她 / 它 (+ 们) · 大家",
+    "explanation": "Los pronombres no cambian según su función: 我 vale para «yo», «me» y «mí». El plural se forma con 们. 您 es el «usted» de cortesía y normalmente no lleva 们. 他, 她 y 它 se pronuncian igual (tā) y solo se distinguen por escrito: hombre, mujer, y animal o cosa. 大家 es «todos»: 大家好.",
+    "markers": [
+      "我",
+      "您",
+      "它",
+      "大家",
+      "她们"
+    ],
+    "examples": [
+      {
+        "zh": "我喜欢他，他也喜欢我。",
+        "pinyin": "Wǒ xǐhuan tā, tā yě xǐhuan wǒ.",
+        "es": "Él me gusta y yo le gusto a él."
+      },
+      {
+        "zh": "您好，请坐。",
+        "pinyin": "Nín hǎo, qǐng zuò.",
+        "es": "Buenos días, siéntese, por favor."
+      },
+      {
+        "zh": "这是我的猫，它很小。",
+        "pinyin": "Zhè shì wǒ de māo, tā hěn xiǎo.",
+        "es": "Este es mi gato; es muy pequeño."
+      },
+      {
+        "zh": "大家好！",
+        "pinyin": "Dàjiā hǎo!",
+        "es": "¡Hola a todos!"
+      },
+      {
+        "zh": "她们是我的同学。",
+        "pinyin": "Tāmen shì wǒ de tóngxué.",
+        "es": "Ellas son mis compañeras de clase."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "您们好！",
+        "right": "大家好！",
+        "why": "您 casi nunca lleva 们; para saludar a un grupo se dice 大家好 o 你们好."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.3.2"
+      }
+    ]
   },
   {
     "code": "2.3.3",
@@ -95,7 +435,54 @@
     "items": [
       "这、那、这儿、那儿、这里、那里、这些、那些、有的、这个、那个、有些"
     ],
-    "order_idx": 8
+    "order_idx": 8,
+    "pattern": "这 / 那 (+ número) + clasificador + nombre · 这儿 / 那儿 · 有的 + nombre",
+    "explanation": "这 señala lo cercano y 那 lo lejano. Delante de un nombre necesitan un clasificador: 这个人, 那本书; en plural, 这些 y 那些. Para lugares se usan 这儿 y 那儿, o 这里 y 那里. 有的 y 有些 significan «algunos» y van delante del sujeto: 有的人喜欢喝茶.",
+    "markers": [
+      "这",
+      "那",
+      "有的"
+    ],
+    "examples": [
+      {
+        "zh": "这个苹果很好吃。",
+        "pinyin": "Zhège píngguǒ hěn hǎochī.",
+        "es": "Esta manzana está muy rica."
+      },
+      {
+        "zh": "那本书是我的。",
+        "pinyin": "Nà běn shū shì wǒ de.",
+        "es": "Ese libro es mío."
+      },
+      {
+        "zh": "你来这儿吧。",
+        "pinyin": "Nǐ lái zhèr ba.",
+        "es": "Ven aquí."
+      },
+      {
+        "zh": "这些东西都很贵。",
+        "pinyin": "Zhèxiē dōngxi dōu hěn guì.",
+        "es": "Todas estas cosas son muy caras."
+      },
+      {
+        "zh": "有的人喜欢喝茶，有的人喜欢喝水。",
+        "pinyin": "Yǒude rén xǐhuan hē chá, yǒude rén xǐhuan hē shuǐ.",
+        "es": "A unos les gusta el té y a otros el agua."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我喜欢这书。",
+        "right": "我喜欢这本书。",
+        "why": "这 y 那 necesitan un clasificador antes del nombre."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.3.3"
+      }
+    ]
   },
   {
     "code": "2.4",
@@ -107,7 +494,56 @@
     "items": [
       "一、二/两、三、四、五、六、七、八、九、零、十、百、半、千"
     ],
-    "order_idx": 9
+    "order_idx": 9,
+    "pattern": "número + clasificador + nombre · 两 + clasificador · 二 al contar",
+    "explanation": "Los números se forman sumando: 十二 es diez y dos, 二十 son dos dieces, y 零 marca el hueco: 一百零五 = 105. Delante de un clasificador, «dos» se dice 两 (两个人); al contar, en las cifras y en los ordinales se usa 二 (十二, 第二). 半 es «medio»: 半个小时.",
+    "markers": [
+      "两",
+      "十二",
+      "千",
+      "半",
+      "零"
+    ],
+    "examples": [
+      {
+        "zh": "我有两个孩子。",
+        "pinyin": "Wǒ yǒu liǎng gè háizi.",
+        "es": "Tengo dos hijos."
+      },
+      {
+        "zh": "今天是十二号。",
+        "pinyin": "Jīntiān shì shí’èr hào.",
+        "es": "Hoy es día doce."
+      },
+      {
+        "zh": "这个手机两千块。",
+        "pinyin": "Zhège shǒujī liǎngqiān kuài.",
+        "es": "Este móvil cuesta dos mil yuanes."
+      },
+      {
+        "zh": "我睡了半个小时。",
+        "pinyin": "Wǒ shuì le bàn gè xiǎoshí.",
+        "es": "Dormí media hora."
+      },
+      {
+        "zh": "这本书一百零五块。",
+        "pinyin": "Zhè běn shū yìbǎi líng wǔ kuài.",
+        "es": "Este libro cuesta ciento cinco yuanes."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我有二个孩子。",
+        "right": "我有两个孩子。",
+        "why": "Delante de un clasificador «dos» se dice 两, no 二."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.5"
+      }
+    ]
   },
   {
     "code": "2.5.1",
@@ -120,7 +556,56 @@
       "（1）专用名量词：本、个、家、口、块、件、只、元",
       "（2）借用名量词：杯"
     ],
-    "order_idx": 10
+    "order_idx": 10,
+    "pattern": "número / 这 / 那 + clasificador + nombre",
+    "explanation": "En chino un número no va directamente delante de un nombre: entre los dos hay un clasificador. 个 es el más general; 本 es para libros, 件 para ropa y asuntos, 家 para comercios, 口 para los miembros de una familia, 只 para animales pequeños y 块 o 元 para el dinero. 杯 se toma de «vaso»: 一杯茶.",
+    "markers": [
+      "本",
+      "口",
+      "件",
+      "杯",
+      "只"
+    ],
+    "examples": [
+      {
+        "zh": "我买了两本书。",
+        "pinyin": "Wǒ mǎi le liǎng běn shū.",
+        "es": "Compré dos libros."
+      },
+      {
+        "zh": "他家有四口人。",
+        "pinyin": "Tā jiā yǒu sì kǒu rén.",
+        "es": "En su familia son cuatro."
+      },
+      {
+        "zh": "这件衣服很漂亮。",
+        "pinyin": "Zhè jiàn yīfu hěn piàoliang.",
+        "es": "Esta ropa es muy bonita."
+      },
+      {
+        "zh": "我想喝一杯水。",
+        "pinyin": "Wǒ xiǎng hē yì bēi shuǐ.",
+        "es": "Quiero beber un vaso de agua."
+      },
+      {
+        "zh": "那只猫很小。",
+        "pinyin": "Nà zhī māo hěn xiǎo.",
+        "es": "Ese gato es muy pequeño."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我有两书。",
+        "right": "我有两本书。",
+        "why": "Entre el número y el nombre siempre va un clasificador."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.6.1"
+      }
+    ]
   },
   {
     "code": "2.5.2",

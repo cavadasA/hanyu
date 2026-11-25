@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "2.5.1",
+  "pattern": "número / 这 / 那 + clasificador + nombre",
+  "explanation": "En chino un número no va directamente delante de un nombre: entre los dos hay un clasificador. 个 es el más general; 本 es para libros, 件 para ropa y asuntos, 家 para comercios, 口 para los miembros de una familia, 只 para animales pequeños y 块 o 元 para el dinero. 杯 se toma de «vaso»: 一杯茶.",
+  "markers": ["本","口","件","杯","只"],
+  "examples": [
+    {"zh":"我买了两本书。","pinyin":"Wǒ mǎi le liǎng běn shū.","es":"Compré dos libros."},
+    {"zh":"他家有四口人。","pinyin":"Tā jiā yǒu sì kǒu rén.","es":"En su familia son cuatro."},
+    {"zh":"这件衣服很漂亮。","pinyin":"Zhè jiàn yīfu hěn piàoliang.","es":"Esta ropa es muy bonita."},
+    {"zh":"我想喝一杯水。","pinyin":"Wǒ xiǎng hē yì bēi shuǐ.","es":"Quiero beber un vaso de agua."},
+    {"zh":"那只猫很小。","pinyin":"Nà zhī māo hěn xiǎo.","es":"Ese gato es muy pequeño."}
+  ],
+  "common_errors": [
+    {"wrong":"我有两书。","right":"我有两本书。","why":"Entre el número y el nombre siempre va un clasificador."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.6.1"}]
+}

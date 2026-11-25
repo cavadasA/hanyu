@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "2.3.1",
+  "pattern": "La palabra interrogativa ocupa el lugar de la respuesta",
+  "explanation": "En chino la palabra interrogativa no se adelanta: va donde iría la respuesta. 你去哪儿？ → 我去商店. 谁 pregunta por personas, 什么 por cosas, 哪儿 por lugares, 几 por cantidades pequeñas (con clasificador) y 多少 por cualquier cantidad. 怎么 pregunta cómo se hace algo y 怎么样, qué tal está. Con todas ellas la frase ya es pregunta y no lleva 吗.",
+  "markers": ["什么","谁","哪","几","怎么"],
+  "examples": [
+    {"zh":"你叫什么名字？","pinyin":"Nǐ jiào shénme míngzi?","es":"¿Cómo te llamas?"},
+    {"zh":"他是谁？","pinyin":"Tā shì shéi?","es":"¿Quién es él?"},
+    {"zh":"你去哪儿？","pinyin":"Nǐ qù nǎr?","es":"¿Adónde vas?"},
+    {"zh":"你家有几口人？","pinyin":"Nǐ jiā yǒu jǐ kǒu rén?","es":"¿Cuántas personas sois en tu familia?"},
+    {"zh":"今天天气怎么样？","pinyin":"Jīntiān tiānqì zěnmeyàng?","es":"¿Qué tiempo hace hoy?"}
+  ],
+  "common_errors": [
+    {"wrong":"什么你喜欢？","right":"你喜欢什么？","why":"La palabra interrogativa no se adelanta como en «¿qué te gusta?»: se queda donde iría la respuesta."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.3.1"}]
+}
