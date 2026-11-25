@@ -1,0 +1,103 @@
+{
+  "slug": "ocio-04-football",
+  "title": "看小飞踢球",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "ocio",
+  "series": "ocio",
+  "series_index": 4,
+  "target_words": [
+    "踢",
+    "球",
+    "篮球"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.8.3",
+      "level": 2
+    },
+    {
+      "code": "2.10.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "星期天下午，方方去学校看小飞踢足球。",
+      "pinyin": "Xīngqītiān xiàwǔ, Fāngfāng qù xuéxiào kàn Xiǎofēi tī zúqiú.",
+      "es": "El domingo por la tarde, Fangfang fue a la universidad a ver jugar al fútbol a Xiaofei."
+    },
+    {
+      "zh": "旁边有很多同学，大家都在看。",
+      "pinyin": "Pángbiān yǒu hěn duō tóngxué, dàjiā dōu zài kàn.",
+      "es": "Alrededor había muchos compañeros mirando."
+    },
+    {
+      "zh": "小飞穿着红色的衣服，跑得非常快。",
+      "pinyin": "Xiǎofēi chuān zhe hóngsè de yīfu, pǎo de fēicháng kuài.",
+      "es": "Xiaofei llevaba ropa roja y corría muchísimo."
+    },
+    {
+      "zh": "他踢进去了两个球。",
+      "pinyin": "Tā tī jìnqù le liǎng gè qiú.",
+      "es": "Metió dos goles."
+    },
+    {
+      "zh": "方方也很高兴，她第一次觉得踢球很有意思。",
+      "pinyin": "Fāngfāng yě hěn gāoxìng, tā dì yī cì juéde tī qiú hěn yǒuyìsi.",
+      "es": "Fangfang también se puso muy contenta; por primera vez el fútbol le pareció interesante."
+    },
+    {
+      "zh": "踢完球，小飞给方方介绍他的朋友们。",
+      "pinyin": "Tī wán qiú, Xiǎofēi gěi Fāngfāng jièshào tā de péngyou men.",
+      "es": "Después del partido, Xiaofei le presentó a sus amigos."
+    },
+    {
+      "zh": "他们说下个星期要打篮球，问方方想不想来。",
+      "pinyin": "Tāmen shuō xià gè xīngqī yào dǎ lánqiú, wèn Fāngfāng xiǎng bu xiǎng lái.",
+      "es": "Le dijeron que la semana que viene juegan al baloncesto y le preguntaron si quería ir."
+    },
+    {
+      "zh": "方方说她不会打篮球，但是可以来看。",
+      "pinyin": "Fāngfāng shuō tā bú huì dǎ lánqiú, dànshì kěyǐ lái kàn.",
+      "es": "Fangfang dijo que no sabe jugar al baloncesto, pero que puede ir a verlos."
+    },
+    {
+      "zh": "回家的时候，方方想请小飞看电影。",
+      "pinyin": "Huí jiā de shíhou, Fāngfāng xiǎng qǐng Xiǎofēi kàn diànyǐng.",
+      "es": "De vuelta a casa, Fangfang pensó en invitar a Xiaofei al cine."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "小飞穿着什么颜色的衣服？",
+      "options": [
+        "白色的",
+        "红色的",
+        "黑色的"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "小飞踢进去了几个球？",
+      "options": [
+        "两个",
+        "一个",
+        "三个"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "方方想请小飞做什么？",
+      "options": [
+        "打篮球",
+        "游泳",
+        "看电影"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 8
+    }
+  ]
+}

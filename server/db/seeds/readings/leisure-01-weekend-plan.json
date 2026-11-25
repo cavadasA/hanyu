@@ -1,26 +1,103 @@
 {
   "slug": "leisure-01-weekend-plan",
-  "title": "星期天看电影",
+  "title": "我们的爱好",
   "hsk_level": 2,
   "format": "short_text",
   "topic": "ocio",
   "series": "ocio",
   "series_index": 1,
-  "target_words": ["电影", "一起", "快乐"],
-  "target_grammar": [{"code": "6.4.4", "level": 2}],
+  "target_words": [
+    "爱好",
+    "足球",
+    "没意思"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.9.1",
+      "level": 2
+    },
+    {
+      "code": "6.4.2",
+      "level": 2
+    }
+  ],
   "sentences": [
-    { "zh": "我叫方方。", "pinyin": "Wǒ jiào Fāngfang.", "es": "Me llamo Fangfang." },
-    { "zh": "星期天我没有课，想和朋友一起看电影。", "pinyin": "Xīngqītiān wǒ méiyǒu kè, xiǎng hé péngyou yìqǐ kàn diànyǐng.", "es": "El domingo no tengo clase y quiero ver una película con mi amigo." },
-    { "zh": "我们在家里吃饭，再坐地铁去电影院。", "pinyin": "Wǒmen zài jiā lǐ chīfàn, zài zuò dìtiě qù diànyǐngyuàn.", "es": "Comemos en casa y después vamos al cine en metro." },
-    { "zh": "朋友说这个电影很好看，但是时间有一点儿晚。", "pinyin": "Péngyou shuō zhège diànyǐng hěn hǎokàn, dànshì shíjiān yǒu yìdiǎnr wǎn.", "es": "Mi amigo dice que esta película es muy bonita, pero la hora es algo tarde." },
-    { "zh": "电影完了，我们在外边喝茶。", "pinyin": "Diànyǐng wán le, wǒmen zài wàibian hē chá.", "es": "Cuando termina la película, tomamos té fuera." },
-    { "zh": "我觉得和朋友一起做事很快乐。", "pinyin": "Wǒ juéde hé péngyou yìqǐ zuò shì hěn kuàilè.", "es": "Creo que hacer cosas con amigos es muy divertido." },
-    { "zh": "晚上回到家，我给妈妈打电话。", "pinyin": "Wǎnshang huí dào jiā, wǒ gěi māma dǎ diànhuà.", "es": "Por la noche vuelvo a casa y llamo a mamá." },
-    { "zh": "我们还一起看书。", "pinyin": "Wǒmen hái yìqǐ kàn shū.", "es": "También leemos juntos." }
+    {
+      "zh": "我叫方方，我的爱好是看电影和看书。",
+      "pinyin": "Wǒ jiào Fāngfāng, wǒ de àihào shì kàn diànyǐng hé kàn shū.",
+      "es": "Me llamo Fangfang; mis aficiones son ver películas y leer."
+    },
+    {
+      "zh": "我有一个好朋友，他叫小飞。",
+      "pinyin": "Wǒ yǒu yí gè hǎo péngyou, tā jiào Xiǎofēi.",
+      "es": "Tengo un buen amigo que se llama Xiaofei."
+    },
+    {
+      "zh": "小飞最大的爱好是运动。",
+      "pinyin": "Xiǎofēi zuì dà de àihào shì yùndòng.",
+      "es": "La mayor afición de Xiaofei es el deporte."
+    },
+    {
+      "zh": "他每个星期都踢足球，有时候也打篮球。",
+      "pinyin": "Tā měi gè xīngqī dōu tī zúqiú, yǒushíhou yě dǎ lánqiú.",
+      "es": "Juega al fútbol todas las semanas y a veces también al baloncesto."
+    },
+    {
+      "zh": "他还很会游泳，从小就喜欢在水里玩。",
+      "pinyin": "Tā hái hěn huì yóuyǒng, cóngxiǎo jiù xǐhuan zài shuǐ lǐ wán.",
+      "es": "Además nada muy bien; desde pequeño le gusta jugar en el agua."
+    },
+    {
+      "zh": "我不会游泳，也不喜欢踢球。",
+      "pinyin": "Wǒ bú huì yóuyǒng, yě bù xǐhuan tī qiú.",
+      "es": "Yo no sé nadar y tampoco me gusta jugar al fútbol."
+    },
+    {
+      "zh": "我觉得跑来跑去没意思，很累也很热。",
+      "pinyin": "Wǒ juéde pǎo lái pǎo qù méiyìsi, hěn lèi yě hěn rè.",
+      "es": "Me parece aburrido correr de un lado a otro: cansa mucho y da mucho calor."
+    },
+    {
+      "zh": "虽然我不喜欢运动，但是我们是很好的朋友。",
+      "pinyin": "Suīrán wǒ bù xǐhuan yùndòng, dànshì wǒmen shì hěn hǎo de péngyou.",
+      "es": "Aunque a mí no me gusta el deporte, somos muy buenos amigos."
+    },
+    {
+      "zh": "小飞说，他想让我和他一起运动。",
+      "pinyin": "Xiǎofēi shuō, tā xiǎng ràng wǒ hé tā yìqǐ yùndòng.",
+      "es": "Xiaofei dice que quiere que haga deporte con él."
+    }
   ],
   "questions": [
-    { "prompt": "他们怎么去电影院？", "options": ["坐飞机", "走路", "坐地铁"], "answer_index": 2, "evidence_sentence": 2 },
-    { "prompt": "朋友觉得电影怎么样？", "options": ["很好看", "很冷", "太贵"], "answer_index": 0, "evidence_sentence": 3 },
-    { "prompt": "我晚上给谁打电话？", "options": ["老师", "妈妈", "朋友"], "answer_index": 1, "evidence_sentence": 6 }
+    {
+      "prompt": "方方的爱好是什么？",
+      "options": [
+        "踢足球",
+        "看电影和看书",
+        "游泳"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "小飞每个星期做什么？",
+      "options": [
+        "踢足球",
+        "看书",
+        "去医院"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "方方觉得跑来跑去怎么样？",
+      "options": [
+        "很快乐",
+        "很有意思",
+        "没意思"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 6
+    }
   ]
 }

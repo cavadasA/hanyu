@@ -1,0 +1,103 @@
+{
+  "slug": "ocio-03-learning-to-swim",
+  "title": "第一次游泳",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "ocio",
+  "series": "ocio",
+  "series_index": 3,
+  "target_words": [
+    "游",
+    "慢",
+    "笑"
+  ],
+  "target_grammar": [
+    {
+      "code": "5.4.3",
+      "level": 2
+    },
+    {
+      "code": "2.7.3",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "星期六上午，方方和小飞去学校里游泳。",
+      "pinyin": "Xīngqīliù shàngwǔ, Fāngfāng hé Xiǎofēi qù xuéxiào lǐ yóuyǒng.",
+      "es": "El sábado por la mañana, Fangfang y Xiaofei fueron a nadar a la universidad."
+    },
+    {
+      "zh": "水里有很多人，有大人，也有小孩儿。",
+      "pinyin": "Shuǐ lǐ yǒu hěn duō rén, yǒu dà rén, yě yǒu xiǎoháir.",
+      "es": "En el agua había mucha gente: adultos y también niños."
+    },
+    {
+      "zh": "小飞让方方在水里走一会儿。",
+      "pinyin": "Xiǎofēi ràng Fāngfāng zài shuǐ lǐ zǒu yíhuìr.",
+      "es": "Xiaofei le dijo a Fangfang que caminara un rato por el agua."
+    },
+    {
+      "zh": "方方走得很慢，她说水有一点儿冷。",
+      "pinyin": "Fāngfāng zǒu de hěn màn, tā shuō shuǐ yǒuyìdiǎnr lěng.",
+      "es": "Fangfang caminaba muy despacio; decía que el agua estaba un poco fría."
+    },
+    {
+      "zh": "小飞教她怎么在水里动手。",
+      "pinyin": "Xiǎofēi jiāo tā zěnme zài shuǐ lǐ dòng shǒu.",
+      "es": "Xiaofei le enseñó a mover las manos en el agua."
+    },
+    {
+      "zh": "一个小时后，方方可以游一会儿了。",
+      "pinyin": "Yí gè xiǎoshí hòu, Fāngfāng kěyǐ yóu yíhuìr le.",
+      "es": "Una hora después, Fangfang ya podía nadar un poco."
+    },
+    {
+      "zh": "她游得不快，但是她笑得很高兴。",
+      "pinyin": "Tā yóu de bú kuài, dànshì tā xiào de hěn gāoxìng.",
+      "es": "No nadaba rápido, pero sonreía muy contenta."
+    },
+    {
+      "zh": "方方说游泳比她想的有意思。",
+      "pinyin": "Fāngfāng shuō yóuyǒng bǐ tā xiǎng de yǒuyìsi.",
+      "es": "Fangfang dijo que nadar era más divertido de lo que pensaba."
+    },
+    {
+      "zh": "小飞说下个星期他要踢足球，请她去看。",
+      "pinyin": "Xiǎofēi shuō xià gè xīngqī tā yào tī zúqiú, qǐng tā qù kàn.",
+      "es": "Xiaofei le dijo que la semana que viene juega al fútbol y la invitó a verlo."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "他们在哪儿游泳？",
+      "options": [
+        "在酒店",
+        "在学校里",
+        "在家里"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "方方说水怎么样？",
+      "options": [
+        "有一点儿冷",
+        "很热",
+        "很好喝"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "一个小时后，方方怎么样了？",
+      "options": [
+        "回家了",
+        "睡觉了",
+        "可以游一会儿了"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 5
+    }
+  ]
+}

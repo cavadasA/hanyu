@@ -1,0 +1,103 @@
+{
+  "slug": "ocio-02-swimming",
+  "title": "我教你游泳",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "ocio",
+  "series": "ocio",
+  "series_index": 2,
+  "target_words": [
+    "游泳",
+    "教",
+    "一会儿"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.2.2",
+      "level": 2
+    },
+    {
+      "code": "6.4.3",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "小飞：方方，星期六天气很好，我们去游泳吧！",
+      "pinyin": "Xiǎofēi: Fāngfāng, xīngqīliù tiānqì hěn hǎo, wǒmen qù yóuyǒng ba!",
+      "es": "Xiaofei: Fangfang, el sábado hará muy buen tiempo; ¡vamos a nadar!"
+    },
+    {
+      "zh": "方方：我不会游泳，你知道的。",
+      "pinyin": "Fāngfāng: Wǒ bú huì yóuyǒng, nǐ zhīdào de.",
+      "es": "Fangfang: No sé nadar, ya lo sabes."
+    },
+    {
+      "zh": "小飞：没关系，我可以教你。",
+      "pinyin": "Xiǎofēi: Méiguānxi, wǒ kěyǐ jiāo nǐ.",
+      "es": "Xiaofei: No pasa nada, yo te puedo enseñar."
+    },
+    {
+      "zh": "方方：我觉得在水里很不舒服。",
+      "pinyin": "Fāngfāng: Wǒ juéde zài shuǐ lǐ hěn bù shūfu.",
+      "es": "Fangfang: En el agua me siento muy incómoda."
+    },
+    {
+      "zh": "小飞：别这样想，我们在水里走一会儿就好了。",
+      "pinyin": "Xiǎofēi: Bié zhèyàng xiǎng, wǒmen zài shuǐ lǐ zǒu yíhuìr jiù hǎo le.",
+      "es": "Xiaofei: No pienses eso; caminamos un rato por el agua y ya verás."
+    },
+    {
+      "zh": "方方：学游泳要多长时间？",
+      "pinyin": "Fāngfāng: Xué yóuyǒng yào duō cháng shíjiān?",
+      "es": "Fangfang: ¿Cuánto se tarda en aprender a nadar?"
+    },
+    {
+      "zh": "小飞：有的人一个星期就会了。",
+      "pinyin": "Xiǎofēi: Yǒude rén yí gè xīngqī jiù huì le.",
+      "es": "Xiaofei: Hay gente que aprende en una semana."
+    },
+    {
+      "zh": "方方：好吧，因为是你教我，所以我去。",
+      "pinyin": "Fāngfāng: Hǎo ba, yīnwèi shì nǐ jiāo wǒ, suǒyǐ wǒ qù.",
+      "es": "Fangfang: Está bien; como me enseñas tú, voy."
+    },
+    {
+      "zh": "小飞：太好了！星期六上午九点，学校门口见。",
+      "pinyin": "Xiǎofēi: Tài hǎo le! Xīngqīliù shàngwǔ jiǔ diǎn, xuéxiào ménkǒu jiàn.",
+      "es": "Xiaofei: ¡Estupendo! El sábado a las nueve de la mañana, nos vemos en la puerta de la universidad."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "小飞想星期六做什么？",
+      "options": [
+        "踢足球",
+        "去游泳",
+        "看电影"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "谁可以教方方游泳？",
+      "options": [
+        "小飞",
+        "老师",
+        "方方的妈妈"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "他们星期六在哪儿见？",
+      "options": [
+        "电影院",
+        "小飞家",
+        "学校门口"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 8
+    }
+  ]
+}
