@@ -1,0 +1,108 @@
+{
+  "slug": "vecinos-02-grandma-li",
+  "title": "楼上的李奶奶",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "comunicación interpersonal",
+  "series": "vecinos",
+  "series_index": 2,
+  "target_words": [
+    "包",
+    "上来",
+    "高中"
+  ],
+  "target_grammar": [
+    {
+      "code": "6.3.6",
+      "level": 2
+    },
+    {
+      "code": "2.10.3",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "第二天晚上，李奶奶拿着一包东西下楼来了。",
+      "pinyin": "Dì èr tiān wǎnshang, Lǐ nǎinai ná zhe yì bāo dōngxi xià lóu lái le.",
+      "es": "La noche siguiente, la abuela Li bajó con un paquete."
+    },
+    {
+      "zh": "李奶奶：小平，这是我做的包子，你们吃吧。",
+      "pinyin": "Lǐ nǎinai: Xiǎopíng, zhè shì wǒ zuò de bāozi, nǐmen chī ba.",
+      "es": "Abuela Li: Xiaoping, son baozi que he hecho yo; coméoslos."
+    },
+    {
+      "zh": "小平：谢谢李奶奶！您进来坐一会儿吧。",
+      "pinyin": "Xiǎopíng: Xièxie Lǐ nǎinai! Nín jìnlái zuò yíhuìr ba.",
+      "es": "Xiaoping: ¡Gracias, abuela Li! Pase y siéntese un rato."
+    },
+    {
+      "zh": "李奶奶：好。你在哪个学校上学？",
+      "pinyin": "Lǐ nǎinai: Hǎo. Nǐ zài nǎge xuéxiào shàngxué?",
+      "es": "Abuela Li: Bien. ¿En qué escuela estudias?"
+    },
+    {
+      "zh": "小平：在旁边的那个高中，走路十分钟。",
+      "pinyin": "Xiǎopíng: Zài pángbiān de nàge gāozhōng, zǒulù shí fēnzhōng.",
+      "es": "Xiaoping: En el instituto de al lado; está a diez minutos andando."
+    },
+    {
+      "zh": "李奶奶：那个学校很好，我儿子小时候也在那里上学。",
+      "pinyin": "Lǐ nǎinai: Nàge xuéxiào hěn hǎo, wǒ érzi xiǎoshíhou yě zài nàlǐ shàngxué.",
+      "es": "Abuela Li: Es muy buena escuela; mi hijo también estudió allí de pequeño."
+    },
+    {
+      "zh": "小平：您的儿子现在住在哪儿？",
+      "pinyin": "Xiǎopíng: Nín de érzi xiànzài zhù zài nǎr?",
+      "es": "Xiaoping: ¿Dónde vive ahora su hijo?"
+    },
+    {
+      "zh": "李奶奶：他在外国工作，一年回来一次。",
+      "pinyin": "Lǐ nǎinai: Tā zài wàiguó gōngzuò, yì nián huílái yí cì.",
+      "es": "Abuela Li: Trabaja en el extranjero y vuelve una vez al año."
+    },
+    {
+      "zh": "小平：您一个人住，有事就叫我，我很快就上来。",
+      "pinyin": "Xiǎopíng: Nín yí gè rén zhù, yǒu shì jiù jiào wǒ, wǒ hěn kuài jiù shànglái.",
+      "es": "Xiaoping: Usted vive sola; si necesita algo, llámeme y subo enseguida."
+    },
+    {
+      "zh": "李奶奶：你真是一个好孩子！",
+      "pinyin": "Lǐ nǎinai: Nǐ zhēn shì yí gè hǎo háizi!",
+      "es": "Abuela Li: ¡Qué buen chico eres!"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "李奶奶给小平拿来了什么？",
+      "options": [
+        "水果",
+        "包子",
+        "面条儿"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "李奶奶的儿子在哪儿工作？",
+      "options": [
+        "在外国",
+        "在高中",
+        "在医院"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 6
+    },
+    {
+      "prompt": "小平说李奶奶有事可以怎么样？",
+      "options": [
+        "给她儿子打电话",
+        "去医院",
+        "叫他"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}

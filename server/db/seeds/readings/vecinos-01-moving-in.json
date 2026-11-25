@@ -1,0 +1,103 @@
+{
+  "slug": "vecinos-01-moving-in",
+  "title": "新家",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "comunicación interpersonal",
+  "series": "vecinos",
+  "series_index": 1,
+  "target_words": [
+    "高中",
+    "进来",
+    "过来"
+  ],
+  "target_grammar": [
+    {
+      "code": "5.4.2",
+      "level": 2
+    },
+    {
+      "code": "3.1.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "小平今年十六岁，在高中上学。",
+      "pinyin": "Xiǎopíng jīnnián shíliù suì, zài gāozhōng shàngxué.",
+      "es": "Xiaoping tiene dieciséis años y estudia en el instituto."
+    },
+    {
+      "zh": "这个星期六，他和爸爸妈妈住进了一个新楼。",
+      "pinyin": "Zhège xīngqīliù, tā hé bàba māma zhù jìn le yí gè xīn lóu.",
+      "es": "Este sábado se mudó con sus padres a un edificio nuevo."
+    },
+    {
+      "zh": "他们的家在五楼，有三个房间。",
+      "pinyin": "Tāmen de jiā zài wǔ lóu, yǒu sān gè fángjiān.",
+      "es": "Su casa está en el quinto piso y tiene tres habitaciones."
+    },
+    {
+      "zh": "东西很多，他们从早上忙到下午。",
+      "pinyin": "Dōngxi hěn duō, tāmen cóng zǎoshang máng dào xiàwǔ.",
+      "es": "Tenían muchas cosas y estuvieron ocupados desde la mañana hasta la tarde."
+    },
+    {
+      "zh": "小平拿着一个大包上楼的时候，楼上下来一位奶奶。",
+      "pinyin": "Xiǎopíng ná zhe yí gè dà bāo shàng lóu de shíhou, lóu shàng xiàlái yí wèi nǎinai.",
+      "es": "Cuando Xiaoping subía con una bolsa grande, una anciana bajó del piso de arriba."
+    },
+    {
+      "zh": "她说大家都叫她李奶奶，她住在六楼。",
+      "pinyin": "Tā shuō dàjiā dōu jiào tā Lǐ nǎinai, tā zhù zài liù lóu.",
+      "es": "Dijo que todos la llaman abuela Li y que vive en el sexto."
+    },
+    {
+      "zh": "李奶奶帮他开门，让他快进来。",
+      "pinyin": "Lǐ nǎinai bāng tā kāi mén, ràng tā kuài jìnlái.",
+      "es": "La abuela Li le abrió la puerta y le dijo que entrara rápido."
+    },
+    {
+      "zh": "小平说谢谢，李奶奶笑着说没关系。",
+      "pinyin": "Xiǎopíng shuō xièxie, Lǐ nǎinai xiào zhe shuō méiguānxi.",
+      "es": "Xiaoping le dio las gracias y la abuela Li dijo sonriendo que no era nada."
+    },
+    {
+      "zh": "她还说有问题可以过来找她。",
+      "pinyin": "Tā hái shuō yǒu wèntí kěyǐ guòlái zhǎo tā.",
+      "es": "También le dijo que, si tenía algún problema, podía ir a buscarla."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "小平的家在几楼？",
+      "options": [
+        "六楼",
+        "五楼",
+        "三楼"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "李奶奶住在几楼？",
+      "options": [
+        "六楼",
+        "五楼",
+        "一楼"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 5
+    },
+    {
+      "prompt": "李奶奶帮小平做了什么？",
+      "options": [
+        "拿包",
+        "做饭",
+        "开门"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 6
+    }
+  ]
+}

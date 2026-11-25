@@ -1,0 +1,103 @@
+{
+  "slug": "vecinos-03-helping",
+  "title": "帮李奶奶",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "comunicación interpersonal",
+  "series": "vecinos",
+  "series_index": 3,
+  "target_words": [
+    "后面",
+    "出",
+    "但"
+  ],
+  "target_grammar": [
+    {
+      "code": "6.3.4",
+      "level": 2
+    },
+    {
+      "code": "5.4.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "安安是小平的同学，她家在小平家后面。",
+      "pinyin": "Ān'ān shì Xiǎopíng de tóngxué, tā jiā zài Xiǎopíng jiā hòumiàn.",
+      "es": "Anan es compañera de clase de Xiaoping; su casa está detrás de la de él."
+    },
+    {
+      "zh": "星期天上午，安安来小平家玩。",
+      "pinyin": "Xīngqītiān shàngwǔ, Ān'ān lái Xiǎopíng jiā wán.",
+      "es": "El domingo por la mañana, Anan fue a casa de Xiaoping."
+    },
+    {
+      "zh": "他们出门的时候，看见李奶奶在楼下。",
+      "pinyin": "Tāmen chūmén de shíhou, kànjiàn Lǐ nǎinai zài lóu xià.",
+      "es": "Al salir, vieron a la abuela Li abajo."
+    },
+    {
+      "zh": "她买了很多东西，有肉、有水果，还有一大包鸡蛋。",
+      "pinyin": "Tā mǎi le hěn duō dōngxi, yǒu ròu, yǒu shuǐguǒ, hái yǒu yí dà bāo jīdàn.",
+      "es": "Había comprado muchas cosas: carne, fruta y una bolsa grande de huevos."
+    },
+    {
+      "zh": "小平和安安很快跑过去帮她拿。",
+      "pinyin": "Xiǎopíng hé Ān'ān hěn kuài pǎo guòqù bāng tā ná.",
+      "es": "Xiaoping y Anan corrieron enseguida a ayudarla a llevarlo."
+    },
+    {
+      "zh": "东西很快就拿到了六楼。",
+      "pinyin": "Dōngxi hěn kuài jiù ná dào le liù lóu.",
+      "es": "Enseguida subieron las cosas al sexto."
+    },
+    {
+      "zh": "李奶奶说他们走得比她快多了。",
+      "pinyin": "Lǐ nǎinai shuō tāmen zǒu de bǐ tā kuài duō le.",
+      "es": "La abuela Li dijo que ellos subían mucho más rápido que ella."
+    },
+    {
+      "zh": "她想给他们钱，但他们不要。",
+      "pinyin": "Tā xiǎng gěi tāmen qián, dàn tāmen búyào.",
+      "es": "Quiso darles dinero, pero no lo aceptaron."
+    },
+    {
+      "zh": "李奶奶就给了他们每人一个苹果。",
+      "pinyin": "Lǐ nǎinai jiù gěi le tāmen měi rén yí gè píngguǒ.",
+      "es": "Así que la abuela Li les dio una manzana a cada uno."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "安安家在哪儿？",
+      "options": [
+        "小平家旁边",
+        "小平家后面",
+        "六楼"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "李奶奶买了什么？",
+      "options": [
+        "肉、水果和鸡蛋",
+        "包子和茶",
+        "衣服"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "最后李奶奶给了他们什么？",
+      "options": [
+        "钱",
+        "包子",
+        "苹果"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 8
+    }
+  ]
+}

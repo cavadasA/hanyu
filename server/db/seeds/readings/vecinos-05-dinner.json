@@ -1,0 +1,103 @@
+{
+  "slug": "vecinos-05-dinner",
+  "title": "李奶奶请吃饭",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "comunicación interpersonal",
+  "series": "vecinos",
+  "series_index": 5,
+  "target_words": [
+    "时",
+    "那么",
+    "面条儿"
+  ],
+  "target_grammar": [
+    {
+      "code": "6.3.2",
+      "level": 2
+    },
+    {
+      "code": "2.8.3",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "星期六晚上，李奶奶请小平和安安去她家吃饭。",
+      "pinyin": "Xīngqīliù wǎnshang, Lǐ nǎinai qǐng Xiǎopíng hé Ān'ān qù tā jiā chī fàn.",
+      "es": "El sábado por la noche, la abuela Li invitó a Xiaoping y a Anan a cenar en su casa."
+    },
+    {
+      "zh": "李奶奶：你们帮了我很多，今天我给你们做面条儿。",
+      "pinyin": "Lǐ nǎinai: Nǐmen bāng le wǒ hěn duō, jīntiān wǒ gěi nǐmen zuò miàntiáor.",
+      "es": "Abuela Li: Me habéis ayudado mucho; hoy os hago fideos."
+    },
+    {
+      "zh": "安安：太好了！李奶奶，您做的面条儿真好吃。",
+      "pinyin": "Ān'ān: Tài hǎo le! Lǐ nǎinai, nín zuò de miàntiáor zhēn hǎochī.",
+      "es": "Anan: ¡Estupendo! Abuela Li, sus fideos están buenísimos."
+    },
+    {
+      "zh": "李奶奶：好吃就多吃一点儿。小平，你多高了？",
+      "pinyin": "Lǐ nǎinai: Hǎochī jiù duō chī yìdiǎnr. Xiǎopíng, nǐ duō gāo le?",
+      "es": "Abuela Li: Si están buenos, come un poco más. Xiaoping, ¿cuánto mides ya?"
+    },
+    {
+      "zh": "小平：我现在有我爸爸那么高了。",
+      "pinyin": "Xiǎopíng: Wǒ xiànzài yǒu wǒ bàba nàme gāo le.",
+      "es": "Xiaoping: Ahora ya soy tan alto como mi padre."
+    },
+    {
+      "zh": "李奶奶：我儿子十六岁时，也是那么高。",
+      "pinyin": "Lǐ nǎinai: Wǒ érzi shíliù suì shí, yě shì nàme gāo.",
+      "es": "Abuela Li: Mi hijo, a los dieciséis, también era así de alto."
+    },
+    {
+      "zh": "安安：您的儿子什么时候回来？",
+      "pinyin": "Ān'ān: Nín de érzi shénme shíhou huílái?",
+      "es": "Anan: ¿Cuándo vuelve su hijo?"
+    },
+    {
+      "zh": "李奶奶：下个月。他说要来谢谢你们。",
+      "pinyin": "Lǐ nǎinai: Xià gè yuè. Tā shuō yào lái xièxie nǐmen.",
+      "es": "Abuela Li: El mes que viene. Dice que quiere venir a daros las gracias."
+    },
+    {
+      "zh": "小平：别这么说，我们住在一个楼里，就是一家人。",
+      "pinyin": "Xiǎopíng: Bié zhème shuō, wǒmen zhù zài yí gè lóu lǐ, jiù shì yì jiārén.",
+      "es": "Xiaoping: No diga eso; vivimos en el mismo edificio, somos como una familia."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "李奶奶给他们做了什么？",
+      "options": [
+        "包子",
+        "面条儿",
+        "饺子"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "小平现在有多高？",
+      "options": [
+        "有他爸爸那么高",
+        "比他爸爸高",
+        "没有安安高"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "李奶奶的儿子什么时候回来？",
+      "options": [
+        "明天",
+        "明年",
+        "下个月"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}

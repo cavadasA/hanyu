@@ -1,0 +1,103 @@
+{
+  "slug": "vecinos-04-phone",
+  "title": "在手机上见面",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "comunicación interpersonal",
+  "series": "vecinos",
+  "series_index": 4,
+  "target_words": [
+    "周",
+    "面",
+    "见"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.2.1",
+      "level": 2
+    },
+    {
+      "code": "2.7.7",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "这周三，李奶奶来找小平。",
+      "pinyin": "Zhè zhōu sān, Lǐ nǎinai lái zhǎo Xiǎopíng.",
+      "es": "Este miércoles, la abuela Li vino a buscar a Xiaoping."
+    },
+    {
+      "zh": "她说她很想儿子，但是不会在手机上跟他见面。",
+      "pinyin": "Tā shuō tā hěn xiǎng érzi, dànshì bú huì zài shǒujī shàng gēn tā jiàn miàn.",
+      "es": "Dijo que echa mucho de menos a su hijo, pero que no sabe verlo por el móvil."
+    },
+    {
+      "zh": "小平叫来了安安，他们一起去李奶奶家。",
+      "pinyin": "Xiǎopíng jiào lái le Ān'ān, tāmen yìqǐ qù Lǐ nǎinai jiā.",
+      "es": "Xiaoping llamó a Anan y fueron juntos a casa de la abuela Li."
+    },
+    {
+      "zh": "李奶奶家不大，桌子上有很多她儿子的书。",
+      "pinyin": "Lǐ nǎinai jiā bú dà, zhuōzi shàng yǒu hěn duō tā érzi de shū.",
+      "es": "La casa de la abuela Li no es grande; en la mesa hay muchos libros de su hijo."
+    },
+    {
+      "zh": "安安拿着手机，教李奶奶怎么给儿子打电话。",
+      "pinyin": "Ān'ān ná zhe shǒujī, jiāo Lǐ nǎinai zěnme gěi érzi dǎdiànhuà.",
+      "es": "Anan cogió el móvil y le enseñó a la abuela Li a llamar a su hijo."
+    },
+    {
+      "zh": "李奶奶看看手机，再看看安安，学得很慢。",
+      "pinyin": "Lǐ nǎinai kàn kàn shǒujī, zài kàn kàn Ān'ān, xué de hěn màn.",
+      "es": "La abuela Li miraba el móvil y luego a Anan, aprendiendo despacio."
+    },
+    {
+      "zh": "半个小时后，她在手机上看见了儿子。",
+      "pinyin": "Bàn gè xiǎoshí hòu, tā zài shǒujī shàng kànjiàn le érzi.",
+      "es": "Media hora después, vio a su hijo en el móvil."
+    },
+    {
+      "zh": "李奶奶笑了，她说已经一年没有见面了。",
+      "pinyin": "Lǐ nǎinai xiào le, tā shuō yǐjīng yì nián méiyǒu jiàn miàn le.",
+      "es": "La abuela Li sonrió; dijo que hacía ya un año que no se veían."
+    },
+    {
+      "zh": "小平和安安都觉得很高兴。",
+      "pinyin": "Xiǎopíng hé Ān'ān dōu juéde hěn gāoxìng.",
+      "es": "Xiaoping y Anan se alegraron mucho."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "李奶奶为什么来找小平？",
+      "options": [
+        "想吃包子",
+        "不会在手机上跟儿子见面",
+        "身体不舒服"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "谁教李奶奶打电话？",
+      "options": [
+        "安安",
+        "小平的妈妈",
+        "她儿子"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "李奶奶和儿子多长时间没有见面了？",
+      "options": [
+        "一个星期",
+        "一个月",
+        "一年"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}
