@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "7.1.2",
+  "pattern": "verbo + 过 (+ objeto) · 没 + verbo + 过",
+  "explanation": "过 cuenta lo que alguien ha vivido alguna vez: 我去过中国 «he estado en China». No habla de una ocasión concreta, sino de la experiencia, por eso responde a preguntas del tipo «¿alguna vez has…?». Se niega con 没…过 y se pregunta con 吗 o con 没有 al final: 你吃过中国菜没有？ No se combina con 了.",
+  "markers": ["过"],
+  "examples": [
+    {"zh":"我没去过中国。","pinyin":"Wǒ méi qùguo Zhōngguó.","es":"No he estado nunca en China."},
+    {"zh":"你吃过中国菜没有？","pinyin":"Nǐ chīguo Zhōngguó cài méiyǒu?","es":"¿Has probado alguna vez la comida china?"},
+    {"zh":"他学过两年汉语。","pinyin":"Tā xuéguo liǎng nián Hànyǔ.","es":"Estudió chino durante dos años."},
+    {"zh":"这个电影我看过。","pinyin":"Zhège diànyǐng wǒ kànguo.","es":"Esta película ya la he visto."}
+  ],
+  "common_errors": [
+    {"wrong":"我没去过了中国。","right":"我没去过中国。","why":"过 ya marca la experiencia; no se le añade 了."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.10.2"},{"hsk_level":1,"code":"6.1.1"}]
+}

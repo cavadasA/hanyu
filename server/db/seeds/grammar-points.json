@@ -3599,7 +3599,55 @@
     "items": [
       "强调时间、地点、方式、动作者"
     ],
-    "order_idx": 50
+    "order_idx": 50,
+    "pattern": "Sujeto + 是 + (cuándo / dónde / cómo / quién) + verbo + 的",
+    "explanation": "Cuando ya se sabe que algo pasó y lo que interesa es un detalle (cuándo, dónde, cómo o quién), ese detalle se encierra entre 是 y 的: 我是昨天来的 «vine ayer, no otro día». Solo se usa con hechos pasados y no lleva 了. En la afirmación 是 a veces se omite, pero en la negación es obligatorio: 我不是坐飞机来的.",
+    "markers": [
+      "是昨天",
+      "是坐",
+      "是在",
+      "是谁"
+    ],
+    "examples": [
+      {
+        "zh": "我是昨天来的。",
+        "pinyin": "Wǒ shì zuótiān lái de.",
+        "es": "Vine ayer."
+      },
+      {
+        "zh": "“你是怎么来的？”“我是坐地铁来的。”",
+        "pinyin": "“Nǐ shì zěnme lái de?” “Wǒ shì zuò dìtiě lái de.”",
+        "es": "—¿Cómo has venido? —En metro."
+      },
+      {
+        "zh": "我是在中国学的汉语。",
+        "pinyin": "Wǒ shì zài Zhōngguó xué de Hànyǔ.",
+        "es": "Aprendí chino en China."
+      },
+      {
+        "zh": "这个菜是谁做的？",
+        "pinyin": "Zhège cài shì shéi zuò de?",
+        "es": "¿Quién ha hecho este plato?"
+      },
+      {
+        "zh": "我不是坐飞机来的。",
+        "pinyin": "Wǒ bú shì zuò fēijī lái de.",
+        "es": "No he venido en avión."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我是昨天来了。",
+        "right": "我是昨天来的。",
+        "why": "La construcción 是…的 cierra con 的; 了 no entra en ella."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "6.3.1"
+      }
+    ]
   },
   {
     "code": "6.3.6",
@@ -3611,7 +3659,49 @@
     "items": [
       "表使令：主语+请/叫/让……+宾语1+动词+宾语2"
     ],
-    "order_idx": 51
+    "order_idx": 51,
+    "pattern": "Sujeto + 请 / 叫 / 让 + persona + verbo (+ objeto)",
+    "explanation": "Con 请, 叫 y 让 alguien hace que otra persona haga algo. Esa persona va justo detrás del primer verbo y es quien realiza la segunda acción: 妈妈让我去买菜 «mamá me pide que vaya a comprar». 请 es invitar o pedir con cortesía; 叫 y 让 son mandar o permitir, más directos. En español se usa «que + subjuntivo»; en chino no hay ningún «que».",
+    "markers": [
+      "请",
+      "叫",
+      "让"
+    ],
+    "examples": [
+      {
+        "zh": "我请你吃饭。",
+        "pinyin": "Wǒ qǐng nǐ chī fàn.",
+        "es": "Te invito a comer."
+      },
+      {
+        "zh": "妈妈让我去买菜。",
+        "pinyin": "Māma ràng wǒ qù mǎi cài.",
+        "es": "Mamá me ha pedido que vaya a comprar comida."
+      },
+      {
+        "zh": "老师叫我们明天八点来。",
+        "pinyin": "Lǎoshī jiào wǒmen míngtiān bā diǎn lái.",
+        "es": "El profesor nos ha dicho que vengamos mañana a las ocho."
+      },
+      {
+        "zh": "他不让我看他的手机。",
+        "pinyin": "Tā bú ràng wǒ kàn tā de shǒujī.",
+        "es": "No me deja mirar su móvil."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "妈妈让了我去买菜。",
+        "right": "妈妈让我去买菜了。",
+        "why": "了 no va detrás de 让 o 请: se pone al final de la frase o detrás del segundo verbo."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "3.1.2"
+      }
+    ]
   },
   {
     "code": "6.3.7",
@@ -3623,7 +3713,51 @@
     "items": [
       "主语+动词+给+宾语1+宾语2"
     ],
-    "order_idx": 52
+    "order_idx": 52,
+    "pattern": "Sujeto + verbo + 给 + persona + cosa",
+    "explanation": "Con verbos que hacen pasar algo de una persona a otra, como 送 «regalar» o 卖 «vender», se pone 给 detrás del verbo y luego la persona y la cosa: 他送给我一本书 «me regaló un libro». El orden es fijo: primero quien recibe, después lo que recibe, sin ninguna preposición más. 给 deja claro hacia quién va la cosa.",
+    "markers": [
+      "给"
+    ],
+    "examples": [
+      {
+        "zh": "他送给我一本书。",
+        "pinyin": "Tā sòng gěi wǒ yì běn shū.",
+        "es": "Me regaló un libro."
+      },
+      {
+        "zh": "我想送给妈妈一件衣服。",
+        "pinyin": "Wǒ xiǎng sòng gěi māma yí jiàn yīfu.",
+        "es": "Quiero regalarle una prenda a mamá."
+      },
+      {
+        "zh": "他卖给我一个手机。",
+        "pinyin": "Tā mài gěi wǒ yí gè shǒujī.",
+        "es": "Me vendió un móvil."
+      },
+      {
+        "zh": "这本书是朋友送给我的。",
+        "pinyin": "Zhè běn shū shì péngyou sòng gěi wǒ de.",
+        "es": "Este libro me lo regaló un amigo."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他送给一本书我。",
+        "right": "他送给我一本书。",
+        "why": "Detrás de 给 va primero la persona y después la cosa."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "5.3.5"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.8.3"
+      }
+    ]
   },
   {
     "code": "6.4.1",
@@ -3635,7 +3769,51 @@
     "items": [
       "（是）……，还是……"
     ],
-    "order_idx": 53
+    "order_idx": 53,
+    "pattern": "(是) A，还是 B？ · 不知道 + (是) A 还是 B",
+    "explanation": "Cuando las dos opciones son frases enteras, se separan con una coma: 你是今天去，还是明天去？ La primera parte puede llevar 是 para anunciar la elección. La misma duda puede ir dentro de otra frase, con verbos como 知道 o 想, y entonces no es una pregunta: 我不知道他是今天来还是明天来 «no sé si viene hoy o mañana». Como en toda pregunta con 还是, no se añade 吗.",
+    "markers": [
+      "还是"
+    ],
+    "examples": [
+      {
+        "zh": "你是今天去，还是明天去？",
+        "pinyin": "Nǐ shì jīntiān qù, háishi míngtiān qù?",
+        "es": "¿Vas hoy o mañana?"
+      },
+      {
+        "zh": "我们是坐地铁，还是打车？",
+        "pinyin": "Wǒmen shì zuò dìtiě, háishi dǎchē?",
+        "es": "¿Vamos en metro o cogemos un taxi?"
+      },
+      {
+        "zh": "我不知道他是今天来还是明天来。",
+        "pinyin": "Wǒ bù zhīdào tā shì jīntiān lái háishi míngtiān lái.",
+        "es": "No sé si viene hoy o mañana."
+      },
+      {
+        "zh": "你想在家吃饭，还是去饭馆吃？",
+        "pinyin": "Nǐ xiǎng zài jiā chī fàn, háishi qù fànguǎn chī?",
+        "es": "¿Quieres comer en casa o ir a un restaurante?"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我不知道他今天来或者明天来。",
+        "right": "我不知道他是今天来还是明天来。",
+        "why": "Una duda entre dos opciones, aunque vaya dentro de otra frase, se expresa con 还是; 或者 solo dice que vale cualquiera."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "6.2.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.9.2"
+      }
+    ]
   },
   {
     "code": "6.4.2",
@@ -3647,7 +3825,48 @@
     "items": [
       "虽然……，但是……"
     ],
-    "order_idx": 54
+    "order_idx": 54,
+    "pattern": "虽然 + lo que se concede，但是 + lo que pasa igualmente",
+    "explanation": "虽然 presenta un hecho que se reconoce y 但是 (o 但) lo que ocurre a pesar de él: 虽然很贵，但是很好吃. En chino se usan los dos juntos, al contrario que en español, donde «aunque…, pero» es incorrecto. 虽然 va en la primera parte, delante o detrás del sujeto; 但是 abre siempre la segunda.",
+    "markers": [
+      "虽然",
+      "但是"
+    ],
+    "examples": [
+      {
+        "zh": "虽然很贵，但是很好吃。",
+        "pinyin": "Suīrán hěn guì, dànshì hěn hǎochī.",
+        "es": "Aunque es caro, está muy rico."
+      },
+      {
+        "zh": "他虽然很累，但是还在工作。",
+        "pinyin": "Tā suīrán hěn lèi, dànshì hái zài gōngzuò.",
+        "es": "Aunque está muy cansado, sigue trabajando."
+      },
+      {
+        "zh": "虽然下雨了，但是我们还是去了。",
+        "pinyin": "Suīrán xià yǔ le, dànshì wǒmen háishi qù le.",
+        "es": "Aunque llovía, fuimos igualmente."
+      },
+      {
+        "zh": "这件衣服虽然不新，但是很漂亮。",
+        "pinyin": "Zhè jiàn yīfu suīrán bù xīn, dànshì hěn piàoliang.",
+        "es": "Esta ropa no es nueva, pero es muy bonita."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "很贵，虽然很好吃。",
+        "right": "虽然很好吃，但是很贵。",
+        "why": "虽然 va en la primera parte, delante de lo que se concede; no se usa en la segunda como «…, aunque…»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.9.2"
+      }
+    ]
   },
   {
     "code": "6.4.3",
@@ -3707,7 +3926,50 @@
     "items": [
       "一……就……"
     ],
-    "order_idx": 56
+    "order_idx": 56,
+    "pattern": "Sujeto + 一 + acción 1 + 就 + acción 2",
+    "explanation": "一…就… une dos acciones que se siguen sin pausa, como «en cuanto» o «nada más»: 我一到家就给你打电话. También expresa que cada vez que pasa lo primero, pasa lo segundo: 他一累就头疼. 一 y 就 van detrás del sujeto, pegados a sus verbos; si cada parte tiene su sujeto, cada uno va delante de la suya: 我一说他就懂了.",
+    "markers": [
+      "一到",
+      "一下课",
+      "一说",
+      "一累"
+    ],
+    "examples": [
+      {
+        "zh": "我一到家就给你打电话。",
+        "pinyin": "Wǒ yí dào jiā jiù gěi nǐ dǎ diànhuà.",
+        "es": "En cuanto llegue a casa te llamo."
+      },
+      {
+        "zh": "他一下课就回家了。",
+        "pinyin": "Tā yí xiàkè jiù huí jiā le.",
+        "es": "Nada más acabar la clase se fue a casa."
+      },
+      {
+        "zh": "我一说他就懂了。",
+        "pinyin": "Wǒ yì shuō tā jiù dǒng le.",
+        "es": "En cuanto se lo dije, lo entendió."
+      },
+      {
+        "zh": "他一累就头疼。",
+        "pinyin": "Tā yí lèi jiù tóu téng.",
+        "es": "Siempre que se cansa le duele la cabeza."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "一我到家就给你打电话。",
+        "right": "我一到家就给你打电话。",
+        "why": "一 va detrás del sujeto, pegado al verbo; no abre la frase como «en cuanto»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.7.6"
+      }
+    ]
   },
   {
     "code": "7.1.1",
@@ -3720,7 +3982,55 @@
       "动词+着：（1）表示状态的持续",
       "（2）表示动作的持续"
     ],
-    "order_idx": 57
+    "order_idx": 57,
+    "pattern": "verbo + 着 (+ objeto) · verbo + 着 + 呢",
+    "explanation": "着 detrás del verbo presenta algo como un estado que se mantiene: 电视开着 «la tele está encendida», 他穿着一件白色的衣服. También muestra una acción que sigue en marcha, a menudo con 呢: 外面下着雨呢. Mientras 在 + verbo cuenta qué se está haciendo, 着 se fija en cómo queda la situación. Va pegado al verbo, antes del objeto.",
+    "markers": [
+      "着"
+    ],
+    "examples": [
+      {
+        "zh": "他穿着一件白色的衣服。",
+        "pinyin": "Tā chuānzhe yí jiàn báisè de yīfu.",
+        "es": "Lleva puesta una prenda blanca."
+      },
+      {
+        "zh": "外面下着雨呢。",
+        "pinyin": "Wàimiàn xiàzhe yǔ ne.",
+        "es": "Fuera está lloviendo."
+      },
+      {
+        "zh": "电视开着，但是没有人看。",
+        "pinyin": "Diànshì kāizhe, dànshì méiyǒu rén kàn.",
+        "es": "La tele está encendida, pero nadie la mira."
+      },
+      {
+        "zh": "我们坐着说吧。",
+        "pinyin": "Wǒmen zuòzhe shuō ba.",
+        "es": "Hablemos sentados."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他穿一件白色的衣服着。",
+        "right": "他穿着一件白色的衣服。",
+        "why": "着 va pegado al verbo, antes del objeto, no al final de la frase."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "6.1.3"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.10.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "6.3.3"
+      }
+    ]
   },
   {
     "code": "7.1.2",
@@ -3732,7 +4042,51 @@
     "items": [
       "用动态助词“过”表示"
     ],
-    "order_idx": 58
+    "order_idx": 58,
+    "pattern": "verbo + 过 (+ objeto) · 没 + verbo + 过",
+    "explanation": "过 cuenta lo que alguien ha vivido alguna vez: 我去过中国 «he estado en China». No habla de una ocasión concreta, sino de la experiencia, por eso responde a preguntas del tipo «¿alguna vez has…?». Se niega con 没…过 y se pregunta con 吗 o con 没有 al final: 你吃过中国菜没有？ No se combina con 了.",
+    "markers": [
+      "过"
+    ],
+    "examples": [
+      {
+        "zh": "我没去过中国。",
+        "pinyin": "Wǒ méi qùguo Zhōngguó.",
+        "es": "No he estado nunca en China."
+      },
+      {
+        "zh": "你吃过中国菜没有？",
+        "pinyin": "Nǐ chīguo Zhōngguó cài méiyǒu?",
+        "es": "¿Has probado alguna vez la comida china?"
+      },
+      {
+        "zh": "他学过两年汉语。",
+        "pinyin": "Tā xuéguo liǎng nián Hànyǔ.",
+        "es": "Estudió chino durante dos años."
+      },
+      {
+        "zh": "这个电影我看过。",
+        "pinyin": "Zhège diànyǐng wǒ kànguo.",
+        "es": "Esta película ya la he visto."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我没去过了中国。",
+        "right": "我没去过中国。",
+        "why": "过 ya marca la experiencia; no se le añade 了."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.10.2"
+      },
+      {
+        "hsk_level": 1,
+        "code": "6.1.1"
+      }
+    ]
   },
   {
     "code": "8.1",
@@ -3747,7 +4101,58 @@
       "（2）数词+多+量词",
       "（3）数词+量词+多"
     ],
-    "order_idx": 59
+    "order_idx": 59,
+    "pattern": "número + 楼 / 号 · 几 + clasificador · número + 多 + clasificador · número + clasificador + 多",
+    "explanation": "Algunos ordinales se dicen sin 第, con el número delante de la unidad: 三楼 «el tercer piso», 二号 «el número dos». Para cantidades aproximadas, 几 es «unos cuantos» (几个苹果) y detrás de 十 da «doce, trece…» (十几个). 多 añade «y pico»: con decenas va delante del clasificador (二十多个) y con unidades, detrás (一个多月).",
+    "markers": [
+      "楼",
+      "几",
+      "多"
+    ],
+    "examples": [
+      {
+        "zh": "我家在三楼。",
+        "pinyin": "Wǒ jiā zài sān lóu.",
+        "es": "Vivo en el tercer piso."
+      },
+      {
+        "zh": "他买了几个苹果。",
+        "pinyin": "Tā mǎi le jǐ gè píngguǒ.",
+        "es": "Compró unas cuantas manzanas."
+      },
+      {
+        "zh": "我们班有十几个学生。",
+        "pinyin": "Wǒmen bān yǒu shí jǐ gè xuésheng.",
+        "es": "En nuestra clase hay doce o trece alumnos."
+      },
+      {
+        "zh": "昨天来了二十多个人。",
+        "pinyin": "Zuótiān lái le èrshí duō gè rén.",
+        "es": "Ayer vinieron veintitantas personas."
+      },
+      {
+        "zh": "我学了一个多月汉语。",
+        "pinyin": "Wǒ xué le yí gè duō yuè Hànyǔ.",
+        "es": "Llevo algo más de un mes estudiando chino."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我家在楼三。",
+        "right": "我家在三楼。",
+        "why": "El número va delante de la unidad: 三楼, no «planta tres»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "7.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.5"
+      }
+    ]
   },
   {
     "code": "1.1",

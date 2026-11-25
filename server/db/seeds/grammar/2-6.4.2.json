@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "6.4.2",
+  "pattern": "虽然 + lo que se concede，但是 + lo que pasa igualmente",
+  "explanation": "虽然 presenta un hecho que se reconoce y 但是 (o 但) lo que ocurre a pesar de él: 虽然很贵，但是很好吃. En chino se usan los dos juntos, al contrario que en español, donde «aunque…, pero» es incorrecto. 虽然 va en la primera parte, delante o detrás del sujeto; 但是 abre siempre la segunda.",
+  "markers": ["虽然","但是"],
+  "examples": [
+    {"zh":"虽然很贵，但是很好吃。","pinyin":"Suīrán hěn guì, dànshì hěn hǎochī.","es":"Aunque es caro, está muy rico."},
+    {"zh":"他虽然很累，但是还在工作。","pinyin":"Tā suīrán hěn lèi, dànshì hái zài gōngzuò.","es":"Aunque está muy cansado, sigue trabajando."},
+    {"zh":"虽然下雨了，但是我们还是去了。","pinyin":"Suīrán xià yǔ le, dànshì wǒmen háishi qù le.","es":"Aunque llovía, fuimos igualmente."},
+    {"zh":"这件衣服虽然不新，但是很漂亮。","pinyin":"Zhè jiàn yīfu suīrán bù xīn, dànshì hěn piàoliang.","es":"Esta ropa no es nueva, pero es muy bonita."}
+  ],
+  "common_errors": [
+    {"wrong":"很贵，虽然很好吃。","right":"虽然很好吃，但是很贵。","why":"虽然 va en la primera parte, delante de lo que se concede; no se usa en la segunda como «…, aunque…»."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.9.2"}]
+}

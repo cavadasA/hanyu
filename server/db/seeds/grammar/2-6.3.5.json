@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "6.3.5",
+  "pattern": "Sujeto + 是 + (cuándo / dónde / cómo / quién) + verbo + 的",
+  "explanation": "Cuando ya se sabe que algo pasó y lo que interesa es un detalle (cuándo, dónde, cómo o quién), ese detalle se encierra entre 是 y 的: 我是昨天来的 «vine ayer, no otro día». Solo se usa con hechos pasados y no lleva 了. En la afirmación 是 a veces se omite, pero en la negación es obligatorio: 我不是坐飞机来的.",
+  "markers": ["是昨天","是坐","是在","是谁"],
+  "examples": [
+    {"zh":"我是昨天来的。","pinyin":"Wǒ shì zuótiān lái de.","es":"Vine ayer."},
+    {"zh":"“你是怎么来的？”“我是坐地铁来的。”","pinyin":"“Nǐ shì zěnme lái de?” “Wǒ shì zuò dìtiě lái de.”","es":"—¿Cómo has venido? —En metro."},
+    {"zh":"我是在中国学的汉语。","pinyin":"Wǒ shì zài Zhōngguó xué de Hànyǔ.","es":"Aprendí chino en China."},
+    {"zh":"这个菜是谁做的？","pinyin":"Zhège cài shì shéi zuò de?","es":"¿Quién ha hecho este plato?"},
+    {"zh":"我不是坐飞机来的。","pinyin":"Wǒ bú shì zuò fēijī lái de.","es":"No he venido en avión."}
+  ],
+  "common_errors": [
+    {"wrong":"我是昨天来了。","right":"我是昨天来的。","why":"La construcción 是…的 cierra con 的; 了 no entra en ella."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.3.1"}]
+}

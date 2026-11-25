@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "6.4.1",
+  "pattern": "(是) A，还是 B？ · 不知道 + (是) A 还是 B",
+  "explanation": "Cuando las dos opciones son frases enteras, se separan con una coma: 你是今天去，还是明天去？ La primera parte puede llevar 是 para anunciar la elección. La misma duda puede ir dentro de otra frase, con verbos como 知道 o 想, y entonces no es una pregunta: 我不知道他是今天来还是明天来 «no sé si viene hoy o mañana». Como en toda pregunta con 还是, no se añade 吗.",
+  "markers": ["还是"],
+  "examples": [
+    {"zh":"你是今天去，还是明天去？","pinyin":"Nǐ shì jīntiān qù, háishi míngtiān qù?","es":"¿Vas hoy o mañana?"},
+    {"zh":"我们是坐地铁，还是打车？","pinyin":"Wǒmen shì zuò dìtiě, háishi dǎchē?","es":"¿Vamos en metro o cogemos un taxi?"},
+    {"zh":"我不知道他是今天来还是明天来。","pinyin":"Wǒ bù zhīdào tā shì jīntiān lái háishi míngtiān lái.","es":"No sé si viene hoy o mañana."},
+    {"zh":"你想在家吃饭，还是去饭馆吃？","pinyin":"Nǐ xiǎng zài jiā chī fàn, háishi qù fànguǎn chī?","es":"¿Quieres comer en casa o ir a un restaurante?"}
+  ],
+  "common_errors": [
+    {"wrong":"我不知道他今天来或者明天来。","right":"我不知道他是今天来还是明天来。","why":"Una duda entre dos opciones, aunque vaya dentro de otra frase, se expresa con 还是; 或者 solo dice que vale cualquiera."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.2.1"},{"hsk_level":2,"code":"2.9.2"}]
+}

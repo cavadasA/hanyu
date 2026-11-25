@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "6.3.7",
+  "pattern": "Sujeto + verbo + 给 + persona + cosa",
+  "explanation": "Con verbos que hacen pasar algo de una persona a otra, como 送 «regalar» o 卖 «vender», se pone 给 detrás del verbo y luego la persona y la cosa: 他送给我一本书 «me regaló un libro». El orden es fijo: primero quien recibe, después lo que recibe, sin ninguna preposición más. 给 deja claro hacia quién va la cosa.",
+  "markers": ["给"],
+  "examples": [
+    {"zh":"他送给我一本书。","pinyin":"Tā sòng gěi wǒ yì běn shū.","es":"Me regaló un libro."},
+    {"zh":"我想送给妈妈一件衣服。","pinyin":"Wǒ xiǎng sòng gěi māma yí jiàn yīfu.","es":"Quiero regalarle una prenda a mamá."},
+    {"zh":"他卖给我一个手机。","pinyin":"Tā mài gěi wǒ yí gè shǒujī.","es":"Me vendió un móvil."},
+    {"zh":"这本书是朋友送给我的。","pinyin":"Zhè běn shū shì péngyou sòng gěi wǒ de.","es":"Este libro me lo regaló un amigo."}
+  ],
+  "common_errors": [
+    {"wrong":"他送给一本书我。","right":"他送给我一本书。","why":"Detrás de 给 va primero la persona y después la cosa."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"5.3.5"},{"hsk_level":2,"code":"2.8.3"}]
+}

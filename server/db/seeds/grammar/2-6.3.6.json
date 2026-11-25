@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "6.3.6",
+  "pattern": "Sujeto + 请 / 叫 / 让 + persona + verbo (+ objeto)",
+  "explanation": "Con 请, 叫 y 让 alguien hace que otra persona haga algo. Esa persona va justo detrás del primer verbo y es quien realiza la segunda acción: 妈妈让我去买菜 «mamá me pide que vaya a comprar». 请 es invitar o pedir con cortesía; 叫 y 让 son mandar o permitir, más directos. En español se usa «que + subjuntivo»; en chino no hay ningún «que».",
+  "markers": ["请","叫","让"],
+  "examples": [
+    {"zh":"我请你吃饭。","pinyin":"Wǒ qǐng nǐ chī fàn.","es":"Te invito a comer."},
+    {"zh":"妈妈让我去买菜。","pinyin":"Māma ràng wǒ qù mǎi cài.","es":"Mamá me ha pedido que vaya a comprar comida."},
+    {"zh":"老师叫我们明天八点来。","pinyin":"Lǎoshī jiào wǒmen míngtiān bā diǎn lái.","es":"El profesor nos ha dicho que vengamos mañana a las ocho."},
+    {"zh":"他不让我看他的手机。","pinyin":"Tā bú ràng wǒ kàn tā de shǒujī.","es":"No me deja mirar su móvil."}
+  ],
+  "common_errors": [
+    {"wrong":"妈妈让了我去买菜。","right":"妈妈让我去买菜了。","why":"了 no va detrás de 让 o 请: se pone al final de la frase o detrás del segundo verbo."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"3.1.2"}]
+}

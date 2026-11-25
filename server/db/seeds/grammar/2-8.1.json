@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "8.1",
+  "pattern": "número + 楼 / 号 · 几 + clasificador · número + 多 + clasificador · número + clasificador + 多",
+  "explanation": "Algunos ordinales se dicen sin 第, con el número delante de la unidad: 三楼 «el tercer piso», 二号 «el número dos». Para cantidades aproximadas, 几 es «unos cuantos» (几个苹果) y detrás de 十 da «doce, trece…» (十几个). 多 añade «y pico»: con decenas va delante del clasificador (二十多个) y con unidades, detrás (一个多月).",
+  "markers": ["楼","几","多"],
+  "examples": [
+    {"zh":"我家在三楼。","pinyin":"Wǒ jiā zài sān lóu.","es":"Vivo en el tercer piso."},
+    {"zh":"他买了几个苹果。","pinyin":"Tā mǎi le jǐ gè píngguǒ.","es":"Compró unas cuantas manzanas."},
+    {"zh":"我们班有十几个学生。","pinyin":"Wǒmen bān yǒu shí jǐ gè xuésheng.","es":"En nuestra clase hay doce o trece alumnos."},
+    {"zh":"昨天来了二十多个人。","pinyin":"Zuótiān lái le èrshí duō gè rén.","es":"Ayer vinieron veintitantas personas."},
+    {"zh":"我学了一个多月汉语。","pinyin":"Wǒ xué le yí gè duō yuè Hànyǔ.","es":"Llevo algo más de un mes estudiando chino."}
+  ],
+  "common_errors": [
+    {"wrong":"我家在楼三。","right":"我家在三楼。","why":"El número va delante de la unidad: 三楼, no «planta tres»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"7.1"},{"hsk_level":2,"code":"2.5"}]
+}

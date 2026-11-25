@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "6.4.4",
+  "pattern": "Sujeto + 一 + acción 1 + 就 + acción 2",
+  "explanation": "一…就… une dos acciones que se siguen sin pausa, como «en cuanto» o «nada más»: 我一到家就给你打电话. También expresa que cada vez que pasa lo primero, pasa lo segundo: 他一累就头疼. 一 y 就 van detrás del sujeto, pegados a sus verbos; si cada parte tiene su sujeto, cada uno va delante de la suya: 我一说他就懂了.",
+  "markers": ["一到","一下课","一说","一累"],
+  "examples": [
+    {"zh":"我一到家就给你打电话。","pinyin":"Wǒ yí dào jiā jiù gěi nǐ dǎ diànhuà.","es":"En cuanto llegue a casa te llamo."},
+    {"zh":"他一下课就回家了。","pinyin":"Tā yí xiàkè jiù huí jiā le.","es":"Nada más acabar la clase se fue a casa."},
+    {"zh":"我一说他就懂了。","pinyin":"Wǒ yì shuō tā jiù dǒng le.","es":"En cuanto se lo dije, lo entendió."},
+    {"zh":"他一累就头疼。","pinyin":"Tā yí lèi jiù tóu téng.","es":"Siempre que se cansa le duele la cabeza."}
+  ],
+  "common_errors": [
+    {"wrong":"一我到家就给你打电话。","right":"我一到家就给你打电话。","why":"一 va detrás del sujeto, pegado al verbo; no abre la frase como «en cuanto»."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.7.6"}]
+}
