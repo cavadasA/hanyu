@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "5.1.1",
+  "pattern": "S + verbo · S + 很 + adjetivo · S + nombre / número · frase sin sujeto",
+  "explanation": "Hay cuatro tipos básicos de frase simple. Con verbo: 我学习汉语. Con adjetivo, sin 是 y casi siempre con 很: 天气很好. Con un nombre o un número como predicado, para fechas, edades o precios: 今天星期六. Y sin sujeto, para el tiempo atmosférico o avisos breves: 下雨了, 上课了.",
+  "markers": ["学习","很好","星期","下雨","上课"],
+  "examples": [
+    {"zh":"我学习汉语。","pinyin":"Wǒ xuéxí Hànyǔ.","es":"Estudio chino."},
+    {"zh":"天气很好。","pinyin":"Tiānqì hěn hǎo.","es":"Hace buen tiempo."},
+    {"zh":"今天星期六。","pinyin":"Jīntiān xīngqīliù.","es":"Hoy es sábado."},
+    {"zh":"下雨了。","pinyin":"Xià yǔ le.","es":"Está lloviendo."},
+    {"zh":"上课了！","pinyin":"Shàngkè le!","es":"¡Empieza la clase!"}
+  ],
+  "common_errors": [
+    {"wrong":"天气是好。","right":"天气很好。","why":"En una frase con adjetivo no se usa 是: se pone 很 u otro adverbio."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"4.2"}]
+}

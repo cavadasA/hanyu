@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "4.5",
+  "pattern": "Sujeto + (tiempo) + (adverbio) + (在 + lugar) + verbo",
+  "explanation": "Lo que dice cuándo, dónde o cómo pasa algo va delante del verbo, nunca detrás. El tiempo va delante o detrás del sujeto (我明天去, 明天我去) y el lugar con 在 justo antes del verbo: 我明天在家休息. Los adverbios como 很, 都 o 也 también van delante. En español «mañana» o «en casa» pueden ir al final; en chino no.",
+  "markers": ["明天","早上","中午"],
+  "examples": [
+    {"zh":"我明天在家休息。","pinyin":"Wǒ míngtiān zài jiā xiūxi.","es":"Mañana descanso en casa."},
+    {"zh":"他早上七点起床。","pinyin":"Tā zǎoshang qī diǎn qǐchuáng.","es":"Se levanta a las siete de la mañana."},
+    {"zh":"我们中午在饭店吃饭。","pinyin":"Wǒmen zhōngwǔ zài fàndiàn chī fàn.","es":"Al mediodía comemos en un restaurante."},
+    {"zh":"你明天来吗？","pinyin":"Nǐ míngtiān lái ma?","es":"¿Vienes mañana?"}
+  ],
+  "common_errors": [
+    {"wrong":"我休息在家明天。","right":"我明天在家休息。","why":"El tiempo y el lugar van delante del verbo, no al final como en «descanso en casa mañana»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.7.1"}]
+}

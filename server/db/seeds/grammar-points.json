@@ -1215,7 +1215,47 @@
     "items": [
       "了1"
     ],
-    "order_idx": 22
+    "order_idx": 22,
+    "pattern": "verbo + 了 (+ número + clasificador + objeto)",
+    "explanation": "了 detrás del verbo indica que la acción se ha completado: 我买了两本书. Suele pedir un objeto con número o con más información; «我买了书» a secas suena incompleto. Se niega con 没 y entonces 了 desaparece: 我没买书. No equivale al pasado español: una costumbre del pasado no lleva 了.",
+    "markers": [
+      "了"
+    ],
+    "examples": [
+      {
+        "zh": "我买了两本书。",
+        "pinyin": "Wǒ mǎi le liǎng běn shū.",
+        "es": "Compré dos libros."
+      },
+      {
+        "zh": "他喝了很多水。",
+        "pinyin": "Tā hē le hěn duō shuǐ.",
+        "es": "Bebió mucha agua."
+      },
+      {
+        "zh": "昨天我看了一个电影。",
+        "pinyin": "Zuótiān wǒ kàn le yí gè diànyǐng.",
+        "es": "Ayer vi una película."
+      },
+      {
+        "zh": "我昨天没去学校，去了医院。",
+        "pinyin": "Wǒ zuótiān méi qù xuéxiào, qù le yīyuàn.",
+        "es": "Ayer no fui al colegio; fui al hospital."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我没买了书。",
+        "right": "我没买书。",
+        "why": "Con 没 desaparece 了: la negación ya dice que la acción no se hizo."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "6.1.1"
+      }
+    ]
   },
   {
     "code": "2.9.3",
@@ -1282,7 +1322,42 @@
     "items": [
       "喂"
     ],
-    "order_idx": 24
+    "order_idx": 24,
+    "pattern": "喂，… (al teléfono o para llamar la atención)",
+    "explanation": "喂 se usa sobre todo al contestar o empezar una llamada, como «¿diga?» o «¿sí?»; ahí suele pronunciarse wéi. También sirve para llamar la atención de alguien (wèi), pero cara a cara y con desconocidos suena brusco. Va al principio de la frase, separado por una coma.",
+    "markers": [
+      "喂"
+    ],
+    "examples": [
+      {
+        "zh": "喂，你好！",
+        "pinyin": "Wéi, nǐ hǎo!",
+        "es": "¿Diga? ¡Hola!"
+      },
+      {
+        "zh": "喂，请问你是谁？",
+        "pinyin": "Wéi, qǐngwèn nǐ shì shéi?",
+        "es": "¿Sí? ¿Quién es, por favor?"
+      },
+      {
+        "zh": "喂，你在哪儿？",
+        "pinyin": "Wéi, nǐ zài nǎr?",
+        "es": "Oye, ¿dónde estás?"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "喂，请问医院在哪儿？（a un desconocido en la calle）",
+        "right": "你好，请问医院在哪儿？",
+        "why": "Cara a cara con un desconocido 喂 resulta brusco; se empieza con 你好 o 请问."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.9.3"
+      }
+    ]
   },
   {
     "code": "3.1.1",
@@ -1349,7 +1424,54 @@
       "（2）介宾短语",
       "（3）方位短语"
     ],
-    "order_idx": 26
+    "order_idx": 26,
+    "pattern": "número + clasificador · preposición + nombre · nombre + posición",
+    "explanation": "Tres grupos pequeños que funcionan como piezas de la frase. El de cantidad une número y clasificador: 三本, 两个. El de preposición une 在, 和 o 对 con un nombre y va delante del verbo: 在学校. El de posición pone 上, 里 o 前 detrás de un nombre: 桌子上. Se combinan entre ellos: 在桌子上 es una preposición con un grupo de posición.",
+    "markers": [
+      "三本",
+      "在学校",
+      "桌子上",
+      "两个"
+    ],
+    "examples": [
+      {
+        "zh": "我买了三本书。",
+        "pinyin": "Wǒ mǎi le sān běn shū.",
+        "es": "Compré tres libros."
+      },
+      {
+        "zh": "我在学校学习。",
+        "pinyin": "Wǒ zài xuéxiào xuéxí.",
+        "es": "Estudio en el colegio."
+      },
+      {
+        "zh": "你的书在桌子上。",
+        "pinyin": "Nǐ de shū zài zhuōzi shang.",
+        "es": "Tu libro está encima de la mesa."
+      },
+      {
+        "zh": "我有两个中国朋友。",
+        "pinyin": "Wǒ yǒu liǎng gè Zhōngguó péngyou.",
+        "es": "Tengo dos amigos chinos."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你的书在桌子。",
+        "right": "你的书在桌子上。",
+        "why": "Una cosa no es un lugar por sí misma: hace falta una palabra de posición, 桌子上."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "3.1.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "3.1.2"
+      }
+    ]
   },
   {
     "code": "4.1",
@@ -1361,7 +1483,50 @@
     "items": [
       "名词、代词或名词性短语作主语"
     ],
-    "order_idx": 27
+    "order_idx": 27,
+    "pattern": "Sujeto (nombre / pronombre / grupo nominal) + predicado",
+    "explanation": "El sujeto va al principio, delante del predicado, y puede ser un nombre (老师), un pronombre (他) o un grupo nominal (我的朋友). El verbo no cambia con el sujeto: 我是, 他是, 他们是. A diferencia del español, el sujeto no puede ir detrás del verbo, como en «le gusta el té a mi amigo». Igual que en español, se omite cuando ya se sabe de quién se habla.",
+    "markers": [
+      "老师",
+      "他",
+      "我的朋友",
+      "这个苹果"
+    ],
+    "examples": [
+      {
+        "zh": "老师来了。",
+        "pinyin": "Lǎoshī lái le.",
+        "es": "Ha llegado el profesor."
+      },
+      {
+        "zh": "他是我的同学。",
+        "pinyin": "Tā shì wǒ de tóngxué.",
+        "es": "Es mi compañero de clase."
+      },
+      {
+        "zh": "我的朋友喜欢喝茶。",
+        "pinyin": "Wǒ de péngyou xǐhuan hē chá.",
+        "es": "A mi amigo le gusta el té."
+      },
+      {
+        "zh": "这个苹果很好吃。",
+        "pinyin": "Zhège píngguǒ hěn hǎochī.",
+        "es": "Esta manzana está muy rica."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "喜欢喝茶我的朋友。",
+        "right": "我的朋友喜欢喝茶。",
+        "why": "El sujeto va delante del verbo; no se puede posponer como en «le gusta el té a mi amigo»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "5.1.1"
+      }
+    ]
   },
   {
     "code": "4.2",
@@ -1374,7 +1539,54 @@
       "名词、代词、数词或数量短语作谓语",
       "动词或动词性短语、形容词或形容词性短语作谓语"
     ],
-    "order_idx": 28
+    "order_idx": 28,
+    "pattern": "Sujeto + verbo / adjetivo / nombre (fecha, edad, precio)",
+    "explanation": "El predicado dice qué hace o cómo es el sujeto. Puede ser un verbo (他喝茶), un adjetivo (今天很冷) o, con fechas, edades y precios, un nombre o un número (今天星期一, 她八岁). Con adjetivos no se usa 是: «hoy hace frío» es 今天很冷. El verbo no cambia de forma ni con la persona ni con el tiempo.",
+    "markers": [
+      "喝",
+      "冷",
+      "星期",
+      "岁"
+    ],
+    "examples": [
+      {
+        "zh": "他喝茶。",
+        "pinyin": "Tā hē chá.",
+        "es": "Él toma té."
+      },
+      {
+        "zh": "今天很冷。",
+        "pinyin": "Jīntiān hěn lěng.",
+        "es": "Hoy hace frío."
+      },
+      {
+        "zh": "今天星期一。",
+        "pinyin": "Jīntiān xīngqīyī.",
+        "es": "Hoy es lunes."
+      },
+      {
+        "zh": "我女儿八岁。",
+        "pinyin": "Wǒ nǚ’ér bā suì.",
+        "es": "Mi hija tiene ocho años."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "今天是冷。",
+        "right": "今天很冷。",
+        "why": "Un adjetivo hace de predicado sin 是; se le pone delante un adverbio como 很."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "5.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "3.2.2"
+      }
+    ]
   },
   {
     "code": "4.3",
@@ -1386,7 +1598,54 @@
     "items": [
       "名词、代词或名词性短语作宾语"
     ],
-    "order_idx": 29
+    "order_idx": 29,
+    "pattern": "Sujeto + verbo + objeto",
+    "explanation": "El objeto va detrás del verbo: 我喝牛奶, 我认识他. Puede ser un nombre, un pronombre o un grupo nominal (一个新手机). Los pronombres de objeto no cambian de forma ni se adelantan: «te quiero» es 我爱你, nunca «我你爱».",
+    "markers": [
+      "牛奶",
+      "他",
+      "妈妈",
+      "手机"
+    ],
+    "examples": [
+      {
+        "zh": "我喜欢喝牛奶。",
+        "pinyin": "Wǒ xǐhuan hē niúnǎi.",
+        "es": "Me gusta la leche."
+      },
+      {
+        "zh": "我认识他。",
+        "pinyin": "Wǒ rènshi tā.",
+        "es": "Lo conozco."
+      },
+      {
+        "zh": "他爱他的妈妈。",
+        "pinyin": "Tā ài tā de māma.",
+        "es": "Quiere mucho a su madre."
+      },
+      {
+        "zh": "我想买一个新手机。",
+        "pinyin": "Wǒ xiǎng mǎi yí gè xīn shǒujī.",
+        "es": "Quiero comprarme un móvil nuevo."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我你爱。",
+        "right": "我爱你。",
+        "why": "El pronombre objeto va detrás del verbo, no delante como en «te quiero»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "4.1"
+      },
+      {
+        "hsk_level": 1,
+        "code": "3.1.1"
+      }
+    ]
   },
   {
     "code": "4.4",
@@ -1398,7 +1657,53 @@
     "items": [
       "名词性词语、形容词性短语、数量短语作定语"
     ],
-    "order_idx": 30
+    "order_idx": 30,
+    "pattern": "modificador (+ 的) + nombre",
+    "explanation": "Todo lo que describe a un nombre va delante de él. Un poseedor lleva 的 (哥哥的电脑); un adjetivo de una sílaba suele ir sin 的 (新书, 大苹果), y un grupo como 很好 sí lo lleva (很好的医生). La cantidad, con número y clasificador, va antes de todo: 两本新书.",
+    "markers": [
+      "的",
+      "大苹果",
+      "新书"
+    ],
+    "examples": [
+      {
+        "zh": "这是哥哥的电脑。",
+        "pinyin": "Zhè shì gēge de diànnǎo.",
+        "es": "Este es el ordenador de mi hermano mayor."
+      },
+      {
+        "zh": "我买了一个大苹果。",
+        "pinyin": "Wǒ mǎi le yí gè dà píngguǒ.",
+        "es": "Compré una manzana grande."
+      },
+      {
+        "zh": "她是一个很好的医生。",
+        "pinyin": "Tā shì yí gè hěn hǎo de yīshēng.",
+        "es": "Es una médica muy buena."
+      },
+      {
+        "zh": "我有两本新书。",
+        "pinyin": "Wǒ yǒu liǎng běn xīn shū.",
+        "es": "Tengo dos libros nuevos."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我买了一个苹果大。",
+        "right": "我买了一个大苹果。",
+        "why": "El adjetivo va delante del nombre, no detrás como en «una manzana grande»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "3.2.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "5.3"
+      }
+    ]
   },
   {
     "code": "4.5",
@@ -1410,7 +1715,49 @@
     "items": [
       "副词、形容词作状语表示时间、处所的词语作状语"
     ],
-    "order_idx": 31
+    "order_idx": 31,
+    "pattern": "Sujeto + (tiempo) + (adverbio) + (在 + lugar) + verbo",
+    "explanation": "Lo que dice cuándo, dónde o cómo pasa algo va delante del verbo, nunca detrás. El tiempo va delante o detrás del sujeto (我明天去, 明天我去) y el lugar con 在 justo antes del verbo: 我明天在家休息. Los adverbios como 很, 都 o 也 también van delante. En español «mañana» o «en casa» pueden ir al final; en chino no.",
+    "markers": [
+      "明天",
+      "早上",
+      "中午"
+    ],
+    "examples": [
+      {
+        "zh": "我明天在家休息。",
+        "pinyin": "Wǒ míngtiān zài jiā xiūxi.",
+        "es": "Mañana descanso en casa."
+      },
+      {
+        "zh": "他早上七点起床。",
+        "pinyin": "Tā zǎoshang qī diǎn qǐchuáng.",
+        "es": "Se levanta a las siete de la mañana."
+      },
+      {
+        "zh": "我们中午在饭店吃饭。",
+        "pinyin": "Wǒmen zhōngwǔ zài fàndiàn chī fàn.",
+        "es": "Al mediodía comemos en un restaurante."
+      },
+      {
+        "zh": "你明天来吗？",
+        "pinyin": "Nǐ míngtiān lái ma?",
+        "es": "¿Vienes mañana?"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我休息在家明天。",
+        "right": "我明天在家休息。",
+        "why": "El tiempo y el lugar van delante del verbo, no al final como en «descanso en casa mañana»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.7.1"
+      }
+    ]
   },
   {
     "code": "4.6.1",
@@ -1422,7 +1769,51 @@
     "items": [
       "动词+动量补语"
     ],
-    "order_idx": 32
+    "order_idx": 32,
+    "pattern": "verbo + 一下 (+ objeto)",
+    "explanation": "一下 detrás de un verbo indica que la acción es breve o se hace sin esfuerzo, y suaviza las peticiones: 你看一下 «échale un vistazo», 我们休息一下吧. Va pegado al verbo y antes del objeto: 看一下这本书. Su efecto se parece al de repetir el verbo (看看).",
+    "markers": [
+      "一下"
+    ],
+    "examples": [
+      {
+        "zh": "你看一下这本书。",
+        "pinyin": "Nǐ kàn yíxià zhè běn shū.",
+        "es": "Échale un vistazo a este libro."
+      },
+      {
+        "zh": "我们休息一下吧。",
+        "pinyin": "Wǒmen xiūxi yíxià ba.",
+        "es": "Descansemos un momento."
+      },
+      {
+        "zh": "请你说一下你的名字。",
+        "pinyin": "Qǐng nǐ shuō yíxià nǐ de míngzi.",
+        "es": "Dime tu nombre, por favor."
+      },
+      {
+        "zh": "我想问一下，医院在哪儿？",
+        "pinyin": "Wǒ xiǎng wèn yíxià, yīyuàn zài nǎr?",
+        "es": "Una pregunta: ¿dónde está el hospital?"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你看这本书一下。",
+        "right": "你看一下这本书。",
+        "why": "一下 va pegado al verbo, antes del objeto."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.6.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.2.1"
+      }
+    ]
   },
   {
     "code": "5.1.1",
@@ -1437,7 +1828,56 @@
       "主谓句3：名词谓语句",
       "非主谓句"
     ],
-    "order_idx": 33
+    "order_idx": 33,
+    "pattern": "S + verbo · S + 很 + adjetivo · S + nombre / número · frase sin sujeto",
+    "explanation": "Hay cuatro tipos básicos de frase simple. Con verbo: 我学习汉语. Con adjetivo, sin 是 y casi siempre con 很: 天气很好. Con un nombre o un número como predicado, para fechas, edades o precios: 今天星期六. Y sin sujeto, para el tiempo atmosférico o avisos breves: 下雨了, 上课了.",
+    "markers": [
+      "学习",
+      "很好",
+      "星期",
+      "下雨",
+      "上课"
+    ],
+    "examples": [
+      {
+        "zh": "我学习汉语。",
+        "pinyin": "Wǒ xuéxí Hànyǔ.",
+        "es": "Estudio chino."
+      },
+      {
+        "zh": "天气很好。",
+        "pinyin": "Tiānqì hěn hǎo.",
+        "es": "Hace buen tiempo."
+      },
+      {
+        "zh": "今天星期六。",
+        "pinyin": "Jīntiān xīngqīliù.",
+        "es": "Hoy es sábado."
+      },
+      {
+        "zh": "下雨了。",
+        "pinyin": "Xià yǔ le.",
+        "es": "Está lloviendo."
+      },
+      {
+        "zh": "上课了！",
+        "pinyin": "Shàngkè le!",
+        "es": "¡Empieza la clase!"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "天气是好。",
+        "right": "天气很好。",
+        "why": "En una frase con adjetivo no se usa 是: se pone 很 u otro adverbio."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "4.2"
+      }
+    ]
   },
   {
     "code": "5.2.1",

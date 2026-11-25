@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "4.4",
+  "pattern": "modificador (+ 的) + nombre",
+  "explanation": "Todo lo que describe a un nombre va delante de él. Un poseedor lleva 的 (哥哥的电脑); un adjetivo de una sílaba suele ir sin 的 (新书, 大苹果), y un grupo como 很好 sí lo lleva (很好的医生). La cantidad, con número y clasificador, va antes de todo: 两本新书.",
+  "markers": ["的","大苹果","新书"],
+  "examples": [
+    {"zh":"这是哥哥的电脑。","pinyin":"Zhè shì gēge de diànnǎo.","es":"Este es el ordenador de mi hermano mayor."},
+    {"zh":"我买了一个大苹果。","pinyin":"Wǒ mǎi le yí gè dà píngguǒ.","es":"Compré una manzana grande."},
+    {"zh":"她是一个很好的医生。","pinyin":"Tā shì yí gè hěn hǎo de yīshēng.","es":"Es una médica muy buena."},
+    {"zh":"我有两本新书。","pinyin":"Wǒ yǒu liǎng běn xīn shū.","es":"Tengo dos libros nuevos."}
+  ],
+  "common_errors": [
+    {"wrong":"我买了一个苹果大。","right":"我买了一个大苹果。","why":"El adjetivo va delante del nombre, no detrás como en «una manzana grande»."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"3.2.1"},{"hsk_level":2,"code":"5.3"}]
+}

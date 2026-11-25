@@ -1,0 +1,16 @@
+{
+  "hsk_level": 1,
+  "code": "2.10",
+  "pattern": "喂，… (al teléfono o para llamar la atención)",
+  "explanation": "喂 se usa sobre todo al contestar o empezar una llamada, como «¿diga?» o «¿sí?»; ahí suele pronunciarse wéi. También sirve para llamar la atención de alguien (wèi), pero cara a cara y con desconocidos suena brusco. Va al principio de la frase, separado por una coma.",
+  "markers": ["喂"],
+  "examples": [
+    {"zh":"喂，你好！","pinyin":"Wéi, nǐ hǎo!","es":"¿Diga? ¡Hola!"},
+    {"zh":"喂，请问你是谁？","pinyin":"Wéi, qǐngwèn nǐ shì shéi?","es":"¿Sí? ¿Quién es, por favor?"},
+    {"zh":"喂，你在哪儿？","pinyin":"Wéi, nǐ zài nǎr?","es":"Oye, ¿dónde estás?"}
+  ],
+  "common_errors": [
+    {"wrong":"喂，请问医院在哪儿？（a un desconocido en la calle）","right":"你好，请问医院在哪儿？","why":"Cara a cara con un desconocido 喂 resulta brusco; se empieza con 你好 o 请问."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.9.3"}]
+}

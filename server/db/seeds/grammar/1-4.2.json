@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "4.2",
+  "pattern": "Sujeto + verbo / adjetivo / nombre (fecha, edad, precio)",
+  "explanation": "El predicado dice qué hace o cómo es el sujeto. Puede ser un verbo (他喝茶), un adjetivo (今天很冷) o, con fechas, edades y precios, un nombre o un número (今天星期一, 她八岁). Con adjetivos no se usa 是: «hoy hace frío» es 今天很冷. El verbo no cambia de forma ni con la persona ni con el tiempo.",
+  "markers": ["喝","冷","星期","岁"],
+  "examples": [
+    {"zh":"他喝茶。","pinyin":"Tā hē chá.","es":"Él toma té."},
+    {"zh":"今天很冷。","pinyin":"Jīntiān hěn lěng.","es":"Hoy hace frío."},
+    {"zh":"今天星期一。","pinyin":"Jīntiān xīngqīyī.","es":"Hoy es lunes."},
+    {"zh":"我女儿八岁。","pinyin":"Wǒ nǚ’ér bā suì.","es":"Mi hija tiene ocho años."}
+  ],
+  "common_errors": [
+    {"wrong":"今天是冷。","right":"今天很冷。","why":"Un adjetivo hace de predicado sin 是; se le pone delante un adverbio como 很."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"5.2"},{"hsk_level":2,"code":"3.2.2"}]
+}

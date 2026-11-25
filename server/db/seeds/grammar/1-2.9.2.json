@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "2.9.2",
+  "pattern": "verbo + 了 (+ número + clasificador + objeto)",
+  "explanation": "了 detrás del verbo indica que la acción se ha completado: 我买了两本书. Suele pedir un objeto con número o con más información; «我买了书» a secas suena incompleto. Se niega con 没 y entonces 了 desaparece: 我没买书. No equivale al pasado español: una costumbre del pasado no lleva 了.",
+  "markers": ["了"],
+  "examples": [
+    {"zh":"我买了两本书。","pinyin":"Wǒ mǎi le liǎng běn shū.","es":"Compré dos libros."},
+    {"zh":"他喝了很多水。","pinyin":"Tā hē le hěn duō shuǐ.","es":"Bebió mucha agua."},
+    {"zh":"昨天我看了一个电影。","pinyin":"Zuótiān wǒ kàn le yí gè diànyǐng.","es":"Ayer vi una película."},
+    {"zh":"我昨天没去学校，去了医院。","pinyin":"Wǒ zuótiān méi qù xuéxiào, qù le yīyuàn.","es":"Ayer no fui al colegio; fui al hospital."}
+  ],
+  "common_errors": [
+    {"wrong":"我没买了书。","right":"我没买书。","why":"Con 没 desaparece 了: la negación ya dice que la acción no se hizo."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"6.1.1"}]
+}

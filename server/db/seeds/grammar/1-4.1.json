@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "4.1",
+  "pattern": "Sujeto (nombre / pronombre / grupo nominal) + predicado",
+  "explanation": "El sujeto va al principio, delante del predicado, y puede ser un nombre (老师), un pronombre (他) o un grupo nominal (我的朋友). El verbo no cambia con el sujeto: 我是, 他是, 他们是. A diferencia del español, el sujeto no puede ir detrás del verbo, como en «le gusta el té a mi amigo». Igual que en español, se omite cuando ya se sabe de quién se habla.",
+  "markers": ["老师","他","我的朋友","这个苹果"],
+  "examples": [
+    {"zh":"老师来了。","pinyin":"Lǎoshī lái le.","es":"Ha llegado el profesor."},
+    {"zh":"他是我的同学。","pinyin":"Tā shì wǒ de tóngxué.","es":"Es mi compañero de clase."},
+    {"zh":"我的朋友喜欢喝茶。","pinyin":"Wǒ de péngyou xǐhuan hē chá.","es":"A mi amigo le gusta el té."},
+    {"zh":"这个苹果很好吃。","pinyin":"Zhège píngguǒ hěn hǎochī.","es":"Esta manzana está muy rica."}
+  ],
+  "common_errors": [
+    {"wrong":"喜欢喝茶我的朋友。","right":"我的朋友喜欢喝茶。","why":"El sujeto va delante del verbo; no se puede posponer como en «le gusta el té a mi amigo»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"5.1.1"}]
+}

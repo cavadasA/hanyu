@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "3.1.2",
+  "pattern": "número + clasificador · preposición + nombre · nombre + posición",
+  "explanation": "Tres grupos pequeños que funcionan como piezas de la frase. El de cantidad une número y clasificador: 三本, 两个. El de preposición une 在, 和 o 对 con un nombre y va delante del verbo: 在学校. El de posición pone 上, 里 o 前 detrás de un nombre: 桌子上. Se combinan entre ellos: 在桌子上 es una preposición con un grupo de posición.",
+  "markers": ["三本","在学校","桌子上","两个"],
+  "examples": [
+    {"zh":"我买了三本书。","pinyin":"Wǒ mǎi le sān běn shū.","es":"Compré tres libros."},
+    {"zh":"我在学校学习。","pinyin":"Wǒ zài xuéxiào xuéxí.","es":"Estudio en el colegio."},
+    {"zh":"你的书在桌子上。","pinyin":"Nǐ de shū zài zhuōzi shang.","es":"Tu libro está encima de la mesa."},
+    {"zh":"我有两个中国朋友。","pinyin":"Wǒ yǒu liǎng gè Zhōngguó péngyou.","es":"Tengo dos amigos chinos."}
+  ],
+  "common_errors": [
+    {"wrong":"你的书在桌子。","right":"你的书在桌子上。","why":"Una cosa no es un lugar por sí misma: hace falta una palabra de posición, 桌子上."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"3.1.1"},{"hsk_level":2,"code":"3.1.2"}]
+}

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "4.3",
+  "pattern": "Sujeto + verbo + objeto",
+  "explanation": "El objeto va detrás del verbo: 我喝牛奶, 我认识他. Puede ser un nombre, un pronombre o un grupo nominal (一个新手机). Los pronombres de objeto no cambian de forma ni se adelantan: «te quiero» es 我爱你, nunca «我你爱».",
+  "markers": ["牛奶","他","妈妈","手机"],
+  "examples": [
+    {"zh":"我喜欢喝牛奶。","pinyin":"Wǒ xǐhuan hē niúnǎi.","es":"Me gusta la leche."},
+    {"zh":"我认识他。","pinyin":"Wǒ rènshi tā.","es":"Lo conozco."},
+    {"zh":"他爱他的妈妈。","pinyin":"Tā ài tā de māma.","es":"Quiere mucho a su madre."},
+    {"zh":"我想买一个新手机。","pinyin":"Wǒ xiǎng mǎi yí gè xīn shǒujī.","es":"Quiero comprarme un móvil nuevo."}
+  ],
+  "common_errors": [
+    {"wrong":"我你爱。","right":"我爱你。","why":"El pronombre objeto va detrás del verbo, no delante como en «te quiero»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"4.1"},{"hsk_level":1,"code":"3.1.1"}]
+}

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "4.6.1",
+  "pattern": "verbo + 一下 (+ objeto)",
+  "explanation": "一下 detrás de un verbo indica que la acción es breve o se hace sin esfuerzo, y suaviza las peticiones: 你看一下 «échale un vistazo», 我们休息一下吧. Va pegado al verbo y antes del objeto: 看一下这本书. Su efecto se parece al de repetir el verbo (看看).",
+  "markers": ["一下"],
+  "examples": [
+    {"zh":"你看一下这本书。","pinyin":"Nǐ kàn yíxià zhè běn shū.","es":"Échale un vistazo a este libro."},
+    {"zh":"我们休息一下吧。","pinyin":"Wǒmen xiūxi yíxià ba.","es":"Descansemos un momento."},
+    {"zh":"请你说一下你的名字。","pinyin":"Qǐng nǐ shuō yíxià nǐ de míngzi.","es":"Dime tu nombre, por favor."},
+    {"zh":"我想问一下，医院在哪儿？","pinyin":"Wǒ xiǎng wèn yíxià, yīyuàn zài nǎr?","es":"Una pregunta: ¿dónde está el hospital?"}
+  ],
+  "common_errors": [
+    {"wrong":"你看这本书一下。","right":"你看一下这本书。","why":"一下 va pegado al verbo, antes del objeto."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.6.2"},{"hsk_level":2,"code":"2.2.1"}]
+}
