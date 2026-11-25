@@ -38,6 +38,7 @@ export function ReadingDetailScreen() {
   const player = useSentencePlayer({
     sentences: reading?.sentences.map(sentence => sentence.zh) ?? [],
     clips: reading?.sentence_audio ?? [],
+    recorded: reading ? reading.audio_kind !== 'tts' : false,
     rate: speechRate,
     onSentence: index => saveSentenceProgress(index),
   });

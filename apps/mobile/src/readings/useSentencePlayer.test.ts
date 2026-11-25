@@ -138,6 +138,17 @@ describe('useSentencePlayer', () => {
     expect(result.current.activeIndex).toBeNull();
   });
 
+  it('una lectura con audio grabado sin ningún clip descargado no cae a TTS', async () => {
+    const { result } = await renderHook(() =>
+      useSentencePlayer({ sentences, clips: [null, null, null], rate: 1, recorded: true }));
+
+    await act(() => result.current.playFrom(0));
+    await flush();
+
+    expect(result.current.missingClip).toBe(0);
+    expect(Speech.speak).not.toHaveBeenCalled();
+  });
+
   it('sin clips, lee con la voz del dispositivo', async () => {
     const { result } = await renderHook(() =>
       useSentencePlayer({ sentences, clips: [null, null, null], rate: 1 }));

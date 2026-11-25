@@ -14,6 +14,8 @@ export function useSentencePlayer(input: {
   sentences: string[];
   clips: Array<{ url: string } | null>;
   rate: ReadingRate;
+  /** La lectura tiene audio grabado: se usan sus clips aunque no haya ninguno descargado. */
+  recorded?: boolean;
   onSentence?(index: number): void;
 }): { activeIndex: number | null; playFrom(i: number): void; stop(): void; missingClip: number | null } {
   const speech = useSpeech();
@@ -24,7 +26,7 @@ export function useSentencePlayer(input: {
   const latest = useRef(input);
   latest.current = input;
 
-  const hasClips = input.clips.some(clip => clip !== null);
+  const hasClips = input.recorded ?? input.clips.some(clip => clip !== null);
 
   useEffect(() => {
     player.current?.setPlaybackRate(input.rate, 'high');
