@@ -150,6 +150,43 @@ describe('readings repository', () => {
     expect(attempts[0]).toMatchObject({ reading_slug: 'reading-1', score: 1, total: 1 });
   });
 
+  it('separa los aciertos inferenciales y devuelve su explicación', async () => {
+    const attempts: any[] = [];
+    const readingRow = {
+      slug: 'reading-1', hsk_level: 2, format: 'short_text', title: 'Una lectura', topic: 'estudio',
+      series: null, series_index: null,
+      sentences: JSON.stringify([{ zh: '我喜欢喝茶。', pinyin: 'Wǒ xǐhuan hē chá.', es: 'Me gusta el té.' }]),
+      questions: JSON.stringify([
+        { prompt: '¿Qué me gusta?', options: ['té', 'agua'], answer_index: 0, evidence_sentence: 0 },
+        { kind: 'literal', prompt: '¿Qué bebo?', options: ['té', 'café'], answer_index: 0, evidence_sentence: 0 },
+        {
+          kind: 'inferential', prompt: '¿Qué bebería?', options: ['agua', 'té'], answer_index: 1,
+          evidence_sentences: [0, 1], rationale_es: 'Le gusta el té, así que es lo que bebería.',
+        },
+      ]),
+      target_words: [], target_grammar: [], audio_kind: 'tts', audio_url: null,
+    };
+    const from = vi.fn((table: string) => {
+      if (table === 'reading') {
+        const query: any = { eq: vi.fn(() => query), single: vi.fn().mockResolvedValue({ data: readingRow, error: null }) };
+        return { select: vi.fn(() => query) };
+      }
+      if (table === 'reading_attempts') {
+        return { insert: vi.fn((row: unknown) => { attempts.push(row); return Promise.resolve({ error: null }); }) };
+      }
+      const statsQuery: any = { eq: vi.fn(() => statsQuery), maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }) };
+      return { select: vi.fn(() => statsQuery), insert: vi.fn().mockResolvedValue({ error: null }) };
+    });
+    const client = { rpc: vi.fn(), from, auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) } };
+
+    const result = await completeReading('reading-1', { q0: '0', q1: '1', q2: '1' }, client as never);
+
+    expect(result.results.map(entry => entry.kind)).toEqual(['literal', 'literal', 'inferential']);
+    expect(result.results[2].rationale_es).toBe('Le gusta el té, así que es lo que bebería.');
+    expect(result.results[0].rationale_es).toBeUndefined();
+    expect(attempts[0]).toMatchObject({ score: 2, total: 3, inferential_score: 1, inferential_total: 1 });
+  });
+
   it('calcula la cobertura conocida antes de abrir cada lectura', async () => {
     const catalog = readingClient([{ slug: 'reading-1', title: 'Una lectura', sentences: [] }]);
     const skillQuery: Record<string, any> = {

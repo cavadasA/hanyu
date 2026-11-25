@@ -246,6 +246,8 @@ export interface WordPage {
   limit?: number;
 }
 
+export type ReadingQuestionKind = 'literal' | 'inferential';
+
 export interface ReadingQuestion {
   id: string;
   prompt: string;
@@ -343,6 +345,9 @@ export interface ReadingResult {
     selected_option_id: string;
     correct_option_id: string;
     correct: boolean;
+    kind: ReadingQuestionKind;
+    /** Por qué la respuesta se deduce del texto; solo en las inferenciales. */
+    rationale_es?: string;
   }>;
 }
 
@@ -526,6 +531,9 @@ export interface LearningReportReadingAttempt {
   reading_slug: string;
   score: number;
   total: number;
+  /** Parte de score/total que viene de preguntas inferenciales; 0 en los intentos anteriores. */
+  inferential_score: number;
+  inferential_total: number;
 }
 
 export interface LearningReportUnit {

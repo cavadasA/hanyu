@@ -16,7 +16,9 @@ export function ReadingQuestions({ questions, answers, disabled, result, onAnswe
 
   return (
     <View style={styles.container}>
-      {questions.map(question => (
+      {questions.map(question => {
+        const outcome = result?.results.find(entry => entry.question_id === question.id);
+        return (
         <View key={question.id} style={styles.question}>
           <Text style={[styles.prompt, { color: colors.text }]}>{question.prompt}</Text>
           {question.options.map(option => {
@@ -41,8 +43,12 @@ export function ReadingQuestions({ questions, answers, disabled, result, onAnswe
               </Pressable>
             );
           })}
+          {outcome?.kind === 'inferential' && outcome.rationale_es ? (
+            <Text style={[styles.rationale, { color: colors.textMuted }]}>{outcome.rationale_es}</Text>
+          ) : null}
         </View>
-      ))}
+        );
+      })}
 
       {result ? (
         <Text style={[styles.score, { color: colors.text }]}>
@@ -70,6 +76,10 @@ const styles = StyleSheet.create({
     padding: tokens.spacing.md,
     minHeight: 44,
     justifyContent: 'center',
+  },
+  rationale: {
+    fontSize: tokens.fontSize.sm,
+    lineHeight: 20,
   },
   score: {
     fontSize: tokens.fontSize.lg,

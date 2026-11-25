@@ -285,8 +285,10 @@ function extractCorrectOptionId(question: any) {
 
 function scoreLocally(questions: any, answers: any) {
   let score = 0;
+  let inferentialScore = 0;
+  let inferentialTotal = 0;
   const normalizedAnswers = answers || {};
-  const results: any[] = [];
+  const results: ReadingResult['results'] = [];
 
   (questions || []).forEach((question: any, index: number) => {
     const questionId = normalizeQuestionId(question, index);
@@ -294,8 +296,15 @@ function scoreLocally(questions: any, answers: any) {
     const selectedOptionId = normalizedAnswers[questionId];
     const correct = selectedOptionId !== undefined && selectedOptionId === correctOptionId;
 
+    // Las preguntas anteriores al Plan 14 no llevan kind: todas eran literales.
+    const kind = question.kind === 'inferential' ? 'inferential' as const : 'literal' as const;
+
     if (correct) {
       score += 1;
+    }
+    if (kind === 'inferential') {
+      inferentialTotal += 1;
+      if (correct) inferentialScore += 1;
     }
 
     results.push({
@@ -303,6 +312,10 @@ function scoreLocally(questions: any, answers: any) {
       selected_option_id: selectedOptionId,
       correct_option_id: correctOptionId,
       correct,
+      kind,
+      ...(kind === 'inferential' && typeof question.rationale_es === 'string'
+        ? { rationale_es: question.rationale_es }
+        : {}),
     });
   });
 
@@ -310,6 +323,8 @@ function scoreLocally(questions: any, answers: any) {
     score,
     total: Array.isArray(questions) ? questions.length : 0,
     results,
+    inferential_score: inferentialScore,
+    inferential_total: inferentialTotal,
   };
 }
 
@@ -847,11 +862,13 @@ export async function completeReading(
     answers,
     score: localResult.score,
     total: localResult.total,
+    inferential_score: localResult.inferential_score,
+    inferential_total: localResult.inferential_total,
   } as any);
 
   if (!attemptError) {
     await incrementReadingStat(client, userId);
   }
 
-  return localResult;
+  return { score: localResult.score, total: localResult.total, results: localResult.results };
 }

@@ -358,6 +358,8 @@ export async function getLearningReport(
       reading_slug: String(a.reading_slug ?? ''),
       score: Number(a.score || 0),
       total: Number(a.total || 0),
+      inferential_score: Number(a.inferential_score || 0),
+      inferential_total: Number(a.inferential_total || 0),
     })),
     mistakes_count: typeof payload.mistakes_count === 'number' ? payload.mistakes_count : Number(payload.mistakes_count || 0),
     syllabus_words_count: typeof payload.syllabus_words_count === 'number'

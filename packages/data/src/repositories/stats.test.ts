@@ -63,4 +63,20 @@ describe('getLearningReport', () => {
     expect(report.syllabus_words_count).toBe(300);
     expect(report.units[0]?.completed).toBe(true);
   });
+
+  it('lleva al informe el desglose inferencial de cada intento, a 0 en los antiguos', async () => {
+    const client = reportClient({
+      reading_attempts: [
+        { created_at: '2026-11-01T00:00:00Z', reading_slug: 'text-1', score: 3, total: 4, inferential_score: 1, inferential_total: 1 },
+        { created_at: '2026-09-01T00:00:00Z', reading_slug: 'text-2', score: 2, total: 3 },
+      ],
+    });
+
+    const report = await getLearningReport(client);
+
+    expect(report.reading_attempts.map(attempt => [attempt.inferential_score, attempt.inferential_total])).toEqual([
+      [1, 1],
+      [0, 0],
+    ]);
+  });
 });

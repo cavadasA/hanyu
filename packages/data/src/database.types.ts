@@ -811,6 +811,8 @@ export type Database = {
           answers: Json
           created_at: string
           id: string
+          inferential_score: number
+          inferential_total: number
           reading_id: string | null
           reading_slug: string | null
           score: number
@@ -821,6 +823,8 @@ export type Database = {
           answers: Json
           created_at?: string
           id?: string
+          inferential_score?: number
+          inferential_total?: number
           reading_id?: string | null
           reading_slug?: string | null
           score: number
@@ -831,6 +835,8 @@ export type Database = {
           answers?: Json
           created_at?: string
           id?: string
+          inferential_score?: number
+          inferential_total?: number
           reading_id?: string | null
           reading_slug?: string | null
           score?: number

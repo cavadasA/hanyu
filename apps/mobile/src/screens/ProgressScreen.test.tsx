@@ -84,7 +84,7 @@ describe('ProgressScreen', () => {
   });
 
   it('separa la comprensión inferencial de la literal', async () => {
-    const attempts: Array<LearningReport['reading_attempts'][number] & { inferential_score: number; inferential_total: number }> = [
+    const attempts: LearningReport['reading_attempts'] = [
       { created_at: '2026-11-01T00:00:00Z', reading_slug: 'text-1', score: 5, total: 6, inferential_score: 2, inferential_total: 3 },
       { created_at: '2026-11-02T00:00:00Z', reading_slug: 'text-2', score: 3, total: 6, inferential_score: 1, inferential_total: 3 },
     ];
@@ -165,7 +165,7 @@ describe('ProgressScreen', () => {
     mockGetReport.mockResolvedValue(
       reportWith({
         reading_attempts: [
-          { created_at: '2026-09-01T00:00:00Z', reading_slug: 'text-1', score: 4, total: 5 },
+          { created_at: '2026-09-01T00:00:00Z', reading_slug: 'text-1', score: 4, total: 5, inferential_score: 0, inferential_total: 0 },
         ],
       }),
     );
