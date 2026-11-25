@@ -23,3 +23,5 @@ export * from './analytics/reading';
 export { durationIsPlausible, hanziCount, sourceHash, validateAudioManifest, type AudioClip, type AudioKind, type AudioManifest, type ManifestExpectations, type ManifestIssue, type ManifestIssueKind, type MediaIssueKind } from './media/manifest';
 export { LEARNING_SKILLS, expressionSkillsFor, type ExpressionSkill, type ExpressionTarget } from './expression/skills';
 export { comparePinyin, parsePinyinSyllables, INTELLIGIBLE_RATIO, type PinyinComparison } from './expression/compare-pinyin';
+export * from './exam/types';
+export * from './exam/validate';
