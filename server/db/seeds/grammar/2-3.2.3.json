@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "3.2.3",
+  "pattern": "很 / 非常 / 不太 + adjetivo · 太 + adjetivo + 了",
+  "explanation": "Un grupo adjetival es un adjetivo con un adverbio de grado: 很好, 非常贵, 不太好, 太大了. Hace de predicado sin 是 (这个很贵) y, con 的, describe a un nombre (很贵的衣服). 不太 suaviza la negación, «no muy». 太…了 dice que algo pasa de la medida, «demasiado».",
+  "markers": ["很","非常","太","不太"],
+  "examples": [
+    {"zh":"这个菜非常好吃。","pinyin":"Zhège cài fēicháng hǎochī.","es":"Este plato está riquísimo."},
+    {"zh":"这件衣服太大了。","pinyin":"Zhè jiàn yīfu tài dà le.","es":"Esta ropa es demasiado grande."},
+    {"zh":"今天天气不太好。","pinyin":"Jīntiān tiānqì bú tài hǎo.","es":"Hoy no hace muy buen tiempo."},
+    {"zh":"我买了一件很贵的衣服。","pinyin":"Wǒ mǎi le yí jiàn hěn guì de yīfu.","es":"Me compré una ropa muy cara."}
+  ],
+  "common_errors": [
+    {"wrong":"这个菜是很好吃。","right":"这个菜很好吃。","why":"El adjetivo hace de predicado por sí solo; el «es» español no se traduce con 是."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.1"},{"hsk_level":1,"code":"4.2"}]
+}

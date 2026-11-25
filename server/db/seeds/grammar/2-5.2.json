@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "5.2",
+  "pattern": "Sujeto + fecha / edad / precio / hora",
+  "explanation": "Con fechas, horas, edades y precios, el predicado puede ser directamente un grupo nominal, sin verbo: 今天星期三, 他二十岁, 这个一百块. En español siempre hace falta un verbo («es», «tiene», «cuesta»); en chino no. Para negarlo, en cambio, sí aparece 是: 今天不是星期三.",
+  "markers": ["星期","岁","块","点"],
+  "examples": [
+    {"zh":"今天星期三。","pinyin":"Jīntiān xīngqīsān.","es":"Hoy es miércoles."},
+    {"zh":"我弟弟八岁。","pinyin":"Wǒ dìdi bā suì.","es":"Mi hermano pequeño tiene ocho años."},
+    {"zh":"这件衣服一百块。","pinyin":"Zhè jiàn yīfu yìbǎi kuài.","es":"Esta ropa cuesta cien yuanes."},
+    {"zh":"现在三点半。","pinyin":"Xiànzài sān diǎn bàn.","es":"Son las tres y media."},
+    {"zh":"今天不是星期三。","pinyin":"Jīntiān bú shì xīngqīsān.","es":"Hoy no es miércoles."}
+  ],
+  "common_errors": [
+    {"wrong":"我弟弟有八岁。","right":"我弟弟八岁。","why":"La edad no se «tiene»: va directamente detrás del sujeto, sin 有."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"4.2"},{"hsk_level":1,"code":"7.2"}]
+}

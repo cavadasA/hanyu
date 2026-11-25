@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "3.2.2",
+  "pattern": "(adverbio) + verbo + objeto / complemento",
+  "explanation": "Un grupo verbal es un verbo con lo que lo acompaña: adverbios delante (每天跑步) y objeto o complemento detrás (看书, 看完). Además de predicado, puede ser sujeto u objeto sin cambiar de forma, porque el chino no tiene infinitivo: 学汉语很有意思 «estudiar chino es interesante», 我喜欢看书 «me gusta leer». Si el predicado es un adjetivo, no se pone 是 en medio.",
+  "markers": ["学汉语","看书","跑步","打电话"],
+  "examples": [
+    {"zh":"学汉语很有意思。","pinyin":"Xué Hànyǔ hěn yǒu yìsi.","es":"Estudiar chino es muy interesante."},
+    {"zh":"我喜欢看书。","pinyin":"Wǒ xǐhuan kàn shū.","es":"Me gusta leer."},
+    {"zh":"每天跑步对身体好。","pinyin":"Měi tiān pǎobù duì shēntǐ hǎo.","es":"Correr todos los días es bueno para la salud."},
+    {"zh":"他不想打电话。","pinyin":"Tā bù xiǎng dǎ diànhuà.","es":"No quiere llamar por teléfono."}
+  ],
+  "common_errors": [
+    {"wrong":"学汉语是很有意思。","right":"学汉语很有意思。","why":"Cuando el predicado es un adjetivo no se pone 是: el grupo verbal va seguido directamente de 很 + adjetivo."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"4.2"}]
+}

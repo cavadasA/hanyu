@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "5.4.2",
+  "pattern": "verbo + 来 / 去 · verbo + 进 / 出 / 回 / 过 / 上 / 下 (+ 来 / 去)",
+  "explanation": "Detrás del verbo se indica la dirección del movimiento. 来 es hacia quien habla y 去, alejándose de él: 进来 «entra aquí», 出去 «sal fuera». 进, 出, 回, 过, 上 y 下 dan la dirección concreta y se combinan con 来 o 去: 走过来, 跑出去. Si hay un lugar, va entre la dirección y 来 / 去: 回家去.",
+  "markers": ["进来","出去","回来","过来"],
+  "examples": [
+    {"zh":"外面冷，快进来吧。","pinyin":"Wàimiàn lěng, kuài jìnlai ba.","es":"Fuera hace frío, entra."},
+    {"zh":"他跑出去了。","pinyin":"Tā pǎo chūqu le.","es":"Salió corriendo."},
+    {"zh":"妈妈什么时候回来？","pinyin":"Māma shénme shíhou huílai?","es":"¿Cuándo vuelve mamá?"},
+    {"zh":"你走过来，我看看。","pinyin":"Nǐ zǒu guòlai, wǒ kànkan.","es":"Acércate, que te vea."}
+  ],
+  "common_errors": [
+    {"wrong":"他回去家了。","right":"他回家去了。","why":"El lugar va entre el verbo de dirección y 来 / 去: 回家去, no detrás de 去."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"3.1.1"}]
+}

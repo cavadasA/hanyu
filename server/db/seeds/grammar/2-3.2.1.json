@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "3.2.1",
+  "pattern": "这 / 那 + número + clasificador + (descripción + 的) + nombre",
+  "explanation": "Un grupo nominal funciona como un nombre: puede ser sujeto u objeto. Todo lo que describe al nombre va delante, en orden fijo: demostrativo, número, clasificador, descripción y, al final, el nombre: 那两本新书. Las descripciones largas llevan 的 (很好的朋友); las cortas y fijas, no (中国菜). En español la descripción suele ir detrás del nombre; en chino nunca.",
+  "markers": ["两本新书","我的老师","很好的朋友","中国菜"],
+  "examples": [
+    {"zh":"那两本新书是我的。","pinyin":"Nà liǎng běn xīn shū shì wǒ de.","es":"Esos dos libros nuevos son míos."},
+    {"zh":"我的老师是中国人。","pinyin":"Wǒ de lǎoshī shì Zhōngguó rén.","es":"Mi profesor es chino."},
+    {"zh":"他是我很好的朋友。","pinyin":"Tā shì wǒ hěn hǎo de péngyou.","es":"Es un muy buen amigo mío."},
+    {"zh":"我喜欢吃中国菜。","pinyin":"Wǒ xǐhuan chī Zhōngguó cài.","es":"Me gusta la comida china."}
+  ],
+  "common_errors": [
+    {"wrong":"我有朋友很好。","right":"我有很好的朋友。","why":"La descripción va delante del nombre con 的; detrás, como en «amigos muy buenos», no funciona."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"4.4"}]
+}

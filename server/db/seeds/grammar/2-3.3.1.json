@@ -1,0 +1,16 @@
+{
+  "hsk_level": 2,
+  "code": "3.3.1",
+  "pattern": "A、B + 什么的",
+  "explanation": "什么的 cierra una lista de ejemplos, como «y cosas así» o «etcétera». Va detrás del último elemento, sin 和 delante, y es propio de la conversación. Puede cerrar una lista de cosas (面包、鸡蛋什么的) o de actividades (看书、看电影什么的).",
+  "markers": ["什么的"],
+  "examples": [
+    {"zh":"我买了面包、鸡蛋什么的。","pinyin":"Wǒ mǎi le miànbāo, jīdàn shénmede.","es":"Compré pan, huevos y cosas así."},
+    {"zh":"星期天我喜欢看书、看电影什么的。","pinyin":"Xīngqītiān wǒ xǐhuan kàn shū, kàn diànyǐng shénmede.","es":"Los domingos me gusta leer, ver películas y cosas así."},
+    {"zh":"桌子上有手机、书什么的。","pinyin":"Zhuōzi shang yǒu shǒujī, shū shénmede.","es":"En la mesa hay un móvil, libros y esas cosas."}
+  ],
+  "common_errors": [
+    {"wrong":"我买了面包、鸡蛋和什么的。","right":"我买了面包、鸡蛋什么的。","why":"什么的 ya cierra la lista; no se pone 和 delante como en «y cosas así»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.3.1"}]
+}

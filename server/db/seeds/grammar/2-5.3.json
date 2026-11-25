@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "5.3",
+  "pattern": "(sujeto +) verbo (+ …) + 的 + nombre",
+  "explanation": "Una acción, o una frase entera con su sujeto, puede describir a un nombre si va delante con 的: 妈妈做的菜 «la comida que hace mamá», 来的人 «la gente que viene». Equivale a las oraciones con «que» del español, pero en orden inverso: primero la descripción y después el nombre, sin ningún «que».",
+  "markers": ["做的菜","买的书","来的人","说的话"],
+  "examples": [
+    {"zh":"妈妈做的菜很好吃。","pinyin":"Māma zuò de cài hěn hǎochī.","es":"La comida que hace mamá está muy rica."},
+    {"zh":"这是我昨天买的书。","pinyin":"Zhè shì wǒ zuótiān mǎi de shū.","es":"Este es el libro que compré ayer."},
+    {"zh":"今天来的人很多。","pinyin":"Jīntiān lái de rén hěn duō.","es":"Hoy ha venido mucha gente."},
+    {"zh":"你说的话我都听懂了。","pinyin":"Nǐ shuō de huà wǒ dōu tīngdǒng le.","es":"He entendido todo lo que has dicho."}
+  ],
+  "common_errors": [
+    {"wrong":"这是书我昨天买的。","right":"这是我昨天买的书。","why":"La descripción va delante del nombre; el «que» de «el libro que compré» no existe y el orden se invierte."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"4.4"},{"hsk_level":2,"code":"3.2.1"}]
+}

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "5.1",
+  "pattern": "Objeto (como sujeto) + verbo + resultado / 了",
+  "explanation": "Lo que recibe la acción puede ir al principio, como sujeto, sin ninguna marca de pasiva: 饭做好了 «la comida está hecha». Se usa cuando importa la cosa y no quién lo hizo, porque ya se sabe o da igual. El verbo casi siempre lleva un resultado o 了. En español equivale a una pasiva refleja («se ha agotado») o a «está hecho».",
+  "markers": ["做好了","洗好了","卖完了","找到了"],
+  "examples": [
+    {"zh":"饭做好了，快来吃吧。","pinyin":"Fàn zuòhǎo le, kuài lái chī ba.","es":"La comida está lista, venid a comer."},
+    {"zh":"衣服洗好了吗？","pinyin":"Yīfu xǐhǎo le ma?","es":"¿Ya está lavada la ropa?"},
+    {"zh":"那本书卖完了。","pinyin":"Nà běn shū màiwán le.","es":"Ese libro se ha agotado."},
+    {"zh":"你的手机找到了。","pinyin":"Nǐ de shǒujī zhǎodào le.","es":"Tu móvil ha aparecido."}
+  ],
+  "common_errors": [
+    {"wrong":"饭被做好了。","right":"饭做好了。","why":"No hace falta ninguna marca de pasiva: la cosa va delante y el verbo detrás. 被 se reserva para cuando hay que señalar quién lo hizo o algo salió mal."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"4.1"}]
+}

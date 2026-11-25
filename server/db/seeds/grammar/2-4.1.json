@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "4.1",
+  "pattern": "还是 + V + 吧 · 要 / 快要 / 就要 + V + 了 · 都 + … + 了",
+  "explanation": "Tres moldes fijos. 还是…吧 recomienda la mejor opción después de pensarlo: 还是回家吧 «mejor volvamos a casa». 要…了, 快要…了 y 就要…了 anuncian que algo va a pasar pronto; si se dice cuándo (明天, 下个星期), solo vale 就要. 都…了 subraya que ya es tarde o que ya es mucho: 都十二点了.",
+  "markers": ["还是","快要","就要","都"],
+  "examples": [
+    {"zh":"太晚了，我们还是回家吧。","pinyin":"Tài wǎn le, wǒmen háishi huí jiā ba.","es":"Es muy tarde; mejor volvamos a casa."},
+    {"zh":"火车快要开了。","pinyin":"Huǒchē kuàiyào kāi le.","es":"El tren está a punto de salir."},
+    {"zh":"明天就要考试了。","pinyin":"Míngtiān jiù yào kǎoshì le.","es":"Mañana ya es el examen."},
+    {"zh":"都十二点了，快睡觉吧。","pinyin":"Dōu shí’èr diǎn le, kuài shuìjiào ba.","es":"Ya son las doce; vete a dormir."}
+  ],
+  "common_errors": [
+    {"wrong":"明天快要考试了。","right":"明天就要考试了。","why":"Con un momento concreto (明天) se usa 就要; 快要 no admite una indicación de tiempo."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.7.3"},{"hsk_level":2,"code":"2.7.7"}]
+}

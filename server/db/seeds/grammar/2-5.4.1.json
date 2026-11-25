@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "5.4.1",
+  "pattern": "verbo + 完 / 好 / 懂 / 会 / 错",
+  "explanation": "Estos complementos dicen cómo acaba la acción. 完 es «terminar» (吃完), 好 «dejar algo hecho y listo» (准备好), 懂 «entender» (听懂, 看懂), 会 «aprender a hacer algo» (学会) y 错 «hacerlo mal» (写错, 说错). Se niegan con 没 y suelen llevar 了 cuando ya ha pasado: 我没听懂, 我学会了.",
+  "markers": ["完","好","懂","会","错"],
+  "examples": [
+    {"zh":"我吃完了。","pinyin":"Wǒ chīwán le.","es":"Ya he terminado de comer."},
+    {"zh":"我准备好了。","pinyin":"Wǒ zhǔnbèi hǎo le.","es":"Ya estoy listo."},
+    {"zh":"这个字我写错了。","pinyin":"Zhège zì wǒ xiěcuò le.","es":"Este carácter lo he escrito mal."},
+    {"zh":"你看懂了吗？","pinyin":"Nǐ kàndǒng le ma?","es":"¿Lo has entendido?"},
+    {"zh":"我学会做中国菜了。","pinyin":"Wǒ xuéhuì zuò Zhōngguó cài le.","es":"He aprendido a hacer comida china."}
+  ],
+  "common_errors": [
+    {"wrong":"这个字我写得错了。","right":"这个字我写错了。","why":"El resultado 错 se pega directamente al verbo; 得 sirve para valorar cómo se hace, no para decir cómo acaba."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"3.1.1"}]
+}
