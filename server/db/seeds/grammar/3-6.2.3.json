@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "6.2.3",
+  "pattern": "verbo 1 + 着 + verbo 2",
+  "explanation": "Con 着 detrás del primer verbo, la primera acción es la manera en que se hace la segunda: 他笑着说 «dijo sonriendo», 我们走着去吧 «vamos andando». La acción principal es la segunda. En español se traduce con un gerundio o con «a pie», «de pie», «sentado».",
+  "markers": ["着"],
+  "examples": [
+    {"zh":"他笑着说：“没关系。”","pinyin":"Tā xiàozhe shuō: “Méi guānxi.”","es":"Dijo sonriendo: «No pasa nada»."},
+    {"zh":"学校不远，我们走着去吧。","pinyin":"Xuéxiào bù yuǎn, wǒmen zǒuzhe qù ba.","es":"El colegio no está lejos, vamos andando."},
+    {"zh":"他每天站着工作。","pinyin":"Tā měi tiān zhànzhe gōngzuò.","es":"Trabaja de pie todos los días."},
+    {"zh":"孩子哭着找妈妈。","pinyin":"Háizi kūzhe zhǎo māma.","es":"El niño busca a su madre llorando."}
+  ],
+  "common_errors": [
+    {"wrong":"他说着笑。（para «dijo sonriendo»）","right":"他笑着说。","why":"La manera va primero con 着 y la acción principal después: 笑着说."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"7.1.1"},{"hsk_level":1,"code":"5.3.4"}]
+}

@@ -8665,7 +8665,56 @@
       "（1）主语+被+宾语+动词+其他成分",
       "（2）主语+被+动词+其他成分"
     ],
-    "order_idx": 42
+    "order_idx": 42,
+    "pattern": "Sujeto (afectado) + 被 (+ agente) + verbo + resultado / 了",
+    "explanation": "Con 被, el sujeto es quien sufre la acción y quien la hace va detrás de 被, o se omite si no importa: 我的自行车被人骑走了. Se usa sobre todo para algo negativo o inesperado; para lo neutro basta con poner la cosa delante sin marca (饭做好了). El verbo no puede quedarse solo: necesita un resultado, una dirección o 了. La negación va delante de 被: 没被.",
+    "markers": [
+      "被"
+    ],
+    "examples": [
+      {
+        "zh": "我的自行车被人骑走了。",
+        "pinyin": "Wǒ de zìxíngchē bèi rén qízǒu le.",
+        "es": "Alguien se ha llevado mi bici."
+      },
+      {
+        "zh": "杯子被我打坏了。",
+        "pinyin": "Bēizi bèi wǒ dǎhuài le.",
+        "es": "He roto el vaso sin querer."
+      },
+      {
+        "zh": "他被老师叫走了。",
+        "pinyin": "Tā bèi lǎoshī jiàozǒu le.",
+        "es": "El profesor lo ha llamado y se ha ido."
+      },
+      {
+        "zh": "我的书没被拿走。",
+        "pinyin": "Wǒ de shū méi bèi názǒu.",
+        "es": "No se han llevado mi libro."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我的自行车被人骑。",
+        "right": "我的自行车被人骑走了。",
+        "why": "Con 被 el verbo no va solo: hay que decir qué le pasó al sujeto (骑走了)."
+      },
+      {
+        "wrong": "饭被妈妈做好了。",
+        "right": "饭妈妈做好了。",
+        "why": "Para algo neutro o positivo no hace falta 被; se reserva para lo que perjudica o sorprende."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "2.6.4"
+      },
+      {
+        "hsk_level": 2,
+        "code": "5.1"
+      }
+    ]
   },
   {
     "code": "6.2.3",
@@ -8677,7 +8726,51 @@
     "items": [
       "“着”表示动作的伴随：动词1+着+动词2"
     ],
-    "order_idx": 43
+    "order_idx": 43,
+    "pattern": "verbo 1 + 着 + verbo 2",
+    "explanation": "Con 着 detrás del primer verbo, la primera acción es la manera en que se hace la segunda: 他笑着说 «dijo sonriendo», 我们走着去吧 «vamos andando». La acción principal es la segunda. En español se traduce con un gerundio o con «a pie», «de pie», «sentado».",
+    "markers": [
+      "着"
+    ],
+    "examples": [
+      {
+        "zh": "他笑着说：“没关系。”",
+        "pinyin": "Tā xiàozhe shuō: “Méi guānxi.”",
+        "es": "Dijo sonriendo: «No pasa nada»."
+      },
+      {
+        "zh": "学校不远，我们走着去吧。",
+        "pinyin": "Xuéxiào bù yuǎn, wǒmen zǒuzhe qù ba.",
+        "es": "El colegio no está lejos, vamos andando."
+      },
+      {
+        "zh": "他每天站着工作。",
+        "pinyin": "Tā měi tiān zhànzhe gōngzuò.",
+        "es": "Trabaja de pie todos los días."
+      },
+      {
+        "zh": "孩子哭着找妈妈。",
+        "pinyin": "Háizi kūzhe zhǎo māma.",
+        "es": "El niño busca a su madre llorando."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他说着笑。（para «dijo sonriendo»）",
+        "right": "他笑着说。",
+        "why": "La manera va primero con 着 y la acción principal después: 笑着说."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "7.1.1"
+      },
+      {
+        "hsk_level": 1,
+        "code": "5.3.4"
+      }
+    ]
   },
   {
     "code": "6.2.4",
@@ -8693,7 +8786,61 @@
       "（4）A不比B+形容词",
       "（5）A比B+多/少/早/晚+动词+数量短语"
     ],
-    "order_idx": 44
+    "order_idx": 44,
+    "pattern": "A 比 B 更 / 还 + adj · A 跟 B 一样 (+ adj) · A 不比 B + adj · A 比 B 早 / 晚 / 多 / 少 + verbo + cantidad",
+    "explanation": "更 o 还 refuerzan una comparación con 比: 今天比昨天还冷. 跟…一样 expresa igualdad, «igual de»: 我跟你一样高. A 不比 B + adjetivo corrige a quien piensa lo contrario: «no es que sea más…». Y con 早, 晚, 多 o 少 delante del verbo, la diferencia va detrás: 他比我早来十分钟 «llegó diez minutos antes que yo».",
+    "markers": [
+      "还",
+      "更",
+      "一样",
+      "不比",
+      "早来"
+    ],
+    "examples": [
+      {
+        "zh": "今天比昨天还冷。",
+        "pinyin": "Jīntiān bǐ zuótiān hái lěng.",
+        "es": "Hoy hace todavía más frío que ayer."
+      },
+      {
+        "zh": "这本书比那本更有意思。",
+        "pinyin": "Zhè běn shū bǐ nà běn gèng yǒu yìsi.",
+        "es": "Este libro es aún más interesante que aquel."
+      },
+      {
+        "zh": "我跟你一样高。",
+        "pinyin": "Wǒ gēn nǐ yíyàng gāo.",
+        "es": "Soy igual de alto que tú."
+      },
+      {
+        "zh": "我的汉语不比他差。",
+        "pinyin": "Wǒ de Hànyǔ bù bǐ tā chà.",
+        "es": "Mi chino no es peor que el suyo."
+      },
+      {
+        "zh": "他比我早来十分钟。",
+        "pinyin": "Tā bǐ wǒ zǎo lái shí fēnzhōng.",
+        "es": "Llegó diez minutos antes que yo."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我跟你一样很高。",
+        "right": "我跟你一样高。",
+        "why": "Con 一样 el adjetivo va solo, sin 很."
+      },
+      {
+        "wrong": "他来比我早十分钟。",
+        "right": "他比我早来十分钟。",
+        "why": "比 y 早 van delante del verbo y la diferencia detrás: 比我早来十分钟."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "6.3.4"
+      }
+    ]
   },
   {
     "code": "6.2.5",
@@ -8706,7 +8853,54 @@
       "（1）表示出现：处所词+动词+趋向补语/结果补语+动态助词（了）+数量短语+人/物",
       "（2）表示消失：处所词+动词+结果补语+动态助词（了）+数量短语+人/物"
     ],
-    "order_idx": 45
+    "order_idx": 45,
+    "pattern": "lugar / tiempo + verbo + complemento + 了 + cantidad + persona / cosa",
+    "explanation": "Para contar que algo aparece o desaparece de un sitio, la frase empieza por el lugar o el tiempo y lo que aparece va al final, con número y clasificador: 前边走过来一个人 «por delante vino una persona», 我们班走了两个学生 «de nuestra clase se han ido dos alumnos». Lo que aparece es algo nuevo, por eso no va como sujeto delante. El lugar no lleva 在.",
+    "markers": [
+      "走过来",
+      "来了",
+      "走了",
+      "跑出来"
+    ],
+    "examples": [
+      {
+        "zh": "前边走过来一个人。",
+        "pinyin": "Qiánbian zǒu guòlai yí gè rén.",
+        "es": "Por delante se acercó una persona."
+      },
+      {
+        "zh": "昨天我们班来了一个新同学。",
+        "pinyin": "Zuótiān wǒmen bān lái le yí gè xīn tóngxué.",
+        "es": "Ayer llegó un compañero nuevo a nuestra clase."
+      },
+      {
+        "zh": "我们公司走了两个人。",
+        "pinyin": "Wǒmen gōngsī zǒu le liǎng gè rén.",
+        "es": "De nuestra empresa se han ido dos personas."
+      },
+      {
+        "zh": "房间里跑出来一只小狗。",
+        "pinyin": "Fángjiān li pǎo chūlai yì zhī xiǎo gǒu.",
+        "es": "De la habitación salió corriendo un perrito."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "一个新同学来了我们班。",
+        "right": "我们班来了一个新同学。",
+        "why": "Cuando algo nuevo aparece en un sitio, el lugar abre la frase y lo nuevo va al final."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "6.3.3"
+      },
+      {
+        "hsk_level": 1,
+        "code": "5.3.3"
+      }
+    ]
   },
   {
     "code": "6.2.6",
@@ -8718,7 +8912,48 @@
     "items": [
       "强调说话人的看法或态度"
     ],
-    "order_idx": 46
+    "order_idx": 46,
+    "pattern": "Sujeto + 是 + valoración + 的",
+    "explanation": "Esta construcción 是…的 no habla del pasado: encierra la opinión de quien habla para darle un tono firme o tranquilizador. 这个问题是可以解决的 «este problema sí que tiene solución», 你说的是对的 «lo que dices es correcto». Dentro suelen ir 会, 能, 可以 o un adjetivo. Sin 是…的 la frase dice lo mismo pero con menos convicción.",
+    "markers": [
+      "是",
+      "的"
+    ],
+    "examples": [
+      {
+        "zh": "你说的是对的。",
+        "pinyin": "Nǐ shuō de shì duì de.",
+        "es": "Lo que dices es correcto."
+      },
+      {
+        "zh": "只要努力，你是能学好的。",
+        "pinyin": "Zhǐyào nǔlì, nǐ shì néng xuéhǎo de.",
+        "es": "Si te esfuerzas, seguro que lo aprendes bien."
+      },
+      {
+        "zh": "他是不会来的。",
+        "pinyin": "Tā shì bú huì lái de.",
+        "es": "Él no va a venir, eso seguro."
+      },
+      {
+        "zh": "这件事是很重要的。",
+        "pinyin": "Zhè jiàn shì shì hěn zhòngyào de.",
+        "es": "Este asunto es realmente importante."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他是不会来。",
+        "right": "他是不会来的。",
+        "why": "El 是 de opinión se cierra con 的; sin 的 queda a medias."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "6.3.5"
+      }
+    ]
   },
   {
     "code": "6.2.7",
@@ -8730,7 +8965,54 @@
     "items": [
       "主语+动词+宾语+动词+补语"
     ],
-    "order_idx": 47
+    "order_idx": 47,
+    "pattern": "Sujeto + verbo + objeto + verbo + 得 / duración / complemento",
+    "explanation": "Cuando un verbo con objeto necesita además un complemento (de modo, de duración o de resultado), el verbo se repite: 他说汉语说得很好, 我等你等了一个小时. El objeto va con la primera aparición del verbo y el complemento con la segunda. Es obligatorio: el chino no admite objeto y complemento detrás del mismo verbo.",
+    "markers": [
+      "说汉语说",
+      "等你等",
+      "看书看",
+      "做饭做"
+    ],
+    "examples": [
+      {
+        "zh": "他说汉语说得很好。",
+        "pinyin": "Tā shuō Hànyǔ shuō de hěn hǎo.",
+        "es": "Habla muy bien chino."
+      },
+      {
+        "zh": "我等你等了一个小时。",
+        "pinyin": "Wǒ děng nǐ děng le yí gè xiǎoshí.",
+        "es": "Te he estado esperando una hora."
+      },
+      {
+        "zh": "他看书看到十二点。",
+        "pinyin": "Tā kàn shū kàndào shí’èr diǎn.",
+        "es": "Estuvo leyendo hasta las doce."
+      },
+      {
+        "zh": "妈妈做饭做得很好吃。",
+        "pinyin": "Māma zuò fàn zuò de hěn hǎochī.",
+        "es": "Mamá cocina muy rico."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他说汉语得很好。",
+        "right": "他说汉语说得很好。",
+        "why": "El objeto y 得 no pueden ir detrás del mismo verbo: se repite el verbo, 说汉语说得很好."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "5.4.3"
+      },
+      {
+        "hsk_level": 2,
+        "code": "5.4.4"
+      }
+    ]
   },
   {
     "code": "6.3.1",
@@ -8742,7 +9024,48 @@
     "items": [
       "先……，再/然后……"
     ],
-    "order_idx": 48
+    "order_idx": 48,
+    "pattern": "先 + acción 1，再 / 然后 + acción 2",
+    "explanation": "先 marca lo que va primero y 再 o 然后 lo que viene después: 我们先吃饭，再去看电影. 再 se usa para planes y para lo que todavía no ha pasado; 然后 vale para cualquier secuencia, también pasada. Los dos van delante de su verbo, detrás del sujeto si lo hay.",
+    "markers": [
+      "先",
+      "再",
+      "然后"
+    ],
+    "examples": [
+      {
+        "zh": "我们先吃饭，再去看电影。",
+        "pinyin": "Wǒmen xiān chī fàn, zài qù kàn diànyǐng.",
+        "es": "Primero comemos y luego vamos al cine."
+      },
+      {
+        "zh": "你先休息一下，然后我们再说。",
+        "pinyin": "Nǐ xiān xiūxi yíxià, ránhòu wǒmen zài shuō.",
+        "es": "Descansa un poco y luego lo hablamos."
+      },
+      {
+        "zh": "昨天我先去了银行，然后去了超市。",
+        "pinyin": "Zuótiān wǒ xiān qù le yínháng, ránhòu qù le chāoshì.",
+        "es": "Ayer primero fui al banco y luego al súper."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "昨天我先去了银行，再去了超市。",
+        "right": "昨天我先去了银行，然后去了超市。",
+        "why": "Para una secuencia ya ocurrida se usa 然后; 再 mira hacia lo que aún no ha pasado."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.7.6"
+      },
+      {
+        "hsk_level": 3,
+        "code": "2.5.3"
+      }
+    ]
   },
   {
     "code": "6.3.2",
@@ -8754,7 +9077,46 @@
     "items": [
       "或者……，或者……"
     ],
-    "order_idx": 49
+    "order_idx": 49,
+    "pattern": "或者 + opción 1，或者 + opción 2",
+    "explanation": "Repetir 或者 delante de cada opción presenta alternativas que valen igual: «o…, o…». 或者你来，或者我去 «o vienes tú, o voy yo». Se usa en afirmaciones y propuestas; en una pregunta para elegir se usa 还是.",
+    "markers": [
+      "或者"
+    ],
+    "examples": [
+      {
+        "zh": "或者你来，或者我去，都可以。",
+        "pinyin": "Huòzhě nǐ lái, huòzhě wǒ qù, dōu kěyǐ.",
+        "es": "O vienes tú o voy yo, como prefieras."
+      },
+      {
+        "zh": "周末我或者在家看书，或者去公园。",
+        "pinyin": "Zhōumò wǒ huòzhě zài jiā kàn shū, huòzhě qù gōngyuán.",
+        "es": "Los fines de semana o leo en casa o voy al parque."
+      },
+      {
+        "zh": "你可以坐地铁，或者打车。",
+        "pinyin": "Nǐ kěyǐ zuò dìtiě, huòzhě dǎchē.",
+        "es": "Puedes ir en metro o coger un taxi."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "或者你来，或者我去？",
+        "right": "你来还是我去？",
+        "why": "Si es una pregunta para elegir, se usa 还是; 或者…或者… es para afirmar o proponer."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "2.7.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "6.4.1"
+      }
+    ]
   },
   {
     "code": "6.3.3",
@@ -8768,7 +9130,44 @@
       "又……，又……",
       "一边……，一边……"
     ],
-    "order_idx": 50
+    "order_idx": 50,
+    "pattern": "一会儿…，一会儿… · 又 + adj，又 + adj · 一边…，一边…",
+    "explanation": "Tres formas de juntar cosas. 一会儿…一会儿… describe cambios que se alternan: 一会儿下雨，一会儿出太阳 «ahora llueve, ahora sale el sol». 又…又… une dos cualidades o acciones a la vez: 又便宜又好吃 «barato y además rico». 一边…一边… son dos acciones simultáneas de la misma persona.",
+    "markers": [
+      "一会儿",
+      "又",
+      "一边"
+    ],
+    "examples": [
+      {
+        "zh": "今天一会儿下雨，一会儿出太阳。",
+        "pinyin": "Jīntiān yíhuìr xià yǔ, yíhuìr chū tàiyáng.",
+        "es": "Hoy tan pronto llueve como sale el sol."
+      },
+      {
+        "zh": "这家饭馆的菜又便宜又好吃。",
+        "pinyin": "Zhè jiā fànguǎn de cài yòu piányi yòu hǎochī.",
+        "es": "La comida de este restaurante es barata y además rica."
+      },
+      {
+        "zh": "他一边听歌，一边做饭。",
+        "pinyin": "Tā yìbiān tīng gē, yìbiān zuò fàn.",
+        "es": "Cocina mientras escucha música."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "这个菜又便宜和好吃。",
+        "right": "这个菜又便宜又好吃。",
+        "why": "又 se repite delante de cada cualidad; no se mezcla con 和."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "2.5.5"
+      }
+    ]
   },
   {
     "code": "6.3.4",
@@ -8780,7 +9179,43 @@
     "items": [
       "不但……，而且……"
     ],
-    "order_idx": 51
+    "order_idx": 51,
+    "pattern": "不但 + A，而且 + B",
+    "explanation": "不但…而且… es «no solo A, sino también B»: la segunda parte añade algo más fuerte o importante. Si el sujeto es el mismo, va delante de 不但: 他不但会说，而且说得很好. Si hay dos sujetos distintos, 不但 va delante del primero. 而且 puede reforzarse con 也 o 还.",
+    "markers": [
+      "不但",
+      "而且"
+    ],
+    "examples": [
+      {
+        "zh": "他不但会说汉语，而且说得很好。",
+        "pinyin": "Tā búdàn huì shuō Hànyǔ, érqiě shuō de hěn hǎo.",
+        "es": "No solo habla chino, sino que lo habla muy bien."
+      },
+      {
+        "zh": "这个房间不但很大，而且很安静。",
+        "pinyin": "Zhège fángjiān búdàn hěn dà, érqiě hěn ānjìng.",
+        "es": "Esta habitación no solo es grande, sino también muy tranquila."
+      },
+      {
+        "zh": "不但我喜欢她，而且我的家人也喜欢她。",
+        "pinyin": "Búdàn wǒ xǐhuan tā, érqiě wǒ de jiārén yě xǐhuan tā.",
+        "es": "No solo me gusta a mí, también a mi familia."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "不但他会说汉语，而且说得很好。",
+        "right": "他不但会说汉语，而且说得很好。",
+        "why": "Con un solo sujeto, este va delante de 不但."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "2.7.2"
+      }
+    ]
   },
   {
     "code": "6.3.5",

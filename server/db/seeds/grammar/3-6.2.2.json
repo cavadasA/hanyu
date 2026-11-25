@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "6.2.2",
+  "pattern": "Sujeto (afectado) + 被 (+ agente) + verbo + resultado / 了",
+  "explanation": "Con 被, el sujeto es quien sufre la acción y quien la hace va detrás de 被, o se omite si no importa: 我的自行车被人骑走了. Se usa sobre todo para algo negativo o inesperado; para lo neutro basta con poner la cosa delante sin marca (饭做好了). El verbo no puede quedarse solo: necesita un resultado, una dirección o 了. La negación va delante de 被: 没被.",
+  "markers": ["被"],
+  "examples": [
+    {"zh":"我的自行车被人骑走了。","pinyin":"Wǒ de zìxíngchē bèi rén qízǒu le.","es":"Alguien se ha llevado mi bici."},
+    {"zh":"杯子被我打坏了。","pinyin":"Bēizi bèi wǒ dǎhuài le.","es":"He roto el vaso sin querer."},
+    {"zh":"他被老师叫走了。","pinyin":"Tā bèi lǎoshī jiàozǒu le.","es":"El profesor lo ha llamado y se ha ido."},
+    {"zh":"我的书没被拿走。","pinyin":"Wǒ de shū méi bèi názǒu.","es":"No se han llevado mi libro."}
+  ],
+  "common_errors": [
+    {"wrong":"我的自行车被人骑。","right":"我的自行车被人骑走了。","why":"Con 被 el verbo no va solo: hay que decir qué le pasó al sujeto (骑走了)."},
+    {"wrong":"饭被妈妈做好了。","right":"饭妈妈做好了。","why":"Para algo neutro o positivo no hace falta 被; se reserva para lo que perjudica o sorprende."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"2.6.4"},{"hsk_level":2,"code":"5.1"}]
+}

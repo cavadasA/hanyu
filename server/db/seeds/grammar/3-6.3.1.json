@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "6.3.1",
+  "pattern": "先 + acción 1，再 / 然后 + acción 2",
+  "explanation": "先 marca lo que va primero y 再 o 然后 lo que viene después: 我们先吃饭，再去看电影. 再 se usa para planes y para lo que todavía no ha pasado; 然后 vale para cualquier secuencia, también pasada. Los dos van delante de su verbo, detrás del sujeto si lo hay.",
+  "markers": ["先","再","然后"],
+  "examples": [
+    {"zh":"我们先吃饭，再去看电影。","pinyin":"Wǒmen xiān chī fàn, zài qù kàn diànyǐng.","es":"Primero comemos y luego vamos al cine."},
+    {"zh":"你先休息一下，然后我们再说。","pinyin":"Nǐ xiān xiūxi yíxià, ránhòu wǒmen zài shuō.","es":"Descansa un poco y luego lo hablamos."},
+    {"zh":"昨天我先去了银行，然后去了超市。","pinyin":"Zuótiān wǒ xiān qù le yínháng, ránhòu qù le chāoshì.","es":"Ayer primero fui al banco y luego al súper."}
+  ],
+  "common_errors": [
+    {"wrong":"昨天我先去了银行，再去了超市。","right":"昨天我先去了银行，然后去了超市。","why":"Para una secuencia ya ocurrida se usa 然后; 再 mira hacia lo que aún no ha pasado."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.7.6"},{"hsk_level":3,"code":"2.5.3"}]
+}

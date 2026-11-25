@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "6.2.6",
+  "pattern": "Sujeto + 是 + valoración + 的",
+  "explanation": "Esta construcción 是…的 no habla del pasado: encierra la opinión de quien habla para darle un tono firme o tranquilizador. 这个问题是可以解决的 «este problema sí que tiene solución», 你说的是对的 «lo que dices es correcto». Dentro suelen ir 会, 能, 可以 o un adjetivo. Sin 是…的 la frase dice lo mismo pero con menos convicción.",
+  "markers": ["是","的"],
+  "examples": [
+    {"zh":"你说的是对的。","pinyin":"Nǐ shuō de shì duì de.","es":"Lo que dices es correcto."},
+    {"zh":"只要努力，你是能学好的。","pinyin":"Zhǐyào nǔlì, nǐ shì néng xuéhǎo de.","es":"Si te esfuerzas, seguro que lo aprendes bien."},
+    {"zh":"他是不会来的。","pinyin":"Tā shì bú huì lái de.","es":"Él no va a venir, eso seguro."},
+    {"zh":"这件事是很重要的。","pinyin":"Zhè jiàn shì shì hěn zhòngyào de.","es":"Este asunto es realmente importante."}
+  ],
+  "common_errors": [
+    {"wrong":"他是不会来。","right":"他是不会来的。","why":"El 是 de opinión se cierra con 的; sin 的 queda a medias."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.3.5"}]
+}

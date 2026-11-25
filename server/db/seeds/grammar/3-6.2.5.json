@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "6.2.5",
+  "pattern": "lugar / tiempo + verbo + complemento + 了 + cantidad + persona / cosa",
+  "explanation": "Para contar que algo aparece o desaparece de un sitio, la frase empieza por el lugar o el tiempo y lo que aparece va al final, con número y clasificador: 前边走过来一个人 «por delante vino una persona», 我们班走了两个学生 «de nuestra clase se han ido dos alumnos». Lo que aparece es algo nuevo, por eso no va como sujeto delante. El lugar no lleva 在.",
+  "markers": ["走过来","来了","走了","跑出来"],
+  "examples": [
+    {"zh":"前边走过来一个人。","pinyin":"Qiánbian zǒu guòlai yí gè rén.","es":"Por delante se acercó una persona."},
+    {"zh":"昨天我们班来了一个新同学。","pinyin":"Zuótiān wǒmen bān lái le yí gè xīn tóngxué.","es":"Ayer llegó un compañero nuevo a nuestra clase."},
+    {"zh":"我们公司走了两个人。","pinyin":"Wǒmen gōngsī zǒu le liǎng gè rén.","es":"De nuestra empresa se han ido dos personas."},
+    {"zh":"房间里跑出来一只小狗。","pinyin":"Fángjiān li pǎo chūlai yì zhī xiǎo gǒu.","es":"De la habitación salió corriendo un perrito."}
+  ],
+  "common_errors": [
+    {"wrong":"一个新同学来了我们班。","right":"我们班来了一个新同学。","why":"Cuando algo nuevo aparece en un sitio, el lugar abre la frase y lo nuevo va al final."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.3.3"},{"hsk_level":1,"code":"5.3.3"}]
+}

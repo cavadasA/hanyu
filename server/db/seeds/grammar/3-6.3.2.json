@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "6.3.2",
+  "pattern": "或者 + opción 1，或者 + opción 2",
+  "explanation": "Repetir 或者 delante de cada opción presenta alternativas que valen igual: «o…, o…». 或者你来，或者我去 «o vienes tú, o voy yo». Se usa en afirmaciones y propuestas; en una pregunta para elegir se usa 还是.",
+  "markers": ["或者"],
+  "examples": [
+    {"zh":"或者你来，或者我去，都可以。","pinyin":"Huòzhě nǐ lái, huòzhě wǒ qù, dōu kěyǐ.","es":"O vienes tú o voy yo, como prefieras."},
+    {"zh":"周末我或者在家看书，或者去公园。","pinyin":"Zhōumò wǒ huòzhě zài jiā kàn shū, huòzhě qù gōngyuán.","es":"Los fines de semana o leo en casa o voy al parque."},
+    {"zh":"你可以坐地铁，或者打车。","pinyin":"Nǐ kěyǐ zuò dìtiě, huòzhě dǎchē.","es":"Puedes ir en metro o coger un taxi."}
+  ],
+  "common_errors": [
+    {"wrong":"或者你来，或者我去？","right":"你来还是我去？","why":"Si es una pregunta para elegir, se usa 还是; 或者…或者… es para afirmar o proponer."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"2.7.1"},{"hsk_level":2,"code":"6.4.1"}]
+}

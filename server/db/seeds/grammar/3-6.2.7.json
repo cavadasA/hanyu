@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "6.2.7",
+  "pattern": "Sujeto + verbo + objeto + verbo + 得 / duración / complemento",
+  "explanation": "Cuando un verbo con objeto necesita además un complemento (de modo, de duración o de resultado), el verbo se repite: 他说汉语说得很好, 我等你等了一个小时. El objeto va con la primera aparición del verbo y el complemento con la segunda. Es obligatorio: el chino no admite objeto y complemento detrás del mismo verbo.",
+  "markers": ["说汉语说","等你等","看书看","做饭做"],
+  "examples": [
+    {"zh":"他说汉语说得很好。","pinyin":"Tā shuō Hànyǔ shuō de hěn hǎo.","es":"Habla muy bien chino."},
+    {"zh":"我等你等了一个小时。","pinyin":"Wǒ děng nǐ děng le yí gè xiǎoshí.","es":"Te he estado esperando una hora."},
+    {"zh":"他看书看到十二点。","pinyin":"Tā kàn shū kàndào shí’èr diǎn.","es":"Estuvo leyendo hasta las doce."},
+    {"zh":"妈妈做饭做得很好吃。","pinyin":"Māma zuò fàn zuò de hěn hǎochī.","es":"Mamá cocina muy rico."}
+  ],
+  "common_errors": [
+    {"wrong":"他说汉语得很好。","right":"他说汉语说得很好。","why":"El objeto y 得 no pueden ir detrás del mismo verbo: se repite el verbo, 说汉语说得很好."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"5.4.3"},{"hsk_level":2,"code":"5.4.4"}]
+}

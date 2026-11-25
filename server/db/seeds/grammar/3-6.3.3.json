@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "6.3.3",
+  "pattern": "一会儿…，一会儿… · 又 + adj，又 + adj · 一边…，一边…",
+  "explanation": "Tres formas de juntar cosas. 一会儿…一会儿… describe cambios que se alternan: 一会儿下雨，一会儿出太阳 «ahora llueve, ahora sale el sol». 又…又… une dos cualidades o acciones a la vez: 又便宜又好吃 «barato y además rico». 一边…一边… son dos acciones simultáneas de la misma persona.",
+  "markers": ["一会儿","又","一边"],
+  "examples": [
+    {"zh":"今天一会儿下雨，一会儿出太阳。","pinyin":"Jīntiān yíhuìr xià yǔ, yíhuìr chū tàiyáng.","es":"Hoy tan pronto llueve como sale el sol."},
+    {"zh":"这家饭馆的菜又便宜又好吃。","pinyin":"Zhè jiā fànguǎn de cài yòu piányi yòu hǎochī.","es":"La comida de este restaurante es barata y además rica."},
+    {"zh":"他一边听歌，一边做饭。","pinyin":"Tā yìbiān tīng gē, yìbiān zuò fàn.","es":"Cocina mientras escucha música."}
+  ],
+  "common_errors": [
+    {"wrong":"这个菜又便宜和好吃。","right":"这个菜又便宜又好吃。","why":"又 se repite delante de cada cualidad; no se mezcla con 和."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"2.5.5"}]
+}

@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "6.3.4",
+  "pattern": "不但 + A，而且 + B",
+  "explanation": "不但…而且… es «no solo A, sino también B»: la segunda parte añade algo más fuerte o importante. Si el sujeto es el mismo, va delante de 不但: 他不但会说，而且说得很好. Si hay dos sujetos distintos, 不但 va delante del primero. 而且 puede reforzarse con 也 o 还.",
+  "markers": ["不但","而且"],
+  "examples": [
+    {"zh":"他不但会说汉语，而且说得很好。","pinyin":"Tā búdàn huì shuō Hànyǔ, érqiě shuō de hěn hǎo.","es":"No solo habla chino, sino que lo habla muy bien."},
+    {"zh":"这个房间不但很大，而且很安静。","pinyin":"Zhège fángjiān búdàn hěn dà, érqiě hěn ānjìng.","es":"Esta habitación no solo es grande, sino también muy tranquila."},
+    {"zh":"不但我喜欢她，而且我的家人也喜欢她。","pinyin":"Búdàn wǒ xǐhuan tā, érqiě wǒ de jiārén yě xǐhuan tā.","es":"No solo me gusta a mí, también a mi familia."}
+  ],
+  "common_errors": [
+    {"wrong":"不但他会说汉语，而且说得很好。","right":"他不但会说汉语，而且说得很好。","why":"Con un solo sujeto, este va delante de 不但."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"2.7.2"}]
+}

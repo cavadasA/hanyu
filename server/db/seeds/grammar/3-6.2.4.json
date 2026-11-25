@@ -1,0 +1,19 @@
+{
+  "hsk_level": 3,
+  "code": "6.2.4",
+  "pattern": "A 比 B 更 / 还 + adj · A 跟 B 一样 (+ adj) · A 不比 B + adj · A 比 B 早 / 晚 / 多 / 少 + verbo + cantidad",
+  "explanation": "更 o 还 refuerzan una comparación con 比: 今天比昨天还冷. 跟…一样 expresa igualdad, «igual de»: 我跟你一样高. A 不比 B + adjetivo corrige a quien piensa lo contrario: «no es que sea más…». Y con 早, 晚, 多 o 少 delante del verbo, la diferencia va detrás: 他比我早来十分钟 «llegó diez minutos antes que yo».",
+  "markers": ["还","更","一样","不比","早来"],
+  "examples": [
+    {"zh":"今天比昨天还冷。","pinyin":"Jīntiān bǐ zuótiān hái lěng.","es":"Hoy hace todavía más frío que ayer."},
+    {"zh":"这本书比那本更有意思。","pinyin":"Zhè běn shū bǐ nà běn gèng yǒu yìsi.","es":"Este libro es aún más interesante que aquel."},
+    {"zh":"我跟你一样高。","pinyin":"Wǒ gēn nǐ yíyàng gāo.","es":"Soy igual de alto que tú."},
+    {"zh":"我的汉语不比他差。","pinyin":"Wǒ de Hànyǔ bù bǐ tā chà.","es":"Mi chino no es peor que el suyo."},
+    {"zh":"他比我早来十分钟。","pinyin":"Tā bǐ wǒ zǎo lái shí fēnzhōng.","es":"Llegó diez minutos antes que yo."}
+  ],
+  "common_errors": [
+    {"wrong":"我跟你一样很高。","right":"我跟你一样高。","why":"Con 一样 el adjetivo va solo, sin 很."},
+    {"wrong":"他来比我早十分钟。","right":"他比我早来十分钟。","why":"比 y 早 van delante del verbo y la diferencia detrás: 比我早来十分钟."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.3.4"}]
+}
