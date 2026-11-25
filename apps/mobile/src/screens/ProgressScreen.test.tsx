@@ -71,16 +71,30 @@ describe('ProgressScreen', () => {
     expect(screen.queryByText('0 %')).toBeNull();
   });
 
-  it('explica por qué la comprensión inferencial está vacía', async () => {
-    // El validador del Plan 7 exige evidencia textual en toda pregunta, así que
-    // todas son literales por construcción. Callarlo daría a entender que el
-    // usuario falla en algo que nadie le ha preguntado.
+  it('sin respuestas suficientes, la comprensión literal e inferencial dicen «Sin datos todavía», nunca 0 %', async () => {
     mockGetReport.mockResolvedValue(reportWith({}));
 
     await renderProgress();
 
     await waitFor(() => {
-      expect(screen.getByText(/todas las preguntas del catálogo son literales/i)).toBeTruthy();
+      expect(screen.getAllByText('Sin datos todavía')).toHaveLength(2);
+    });
+    expect(screen.queryByText(/todas las preguntas del catálogo son literales/i)).toBeNull();
+    expect(screen.queryByText(/^0 %/)).toBeNull();
+  });
+
+  it('separa la comprensión inferencial de la literal', async () => {
+    const attempts: Array<LearningReport['reading_attempts'][number] & { inferential_score: number; inferential_total: number }> = [
+      { created_at: '2026-11-01T00:00:00Z', reading_slug: 'text-1', score: 5, total: 6, inferential_score: 2, inferential_total: 3 },
+      { created_at: '2026-11-02T00:00:00Z', reading_slug: 'text-2', score: 3, total: 6, inferential_score: 1, inferential_total: 3 },
+    ];
+    mockGetReport.mockResolvedValue(reportWith({ reading_attempts: attempts }));
+
+    await renderProgress();
+
+    await waitFor(() => {
+      expect(screen.getByText(/\(3 de 6 preguntas acertadas\)/)).toBeTruthy();
+      expect(screen.getByText(/\(5 de 6 preguntas acertadas\)/)).toBeTruthy();
     });
   });
 

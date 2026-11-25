@@ -1,5 +1,5 @@
 // packages/domain/src/analytics/reading.test.ts
-import { lookupsPer100Tokens, readingSpeed } from './reading';
+import { comprehensionByKind, lookupsPer100Tokens, readingSpeed } from './reading';
 
 describe('readingSpeed', () => {
   it('calcula caracteres por minuto', () => {
@@ -54,5 +54,33 @@ describe('lookupsPer100Tokens', () => {
 
   it('no divide por cero', () => {
     expect(lookupsPer100Tokens(0, 0)).toBeNull();
+  });
+});
+
+describe('comprehensionByKind', () => {
+  it('con menos de 5 respuestas de un tipo no hay métrica de ese tipo', () => {
+    const result = comprehensionByKind([{ score: 6, total: 9, inferential_score: 2, inferential_total: 4 }]);
+    expect(result.inferential).toBeNull();
+    expect(result.literal).toEqual({ correct: 4, total: 5, ratio: 0.8 });
+    expect(comprehensionByKind([{ score: 3, total: 4 }]).literal).toBeNull();
+  });
+
+  it('6 respuestas inferenciales con 3 aciertos dan 0.5', () => {
+    const result = comprehensionByKind([
+      { score: 5, total: 6, inferential_score: 2, inferential_total: 3 },
+      { score: 3, total: 6, inferential_score: 1, inferential_total: 3 },
+    ]);
+    expect(result.inferential).toEqual({ correct: 3, total: 6, ratio: 0.5 });
+    expect(result.literal).toEqual({ correct: 5, total: 6, ratio: 5 / 6 });
+  });
+
+  it('los intentos anteriores a las inferenciales cuentan enteros como literales', () => {
+    const result = comprehensionByKind([{ score: 4, total: 5 }]);
+    expect(result.literal).toEqual({ correct: 4, total: 5, ratio: 0.8 });
+    expect(result.inferential).toBeNull();
+  });
+
+  it('sin intentos no hay ninguna métrica, nunca un cero', () => {
+    expect(comprehensionByKind([])).toEqual({ literal: null, inferential: null });
   });
 });

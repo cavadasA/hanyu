@@ -14,12 +14,14 @@ import {
   type LearningReportSkillState,
 } from '@hanyu/data';
 import {
+  comprehensionByKind,
   lookupsPer100Chars,
   masteryBySkill,
   observedRetention,
   readingSpeed,
   syllabusCoverage,
   type ReadingSession,
+  type ComprehensionRatio,
   type Retention,
   type RetentionReview,
   type SkillMastery,
@@ -163,10 +165,8 @@ export function ProgressScreen() {
     const lookups = report.lookups ?? 0;
     const lookupRate = totalTokens > 0 ? lookupsPer100Chars(lookups, totalTokens) : null;
 
-    // Comprensión literal (preguntas de comprensión de textos en reading_attempts)
-    const readingAttempts = report.reading_attempts ?? [];
-    const literalCorrect = readingAttempts.reduce((acc, a) => acc + a.score, 0);
-    const literalTotal = readingAttempts.reduce((acc, a) => acc + a.total, 0);
+    // Comprensión literal e inferencial, por separado (reading_attempts)
+    const comprehension = comprehensionByKind(report.reading_attempts ?? []);
 
     return {
       retention7,
@@ -186,8 +186,7 @@ export function ProgressScreen() {
       totalTokens,
       lookups,
       lookupRate,
-      literalCorrect,
-      literalTotal,
+      comprehension,
     };
   }, [report, targetRetention]);
 
@@ -237,8 +236,7 @@ export function ProgressScreen() {
     totalTokens,
     lookups,
     lookupRate,
-    literalCorrect,
-    literalTotal,
+    comprehension,
   } = metrics;
 
   return (
@@ -558,38 +556,50 @@ export function ProgressScreen() {
             </View>
           </View>
 
-          {/* Comprensión literal */}
-          <View style={[styles.metricRow, { borderBottomColor: colors.border }]}>
-            <View style={styles.metricTextContainer}>
-              <Text style={[styles.metricName, { color: colors.text }]}>Comprensión literal</Text>
-              {literalTotal > 0 ? (
-                <Text style={[styles.metricValue, { color: colors.text }]}>
-                  {Math.round((literalCorrect / literalTotal) * 100)} %{' '}
-                  <Text style={[styles.sampleText, { color: colors.textMuted }]}>
-                    ({literalCorrect} de {literalTotal} preguntas acertadas)
-                  </Text>
-                </Text>
-              ) : (
-                <Text style={[styles.emptyNotice, { color: colors.textMuted }]}>
-                  Aún no se han completado preguntas de comprensión literal.
-                </Text>
-              )}
-            </View>
-          </View>
-
-          {/* Comprensión inferencial (ausente declarada con motivo) */}
-          <View style={styles.metricRow}>
-            <View style={styles.metricTextContainer}>
-              <Text style={[styles.metricName, { color: colors.text }]}>Comprensión inferencial</Text>
-              <Text style={[styles.emptyNotice, { color: colors.textMuted }]}>
-                No disponible: todas las preguntas del catálogo son literales por construcción
-                al exigir evidencia textual explícita en cada respuesta.
-              </Text>
-            </View>
-          </View>
+          <ComprehensionRow
+            name="Comprensión literal"
+            value={comprehension.literal}
+            colors={colors}
+            bordered
+          />
+          <ComprehensionRow
+            name="Comprensión inferencial"
+            value={comprehension.inferential}
+            colors={colors}
+          />
         </Card>
       </ScrollView>
     </Screen>
+  );
+}
+
+function ComprehensionRow({
+  name,
+  value,
+  colors,
+  bordered = false,
+}: {
+  name: string;
+  value: ComprehensionRatio | null;
+  colors: ReturnType<typeof useTheme>['colors'];
+  bordered?: boolean;
+}) {
+  return (
+    <View style={[styles.metricRow, bordered ? { borderBottomColor: colors.border } : null]}>
+      <View style={styles.metricTextContainer}>
+        <Text style={[styles.metricName, { color: colors.text }]}>{name}</Text>
+        {value ? (
+          <Text style={[styles.metricValue, { color: colors.text }]}>
+            {Math.round(value.ratio * 100)} %{' '}
+            <Text style={[styles.sampleText, { color: colors.textMuted }]}>
+              ({value.correct} de {value.total} preguntas acertadas)
+            </Text>
+          </Text>
+        ) : (
+          <Text style={[styles.emptyNotice, { color: colors.textMuted }]}>Sin datos todavía</Text>
+        )}
+      </View>
+    </View>
   );
 }
 

@@ -45,3 +45,48 @@ export function lookupsPer100Tokens(lookups: number, tokens: number): number | n
 }
 
 export const lookupsPer100Chars = lookupsPer100Tokens;
+
+export interface ReadingAttemptScore {
+  score: number;
+  total: number;
+  /** Ausentes en los intentos anteriores a las preguntas inferenciales: todo era literal. */
+  inferential_score?: number;
+  inferential_total?: number;
+}
+
+export interface ComprehensionRatio {
+  correct: number;
+  total: number;
+  ratio: number;
+}
+
+/** Con menos respuestas que esto, un porcentaje dice más del azar que del alumno. */
+const MIN_ANSWERS_PER_KIND = 5;
+
+function ratioOf(correct: number, total: number): ComprehensionRatio | null {
+  return total < MIN_ANSWERS_PER_KIND ? null : { correct, total, ratio: correct / total };
+}
+
+export function comprehensionByKind(attempts: readonly ReadingAttemptScore[]): {
+  literal: ComprehensionRatio | null;
+  inferential: ComprehensionRatio | null;
+} {
+  let literalCorrect = 0;
+  let literalTotal = 0;
+  let inferentialCorrect = 0;
+  let inferentialTotal = 0;
+
+  for (const attempt of attempts) {
+    const inferentialScore = attempt.inferential_score ?? 0;
+    const inferentialCount = attempt.inferential_total ?? 0;
+    inferentialCorrect += inferentialScore;
+    inferentialTotal += inferentialCount;
+    literalCorrect += attempt.score - inferentialScore;
+    literalTotal += attempt.total - inferentialCount;
+  }
+
+  return {
+    literal: ratioOf(literalCorrect, literalTotal),
+    inferential: ratioOf(inferentialCorrect, inferentialTotal),
+  };
+}
