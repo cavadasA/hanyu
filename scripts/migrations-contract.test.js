@@ -414,4 +414,16 @@ describe('contratos de migraciones', () => {
       'create trigger guard_expression_skill_state before insert or update on public.learner_skill_state',
     );
   });
+
+  it('guarda las tareas comunicativas, legibles para el alumno y solo escribibles por service_role', () => {
+    const migration = readMigration('2026112602_communicative_tasks.sql');
+
+    expectSqlToContain(migration, 'create table if not exists public.communicative_task (');
+    expectSqlToContain(migration, "mode text not null check (mode in ('write', 'speak'))");
+    expectSqlToContain(migration, 'intent text[] not null check (cardinality(intent) > 0)');
+    expectSqlToContain(migration, 'alter table public.communicative_task enable row level security;');
+    expectSqlToContain(migration, 'create policy communicative_task_select_authenticated on public.communicative_task for select to authenticated using (true);');
+    expect(normalizeSql(migration)).not.toMatch(/for (insert|update|delete|all) to [^;]*\bauthenticated\b/i);
+    expectSqlToContain(migration, 'grant select on public.communicative_task to authenticated;');
+  });
 });
