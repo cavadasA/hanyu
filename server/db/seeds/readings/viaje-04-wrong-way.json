@@ -1,0 +1,103 @@
+{
+  "slug": "viaje-04-wrong-way",
+  "title": "走错路了",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "lugares",
+  "series": "viaje",
+  "series_index": 4,
+  "target_words": [
+    "过去",
+    "右",
+    "回去"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.8.4",
+      "level": 2
+    },
+    {
+      "code": "2.7.5",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "下午，大山和小月去找小月说的那个饭馆。",
+      "pinyin": "Xiàwǔ, Dàshān hé Xiǎoyuè qù zhǎo Xiǎoyuè shuō de nàge fànguǎn.",
+      "es": "Por la tarde, Dashan y Xiaoyue van a buscar el restaurante del que habló Xiaoyue."
+    },
+    {
+      "zh": "大山：小月，我们走了半个小时了，饭馆在哪儿？",
+      "pinyin": "Dàshān: Xiǎoyuè, wǒmen zǒu le bàn gè xiǎoshí le, fànguǎn zài nǎr?",
+      "es": "Dashan: Xiaoyue, llevamos media hora andando; ¿dónde está el restaurante?"
+    },
+    {
+      "zh": "小月：手机上说就在前面，但是我没看见。",
+      "pinyin": "Xiǎoyuè: Shǒujī shàng shuō jiù zài qiánmiàn, dànshì wǒ méi kànjiàn.",
+      "es": "Xiaoyue: El móvil dice que está justo delante, pero no lo veo."
+    },
+    {
+      "zh": "大山：我们是不是走错路了？",
+      "pinyin": "Dàshān: Wǒmen shì bu shì zǒu cuò lù le?",
+      "es": "Dashan: ¿No nos habremos equivocado de camino?"
+    },
+    {
+      "zh": "小月：可能是，因为我们在那个路口往左走了。",
+      "pinyin": "Xiǎoyuè: Kěnéng shì, yīnwèi wǒmen zài nàge lù kǒu wǎng zuǒ zǒu le.",
+      "es": "Xiaoyue: Puede ser, porque en aquel cruce giramos a la izquierda."
+    },
+    {
+      "zh": "大山：那我们回去吧。",
+      "pinyin": "Dàshān: Nà wǒmen huíqù ba.",
+      "es": "Dashan: Entonces volvamos."
+    },
+    {
+      "zh": "小月：别回去，你看，手机上说往右走，过去就是。",
+      "pinyin": "Xiǎoyuè: Bié huíqù, nǐ kàn, shǒujī shàng shuō wǎng yòu zǒu, guòqù jiù shì.",
+      "es": "Xiaoyue: No volvamos; mira, el móvil dice que giremos a la derecha y que está justo al cruzar."
+    },
+    {
+      "zh": "大山：真的！饭馆就在右边，门口有很多人。",
+      "pinyin": "Dàshān: Zhēn de! Fànguǎn jiù zài yòubian, ménkǒu yǒu hěn duō rén.",
+      "es": "Dashan: ¡Es verdad! El restaurante está a la derecha y hay mucha gente en la puerta."
+    },
+    {
+      "zh": "小月：太好了，我们进去吧，我想吃饭了。",
+      "pinyin": "Xiǎoyuè: Tài hǎo le, wǒmen jìnqù ba, wǒ xiǎng chī fàn le.",
+      "es": "Xiaoyue: ¡Estupendo, entremos! Ya tengo ganas de comer."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "他们走了多长时间？",
+      "options": [
+        "十分钟",
+        "半个小时",
+        "两个小时"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "他们为什么走错了？",
+      "options": [
+        "在路口往左走了",
+        "没有手机",
+        "下雨了"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "饭馆在哪边？",
+      "options": [
+        "左边",
+        "后面",
+        "右边"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}

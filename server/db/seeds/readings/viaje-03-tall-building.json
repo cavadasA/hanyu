@@ -1,0 +1,107 @@
+{
+  "slug": "viaje-03-tall-building",
+  "title": "上楼看看",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "lugares",
+  "series": "viaje",
+  "series_index": 3,
+  "target_words": [
+    "门票",
+    "上去",
+    "下来"
+  ],
+  "target_grammar": [
+    {
+      "code": "5.4.4",
+      "level": 2
+    },
+    {
+      "code": "8.1",
+      "level": 2
+    },
+    {
+      "code": "7.1.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "第二天，大山和小月去看这里最高的楼。",
+      "pinyin": "Dì èr tiān, Dàshān hé Xiǎoyuè qù kàn zhèlǐ zuì gāo de lóu.",
+      "es": "Al día siguiente, Dashan y Xiaoyue fueron a ver el edificio más alto de la ciudad."
+    },
+    {
+      "zh": "楼下有很多人，他们在楼下等了二十分钟。",
+      "pinyin": "Lóu xià yǒu hěn duō rén, tāmen zài lóu xià děng le èrshí fēnzhōng.",
+      "es": "Abajo había mucha gente y esperaron veinte minutos."
+    },
+    {
+      "zh": "门票一百二十块钱，有一点儿贵。",
+      "pinyin": "Ménpiào yìbǎi'èrshí kuài qián, yǒuyìdiǎnr guì.",
+      "es": "La entrada cuesta ciento veinte yuanes; es un poco cara."
+    },
+    {
+      "zh": "他们很快就上去了。",
+      "pinyin": "Tāmen hěn kuài jiù shàngqù le.",
+      "es": "Subieron enseguida."
+    },
+    {
+      "zh": "从上面往下看，下面的车和人都很小。",
+      "pinyin": "Cóng shàngmiàn wǎng xià kàn, xiàmiàn de chē hé rén dōu hěn xiǎo.",
+      "es": "Mirando hacia abajo desde arriba, los coches y la gente se ven muy pequeños."
+    },
+    {
+      "zh": "大山说他没有看过这么高的楼。",
+      "pinyin": "Dàshān shuō tā méiyǒu kànguo zhème gāo de lóu.",
+      "es": "Dashan dice que nunca había visto un edificio tan alto."
+    },
+    {
+      "zh": "他们在上面玩了两个小时。",
+      "pinyin": "Tāmen zài shàngmiàn wán le liǎng gè xiǎoshí.",
+      "es": "Estuvieron dos horas arriba."
+    },
+    {
+      "zh": "下来后，他们去旁边的饭馆吃饭。",
+      "pinyin": "Xiàlái hòu, tāmen qù pángbiān de fànguǎn chī fàn.",
+      "es": "Después de bajar, fueron a comer al restaurante de al lado."
+    },
+    {
+      "zh": "大山觉得门票虽然贵，但是很有意思。",
+      "pinyin": "Dàshān juéde ménpiào suīrán guì, dànshì hěn yǒuyìsi.",
+      "es": "A Dashan le pareció que, aunque la entrada era cara, valía mucho la pena."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "他们在楼下等了多长时间？",
+      "options": [
+        "十分钟",
+        "二十分钟",
+        "两个小时"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "门票多少钱？",
+      "options": [
+        "一百二十块",
+        "二十块",
+        "一百块"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "下来后，他们去哪儿了？",
+      "options": [
+        "酒店",
+        "机场",
+        "饭馆"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}

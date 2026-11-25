@@ -1,0 +1,103 @@
+{
+  "slug": "viaje-05-last-day",
+  "title": "最后一天",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "lugares",
+  "series": "viaje",
+  "series_index": 5,
+  "target_words": [
+    "有时",
+    "送",
+    "进去"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.9.1",
+      "level": 2
+    },
+    {
+      "code": "2.10.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "大山在中国住了一个星期。",
+      "pinyin": "Dàshān zài Zhōngguó zhù le yí gè xīngqī.",
+      "es": "Dashan pasó una semana en China."
+    },
+    {
+      "zh": "这几天，他跟小月去了很多商场和饭馆。",
+      "pinyin": "Zhè jǐ tiān, tā gēn Xiǎoyuè qù le hěn duō shāngchǎng hé fànguǎn.",
+      "es": "Estos días fue con Xiaoyue a muchos centros comerciales y restaurantes."
+    },
+    {
+      "zh": "他们有时坐地铁，有时走路。",
+      "pinyin": "Tāmen yǒushí zuò dìtiě, yǒushí zǒulù.",
+      "es": "A veces iban en metro y a veces a pie."
+    },
+    {
+      "zh": "大山最喜欢酒店下面的那个大学，他每天早上都去那里走路。",
+      "pinyin": "Dàshān zuì xǐhuan jiǔdiàn xiàmiàn de nàge dàxué, tā měi tiān zǎoshang dōu qù nàlǐ zǒulù.",
+      "es": "Lo que más le gustó a Dashan fue la universidad de debajo del hotel; iba a pasear allí todas las mañanas."
+    },
+    {
+      "zh": "最后一天，他给家人买了茶和衣服。",
+      "pinyin": "Zuì hòu yì tiān, tā gěi jiārén mǎi le chá hé yīfu.",
+      "es": "El último día compró té y ropa para su familia."
+    },
+    {
+      "zh": "下午，小月送他去机场。",
+      "pinyin": "Xiàwǔ, Xiǎoyuè sòng tā qù jīchǎng.",
+      "es": "Por la tarde, Xiaoyue lo acompañó al aeropuerto."
+    },
+    {
+      "zh": "在机场，大山说他很喜欢中国，明年还想来。",
+      "pinyin": "Zài jīchǎng, Dàshān shuō tā hěn xǐhuan Zhōngguó, míngnián hái xiǎng lái.",
+      "es": "En el aeropuerto, Dashan dijo que le gusta mucho China y que el año que viene quiere volver."
+    },
+    {
+      "zh": "小月说她希望大山明年再来。",
+      "pinyin": "Xiǎoyuè shuō tā xīwàng Dàshān míngnián zài lái.",
+      "es": "Xiaoyue dijo que espera que Dashan vuelva el año que viene."
+    },
+    {
+      "zh": "大山进去后，小月一个人坐地铁回家了。",
+      "pinyin": "Dàshān jìnqù hòu, Xiǎoyuè yī gè rén zuò dìtiě huí jiā le.",
+      "es": "Después de que Dashan entrara, Xiaoyue volvió sola a casa en metro."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "大山在中国住了多长时间？",
+      "options": [
+        "一个月",
+        "一个星期",
+        "两天"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "大山最喜欢哪儿？",
+      "options": [
+        "酒店下面的大学",
+        "机场",
+        "商场"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "最后一天，大山给家人买了什么？",
+      "options": [
+        "手表和书",
+        "鱼和肉",
+        "茶和衣服"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 4
+    }
+  ]
+}

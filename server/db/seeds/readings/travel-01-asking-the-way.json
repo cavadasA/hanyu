@@ -1,28 +1,108 @@
 {
   "slug": "travel-01-asking-the-way",
-  "title": "怎么去车站",
+  "title": "在机场",
   "hsk_level": 2,
   "format": "dialogue",
   "topic": "lugares",
   "series": "viaje",
   "series_index": 1,
-  "target_words": ["地铁", "车站", "走"],
-  "target_grammar": [{"code": "5.4.2", "level": 2}],
+  "target_words": [
+    "机场",
+    "前面",
+    "右边"
+  ],
+  "target_grammar": [
+    {
+      "code": "1.1",
+      "level": 2
+    },
+    {
+      "code": "2.6.2",
+      "level": 2
+    }
+  ],
   "sentences": [
-    { "zh": "我叫大山。", "pinyin": "Wǒ jiào Dàshān.", "es": "Me llamo Dashan." },
-    { "zh": "我今天来到这里，不知道车站怎么走。", "pinyin": "Wǒ jīntiān lái dào zhèlǐ, bù zhīdào chēzhàn zěnme zǒu.", "es": "Hoy he venido aquí, pero no sé cómo llegar a la estación." },
-    { "zh": "我问一个人地铁站在哪里。", "pinyin": "Wǒ wèn yí gè rén dìtiě zhàn zài nǎlǐ.", "es": "Le pregunto a una persona dónde está la estación de metro." },
-    { "zh": "他说右边有一个地铁站。", "pinyin": "Tā shuō yòubian yǒu yí gè dìtiě zhàn.", "es": "Dice que hay una estación de metro a la derecha." },
-    { "zh": "过了饭店，我就看见了车站。", "pinyin": "Guò le fàndiàn, wǒ jiù kànjiàn le chēzhàn.", "es": "Después de pasar el restaurante, veo la estación." },
-    { "zh": "我说谢谢，他就走了。", "pinyin": "Wǒ shuō xièxie, tā jiù zǒu le.", "es": "Digo gracias y él se va." },
-    { "zh": "到了车站，我买了票。", "pinyin": "Dào le chēzhàn, wǒ mǎi le piào.", "es": "Al llegar a la estación, compro un billete." },
-    { "zh": "这次我没有走错路。", "pinyin": "Zhè cì wǒ méiyǒu zǒu cuò lù.", "es": "Esta vez no me equivoco de camino." },
-    { "zh": "朋友从后面走过来。", "pinyin": "Péngyou cóng hòumiàn zǒu guòlái.", "es": "Mi amigo se acerca desde atrás." },
-    { "zh": "我觉得走路很好。", "pinyin": "Wǒ juéde zǒulù hěn hǎo.", "es": "Creo que caminar está muy bien." }
+    {
+      "zh": "大山第一次来中国，小月去机场等他。",
+      "pinyin": "Dàshān dì yī cì lái Zhōngguó, Xiǎoyuè qù jīchǎng děng tā.",
+      "es": "Dashan viene a China por primera vez y Xiaoyue va al aeropuerto a esperarlo."
+    },
+    {
+      "zh": "大山：喂，小月，我已经下飞机了！你在哪儿？",
+      "pinyin": "Dàshān: Wèi, Xiǎoyuè, wǒ yǐjīng xià fēijī le! Nǐ zài nǎr?",
+      "es": "Dashan: ¡Hola, Xiaoyue, ya he bajado del avión! ¿Dónde estás?"
+    },
+    {
+      "zh": "小月：我在门口，你出来就能看见我。",
+      "pinyin": "Xiǎoyuè: Wǒ zài ménkǒu, nǐ chūlái jiù néng kànjiàn wǒ.",
+      "es": "Xiaoyue: Estoy en la salida; en cuanto salgas me verás."
+    },
+    {
+      "zh": "大山：这里有很多门，是哪个门？",
+      "pinyin": "Dàshān: Zhèlǐ yǒu hěn duō mén, shì nǎge mén?",
+      "es": "Dashan: Aquí hay muchas puertas; ¿cuál es?"
+    },
+    {
+      "zh": "小月：三号门。你往前走，三号门在右边。",
+      "pinyin": "Xiǎoyuè: Sān hào mén. Nǐ wǎng qián zǒu, sān hào mén zài yòubian.",
+      "es": "Xiaoyue: La puerta tres. Sigue recto; la puerta tres está a la derecha."
+    },
+    {
+      "zh": "大山：好，我看见了，前面人很多。",
+      "pinyin": "Dàshān: Hǎo, wǒ kànjiàn le, qiánmiàn rén hěn duō.",
+      "es": "Dashan: Vale, ya la veo; delante hay mucha gente."
+    },
+    {
+      "zh": "小月：我穿着红色的衣服，手里拿着一本书。",
+      "pinyin": "Xiǎoyuè: Wǒ chuān zhe hóngsè de yīfu, shǒu lǐ ná zhe yì běn shū.",
+      "es": "Xiaoyue: Llevo ropa roja y tengo un libro en la mano."
+    },
+    {
+      "zh": "大山：我看见你了！小月，你好！",
+      "pinyin": "Dàshān: Wǒ kànjiàn nǐ le! Xiǎoyuè, nǐhǎo!",
+      "es": "Dashan: ¡Ya te veo! ¡Hola, Xiaoyue!"
+    },
+    {
+      "zh": "小月：你好！这是你第几次坐飞机？",
+      "pinyin": "Xiǎoyuè: Nǐhǎo! Zhè shì nǐ dì jǐ cì zuò fēijī?",
+      "es": "Xiaoyue: ¡Hola! ¿Cuántas veces has volado en avión?"
+    },
+    {
+      "zh": "大山：第二次，但是坐这么长时间是第一次。",
+      "pinyin": "Dàshān: Dì èr cì, dànshì zuò zhème cháng shíjiān shì dì yī cì.",
+      "es": "Dashan: Es la segunda, pero es la primera vez que vuelo tanto rato."
+    }
   ],
   "questions": [
-    { "prompt": "地铁站在哪里？", "options": ["后面", "右边", "商店里"], "answer_index": 1, "evidence_sentence": 3 },
-    { "prompt": "我到了车站以后买了什么？", "options": ["衣服", "药", "票"], "answer_index": 2, "evidence_sentence": 6 },
-    { "prompt": "谁走过来了？", "options": ["朋友", "老师", "医生"], "answer_index": 0, "evidence_sentence": 8 }
+    {
+      "prompt": "小月在哪儿等大山？",
+      "options": [
+        "酒店",
+        "机场",
+        "车站"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "三号门在哪边？",
+      "options": [
+        "右边",
+        "左边",
+        "后面"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "小月穿着什么颜色的衣服？",
+      "options": [
+        "白色的",
+        "黑色的",
+        "红色的"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 6
+    }
   ]
 }

@@ -1,0 +1,103 @@
+{
+  "slug": "viaje-02-hotel",
+  "title": "酒店的房间",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "lugares",
+  "series": "viaje",
+  "series_index": 2,
+  "target_words": [
+    "下面",
+    "鸟",
+    "酒店"
+  ],
+  "target_grammar": [
+    {
+      "code": "5.4.2",
+      "level": 2
+    },
+    {
+      "code": "2.8.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "从机场出来，他们坐地铁去酒店。",
+      "pinyin": "Cóng jīchǎng chūlái, tāmen zuò dìtiě qù jiǔdiàn.",
+      "es": "Al salir del aeropuerto, fueron en metro al hotel."
+    },
+    {
+      "zh": "地铁很快，四十分钟就到了。",
+      "pinyin": "Dìtiě hěn kuài, sìshí fēnzhōng jiù dào le.",
+      "es": "El metro es muy rápido: en cuarenta minutos llegaron."
+    },
+    {
+      "zh": "大山的房间在十八楼，房间不大，但是很舒服。",
+      "pinyin": "Dàshān de fángjiān zài shíbā lóu, fángjiān bú dà, dànshì hěn shūfu.",
+      "es": "La habitación de Dashan está en la planta dieciocho; no es grande, pero es muy cómoda."
+    },
+    {
+      "zh": "他从房间里往下面看，下面是一个很大的大学。",
+      "pinyin": "Tā cóng fángjiān lǐ wǎng xiàmiàn kàn, xiàmiàn shì yí gè hěn dà de dàxué.",
+      "es": "Desde la habitación miró hacia abajo: abajo hay una universidad muy grande."
+    },
+    {
+      "zh": "大学里有很多人，有的在跑步，有的在跳舞。",
+      "pinyin": "Dàxué lǐ yǒu hěn duō rén, yǒude zài pǎobù, yǒude zài tiàowǔ.",
+      "es": "En la universidad hay mucha gente: unos corren y otros bailan."
+    },
+    {
+      "zh": "还有很多鸟在大学上面飞来飞去。",
+      "pinyin": "Hái yǒu hěn duō niǎo zài dàxué shàngmiàn fēi lái fēi qù.",
+      "es": "Además, muchos pájaros vuelan de un lado a otro por encima de la universidad."
+    },
+    {
+      "zh": "大山说他从小就喜欢看鸟。",
+      "pinyin": "Dàshān shuō tā cóngxiǎo jiù xǐhuan kàn niǎo.",
+      "es": "Dashan dice que desde pequeño le gusta mirar los pájaros."
+    },
+    {
+      "zh": "小月说明天早上可以下去走走，大学离酒店很近。",
+      "pinyin": "Xiǎoyuè shuō míngtiān zǎoshang kěyǐ xiàqù zǒu zǒu, dàxué lí jiǔdiàn hěn jìn.",
+      "es": "Xiaoyue dice que mañana por la mañana pueden bajar a pasear; la universidad está muy cerca del hotel."
+    },
+    {
+      "zh": "那天晚上，大山很累，十点就睡觉了。",
+      "pinyin": "Nà tiān wǎnshang, Dàshān hěn lèi, shí diǎn jiù shuìjiào le.",
+      "es": "Aquella noche Dashan estaba muy cansado y a las diez ya se había dormido."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "他们怎么去酒店？",
+      "options": [
+        "坐出租车",
+        "坐地铁",
+        "走路"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "从房间里往下面看，能看见什么？",
+      "options": [
+        "一个大学",
+        "一个机场",
+        "一个商场"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "大山从小就喜欢做什么？",
+      "options": [
+        "跑步",
+        "跳舞",
+        "看鸟"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 6
+    }
+  ]
+}
