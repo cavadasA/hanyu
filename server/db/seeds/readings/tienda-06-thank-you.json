@@ -1,0 +1,103 @@
+{
+  "slug": "tienda-06-thank-you",
+  "title": "再去那个商店",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "compras",
+  "series": "tienda",
+  "series_index": 6,
+  "target_words": [
+    "这么",
+    "那么",
+    "万"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.5",
+      "level": 2
+    },
+    {
+      "code": "8.1",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "新书包很好，小林每天上课都拿着它。",
+      "pinyin": "Xīn shūbāo hěn hǎo, Xiǎolín měi tiān shàngkè dōu ná zhe tā.",
+      "es": "La mochila nueva es muy buena; Xiaolin la lleva todos los días a clase."
+    },
+    {
+      "zh": "他想谢谢那个商店的先生。",
+      "pinyin": "Tā xiǎng xièxie nàge shāngdiàn de xiānsheng.",
+      "es": "Quiere dar las gracias al dependiente de aquella tienda."
+    },
+    {
+      "zh": "星期天，他和小美一起去了那个商店。",
+      "pinyin": "Xīngqītiān, tā hé Xiǎoměi yìqǐ qù le nàge shāngdiàn.",
+      "es": "El domingo, él y Xiaomei fueron juntos a aquella tienda."
+    },
+    {
+      "zh": "商店不大，但是里面东西很多，有书包、本子、笔什么的。",
+      "pinyin": "Shāngdiàn bú dà, dànshì lǐmiàn dōngxi hěn duō, yǒu shūbāo, běnzi, bǐ shénme de.",
+      "es": "La tienda no es grande, pero dentro hay muchas cosas: mochilas, cuadernos, bolígrafos y demás."
+    },
+    {
+      "zh": "先生说，商店开了十年了，卖了一万多个书包。",
+      "pinyin": "Xiānsheng shuō, shāngdiàn kāi le shí nián le, mài le yíwàn duō gè shūbāo.",
+      "es": "El dependiente cuenta que la tienda lleva diez años abierta y ha vendido más de diez mil mochilas."
+    },
+    {
+      "zh": "小美说这个商店这么小，卖了那么多书包，真不错。",
+      "pinyin": "Xiǎoměi shuō zhège shāngdiàn zhème xiǎo, mài le nàme duō shūbāo, zhēn búcuò.",
+      "es": "Xiaomei dice que, para ser una tienda tan pequeña, ha vendido muchísimas mochilas; está muy bien."
+    },
+    {
+      "zh": "小林在商店里买了本子和笔。",
+      "pinyin": "Xiǎolín zài shāngdiàn lǐ mǎi le běnzi hé bǐ.",
+      "es": "Xiaolin compró en la tienda cuadernos y bolígrafos."
+    },
+    {
+      "zh": "先生说他们下次来，他给他们便宜一点儿。",
+      "pinyin": "Xiānsheng shuō tāmen xià cì lái, tā gěi tāmen piányi yìdiǎnr.",
+      "es": "El dependiente les dijo que, la próxima vez que vengan, se lo dejará un poco más barato."
+    },
+    {
+      "zh": "小林觉得在这样的小商店买东西也很好。",
+      "pinyin": "Xiǎolín juéde zài zhèyàng de xiǎo shāngdiàn mǎi dōngxi yě hěn hǎo.",
+      "es": "Xiaolin piensa que comprar en una tienda pequeña como esta también está muy bien."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "小林为什么去那个商店？",
+      "options": [
+        "书包又坏了",
+        "想谢谢先生",
+        "想买裤子"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "商店卖了多少书包？",
+      "options": [
+        "一千多个",
+        "一万多个",
+        "一百多个"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "先生说他们下次来会怎么样？",
+      "options": [
+        "送他们书包",
+        "不卖东西",
+        "给他们便宜一点儿"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}

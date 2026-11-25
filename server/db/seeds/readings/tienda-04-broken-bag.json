@@ -1,0 +1,103 @@
+{
+  "slug": "tienda-04-broken-bag",
+  "title": "书包到了",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "compras",
+  "series": "tienda",
+  "series_index": 4,
+  "target_words": [
+    "打开",
+    "坏",
+    "右边"
+  ],
+  "target_grammar": [
+    {
+      "code": "5.4.2",
+      "level": 2
+    },
+    {
+      "code": "2.3.3",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "三天后，小林的书包到了。",
+      "pinyin": "Sān tiān hòu, Xiǎolín de shūbāo dào le.",
+      "es": "Tres días después llegó la mochila de Xiaolin."
+    },
+    {
+      "zh": "他很高兴，很快打开看了看。",
+      "pinyin": "Tā hěn gāoxìng, hěn kuài dǎkāi kàn le kàn.",
+      "es": "Muy contento, la abrió enseguida para verla."
+    },
+    {
+      "zh": "书包是黑色的，很好看。",
+      "pinyin": "Shūbāo shì hēisè de, hěn hǎokàn.",
+      "es": "La mochila es negra y muy bonita."
+    },
+    {
+      "zh": "但是书包的右边坏了。",
+      "pinyin": "Dànshì shūbāo de yòubian huài le.",
+      "es": "Pero el lado derecho de la mochila está roto."
+    },
+    {
+      "zh": "小林很不高兴，他给小美打电话。",
+      "pinyin": "Xiǎolín hěn bù gāoxìng, tā gěi Xiǎoměi dǎdiànhuà.",
+      "es": "Xiaolin se enfada mucho y llama por teléfono a Xiaomei."
+    },
+    {
+      "zh": "小美说网上买东西，有时候会这样。",
+      "pinyin": "Xiǎoměi shuō wǎngshang mǎi dōngxi, yǒushíhou huì zhèyàng.",
+      "es": "Xiaomei dice que, al comprar por internet, a veces pasa esto."
+    },
+    {
+      "zh": "她让小林给商店打电话，让他们再送一个新的来。",
+      "pinyin": "Tā ràng Xiǎolín gěi shāngdiàn dǎdiànhuà, ràng tāmen zài sòng yí gè xīn de lái.",
+      "es": "Le dice a Xiaolin que llame a la tienda para que le envíen otra nueva."
+    },
+    {
+      "zh": "小林打了电话，商店的先生说对不起，明天给他送一个新的来。",
+      "pinyin": "Xiǎolín dǎ le diànhuà, shāngdiàn de xiānsheng shuō duìbuqǐ, míngtiān gěi tā sòng yí gè xīn de lái.",
+      "es": "Xiaolin llamó; el dependiente de la tienda le pidió perdón y le dijo que mañana le lleva una nueva."
+    },
+    {
+      "zh": "小林说没关系，他在家等着新书包。",
+      "pinyin": "Xiǎolín shuō méiguānxi, tā zài jiā děng zhe xīn shūbāo.",
+      "es": "Xiaolin dijo que no pasaba nada; espera la mochila nueva en casa."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "书包到了，小林做了什么？",
+      "options": [
+        "给商店写字",
+        "很快打开看了看",
+        "睡觉了"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "书包哪儿坏了？",
+      "options": [
+        "左边",
+        "右边",
+        "里面"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "商店的先生说什么时候送新书包？",
+      "options": [
+        "今天",
+        "下个星期",
+        "明天"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "slug": "tienda-05-new-bag",
+  "title": "新书包",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "compras",
+  "series": "tienda",
+  "series_index": 5,
+  "target_words": [
+    "不好意思",
+    "离",
+    "一会儿"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.7.7",
+      "level": 2
+    },
+    {
+      "code": "6.3.5",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "第二天下午，商店的先生给小林送书包来了。",
+      "pinyin": "Dì èr tiān xiàwǔ, shāngdiàn de xiānsheng gěi Xiǎolín sòng shūbāo lái le.",
+      "es": "Al día siguiente por la tarde, el dependiente de la tienda le llevó la mochila a Xiaolin."
+    },
+    {
+      "zh": "先生：你好，你是小林吧？这是你的新书包。",
+      "pinyin": "Xiānsheng: Nǐhǎo, nǐ shì Xiǎolín ba? Zhè shì nǐ de xīn shūbāo.",
+      "es": "Dependiente: Hola, eres Xiaolin, ¿verdad? Aquí tienes tu mochila nueva."
+    },
+    {
+      "zh": "小林：谢谢！您是从商店来的吗？",
+      "pinyin": "Xiǎolín: Xièxie! Nín shì cóng shāngdiàn lái de ma?",
+      "es": "Xiaolin: ¡Gracias! ¿Viene usted desde la tienda?"
+    },
+    {
+      "zh": "先生：是的，我们的商店离你们学校不远。",
+      "pinyin": "Xiānsheng: Shì de, wǒmen de shāngdiàn lí nǐmen xuéxiào bù yuǎn.",
+      "es": "Dependiente: Sí, nuestra tienda no está lejos de vuestra universidad."
+    },
+    {
+      "zh": "先生：真不好意思，上次的书包是坏的。",
+      "pinyin": "Xiānsheng: Zhēn bùhǎoyìsi, shàng cì de shūbāo shì huài de.",
+      "es": "Dependiente: Lo siento mucho; la mochila de la otra vez estaba rota."
+    },
+    {
+      "zh": "小林：没关系，您还送来了，我很高兴。",
+      "pinyin": "Xiǎolín: Méiguānxi, nín hái sòng lái le, wǒ hěn gāoxìng.",
+      "es": "Xiaolin: No pasa nada; además me la ha traído usted, estoy muy contento."
+    },
+    {
+      "zh": "先生：你打开看看，这个好不好？",
+      "pinyin": "Xiānsheng: Nǐ dǎkāi kàn kàn, zhège hǎo bu hǎo?",
+      "es": "Dependiente: Ábrela y mira si esta está bien."
+    },
+    {
+      "zh": "小林：很好，没有坏。您等一会儿，我给您拿一些水。",
+      "pinyin": "Xiǎolín: Hěn hǎo, méiyǒu huài. Nín děng yíhuìr, wǒ gěi nín ná yìxiē shuǐ.",
+      "es": "Xiaolin: Está muy bien, no está rota. Espere un momento, que le traigo un poco de agua."
+    },
+    {
+      "zh": "先生：谢谢你，我不喝了，还要去送东西呢。",
+      "pinyin": "Xiānsheng: Xièxie nǐ, wǒ bù hē le, hái yào qù sòng dōngxi ne.",
+      "es": "Dependiente: Gracias, pero no; todavía tengo que ir a entregar más cosas."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "谁给小林送书包来了？",
+      "options": [
+        "小美",
+        "商店的先生",
+        "老师"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "商店离学校远吗？",
+      "options": [
+        "不远",
+        "很远",
+        "在学校里面"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "先生为什么不喝水？",
+      "options": [
+        "他不喜欢喝水",
+        "他已经喝了",
+        "他还要去送东西"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 8
+    }
+  ]
+}

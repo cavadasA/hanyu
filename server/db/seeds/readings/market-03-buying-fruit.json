@@ -1,26 +1,103 @@
 {
   "slug": "market-03-buying-fruit",
-  "title": "买水果",
+  "title": "在网上买书包",
   "hsk_level": 2,
   "format": "short_text",
   "topic": "compras",
   "series": "tienda",
   "series_index": 3,
-  "target_words": ["苹果", "水果", "买"],
-  "target_grammar": [{"code": "5.4.4", "level": 2}],
+  "target_words": [
+    "网上",
+    "上网",
+    "书包"
+  ],
+  "target_grammar": [
+    {
+      "code": "3.3.1",
+      "level": 2
+    },
+    {
+      "code": "2.7.3",
+      "level": 2
+    }
+  ],
   "sentences": [
-    { "zh": "今天我和朋友去商店买水果。", "pinyin": "Jīntiān wǒ hé péngyou qù shāngdiàn mǎi shuǐguǒ.", "es": "Hoy mi amigo y yo vamos a la tienda a comprar fruta." },
-    { "zh": "我们看了苹果，也看了肉。", "pinyin": "Wǒmen kàn le píngguǒ, yě kàn le ròu.", "es": "Miramos las manzanas y también la carne." },
-    { "zh": "朋友说苹果很好吃，但是肉太贵。", "pinyin": "Péngyou shuō píngguǒ hěn hǎochī, dànshì ròu tài guì.", "es": "Mi amigo dice que las manzanas están muy ricas, pero la carne es demasiado cara." },
-    { "zh": "我问一个苹果多少元。", "pinyin": "Wǒ wèn yí gè píngguǒ duōshao yuán.", "es": "Pregunto cuántos yuanes cuesta una manzana." },
-    { "zh": "先生说一个苹果三元，三个苹果八元。", "pinyin": "Xiānsheng shuō yí gè píngguǒ sān yuán, sān gè píngguǒ bā yuán.", "es": "El señor dice que una manzana cuesta tres yuanes y tres cuestan ocho." },
-    { "zh": "我们买了三个苹果和两个包子。", "pinyin": "Wǒmen mǎi le sān gè píngguǒ hé liǎng gè bāozi.", "es": "Compramos tres manzanas y dos bollos." },
-    { "zh": "回家的时候，我很高兴。", "pinyin": "Huí jiā de shíhou, wǒ hěn gāoxìng.", "es": "Cuando volvemos a casa, estoy muy contento." },
-    { "zh": "晚上我们一起吃水果。", "pinyin": "Wǎnshang wǒmen yìqǐ chī shuǐguǒ.", "es": "Por la noche comemos fruta juntos." }
+    {
+      "zh": "小林的书包坏了，他想买一个新的。",
+      "pinyin": "Xiǎolín de shūbāo huài le, tā xiǎng mǎi yí gè xīn de.",
+      "es": "La mochila de Xiaolin se ha roto y quiere comprarse una nueva."
+    },
+    {
+      "zh": "小美说网上的东西很多，也很便宜。",
+      "pinyin": "Xiǎoměi shuō wǎngshang de dōngxi hěn duō, yě hěn piányi.",
+      "es": "Xiaomei dice que en internet hay muchas cosas y además son baratas."
+    },
+    {
+      "zh": "晚上，小林上网看了很长时间。",
+      "pinyin": "Wǎnshang, Xiǎolín shàngwǎng kàn le hěn cháng shíjiān.",
+      "es": "Por la noche, Xiaolin estuvo mucho rato mirando en internet."
+    },
+    {
+      "zh": "网上有大书包、小书包，有黑色的、红色的、白色的什么的。",
+      "pinyin": "Wǎngshang yǒu dà shūbāo, xiǎo shūbāo, yǒu hēisè de, hóngsè de, báisè de shénme de.",
+      "es": "En internet hay mochilas grandes y pequeñas: negras, rojas, blancas y de otros colores."
+    },
+    {
+      "zh": "这个黑色的书包九十九块钱，不贵。",
+      "pinyin": "Zhège hēisè de shūbāo jiǔshíjiǔ kuài qián, bú guì.",
+      "es": "Esta mochila negra cuesta noventa y nueve yuanes; no es cara."
+    },
+    {
+      "zh": "小林很快就买了。",
+      "pinyin": "Xiǎolín hěn kuài jiù mǎi le.",
+      "es": "Xiaolin la compró enseguida."
+    },
+    {
+      "zh": "网上说三天后书包就到了。",
+      "pinyin": "Wǎngshang shuō sān tiān hòu shūbāo jiù dào le.",
+      "es": "En la web dice que la mochila llegará en tres días."
+    },
+    {
+      "zh": "小林很高兴，他告诉小美，他在网上买了书包。",
+      "pinyin": "Xiǎolín hěn gāoxìng, tā gàosu Xiǎoměi, tā zài wǎngshang mǎi le shūbāo.",
+      "es": "Xiaolin está muy contento y le cuenta a Xiaomei que ha comprado una mochila por internet."
+    },
+    {
+      "zh": "小美说她也想看看。",
+      "pinyin": "Xiǎoměi shuō tā yě xiǎng kàn kàn.",
+      "es": "Xiaomei dice que ella también quiere verla."
+    }
   ],
   "questions": [
-    { "prompt": "三个苹果多少钱？", "options": ["三元", "八元", "十元"], "answer_index": 1, "evidence_sentence": 4 },
-    { "prompt": "他们买了几个苹果？", "options": ["一个", "两个", "三个"], "answer_index": 2, "evidence_sentence": 5 },
-    { "prompt": "朋友觉得肉怎么样？", "options": ["太贵", "很好听", "很冷"], "answer_index": 0, "evidence_sentence": 2 }
+    {
+      "prompt": "小林为什么想买书包？",
+      "options": [
+        "书包太贵了",
+        "他的书包坏了",
+        "小美让他买"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "小林在哪儿买书包？",
+      "options": [
+        "在网上",
+        "在商场",
+        "在学校旁边的商店"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 7
+    },
+    {
+      "prompt": "书包多少钱？",
+      "options": [
+        "十九块",
+        "九百块",
+        "九十九块"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 4
+    }
   ]
 }

@@ -69,7 +69,7 @@
     "characters": [
       { "name": "小林", "role_es": "estudiante; cuenta la historia", "voice": "zh-CN-YunxiNeural" },
       { "name": "小美", "role_es": "amiga de Xiaolin", "voice": "zh-CN-XiaoyiNeural" },
-      { "name": "先生", "role_es": "el dependiente de la tienda", "voice": "zh-CN-YunyangNeural" }
+      { "name": "先生", "role_es": "el dependiente de cada tienda a la que van", "voice": "zh-CN-YunyangNeural" }
     ]
   },
   {

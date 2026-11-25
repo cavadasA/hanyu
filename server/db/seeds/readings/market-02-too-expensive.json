@@ -1,27 +1,107 @@
 {
   "slug": "market-02-too-expensive",
-  "title": "这件衣服太贵了",
+  "title": "这条裤子太贵了",
   "hsk_level": 2,
   "format": "dialogue",
   "topic": "compras",
   "series": "tienda",
   "series_index": 2,
-  "target_words": ["太", "贵", "便宜"],
-  "target_grammar": [{"code": "2.6.1", "level": 1}],
+  "target_words": [
+    "裤子",
+    "条",
+    "黑色"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.6.1",
+      "level": 2
+    },
+    {
+      "code": "2.7.1",
+      "level": 2
+    },
+    {
+      "code": "6.2.1",
+      "level": 2
+    }
+  ],
   "sentences": [
-    { "zh": "今天我和朋友一起买新衣服。", "pinyin": "Jīntiān wǒ hé péngyou yìqǐ mǎi xīn yīfu.", "es": "Hoy mi amigo y yo vamos a comprar ropa nueva." },
-    { "zh": "他问商店里的衣服多少钱。", "pinyin": "Tā wèn shāngdiàn lǐ de yīfu duōshao qián.", "es": "Pregunta cuánto cuesta la ropa de la tienda." },
-    { "zh": "先生说这件衣服太贵了。", "pinyin": "Xiānsheng shuō zhè jiàn yīfu tài guì le.", "es": "El señor dice que esta prenda es demasiado cara." },
-    { "zh": "朋友觉得那个颜色很好看。", "pinyin": "Péngyou juéde nàge yánsè hěn hǎokàn.", "es": "A mi amigo le parece muy bonito ese color." },
-    { "zh": "但是他没有很多钱。", "pinyin": "Dànshì tā méiyǒu hěn duō qián.", "es": "Pero no tiene mucho dinero." },
-    { "zh": "先生说那件便宜一些。", "pinyin": "Xiānsheng shuō nà jiàn piányi yìxiē.", "es": "El señor dice que aquella es algo más barata." },
-    { "zh": "朋友看了看，还是觉得太贵。", "pinyin": "Péngyou kàn le kàn, háishi juéde tài guì.", "es": "Mi amigo la mira y sigue pensando que es demasiado cara." },
-    { "zh": "朋友买了一件便宜的衣服。", "pinyin": "Péngyou mǎi le yí jiàn piányi de yīfu.", "es": "Mi amigo compra una prenda barata." },
-    { "zh": "明天他还来这个商店买东西。", "pinyin": "Míngtiān tā hái lái zhège shāngdiàn mǎi dōngxi.", "es": "Mañana volverá a esta tienda a comprar cosas." }
+    {
+      "zh": "星期六，小林和小美去一个衣服店买裤子。",
+      "pinyin": "Xīngqīliù, Xiǎolín hé Xiǎoměi qù yí gè yīfu diàn mǎi kùzi.",
+      "es": "El sábado, Xiaolin y Xiaomei van a una tienda de ropa a comprar unos pantalones."
+    },
+    {
+      "zh": "小林：先生，这条黑色的裤子多少钱？",
+      "pinyin": "Xiǎolín: Xiānsheng, zhè tiáo hēisè de kùzi duōshao qián?",
+      "es": "Xiaolin: Disculpe, ¿cuánto cuestan estos pantalones negros?"
+    },
+    {
+      "zh": "先生：三百八十块。",
+      "pinyin": "Xiānsheng: Sānbǎibāshí kuài.",
+      "es": "Dependiente: Trescientos ochenta yuanes."
+    },
+    {
+      "zh": "小林：太贵了！有没有便宜一点儿的？",
+      "pinyin": "Xiǎolín: Tài guì le! Yǒu méiyǒu piányi yìdiǎnr de?",
+      "es": "Xiaolin: ¡Qué caros! ¿Tiene algunos más baratos?"
+    },
+    {
+      "zh": "先生：这条白色的便宜，两百块。",
+      "pinyin": "Xiānsheng: Zhè tiáo báisè de piányi, liǎngbǎi kuài.",
+      "es": "Dependiente: Estos blancos son más baratos: doscientos yuanes."
+    },
+    {
+      "zh": "小美：你喜欢黑色的还是白色的？",
+      "pinyin": "Xiǎoměi: Nǐ xǐhuan hēisè de háishi báisè de?",
+      "es": "Xiaomei: ¿Te gustan más los negros o los blancos?"
+    },
+    {
+      "zh": "小林：我最喜欢黑色的，但是白色的也不错。",
+      "pinyin": "Xiǎolín: Wǒ zuì xǐhuan hēisè de, dànshì báisè de yě búcuò.",
+      "es": "Xiaolin: Los que más me gustan son los negros, pero los blancos tampoco están mal."
+    },
+    {
+      "zh": "先生：你可以穿一下，看看大小。",
+      "pinyin": "Xiānsheng: Nǐ kěyǐ chuān yíxià, kàn kàn dà xiǎo.",
+      "es": "Dependiente: Puedes probártelos para ver la talla."
+    },
+    {
+      "zh": "小美：很好看！就买这条白色的吧。",
+      "pinyin": "Xiǎoměi: Hěn hǎokàn! Jiù mǎi zhè tiáo báisè de ba.",
+      "es": "Xiaomei: ¡Te quedan muy bien! Cómprate estos blancos."
+    }
   ],
   "questions": [
-    { "prompt": "朋友觉得衣服怎么样？", "options": ["很好吃", "太贵", "很冷"], "answer_index": 1, "evidence_sentence": 6 },
-    { "prompt": "朋友最后买了什么？", "options": ["咖啡", "水果", "一件便宜的衣服"], "answer_index": 2, "evidence_sentence": 7 },
-    { "prompt": "朋友明天还要去哪里？", "options": ["这个商店", "学校", "医院"], "answer_index": 0, "evidence_sentence": 8 }
+    {
+      "prompt": "黑色的裤子多少钱？",
+      "options": [
+        "两百块",
+        "三百八十块",
+        "八十块"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "小林最喜欢什么颜色的？",
+      "options": [
+        "黑色的",
+        "白色的",
+        "红色的"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 6
+    },
+    {
+      "prompt": "小美觉得白色的裤子怎么样？",
+      "options": [
+        "太长了",
+        "太贵了",
+        "很好看"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 8
+    }
   ]
 }

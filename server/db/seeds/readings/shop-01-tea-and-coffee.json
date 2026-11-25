@@ -1,29 +1,103 @@
 {
   "slug": "shop-01-tea-and-coffee",
-  "title": "去商店买东西",
+  "title": "学校旁边的商店",
   "hsk_level": 2,
   "format": "short_text",
   "topic": "compras",
   "series": "tienda",
   "series_index": 1,
-  "target_words": ["比", "咖啡", "但是"],
-  "target_grammar": [{"code": "6.3.4", "level": 2}],
+  "target_words": [
+    "红茶",
+    "奶茶",
+    "绿茶"
+  ],
+  "target_grammar": [
+    {
+      "code": "6.3.4",
+      "level": 2
+    },
+    {
+      "code": "2.10.3",
+      "level": 2
+    }
+  ],
   "sentences": [
-    { "zh": "我叫小林。", "pinyin": "Wǒ jiào Xiǎolín.", "es": "Me llamo Xiaolin." },
-    { "zh": "今天我和朋友去商店买东西。", "pinyin": "Jīntiān wǒ hé péngyou qù shāngdiàn mǎi dōngxi.", "es": "Hoy mi amigo y yo fuimos a la tienda a comprar cosas." },
-    { "zh": "商店里的水果很多。", "pinyin": "Shāngdiàn lǐ de shuǐguǒ hěn duō.", "es": "En la tienda hay mucha fruta." },
-    { "zh": "我买了苹果和茶。", "pinyin": "Wǒ mǎi le píngguǒ hé chá.", "es": "Compré manzanas y té." },
-    { "zh": "朋友买了咖啡。", "pinyin": "Péngyou mǎi le kāfēi.", "es": "Mi amigo compró café." },
-    { "zh": "咖啡比茶贵。", "pinyin": "Kāfēi bǐ chá guì.", "es": "El café es más caro que el té." },
-    { "zh": "一个苹果三元，一个咖啡十元。", "pinyin": "Yí gè píngguǒ sān yuán, yí gè kāfēi shí yuán.", "es": "Una manzana cuesta tres yuanes; un café, diez." },
-    { "zh": "但是朋友说咖啡很好喝。", "pinyin": "Dànshì péngyou shuō kāfēi hěn hǎo hē.", "es": "Pero mi amigo dice que el café está muy rico." },
-    { "zh": "我觉得茶也很好喝。", "pinyin": "Wǒ juéde chá yě hěn hǎo hē.", "es": "Yo creo que el té también está muy rico." },
-    { "zh": "我们喝了茶，也吃了苹果。", "pinyin": "Wǒmen hē le chá, yě chī le píngguǒ.", "es": "Bebimos té y también comimos manzanas." },
-    { "zh": "我很喜欢那个商店。", "pinyin": "Wǒ hěn xǐhuan nàge shāngdiàn.", "es": "Me gusta mucho esa tienda." }
+    {
+      "zh": "我叫小林，是大学生。",
+      "pinyin": "Wǒ jiào Xiǎolín, shì dàxuéshēng.",
+      "es": "Me llamo Xiaolin y soy universitario."
+    },
+    {
+      "zh": "我们学校旁边有一个小商店，东西不贵。",
+      "pinyin": "Wǒmen xuéxiào pángbiān yǒu yí gè xiǎo shāngdiàn, dōngxi bú guì.",
+      "es": "Al lado de nuestra universidad hay una tienda pequeña donde las cosas no son caras."
+    },
+    {
+      "zh": "今天下午，我和朋友小美一起去那里买喝的。",
+      "pinyin": "Jīntiān xiàwǔ, wǒ hé péngyou Xiǎoměi yìqǐ qù nàlǐ mǎi hē de.",
+      "es": "Esta tarde, mi amiga Xiaomei y yo hemos ido allí a comprar algo de beber."
+    },
+    {
+      "zh": "商店的先生很好，他认识我们。",
+      "pinyin": "Shāngdiàn de xiānsheng hěn hǎo, tā rènshi wǒmen.",
+      "es": "El dependiente de la tienda es muy amable; nos conoce."
+    },
+    {
+      "zh": "我买了绿茶，小美想喝奶茶。",
+      "pinyin": "Wǒ mǎi le lǜchá, Xiǎoměi xiǎng hē nǎichá.",
+      "es": "Yo he comprado té verde y Xiaomei quería té con leche."
+    },
+    {
+      "zh": "奶茶比绿茶贵两块钱。",
+      "pinyin": "Nǎichá bǐ lǜchá guì liǎng kuài qián.",
+      "es": "El té con leche cuesta dos yuanes más que el té verde."
+    },
+    {
+      "zh": "先生说他们的红茶也很好喝，我们下次可以买红茶。",
+      "pinyin": "Xiānsheng shuō tāmen de hóngchá yě hěn hǎo hē, wǒmen xià cì kěyǐ mǎi hóngchá.",
+      "es": "El dependiente dice que su té negro también está muy bueno; la próxima vez podemos comprarlo."
+    },
+    {
+      "zh": "我们坐在商店门口喝茶，说了很长时间。",
+      "pinyin": "Wǒmen zuò zài shāngdiàn ménkǒu hē chá, shuō le hěn cháng shíjiān.",
+      "es": "Nos sentamos a la puerta de la tienda a tomar el té y estuvimos hablando mucho rato."
+    },
+    {
+      "zh": "小美说这个商店不错，她明天还想来。",
+      "pinyin": "Xiǎoměi shuō zhège shāngdiàn búcuò, tā míngtiān hái xiǎng lái.",
+      "es": "Xiaomei dice que esta tienda está muy bien y que mañana quiere volver."
+    }
   ],
   "questions": [
-    { "prompt": "咖啡和茶，哪个贵？", "options": ["茶", "咖啡", "水果"], "answer_index": 1, "evidence_sentence": 5 },
-    { "prompt": "我买了什么？", "options": ["苹果和茶", "咖啡", "水"], "answer_index": 0, "evidence_sentence": 3 },
-    { "prompt": "一个咖啡多少钱？", "options": ["三元", "一元", "十元"], "answer_index": 2, "evidence_sentence": 6 }
+    {
+      "prompt": "小林买了什么？",
+      "options": [
+        "奶茶",
+        "绿茶",
+        "咖啡"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "奶茶比绿茶贵多少？",
+      "options": [
+        "两块钱",
+        "十块钱",
+        "一样贵"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 5
+    },
+    {
+      "prompt": "小美觉得这个商店怎么样？",
+      "options": [
+        "太贵了",
+        "很远",
+        "不错"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 8
+    }
   ]
 }
