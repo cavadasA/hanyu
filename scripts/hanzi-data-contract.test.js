@@ -40,3 +40,14 @@ describe('datos de caracteres (Make Me a Hanzi)', () => {
     expect(licenses).toMatch(/LGPL/);
   });
 });
+
+describe('medianas empaquetadas en el móvil', () => {
+  it('apps/mobile/assets/hanzi-writer/handwriting-medians.json son las de los 100 caracteres de escritura, al día', async () => {
+    const { handwritingMedians } = await import('./build-handwriting-assets.js');
+    const bundled = JSON.parse(
+      readFileSync(join(seedDir, '..', '..', '..', 'apps', 'mobile', 'assets', 'hanzi-writer', 'handwriting-medians.json'), 'utf8'),
+    );
+    expect(Object.keys(bundled)).toHaveLength(100);
+    expect(bundled).toEqual(handwritingMedians());
+  });
+});
