@@ -3076,7 +3076,47 @@
     "items": [
       "动词+得+形容词性短语"
     ],
-    "order_idx": 41
+    "order_idx": 41,
+    "pattern": "verbo + 得 + (很 / 非常 / 不) + adjetivo",
+    "explanation": "Para valorar cómo se hace una acción, el adjetivo va detrás del verbo con 得: 他跑得很快 «corre muy rápido». Describe lo habitual o lo que ya pasó; no sirve para dar órdenes. La negación va detrás de 得, sobre la valoración: 跑得不快. Si el verbo tiene objeto, se repite el verbo: 唱歌唱得很好.",
+    "markers": [
+      "得"
+    ],
+    "examples": [
+      {
+        "zh": "他跑得很快。",
+        "pinyin": "Tā pǎo de hěn kuài.",
+        "es": "Corre muy rápido."
+      },
+      {
+        "zh": "你今天来得很早。",
+        "pinyin": "Nǐ jīntiān lái de hěn zǎo.",
+        "es": "Hoy has venido muy pronto."
+      },
+      {
+        "zh": "她唱歌唱得非常好。",
+        "pinyin": "Tā chàng gē chàng de fēicháng hǎo.",
+        "es": "Canta muy bien."
+      },
+      {
+        "zh": "我昨天睡得不太好。",
+        "pinyin": "Wǒ zuótiān shuì de bú tài hǎo.",
+        "es": "Ayer no dormí muy bien."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他不跑得快。",
+        "right": "他跑得不快。",
+        "why": "La negación va detrás de 得, sobre la valoración; no delante del verbo."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.10.1"
+      }
+    ]
   },
   {
     "code": "5.4.4",
@@ -3089,7 +3129,59 @@
       "（1）表示动作持续的时间",
       "（2）形容词+数量补语"
     ],
-    "order_idx": 42
+    "order_idx": 42,
+    "pattern": "verbo + (了) + duración (+ objeto) · adjetivo + cantidad",
+    "explanation": "La duración de una acción va detrás del verbo: 我学了两年汉语, 他睡了八个小时. Un objeto común se coloca detrás de la duración (两年汉语); un pronombre, delante (等了你半个小时). Detrás de un adjetivo, una cantidad expresa la diferencia: 他比我大两岁 «me lleva dos años». En español la duración puede abrir la frase; en chino no.",
+    "markers": [
+      "年",
+      "小时",
+      "岁",
+      "块"
+    ],
+    "examples": [
+      {
+        "zh": "我学了两年汉语。",
+        "pinyin": "Wǒ xué le liǎng nián Hànyǔ.",
+        "es": "Estudié chino durante dos años."
+      },
+      {
+        "zh": "他每天睡八个小时。",
+        "pinyin": "Tā měi tiān shuì bā gè xiǎoshí.",
+        "es": "Duerme ocho horas al día."
+      },
+      {
+        "zh": "我等了你半个小时。",
+        "pinyin": "Wǒ děng le nǐ bàn gè xiǎoshí.",
+        "es": "Te he esperado media hora."
+      },
+      {
+        "zh": "他比我大两岁。",
+        "pinyin": "Tā bǐ wǒ dà liǎng suì.",
+        "es": "Me lleva dos años."
+      },
+      {
+        "zh": "这件比那件贵一百块。",
+        "pinyin": "Zhè jiàn bǐ nà jiàn guì yìbǎi kuài.",
+        "es": "Esta cuesta cien yuanes más que aquella."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我两年学了汉语。",
+        "right": "我学了两年汉语。",
+        "why": "La duración va detrás del verbo, no delante como en «dos años estudié chino»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "4.6.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "6.3.4"
+      }
+    ]
   },
   {
     "code": "6.1.1",
@@ -3161,7 +3253,51 @@
     "items": [
       "用“还是”连接的选择问句"
     ],
-    "order_idx": 44
+    "order_idx": 44,
+    "pattern": "(是) A 还是 B？",
+    "explanation": "Para preguntar entre dos opciones se unen con 还是: 你要大的还是小的？ La pregunta ya está hecha, así que no lleva 吗. Si las opciones son acciones, se repite el verbo (你今天去还是明天去？) y se puede poner 是 delante de la primera. En las afirmaciones la «o» no es 还是, sino 或者.",
+    "markers": [
+      "还是"
+    ],
+    "examples": [
+      {
+        "zh": "你要大的还是小的？",
+        "pinyin": "Nǐ yào dà de háishi xiǎo de?",
+        "es": "¿Quieres el grande o el pequeño?"
+      },
+      {
+        "zh": "你今天去还是明天去？",
+        "pinyin": "Nǐ jīntiān qù háishi míngtiān qù?",
+        "es": "¿Vas hoy o mañana?"
+      },
+      {
+        "zh": "他是老师还是学生？",
+        "pinyin": "Tā shì lǎoshī háishi xuésheng?",
+        "es": "¿Es profesor o estudiante?"
+      },
+      {
+        "zh": "你是坐地铁来的还是打车来的？",
+        "pinyin": "Nǐ shì zuò dìtiě lái de háishi dǎchē lái de?",
+        "es": "¿Has venido en metro o en taxi?"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你喝茶或者咖啡？",
+        "right": "你喝茶还是咖啡？",
+        "why": "En una pregunta entre dos opciones la «o» es 还是; 或者 es la «o» de las afirmaciones."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "5.2.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.9.2"
+      }
+    ]
   },
   {
     "code": "6.2.2",
@@ -3173,7 +3309,51 @@
     "items": [
       "用“别”的祈使句"
     ],
-    "order_idx": 45
+    "order_idx": 45,
+    "pattern": "(你 / 请) + 别 + verbo (+ 了 / 吧)",
+    "explanation": "Una orden negativa se forma con 别 delante del verbo: 别走. Con 了 al final pide dejar algo que ya está pasando: 别玩手机了 «deja el móvil». Para sonar más amable se pone 请 delante: 请别在这儿说话. 不要 expresa lo mismo con un tono algo más firme; con 不 solo no se puede prohibir.",
+    "markers": [
+      "别"
+    ],
+    "examples": [
+      {
+        "zh": "别玩手机了，快吃饭吧。",
+        "pinyin": "Bié wán shǒujī le, kuài chī fàn ba.",
+        "es": "Deja el móvil y come."
+      },
+      {
+        "zh": "请别在这儿说话。",
+        "pinyin": "Qǐng bié zài zhèr shuōhuà.",
+        "es": "Por favor, no habléis aquí."
+      },
+      {
+        "zh": "别忘了明天的考试。",
+        "pinyin": "Bié wàng le míngtiān de kǎoshì.",
+        "es": "No olvides el examen de mañana."
+      },
+      {
+        "zh": "你别走，我们一起吃饭吧。",
+        "pinyin": "Nǐ bié zǒu, wǒmen yìqǐ chī fàn ba.",
+        "es": "No te vayas, comamos juntos."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你不说话！",
+        "right": "你别说话！",
+        "why": "Con 不 solo se describe lo que alguien hace; para prohibir se usa 别 o 不要."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.7.5"
+      },
+      {
+        "hsk_level": 1,
+        "code": "5.2.3"
+      }
+    ]
   },
   {
     "code": "6.3.1",
@@ -3185,7 +3365,47 @@
     "items": [
       "表示说明或特征"
     ],
-    "order_idx": 46
+    "order_idx": 46,
+    "pattern": "Sujeto + 是 + descripción + 的 · 不是…，是…",
+    "explanation": "Además de identificar (我是学生), 是 sirve para explicar cómo es algo: 这本书是新的, 我的手机是黑色的. La descripción suele cerrar con 的 porque se omite el nombre: «es (uno) nuevo». También aclara o corrige una situación: 我不是不想去，是没有时间 «no es que no quiera ir, es que no tengo tiempo».",
+    "markers": [
+      "是"
+    ],
+    "examples": [
+      {
+        "zh": "这本书是新的。",
+        "pinyin": "Zhè běn shū shì xīn de.",
+        "es": "Este libro es nuevo."
+      },
+      {
+        "zh": "我的手机是黑色的。",
+        "pinyin": "Wǒ de shǒujī shì hēisè de.",
+        "es": "Mi móvil es negro."
+      },
+      {
+        "zh": "我不是不想去，是没有时间。",
+        "pinyin": "Wǒ bú shì bù xiǎng qù, shì méiyǒu shíjiān.",
+        "es": "No es que no quiera ir, es que no tengo tiempo."
+      },
+      {
+        "zh": "这件衣服是妈妈的。",
+        "pinyin": "Zhè jiàn yīfu shì māma de.",
+        "es": "Esta ropa es de mamá."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "这本书是新。",
+        "right": "这本书是新的。",
+        "why": "Si describes con 是 + adjetivo, cierra con 的 (是新的); sin 是 basta con 很: 这本书很新."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "5.3.1"
+      }
+    ]
   },
   {
     "code": "6.3.2",
@@ -3197,7 +3417,51 @@
     "items": [
       "表示达到"
     ],
-    "order_idx": 47
+    "order_idx": 47,
+    "pattern": "Sujeto + 有 + cantidad / B (+ 这么 / 那么) + adjetivo",
+    "explanation": "有 seguido de una medida indica que algo llega a ella: 从我家到学校有一个小时 «hay una hora», 他有二十岁了 «ya tiene sus veinte años». Con otra persona o cosa compara si se alcanza su nivel: 你有他这么高吗？ «¿eres tan alto como él?». En español usamos «medir», «llegar a» o «tan… como»; en chino basta con 有.",
+    "markers": [
+      "有"
+    ],
+    "examples": [
+      {
+        "zh": "你有他这么高吗？",
+        "pinyin": "Nǐ yǒu tā zhème gāo ma?",
+        "es": "¿Eres tan alto como él?"
+      },
+      {
+        "zh": "他今年有二十岁了吧？",
+        "pinyin": "Tā jīnnián yǒu èrshí suì le ba?",
+        "es": "Este año ya tiene sus veinte, ¿no?"
+      },
+      {
+        "zh": "这个房间有那个房间大吗？",
+        "pinyin": "Zhège fángjiān yǒu nàge fángjiān dà ma?",
+        "es": "¿Esta habitación es tan grande como aquella?"
+      },
+      {
+        "zh": "从我家到学校有一个小时。",
+        "pinyin": "Cóng wǒ jiā dào xuéxiào yǒu yí gè xiǎoshí.",
+        "es": "De mi casa al colegio hay una hora."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你是他这么高吗？",
+        "right": "你有他这么高吗？",
+        "why": "Para preguntar si algo llega a la medida de otro se usa 有, no 是."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "5.3.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "6.3.4"
+      }
+    ]
   },
   {
     "code": "6.3.3",
@@ -3209,7 +3473,51 @@
     "items": [
       "处所+动词+着(+数量短语)+名词"
     ],
-    "order_idx": 48
+    "order_idx": 48,
+    "pattern": "lugar + verbo + 着 + (número + clasificador) + nombre",
+    "explanation": "Para describir qué hay en un sitio y en qué postura, la frase empieza por el lugar y sigue con un verbo con 着: 门口站着一个人 «en la puerta hay un hombre de pie». Lo que hay va al final, casi siempre con número y clasificador, y el lugar no lleva 在 delante. Dice más que 有: además de qué hay, cuenta cómo está.",
+    "markers": [
+      "着"
+    ],
+    "examples": [
+      {
+        "zh": "门口站着一个人。",
+        "pinyin": "Ménkǒu zhànzhe yí gè rén.",
+        "es": "En la puerta hay un hombre de pie."
+      },
+      {
+        "zh": "椅子上坐着一个孩子。",
+        "pinyin": "Yǐzi shang zuòzhe yí gè háizi.",
+        "es": "En la silla está sentado un niño."
+      },
+      {
+        "zh": "书上写着我的名字。",
+        "pinyin": "Shū shang xiězhe wǒ de míngzi.",
+        "es": "En el libro está escrito mi nombre."
+      },
+      {
+        "zh": "这个房间里住着两个学生。",
+        "pinyin": "Zhège fángjiān li zhùzhe liǎng gè xuésheng.",
+        "es": "En esta habitación viven dos estudiantes."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "在门口站着一个人。",
+        "right": "门口站着一个人。",
+        "why": "En esta construcción el lugar abre la frase sin 在."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "5.3.3"
+      },
+      {
+        "hsk_level": 2,
+        "code": "7.1.1"
+      }
+    ]
   },
   {
     "code": "6.3.4",
@@ -3224,7 +3532,62 @@
       "（3）A有/没有B（+这么/那么）+形容词",
       "（4）A比B+动词+得+形容词/A+动词+得+比+B+形容词"
     ],
-    "order_idx": 49
+    "order_idx": 49,
+    "pattern": "A 比 B + adjetivo (+ diferencia) · A 没有 B (那么) + adjetivo · A + V 得 + 比 B + adjetivo",
+    "explanation": "A 比 B + adjetivo dice que A supera a B: 今天比昨天冷. La diferencia va detrás del adjetivo: 高一点儿, 贵多了. Para decir que A no llega a B se usa 没有: 我没有他那么高. Con una acción, 比 va detrás de 得 o delante del verbo: 他跑得比我快. En una comparación el adjetivo nunca lleva 很 ni 非常.",
+    "markers": [
+      "比",
+      "没有"
+    ],
+    "examples": [
+      {
+        "zh": "今天比昨天冷。",
+        "pinyin": "Jīntiān bǐ zuótiān lěng.",
+        "es": "Hoy hace más frío que ayer."
+      },
+      {
+        "zh": "他比我高一点儿。",
+        "pinyin": "Tā bǐ wǒ gāo yìdiǎnr.",
+        "es": "Es un poco más alto que yo."
+      },
+      {
+        "zh": "这个比那个贵多了。",
+        "pinyin": "Zhège bǐ nàge guì duō le.",
+        "es": "Este es mucho más caro que aquel."
+      },
+      {
+        "zh": "我没有他那么高。",
+        "pinyin": "Wǒ méiyǒu tā nàme gāo.",
+        "es": "No soy tan alto como él."
+      },
+      {
+        "zh": "他跑得比我快。",
+        "pinyin": "Tā pǎo de bǐ wǒ kuài.",
+        "es": "Corre más rápido que yo."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我比他不高。",
+        "right": "我没有他高。",
+        "why": "Para decir que A no supera a B no se pone 不 detrás de 比: se usa 没有."
+      },
+      {
+        "wrong": "今天比昨天很冷。",
+        "right": "今天比昨天冷多了。",
+        "why": "Con 比 el adjetivo no lleva 很; la diferencia se expresa detrás: 冷多了, 冷一点儿."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.8.3"
+      },
+      {
+        "hsk_level": 2,
+        "code": "5.4.4"
+      }
+    ]
   },
   {
     "code": "6.3.5",

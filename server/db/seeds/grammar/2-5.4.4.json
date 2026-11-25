@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "5.4.4",
+  "pattern": "verbo + (了) + duración (+ objeto) · adjetivo + cantidad",
+  "explanation": "La duración de una acción va detrás del verbo: 我学了两年汉语, 他睡了八个小时. Un objeto común se coloca detrás de la duración (两年汉语); un pronombre, delante (等了你半个小时). Detrás de un adjetivo, una cantidad expresa la diferencia: 他比我大两岁 «me lleva dos años». En español la duración puede abrir la frase; en chino no.",
+  "markers": ["年","小时","岁","块"],
+  "examples": [
+    {"zh":"我学了两年汉语。","pinyin":"Wǒ xué le liǎng nián Hànyǔ.","es":"Estudié chino durante dos años."},
+    {"zh":"他每天睡八个小时。","pinyin":"Tā měi tiān shuì bā gè xiǎoshí.","es":"Duerme ocho horas al día."},
+    {"zh":"我等了你半个小时。","pinyin":"Wǒ děng le nǐ bàn gè xiǎoshí.","es":"Te he esperado media hora."},
+    {"zh":"他比我大两岁。","pinyin":"Tā bǐ wǒ dà liǎng suì.","es":"Me lleva dos años."},
+    {"zh":"这件比那件贵一百块。","pinyin":"Zhè jiàn bǐ nà jiàn guì yìbǎi kuài.","es":"Esta cuesta cien yuanes más que aquella."}
+  ],
+  "common_errors": [
+    {"wrong":"我两年学了汉语。","right":"我学了两年汉语。","why":"La duración va detrás del verbo, no delante como en «dos años estudié chino»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"4.6.1"},{"hsk_level":2,"code":"6.3.4"}]
+}

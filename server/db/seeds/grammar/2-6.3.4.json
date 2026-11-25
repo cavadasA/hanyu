@@ -1,0 +1,19 @@
+{
+  "hsk_level": 2,
+  "code": "6.3.4",
+  "pattern": "A 比 B + adjetivo (+ diferencia) · A 没有 B (那么) + adjetivo · A + V 得 + 比 B + adjetivo",
+  "explanation": "A 比 B + adjetivo dice que A supera a B: 今天比昨天冷. La diferencia va detrás del adjetivo: 高一点儿, 贵多了. Para decir que A no llega a B se usa 没有: 我没有他那么高. Con una acción, 比 va detrás de 得 o delante del verbo: 他跑得比我快. En una comparación el adjetivo nunca lleva 很 ni 非常.",
+  "markers": ["比","没有"],
+  "examples": [
+    {"zh":"今天比昨天冷。","pinyin":"Jīntiān bǐ zuótiān lěng.","es":"Hoy hace más frío que ayer."},
+    {"zh":"他比我高一点儿。","pinyin":"Tā bǐ wǒ gāo yìdiǎnr.","es":"Es un poco más alto que yo."},
+    {"zh":"这个比那个贵多了。","pinyin":"Zhège bǐ nàge guì duō le.","es":"Este es mucho más caro que aquel."},
+    {"zh":"我没有他那么高。","pinyin":"Wǒ méiyǒu tā nàme gāo.","es":"No soy tan alto como él."},
+    {"zh":"他跑得比我快。","pinyin":"Tā pǎo de bǐ wǒ kuài.","es":"Corre más rápido que yo."}
+  ],
+  "common_errors": [
+    {"wrong":"我比他不高。","right":"我没有他高。","why":"Para decir que A no supera a B no se pone 不 detrás de 比: se usa 没有."},
+    {"wrong":"今天比昨天很冷。","right":"今天比昨天冷多了。","why":"Con 比 el adjetivo no lleva 很; la diferencia se expresa detrás: 冷多了, 冷一点儿."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.8.3"},{"hsk_level":2,"code":"5.4.4"}]
+}

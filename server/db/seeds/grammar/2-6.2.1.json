@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "6.2.1",
+  "pattern": "(是) A 还是 B？",
+  "explanation": "Para preguntar entre dos opciones se unen con 还是: 你要大的还是小的？ La pregunta ya está hecha, así que no lleva 吗. Si las opciones son acciones, se repite el verbo (你今天去还是明天去？) y se puede poner 是 delante de la primera. En las afirmaciones la «o» no es 还是, sino 或者.",
+  "markers": ["还是"],
+  "examples": [
+    {"zh":"你要大的还是小的？","pinyin":"Nǐ yào dà de háishi xiǎo de?","es":"¿Quieres el grande o el pequeño?"},
+    {"zh":"你今天去还是明天去？","pinyin":"Nǐ jīntiān qù háishi míngtiān qù?","es":"¿Vas hoy o mañana?"},
+    {"zh":"他是老师还是学生？","pinyin":"Tā shì lǎoshī háishi xuésheng?","es":"¿Es profesor o estudiante?"},
+    {"zh":"你是坐地铁来的还是打车来的？","pinyin":"Nǐ shì zuò dìtiě lái de háishi dǎchē lái de?","es":"¿Has venido en metro o en taxi?"}
+  ],
+  "common_errors": [
+    {"wrong":"你喝茶或者咖啡？","right":"你喝茶还是咖啡？","why":"En una pregunta entre dos opciones la «o» es 还是; 或者 es la «o» de las afirmaciones."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"5.2.2"},{"hsk_level":2,"code":"2.9.2"}]
+}

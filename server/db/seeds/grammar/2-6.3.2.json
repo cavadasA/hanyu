@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "6.3.2",
+  "pattern": "Sujeto + 有 + cantidad / B (+ 这么 / 那么) + adjetivo",
+  "explanation": "有 seguido de una medida indica que algo llega a ella: 从我家到学校有一个小时 «hay una hora», 他有二十岁了 «ya tiene sus veinte años». Con otra persona o cosa compara si se alcanza su nivel: 你有他这么高吗？ «¿eres tan alto como él?». En español usamos «medir», «llegar a» o «tan… como»; en chino basta con 有.",
+  "markers": ["有"],
+  "examples": [
+    {"zh":"你有他这么高吗？","pinyin":"Nǐ yǒu tā zhème gāo ma?","es":"¿Eres tan alto como él?"},
+    {"zh":"他今年有二十岁了吧？","pinyin":"Tā jīnnián yǒu èrshí suì le ba?","es":"Este año ya tiene sus veinte, ¿no?"},
+    {"zh":"这个房间有那个房间大吗？","pinyin":"Zhège fángjiān yǒu nàge fángjiān dà ma?","es":"¿Esta habitación es tan grande como aquella?"},
+    {"zh":"从我家到学校有一个小时。","pinyin":"Cóng wǒ jiā dào xuéxiào yǒu yí gè xiǎoshí.","es":"De mi casa al colegio hay una hora."}
+  ],
+  "common_errors": [
+    {"wrong":"你是他这么高吗？","right":"你有他这么高吗？","why":"Para preguntar si algo llega a la medida de otro se usa 有, no 是."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"5.3.2"},{"hsk_level":2,"code":"6.3.4"}]
+}

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "6.2.2",
+  "pattern": "(你 / 请) + 别 + verbo (+ 了 / 吧)",
+  "explanation": "Una orden negativa se forma con 别 delante del verbo: 别走. Con 了 al final pide dejar algo que ya está pasando: 别玩手机了 «deja el móvil». Para sonar más amable se pone 请 delante: 请别在这儿说话. 不要 expresa lo mismo con un tono algo más firme; con 不 solo no se puede prohibir.",
+  "markers": ["别"],
+  "examples": [
+    {"zh":"别玩手机了，快吃饭吧。","pinyin":"Bié wán shǒujī le, kuài chī fàn ba.","es":"Deja el móvil y come."},
+    {"zh":"请别在这儿说话。","pinyin":"Qǐng bié zài zhèr shuōhuà.","es":"Por favor, no habléis aquí."},
+    {"zh":"别忘了明天的考试。","pinyin":"Bié wàng le míngtiān de kǎoshì.","es":"No olvides el examen de mañana."},
+    {"zh":"你别走，我们一起吃饭吧。","pinyin":"Nǐ bié zǒu, wǒmen yìqǐ chī fàn ba.","es":"No te vayas, comamos juntos."}
+  ],
+  "common_errors": [
+    {"wrong":"你不说话！","right":"你别说话！","why":"Con 不 solo se describe lo que alguien hace; para prohibir se usa 别 o 不要."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.7.5"},{"hsk_level":1,"code":"5.2.3"}]
+}

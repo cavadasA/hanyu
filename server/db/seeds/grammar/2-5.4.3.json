@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "5.4.3",
+  "pattern": "verbo + 得 + (很 / 非常 / 不) + adjetivo",
+  "explanation": "Para valorar cómo se hace una acción, el adjetivo va detrás del verbo con 得: 他跑得很快 «corre muy rápido». Describe lo habitual o lo que ya pasó; no sirve para dar órdenes. La negación va detrás de 得, sobre la valoración: 跑得不快. Si el verbo tiene objeto, se repite el verbo: 唱歌唱得很好.",
+  "markers": ["得"],
+  "examples": [
+    {"zh":"他跑得很快。","pinyin":"Tā pǎo de hěn kuài.","es":"Corre muy rápido."},
+    {"zh":"你今天来得很早。","pinyin":"Nǐ jīntiān lái de hěn zǎo.","es":"Hoy has venido muy pronto."},
+    {"zh":"她唱歌唱得非常好。","pinyin":"Tā chàng gē chàng de fēicháng hǎo.","es":"Canta muy bien."},
+    {"zh":"我昨天睡得不太好。","pinyin":"Wǒ zuótiān shuì de bú tài hǎo.","es":"Ayer no dormí muy bien."}
+  ],
+  "common_errors": [
+    {"wrong":"他不跑得快。","right":"他跑得不快。","why":"La negación va detrás de 得, sobre la valoración; no delante del verbo."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.10.1"}]
+}

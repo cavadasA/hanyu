@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "6.3.1",
+  "pattern": "Sujeto + 是 + descripción + 的 · 不是…，是…",
+  "explanation": "Además de identificar (我是学生), 是 sirve para explicar cómo es algo: 这本书是新的, 我的手机是黑色的. La descripción suele cerrar con 的 porque se omite el nombre: «es (uno) nuevo». También aclara o corrige una situación: 我不是不想去，是没有时间 «no es que no quiera ir, es que no tengo tiempo».",
+  "markers": ["是"],
+  "examples": [
+    {"zh":"这本书是新的。","pinyin":"Zhè běn shū shì xīn de.","es":"Este libro es nuevo."},
+    {"zh":"我的手机是黑色的。","pinyin":"Wǒ de shǒujī shì hēisè de.","es":"Mi móvil es negro."},
+    {"zh":"我不是不想去，是没有时间。","pinyin":"Wǒ bú shì bù xiǎng qù, shì méiyǒu shíjiān.","es":"No es que no quiera ir, es que no tengo tiempo."},
+    {"zh":"这件衣服是妈妈的。","pinyin":"Zhè jiàn yīfu shì māma de.","es":"Esta ropa es de mamá."}
+  ],
+  "common_errors": [
+    {"wrong":"这本书是新。","right":"这本书是新的。","why":"Si describes con 是 + adjetivo, cierra con 的 (是新的); sin 是 basta con 很: 这本书很新."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"5.3.1"}]
+}

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "6.3.3",
+  "pattern": "lugar + verbo + 着 + (número + clasificador) + nombre",
+  "explanation": "Para describir qué hay en un sitio y en qué postura, la frase empieza por el lugar y sigue con un verbo con 着: 门口站着一个人 «en la puerta hay un hombre de pie». Lo que hay va al final, casi siempre con número y clasificador, y el lugar no lleva 在 delante. Dice más que 有: además de qué hay, cuenta cómo está.",
+  "markers": ["着"],
+  "examples": [
+    {"zh":"门口站着一个人。","pinyin":"Ménkǒu zhànzhe yí gè rén.","es":"En la puerta hay un hombre de pie."},
+    {"zh":"椅子上坐着一个孩子。","pinyin":"Yǐzi shang zuòzhe yí gè háizi.","es":"En la silla está sentado un niño."},
+    {"zh":"书上写着我的名字。","pinyin":"Shū shang xiězhe wǒ de míngzi.","es":"En el libro está escrito mi nombre."},
+    {"zh":"这个房间里住着两个学生。","pinyin":"Zhège fángjiān li zhùzhe liǎng gè xuésheng.","es":"En esta habitación viven dos estudiantes."}
+  ],
+  "common_errors": [
+    {"wrong":"在门口站着一个人。","right":"门口站着一个人。","why":"En esta construcción el lugar abre la frase sin 在."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"5.3.3"},{"hsk_level":2,"code":"7.1.1"}]
+}
