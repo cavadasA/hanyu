@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "5.3.3",
+  "pattern": "lugar + 有 + número + clasificador + nombre · lugar + 是 + nombre",
+  "explanation": "Para decir qué hay en un sitio, la frase empieza por el lugar: 桌子上有一本书 «encima de la mesa hay un libro». Con 有 se dice que algo existe allí; con 是 se identifica qué es lo que ocupa ese lugar: 学校前边是一个商店 «lo que hay delante del colegio es una tienda». El lugar va sin 在 delante.",
+  "markers": ["有","是"],
+  "examples": [
+    {"zh":"桌子上有一本书。","pinyin":"Zhuōzi shang yǒu yì běn shū.","es":"Encima de la mesa hay un libro."},
+    {"zh":"房间里有两个人。","pinyin":"Fángjiān li yǒu liǎng gè rén.","es":"En la habitación hay dos personas."},
+    {"zh":"学校前边是一个商店。","pinyin":"Xuéxiào qiánbian shì yí gè shāngdiàn.","es":"Delante del colegio hay una tienda."},
+    {"zh":"我家后边是医院。","pinyin":"Wǒ jiā hòubian shì yīyuàn.","es":"Detrás de mi casa está el hospital."}
+  ],
+  "common_errors": [
+    {"wrong":"在桌子上有一本书。","right":"桌子上有一本书。","why":"En estas frases el lugar abre la frase sin 在."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.3.3"}]
+}

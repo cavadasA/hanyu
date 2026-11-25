@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "5.4.1",
+  "pattern": "frase 1，frase 2",
+  "explanation": "Muchas veces dos frases se unen solo con una coma, sin «y», «pero» ni «porque»: la relación se entiende por el sentido. 下雨了，我们不去了 se lee como «llueve, así que no vamos», y 我喜欢喝茶，他喜欢喝水 contrasta dos gustos. En español solemos añadir un conector; en el chino básico lo normal es no ponerlo.",
+  "markers": ["，"],
+  "examples": [
+    {"zh":"下雨了，我们不去了。","pinyin":"Xià yǔ le, wǒmen bú qù le.","es":"Llueve, así que no vamos."},
+    {"zh":"我喜欢喝茶，他喜欢喝水。","pinyin":"Wǒ xǐhuan hē chá, tā xǐhuan hē shuǐ.","es":"A mí me gusta el té y a él el agua."},
+    {"zh":"今天太冷了，我在家看书。","pinyin":"Jīntiān tài lěng le, wǒ zài jiā kàn shū.","es":"Hoy hace demasiado frío; me quedo en casa leyendo."},
+    {"zh":"他生病了，没去上班。","pinyin":"Tā shēngbìng le, méi qù shàngbān.","es":"Está enfermo y no ha ido a trabajar."}
+  ],
+  "common_errors": [
+    {"wrong":"下雨了和我们不去了。","right":"下雨了，我们不去了。","why":"和 no une frases; dos frases se juntan con una coma o con un conector propio."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"5.4.2"},{"hsk_level":2,"code":"2.9.2"}]
+}

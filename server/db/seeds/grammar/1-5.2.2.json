@@ -1,0 +1,19 @@
+{
+  "hsk_level": 1,
+  "code": "5.2.2",
+  "pattern": "… 吗？ · palabra interrogativa en su sitio · verbo / adjetivo + 不 / 没 + verbo / adjetivo？",
+  "explanation": "Hay tres maneras de preguntar. Con 吗 al final se pregunta sí o no: 你是学生吗？ Con una palabra interrogativa (什么, 谁, 哪儿) en el sitio de la respuesta: 你去哪儿？ Y repitiendo el verbo o el adjetivo con 不 en medio: 你去不去？, 好吃不好吃？; con 有, la forma es 有没有. En las dos últimas no se añade 吗.",
+  "markers": ["吗","哪","去不去","好吃不好吃","有没有"],
+  "examples": [
+    {"zh":"你是学生吗？","pinyin":"Nǐ shì xuésheng ma?","es":"¿Eres estudiante?"},
+    {"zh":"你去哪儿？","pinyin":"Nǐ qù nǎr?","es":"¿Adónde vas?"},
+    {"zh":"你去不去？","pinyin":"Nǐ qù bu qù?","es":"¿Vas o no?"},
+    {"zh":"这个菜好吃不好吃？","pinyin":"Zhège cài hǎochī bu hǎochī?","es":"¿Está rico este plato?"},
+    {"zh":"你有没有中文书？","pinyin":"Nǐ yǒu méiyǒu Zhōngwén shū?","es":"¿Tienes libros en chino?"}
+  ],
+  "common_errors": [
+    {"wrong":"你去不去吗？","right":"你去不去？","why":"La forma verbo + 不 + verbo ya es una pregunta; no se le añade 吗."},
+    {"wrong":"你有不有书？","right":"你有没有书？","why":"有 se niega con 没, también en esta forma: 有没有."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.3.1"},{"hsk_level":1,"code":"2.9.3"}]
+}

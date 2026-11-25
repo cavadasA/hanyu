@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "5.2.1",
+  "pattern": "Sujeto + (tiempo / lugar) + predicado。 · Sujeto + 不 / 没 + predicado。",
+  "explanation": "Una frase declarativa informa de algo y termina en 。. Su orden básico es sujeto, tiempo y lugar, verbo y objeto: 我今天在家看书. Para negarla se pone 不 o 没 justo delante del verbo o del adjetivo, sin tocar nada más. A diferencia del español, la entonación sola no la convierte en pregunta: hace falta 吗 u otra estructura.",
+  "markers": ["。"],
+  "examples": [
+    {"zh":"我今天在家看书。","pinyin":"Wǒ jīntiān zài jiā kàn shū.","es":"Hoy leo en casa."},
+    {"zh":"他是医生。","pinyin":"Tā shì yīshēng.","es":"Es médico."},
+    {"zh":"我不喝牛奶。","pinyin":"Wǒ bù hē niúnǎi.","es":"No tomo leche."},
+    {"zh":"昨天下雨了。","pinyin":"Zuótiān xià yǔ le.","es":"Ayer llovió."}
+  ],
+  "common_errors": [
+    {"wrong":"你是学生。（preguntando）","right":"你是学生吗？","why":"La entonación sola no convierte una afirmación en pregunta; hace falta 吗 u otra forma interrogativa."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"5.2.2"}]
+}

@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "5.2.3",
+  "pattern": "(请) + verbo · verbo + 吧 · 不要 + verbo",
+  "explanation": "Para pedir u ordenar algo se usa el verbo solo o con 你: el verbo no cambia de forma como el imperativo español. 请 delante lo hace cortés: 请坐 «siéntese». 吧 al final lo convierte en una propuesta suave: 我们去吃饭吧. 不要 delante del verbo prohíbe: 不要说话.",
+  "markers": ["请","吧","不要","一下"],
+  "examples": [
+    {"zh":"请坐。","pinyin":"Qǐng zuò.","es":"Siéntese, por favor."},
+    {"zh":"请喝茶。","pinyin":"Qǐng hē chá.","es":"Tome un té, por favor."},
+    {"zh":"我们去吃饭吧。","pinyin":"Wǒmen qù chī fàn ba.","es":"Vamos a comer."},
+    {"zh":"不要在这儿睡觉。","pinyin":"Búyào zài zhèr shuìjiào.","es":"No duermas aquí."},
+    {"zh":"你来一下。","pinyin":"Nǐ lái yíxià.","es":"Ven un momento."}
+  ],
+  "common_errors": [
+    {"wrong":"请你不说话。","right":"请你不要说话。","why":"Para prohibir se usa 不要; con 不 solo se describe lo que alguien hace."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.2.2"}]
+}

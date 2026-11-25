@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "5.3.2",
+  "pattern": "Sujeto + 有 + objeto · Sujeto + 没有 + objeto",
+  "explanation": "有 expresa posesión, «tener»: 我有一个哥哥. Se niega siempre con 没有, nunca con 不: 我没有钱. Para preguntar se usa 有…吗 o 有没有. En la negación el objeto no suele llevar número: 我没有哥哥.",
+  "markers": ["有"],
+  "examples": [
+    {"zh":"我有一个哥哥。","pinyin":"Wǒ yǒu yí gè gēge.","es":"Tengo un hermano mayor."},
+    {"zh":"他有很多中文书。","pinyin":"Tā yǒu hěn duō Zhōngwén shū.","es":"Tiene muchos libros en chino."},
+    {"zh":"我没有钱。","pinyin":"Wǒ méiyǒu qián.","es":"No tengo dinero."},
+    {"zh":"你有电脑吗？","pinyin":"Nǐ yǒu diànnǎo ma?","es":"¿Tienes ordenador?"}
+  ],
+  "common_errors": [
+    {"wrong":"我不有哥哥。","right":"我没有哥哥。","why":"有 se niega con 没: «不有» no existe."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.3.2"}]
+}

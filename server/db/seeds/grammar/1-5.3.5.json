@@ -1,0 +1,16 @@
+{
+  "hsk_level": 1,
+  "code": "5.3.5",
+  "pattern": "Sujeto + 给 / 问 + persona + cosa",
+  "explanation": "Algunos verbos llevan dos objetos seguidos: primero la persona y después la cosa, sin preposición: 妈妈给我一个苹果 «mamá me da una manzana», 我问老师一个问题. El orden es fijo y la persona no lleva delante nada parecido a la «a» española.",
+  "markers": ["给","问"],
+  "examples": [
+    {"zh":"妈妈给我一个苹果。","pinyin":"Māma gěi wǒ yí gè píngguǒ.","es":"Mamá me da una manzana."},
+    {"zh":"我问老师一个问题。","pinyin":"Wǒ wèn lǎoshī yí gè wèntí.","es":"Le hago una pregunta al profesor."},
+    {"zh":"请给我一个面包。","pinyin":"Qǐng gěi wǒ yí gè miànbāo.","es":"Deme un pan, por favor."}
+  ],
+  "common_errors": [
+    {"wrong":"妈妈给一个苹果我。","right":"妈妈给我一个苹果。","why":"La persona va primero y la cosa después."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.3.7"}]
+}

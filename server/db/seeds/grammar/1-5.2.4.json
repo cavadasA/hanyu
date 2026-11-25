@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "5.2.4",
+  "pattern": "太 + adjetivo + 了！ · 真 + adjetivo！",
+  "explanation": "Para exclamar se pone 太…了 o 真 alrededor de un adjetivo: 太好了！ «¡genial!», 真漂亮！ «¡qué bonito!». 太…了 también puede expresar exceso, «demasiado», según el contexto. Se escribe con ！ al final. Equivale al «¡qué…!» español, pero sin ninguna palabra interrogativa.",
+  "markers": ["太","真"],
+  "examples": [
+    {"zh":"太好了！","pinyin":"Tài hǎo le!","es":"¡Genial!"},
+    {"zh":"你的中文真好！","pinyin":"Nǐ de Zhōngwén zhēn hǎo!","es":"¡Qué bien hablas chino!"},
+    {"zh":"今天太冷了！","pinyin":"Jīntiān tài lěng le!","es":"¡Qué frío hace hoy!"},
+    {"zh":"这个苹果真好吃！","pinyin":"Zhège píngguǒ zhēn hǎochī!","es":"¡Qué rica está esta manzana!"}
+  ],
+  "common_errors": [
+    {"wrong":"什么漂亮！","right":"真漂亮！","why":"El «¡qué…!» exclamativo no se traduce con 什么, que solo sirve para preguntar; se usa 真 o 太…了."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.1"}]
+}

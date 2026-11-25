@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "5.3.4",
+  "pattern": "Sujeto + 去 / 来 + lugar + verbo · Sujeto + 坐 / 开车 + 去 / 来",
+  "explanation": "Dos verbos seguidos, sin conjunción, cuentan acciones encadenadas. Si el primero es ir o venir, el segundo dice para qué: 我去超市买水果 «voy al súper a comprar fruta». Si el primero es un medio, como 坐 o 开车, dice cómo se hace el segundo: 我们坐出租车去医院. El orden sigue el de los hechos y no lleva «para» ni «en».",
+  "markers": ["买","学习","坐","开车"],
+  "examples": [
+    {"zh":"我去超市买水果。","pinyin":"Wǒ qù chāoshì mǎi shuǐguǒ.","es":"Voy al súper a comprar fruta."},
+    {"zh":"他来中国学习汉语。","pinyin":"Tā lái Zhōngguó xuéxí Hànyǔ.","es":"Viene a China a estudiar chino."},
+    {"zh":"我们坐出租车去医院。","pinyin":"Wǒmen zuò chūzūchē qù yīyuàn.","es":"Vamos al hospital en taxi."},
+    {"zh":"爸爸开车去公司。","pinyin":"Bàba kāichē qù gōngsī.","es":"Papá va en coche a la empresa."}
+  ],
+  "common_errors": [
+    {"wrong":"我去中国坐飞机。","right":"我坐飞机去中国。","why":"El medio va primero: al revés se entiende que vas a China a coger un avión."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"3.1.2"}]
+}

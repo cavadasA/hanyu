@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "5.3.1",
+  "pattern": "A + 是 + B · A + 不是 + B",
+  "explanation": "是 une dos nombres para decir qué o quién es algo: 他是老师, 这是我的书. Solo une nombres o pronombres; delante de un adjetivo no se pone. Se niega siempre con 不是, nunca con 没. A diferencia de «ser», no describe cualidades: «es alto» es 他很高.",
+  "markers": ["是"],
+  "examples": [
+    {"zh":"他是老师。","pinyin":"Tā shì lǎoshī.","es":"Es profesor."},
+    {"zh":"这是我的书。","pinyin":"Zhè shì wǒ de shū.","es":"Este es mi libro."},
+    {"zh":"我不是中国人。","pinyin":"Wǒ bú shì Zhōngguó rén.","es":"No soy chino."},
+    {"zh":"她是我妈妈。","pinyin":"Tā shì wǒ māma.","es":"Es mi madre."}
+  ],
+  "common_errors": [
+    {"wrong":"他是很高。","right":"他很高。","why":"是 une nombres; una cualidad con adjetivo se dice sin 是: 他很高."},
+    {"wrong":"我没是老师。","right":"我不是老师。","why":"是 se niega siempre con 不."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.3.1"}]
+}
