@@ -225,6 +225,26 @@ describe('validateExamGroup', () => {
     );
   });
 
+  it('el ejemplo de L1 también se valida: imagen sin manifiesto → image_unknown', () => {
+    const l1 = group(formA(), 'L1');
+    l1.example = { audio: [line('我是老师。')], images: ['img-0', 'img-1', 'img-998'], answer: 0 };
+    expect(validateExamGroup(l1, ctx)).toContainEqual(
+      expect.objectContaining({ kind: 'image_unknown', detail: 'img-998' }),
+    );
+  });
+
+  it('el ejemplo de L3 también se valida: palabra HSK 3 → unknown_vocabulary sin question_index', () => {
+    const l3 = group(formA(), 'L3');
+    l3.example = {
+      audio: [line('你有经验吗？', 'M'), line('有。')],
+      question: line('她有什么？', 'M'),
+      options: [p('书'), p('茶'), p('水')],
+      answer: 0,
+    };
+    const issue = validateExamGroup(l3, ctx).find(entry => entry.kind === 'unknown_vocabulary');
+    expect(issue).toEqual({ kind: 'unknown_vocabulary', detail: '经' });
+  });
+
   it('respuesta fuera del banco → answer_out_of_range', () => {
     const r3 = group(formA(), 'R3', 1);
     r3.items[4].answer = 5;

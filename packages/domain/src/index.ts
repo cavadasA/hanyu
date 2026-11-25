@@ -28,3 +28,6 @@ export * from './exam/validate';
 export * from './exam/score';
 export { checkAnswerRules, checkAnswerShape, hanziLength, markerSegments, type AnswerRuleReason, type AnswerRulesResult, type CommunicativeContext, type CommunicativeTask } from './expression/check-answer';
 export { validateCommunicativeTask, type TaskIssue, type TaskIssueKind } from './expression/validate-task';
+export * from './exam/timeline';
+export * from './exam/components';
+export { IMAGE_MAX_BYTES, validateImageManifest, type ImageIssue, type ImageIssueKind, type ImageManifest } from './media/manifest';

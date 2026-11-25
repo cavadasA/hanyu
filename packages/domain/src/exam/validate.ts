@@ -3,6 +3,7 @@
 // para publicar una forma. La forma de cada grupo (cuántas opciones, si hay ejemplo,
 // cuántas preguntas) sale de exam-structure.json, no de constantes de aquí.
 import { tokenizeReading } from '../reading/tokenize.ts';
+import { directComponents } from './components.ts';
 import {
   EXAM_PART_CODES,
   examPartStructure,
@@ -165,6 +166,10 @@ export function validateExamGroup(group: ExamGroup, ctx: ExamValidationContext):
 
   switch (group.part) {
     case 'L1': {
+      if (group.example) {
+        checkImages(group.example.images, ctx, report);
+        checkPrinted(group.example.audio, report, vocabulary);
+      }
       group.items.forEach((item, index) => {
         if (item.images.length !== examPartStructure(ctx.structure, 'L1').group_shapes[0].options) {
           report({ kind: 'wrong_count', question_index: index, detail: `${item.images.length} imágenes` });
@@ -195,6 +200,10 @@ export function validateExamGroup(group: ExamGroup, ctx: ExamValidationContext):
       break;
     }
     case 'L3': {
+      if (group.example) {
+        const example = group.example;
+        checkPrinted([...example.audio, example.question, ...example.options], report, vocabulary);
+      }
       group.items.forEach((item, index) => {
         if (item.options.length !== 3) {
           report({ kind: 'wrong_count', question_index: index, detail: `${item.options.length} opciones` });
@@ -249,7 +258,8 @@ export function validateExamGroup(group: ExamGroup, ctx: ExamValidationContext):
           return;
         }
         const decomposition = ctx.decomposition[target]?.decomposition ?? '';
-        const occurrences = Array.from(decomposition).filter(part => part === component).length;
+        // Solo cuentan los hijos directos: es lo que incompleteCharacterSvg sabe quitar.
+        const occurrences = directComponents(decomposition).filter(part => part === component).length;
         if (occurrences === 0) {
           report({ kind: 'component_not_in_character', question_index, detail: `${component} ∉ ${target}` });
         } else if (occurrences > 1) {

@@ -116,3 +116,56 @@ export function validateAudioManifest(
 
   return issues;
 }
+
+// Manifiesto de imágenes (Plan 12): cada imagen del simulacro declara qué muestra, de
+// dónde sale y con qué licencia. Sin licencia no entra.
+
+export interface ImageManifest {
+  owner: string;
+  images: Array<{ key: string; file: string; depicts_es: string; source: string; license: string }>;
+}
+
+export type ImageIssueKind =
+  | 'license_missing'
+  | 'source_missing'
+  | 'depicts_missing'
+  | 'image_format'
+  | 'image_too_large'
+  | 'file_missing'
+  | 'duplicate_key';
+
+export interface ImageIssue {
+  kind: ImageIssueKind;
+  key: string;
+}
+
+/** 800 px de lado mayor en .webp caben de sobra en 80 KB. */
+export const IMAGE_MAX_BYTES = 80 * 1024;
+
+export function validateImageManifest(
+  manifest: ImageManifest,
+  opts: { fileSize: (file: string) => number | null },
+): ImageIssue[] {
+  const issues: ImageIssue[] = [];
+  const seen = new Set<string>();
+
+  for (const image of manifest.images) {
+    const report = (kind: ImageIssueKind) => issues.push({ kind, key: image.key });
+    if (seen.has(image.key)) {
+      report('duplicate_key');
+      continue;
+    }
+    seen.add(image.key);
+
+    if (!image.license?.trim()) report('license_missing');
+    if (!image.source?.trim()) report('source_missing');
+    if (!image.depicts_es?.trim()) report('depicts_missing');
+    if (!image.file.endsWith('.webp')) report('image_format');
+
+    const size = opts.fileSize(image.file);
+    if (size === null) report('file_missing');
+    else if (size > IMAGE_MAX_BYTES) report('image_too_large');
+  }
+
+  return issues;
+}

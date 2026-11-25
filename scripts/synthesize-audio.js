@@ -4,6 +4,7 @@
 // texto cambió (source_hash distinto), los de otra voz o los de otro proveedor.
 //
 //   node scripts/synthesize-audio.js <slug|--all> --provider edge|azure [--force]
+//   node scripts/synthesize-audio.js --exam hsk2/<forma> --provider edge|azure [--force]
 //
 // edge: provisional (edge-tts no acepta <phoneme>); deja en
 // content/audio/POLIFONOS.md las frases con polífonos para revisarlas de oído.
@@ -20,6 +21,8 @@ import { defaultContentDir, findManifests } from './lib/media.js';
 import { readingOwner } from './lib/media-owners.js';
 import { clipKey, speakerOf, spokenText } from './lib/reading-audio.js';
 import { polyphonesIn, sentenceToSsml } from './lib/ssml.js';
+import { clipSource, examClipSpecs, examOwner } from './lib/exam-audio.js';
+import { loadExamForm, loadExamInstructions, loadExamStructure } from './lib/exam.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -172,6 +175,100 @@ export async function synthesizeReading({
   return { calls, manifest };
 }
 
+/** Concatena mp3 y silencios (en orden) en un m4a con ffmpeg. */
+export function ffmpegConcatToM4a(parts, out, { run = execFileSync } = {}) {
+  const dir = mkdtempSync(join(tmpdir(), 'hanyu-concat-'));
+  try {
+    const inputs = [];
+    parts.forEach((part, index) => {
+      if (part.mp3) {
+        const file = join(dir, `${index}.mp3`);
+        writeFileSync(file, part.mp3);
+        inputs.push('-i', file);
+      } else {
+        inputs.push('-f', 'lavfi', '-t', String(part.silence_ms / 1000), '-i', 'anullsrc=r=24000:cl=mono');
+      }
+    });
+    const normalized = parts.map((_, index) => `[${index}:a]aresample=24000,aformat=channel_layouts=mono[a${index}]`);
+    const filter = `${normalized.join(';')};${parts.map((_, index) => `[a${index}]`).join('')}concat=n=${parts.length}:v=0:a=1[out]`;
+    run('ffmpeg', ['-y', '-loglevel', 'error', ...inputs, '-filter_complex', filter, '-map', '[out]', '-c:a', 'aac', '-b:a', '48k', out], { stdio: 'pipe' });
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+/**
+ * Sintetiza el audio de 听力 de una forma del simulacro (Plan 12): un clip por entrada de
+ * la línea de tiempo, compuesto por las líneas de cada speaker y los silencios de
+ * exam-audio.js. Como en las lecturas, sin --force solo regenera lo que cambió.
+ */
+export async function synthesizeExam({
+  form,
+  instructions,
+  structure,
+  dictionary,
+  provider,
+  contentDir = defaultContentDir,
+  force = false,
+  concat = ffmpegConcatToM4a,
+  durationOf = fileDurationMs,
+}) {
+  const owner = examOwner(form.level, form.code);
+  const dir = join(contentDir, owner);
+  mkdirSync(dir, { recursive: true });
+
+  const previous = readManifest(dir);
+  const reusable = !force && providerOf(previous) === provider.name
+    ? new Map(previous.clips.map(clip => [clip.key, clip]))
+    : new Map();
+
+  let calls = 0;
+  const clips = [];
+  for (const { key, segments } of examClipSpecs(form, instructions, structure)) {
+    const voice = [...new Set(segments.filter(segment => segment.voice).map(segment => segment.voice))].join('+');
+    const hash = sourceHash(clipSource(segments));
+    const old = reusable.get(key);
+    if (old && old.source_hash === hash && old.voice === voice && existsSync(join(dir, old.file))) {
+      clips.push(old);
+      continue;
+    }
+
+    const parts = [];
+    for (const segment of segments) {
+      if (segment.silence_ms) {
+        parts.push({ silence_ms: segment.silence_ms });
+        continue;
+      }
+      const sentence = { zh: segment.zh, pinyin: segment.pinyin };
+      const ssml = sentenceToSsml(sentence, segment.voice, dictionary);
+      parts.push({ mp3: await provider.synthesize({ text: segment.zh, ssml, voice: segment.voice }) });
+      calls += 1;
+    }
+
+    const file = `${key}.m4a`;
+    concat(parts, join(dir, file));
+    clips.push({ key, file, duration_ms: await durationOf(join(dir, file)), voice, source_hash: hash });
+  }
+
+  for (const clip of previous?.clips ?? []) {
+    if (!clips.some(kept => kept.file === clip.file) && existsSync(join(dir, clip.file))) {
+      unlinkSync(join(dir, clip.file));
+    }
+  }
+
+  const voices = [...new Set(clips.flatMap(clip => clip.voice.split('+')))].sort();
+  const manifest = {
+    kind: 'neural',
+    owner,
+    produced_by: `${provider.name}:${voices.join('+')}`,
+    license: provider.license,
+    ...(provider.provisional ? { provisional: true } : {}),
+    clips,
+  };
+  writeFileSync(join(dir, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
+  return { calls, manifest };
+}
+
 /**
  * Frases con polífonos de las lecturas cuyo audio no pudo forzarlos (edge-tts),
  * para revisarlas de oído. Se regenera entero en cada ejecución.
@@ -223,7 +320,29 @@ function argValue(name) {
   return at === -1 ? undefined : process.argv[at + 1];
 }
 
-if (process.argv[1] && process.argv[1].endsWith('synthesize-audio.js')) {
+if (process.argv[1] && process.argv[1].endsWith('synthesize-audio.js') && process.argv.includes('--exam')) {
+  const providerName = argValue('--provider');
+  const match = /^hsk(\d)\/([A-Z])$/.exec(argValue('--exam') ?? '');
+  if (!['edge', 'azure'].includes(providerName) || !match) {
+    console.error('Uso: synthesize-audio.js --exam hsk2/<forma> --provider edge|azure [--force]');
+    process.exit(2);
+  }
+  const env = { ...loadLocalEnv(), ...process.env };
+  const provider = providerName === 'edge'
+    ? edgeProvider()
+    : azureProvider({ key: env.AZURE_SPEECH_KEY, region: env.AZURE_SPEECH_REGION });
+  const level = Number(match[1]);
+  const form = loadExamForm(level, match[2]);
+  const { calls, manifest } = await synthesizeExam({
+    form,
+    instructions: loadExamInstructions(level),
+    structure: loadExamStructure(),
+    dictionary: loadDictionary(),
+    provider,
+    force: process.argv.includes('--force'),
+  });
+  console.log(`${manifest.owner}: ${calls} segmentos sintetizados, ${manifest.clips.length} clips`);
+} else if (process.argv[1] && process.argv[1].endsWith('synthesize-audio.js')) {
   const providerName = argValue('--provider');
   const target = process.argv.slice(2).find(arg => !arg.startsWith('--') && arg !== providerName);
   const all = process.argv.includes('--all');

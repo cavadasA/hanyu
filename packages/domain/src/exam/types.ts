@@ -15,7 +15,11 @@ export interface ExamLine extends Printed {
 }
 
 export type ExamGroup =
-  | { part: 'L1'; items: Array<{ audio: ExamLine[]; images: [string, string, string]; answer: 0 | 1 | 2 }> }
+  | {
+      part: 'L1';
+      example?: { audio: ExamLine[]; images: [string, string, string]; answer: 0 | 1 | 2 };
+      items: Array<{ audio: ExamLine[]; images: [string, string, string]; answer: 0 | 1 | 2 }>;
+    }
   | {
       part: 'L2' | 'R1';
       images: string[];
@@ -24,6 +28,7 @@ export type ExamGroup =
     }
   | {
       part: 'L3';
+      example?: { audio: ExamLine[]; question: ExamLine; options: [Printed, Printed, Printed]; answer: 0 | 1 | 2 };
       items: Array<{ audio: ExamLine[]; question: ExamLine; options: [Printed, Printed, Printed]; answer: 0 | 1 | 2 }>;
     }
   | { part: 'R2' | 'R3'; bank: Printed[]; example?: { text: Printed; answer: number }; items: Array<{ text: Printed; answer: number }> }
