@@ -330,6 +330,18 @@ export interface ReadingResult {
   }>;
 }
 
+export interface GrammarExample {
+  zh: string;
+  pinyin: string;
+  es: string;
+}
+
+export interface GrammarError {
+  wrong: string;
+  right: string;
+  why: string;
+}
+
 export interface GrammarPoint {
   id: number;
   hsk_level: HskLevel;
@@ -341,7 +353,9 @@ export interface GrammarPoint {
   pattern: string | null;
   explanation: string | null;
   items: string[];
-  examples: Array<{ chinese: string; pinyin?: string; english?: string }>;
+  examples: GrammarExample[];
+  common_errors: GrammarError[];
+  see_also: Array<{ hsk_level: HskLevel; code: string }>;
   order_idx?: number | null;
 }
 

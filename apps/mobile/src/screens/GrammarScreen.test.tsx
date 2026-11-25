@@ -71,9 +71,9 @@ describe('Grammar screens', () => {
       explanation: null,
       examples: [
         {
-          chinese: '因为下雨，所以我不去。',
+          zh: '因为下雨，所以我不去。',
           pinyin: 'yinwei xiayu, suoyi wo bu qu.',
-          english: 'Because it rains, I am not going.',
+          es: 'Como llueve, no voy.',
         },
       ],
     });
@@ -83,7 +83,7 @@ describe('Grammar screens', () => {
     expect(view.getByText('因为 + reason，所以 + result')).toBeTruthy();
     expect(view.getByText('因为下雨，所以我不去。')).toBeTruthy();
     expect(view.getByText('yinwei xiayu, suoyi wo bu qu.')).toBeTruthy();
-    expect(view.getByText('Because it rains, I am not going.')).toBeTruthy();
+    expect(view.getByText('Como llueve, no voy.')).toBeTruthy();
     expect(view.queryByText('null')).toBeNull();
     expect(mockGetGrammarPoint).toHaveBeenCalledWith(2, 3);
     await fireEvent.press(view.getByText('Mark as studied'));
@@ -109,5 +109,42 @@ describe('Grammar screens', () => {
     const studiedButton = view.getByRole('button', { name: 'Studied' });
     expect(studiedButton).toBeDisabled();
     expect(mockMarkGrammarStudied).not.toHaveBeenCalled();
+  });
+
+  it('pinta hanzi y traducción de los ejemplos, y los errores típicos', async () => {
+    mockParams = { id: '4', level: '2' };
+    mockGetGrammarPoint.mockResolvedValue({
+      id: 4,
+      hsk_level: 2,
+      code: '2.1.1',
+      title: '喝',
+      pattern: null,
+      explanation: 'Explicación.',
+      examples: [{ zh: '我喝茶。', pinyin: 'Wǒ hē chá.', es: 'Bebo té.' }],
+      common_errors: [{ wrong: '我喝了茶', right: '我喝茶。', why: 'Falta el punto.' }],
+      see_also: [{ hsk_level: 2, code: '2.2.1' }],
+    });
+    const view = await render(<GrammarDetailScreen />);
+
+    await waitFor(() => expect(view.getAllByText('我喝茶。')).toHaveLength(2));
+    expect(view.getByText('Bebo té.')).toBeTruthy();
+    expect(view.getByText('Ejemplos')).toBeTruthy();
+    expect(view.getByText('Errores típicos')).toBeTruthy();
+    expect(view.getByText('我喝了茶')).toHaveStyle({ textDecorationLine: 'line-through' });
+    expect(view.getByText('Falta el punto.')).toBeTruthy();
+    expect(view.getByText('Ver también')).toBeTruthy();
+  });
+
+  it('oculta las secciones sin contenido', async () => {
+    mockParams = { id: '5', level: '2' };
+    mockGetGrammarPoint.mockResolvedValue({
+      id: 5, hsk_level: 2, code: 'x', title: 'X', pattern: null, explanation: null,
+      examples: [], common_errors: [], see_also: [],
+    });
+    const view = await render(<GrammarDetailScreen />);
+    await waitFor(() => expect(view.getByText('X')).toBeTruthy());
+    for (const t of ['Estructura', 'Explicación', 'Ejemplos', 'Errores típicos', 'Ver también']) {
+      expect(view.queryByText(t)).toBeNull();
+    }
   });
 });

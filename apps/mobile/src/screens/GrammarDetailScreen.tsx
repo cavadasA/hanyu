@@ -74,6 +74,10 @@ export function GrammarDetailScreen() {
     );
   }
 
+  const examples = point?.examples ?? [];
+  const commonErrors = point?.common_errors ?? [];
+  const seeAlso = point?.see_also ?? [];
+
   return (
     <Screen>
       {error ? <ErrorBanner message={error} onRetry={load} /> : null}
@@ -94,33 +98,57 @@ export function GrammarDetailScreen() {
 
           {point.pattern ? (
             <Card>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Pattern</Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Estructura</Text>
               <Text style={[styles.body, { color: colors.textMuted }]}>{point.pattern}</Text>
             </Card>
           ) : null}
 
           {point.explanation ? (
             <Card>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Explanation</Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Explicación</Text>
               <Text style={[styles.body, { color: colors.textMuted }]}>{point.explanation}</Text>
             </Card>
           ) : null}
 
-          {point.examples.length > 0 ? (
+          {examples.length > 0 ? (
             <Card>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Examples</Text>
-              {point.examples.map((example, index) => (
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Ejemplos</Text>
+              {examples.map((example, index) => (
                 <View key={`${point.id}-${index}`} style={styles.example}>
-                  {example.chinese ? (
-                    <Text style={[styles.chinese, { color: colors.text }]}>{example.chinese}</Text>
+                  {example.zh ? (
+                    <Text style={[styles.chinese, { color: colors.text }]}>{example.zh}</Text>
                   ) : null}
                   {example.pinyin ? (
                     <Text style={[styles.body, { color: colors.textMuted }]}>{example.pinyin}</Text>
                   ) : null}
-                  {example.english ? (
-                    <Text style={[styles.body, { color: colors.textMuted }]}>{example.english}</Text>
+                  {example.es ? (
+                    <Text style={[styles.body, { color: colors.textMuted }]}>{example.es}</Text>
                   ) : null}
                 </View>
+              ))}
+            </Card>
+          ) : null}
+
+          {commonErrors.length > 0 ? (
+            <Card>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Errores típicos</Text>
+              {commonErrors.map((item, index) => (
+                <View key={`${point.id}-err-${index}`} style={styles.example}>
+                  <Text style={[styles.chinese, styles.wrong, { color: colors.textMuted }]}>{item.wrong}</Text>
+                  <Text style={[styles.chinese, { color: colors.text }]}>{item.right}</Text>
+                  <Text style={[styles.body, { color: colors.textMuted }]}>{item.why}</Text>
+                </View>
+              ))}
+            </Card>
+          ) : null}
+
+          {seeAlso.length > 0 ? (
+            <Card>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Ver también</Text>
+              {seeAlso.map((ref) => (
+                <Text key={`${ref.hsk_level}-${ref.code}`} style={[styles.body, { color: colors.textMuted }]}>
+                  {`${ref.code} · HSK ${ref.hsk_level}`}
+                </Text>
               ))}
             </Card>
           ) : null}
@@ -161,6 +189,9 @@ const styles = StyleSheet.create({
   },
   example: {
     gap: tokens.spacing.xs,
+  },
+  wrong: {
+    textDecorationLine: 'line-through',
   },
   chinese: {
     fontSize: tokens.fontSize.lg,

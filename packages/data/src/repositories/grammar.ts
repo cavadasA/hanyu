@@ -2,12 +2,14 @@ import type { HanyuClient } from '../client';
 import type { GrammarPoint, HskLevel } from '../types';
 import { createRepositoryError, parseJsonField } from './shared';
 
-function normalizeGrammarPoint(point: any): GrammarPoint {
+export function normalizeGrammarPoint(point: any): GrammarPoint {
   return {
     ...point,
     pattern: point.pattern ?? null,
     items: point.items ?? [],
     examples: parseJsonField(point.examples, []),
+    common_errors: parseJsonField(point.common_errors, []),
+    see_also: parseJsonField(point.see_also, []),
   };
 }
 
