@@ -2,7 +2,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { loadExercises } from './build-exercises.js';
-import { loadReadingAudio, loadReadings } from './build-readings.js';
+import { loadReadingAudio, loadReadings, loadSeries, properNounsFor } from './build-readings.js';
+import { loadWordRows, readingSenses } from './lib/reading-senses.js';
 import { loadCommunicativeTasks, validateCommunicativeCatalog } from './build-communicative.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -247,10 +248,17 @@ function buildExerciseRows() {
 
 function buildReadingRows() {
   const audioOf = loadReadingAudio();
+  const words = loadWordRows();
+  const series = loadSeries();
   return loadReadings().map(reading => {
     const audio = audioOf(reading);
     if (audio.issues.length > 0) {
       throw new Error(`${reading.slug}: ${audio.issues.map(issue => `${issue.kind} (frase ${issue.sentence_index})`).join(', ')}`);
+    }
+    // Las frases llevan la acepción resuelta en la build; tokenize-reading la aplica.
+    const senses = readingSenses(reading, words, properNounsFor(reading, series));
+    if (senses.issues.length > 0) {
+      throw new Error(`${reading.slug}: ${senses.issues.map(issue => `${issue.kind} (frase ${issue.sentence_index}): ${issue.detail}`).join(', ')}`);
     }
     return [
     sqlString(reading.slug),
@@ -260,7 +268,7 @@ function buildReadingRows() {
     sqlString(reading.topic),
     sqlString(reading.series ?? null),
     sqlInteger(reading.series_index ?? null),
-    sqlJson(reading.sentences),
+    sqlJson(senses.sentences),
     sqlJson(reading.questions || []),
     sqlTextArray(reading.target_words),
     sqlJson(reading.target_grammar || []),

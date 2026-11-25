@@ -12,6 +12,7 @@ import {
 } from '../packages/domain/src/reading/series.ts';
 import { defaultContentDir, defaultIndexFile, findManifests } from './lib/media.js';
 import { clipKey } from './lib/reading-audio.js';
+import { loadWordRows, readingSenses } from './lib/reading-senses.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
@@ -76,7 +77,7 @@ function loadGrammarPoints() {
 }
 
 /** Nombres de los personajes de la serie de una lectura: sólo ésos se aceptan en su texto. */
-function properNounsFor(reading, series) {
+export function properNounsFor(reading, series) {
   const declaration = series.find(entry => entry.code === reading.series);
   return declaration ? declaration.characters.map(character => character.name) : [];
 }
@@ -116,11 +117,12 @@ export function loadReadingAudio({ audioDir = defaultContentDir, mediaIndexFile 
   });
 }
 
-export function validateCatalog({ readingsDir, seriesFile, audioDir, mediaIndexFile } = {}) {
+export function validateCatalog({ readingsDir, seriesFile, audioDir, mediaIndexFile, complete = false } = {}) {
   const dictionary = loadDictionary();
   const grammar_points = loadGrammarPoints();
   const series = loadSeries(seriesFile);
   const audioOf = loadReadingAudio({ audioDir, mediaIndexFile });
+  const words = loadWordRows();
 
   return loadReadings(readingsDir).map(reading => ({
     slug: reading.slug,
@@ -131,8 +133,10 @@ export function validateCatalog({ readingsDir, seriesFile, audioDir, mediaIndexF
         target_word_ids: [],
         grammar_points,
         proper_nouns: properNounsFor(reading, series),
+        complete,
       }),
       ...audioOf(reading).issues,
+      ...readingSenses(reading, words, properNounsFor(reading, series)).issues,
     ],
   }));
 }

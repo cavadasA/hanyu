@@ -182,3 +182,65 @@ describe('validateReading', () => {
       .toEqual([{ kind: 'unknown_vocabulary', detail: '小林' }]);
   });
 });
+
+describe('validateReading: preguntas inferenciales', () => {
+  const INFERENCE_KINDS = ['inference_needs_two', 'inference_is_literal', 'rationale_missing', 'inference_not_last', 'no_inferential', 'missing_evidence'];
+  const inferenceIssues = (reading: Parameters<typeof validateReading>[0], ctx: Parameters<typeof validateReading>[1] = context) =>
+    validateReading(reading, ctx).filter(issue => INFERENCE_KINDS.includes(issue.kind));
+
+  const lunch = {
+    ...valid,
+    sentences: [
+      { zh: '我六点起床。', pinyin: 'Wǒ liù diǎn qǐchuáng.', es: 'Me levanto a las seis.' },
+      { zh: '妈妈做好了午饭。', pinyin: 'Māma zuòhǎo le wǔfàn.', es: 'Mamá ha hecho la comida.' },
+      { zh: '我中午回家。', pinyin: 'Wǒ zhōngwǔ huí jiā.', es: 'Vuelvo a casa a mediodía.' },
+    ],
+  };
+  const inferential = {
+    kind: 'inferential' as const,
+    prompt: '他中午在哪儿吃饭？',
+    options: ['学校', '家里', '饭馆'],
+    answer_index: 1,
+    evidence_sentences: [1, 2],
+    rationale_es: 'Su madre ha hecho la comida y él vuelve a casa a mediodía: come en casa.',
+  };
+
+  it('una inferencial que combina dos frases y cuya respuesta no está escrita es válida', () => {
+    expect(inferenceIssues({ ...lunch, questions: [valid.questions[0], inferential] })).toEqual([]);
+  });
+
+  it('si la respuesta correcta aparece tal cual en el texto, no es inferencial', () => {
+    const literal = { ...inferential, prompt: '他几点起床？', options: ['五点', '六点', '七点'], answer_index: 1, evidence_sentences: [0, 2] };
+    expect(inferenceIssues({ ...lunch, questions: [literal] })).toEqual([
+      { kind: 'inference_is_literal', question_index: 0, detail: '六点' },
+    ]);
+  });
+
+  it('una inferencial necesita al menos dos frases de evidencia que existan', () => {
+    expect(inferenceIssues({ ...lunch, questions: [{ ...inferential, evidence_sentences: [1] }] })).toEqual([
+      { kind: 'inference_needs_two', question_index: 0 },
+    ]);
+    expect(inferenceIssues({ ...lunch, questions: [{ ...inferential, evidence_sentences: [1, 7] }] })).toEqual([
+      { kind: 'missing_evidence', question_index: 0 },
+    ]);
+  });
+
+  it('una inferencial explica por qué, en al menos 20 caracteres', () => {
+    expect(inferenceIssues({ ...lunch, questions: [{ ...inferential, rationale_es: 'Come en casa.' }] })).toEqual([
+      { kind: 'rationale_missing', question_index: 0 },
+    ]);
+  });
+
+  it('la inferencial va al final: una literal detrás cambiaría los ids de las respuestas guardadas', () => {
+    expect(inferenceIssues({ ...lunch, questions: [inferential, valid.questions[0]] })).toEqual([
+      { kind: 'inference_not_last', question_index: 1 },
+    ]);
+  });
+
+  it('con el catálogo completo, toda lectura tiene al menos una inferencial', () => {
+    const onlyLiteral = { ...lunch, questions: [valid.questions[0]] };
+    expect(inferenceIssues(onlyLiteral)).toEqual([]);
+    expect(inferenceIssues(onlyLiteral, { ...context, complete: true })).toEqual([{ kind: 'no_inferential' }]);
+  });
+});
+

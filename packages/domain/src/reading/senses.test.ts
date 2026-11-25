@@ -18,7 +18,7 @@ const dictionary = [
   { hanzi: '花', pinyin: 'huā', hsk_level: 2, sense_index: 2, meaning_en: 'to spend', meaning_es: 'gastar', pos: 'verb' },
 ];
 
-type Token = { text: string; pinyin: string | null };
+type Token = { text: string; pinyin: string | null; proper_noun?: boolean };
 const t = (text: string, pinyin: string | null = null): Token => ({ text, pinyin });
 
 function reading(tokens: Token[], senses?: SenseAnnotation[], hsk_level = 3) {
@@ -161,14 +161,12 @@ describe('resolveSenses', () => {
     ]);
   });
 
-  it('una palabra de una sola entrada por encima del nivel también da sense_above_level', () => {
+  it('una palabra de una sola entrada no es cuestión de acepción: el nivel de su forma no se juzga aquí', () => {
     const { issues } = resolveSenses(
       reading([t('长城', 'Chángchéng'), t('很', 'hěn'), t('长', 'cháng'), t('。')], undefined, 2),
       dictionary,
     );
-    expect(issues).toEqual([
-      { kind: 'sense_above_level', sentence: 0, hanzi: '长城', detail: 'HSK 3 en una lectura HSK 2' },
-    ]);
+    expect(issues).toEqual([]);
   });
 
   it('el pinyin con cambio de tono de 一 resuelve 一会儿', () => {
@@ -237,6 +235,21 @@ describe('resolveSenses', () => {
     expect(annotated.issues).toEqual([]);
     expect(resolveSenses(reading([t('过去', 'guòqu')], undefined, 2), dict).issues)
       .toEqual([{ kind: 'sense_unresolved', sentence: 0, hanzi: '过去' }]);
+  });
+
+  it('un token que forma parte de un nombre propio no se resuelve, pero cuenta como aparición', () => {
+    const { resolved, issues } = resolveSenses(
+      reading(
+        [{ text: '会', pinyin: 'huì', proper_noun: true }, t('会', 'huì'), t('。')],
+        [{ sentence: 0, hanzi: '会', occurrence: 1, hsk_level: 1, sense_index: 1 }],
+        2,
+      ),
+      dictionary,
+    );
+    expect(issues).toEqual([]);
+    expect(resolved).toEqual([
+      { sentence: 0, hanzi: '会', occurrence: 1, hsk_level: 1, sense_index: 1, by: 'annotation' },
+    ]);
   });
 
   it('sin pinyin alineado, una palabra con varias acepciones pide anotación', () => {

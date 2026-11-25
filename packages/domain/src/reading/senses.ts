@@ -41,6 +41,11 @@ export interface SenseToken {
   text: string;
   /** Pinyin de la frase alineado con este token; null si no hay alineación. */
   pinyin: string | null;
+  /**
+   * Parte del nombre de un personaje (张东 → 张, 东): no es vocabulario y no se
+   * resuelve, pero cuenta como aparición, igual que en el tokenizador del móvil.
+   */
+  proper_noun?: boolean;
 }
 
 export interface SenseReading {
@@ -149,6 +154,7 @@ export function resolveSenses(
       const hanzi = token.text;
       const occurrence = seen.get(hanzi) ?? 0;
       seen.set(hanzi, occurrence + 1);
+      if (token.proper_noun) continue;
 
       const annotation = annotations.find(
         candidate =>
@@ -205,7 +211,9 @@ export function resolveSenses(
         by = 'pinyin';
       }
 
-      if (chosen.hsk_level > reading.hsk_level) {
+      // Solo cuando había donde elegir: el nivel de una forma con una sola
+      // entrada es cosa del vocabulario de la lectura, no de su acepción.
+      if (entries.length > 1 && chosen.hsk_level > reading.hsk_level) {
         issues.push({
           kind: 'sense_above_level',
           sentence: sentenceIndex,

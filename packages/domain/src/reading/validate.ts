@@ -15,7 +15,12 @@ export type IssueKind =
   | 'duplicate_options'
   | 'target_absent'
   | 'unknown_grammar'
-  | 'no_questions';
+  | 'no_questions'
+  | 'inference_needs_two'
+  | 'inference_is_literal'
+  | 'rationale_missing'
+  | 'inference_not_last'
+  | 'no_inferential';
 
 export interface ValidationIssue {
   kind: IssueKind;
@@ -30,13 +35,30 @@ export interface ReadingSentence {
   es: string;
 }
 
-export interface ReadingQuestion {
+interface QuestionBase {
   prompt: string;
   options: string[];
   answer_index: number;
+}
+
+/** Las preguntas sin `kind` (todas las anteriores al Plan 14) son literales. */
+export interface LiteralQuestion extends QuestionBase {
+  kind?: 'literal';
   /** Índice de la frase que justifica la respuesta. */
   evidence_sentence: number;
 }
+
+/**
+ * La respuesta no está escrita en el texto: se deduce combinando frases.
+ * `rationale_es` explica la deducción y se muestra después de responder.
+ */
+export interface InferentialQuestion extends QuestionBase {
+  kind: 'inferential';
+  evidence_sentences: number[];
+  rationale_es: string;
+}
+
+export type ReadingQuestion = LiteralQuestion | InferentialQuestion;
 
 export interface ReadingGrammarTarget {
   code: string;
@@ -65,6 +87,8 @@ export interface ValidationContext {
    * texto, pero no son vocabulario: no sirven como palabra objetivo.
    */
   proper_nouns?: string[];
+  /** El corpus se declara terminado: cuentan también las reglas de completitud. */
+  complete?: boolean;
 }
 
 /**
@@ -78,6 +102,9 @@ const LENGTH = {
 } as const;
 
 const SENTENCE_END = /[。！？…]$/;
+
+/** Menos que esto no explica una deducción; como mucho la repite. */
+const MIN_RATIONALE_LENGTH = 20;
 
 export function validateReading(
   reading: ReadingSource,
@@ -147,17 +174,48 @@ export function validateReading(
     issues.push({ kind: 'no_questions' });
   }
 
+  const exists = (sentence: number) =>
+    Number.isInteger(sentence) && sentence >= 0 && sentence < reading.sentences.length;
+
   reading.questions.forEach((question, index) => {
     if (new Set(question.options).size !== question.options.length) {
       issues.push({ kind: 'duplicate_options', question_index: index });
     }
-    if (
-      question.evidence_sentence < 0 ||
-      question.evidence_sentence >= reading.sentences.length
-    ) {
+
+    if (question.kind !== 'inferential') {
+      if (!exists(question.evidence_sentence)) {
+        issues.push({ kind: 'missing_evidence', question_index: index });
+      }
+      // Los ids de pregunta son su posición: una literal detrás de una
+      // inferencial movería las respuestas ya guardadas de los alumnos.
+      if (reading.questions.slice(0, index).some(previous => previous.kind === 'inferential')) {
+        issues.push({ kind: 'inference_not_last', question_index: index });
+      }
+      return;
+    }
+
+    const evidence = question.evidence_sentences ?? [];
+    if (new Set(evidence).size < 2) {
+      issues.push({ kind: 'inference_needs_two', question_index: index });
+    } else if (!evidence.every(exists)) {
       issues.push({ kind: 'missing_evidence', question_index: index });
     }
+
+    // Si la respuesta está escrita tal cual en el texto, basta con buscarla:
+    // es una pregunta literal aunque se declare inferencial.
+    const answer = question.options[question.answer_index] ?? '';
+    if (answer && reading.sentences.some(sentence => sentence.zh.includes(answer))) {
+      issues.push({ kind: 'inference_is_literal', question_index: index, detail: answer });
+    }
+
+    if ((question.rationale_es ?? '').trim().length < MIN_RATIONALE_LENGTH) {
+      issues.push({ kind: 'rationale_missing', question_index: index });
+    }
   });
+
+  if (context.complete && !reading.questions.some(question => question.kind === 'inferential')) {
+    issues.push({ kind: 'no_inferential' });
+  }
 
   // Con tres o más preguntas, tenerlas todas en la misma opción o seguir una
   // secuencia fija convierte el cuestionario en un test predecible.
