@@ -99,6 +99,13 @@ describe('ExamRunner', () => {
     expect(screen.getByText('Ahora: pregunta 3')).toBeTruthy();
   });
 
+  it('en la hoja de respuestas no suena nada ni se anuncia ninguna pregunta activa', async () => {
+    await start();
+    await advance(35_000);
+    expect(screen.getByText('Hoja de respuestas de 听力')).toBeTruthy();
+    expect(screen.queryByText(/^Ahora:/)).toBeNull();
+  });
+
   it('no hay botón «Pausar» en 听力', async () => {
     await start();
     expect(screen.queryByLabelText('Pausar')).toBeNull();

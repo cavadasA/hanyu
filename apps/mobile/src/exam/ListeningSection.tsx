@@ -11,6 +11,7 @@ import { useTheme } from '../theme/ThemeProvider';
 
 interface Props {
   form: ServedExamForm;
+  /** Tiempo desde que empezó 听力; negativo en la hoja de respuestas (sin audio). */
   elapsedMs: number;
   numbers: Record<string, number>;
   picks: Picks;
@@ -68,7 +69,7 @@ export function ListeningSection({ form, elapsedMs, numbers, picks, onPick, loca
 
   return (
     <View style={styles.wrap}>
-      <Text style={[styles.now, { color: colors.vermilion }]}>{now}</Text>
+      {elapsedMs >= 0 ? <Text style={[styles.now, { color: colors.vermilion }]}>{now}</Text> : null}
       {form.content.groups
         .filter(group => group.part === 'L1' || group.part === 'L2' || group.part === 'L3')
         .map(group => {
