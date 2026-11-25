@@ -371,5 +371,39 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'alter default privileges in schema public grant select, insert, update, delete on tables to authenticated;');
     expectSqlToContain(migration, 'grant select on public.words, public.grammar_points, public.reading');
   });
-});
 
+  it('añade pronunciación y escritura como habilidades, y la marca de escritura a los caracteres', () => {
+    const migration = readMigration('2026112601_expression_skills.sql');
+
+    expectSqlToContain(migration, "alter type public.learning_skill add value if not exists 'pronunciation'");
+    expectSqlToContain(migration, "alter type public.learning_skill add value if not exists 'writing'");
+    expectSqlToContain(
+      migration,
+      'alter table public.hsk_characters add column if not exists handwriting boolean not null default false',
+    );
+  });
+
+  it('marca en la migración los 250 caracteres de escritura del sílabo, ni uno más', async () => {
+    const { OFFICIAL_HANDWRITING } = await import('./lib/official-handwriting.js');
+    const migration = readMigration('2026112601_expression_skills.sql');
+    const listed = /update public\.hsk_characters set handwriting = true where hanzi in \(([^)]*)\)/.exec(
+      normalizeSql(migration),
+    );
+
+    expect(listed).not.toBeNull();
+    const hanzi = [...listed[1].matchAll(/'([^']+)'/g)].map((match) => match[1]);
+    expect(hanzi.sort()).toEqual([...OFFICIAL_HANDWRITING.hsk_1_2, ...OFFICIAL_HANDWRITING.hsk_3].sort());
+  });
+
+  it('impide estados de escritura y pronunciación sobre objetivos que no los admiten', () => {
+    const migration = readMigration('2026112601_expression_skills.sql');
+
+    expectSqlToContain(migration, 'create or replace function public.guard_expression_skill_state()');
+    expectSqlToContain(migration, "if new.skill::text = 'writing' and not (new.target_kind = 'character' and exists (");
+    expectSqlToContain(migration, "if new.skill::text = 'pronunciation' and new.target_kind <> 'word' then");
+    expectSqlToContain(
+      migration,
+      'create trigger guard_expression_skill_state before insert or update on public.learner_skill_state',
+    );
+  });
+});

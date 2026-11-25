@@ -14,6 +14,18 @@ function state(id: number, skill: string, stability: number, daysAgo = 1) {
 }
 
 describe('masteryBySkill', () => {
+  it('informa de las siete habilidades, incluidas pronunciación y escritura', () => {
+    expect(Object.keys(masteryBySkill([], now))).toEqual([
+      'recognition',
+      'recall',
+      'listening',
+      'reading',
+      'production',
+      'pronunciation',
+      'writing',
+    ]);
+  });
+
   it('cuenta por habilidad y no las mezcla', () => {
     const states = [state(1, 'recognition', 200), state(1, 'listening', 3), state(2, 'recognition', 200)];
 

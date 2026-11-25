@@ -102,6 +102,26 @@ describe('ProgressScreen', () => {
     });
   });
 
+  it('desglosa también pronunciación y escritura, y la escritura cuenta caracteres', async () => {
+    mockGetReport.mockResolvedValue(
+      reportWith({
+        skill_states: [
+          { target_id: 23398, skill: 'writing', stability: 200, suspended: false, last_reviewed_at: '2026-09-01T00:00:00Z' },
+          { target_id: 3, skill: 'pronunciation', stability: 200, suspended: false, last_reviewed_at: '2026-09-02T00:00:00Z' },
+        ],
+      }),
+    );
+
+    await renderProgress();
+
+    await waitFor(() => {
+      expect(screen.getByText('Pronunciación')).toBeTruthy();
+      expect(screen.getByText('Escritura')).toBeTruthy();
+      expect(screen.getByText('1 caracteres')).toBeTruthy();
+      expect(screen.getByText('1 palabras')).toBeTruthy();
+    });
+  });
+
   it('muestra ErrorBanner y botón de reintentar si la carga falla, sin tarjetas vacías', async () => {
     mockGetReport.mockRejectedValue(new Error('Error de prueba'));
 

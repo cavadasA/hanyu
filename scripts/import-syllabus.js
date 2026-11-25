@@ -6,6 +6,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadOfficialCharacters } from './lib/official-terms.js';
+import { OFFICIAL_HANDWRITING } from './lib/official-handwriting.js';
 import { loadOfficialGrammar } from './lib/official-grammar.js';
 import { deriveGrammarPrerequisites } from './lib/grammar-prerequisites.js';
 import { deriveUnits } from './lib/derive-units.js';
@@ -14,10 +15,11 @@ import { applyGrammarContent, loadGrammarFiles } from './build-grammar.js';
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
 
+const handwriting = new Set([...OFFICIAL_HANDWRITING.hsk_1_2, ...OFFICIAL_HANDWRITING.hsk_3]);
 const characters = [];
 for (const level of [1, 2, 3]) {
   for (const hanzi of loadOfficialCharacters(level)) {
-    characters.push({ hanzi, hsk_level: level });
+    characters.push({ hanzi, hsk_level: level, handwriting: handwriting.has(hanzi) });
   }
 }
 writeFileSync(

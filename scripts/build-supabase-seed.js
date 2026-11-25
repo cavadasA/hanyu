@@ -188,6 +188,7 @@ function buildCharacterRows() {
   return readJson('hsk-characters.json').map((entry) => [
     sqlString(entry.hanzi),
     sqlInteger(entry.hsk_level),
+    entry.handwriting === true ? 'true' : 'false',
   ]);
 }
 
@@ -343,9 +344,9 @@ export function buildSeedSql() {
     '',
     buildInsert(
       'hsk_characters',
-      ['hanzi', 'hsk_level'],
+      ['hanzi', 'hsk_level', 'handwriting'],
       characterRows,
-      'on conflict (hanzi) do update set hsk_level = excluded.hsk_level',
+      'on conflict (hanzi) do update set hsk_level = excluded.hsk_level, handwriting = excluded.handwriting',
     ),
     buildInsert(
       'words',

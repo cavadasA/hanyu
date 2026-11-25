@@ -5,6 +5,7 @@
 // dos, y confundirlas haría creer que tener el contenido es saberlo.
 import { fsrs, State, type Card } from 'ts-fsrs';
 import { MASTERED_STABILITY_DAYS } from '../scheduling/schedule';
+import { LEARNING_SKILLS } from '../expression/skills';
 
 export { MASTERED_STABILITY_DAYS };
 
@@ -23,8 +24,6 @@ export interface SkillMastery {
   /** Días desde la demostración más antigua que aún se cuenta como válida. */
   oldest_days: number | null;
 }
-
-const SKILLS = ['recognition', 'recall', 'listening', 'reading', 'production'] as const;
 
 const defaultFsrs = fsrs();
 
@@ -67,7 +66,7 @@ export function masteryBySkill(
 ): Record<string, SkillMastery> {
   const result: Record<string, SkillMastery> = {};
 
-  for (const skill of SKILLS) {
+  for (const skill of LEARNING_SKILLS) {
     const mine = states.filter((state) => state.skill === skill);
     const demonstrated = mine.filter((state) => isDemonstrated(state, now, targetRetention));
 

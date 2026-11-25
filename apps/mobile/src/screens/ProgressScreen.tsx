@@ -40,6 +40,8 @@ const SKILL_LABELS: Record<string, string> = {
   listening: 'Escucha',
   reading: 'Lectura',
   production: 'Producción',
+  pronunciation: 'Pronunciación',
+  writing: 'Escritura',
 };
 
 function formatPercent(rate: number | null): string {
@@ -374,7 +376,7 @@ export function ProgressScreen() {
                   <Text style={[styles.skillName, { color: colors.text }]}>{skillName}</Text>
                   {hasDemonstrated ? (
                     <Text style={[styles.demonstratedCount, { color: colors.vermilion }]}>
-                      {m!.demonstrated} palabras
+                      {m!.demonstrated} {skillKey === 'writing' ? 'caracteres' : 'palabras'}
                     </Text>
                   ) : null}
                 </View>

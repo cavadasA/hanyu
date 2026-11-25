@@ -414,14 +414,17 @@ export type Database = {
       }
       hsk_characters: {
         Row: {
+          handwriting: boolean
           hanzi: string
           hsk_level: number
         }
         Insert: {
+          handwriting?: boolean
           hanzi: string
           hsk_level: number
         }
         Update: {
+          handwriting?: boolean
           hanzi?: string
           hsk_level?: number
         }

@@ -4,6 +4,15 @@ import { buildSeedSql } from './build-supabase-seed.js';
 describe('buildSeedSql', () => {
   const { sql, counts } = buildSeedSql();
 
+  it('siembra qué caracteres pide escribir a mano el sílabo', () => {
+    expect(sql).toContain('insert into public.hsk_characters (hanzi, hsk_level, handwriting)');
+    expect(sql).toContain("('学', 1, true)");
+    expect(sql).toContain("('饭', 1, false)");
+    expect(sql).toContain(
+      'on conflict (hanzi) do update set hsk_level = excluded.hsk_level, handwriting = excluded.handwriting',
+    );
+  });
+
   it('builds seed SQL for words, grammar, and exercises', () => {
     const generated = { sql, counts };
 

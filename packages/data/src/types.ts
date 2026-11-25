@@ -34,7 +34,16 @@ export type LearningSkill =
   | 'recall'
   | 'listening'
   | 'reading'
-  | 'production';
+  | 'production'
+  | 'pronunciation'
+  | 'writing';
+
+/** Un carácter del sílabo. `handwriting`: está en la lista 书写字, se escribe a mano. */
+export interface HskCharacter {
+  hanzi: string;
+  hsk_level: HskLevel;
+  handwriting: boolean;
+}
 
 export interface WordContext {
   sentence: string;

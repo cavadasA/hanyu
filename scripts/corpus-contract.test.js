@@ -7,6 +7,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadOfficialWords } from './lib/official-terms.js';
+import { OFFICIAL_HANDWRITING } from './lib/official-handwriting.js';
 import { loadGrammarFiles } from './build-grammar.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -216,6 +217,29 @@ describe('contrato del corpus', () => {
     }
 
     expect(perLevel).toEqual({ 1: 246, 2: 125, 3: 284 });
+  });
+
+  it('marca los caracteres de escritura (书写字) con los recuentos del sílabo', () => {
+    // 新版HSK考试大纲（2025-11），«HSK 汉字大纲»: la lista de HSK 1 y 2 es
+    // una sola, «HSK（一级）~（二级）书写字», en la p. 374 (100); la de
+    // HSK 3, «HSK（三级）书写字», en la p. 375 (150).
+    const SYLLABUS_HANDWRITING_HSK_1_2 = 100;
+    const SYLLABUS_HANDWRITING_HSK_3 = 150;
+    const characters = JSON.parse(
+      readFileSync(join(seedDir, 'hsk-characters.json'), 'utf8'),
+    );
+
+    expect(characters.filter((entry) => typeof entry.handwriting !== 'boolean')).toEqual([]);
+    const handwritten = characters.filter((entry) => entry.handwriting);
+    expect(handwritten.filter((entry) => entry.hsk_level <= 2)).toHaveLength(
+      SYLLABUS_HANDWRITING_HSK_1_2,
+    );
+    expect(handwritten.filter((entry) => entry.hsk_level === 3)).toHaveLength(
+      SYLLABUS_HANDWRITING_HSK_3,
+    );
+    expect(new Set(handwritten.map((entry) => entry.hanzi))).toEqual(
+      new Set([...OFFICIAL_HANDWRITING.hsk_1_2, ...OFFICIAL_HANDWRITING.hsk_3]),
+    );
   });
 
   it('cada carácter oficial es un único carácter', () => {
