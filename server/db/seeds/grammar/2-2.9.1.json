@@ -1,0 +1,16 @@
+{
+  "hsk_level": 2,
+  "code": "2.9.1",
+  "pattern": "nombre / pronombre + 跟 + nombre / pronombre",
+  "explanation": "跟 puede unir dos nombres o pronombres, igual que 和: 我跟他 «él y yo». Solo une nombres, nunca dos verbos ni dos frases. Cuando después viene un verbo que vale para los dos, se suele poner 都 o 一起: 我跟他都是学生.",
+  "markers": ["跟"],
+  "examples": [
+    {"zh":"我跟他都是学生。","pinyin":"Wǒ gēn tā dōu shì xuésheng.","es":"Él y yo somos estudiantes."},
+    {"zh":"爸爸跟妈妈都不在家。","pinyin":"Bàba gēn māma dōu bú zài jiā.","es":"Ni papá ni mamá están en casa."},
+    {"zh":"我买了面包跟鸡蛋。","pinyin":"Wǒ mǎi le miànbāo gēn jīdàn.","es":"Compré pan y huevos."}
+  ],
+  "common_errors": [
+    {"wrong":"我吃了饭跟看了电视。","right":"我吃了饭，还看了电视。","why":"跟, como 和, solo une nombres; para encadenar dos acciones no sirve."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.8.1"}]
+}

@@ -1,0 +1,19 @@
+{
+  "hsk_level": 2,
+  "code": "2.9.2",
+  "pattern": "…，但是… · 虽然…，但是… · 那… · A 还是 B？ · 因为…，所以…",
+  "explanation": "Estas palabras unen frases. 但是, o 但, introduce un contraste: «pero». 虽然 «aunque» va en la primera parte y se completa con 但是 en la segunda, cosa que en español sobraría. 那 al principio saca una conclusión de lo que acaba de decir el otro: «entonces». 还是 une dos opciones en una pregunta, «¿A o B?». 因为 presenta la causa y 所以 la consecuencia.",
+  "markers": ["但","虽然","那","还是","所以"],
+  "examples": [
+    {"zh":"这件衣服很漂亮，但是太贵了。","pinyin":"Zhè jiàn yīfu hěn piàoliang, dànshì tài guì le.","es":"Esta ropa es muy bonita, pero demasiado cara."},
+    {"zh":"虽然下雨了，但是他来了。","pinyin":"Suīrán xià yǔ le, dànshì tā lái le.","es":"Aunque llovía, vino."},
+    {"zh":"“我不想去。”“那我们在家吧。”","pinyin":"“Wǒ bù xiǎng qù.” “Nà wǒmen zài jiā ba.”","es":"—No quiero ir. —Entonces quedémonos en casa."},
+    {"zh":"你喝茶还是喝咖啡？","pinyin":"Nǐ hē chá háishi hē kāfēi?","es":"¿Tomas té o café?"},
+    {"zh":"因为太累了，所以我没去。","pinyin":"Yīnwèi tài lèi le, suǒyǐ wǒ méi qù.","es":"Como estaba muy cansado, no fui."}
+  ],
+  "common_errors": [
+    {"wrong":"虽然很贵，我买了。","right":"虽然很贵，但是我买了。","why":"虽然 pide su pareja 但是 en la segunda parte, aunque en español «aunque…, pero» sea incorrecto."},
+    {"wrong":"你喝茶还是喝咖啡吗？","right":"你喝茶还是喝咖啡？","why":"Una pregunta con 还是 ya es pregunta; 吗 sobra."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.4.1"},{"hsk_level":2,"code":"6.4.2"},{"hsk_level":2,"code":"6.4.3"}]
+}

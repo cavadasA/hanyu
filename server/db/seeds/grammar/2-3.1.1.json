@@ -1,0 +1,19 @@
+{
+  "hsk_level": 2,
+  "code": "3.1.1",
+  "pattern": "verbo + complemento de resultado / dirección: 看完, 听懂, 找到, 进来",
+  "explanation": "El resultado de una acción se pega al verbo como un segundo elemento: 看完 «terminar de leer», 听懂 «entender lo que se oye», 找到 «encontrar». El primer verbo dice qué se hace y el segundo qué se consigue o hacia dónde va. Se niega con 没: 我没听懂. En español solemos usar otro verbo («encontrar» frente a «buscar»), por eso al principio se olvida el complemento.",
+  "markers": ["完","懂","到","进来"],
+  "examples": [
+    {"zh":"我看完这本书了。","pinyin":"Wǒ kànwán zhè běn shū le.","es":"He terminado de leer este libro."},
+    {"zh":"你说的我都听懂了。","pinyin":"Nǐ shuō de wǒ dōu tīngdǒng le.","es":"He entendido todo lo que has dicho."},
+    {"zh":"我找到我的手机了。","pinyin":"Wǒ zhǎodào wǒ de shǒujī le.","es":"He encontrado mi móvil."},
+    {"zh":"请进来！","pinyin":"Qǐng jìnlai!","es":"¡Pasa, por favor!"},
+    {"zh":"我没听懂。","pinyin":"Wǒ méi tīngdǒng.","es":"No lo he entendido."}
+  ],
+  "common_errors": [
+    {"wrong":"我找我的手机了。","right":"我找到我的手机了。","why":"找 solo es «buscar»; para decir que lo has encontrado hace falta el resultado 到."},
+    {"wrong":"我不听懂。","right":"我没听懂。","why":"Un verbo con resultado se niega con 没 cuando hablas de lo que pasó."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"5.4.1"},{"hsk_level":2,"code":"5.4.2"}]
+}

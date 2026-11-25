@@ -1899,7 +1899,48 @@
       "往",
       "从2"
     ],
-    "order_idx": 21
+    "order_idx": 21,
+    "pattern": "往 + dirección + verbo · 从 + lugar de paso + verbo",
+    "explanation": "往 indica hacia dónde va el movimiento: 往前走 «sigue recto», 往左走 «gira a la izquierda». 从, además del punto de partida, marca el sitio por donde se pasa: 从这儿走 «ve por aquí», 从门口进来 «entra por la puerta». Los dos grupos van delante del verbo, nunca detrás.",
+    "markers": [
+      "往",
+      "从"
+    ],
+    "examples": [
+      {
+        "zh": "你往前走，医院就在右边。",
+        "pinyin": "Nǐ wǎng qián zǒu, yīyuàn jiù zài yòubian.",
+        "es": "Sigue recto y el hospital está a la derecha."
+      },
+      {
+        "zh": "往左走是车站。",
+        "pinyin": "Wǎng zuǒ zǒu shì chēzhàn.",
+        "es": "Si giras a la izquierda está la estación."
+      },
+      {
+        "zh": "我们从这儿走吧。",
+        "pinyin": "Wǒmen cóng zhèr zǒu ba.",
+        "es": "Vamos por aquí."
+      },
+      {
+        "zh": "他从门口进来了。",
+        "pinyin": "Tā cóng ménkǒu jìnlai le.",
+        "es": "Entró por la puerta."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你走往前。",
+        "right": "你往前走。",
+        "why": "往 y la dirección van delante del verbo, no detrás como en «camina hacia delante»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.8.1"
+      }
+    ]
   },
   {
     "code": "2.8.3",
@@ -1913,7 +1954,58 @@
       "比",
       "跟1"
     ],
-    "order_idx": 22
+    "order_idx": 22,
+    "pattern": "给 + persona + verbo · 跟 + persona + verbo · A + 比 + B + adjetivo",
+    "explanation": "Las tres presentan a la otra persona o cosa de la acción y van delante del verbo. 给 dice a quién va dirigida o para quién es: 给妈妈打电话 «llamar a mamá». 跟 es «con» o «a» en las acciones de dos: 跟朋友说话, 跟我来. 比 introduce con qué se compara: 他比我高; el adjetivo va al final y sin 很.",
+    "markers": [
+      "给",
+      "跟",
+      "比"
+    ],
+    "examples": [
+      {
+        "zh": "我晚上给你打电话。",
+        "pinyin": "Wǒ wǎnshang gěi nǐ dǎ diànhuà.",
+        "es": "Te llamo esta noche."
+      },
+      {
+        "zh": "妈妈给我买了一件衣服。",
+        "pinyin": "Māma gěi wǒ mǎi le yí jiàn yīfu.",
+        "es": "Mamá me compró ropa."
+      },
+      {
+        "zh": "我跟你说一件事。",
+        "pinyin": "Wǒ gēn nǐ shuō yí jiàn shì.",
+        "es": "Te voy a contar una cosa."
+      },
+      {
+        "zh": "他比我高。",
+        "pinyin": "Tā bǐ wǒ gāo.",
+        "es": "Es más alto que yo."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我说你一件事。",
+        "right": "我跟你说一件事。",
+        "why": "说 no lleva a la persona como objeto: «decirle algo a alguien» pide 跟 delante, 跟你说."
+      },
+      {
+        "wrong": "他比我很高。",
+        "right": "他比我高。",
+        "why": "En una comparación con 比 el adjetivo va solo, sin 很."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.7.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "6.3.4"
+      }
+    ]
   },
   {
     "code": "2.8.4",
@@ -1925,7 +2017,47 @@
     "items": [
       "因为1"
     ],
-    "order_idx": 23
+    "order_idx": 23,
+    "pattern": "Sujeto + 因为 + causa + predicado",
+    "explanation": "因为 también puede ir dentro de una sola frase, delante del verbo y con la causa justo detrás: 他因为生病没来. Así se da el motivo sin partir la frase en dos. La causa puede ser un nombre (因为这件事) o una frase corta. Si va detrás del verbo, necesita una pausa y forma otra frase: 他没来，因为他生病了.",
+    "markers": [
+      "因为"
+    ],
+    "examples": [
+      {
+        "zh": "他因为生病没来上课。",
+        "pinyin": "Tā yīnwèi shēngbìng méi lái shàngkè.",
+        "es": "No vino a clase porque estaba enfermo."
+      },
+      {
+        "zh": "我因为这件事很不高兴。",
+        "pinyin": "Wǒ yīnwèi zhè jiàn shì hěn bù gāoxìng.",
+        "es": "Estoy muy disgustado por este asunto."
+      },
+      {
+        "zh": "她因为工作很忙，没时间运动。",
+        "pinyin": "Tā yīnwèi gōngzuò hěn máng, méi shíjiān yùndòng.",
+        "es": "Como tiene mucho trabajo, no tiene tiempo para hacer deporte."
+      },
+      {
+        "zh": "我们因为下雨没出去。",
+        "pinyin": "Wǒmen yīnwèi xià yǔ méi chūqu.",
+        "es": "No salimos por la lluvia."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他没来上课因为生病。",
+        "right": "他因为生病没来上课。",
+        "why": "Sin pausa, 因为 y la causa van delante del verbo; detrás solo funcionan como otra frase: 他没来上课，因为他生病了."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "6.4.3"
+      }
+    ]
   },
   {
     "code": "2.9.1",
@@ -1937,7 +2069,42 @@
     "items": [
       "跟2"
     ],
-    "order_idx": 24
+    "order_idx": 24,
+    "pattern": "nombre / pronombre + 跟 + nombre / pronombre",
+    "explanation": "跟 puede unir dos nombres o pronombres, igual que 和: 我跟他 «él y yo». Solo une nombres, nunca dos verbos ni dos frases. Cuando después viene un verbo que vale para los dos, se suele poner 都 o 一起: 我跟他都是学生.",
+    "markers": [
+      "跟"
+    ],
+    "examples": [
+      {
+        "zh": "我跟他都是学生。",
+        "pinyin": "Wǒ gēn tā dōu shì xuésheng.",
+        "es": "Él y yo somos estudiantes."
+      },
+      {
+        "zh": "爸爸跟妈妈都不在家。",
+        "pinyin": "Bàba gēn māma dōu bú zài jiā.",
+        "es": "Ni papá ni mamá están en casa."
+      },
+      {
+        "zh": "我买了面包跟鸡蛋。",
+        "pinyin": "Wǒ mǎi le miànbāo gēn jīdàn.",
+        "es": "Compré pan y huevos."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我吃了饭跟看了电视。",
+        "right": "我吃了饭，还看了电视。",
+        "why": "跟, como 和, solo une nombres; para encadenar dos acciones no sirve."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.8.1"
+      }
+    ]
   },
   {
     "code": "2.9.2",
@@ -1949,7 +2116,69 @@
     "items": [
       "但、但是、那、虽然、还是2、因为2、所以"
     ],
-    "order_idx": 25
+    "order_idx": 25,
+    "pattern": "…，但是… · 虽然…，但是… · 那… · A 还是 B？ · 因为…，所以…",
+    "explanation": "Estas palabras unen frases. 但是, o 但, introduce un contraste: «pero». 虽然 «aunque» va en la primera parte y se completa con 但是 en la segunda, cosa que en español sobraría. 那 al principio saca una conclusión de lo que acaba de decir el otro: «entonces». 还是 une dos opciones en una pregunta, «¿A o B?». 因为 presenta la causa y 所以 la consecuencia.",
+    "markers": [
+      "但",
+      "虽然",
+      "那",
+      "还是",
+      "所以"
+    ],
+    "examples": [
+      {
+        "zh": "这件衣服很漂亮，但是太贵了。",
+        "pinyin": "Zhè jiàn yīfu hěn piàoliang, dànshì tài guì le.",
+        "es": "Esta ropa es muy bonita, pero demasiado cara."
+      },
+      {
+        "zh": "虽然下雨了，但是他来了。",
+        "pinyin": "Suīrán xià yǔ le, dànshì tā lái le.",
+        "es": "Aunque llovía, vino."
+      },
+      {
+        "zh": "“我不想去。”“那我们在家吧。”",
+        "pinyin": "“Wǒ bù xiǎng qù.” “Nà wǒmen zài jiā ba.”",
+        "es": "—No quiero ir. —Entonces quedémonos en casa."
+      },
+      {
+        "zh": "你喝茶还是喝咖啡？",
+        "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+        "es": "¿Tomas té o café?"
+      },
+      {
+        "zh": "因为太累了，所以我没去。",
+        "pinyin": "Yīnwèi tài lèi le, suǒyǐ wǒ méi qù.",
+        "es": "Como estaba muy cansado, no fui."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "虽然很贵，我买了。",
+        "right": "虽然很贵，但是我买了。",
+        "why": "虽然 pide su pareja 但是 en la segunda parte, aunque en español «aunque…, pero» sea incorrecto."
+      },
+      {
+        "wrong": "你喝茶还是喝咖啡吗？",
+        "right": "你喝茶还是喝咖啡？",
+        "why": "Una pregunta con 还是 ya es pregunta; 吗 sobra."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "6.4.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "6.4.2"
+      },
+      {
+        "hsk_level": 2,
+        "code": "6.4.3"
+      }
+    ]
   },
   {
     "code": "2.10.1",
@@ -1961,7 +2190,52 @@
     "items": [
       "得、地"
     ],
-    "order_idx": 26
+    "order_idx": 26,
+    "pattern": "verbo + 得 + valoración · adjetivo + 地 + verbo",
+    "explanation": "Los dos se pronuncian de y se distinguen por su sitio. 得 va detrás del verbo y presenta cómo sale la acción o hasta qué punto: 他说得很快. 地 va delante del verbo y convierte lo anterior en la manera de hacerlo, como el «-mente» español: 高兴地说. Si el verbo con 得 tiene objeto, se repite el verbo o se adelanta el objeto: 他汉语说得很好.",
+    "markers": [
+      "得",
+      "地"
+    ],
+    "examples": [
+      {
+        "zh": "他说得很快。",
+        "pinyin": "Tā shuō de hěn kuài.",
+        "es": "Habla muy rápido."
+      },
+      {
+        "zh": "你汉语说得真好！",
+        "pinyin": "Nǐ Hànyǔ shuō de zhēn hǎo!",
+        "es": "¡Qué bien hablas chino!"
+      },
+      {
+        "zh": "她高兴地说：“谢谢！”",
+        "pinyin": "Tā gāoxìng de shuō: “Xièxie!”",
+        "es": "Dijo contenta: «¡Gracias!»."
+      },
+      {
+        "zh": "我们慢慢地走吧。",
+        "pinyin": "Wǒmen mànmàn de zǒu ba.",
+        "es": "Vamos andando despacio."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他说汉语得很好。",
+        "right": "他说汉语说得很好。",
+        "why": "得 va pegado al verbo; si hay objeto, se repite el verbo (说汉语说得) o se adelanta el objeto (汉语说得)."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.9.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "5.4.3"
+      }
+    ]
   },
   {
     "code": "2.10.2",
@@ -1974,7 +2248,57 @@
       "过",
       "着"
     ],
-    "order_idx": 27
+    "order_idx": 27,
+    "pattern": "verbo + 过 (experiencia) · verbo + 着 (estado que continúa)",
+    "explanation": "过 detrás del verbo cuenta una experiencia: algo que se ha hecho alguna vez, sin decir cuándo: 我去过中国. Se niega con 没…过. 着 indica que un estado se mantiene o que algo se hace a la vez que otra cosa: 门开着 «la puerta está abierta», 笑着说 «decir sonriendo». Los dos van pegados al verbo, antes del objeto.",
+    "markers": [
+      "过",
+      "着"
+    ],
+    "examples": [
+      {
+        "zh": "我去过中国。",
+        "pinyin": "Wǒ qùguo Zhōngguó.",
+        "es": "He estado en China."
+      },
+      {
+        "zh": "你吃过中国菜吗？",
+        "pinyin": "Nǐ chīguo Zhōngguó cài ma?",
+        "es": "¿Has probado la comida china?"
+      },
+      {
+        "zh": "我没看过这个电影。",
+        "pinyin": "Wǒ méi kànguo zhège diànyǐng.",
+        "es": "No he visto esta película."
+      },
+      {
+        "zh": "门开着。",
+        "pinyin": "Mén kāizhe.",
+        "es": "La puerta está abierta."
+      },
+      {
+        "zh": "他笑着说：“没关系。”",
+        "pinyin": "Tā xiàozhe shuō: “Méi guānxi.”",
+        "es": "Dijo sonriendo: «No pasa nada»."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我不去过中国。",
+        "right": "我没去过中国。",
+        "why": "La experiencia con 过 se niega con 没, nunca con 不."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "7.1.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "7.1.2"
+      }
+    ]
   },
   {
     "code": "2.10.3",
@@ -1986,7 +2310,55 @@
     "items": [
       "呢4、吧2、的2、啊1"
     ],
-    "order_idx": 28
+    "order_idx": 28,
+    "pattern": "frase + 吧 / 呢 / 的 / 啊",
+    "explanation": "Estas partículas finales dan el tono de la frase. 吧 detrás de una afirmación pide confirmación, como «¿verdad?»: 你是老师吧？ 呢 subraya un hecho que contradice lo esperado: 他还没来呢 «pues todavía no ha llegado». 的 al final da seguridad: 我会来的 «vendré, seguro». 啊 añade emoción o suaviza: 好啊！",
+    "markers": [
+      "吧",
+      "呢",
+      "的",
+      "啊"
+    ],
+    "examples": [
+      {
+        "zh": "你是老师吧？",
+        "pinyin": "Nǐ shì lǎoshī ba?",
+        "es": "Eres profesor, ¿verdad?"
+      },
+      {
+        "zh": "他还没来呢。",
+        "pinyin": "Tā hái méi lái ne.",
+        "es": "Pues todavía no ha llegado."
+      },
+      {
+        "zh": "我会来的。",
+        "pinyin": "Wǒ huì lái de.",
+        "es": "Vendré, seguro."
+      },
+      {
+        "zh": "好啊，我们走吧。",
+        "pinyin": "Hǎo a, wǒmen zǒu ba.",
+        "es": "¡Vale, vámonos!"
+      },
+      {
+        "zh": "今天天气真好啊！",
+        "pinyin": "Jīntiān tiānqì zhēn hǎo a!",
+        "es": "¡Qué buen tiempo hace hoy!"
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你是老师吧吗？",
+        "right": "你是老师吧？",
+        "why": "吧 ya convierte la frase en una pregunta de confirmación; no se junta con 吗."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.9.3"
+      }
+    ]
   },
   {
     "code": "3.1.1",
@@ -1998,7 +2370,64 @@
     "items": [
       "动补短语1"
     ],
-    "order_idx": 29
+    "order_idx": 29,
+    "pattern": "verbo + complemento de resultado / dirección: 看完, 听懂, 找到, 进来",
+    "explanation": "El resultado de una acción se pega al verbo como un segundo elemento: 看完 «terminar de leer», 听懂 «entender lo que se oye», 找到 «encontrar». El primer verbo dice qué se hace y el segundo qué se consigue o hacia dónde va. Se niega con 没: 我没听懂. En español solemos usar otro verbo («encontrar» frente a «buscar»), por eso al principio se olvida el complemento.",
+    "markers": [
+      "完",
+      "懂",
+      "到",
+      "进来"
+    ],
+    "examples": [
+      {
+        "zh": "我看完这本书了。",
+        "pinyin": "Wǒ kànwán zhè běn shū le.",
+        "es": "He terminado de leer este libro."
+      },
+      {
+        "zh": "你说的我都听懂了。",
+        "pinyin": "Nǐ shuō de wǒ dōu tīngdǒng le.",
+        "es": "He entendido todo lo que has dicho."
+      },
+      {
+        "zh": "我找到我的手机了。",
+        "pinyin": "Wǒ zhǎodào wǒ de shǒujī le.",
+        "es": "He encontrado mi móvil."
+      },
+      {
+        "zh": "请进来！",
+        "pinyin": "Qǐng jìnlai!",
+        "es": "¡Pasa, por favor!"
+      },
+      {
+        "zh": "我没听懂。",
+        "pinyin": "Wǒ méi tīngdǒng.",
+        "es": "No lo he entendido."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我找我的手机了。",
+        "right": "我找到我的手机了。",
+        "why": "找 solo es «buscar»; para decir que lo has encontrado hace falta el resultado 到."
+      },
+      {
+        "wrong": "我不听懂。",
+        "right": "我没听懂。",
+        "why": "Un verbo con resultado se niega con 没 cuando hablas de lo que pasó."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "5.4.1"
+      },
+      {
+        "hsk_level": 2,
+        "code": "5.4.2"
+      }
+    ]
   },
   {
     "code": "3.1.2",
@@ -2012,7 +2441,63 @@
       "（2）连谓短语",
       "（3）兼语短语"
     ],
-    "order_idx": 30
+    "order_idx": 30,
+    "pattern": "… + 的 (sin nombre) · V1 + O1 + V2 + O2 · 请 / 让 + persona + verbo",
+    "explanation": "Tres construcciones muy frecuentes. Con 的 al final se puede omitir el nombre cuando ya se sabe de qué se habla: 这本书是我的, 我要大的. Dos verbos seguidos, sin conjunción, encadenan acciones y el segundo suele ser la finalidad: 去商店买东西 «ir a la tienda a comprar». En 请朋友来, la persona es a la vez quien recibe el primer verbo y quien hace el segundo.",
+    "markers": [
+      "的",
+      "去商店买",
+      "坐飞机去",
+      "请"
+    ],
+    "examples": [
+      {
+        "zh": "这本书是我的。",
+        "pinyin": "Zhè běn shū shì wǒ de.",
+        "es": "Este libro es mío."
+      },
+      {
+        "zh": "我要大的，不要小的。",
+        "pinyin": "Wǒ yào dà de, bú yào xiǎo de.",
+        "es": "Quiero el grande, no el pequeño."
+      },
+      {
+        "zh": "我去商店买东西。",
+        "pinyin": "Wǒ qù shāngdiàn mǎi dōngxi.",
+        "es": "Voy a la tienda a comprar."
+      },
+      {
+        "zh": "他坐飞机去中国。",
+        "pinyin": "Tā zuò fēijī qù Zhōngguó.",
+        "es": "Va a China en avión."
+      },
+      {
+        "zh": "我请朋友来我家吃饭。",
+        "pinyin": "Wǒ qǐng péngyou lái wǒ jiā chī fàn.",
+        "es": "Invito a unos amigos a comer a casa."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我去买东西在商店。",
+        "right": "我去商店买东西。",
+        "why": "Las acciones van en orden: primero adónde vas y luego qué haces allí; el lugar no se deja al final."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "3.1.2"
+      },
+      {
+        "hsk_level": 1,
+        "code": "5.3.4"
+      },
+      {
+        "hsk_level": 2,
+        "code": "6.3.6"
+      }
+    ]
   },
   {
     "code": "3.2.1",

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.10.1",
+  "pattern": "verbo + 得 + valoración · adjetivo + 地 + verbo",
+  "explanation": "Los dos se pronuncian de y se distinguen por su sitio. 得 va detrás del verbo y presenta cómo sale la acción o hasta qué punto: 他说得很快. 地 va delante del verbo y convierte lo anterior en la manera de hacerlo, como el «-mente» español: 高兴地说. Si el verbo con 得 tiene objeto, se repite el verbo o se adelanta el objeto: 他汉语说得很好.",
+  "markers": ["得","地"],
+  "examples": [
+    {"zh":"他说得很快。","pinyin":"Tā shuō de hěn kuài.","es":"Habla muy rápido."},
+    {"zh":"你汉语说得真好！","pinyin":"Nǐ Hànyǔ shuō de zhēn hǎo!","es":"¡Qué bien hablas chino!"},
+    {"zh":"她高兴地说：“谢谢！”","pinyin":"Tā gāoxìng de shuō: “Xièxie!”","es":"Dijo contenta: «¡Gracias!»."},
+    {"zh":"我们慢慢地走吧。","pinyin":"Wǒmen mànmàn de zǒu ba.","es":"Vamos andando despacio."}
+  ],
+  "common_errors": [
+    {"wrong":"他说汉语得很好。","right":"他说汉语说得很好。","why":"得 va pegado al verbo; si hay objeto, se repite el verbo (说汉语说得) o se adelanta el objeto (汉语说得)."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.9.1"},{"hsk_level":2,"code":"5.4.3"}]
+}

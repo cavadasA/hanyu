@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "2.8.3",
+  "pattern": "给 + persona + verbo · 跟 + persona + verbo · A + 比 + B + adjetivo",
+  "explanation": "Las tres presentan a la otra persona o cosa de la acción y van delante del verbo. 给 dice a quién va dirigida o para quién es: 给妈妈打电话 «llamar a mamá». 跟 es «con» o «a» en las acciones de dos: 跟朋友说话, 跟我来. 比 introduce con qué se compara: 他比我高; el adjetivo va al final y sin 很.",
+  "markers": ["给","跟","比"],
+  "examples": [
+    {"zh":"我晚上给你打电话。","pinyin":"Wǒ wǎnshang gěi nǐ dǎ diànhuà.","es":"Te llamo esta noche."},
+    {"zh":"妈妈给我买了一件衣服。","pinyin":"Māma gěi wǒ mǎi le yí jiàn yīfu.","es":"Mamá me compró ropa."},
+    {"zh":"我跟你说一件事。","pinyin":"Wǒ gēn nǐ shuō yí jiàn shì.","es":"Te voy a contar una cosa."},
+    {"zh":"他比我高。","pinyin":"Tā bǐ wǒ gāo.","es":"Es más alto que yo."}
+  ],
+  "common_errors": [
+    {"wrong":"我说你一件事。","right":"我跟你说一件事。","why":"说 no lleva a la persona como objeto: «decirle algo a alguien» pide 跟 delante, 跟你说."},
+    {"wrong":"他比我很高。","right":"他比我高。","why":"En una comparación con 比 el adjetivo va solo, sin 很."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.7.2"},{"hsk_level":2,"code":"6.3.4"}]
+}

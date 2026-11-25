@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.8.4",
+  "pattern": "Sujeto + 因为 + causa + predicado",
+  "explanation": "因为 también puede ir dentro de una sola frase, delante del verbo y con la causa justo detrás: 他因为生病没来. Así se da el motivo sin partir la frase en dos. La causa puede ser un nombre (因为这件事) o una frase corta. Si va detrás del verbo, necesita una pausa y forma otra frase: 他没来，因为他生病了.",
+  "markers": ["因为"],
+  "examples": [
+    {"zh":"他因为生病没来上课。","pinyin":"Tā yīnwèi shēngbìng méi lái shàngkè.","es":"No vino a clase porque estaba enfermo."},
+    {"zh":"我因为这件事很不高兴。","pinyin":"Wǒ yīnwèi zhè jiàn shì hěn bù gāoxìng.","es":"Estoy muy disgustado por este asunto."},
+    {"zh":"她因为工作很忙，没时间运动。","pinyin":"Tā yīnwèi gōngzuò hěn máng, méi shíjiān yùndòng.","es":"Como tiene mucho trabajo, no tiene tiempo para hacer deporte."},
+    {"zh":"我们因为下雨没出去。","pinyin":"Wǒmen yīnwèi xià yǔ méi chūqu.","es":"No salimos por la lluvia."}
+  ],
+  "common_errors": [
+    {"wrong":"他没来上课因为生病。","right":"他因为生病没来上课。","why":"Sin pausa, 因为 y la causa van delante del verbo; detrás solo funcionan como otra frase: 他没来上课，因为他生病了."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.4.3"}]
+}

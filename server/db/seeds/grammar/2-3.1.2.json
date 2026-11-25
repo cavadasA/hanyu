@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "3.1.2",
+  "pattern": "… + 的 (sin nombre) · V1 + O1 + V2 + O2 · 请 / 让 + persona + verbo",
+  "explanation": "Tres construcciones muy frecuentes. Con 的 al final se puede omitir el nombre cuando ya se sabe de qué se habla: 这本书是我的, 我要大的. Dos verbos seguidos, sin conjunción, encadenan acciones y el segundo suele ser la finalidad: 去商店买东西 «ir a la tienda a comprar». En 请朋友来, la persona es a la vez quien recibe el primer verbo y quien hace el segundo.",
+  "markers": ["的","去商店买","坐飞机去","请"],
+  "examples": [
+    {"zh":"这本书是我的。","pinyin":"Zhè běn shū shì wǒ de.","es":"Este libro es mío."},
+    {"zh":"我要大的，不要小的。","pinyin":"Wǒ yào dà de, bú yào xiǎo de.","es":"Quiero el grande, no el pequeño."},
+    {"zh":"我去商店买东西。","pinyin":"Wǒ qù shāngdiàn mǎi dōngxi.","es":"Voy a la tienda a comprar."},
+    {"zh":"他坐飞机去中国。","pinyin":"Tā zuò fēijī qù Zhōngguó.","es":"Va a China en avión."},
+    {"zh":"我请朋友来我家吃饭。","pinyin":"Wǒ qǐng péngyou lái wǒ jiā chī fàn.","es":"Invito a unos amigos a comer a casa."}
+  ],
+  "common_errors": [
+    {"wrong":"我去买东西在商店。","right":"我去商店买东西。","why":"Las acciones van en orden: primero adónde vas y luego qué haces allí; el lugar no se deja al final."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"3.1.2"},{"hsk_level":1,"code":"5.3.4"},{"hsk_level":2,"code":"6.3.6"}]
+}

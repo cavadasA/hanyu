@@ -1,0 +1,17 @@
+{
+  "hsk_level": 2,
+  "code": "2.8.2",
+  "pattern": "往 + dirección + verbo · 从 + lugar de paso + verbo",
+  "explanation": "往 indica hacia dónde va el movimiento: 往前走 «sigue recto», 往左走 «gira a la izquierda». 从, además del punto de partida, marca el sitio por donde se pasa: 从这儿走 «ve por aquí», 从门口进来 «entra por la puerta». Los dos grupos van delante del verbo, nunca detrás.",
+  "markers": ["往","从"],
+  "examples": [
+    {"zh":"你往前走，医院就在右边。","pinyin":"Nǐ wǎng qián zǒu, yīyuàn jiù zài yòubian.","es":"Sigue recto y el hospital está a la derecha."},
+    {"zh":"往左走是车站。","pinyin":"Wǎng zuǒ zǒu shì chēzhàn.","es":"Si giras a la izquierda está la estación."},
+    {"zh":"我们从这儿走吧。","pinyin":"Wǒmen cóng zhèr zǒu ba.","es":"Vamos por aquí."},
+    {"zh":"他从门口进来了。","pinyin":"Tā cóng ménkǒu jìnlai le.","es":"Entró por la puerta."}
+  ],
+  "common_errors": [
+    {"wrong":"你走往前。","right":"你往前走。","why":"往 y la dirección van delante del verbo, no detrás como en «camina hacia delante»."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.8.1"}]
+}

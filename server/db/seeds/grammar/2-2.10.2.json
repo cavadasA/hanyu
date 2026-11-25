@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "2.10.2",
+  "pattern": "verbo + 过 (experiencia) · verbo + 着 (estado que continúa)",
+  "explanation": "过 detrás del verbo cuenta una experiencia: algo que se ha hecho alguna vez, sin decir cuándo: 我去过中国. Se niega con 没…过. 着 indica que un estado se mantiene o que algo se hace a la vez que otra cosa: 门开着 «la puerta está abierta», 笑着说 «decir sonriendo». Los dos van pegados al verbo, antes del objeto.",
+  "markers": ["过","着"],
+  "examples": [
+    {"zh":"我去过中国。","pinyin":"Wǒ qùguo Zhōngguó.","es":"He estado en China."},
+    {"zh":"你吃过中国菜吗？","pinyin":"Nǐ chīguo Zhōngguó cài ma?","es":"¿Has probado la comida china?"},
+    {"zh":"我没看过这个电影。","pinyin":"Wǒ méi kànguo zhège diànyǐng.","es":"No he visto esta película."},
+    {"zh":"门开着。","pinyin":"Mén kāizhe.","es":"La puerta está abierta."},
+    {"zh":"他笑着说：“没关系。”","pinyin":"Tā xiàozhe shuō: “Méi guānxi.”","es":"Dijo sonriendo: «No pasa nada»."}
+  ],
+  "common_errors": [
+    {"wrong":"我不去过中国。","right":"我没去过中国。","why":"La experiencia con 过 se niega con 没, nunca con 不."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"7.1.1"},{"hsk_level":2,"code":"7.1.2"}]
+}

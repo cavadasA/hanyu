@@ -1,0 +1,18 @@
+{
+  "hsk_level": 2,
+  "code": "2.10.3",
+  "pattern": "frase + 吧 / 呢 / 的 / 啊",
+  "explanation": "Estas partículas finales dan el tono de la frase. 吧 detrás de una afirmación pide confirmación, como «¿verdad?»: 你是老师吧？ 呢 subraya un hecho que contradice lo esperado: 他还没来呢 «pues todavía no ha llegado». 的 al final da seguridad: 我会来的 «vendré, seguro». 啊 añade emoción o suaviza: 好啊！",
+  "markers": ["吧","呢","的","啊"],
+  "examples": [
+    {"zh":"你是老师吧？","pinyin":"Nǐ shì lǎoshī ba?","es":"Eres profesor, ¿verdad?"},
+    {"zh":"他还没来呢。","pinyin":"Tā hái méi lái ne.","es":"Pues todavía no ha llegado."},
+    {"zh":"我会来的。","pinyin":"Wǒ huì lái de.","es":"Vendré, seguro."},
+    {"zh":"好啊，我们走吧。","pinyin":"Hǎo a, wǒmen zǒu ba.","es":"¡Vale, vámonos!"},
+    {"zh":"今天天气真好啊！","pinyin":"Jīntiān tiānqì zhēn hǎo a!","es":"¡Qué buen tiempo hace hoy!"}
+  ],
+  "common_errors": [
+    {"wrong":"你是老师吧吗？","right":"你是老师吧？","why":"吧 ya convierte la frase en una pregunta de confirmación; no se junta con 吗."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.9.3"}]
+}
