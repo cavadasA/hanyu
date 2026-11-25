@@ -1,0 +1,103 @@
+{
+  "slug": "escuela-04-before-exam",
+  "title": "考试前",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "estudio",
+  "series": "escuela",
+  "series_index": 4,
+  "target_words": [
+    "考试",
+    "别",
+    "可能"
+  ],
+  "target_grammar": [
+    {
+      "code": "6.2.2",
+      "level": 2
+    },
+    {
+      "code": "2.2.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "星期四下午，王老师告诉大家，下星期一有考试。",
+      "pinyin": "Xīngqīsì xiàwǔ, Wáng lǎoshī gàosu dàjiā, xià xīngqīyī yǒu kǎoshì.",
+      "es": "El jueves por la tarde, la profesora Wang dijo a todos que el lunes que viene hay examen."
+    },
+    {
+      "zh": "大卫：李文，考试的问题多不多？",
+      "pinyin": "Dàwèi: Lǐ Wén, kǎoshì de wèntí duō bu duō?",
+      "es": "David: Li Wen, ¿el examen tiene muchas preguntas?"
+    },
+    {
+      "zh": "李文：不多，王老师说有二十个问题。",
+      "pinyin": "Lǐ Wén: Bù duō, Wáng lǎoshī shuō yǒu èrshí gè wèntí.",
+      "es": "Li Wen: No muchas; la profesora Wang dice que son veinte preguntas."
+    },
+    {
+      "zh": "大卫：我还有很多词不懂，可能考不好。",
+      "pinyin": "Dàwèi: Wǒ hái yǒu hěn duō cí bù dǒng, kěnéng kǎo bù hǎo.",
+      "es": "David: Todavía hay muchas palabras que no entiendo; puede que me salga mal."
+    },
+    {
+      "zh": "李文：别不高兴，我们星期六一起准备吧。",
+      "pinyin": "Lǐ Wén: Bié bù gāoxìng, wǒmen xīngqīliù yìqǐ zhǔnbèi ba.",
+      "es": "Li Wen: No te preocupes; el sábado lo preparamos juntos."
+    },
+    {
+      "zh": "大卫：好啊！在哪儿准备？",
+      "pinyin": "Dàwèi: Hǎo a! Zài nǎr zhǔnbèi?",
+      "es": "David: ¡Vale! ¿Dónde lo preparamos?"
+    },
+    {
+      "zh": "李文：就在教室，我们九点见。",
+      "pinyin": "Lǐ Wén: Jiù zài jiàoshì, wǒmen jiǔ diǎn jiàn.",
+      "es": "Li Wen: En el aula misma; nos vemos a las nueve."
+    },
+    {
+      "zh": "大卫：好，我会早一点儿来。",
+      "pinyin": "Dàwèi: Hǎo, wǒ huì zǎo yìdiǎnr lái.",
+      "es": "David: Bien, vendré un poco antes."
+    },
+    {
+      "zh": "王老师：你们一起学习，很好。别忘了你们的本子和笔。",
+      "pinyin": "Wáng lǎoshī: Nǐmen yìqǐ xuéxí, hěn hǎo. Bié wàng le nǐmen de běnzi hé bǐ.",
+      "es": "Profesora Wang: Que estudiéis juntos está muy bien. No olvidéis vuestros cuadernos y bolígrafos."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "考试是什么时候？",
+      "options": [
+        "这个星期六",
+        "下星期一",
+        "明天"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "他们星期六在哪儿准备？",
+      "options": [
+        "在教室",
+        "在大卫家",
+        "在饭馆"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 6
+    },
+    {
+      "prompt": "王老师让他们别忘了什么？",
+      "options": [
+        "手机",
+        "书包",
+        "本子和笔"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 8
+    }
+  ]
+}

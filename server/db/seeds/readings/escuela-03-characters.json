@@ -1,0 +1,107 @@
+{
+  "slug": "escuela-03-characters",
+  "title": "大卫学汉字",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "estudio",
+  "series": "escuela",
+  "series_index": 3,
+  "target_words": [
+    "懂",
+    "本子",
+    "笔"
+  ],
+  "target_grammar": [
+    {
+      "code": "5.4.3",
+      "level": 2
+    },
+    {
+      "code": "6.3.3",
+      "level": 2
+    },
+    {
+      "code": "7.1.1",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "大卫回来上课了，他的身体已经好了。",
+      "pinyin": "Dàwèi huílái shàngkè le, tā de shēntǐ yǐjīng hǎo le.",
+      "es": "David ha vuelto a clase; ya se ha recuperado."
+    },
+    {
+      "zh": "他说汉字不好写，但是他很想学。",
+      "pinyin": "Tā shuō Hànzì bù hǎo xiě, dànshì tā hěn xiǎng xué.",
+      "es": "Dice que los caracteres no son fáciles de escribir, pero tiene muchas ganas de aprender."
+    },
+    {
+      "zh": "每天下课后，我们在教室里一起学习一个小时。",
+      "pinyin": "Měi tiān xiàkè hòu, wǒmen zài jiàoshì lǐ yìqǐ xuéxí yí gè xiǎoshí.",
+      "es": "Cada día, después de clase, estudiamos juntos una hora en el aula."
+    },
+    {
+      "zh": "我写一个字，他就跟着写一个。",
+      "pinyin": "Wǒ xiě yí gè zì, tā jiù gēn zhe xiě yí gè.",
+      "es": "Yo escribo un carácter y él escribe uno detrás de mí."
+    },
+    {
+      "zh": "他写得很慢，但是写得很对。",
+      "pinyin": "Tā xiě de hěn màn, dànshì xiě de hěn duì.",
+      "es": "Escribe muy despacio, pero lo escribe bien."
+    },
+    {
+      "zh": "他有一个小本子，里面写着很多新词。",
+      "pinyin": "Tā yǒu yí gè xiǎo běnzi, lǐmiàn xiě zhe hěn duō xīn cí.",
+      "es": "Tiene un cuaderno pequeño en el que hay escritas muchas palabras nuevas."
+    },
+    {
+      "zh": "有的词他还不懂，就拿着笔来问我。",
+      "pinyin": "Yǒude cí tā hái bù dǒng, jiù ná zhe bǐ lái wèn wǒ.",
+      "es": "Cuando hay palabras que aún no entiende, viene con el bolígrafo a preguntarme."
+    },
+    {
+      "zh": "一个星期后，大卫已经会写五十多个汉字了。",
+      "pinyin": "Yí gè xīngqī hòu, Dàwèi yǐjīng huì xiě wǔshí duō gè Hànzì le.",
+      "es": "Una semana después, David ya sabe escribir más de cincuenta caracteres."
+    },
+    {
+      "zh": "王老师看了他的本子，说他写得很好。",
+      "pinyin": "Wáng lǎoshī kàn le tā de běnzi, shuō tā xiě de hěn hǎo.",
+      "es": "La profesora Wang miró su cuaderno y dijo que escribe muy bien."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "他们每天在哪儿学习？",
+      "options": [
+        "在家里",
+        "在教室里",
+        "在饭馆"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "大卫的本子里写着什么？",
+      "options": [
+        "很多新词",
+        "老师的名字",
+        "电话号码"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 5
+    },
+    {
+      "prompt": "一个星期后，大卫会写多少汉字？",
+      "options": [
+        "十多个",
+        "一百个",
+        "五十多个"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}

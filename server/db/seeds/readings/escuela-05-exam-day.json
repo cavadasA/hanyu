@@ -1,0 +1,103 @@
+{
+  "slug": "escuela-05-exam-day",
+  "title": "考试那天",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "estudio",
+  "series": "escuela",
+  "series_index": 5,
+  "target_words": [
+    "开始",
+    "完",
+    "错"
+  ],
+  "target_grammar": [
+    {
+      "code": "5.4.1",
+      "level": 2
+    },
+    {
+      "code": "6.3.4",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "星期一早上，大卫很早就到了教室。",
+      "pinyin": "Xīngqīyī zǎoshang, Dàwèi hěn zǎo jiù dào le jiàoshì.",
+      "es": "El lunes por la mañana, David llegó muy temprano al aula."
+    },
+    {
+      "zh": "他说他昨天晚上睡得不好。",
+      "pinyin": "Tā shuō tā zuótiān wǎnshang shuì de bù hǎo.",
+      "es": "Dijo que la noche anterior había dormido mal."
+    },
+    {
+      "zh": "九点，考试开始了。",
+      "pinyin": "Jiǔ diǎn, kǎoshì kāishǐ le.",
+      "es": "A las nueve empezó el examen."
+    },
+    {
+      "zh": "大卫看了看题，觉得自己都会。",
+      "pinyin": "Dàwèi kàn le kàn tí, juéde zìjǐ dōu huì.",
+      "es": "David echó un vistazo a las preguntas y vio que se las sabía todas."
+    },
+    {
+      "zh": "他写得很快，十点就写完了。",
+      "pinyin": "Tā xiě de hěn kuài, shí diǎn jiù xiě wán le.",
+      "es": "Escribió muy rápido y a las diez ya había terminado."
+    },
+    {
+      "zh": "写完后，他再看了看，找到了两个错字。",
+      "pinyin": "Xiě wán hòu, tā zài kàn le kàn, zhǎo dào le liǎng gè cuò zì.",
+      "es": "Después de terminar lo repasó y encontró dos caracteres mal escritos."
+    },
+    {
+      "zh": "三天后，王老师告诉大家考得怎么样。",
+      "pinyin": "Sān tiān hòu, Wáng lǎoshī gàosu dàjiā kǎo de zěnmeyàng.",
+      "es": "Tres días después, la profesora Wang dijo a todos cómo les había ido."
+    },
+    {
+      "zh": "大卫考得比上次好多了。",
+      "pinyin": "Dàwèi kǎo de bǐ shàng cì hǎo duō le.",
+      "es": "A David le salió mucho mejor que la vez anterior."
+    },
+    {
+      "zh": "王老师说，他已经是班里汉字写得最好的外国学生了。",
+      "pinyin": "Wáng lǎoshī shuō, tā yǐjīng shì bān lǐ Hànzì xiě de zuì hǎo de wàiguó xuéshēng le.",
+      "es": "La profesora Wang dijo que ya es el alumno extranjero de la clase que mejor escribe los caracteres."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "考试几点开始？",
+      "options": [
+        "八点",
+        "九点",
+        "十点"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "大卫写完后做了什么？",
+      "options": [
+        "再看了看",
+        "回家了",
+        "睡觉了"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 5
+    },
+    {
+      "prompt": "大卫这次考得怎么样？",
+      "options": [
+        "不太好",
+        "跟上次一样",
+        "比上次好多了"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
+  ]
+}

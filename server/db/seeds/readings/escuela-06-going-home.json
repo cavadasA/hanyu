@@ -1,0 +1,103 @@
+{
+  "slug": "escuela-06-going-home",
+  "title": "大卫要回国了",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "estudio",
+  "series": "escuela",
+  "series_index": 6,
+  "target_words": [
+    "虽然",
+    "出国",
+    "从小"
+  ],
+  "target_grammar": [
+    {
+      "code": "6.4.2",
+      "level": 2
+    },
+    {
+      "code": "2.9.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "还有一个星期，我们就不上课了。",
+      "pinyin": "Hái yǒu yí gè xīngqī, wǒmen jiù bú shàngkè le.",
+      "es": "Dentro de una semana se acaban las clases."
+    },
+    {
+      "zh": "大卫要回国看他的爸爸妈妈。",
+      "pinyin": "Dàwèi yào huí guó kàn tā de bàba māma.",
+      "es": "David va a volver a su país para ver a sus padres."
+    },
+    {
+      "zh": "虽然他很想家，但是他也很喜欢这里。",
+      "pinyin": "Suīrán tā hěn xiǎng jiā, dànshì tā yě hěn xǐhuan zhèlǐ.",
+      "es": "Aunque echa mucho de menos su casa, también le gusta mucho estar aquí."
+    },
+    {
+      "zh": "他说他在这里认识了很多朋友，也学会了很多汉字。",
+      "pinyin": "Tā shuō tā zài zhèlǐ rènshi le hěn duō péngyou, yě xué huì le hěn duō Hànzì.",
+      "es": "Dice que aquí ha conocido a muchos amigos y ha aprendido muchos caracteres."
+    },
+    {
+      "zh": "大卫问我想不想出国看看。",
+      "pinyin": "Dàwèi wèn wǒ xiǎng bu xiǎng chūguó kàn kàn.",
+      "es": "David me preguntó si quiero salir al extranjero a conocer otros lugares."
+    },
+    {
+      "zh": "我说我从小就想去外国旅游。",
+      "pinyin": "Wǒ shuō wǒ cóngxiǎo jiù xiǎng qù wàiguó lǚyóu.",
+      "es": "Le dije que desde pequeña quiero viajar al extranjero."
+    },
+    {
+      "zh": "他让我明年去他家玩，他可以给我介绍他的家人。",
+      "pinyin": "Tā ràng wǒ míngnián qù tā jiā wán, tā kěyǐ gěi wǒ jièshào tā de jiārén.",
+      "es": "Me invitó a ir a su casa el año que viene; me puede presentar a su familia."
+    },
+    {
+      "zh": "我说好，我会记得的。",
+      "pinyin": "Wǒ shuō hǎo, wǒ huì jìde de.",
+      "es": "Le dije que sí y que no lo olvidaría."
+    },
+    {
+      "zh": "我们都希望大卫早一点儿回来。",
+      "pinyin": "Wǒmen dōu xīwàng Dàwèi zǎo yìdiǎnr huílái.",
+      "es": "Todos esperamos que David vuelva pronto."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "大卫为什么要回国？",
+      "options": [
+        "去旅游",
+        "看爸爸妈妈",
+        "考试"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "李文从小就想做什么？",
+      "options": [
+        "去外国旅游",
+        "做老师",
+        "学游泳"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 5
+    },
+    {
+      "prompt": "大卫让李文做什么？",
+      "options": [
+        "给他打电话",
+        "写汉字",
+        "明年去他家玩"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 6
+    }
+  ]
+}

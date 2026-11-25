@@ -1,27 +1,103 @@
 {
   "slug": "school-02-forgot-homework",
-  "title": "为什么没有写字",
+  "title": "大卫为什么没来",
   "hsk_level": 2,
   "format": "dialogue",
   "topic": "estudio",
   "series": "escuela",
   "series_index": 2,
-  "target_words": ["因为", "所以", "身体"],
-  "target_grammar": [{"code": "6.4.3", "level": 2}],
+  "target_words": [
+    "因为",
+    "所以",
+    "身体"
+  ],
+  "target_grammar": [
+    {
+      "code": "6.4.3",
+      "level": 2
+    },
+    {
+      "code": "2.3.1",
+      "level": 2
+    }
+  ],
   "sentences": [
-    { "zh": "我叫李文。", "pinyin": "Wǒ jiào Lǐ Wén.", "es": "Me llamo Li Wen." },
-    { "zh": "今天老师问我们为什么没有写字。", "pinyin": "Jīntiān lǎoshī wèn wǒmen wèishénme méiyǒu xiězì.", "es": "Hoy el profesor pregunta por qué no hemos escrito." },
-    { "zh": "同学说因为昨天身体不好，所以没有学习。", "pinyin": "Tóngxué shuō yīnwèi zuótiān shēntǐ bù hǎo, suǒyǐ méiyǒu xuéxí.", "es": "El compañero dice que ayer no se encontraba bien, así que no estudió." },
-    { "zh": "老师说现在好了吗。", "pinyin": "Lǎoshī shuō xiànzài hǎo le ma.", "es": "El profesor pregunta si ahora está mejor." },
-    { "zh": "同学说已经好了，但是还想休息。", "pinyin": "Tóngxué shuō yǐjīng hǎo le, dànshì hái xiǎng xiūxi.", "es": "El compañero dice que ya está mejor, pero aún quiere descansar." },
-    { "zh": "老师让他明天再写字。", "pinyin": "Lǎoshī ràng tā míngtiān zài xiězì.", "es": "El profesor le pide que escriba mañana." },
-    { "zh": "同学们都希望他回到学校。", "pinyin": "Tóngxuémen dōu xīwàng tā huí dào xuéxiào.", "es": "Todos los compañeros esperan que vuelva a la escuela." },
-    { "zh": "他会和老师说话。", "pinyin": "Tā huì hé lǎoshī shuōhuà.", "es": "Él hablará con el profesor." },
-    { "zh": "今天大家一起学习。", "pinyin": "Jīntiān dàjiā yìqǐ xuéxí.", "es": "Hoy todos estudiamos juntos." }
+    {
+      "zh": "星期一，大卫没有来上课。",
+      "pinyin": "Xīngqīyī, Dàwèi méiyǒu lái shàngkè.",
+      "es": "El lunes David no vino a clase."
+    },
+    {
+      "zh": "王老师：李文，你知道大卫为什么没来吗？",
+      "pinyin": "Wáng lǎoshī: Lǐ Wén, nǐ zhīdào Dàwèi wèishénme méi lái ma?",
+      "es": "Profesora Wang: Li Wen, ¿sabes por qué no ha venido David?"
+    },
+    {
+      "zh": "李文：他昨天给我打电话，说他身体不舒服。",
+      "pinyin": "Lǐ Wén: Tā zuótiān gěi wǒ dǎdiànhuà, shuō tā shēntǐ bù shūfu.",
+      "es": "Li Wen: Ayer me llamó por teléfono y me dijo que no se encontraba bien."
+    },
+    {
+      "zh": "王老师：他去医院了吗？",
+      "pinyin": "Wáng lǎoshī: Tā qù yīyuàn le ma?",
+      "es": "Profesora Wang: ¿Ha ido al hospital?"
+    },
+    {
+      "zh": "李文：去了，医生说他要休息两天。",
+      "pinyin": "Lǐ Wén: Qù le, yīshēng shuō tā yào xiūxi liǎng tiān.",
+      "es": "Li Wen: Sí; el médico le ha dicho que tiene que descansar dos días."
+    },
+    {
+      "zh": "王老师：那这两天上课的东西，你能告诉他吗？",
+      "pinyin": "Wáng lǎoshī: Nà zhè liǎng tiān shàngkè de dōngxi, nǐ néng gàosu tā ma?",
+      "es": "Profesora Wang: Entonces, ¿puedes contarle lo que demos en clase estos dos días?"
+    },
+    {
+      "zh": "李文：可以，下课后我给他打电话。",
+      "pinyin": "Lǐ Wén: Kěyǐ, xiàkè hòu wǒ gěi tā dǎdiànhuà.",
+      "es": "Li Wen: Sí; después de clase lo llamo por teléfono."
+    },
+    {
+      "zh": "王老师：好。因为他是新同学，所以我们要多帮他。",
+      "pinyin": "Wáng lǎoshī: Hǎo. Yīnwèi tā shì xīn tóngxué, suǒyǐ wǒmen yào duō bāng tā.",
+      "es": "Profesora Wang: Bien. Como es un compañero nuevo, tenemos que ayudarle mucho."
+    },
+    {
+      "zh": "李文：好的，老师。",
+      "pinyin": "Lǐ Wén: Hǎo de, lǎoshī.",
+      "es": "Li Wen: De acuerdo, profesora."
+    }
   ],
   "questions": [
-    { "prompt": "同学昨天为什么没有学习？", "options": ["因为去商店", "因为看电影", "因为身体不好"], "answer_index": 2, "evidence_sentence": 2 },
-    { "prompt": "同学现在想做什么？", "options": ["休息", "买衣服", "踢足球"], "answer_index": 0, "evidence_sentence": 4 },
-    { "prompt": "老师让他什么时候写字？", "options": ["昨天", "明天", "今天"], "answer_index": 1, "evidence_sentence": 5 }
+    {
+      "prompt": "大卫为什么没来上课？",
+      "options": [
+        "因为去旅游了",
+        "因为身体不舒服",
+        "因为忘了时间"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "医生说大卫要怎么样？",
+      "options": [
+        "多运动",
+        "休息两天",
+        "马上上课"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "李文下课后要做什么？",
+      "options": [
+        "去医院",
+        "写汉字",
+        "给大卫打电话"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 6
+    }
   ]
 }

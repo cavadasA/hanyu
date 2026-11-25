@@ -6,22 +6,98 @@
   "topic": "estudio",
   "series": "escuela",
   "series_index": 1,
-  "target_words": ["新", "同学", "认识"],
-  "target_grammar": [{"code": "6.3.5", "level": 2}],
+  "target_words": [
+    "介绍",
+    "外国",
+    "位"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.6.1",
+      "level": 2
+    },
+    {
+      "code": "6.3.5",
+      "level": 2
+    }
+  ],
   "sentences": [
-    { "zh": "我叫李文。", "pinyin": "Wǒ jiào Lǐ Wén.", "es": "Me llamo Li Wen." },
-    { "zh": "昨天学校来了一个新同学。", "pinyin": "Zuótiān xuéxiào lái le yí gè xīn tóngxué.", "es": "Ayer llegó un compañero nuevo a la escuela." },
-    { "zh": "老师给我们介绍他的姓名。", "pinyin": "Lǎoshī gěi wǒmen jièshào tā de xìngmíng.", "es": "El profesor nos presentó su nombre." },
-    { "zh": "老师说他的姓名很好听。", "pinyin": "Lǎoshī shuō tā de xìngmíng hěn hǎotīng.", "es": "El profesor dice que su nombre suena bien." },
-    { "zh": "我和他坐在一起学习汉语。", "pinyin": "Wǒ hé tā zuò zài yìqǐ xuéxí Hànyǔ.", "es": "Él y yo nos sentamos juntos a estudiar chino." },
-    { "zh": "下课的时候，我们一起说话。", "pinyin": "Xiàkè de shíhou, wǒmen yìqǐ shuōhuà.", "es": "Cuando termina la clase, hablamos juntos." },
-    { "zh": "他喜欢看书，也喜欢看电影。", "pinyin": "Tā xǐhuan kàn shū, yě xǐhuan kàn diànyǐng.", "es": "Le gusta leer y también ver películas." },
-    { "zh": "我觉得认识新朋友很高兴。", "pinyin": "Wǒ juéde rènshi xīn péngyou hěn gāoxìng.", "es": "Creo que es muy agradable conocer a un amigo nuevo." },
-    { "zh": "明天我还想和他一起去学校。", "pinyin": "Míngtiān wǒ hái xiǎng hé tā yìqǐ qù xuéxiào.", "es": "Mañana también quiero ir a la escuela con él." }
+    {
+      "zh": "我叫李文，是这个班的学生。",
+      "pinyin": "Wǒ jiào Lǐ Wén, shì zhège bān de xuéshēng.",
+      "es": "Me llamo Li Wen y soy alumna de esta clase."
+    },
+    {
+      "zh": "开学第一天，我们班来了一位新同学。",
+      "pinyin": "Kāixué dì yī tiān, wǒmen bān lái le yí wèi xīn tóngxué.",
+      "es": "El primer día de curso llegó a nuestra clase un compañero nuevo."
+    },
+    {
+      "zh": "王老师给我们介绍他：他叫大卫，是从外国来的。",
+      "pinyin": "Wáng lǎoshī gěi wǒmen jièshào tā: tā jiào Dàwèi, shì cóng wàiguó lái de.",
+      "es": "La profesora Wang nos lo presentó: se llama David y viene del extranjero."
+    },
+    {
+      "zh": "大卫个子很高，眼睛很大，笑起来很好看。",
+      "pinyin": "Dàwèi gèzi hěn gāo, yǎnjing hěn dà, xiào qǐlái hěn hǎokàn.",
+      "es": "David es muy alto, tiene los ojos grandes y tiene una sonrisa bonita."
+    },
+    {
+      "zh": "他会说一点儿汉语，但是还不会写汉字。",
+      "pinyin": "Tā huì shuō yìdiǎnr Hànyǔ, dànshì hái bú huì xiě Hànzì.",
+      "es": "Habla un poco de chino, pero todavía no sabe escribir caracteres."
+    },
+    {
+      "zh": "王老师让他坐在我旁边。",
+      "pinyin": "Wáng lǎoshī ràng tā zuò zài wǒ pángbiān.",
+      "es": "La profesora Wang le dijo que se sentara a mi lado."
+    },
+    {
+      "zh": "下课的时候，大卫问我一个字是什么意思。",
+      "pinyin": "Xiàkè de shíhou, Dàwèi wèn wǒ yí gè zì shì shénme yìsi.",
+      "es": "En el descanso, David me preguntó qué significaba un carácter."
+    },
+    {
+      "zh": "我告诉了他，他笑着对我说谢谢。",
+      "pinyin": "Wǒ gàosu le tā, tā xiào zhe duì wǒ shuō xièxie.",
+      "es": "Se lo dije y él, sonriendo, me dio las gracias."
+    },
+    {
+      "zh": "我觉得认识一个外国朋友很有意思。",
+      "pinyin": "Wǒ juéde rènshi yí gè wàiguó péngyou hěn yǒuyìsi.",
+      "es": "Me parece muy interesante conocer a un amigo extranjero."
+    }
   ],
   "questions": [
-    { "prompt": "新同学喜欢看什么？", "options": ["水果和茶", "书和电影", "衣服和咖啡"], "answer_index": 1, "evidence_sentence": 6 },
-    { "prompt": "我和新同学一起做什么？", "options": ["买东西", "看病", "学习汉语"], "answer_index": 2, "evidence_sentence": 4 },
-    { "prompt": "新同学明天要去哪里？", "options": ["学校", "商店", "医院"], "answer_index": 0, "evidence_sentence": 8 }
+    {
+      "prompt": "新同学是从哪儿来的？",
+      "options": [
+        "从外国来的",
+        "从医院来的",
+        "从商店来的"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "王老师让大卫坐在哪儿？",
+      "options": [
+        "门口",
+        "李文旁边",
+        "前面"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 5
+    },
+    {
+      "prompt": "李文觉得认识外国朋友怎么样？",
+      "options": [
+        "很有意思",
+        "没意思",
+        "很累"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 8
+    }
   ]
 }
