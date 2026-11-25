@@ -33,6 +33,7 @@ export type {
   PlanStep,
   FlashcardStats,
   GrammarPoint,
+  GrammarReading,
   HskLevel,
   LearnerSkillState,
   LearningEvent,

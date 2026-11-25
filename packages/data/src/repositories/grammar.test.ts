@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { getGrammarPoint, normalizeGrammarPoint } from './grammar';
+import { getGrammarPoint, getGrammarReadings, normalizeGrammarPoint } from './grammar';
 
 describe('normalizeGrammarPoint', () => {
   it('defaults common_errors and see_also to [] when absent', () => {
@@ -41,5 +41,63 @@ describe('getGrammarPoint', () => {
     expect(columns).toEqual(expect.arrayContaining(['markers', 'common_errors', 'see_also']));
     expect(point.common_errors).toEqual([{ wrong: 'a', right: 'b', why: 'c' }]);
     expect(point.markers).toEqual(['因为']);
+  });
+});
+
+describe('getGrammarReadings', () => {
+  function fakeClient(markers: string[], readings: any[]) {
+    const calls: Record<string, any[]> = { contains: [], eq: [] };
+    const grammarQuery: any = {
+      select: vi.fn(() => grammarQuery),
+      eq: vi.fn((...args: any[]) => { calls.eq.push(args); return grammarQuery; }),
+      maybeSingle: vi.fn(async () => ({ data: { markers }, error: null })),
+    };
+    const readingQuery: any = {
+      select: vi.fn(() => readingQuery),
+      contains: vi.fn((...args: any[]) => { calls.contains.push(args); return readingQuery; }),
+      order: vi.fn(async () => ({ data: readings, error: null })),
+    };
+    const client: any = {
+      from: vi.fn((table: string) => (table === 'grammar_points' ? grammarQuery : readingQuery)),
+    };
+    return { client, calls };
+  }
+
+  it('filtra las lecturas por (nivel, código), no por código solo', async () => {
+    const { client, calls } = fakeClient(['看看'], []);
+
+    await getGrammarReadings(2, '2.2.1', client);
+
+    expect(client.from).toHaveBeenCalledWith('reading');
+    expect(calls.contains).toEqual([['target_grammar', [{ code: '2.2.1', level: 2 }]]]);
+    expect(calls.eq).toEqual([['hsk_level', 2], ['code', '2.2.1']]);
+  });
+
+  it('devuelve cada lectura con la primera frase que contiene un marcador', async () => {
+    const { client } = fakeClient(['看看', '试一试'], [
+      {
+        slug: 'home-01-morning',
+        title: '星期天',
+        sentences: [
+          { zh: '星期天我六点起床。', pinyin: '', es: '' },
+          { zh: '我想试一试。', pinyin: '', es: '' },
+          { zh: '你看看。', pinyin: '', es: '' },
+        ],
+      },
+    ]);
+
+    await expect(getGrammarReadings(2, '2.2.1', client)).resolves.toEqual([
+      { slug: 'home-01-morning', title: '星期天', sentence: '我想试一试。' },
+    ]);
+  });
+
+  it('deja la frase vacía si ninguna contiene un marcador', async () => {
+    const { client } = fakeClient(['看看'], [
+      { slug: 'x', title: 'X', sentences: [{ zh: '我喝茶。', pinyin: '', es: '' }] },
+    ]);
+
+    await expect(getGrammarReadings(2, '2.2.1', client)).resolves.toEqual([
+      { slug: 'x', title: 'X', sentence: '' },
+    ]);
   });
 });

@@ -1,7 +1,7 @@
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import { toUserMessage, type GrammarPoint, type HskLevel } from '@hanyu/data';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import { toUserMessage, type GrammarPoint, type GrammarReading, type HskLevel } from '@hanyu/data';
 import { getData } from '../lib/data';
 import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
@@ -16,12 +16,14 @@ export function GrammarDetailScreen() {
   const id = parseNumber(Array.isArray(params.id) ? params.id[0] : params.id);
   const level = parseLevel(Array.isArray(params.level) ? params.level[0] : params.level);
   const grammarApi = useRef(getData().grammar);
+  const router = useRouter();
   const { colors } = useTheme();
   const [point, setPoint] = useState<GrammarPoint | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [studied, setStudied] = useState(false);
+  const [readings, setReadings] = useState<GrammarReading[]>([]);
 
   async function load() {
     if (!id || !level) {
@@ -35,6 +37,7 @@ export function GrammarDetailScreen() {
     try {
       const loadedPoint = await grammarApi.current.getGrammarPoint(level, id);
       setPoint(loadedPoint);
+      setReadings(await grammarApi.current.getGrammarReadings(loadedPoint.hsk_level, loadedPoint.code));
       try {
         setStudied(await grammarApi.current.getGrammarStudyState(id));
       } catch {
@@ -149,6 +152,26 @@ export function GrammarDetailScreen() {
                 <Text key={`${ref.hsk_level}-${ref.code}`} style={[styles.body, { color: colors.textMuted }]}>
                   {`${ref.code} · HSK ${ref.hsk_level}`}
                 </Text>
+              ))}
+            </Card>
+          ) : null}
+
+          {readings.length > 0 ? (
+            <Card>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>En lecturas</Text>
+              {readings.map((reading) => (
+                <Pressable
+                  key={reading.slug}
+                  accessibilityRole="button"
+                  accessibilityLabel={reading.title}
+                  onPress={() => router.push(`/practice/readings/${reading.slug}`)}
+                  style={styles.example}
+                >
+                  <Text style={[styles.body, { color: colors.text }]}>{reading.title}</Text>
+                  {reading.sentence ? (
+                    <Text style={[styles.chinese, { color: colors.textMuted }]}>{reading.sentence}</Text>
+                  ) : null}
+                </Pressable>
               ))}
             </Card>
           ) : null}

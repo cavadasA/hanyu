@@ -1,5 +1,5 @@
 import type { HanyuClient } from '../client';
-import type { GrammarPoint, HskLevel } from '../types';
+import type { GrammarPoint, GrammarReading, HskLevel } from '../types';
 import { createRepositoryError, parseJsonField } from './shared';
 
 export function normalizeGrammarPoint(point: any): GrammarPoint {
@@ -56,6 +56,53 @@ export async function getGrammarPoint(
   }
 
   return normalizeGrammarPoint(data);
+}
+
+/** `小—` se busca como `小`: el guion marca un hueco (mismo criterio que el validador). */
+function normalizeMarker(marker: string): string {
+  return marker.replace(/[—\s]/g, '');
+}
+
+/**
+ * Lecturas cuyo target_grammar declara este punto. La clave es (nivel, código):
+ * 47 códigos se repiten entre niveles. De cada una se devuelve la primera
+ * frase que contiene un marcador del punto, como ejemplo real en contexto.
+ */
+export async function getGrammarReadings(
+  level: HskLevel,
+  code: string,
+  client: HanyuClient,
+): Promise<GrammarReading[]> {
+  const { data: point, error: pointError } = await client
+    .from('grammar_points')
+    .select('markers')
+    .eq('hsk_level', level)
+    .eq('code', code)
+    .maybeSingle();
+
+  if (pointError) {
+    throw createRepositoryError(pointError, 'Failed to load grammar point');
+  }
+
+  const { data, error } = await client
+    .from('reading')
+    .select('slug, title, sentences')
+    .contains('target_grammar', [{ code, level }])
+    .order('slug');
+
+  if (error) {
+    throw createRepositoryError(error, 'Failed to load grammar readings');
+  }
+
+  const markers = ((point?.markers ?? []) as string[]).map(normalizeMarker).filter(Boolean);
+
+  return ((data ?? []) as any[]).map(row => {
+    const sentences: Array<{ zh?: string }> = parseJsonField(row.sentences, []);
+    const match = sentences.find(sentence =>
+      markers.some(marker => String(sentence.zh ?? '').includes(marker)),
+    );
+    return { slug: String(row.slug), title: String(row.title), sentence: match?.zh ?? '' };
+  });
 }
 
 export async function markGrammarStudied(

@@ -6,6 +6,7 @@ const mockGetGrammar = jest.fn();
 const mockGetGrammarPoint = jest.fn();
 const mockGetGrammarStudyState = jest.fn();
 const mockMarkGrammarStudied = jest.fn();
+const mockGetGrammarReadings = jest.fn();
 const mockPush = jest.fn();
 let mockParams: Record<string, string> = {};
 
@@ -21,6 +22,7 @@ jest.mock('../lib/data', () => ({
       getGrammarPoint: (...args: unknown[]) => mockGetGrammarPoint(...args),
       getGrammarStudyState: (...args: unknown[]) => mockGetGrammarStudyState(...args),
       markGrammarStudied: (...args: unknown[]) => mockMarkGrammarStudied(...args),
+      getGrammarReadings: (...args: unknown[]) => mockGetGrammarReadings(...args),
     },
   }),
 }));
@@ -34,6 +36,8 @@ describe('Grammar screens', () => {
     mockPush.mockReset();
     mockParams = {};
     mockGetGrammarStudyState.mockResolvedValue(false);
+    mockGetGrammarReadings.mockReset();
+    mockGetGrammarReadings.mockResolvedValue([]);
   });
 
   it('filters grammar points and navigates with the selected level', async () => {
@@ -146,5 +150,34 @@ describe('Grammar screens', () => {
     for (const t of ['Estructura', 'Explicación', 'Ejemplos', 'Errores típicos', 'Ver también']) {
       expect(view.queryByText(t)).toBeNull();
     }
+  });
+
+  it('no pinta «En lecturas» si ninguna lectura usa el punto', async () => {
+    mockParams = { id: '6', level: '2' };
+    mockGetGrammarPoint.mockResolvedValue({
+      id: 6, hsk_level: 2, code: '2.2.1', title: '动词重叠', pattern: null, explanation: null,
+      examples: [], common_errors: [], see_also: [],
+    });
+    const view = await render(<GrammarDetailScreen />);
+
+    await waitFor(() => expect(mockGetGrammarReadings).toHaveBeenCalledWith(2, '2.2.1'));
+    expect(view.queryByText('En lecturas')).toBeNull();
+  });
+
+  it('enlaza las lecturas que usan el punto y navega a la lectura', async () => {
+    mockParams = { id: '6', level: '2' };
+    mockGetGrammarPoint.mockResolvedValue({
+      id: 6, hsk_level: 2, code: '2.2.1', title: '动词重叠', pattern: null, explanation: null,
+      examples: [], common_errors: [], see_also: [],
+    });
+    mockGetGrammarReadings.mockResolvedValue([
+      { slug: 'home-01-morning', title: '星期天的早上', sentence: '我看看。' },
+    ]);
+    const view = await render(<GrammarDetailScreen />);
+
+    await waitFor(() => expect(view.getByText('En lecturas')).toBeTruthy());
+    expect(view.getByText('我看看。')).toBeTruthy();
+    await fireEvent.press(view.getByRole('button', { name: '星期天的早上' }));
+    expect(mockPush).toHaveBeenLastCalledWith('/practice/readings/home-01-morning');
   });
 });

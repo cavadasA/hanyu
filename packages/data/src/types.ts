@@ -342,6 +342,13 @@ export interface GrammarError {
   why: string;
 }
 
+export interface GrammarReading {
+  slug: string;
+  title: string;
+  /** Primera frase de la lectura que contiene un marcador del punto; '' si ninguna. */
+  sentence: string;
+}
+
 export interface GrammarPoint {
   id: number;
   hsk_level: HskLevel;
