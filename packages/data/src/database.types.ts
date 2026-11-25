@@ -317,11 +317,11 @@ export type Database = {
       reading: {
         Row: {
           audio_kind: string
-          audio_url: string | null
           created_at: string
           format: string
           hsk_level: number
           questions: Json
+          sentence_audio: Json
           sentences: Json
           series: string | null
           series_index: number | null
@@ -333,11 +333,11 @@ export type Database = {
         }
         Insert: {
           audio_kind?: string
-          audio_url?: string | null
           created_at?: string
           format: string
           hsk_level: number
           questions?: Json
+          sentence_audio?: Json
           sentences: Json
           series?: string | null
           series_index?: number | null
@@ -349,11 +349,11 @@ export type Database = {
         }
         Update: {
           audio_kind?: string
-          audio_url?: string | null
           created_at?: string
           format?: string
           hsk_level?: number
           questions?: Json
+          sentence_audio?: Json
           sentences?: Json
           series?: string | null
           series_index?: number | null

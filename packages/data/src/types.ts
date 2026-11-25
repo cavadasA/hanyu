@@ -264,7 +264,13 @@ export interface ReadingGrammarTarget {
   level: number;
 }
 
-export type ReadingAudioKind = 'tts' | 'human';
+export type ReadingAudioKind = 'tts' | 'neural' | 'human';
+
+/** Clip de una frase: URL pública (o `file://` si está descargado) y duración. */
+export interface SentenceAudio {
+  url: string;
+  duration_ms: number;
+}
 
 export interface ReadingToken {
   id: string;
@@ -289,7 +295,8 @@ export interface ReadingSummary {
   target_words: string[];
   target_grammar: ReadingGrammarTarget[];
   audio_kind: ReadingAudioKind;
-  audio_url: string | null;
+  /** Un elemento por frase; todos `null` si `audio_kind = 'tts'`. */
+  sentence_audio: Array<SentenceAudio | null>;
   coverage?: Coverage | null;
   progress?: ReadingProgress | null;
   offline?: ReadingOfflineDetail;

@@ -18,7 +18,6 @@ const NEXT_READING_FIELDS = [
   'series',
   'series_index',
   'audio_kind',
-  'audio_url',
 ] as const;
 
 function toNextReading(row: Record<string, unknown> | null | undefined) {

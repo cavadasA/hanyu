@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { loadExercises } from './build-exercises.js';
-import { loadReadings } from './build-readings.js';
+import { loadReadingAudio, loadReadings } from './build-readings.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = dirname(__dirname);
@@ -245,7 +245,13 @@ function buildExerciseRows() {
 }
 
 function buildReadingRows() {
-  return loadReadings().map(reading => [
+  const audioOf = loadReadingAudio();
+  return loadReadings().map(reading => {
+    const audio = audioOf(reading);
+    if (audio.issues.length > 0) {
+      throw new Error(`${reading.slug}: ${audio.issues.map(issue => `${issue.kind} (frase ${issue.sentence_index})`).join(', ')}`);
+    }
+    return [
     sqlString(reading.slug),
     sqlInteger(reading.hsk_level),
     sqlString(reading.format),
@@ -257,9 +263,10 @@ function buildReadingRows() {
     sqlJson(reading.questions || []),
     sqlTextArray(reading.target_words),
     sqlJson(reading.target_grammar || []),
-    sqlString(reading.audio_kind || 'tts'),
-    sqlString(reading.audio_url ?? null),
-  ]);
+    sqlString(audio.audio_kind),
+    sqlJson(audio.sentence_audio),
+  ];
+  });
 }
 
 function buildReadingContentRows() {
@@ -393,9 +400,9 @@ export function buildSeedSql() {
     ),
     buildInsert(
       'reading',
-      ['slug', 'hsk_level', 'format', 'title', 'topic', 'series', 'series_index', 'sentences', 'questions', 'target_words', 'target_grammar', 'audio_kind', 'audio_url'],
+      ['slug', 'hsk_level', 'format', 'title', 'topic', 'series', 'series_index', 'sentences', 'questions', 'target_words', 'target_grammar', 'audio_kind', 'sentence_audio'],
       readingRows,
-      'on conflict (slug) do update set hsk_level = excluded.hsk_level, format = excluded.format, title = excluded.title, topic = excluded.topic, series = excluded.series, series_index = excluded.series_index, sentences = excluded.sentences, questions = excluded.questions, target_words = excluded.target_words, target_grammar = excluded.target_grammar, audio_kind = excluded.audio_kind, audio_url = excluded.audio_url',
+      'on conflict (slug) do update set hsk_level = excluded.hsk_level, format = excluded.format, title = excluded.title, topic = excluded.topic, series = excluded.series, series_index = excluded.series_index, sentences = excluded.sentences, questions = excluded.questions, target_words = excluded.target_words, target_grammar = excluded.target_grammar, audio_kind = excluded.audio_kind, sentence_audio = excluded.sentence_audio',
     ),
     buildInsert(
       'content_item',

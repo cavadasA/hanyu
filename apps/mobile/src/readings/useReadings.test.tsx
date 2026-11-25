@@ -14,7 +14,7 @@ const firstReading: ReadingSummary = {
   target_words: [],
   target_grammar: [],
   audio_kind: 'tts',
-  audio_url: null,
+  sentence_audio: [],
 };
 
 const storyReading: ReadingSummary = {
@@ -29,7 +29,7 @@ const storyReading: ReadingSummary = {
   target_words: ['同学'],
   target_grammar: [{ code: '6.3.5', level: 2 }],
   audio_kind: 'tts',
-  audio_url: null,
+  sentence_audio: [],
 };
 
 function deferred<T>() {

@@ -10,6 +10,8 @@ import {
   COMPLETENESS_KINDS,
   validateCatalogShape,
 } from '../packages/domain/src/reading/series.ts';
+import { defaultContentDir, defaultIndexFile, findManifests } from './lib/media.js';
+import { clipKey } from './lib/reading-audio.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
@@ -79,20 +81,59 @@ function properNounsFor(reading, series) {
   return declaration ? declaration.characters.map(character => character.name) : [];
 }
 
-export function validateCatalog({ readingsDir, seriesFile } = {}) {
+/**
+ * Audio de una lectura: el `kind` de su manifiesto y un clip por frase sacado de
+ * media-index.json (que build-media sólo rellena si el manifiesto valida). Sin
+ * manifiesto, 'tts' y ningún clip. Con manifiesto, cada frase sin clip es un
+ * `clip_missing`: nunca se sirve el audio de otra frase.
+ */
+export function readingAudio(reading, { manifest, indexEntry }) {
+  if (!manifest) {
+    return { audio_kind: 'tts', sentence_audio: reading.sentences.map(() => null), issues: [] };
+  }
+
+  const issues = [];
+  const sentence_audio = reading.sentences.map((_, index) => {
+    const clip = indexEntry?.[clipKey(index)];
+    if (!clip) {
+      issues.push({ kind: 'clip_missing', sentence_index: index });
+      return null;
+    }
+    return { path: clip.path, duration_ms: clip.duration_ms };
+  });
+  return { audio_kind: manifest.kind, sentence_audio, issues };
+}
+
+/** Manifiesto y entrada de media-index.json de cada lectura, por slug. */
+export function loadReadingAudio({ audioDir = defaultContentDir, mediaIndexFile = defaultIndexFile } = {}) {
+  const index = existsSync(mediaIndexFile) ? JSON.parse(readFileSync(mediaIndexFile, 'utf8')) : {};
+  const manifests = new Map(
+    findManifests(audioDir).map(({ owner, manifest }) => [owner, manifest]),
+  );
+  return reading => readingAudio(reading, {
+    manifest: manifests.get(`readings/${reading.slug}`) ?? null,
+    indexEntry: index[`readings/${reading.slug}`],
+  });
+}
+
+export function validateCatalog({ readingsDir, seriesFile, audioDir, mediaIndexFile } = {}) {
   const dictionary = loadDictionary();
   const grammar_points = loadGrammarPoints();
   const series = loadSeries(seriesFile);
+  const audioOf = loadReadingAudio({ audioDir, mediaIndexFile });
 
   return loadReadings(readingsDir).map(reading => ({
     slug: reading.slug,
-    issues: validateReading(reading, {
-      dictionary,
-      max_level: reading.hsk_level,
-      target_word_ids: [],
-      grammar_points,
-      proper_nouns: properNounsFor(reading, series),
-    }),
+    issues: [
+      ...validateReading(reading, {
+        dictionary,
+        max_level: reading.hsk_level,
+        target_word_ids: [],
+        grammar_points,
+        proper_nouns: properNounsFor(reading, series),
+      }),
+      ...audioOf(reading).issues,
+    ],
   }));
 }
 

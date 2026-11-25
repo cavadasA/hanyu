@@ -77,6 +77,14 @@ describe('buildSeedSql', () => {
     expect(counts.words).toBe(1009);
   });
 
+  it('siembra el audio por frase de cada lectura y ya no audio_url', () => {
+    const columns = sql.split('insert into public.reading (')[1].split(')')[0];
+
+    expect(columns).toContain('audio_kind, sentence_audio');
+    expect(sql).toContain('sentence_audio = excluded.sentence_audio');
+    expect(sql).not.toContain('audio_url');
+  });
+
   it('siembra las unidades y sus palabras', () => {
     expect(sql).toContain('insert into public.unit (');
     expect(sql).toContain('insert into public.unit_word (');

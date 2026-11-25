@@ -219,7 +219,7 @@ export function ReadingDetailScreen() {
             ))}
           </>
         ) : (
-          <AudioButton text={reading.content} audioUrl={reading.audio_url} label="Play reading" />
+          <AudioButton text={reading.content} label="Play reading" />
         )}
         {reading.audio_kind === 'tts' ? (
           <Text style={[styles.audioNote, { color: colors.textMuted }]}>Voz sintética</Text>

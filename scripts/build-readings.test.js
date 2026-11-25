@@ -8,6 +8,7 @@ import {
   loadDictionary,
   loadReadings,
   loadSeries,
+  readingAudio,
   validateCatalog,
   validateCatalogStructure,
 } from './build-readings.js';
@@ -141,5 +142,60 @@ describe('catálogo de lecturas', () => {
     expect(partial.status, partial.stderr).toBe(0);
     expect(strict.status).toBe(1);
     expect(strict.stderr).toContain('series_gap');
+  });
+});
+
+describe('audio por frase', () => {
+  const reading = sentences => ({
+    slug: 'casa-01-prueba',
+    sentences: Array.from({ length: sentences }, (_, i) => ({ zh: `句${i}`, pinyin: 'jù', es: '' })),
+  });
+  const entry = clips => Object.fromEntries(Array.from({ length: clips }, (_, i) => [
+    String(i).padStart(2, '0'),
+    { path: `media/${i}.m4a`, duration_ms: 1000 + i },
+  ]));
+
+  it('una lectura con manifiesto neural válido tiene un clip por frase', () => {
+    const audio = readingAudio(reading(3), { manifest: { kind: 'neural' }, indexEntry: entry(3) });
+
+    expect(audio.audio_kind).toBe('neural');
+    expect(audio.issues).toEqual([]);
+    expect(audio.sentence_audio).toEqual([
+      { path: 'media/0.m4a', duration_ms: 1000 },
+      { path: 'media/1.m4a', duration_ms: 1001 },
+      { path: 'media/2.m4a', duration_ms: 1002 },
+    ]);
+  });
+
+  it('8 frases y 7 clips: clip_missing en la frase de índice 7', () => {
+    const audio = readingAudio(reading(8), { manifest: { kind: 'neural' }, indexEntry: entry(7) });
+
+    expect(audio.issues).toEqual([{ kind: 'clip_missing', sentence_index: 7 }]);
+  });
+
+  it('un manifiesto que no entró en media-index.json falla en todas sus frases', () => {
+    const audio = readingAudio(reading(2), { manifest: { kind: 'human' }, indexEntry: undefined });
+
+    expect(audio.issues.map(issue => issue.sentence_index)).toEqual([0, 1]);
+  });
+
+  it('sin manifiesto, la lectura es tts y no tiene clips', () => {
+    const audio = readingAudio(reading(2), { manifest: null, indexEntry: undefined });
+
+    expect(audio).toEqual({ audio_kind: 'tts', sentence_audio: [null, null], issues: [] });
+  });
+
+  it('validateCatalog añade los problemas de audio a los de la lectura', () => {
+    const { readingsDir, seriesFile } = fixtureCatalog({ series: ['tienda'], readingSeries: 'tienda' });
+    const audioDir = mkdtempSync(join(tmpdir(), 'hanyu-audio-'));
+    const owner = join(audioDir, 'readings', 'market-03-buying-fruit');
+    mkdirSync(owner, { recursive: true });
+    writeFileSync(join(owner, 'manifest.json'), JSON.stringify({ kind: 'neural', owner: 'readings/market-03-buying-fruit', clips: [] }));
+    const mediaIndexFile = join(audioDir, 'media-index.json');
+    writeFileSync(mediaIndexFile, '{}');
+
+    const [result] = validateCatalog({ readingsDir, seriesFile, audioDir, mediaIndexFile });
+
+    expect(result.issues).toContainEqual({ kind: 'clip_missing', sentence_index: 0 });
   });
 });

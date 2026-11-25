@@ -22,7 +22,7 @@ import {
 const VALID_FORMATS = new Set(['short_text', 'story', 'dialogue']);
 const KNOWN_MIN_STABILITY_DAYS = 30;
 const READING_SELECT =
-  'slug, hsk_level, format, title, topic, series, series_index, sentences, questions, target_words, target_grammar, audio_kind, audio_url';
+  'slug, hsk_level, format, title, topic, series, series_index, sentences, questions, target_words, target_grammar, audio_kind, sentence_audio';
 const READING_PROGRESS_SELECT = 'reading_slug, bookmarked, last_sentence, started_at, finished_at, pinyin_shown, updated_at';
 
 function normalizeQuestions(questions: unknown) {
@@ -457,7 +457,7 @@ export async function getReadingPlannerInput(
     return EMPTY_PLANNER_INPUT;
   }
 
-  const summaries = rows.map(normalizeSummary);
+  const summaries = rows.map(row => normalizeSummary(row, client));
   const [tokenized, finished, recent] = await Promise.all([
     tokenizeReadings(summaries, client),
     getFinishedReadings(userId, client),
@@ -538,7 +538,7 @@ export async function getReadings(
     throw createRepositoryError(error, 'Failed to load readings');
   }
 
-  const summaries = (data || []).map(normalizeSummary);
+  const summaries = (data || []).map(row => normalizeSummary(row, client));
   const tokenized = await tokenizeReadings(summaries, client);
   const grammarPoints = await getReadingGrammarPointMap(summaries, client);
   const withCoverage = summaries.map(summary => {
@@ -584,7 +584,23 @@ function normalizeSentences(value: unknown): ReadingSentence[] {
   }));
 }
 
-function normalizeSummary(row: any): ReadingSummary {
+const AUDIO_KINDS = new Set(['tts', 'neural', 'human']);
+
+/** `path` es '<bucket>/<objeto>' (media-index.json); la URL la da Storage. */
+function normalizeSentenceAudio(value: unknown, client: HanyuClient): ReadingSummary['sentence_audio'] {
+  const entries = typeof value === 'string' ? JSON.parse(value) : value;
+  if (!Array.isArray(entries)) return [];
+  return entries.map(entry => {
+    if (!entry || typeof entry.path !== 'string') return null;
+    const [bucket, ...object] = entry.path.split('/');
+    return {
+      url: client.storage.from(bucket).getPublicUrl(object.join('/')).data.publicUrl,
+      duration_ms: Number(entry.duration_ms),
+    };
+  });
+}
+
+function normalizeSummary(row: any, client: HanyuClient): ReadingSummary {
   const slug = String(row.slug);
   const sentences = normalizeSentences(row.sentences);
 
@@ -601,8 +617,8 @@ function normalizeSummary(row: any): ReadingSummary {
       : Number(row.series_index),
     target_words: Array.isArray(row.target_words) ? row.target_words.map(String) : [],
     target_grammar: normalizeGrammarTargets(row.target_grammar),
-    audio_kind: row.audio_kind === 'human' ? 'human' : 'tts',
-    audio_url: row.audio_url === null || row.audio_url === undefined ? null : String(row.audio_url),
+    audio_kind: AUDIO_KINDS.has(row.audio_kind) ? row.audio_kind : 'tts',
+    sentence_audio: normalizeSentenceAudio(row.sentence_audio, client),
     offline: {
       sentences,
       content: sentences.map(sentence => sentence.zh).join(''),
@@ -800,10 +816,10 @@ export async function getReading(slug: string, client: HanyuClient): Promise<Rea
     .map((token: any) => token.word?.id)
     .filter((id: unknown): id is number => typeof id === 'number');
   const recognitionStates = await getRecognitionStates([...new Set(wordIds)], client);
-  const tokens = statusTokens(tokenData.tokens, normalizeSummary(data).target_words, recognitionStates);
+  const tokens = statusTokens(tokenData.tokens, normalizeSummary(data, client).target_words, recognitionStates);
   const tokenizedSentences = tokensBySentence(sentences, tokens);
   const targetGrammar = normalizeGrammarTargets(data.target_grammar);
-  const { offline: _offline, ...summary } = normalizeSummary(data);
+  const { offline: _offline, ...summary } = normalizeSummary(data, client);
 
   return {
     ...summary,

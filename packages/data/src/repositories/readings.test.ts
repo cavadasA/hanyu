@@ -38,6 +38,50 @@ describe('readings repository', () => {
     });
   });
 
+  it('mapea sentence_audio y resuelve cada clip con la URL pública del bucket', async () => {
+    const client = {
+      ...readingClient([{
+        slug: 'casa-01',
+        title: '早上',
+        audio_kind: 'neural',
+        sentences: [{ zh: '我起床。', pinyin: 'Wǒ qǐchuáng.', es: '' }, { zh: '我吃饭。', pinyin: 'Wǒ chīfàn.', es: '' }],
+        sentence_audio: [{ path: 'media/abc.m4a', duration_ms: 1500 }, { path: 'media/def.m4a', duration_ms: 1700 }],
+      }]),
+      storage: {
+        from: vi.fn((bucket: string) => ({
+          getPublicUrl: (object: string) => ({
+            data: { publicUrl: `https://x.supabase.co/storage/v1/object/public/${bucket}/${object}` },
+          }),
+        })),
+      },
+    };
+
+    const [reading] = await getReadings({}, client as never);
+
+    expect(reading.audio_kind).toBe('neural');
+    expect(reading.sentence_audio).toEqual([
+      { url: 'https://x.supabase.co/storage/v1/object/public/media/abc.m4a', duration_ms: 1500 },
+      { url: 'https://x.supabase.co/storage/v1/object/public/media/def.m4a', duration_ms: 1700 },
+    ]);
+    expect(client.storage.from).toHaveBeenCalledWith('media');
+    expect('audio_url' in reading).toBe(false);
+  });
+
+  it('una lectura tts tiene una entrada null por frase', async () => {
+    const client = readingClient([{
+      slug: 'casa-02',
+      title: '晚上',
+      audio_kind: 'tts',
+      sentences: [{ zh: '我睡觉。', pinyin: 'Wǒ shuìjiào.', es: '' }],
+      sentence_audio: [null],
+    }]);
+
+    const [reading] = await getReadings({}, client as never);
+
+    expect(reading.audio_kind).toBe('tts');
+    expect(reading.sentence_audio).toEqual([null]);
+  });
+
   it('ya no expone una función de generación', async () => {
     const module = await import('./readings');
 

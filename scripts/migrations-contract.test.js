@@ -27,6 +27,14 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'create policy media_service_write on storage.objects for insert to service_role');
   });
 
+  it('guarda el audio por frase en public.reading y admite audio neuronal', () => {
+    const migration = readMigration('2026112501_media_storage.sql');
+
+    expectSqlToContain(migration, "alter table public.reading add column if not exists sentence_audio jsonb not null default '[]'::jsonb");
+    expectSqlToContain(migration, "check (audio_kind in ('tts', 'neural', 'human'))");
+    expectSqlToContain(migration, 'alter table public.reading drop column if exists audio_url');
+  });
+
   it('añade a grammar_points las columnas del contenido gramatical', () => {
     const migration = readMigration('2026112502_grammar_content.sql');
 
