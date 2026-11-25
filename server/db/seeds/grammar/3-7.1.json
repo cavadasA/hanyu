@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "7.1",
+  "pattern": "大概 + cantidad · dos números seguidos + clasificador (三四个, 七八天)",
+  "explanation": "Hay dos formas de dar una cantidad aproximada. 大概 delante del número es «unos, aproximadamente»: 大概二十个人. Y dos números consecutivos seguidos, sin conjunción, significan «tres o cuatro», «siete u ocho»: 三四个人, 七八天. No se juntan números que no sean consecutivos ni se pone 或 en medio.",
+  "markers": ["大概","三四","七八","两三"],
+  "examples": [
+    {"zh":"来了大概二十个人。","pinyin":"Lái le dàgài èrshí gè rén.","es":"Vinieron unas veinte personas."},
+    {"zh":"我们班有三四个中国同学。","pinyin":"Wǒmen bān yǒu sān sì gè Zhōngguó tóngxué.","es":"En nuestra clase hay tres o cuatro compañeros chinos."},
+    {"zh":"他去北方玩了七八天。","pinyin":"Tā qù běifāng wán le qī bā tiān.","es":"Estuvo siete u ocho días de viaje por el norte."},
+    {"zh":"我在门口等了两三分钟。","pinyin":"Wǒ zài ménkǒu děng le liǎng sān fēnzhōng.","es":"Esperé dos o tres minutos en la puerta."}
+  ],
+  "common_errors": [
+    {"wrong":"我们班有三或四个中国同学。","right":"我们班有三四个中国同学。","why":"Para «tres o cuatro» los números van seguidos, sin 或 en medio."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"8.1"},{"hsk_level":3,"code":"2.5.6"}]
+}

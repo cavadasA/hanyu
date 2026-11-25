@@ -135,4 +135,15 @@ describe('build-grammar', () => {
       `${issue.file}: ${issue.kind}${issue.example_index !== undefined ? ` (ejemplo ${issue.example_index + 1})` : ''}${issue.detail ? ` ${issue.detail}` : ''}`,
     )).toEqual([]);
   });
+
+  it('los 165 puntos oficiales tienen fichero', () => {
+    const result = buildGrammar();
+
+    expect(result.missing.map(point => `${point.hsk_level}-${point.code}`)).toEqual([]);
+    expect(summarize(result, { complete: true })).toEqual({
+      line: 'HSK 1: 49/49 · HSK 2: 59/59 · HSK 3: 57/57 · issues: 0',
+      ok: true,
+    });
+  });
 });
+

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "6.3.9",
+  "pattern": "verbo 1 + 了 (+ objeto) + (就) + verbo 2",
+  "explanation": "Dos acciones encadenadas se pueden comprimir en una sola frase, sin coma: 吃了饭就走 «en cuanto coma, me voy». 了 marca que la primera se termina y 就 subraya que la segunda llega enseguida. Vale para el pasado y para el futuro: 他下了课就回家了, 我到了就给你打电话.",
+  "markers": ["了"],
+  "examples": [
+    {"zh":"我吃了饭就走。","pinyin":"Wǒ chī le fàn jiù zǒu.","es":"En cuanto coma, me voy."},
+    {"zh":"他下了课就回家了。","pinyin":"Tā xià le kè jiù huí jiā le.","es":"Al acabar la clase se fue a casa."},
+    {"zh":"他想了想就同意了。","pinyin":"Tā xiǎng le xiǎng jiù tóngyì le.","es":"Lo pensó un momento y aceptó."},
+    {"zh":"你看了这本书就明白了。","pinyin":"Nǐ kàn le zhè běn shū jiù míngbai le.","es":"En cuanto leas este libro, lo entenderás."}
+  ],
+  "common_errors": [
+    {"wrong":"我吃饭就走了。（para el futuro）","right":"我吃了饭就走。","why":"El 了 va detrás de la primera acción para marcar que se termina; al final de la frase cambiaría el sentido a algo ya ocurrido."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.4.4"},{"hsk_level":2,"code":"2.7.6"}]
+}

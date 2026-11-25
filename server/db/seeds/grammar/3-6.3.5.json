@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "6.3.5",
+  "pattern": "虽然 + lo que se concede，可是 + lo que pasa igualmente",
+  "explanation": "Es el mismo molde que 虽然…但是…, con 可是 en la segunda parte, más oral: 虽然很累，可是我很高兴. Igual que con 但是, en chino se dicen las dos partes, aunque en español «aunque…, pero» sobre. 可是 abre siempre la segunda frase y puede reforzarse con 还 o 也: 可是他还是来了.",
+  "markers": ["虽然","可是"],
+  "examples": [
+    {"zh":"虽然很累，可是我很高兴。","pinyin":"Suīrán hěn lèi, kěshì wǒ hěn gāoxìng.","es":"Aunque estoy cansado, estoy muy contento."},
+    {"zh":"虽然下雨了，可是他还是来了。","pinyin":"Suīrán xià yǔ le, kěshì tā háishi lái le.","es":"Aunque llovía, vino igualmente."},
+    {"zh":"这个问题虽然不难，可是很多人都错了。","pinyin":"Zhège wèntí suīrán bù nán, kěshì hěn duō rén dōu cuò le.","es":"Aunque la pregunta no es difícil, mucha gente ha fallado."}
+  ],
+  "common_errors": [
+    {"wrong":"虽然很累，我很高兴。","right":"虽然很累，可是我很高兴。","why":"虽然 pide su pareja (可是 o 但是) en la segunda parte; omitirla suena incompleto."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.4.2"}]
+}

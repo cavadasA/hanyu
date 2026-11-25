@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "6.3.6",
+  "pattern": "如果 + condición，(sujeto +) 就 + consecuencia · condición + 的话，就 + consecuencia",
+  "explanation": "如果 abre una condición hipotética, «si», y 就 introduce lo que pasaría: 如果明天下雨，我们就不去了. 就 va detrás del sujeto de la segunda parte, nunca delante. En lugar de 如果, o junto a él, se puede cerrar la condición con 的话. A diferencia del español, la condición casi siempre va primero.",
+  "markers": ["如果","的话","就"],
+  "examples": [
+    {"zh":"如果明天下雨，我们就不去了。","pinyin":"Rúguǒ míngtiān xià yǔ, wǒmen jiù bú qù le.","es":"Si mañana llueve, no iremos."},
+    {"zh":"你有问题的话，就给我打电话。","pinyin":"Nǐ yǒu wèntí dehuà, jiù gěi wǒ dǎ diànhuà.","es":"Si tienes alguna duda, llámame."},
+    {"zh":"如果你不想去，就别去了。","pinyin":"Rúguǒ nǐ bù xiǎng qù, jiù bié qù le.","es":"Si no quieres ir, no vayas."}
+  ],
+  "common_errors": [
+    {"wrong":"如果明天下雨，就我们不去了。","right":"如果明天下雨，我们就不去了。","why":"就 es un adverbio: va detrás del sujeto, no delante como «entonces»."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"2.8.1"},{"hsk_level":3,"code":"2.7.2"}]
+}

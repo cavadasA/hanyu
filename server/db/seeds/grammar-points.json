@@ -9227,7 +9227,43 @@
     "items": [
       "虽然……，可是……"
     ],
-    "order_idx": 52
+    "order_idx": 52,
+    "pattern": "虽然 + lo que se concede，可是 + lo que pasa igualmente",
+    "explanation": "Es el mismo molde que 虽然…但是…, con 可是 en la segunda parte, más oral: 虽然很累，可是我很高兴. Igual que con 但是, en chino se dicen las dos partes, aunque en español «aunque…, pero» sobre. 可是 abre siempre la segunda frase y puede reforzarse con 还 o 也: 可是他还是来了.",
+    "markers": [
+      "虽然",
+      "可是"
+    ],
+    "examples": [
+      {
+        "zh": "虽然很累，可是我很高兴。",
+        "pinyin": "Suīrán hěn lèi, kěshì wǒ hěn gāoxìng.",
+        "es": "Aunque estoy cansado, estoy muy contento."
+      },
+      {
+        "zh": "虽然下雨了，可是他还是来了。",
+        "pinyin": "Suīrán xià yǔ le, kěshì tā háishi lái le.",
+        "es": "Aunque llovía, vino igualmente."
+      },
+      {
+        "zh": "这个问题虽然不难，可是很多人都错了。",
+        "pinyin": "Zhège wèntí suīrán bù nán, kěshì hěn duō rén dōu cuò le.",
+        "es": "Aunque la pregunta no es difícil, mucha gente ha fallado."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "虽然很累，我很高兴。",
+        "right": "虽然很累，可是我很高兴。",
+        "why": "虽然 pide su pareja (可是 o 但是) en la segunda parte; omitirla suena incompleto."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "6.4.2"
+      }
+    ]
   },
   {
     "code": "6.3.6",
@@ -9240,7 +9276,48 @@
       "如果……，就……",
       "……的话，就……"
     ],
-    "order_idx": 53
+    "order_idx": 53,
+    "pattern": "如果 + condición，(sujeto +) 就 + consecuencia · condición + 的话，就 + consecuencia",
+    "explanation": "如果 abre una condición hipotética, «si», y 就 introduce lo que pasaría: 如果明天下雨，我们就不去了. 就 va detrás del sujeto de la segunda parte, nunca delante. En lugar de 如果, o junto a él, se puede cerrar la condición con 的话. A diferencia del español, la condición casi siempre va primero.",
+    "markers": [
+      "如果",
+      "的话",
+      "就"
+    ],
+    "examples": [
+      {
+        "zh": "如果明天下雨，我们就不去了。",
+        "pinyin": "Rúguǒ míngtiān xià yǔ, wǒmen jiù bú qù le.",
+        "es": "Si mañana llueve, no iremos."
+      },
+      {
+        "zh": "你有问题的话，就给我打电话。",
+        "pinyin": "Nǐ yǒu wèntí dehuà, jiù gěi wǒ dǎ diànhuà.",
+        "es": "Si tienes alguna duda, llámame."
+      },
+      {
+        "zh": "如果你不想去，就别去了。",
+        "pinyin": "Rúguǒ nǐ bù xiǎng qù, jiù bié qù le.",
+        "es": "Si no quieres ir, no vayas."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "如果明天下雨，就我们不去了。",
+        "right": "如果明天下雨，我们就不去了。",
+        "why": "就 es un adverbio: va detrás del sujeto, no delante como «entonces»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "2.8.1"
+      },
+      {
+        "hsk_level": 3,
+        "code": "2.7.2"
+      }
+    ]
   },
   {
     "code": "6.3.7",
@@ -9253,7 +9330,50 @@
       "只有……，才……",
       "只要……，就……"
     ],
-    "order_idx": 54
+    "order_idx": 54,
+    "pattern": "只有 + única condición，才 + resultado · 只要 + condición suficiente，就 + resultado",
+    "explanation": "只有…才… presenta la única condición que lleva al resultado, «solo si…»: 只有多练习，才能说得好. 只要…就… presenta una condición que basta, «con tal de que, basta con que»: 只要你来，我就高兴. Las parejas son fijas: 只有 va con 才 y 只要, con 就. Confundirlas cambia el sentido.",
+    "markers": [
+      "只有",
+      "才",
+      "只要",
+      "就"
+    ],
+    "examples": [
+      {
+        "zh": "只有多练习，才能说得好。",
+        "pinyin": "Zhǐyǒu duō liànxí, cái néng shuō de hǎo.",
+        "es": "Solo practicando mucho se llega a hablar bien."
+      },
+      {
+        "zh": "只要你来，我就很高兴。",
+        "pinyin": "Zhǐyào nǐ lái, wǒ jiù hěn gāoxìng.",
+        "es": "Con que vengas, ya me alegro mucho."
+      },
+      {
+        "zh": "只有他知道这件事。",
+        "pinyin": "Zhǐyǒu tā zhīdào zhè jiàn shì.",
+        "es": "Solo él sabe esto."
+      },
+      {
+        "zh": "只要天气好，我们就去公园。",
+        "pinyin": "Zhǐyào tiānqì hǎo, wǒmen jiù qù gōngyuán.",
+        "es": "Si hace buen tiempo, vamos al parque."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "只有多练习，就能说得好。",
+        "right": "只有多练习，才能说得好。",
+        "why": "只有 va con 才; con 就 la pareja correcta es 只要."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "2.7.2"
+      }
+    ]
   },
   {
     "code": "6.3.8",
@@ -9265,7 +9385,42 @@
     "items": [
       "为了……，……"
     ],
-    "order_idx": 55
+    "order_idx": 55,
+    "pattern": "为了 + finalidad，sujeto + acción",
+    "explanation": "En una frase compuesta, 为了 abre la primera parte con la finalidad y la segunda cuenta lo que se hace para conseguirla: 为了买到票，他早上五点就起床了. En español la finalidad suele ir al final («se levantó a las cinco para conseguir billetes»); en chino va delante, separada por una coma.",
+    "markers": [
+      "为了"
+    ],
+    "examples": [
+      {
+        "zh": "为了买到票，他早上五点就起床了。",
+        "pinyin": "Wèile mǎidào piào, tā zǎoshang wǔ diǎn jiù qǐchuáng le.",
+        "es": "Para conseguir billetes, se levantó a las cinco de la mañana."
+      },
+      {
+        "zh": "为了身体健康，我每天都去跑步。",
+        "pinyin": "Wèile shēntǐ jiànkāng, wǒ měi tiān dōu qù pǎobù.",
+        "es": "Para estar sano, salgo a correr todos los días."
+      },
+      {
+        "zh": "为了学好汉语，她来中国了。",
+        "pinyin": "Wèile xuéhǎo Hànyǔ, tā lái Zhōngguó le.",
+        "es": "Para aprender bien chino, se vino a China."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他早上五点起床为了买到票。",
+        "right": "为了买到票，他早上五点就起床了。",
+        "why": "La finalidad con 为了 va delante, no al final como «para conseguir billetes»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "2.6.3"
+      }
+    ]
   },
   {
     "code": "6.3.9",
@@ -9277,7 +9432,51 @@
     "items": [
       "……了……（就）……"
     ],
-    "order_idx": 56
+    "order_idx": 56,
+    "pattern": "verbo 1 + 了 (+ objeto) + (就) + verbo 2",
+    "explanation": "Dos acciones encadenadas se pueden comprimir en una sola frase, sin coma: 吃了饭就走 «en cuanto coma, me voy». 了 marca que la primera se termina y 就 subraya que la segunda llega enseguida. Vale para el pasado y para el futuro: 他下了课就回家了, 我到了就给你打电话.",
+    "markers": [
+      "了"
+    ],
+    "examples": [
+      {
+        "zh": "我吃了饭就走。",
+        "pinyin": "Wǒ chī le fàn jiù zǒu.",
+        "es": "En cuanto coma, me voy."
+      },
+      {
+        "zh": "他下了课就回家了。",
+        "pinyin": "Tā xià le kè jiù huí jiā le.",
+        "es": "Al acabar la clase se fue a casa."
+      },
+      {
+        "zh": "他想了想就同意了。",
+        "pinyin": "Tā xiǎng le xiǎng jiù tóngyì le.",
+        "es": "Lo pensó un momento y aceptó."
+      },
+      {
+        "zh": "你看了这本书就明白了。",
+        "pinyin": "Nǐ kàn le zhè běn shū jiù míngbai le.",
+        "es": "En cuanto leas este libro, lo entenderás."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我吃饭就走了。（para el futuro）",
+        "right": "我吃了饭就走。",
+        "why": "El 了 va detrás de la primera acción para marcar que se termina; al final de la frase cambiaría el sentido a algo ya ocurrido."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "6.4.4"
+      },
+      {
+        "hsk_level": 2,
+        "code": "2.7.6"
+      }
+    ]
   },
   {
     "code": "7.1",
@@ -9290,6 +9489,53 @@
       "概数表达法2：（1）用“大概”表示概数",
       "（2）相邻数词连用表示概数"
     ],
-    "order_idx": 57
+    "order_idx": 57,
+    "pattern": "大概 + cantidad · dos números seguidos + clasificador (三四个, 七八天)",
+    "explanation": "Hay dos formas de dar una cantidad aproximada. 大概 delante del número es «unos, aproximadamente»: 大概二十个人. Y dos números consecutivos seguidos, sin conjunción, significan «tres o cuatro», «siete u ocho»: 三四个人, 七八天. No se juntan números que no sean consecutivos ni se pone 或 en medio.",
+    "markers": [
+      "大概",
+      "三四",
+      "七八",
+      "两三"
+    ],
+    "examples": [
+      {
+        "zh": "来了大概二十个人。",
+        "pinyin": "Lái le dàgài èrshí gè rén.",
+        "es": "Vinieron unas veinte personas."
+      },
+      {
+        "zh": "我们班有三四个中国同学。",
+        "pinyin": "Wǒmen bān yǒu sān sì gè Zhōngguó tóngxué.",
+        "es": "En nuestra clase hay tres o cuatro compañeros chinos."
+      },
+      {
+        "zh": "他去北方玩了七八天。",
+        "pinyin": "Tā qù běifāng wán le qī bā tiān.",
+        "es": "Estuvo siete u ocho días de viaje por el norte."
+      },
+      {
+        "zh": "我在门口等了两三分钟。",
+        "pinyin": "Wǒ zài ménkǒu děng le liǎng sān fēnzhōng.",
+        "es": "Esperé dos o tres minutos en la puerta."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我们班有三或四个中国同学。",
+        "right": "我们班有三四个中国同学。",
+        "why": "Para «tres o cuatro» los números van seguidos, sin 或 en medio."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "8.1"
+      },
+      {
+        "hsk_level": 3,
+        "code": "2.5.6"
+      }
+    ]
   }
 ]

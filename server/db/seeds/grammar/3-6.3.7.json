@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "6.3.7",
+  "pattern": "只有 + única condición，才 + resultado · 只要 + condición suficiente，就 + resultado",
+  "explanation": "只有…才… presenta la única condición que lleva al resultado, «solo si…»: 只有多练习，才能说得好. 只要…就… presenta una condición que basta, «con tal de que, basta con que»: 只要你来，我就高兴. Las parejas son fijas: 只有 va con 才 y 只要, con 就. Confundirlas cambia el sentido.",
+  "markers": ["只有","才","只要","就"],
+  "examples": [
+    {"zh":"只有多练习，才能说得好。","pinyin":"Zhǐyǒu duō liànxí, cái néng shuō de hǎo.","es":"Solo practicando mucho se llega a hablar bien."},
+    {"zh":"只要你来，我就很高兴。","pinyin":"Zhǐyào nǐ lái, wǒ jiù hěn gāoxìng.","es":"Con que vengas, ya me alegro mucho."},
+    {"zh":"只有他知道这件事。","pinyin":"Zhǐyǒu tā zhīdào zhè jiàn shì.","es":"Solo él sabe esto."},
+    {"zh":"只要天气好，我们就去公园。","pinyin":"Zhǐyào tiānqì hǎo, wǒmen jiù qù gōngyuán.","es":"Si hace buen tiempo, vamos al parque."}
+  ],
+  "common_errors": [
+    {"wrong":"只有多练习，就能说得好。","right":"只有多练习，才能说得好。","why":"只有 va con 才; con 就 la pareja correcta es 只要."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"2.7.2"}]
+}
