@@ -19,6 +19,9 @@ const dictionary = [
   { hanzi: '三', hsk_level: 1 },
   { hanzi: '个', hsk_level: 1 },
   { hanzi: '小时', hsk_level: 1 },
+  { hanzi: '睡觉', hsk_level: 1 },
+  { hanzi: '八', hsk_level: 1 },
+  { hanzi: '跳舞', hsk_level: 2 },
 ];
 
 const ctx = {
@@ -157,5 +160,35 @@ describe('validateGrammarEntry', () => {
     const entry = valid();
     entry.see_also = [{ hsk_level: 3, code: '2.2.1' }];
     expect(validateGrammarEntry(entry, ctx)).toEqual([{ kind: 'see_also_unknown', detail: '3-2.2.1' }]);
+  });
+
+  it('acepta un verbo separable del nivel partido por otras palabras (睡了八个小时觉)', () => {
+    const entry = valid();
+    entry.hsk_level = 1;
+    entry.see_also = [];
+    entry.markers = ['觉'];
+    entry.examples = [
+      { zh: '我睡了八个小时觉。', pinyin: 'Wǒ shuì le bā gè xiǎoshí jiào.', es: 'Dormí ocho horas.' },
+      { zh: '我睡觉了。', pinyin: 'Wǒ shuìjiào le.', es: 'Me fui a dormir.' },
+      { zh: '你睡了几个小时觉？', pinyin: 'Nǐ shuì le jǐ gè xiǎoshí jiào?', es: '¿Cuántas horas dormiste?' },
+    ];
+    const issues = validateGrammarEntry(entry, ctx).filter(issue => issue.kind === 'unknown_vocabulary');
+    expect(issues).toEqual([{ kind: 'unknown_vocabulary', example_index: 2, detail: '几' }]);
+  });
+
+  it('no acepta la mitad de un verbo separable si la otra no está antes, ni si el verbo es de otro nivel', () => {
+    const entry = valid();
+    entry.hsk_level = 1;
+    entry.see_also = [];
+    entry.markers = ['了'];
+    entry.examples = [
+      { zh: '我觉了。', pinyin: 'x', es: 'x' },
+      { zh: '我舞了。', pinyin: 'x', es: 'x' },
+      { zh: '我看了书。', pinyin: 'x', es: 'x' },
+    ];
+    expect(validateGrammarEntry(entry, ctx).filter(issue => issue.kind === 'unknown_vocabulary')).toEqual([
+      { kind: 'unknown_vocabulary', example_index: 0, detail: '觉' },
+      { kind: 'unknown_vocabulary', example_index: 1, detail: '舞' },
+    ]);
   });
 });

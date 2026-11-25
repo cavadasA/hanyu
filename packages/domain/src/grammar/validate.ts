@@ -53,6 +53,19 @@ function normalizeMarker(marker: string): string {
   return marker.replace(/[—\s]/g, '');
 }
 
+/**
+ * Un verbo separable del nivel (睡觉, 跑步) se parte con otras palabras en
+ * medio: 睡了八个小时觉. Sus mitades sueltas no son palabras del diccionario,
+ * pero sí vocabulario del nivel cuando la otra mitad está en su sitio: la
+ * primera antes, la segunda después.
+ */
+function isSplitHalf(sentence: string, offset: number, text: string, splittable: string[][]): boolean {
+  return splittable.some(([first, second]) =>
+    (text === first && sentence.indexOf(second, offset + text.length) !== -1) ||
+    (text === second && sentence.lastIndexOf(first, offset - 1) !== -1 && offset > 0),
+  );
+}
+
 export function validateGrammarEntry(
   entry: GrammarEntry,
   ctx: GrammarValidationContext,
@@ -62,6 +75,7 @@ export function validateGrammarEntry(
     .filter(word => word.hsk_level <= entry.hsk_level)
     .map(word => ({ hanzi: word.hanzi, pinyin: '' }));
   const markers = entry.markers.map(normalizeMarker).filter(marker => marker.length > 0);
+  const splittable = allowed.map(word => Array.from(word.hanzi)).filter(chars => chars.length === 2);
 
   if (entry.examples.length < MIN_EXAMPLES) {
     issues.push({ kind: 'too_few_examples', detail: `${entry.examples.length} < ${MIN_EXAMPLES}` });
@@ -80,10 +94,12 @@ export function validateGrammarEntry(
     if (!example.es?.trim()) {
       issues.push({ kind: 'missing_translation', example_index: index });
     }
+    let offset = 0;
     for (const token of tokenizeReading(example.zh, allowed)) {
-      if (token.type === 'unknown') {
+      if (token.type === 'unknown' && !isSplitHalf(example.zh, offset, token.text, splittable)) {
         issues.push({ kind: 'unknown_vocabulary', example_index: index, detail: token.text });
       }
+      offset += token.text.length;
     }
     if (markers.length > 0 && !markers.some(marker => example.zh.includes(marker))) {
       issues.push({ kind: 'marker_absent', example_index: index });
