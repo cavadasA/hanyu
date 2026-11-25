@@ -1,0 +1,107 @@
+{
+  "slug": "oficina-02-new-colleague",
+  "title": "新同事",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "trabajo",
+  "series": "oficina",
+  "series_index": 2,
+  "target_words": [
+    "姓名",
+    "洗手间",
+    "往"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.8.2",
+      "level": 2
+    },
+    {
+      "code": "2.1.1",
+      "level": 2
+    },
+    {
+      "code": "6.3.1",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "马力：你好！你是新来的吧？我叫马力。",
+      "pinyin": "Mǎ Lì: Nǐhǎo! Nǐ shì xīn lái de ba? Wǒ jiào Mǎ Lì.",
+      "es": "Ma Li: ¡Hola! Eres la nueva, ¿verdad? Me llamo Ma Li."
+    },
+    {
+      "zh": "张红：你好，我叫张红，今天第一天上班。",
+      "pinyin": "Zhāng Hóng: Nǐhǎo, wǒ jiào Zhāng Hóng, jīntiān dì yī tiān shàngbān.",
+      "es": "Zhang Hong: Hola, me llamo Zhang Hong; hoy es mi primer día."
+    },
+    {
+      "zh": "马力：请你在这里写一下你的姓名，我们再一起看看公司。",
+      "pinyin": "Mǎ Lì: Qǐng nǐ zài zhèlǐ xiě yíxià nǐ de xìngmíng, wǒmen zài yìqǐ kàn kàn gōngsī.",
+      "es": "Ma Li: Escribe aquí tu nombre y luego vemos juntos la empresa."
+    },
+    {
+      "zh": "张红：好，谢谢你。洗手间在哪儿？",
+      "pinyin": "Zhāng Hóng: Hǎo, xièxie nǐ. Xǐshǒujiān zài nǎr?",
+      "es": "Zhang Hong: Vale, gracias. ¿Dónde está el baño?"
+    },
+    {
+      "zh": "马力：往前走，再往左，门上写着字。",
+      "pinyin": "Mǎ Lì: Wǎng qián zǒu, zài wǎng zuǒ, mén shàng xiě zhe zì.",
+      "es": "Ma Li: Sigue recto y luego a la izquierda; en la puerta está escrito."
+    },
+    {
+      "zh": "张红：那边那个房间是谁的？",
+      "pinyin": "Zhāng Hóng: Nàbiān nàge fángjiān shì shuí de?",
+      "es": "Zhang Hong: ¿De quién es aquella habitación de allí?"
+    },
+    {
+      "zh": "马力：是白先生的，公司是他的。",
+      "pinyin": "Mǎ Lì: Shì Bái xiānsheng de, gōngsī shì tā de.",
+      "es": "Ma Li: Es del señor Bai; la empresa es suya."
+    },
+    {
+      "zh": "白先生：张红，你来了！有问题就问马力。",
+      "pinyin": "Bái xiānsheng: Zhāng Hóng, nǐ lái le! Yǒu wèntí jiù wèn Mǎ Lì.",
+      "es": "Señor Bai: ¡Zhang Hong, ya estás aquí! Si tienes alguna duda, pregúntale a Ma Li."
+    },
+    {
+      "zh": "张红：好的，白先生。",
+      "pinyin": "Zhāng Hóng: Hǎo de, Bái xiānsheng.",
+      "es": "Zhang Hong: De acuerdo, señor Bai."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "马力让张红在那里写什么？",
+      "options": [
+        "电话",
+        "姓名",
+        "时间"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "洗手间怎么走？",
+      "options": [
+        "往前走，再往左",
+        "往右走",
+        "上楼"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "公司是谁的？",
+      "options": [
+        "马力的",
+        "张红的",
+        "白先生的"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 6
+    }
+  ]
+}

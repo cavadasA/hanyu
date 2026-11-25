@@ -1,0 +1,103 @@
+{
+  "slug": "oficina-04-lunch",
+  "title": "一起吃午饭",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "trabajo",
+  "series": "oficina",
+  "series_index": 4,
+  "target_words": [
+    "饭馆",
+    "近",
+    "远"
+  ],
+  "target_grammar": [
+    {
+      "code": "6.4.1",
+      "level": 2
+    },
+    {
+      "code": "2.3.2",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "中午，马力和张红去公司旁边的饭馆吃饭。",
+      "pinyin": "Zhōngwǔ, Mǎ Lì hé Zhāng Hóng qù gōngsī pángbiān de fànguǎn chī fàn.",
+      "es": "A mediodía, Ma Li y Zhang Hong van a comer al restaurante que hay junto a la empresa."
+    },
+    {
+      "zh": "马力：你想吃米饭还是面条儿？",
+      "pinyin": "Mǎ Lì: Nǐ xiǎng chī mǐfàn háishi miàntiáor?",
+      "es": "Ma Li: ¿Quieres arroz o fideos?"
+    },
+    {
+      "zh": "张红：面条儿吧。马力，你家离公司远吗？",
+      "pinyin": "Zhāng Hóng: Miàntiáor ba. Mǎ Lì, nǐ jiā lí gōngsī yuǎn ma?",
+      "es": "Zhang Hong: Fideos. Ma Li, ¿tu casa está lejos de la empresa?"
+    },
+    {
+      "zh": "马力：不远，我走路十分钟就到。你呢？",
+      "pinyin": "Mǎ Lì: Bù yuǎn, wǒ zǒulù shí fēnzhōng jiù dào. Nǐ ne?",
+      "es": "Ma Li: No; andando llego en diez minutos. ¿Y tú?"
+    },
+    {
+      "zh": "张红：我家很远，每天在路上要两个小时。",
+      "pinyin": "Zhāng Hóng: Wǒ jiā hěn yuǎn, měi tiān zài lùshang yào liǎng gè xiǎoshí.",
+      "es": "Zhang Hong: Mi casa está muy lejos; cada día paso dos horas de camino."
+    },
+    {
+      "zh": "马力：那太累了。你可以住得近一点儿。",
+      "pinyin": "Mǎ Lì: Nà tài lèi le. Nǐ kěyǐ zhù de jìn yìdiǎnr.",
+      "es": "Ma Li: Eso cansa demasiado. Podrías vivir un poco más cerca."
+    },
+    {
+      "zh": "张红：我也这样想，但是不知道哪儿有房间。",
+      "pinyin": "Zhāng Hóng: Wǒ yě zhèyàng xiǎng, dànshì bù zhīdào nǎr yǒu fángjiān.",
+      "es": "Zhang Hong: Yo también lo pienso, pero no sé dónde hay habitaciones."
+    },
+    {
+      "zh": "马力：我住的楼里有一个房间，你自己去看看吧。",
+      "pinyin": "Mǎ Lì: Wǒ zhù de lóu lǐ yǒu yí gè fángjiān, nǐ zìjǐ qù kàn kàn ba.",
+      "es": "Ma Li: En el edificio donde vivo hay una habitación libre; ve tú misma a verla."
+    },
+    {
+      "zh": "张红：太好了！明天下班后我就去。",
+      "pinyin": "Zhāng Hóng: Tài hǎo le! Míngtiān xiàbān hòu wǒ jiù qù.",
+      "es": "Zhang Hong: ¡Estupendo! Mañana después del trabajo voy."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "张红想吃什么？",
+      "options": [
+        "米饭",
+        "面条儿",
+        "饺子"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "马力走路去公司要多长时间？",
+      "options": [
+        "十分钟",
+        "两个小时",
+        "一个小时"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "张红什么时候去看房间？",
+      "options": [
+        "今天中午",
+        "星期天",
+        "明天下班后"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 8
+    }
+  ]
+}

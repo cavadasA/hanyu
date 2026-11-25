@@ -1,0 +1,103 @@
+{
+  "slug": "oficina-05-moving",
+  "title": "住得近了",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "trabajo",
+  "series": "oficina",
+  "series_index": 5,
+  "target_words": [
+    "运动",
+    "进去",
+    "最"
+  ],
+  "target_grammar": [
+    {
+      "code": "5.4.3",
+      "level": 2
+    },
+    {
+      "code": "2.7.6",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "张红看了那个房间，很喜欢，第二个星期就住进去了。",
+      "pinyin": "Zhāng Hóng kàn le nàge fángjiān, hěn xǐhuan, dì èr gè xīngqī jiù zhù jìnqù le.",
+      "es": "Zhang Hong vio la habitación, le gustó mucho y a la semana siguiente ya se había mudado."
+    },
+    {
+      "zh": "现在她家离公司很近，走路十分钟就到了。",
+      "pinyin": "Xiànzài tā jiā lí gōngsī hěn jìn, zǒulù shí fēnzhōng jiù dào le.",
+      "es": "Ahora su casa está muy cerca de la empresa: andando llega en diez minutos."
+    },
+    {
+      "zh": "她每天早上七点半起床，起床后还能去外面运动。",
+      "pinyin": "Tā měi tiān zǎoshang qī diǎn bàn qǐchuáng, qǐchuáng hòu hái néng qù wàimiàn yùndòng.",
+      "es": "Cada mañana se levanta a las siete y media y después todavía puede salir a hacer ejercicio."
+    },
+    {
+      "zh": "下班后，她有时候跟马力一起去跑步。",
+      "pinyin": "Xiàbān hòu, tā yǒushíhou gēn Mǎ Lì yìqǐ qù pǎobù.",
+      "es": "Después del trabajo, a veces sale a correr con Ma Li."
+    },
+    {
+      "zh": "晚上她自己做饭，还看书学习。",
+      "pinyin": "Wǎnshang tā zìjǐ zuòfàn, hái kàn shū xuéxí.",
+      "es": "Por la noche se hace ella misma la cena y además lee y estudia."
+    },
+    {
+      "zh": "白先生说，张红来了一个月，工作做得很好。",
+      "pinyin": "Bái xiānsheng shuō, Zhāng Hóng lái le yí gè yuè, gōngzuò zuò de hěn hǎo.",
+      "es": "El señor Bai dice que Zhang Hong lleva un mes y trabaja muy bien."
+    },
+    {
+      "zh": "他说张红是这个月公司里做得最好的新人。",
+      "pinyin": "Tā shuō Zhāng Hóng shì zhège yuè gōngsī lǐ zuò de zuì hǎo de xīn rén.",
+      "es": "Dice que es la persona nueva que mejor ha trabajado este mes en la empresa."
+    },
+    {
+      "zh": "张红很高兴，她觉得住得近真好。",
+      "pinyin": "Zhāng Hóng hěn gāoxìng, tā juéde zhù de jìn zhēn hǎo.",
+      "es": "Zhang Hong está muy contenta; cree que vivir cerca es estupendo."
+    },
+    {
+      "zh": "她给妈妈打电话，说她在这里很快乐。",
+      "pinyin": "Tā gěi māma dǎdiànhuà, shuō tā zài zhèlǐ hěn kuàilè.",
+      "es": "Llama a su madre y le dice que aquí es muy feliz."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "张红现在走路去公司要多长时间？",
+      "options": [
+        "十分钟",
+        "一个小时",
+        "两个小时"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "下班后张红有时候做什么？",
+      "options": [
+        "跟马力去跑步",
+        "去饭馆",
+        "打车回家"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "白先生觉得张红怎么样？",
+      "options": [
+        "常常来晚",
+        "不喜欢工作",
+        "工作做得很好"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 5
+    }
+  ]
+}

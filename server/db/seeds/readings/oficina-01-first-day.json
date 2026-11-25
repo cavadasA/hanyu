@@ -1,0 +1,103 @@
+{
+  "slug": "oficina-01-first-day",
+  "title": "第一天上班",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "trabajo",
+  "series": "oficina",
+  "series_index": 1,
+  "target_words": [
+    "出门",
+    "公交车",
+    "楼"
+  ],
+  "target_grammar": [
+    {
+      "code": "5.2",
+      "level": 2
+    },
+    {
+      "code": "2.8.1",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "张红今年二十三岁，她找到了一个新工作。",
+      "pinyin": "Zhāng Hóng jīnnián èrshísān suì, tā zhǎo dào le yí gè xīn gōngzuò.",
+      "es": "Zhang Hong tiene veintitrés años y ha encontrado un trabajo nuevo."
+    },
+    {
+      "zh": "今天是她第一天上班。",
+      "pinyin": "Jīntiān shì tā dì yī tiān shàngbān.",
+      "es": "Hoy es su primer día de trabajo."
+    },
+    {
+      "zh": "公司离她家很远，坐公交车要一个小时。",
+      "pinyin": "Gōngsī lí tā jiā hěn yuǎn, zuò gōngjiāochē yào yí gè xiǎoshí.",
+      "es": "La empresa está muy lejos de su casa: en autobús se tarda una hora."
+    },
+    {
+      "zh": "所以她七点就出门了。",
+      "pinyin": "Suǒyǐ tā qī diǎn jiù chūmén le.",
+      "es": "Por eso salió de casa ya a las siete."
+    },
+    {
+      "zh": "公交车上人很多，她站了一个小时。",
+      "pinyin": "Gōngjiāochē shàng rén hěn duō, tā zhàn le yí gè xiǎoshí.",
+      "es": "En el autobús había mucha gente y estuvo una hora de pie."
+    },
+    {
+      "zh": "八点半，她到了公司的楼下。",
+      "pinyin": "Bā diǎn bàn, tā dào le gōngsī de lóu xià.",
+      "es": "A las ocho y media llegó al pie del edificio de la empresa."
+    },
+    {
+      "zh": "这个楼很高，她的公司在十二楼。",
+      "pinyin": "Zhège lóu hěn gāo, tā de gōngsī zài shí'èr lóu.",
+      "es": "El edificio es muy alto; su empresa está en la planta doce."
+    },
+    {
+      "zh": "她进了楼，很快就上去了。",
+      "pinyin": "Tā jìn le lóu, hěn kuài jiù shàngqù le.",
+      "es": "Entró en el edificio y subió enseguida."
+    },
+    {
+      "zh": "她有一点儿累，但是很高兴，她希望在新公司做得好。",
+      "pinyin": "Tā yǒuyìdiǎnr lèi, dànshì hěn gāoxìng, tā xīwàng zài xīn gōngsī zuò de hǎo.",
+      "es": "Está un poco cansada pero muy contenta; espera hacerlo bien en la empresa nueva."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "张红坐什么去公司？",
+      "options": [
+        "地铁",
+        "公交车",
+        "出租车"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "张红几点出门？",
+      "options": [
+        "七点",
+        "八点半",
+        "九点"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "张红的公司在几楼？",
+      "options": [
+        "二楼",
+        "十楼",
+        "十二楼"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 6
+    }
+  ]
+}

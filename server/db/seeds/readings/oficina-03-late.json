@@ -1,0 +1,103 @@
+{
+  "slug": "oficina-03-late",
+  "title": "下雨的早上",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "trabajo",
+  "series": "oficina",
+  "series_index": 3,
+  "target_words": [
+    "打车",
+    "正",
+    "路上"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.7.3",
+      "level": 2
+    },
+    {
+      "code": "6.1.1",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "星期三早上下大雨，路上车很多。",
+      "pinyin": "Xīngqīsān zǎoshang xià dà yǔ, lùshang chē hěn duō.",
+      "es": "El miércoles por la mañana llovía mucho y había mucho tráfico."
+    },
+    {
+      "zh": "张红在车站等了二十分钟，公交车还没有来。",
+      "pinyin": "Zhāng Hóng zài chēzhàn děng le èrshí fēnzhōng, gōngjiāochē hái méiyǒu lái.",
+      "es": "Zhang Hong esperó veinte minutos en la parada y el autobús todavía no había llegado."
+    },
+    {
+      "zh": "她看了看手表，已经八点多了。",
+      "pinyin": "Tā kàn le kàn shǒubiǎo, yǐjīng bā diǎn duō le.",
+      "es": "Miró el reloj: ya eran más de las ocho."
+    },
+    {
+      "zh": "她想，坐公交车可能会晚，就打车去公司。",
+      "pinyin": "Tā xiǎng, zuò gōngjiāochē kěnéng huì wǎn, jiù dǎchē qù gōngsī.",
+      "es": "Pensó que en autobús llegaría tarde, así que cogió un taxi a la empresa."
+    },
+    {
+      "zh": "出租车开得很慢，她九点十分到了公司。",
+      "pinyin": "Chūzūchē kāi de hěn màn, tā jiǔ diǎn shí fēn dào le gōngsī.",
+      "es": "El taxi iba muy despacio y llegó a la empresa a las nueve y diez."
+    },
+    {
+      "zh": "她进门的时候，白先生正在打电话。",
+      "pinyin": "Tā jìn mén de shíhou, Bái xiānsheng zhèngzài dǎdiànhuà.",
+      "es": "Cuando entró, el señor Bai estaba hablando por teléfono."
+    },
+    {
+      "zh": "张红对白先生说对不起，她来晚了。",
+      "pinyin": "Zhāng Hóng duì Bái xiānsheng shuō duìbuqǐ, tā lái wǎn le.",
+      "es": "Zhang Hong le pidió perdón al señor Bai por llegar tarde."
+    },
+    {
+      "zh": "白先生说没关系，今天下雨，很多人都来晚了。",
+      "pinyin": "Bái xiānsheng shuō méiguānxi, jīntiān xiàyǔ, hěn duō rén dōu lái wǎn le.",
+      "es": "El señor Bai dijo que no pasaba nada: hoy llovía y mucha gente había llegado tarde."
+    },
+    {
+      "zh": "马力给她拿来热水，张红觉得很高兴。",
+      "pinyin": "Mǎ Lì gěi tā ná lái rè shuǐ, Zhāng Hóng juéde hěn gāoxìng.",
+      "es": "Ma Li le trajo agua caliente y Zhang Hong se sintió muy contenta."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "张红在车站等了多长时间？",
+      "options": [
+        "十分钟",
+        "二十分钟",
+        "一个小时"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "张红几点到公司？",
+      "options": [
+        "九点十分",
+        "八点",
+        "八点半"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "张红进门的时候，白先生在做什么？",
+      "options": [
+        "喝水",
+        "看书",
+        "打电话"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 5
+    }
+  ]
+}
