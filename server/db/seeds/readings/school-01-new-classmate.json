@@ -9,6 +9,7 @@
   "target_words": ["新", "同学", "认识"],
   "target_grammar": [{"code": "6.3.5", "level": 2}],
   "sentences": [
+    { "zh": "我叫李文。", "pinyin": "Wǒ jiào Lǐ Wén.", "es": "Me llamo Li Wen." },
     { "zh": "昨天学校来了一个新同学。", "pinyin": "Zuótiān xuéxiào lái le yí gè xīn tóngxué.", "es": "Ayer llegó un compañero nuevo a la escuela." },
     { "zh": "老师给我们介绍他的姓名。", "pinyin": "Lǎoshī gěi wǒmen jièshào tā de xìngmíng.", "es": "El profesor nos presentó su nombre." },
     { "zh": "老师说他的姓名很好听。", "pinyin": "Lǎoshī shuō tā de xìngmíng hěn hǎotīng.", "es": "El profesor dice que su nombre suena bien." },
@@ -19,8 +20,8 @@
     { "zh": "明天我还想和他一起去学校。", "pinyin": "Míngtiān wǒ hái xiǎng hé tā yìqǐ qù xuéxiào.", "es": "Mañana también quiero ir a la escuela con él." }
   ],
   "questions": [
-    { "prompt": "新同学喜欢看什么？", "options": ["水果和茶", "书和电影", "衣服和咖啡"], "answer_index": 1, "evidence_sentence": 5 },
-    { "prompt": "我和新同学一起做什么？", "options": ["买东西", "看病", "学习汉语"], "answer_index": 2, "evidence_sentence": 3 },
-    { "prompt": "新同学明天要去哪里？", "options": ["学校", "商店", "医院"], "answer_index": 0, "evidence_sentence": 7 }
+    { "prompt": "新同学喜欢看什么？", "options": ["水果和茶", "书和电影", "衣服和咖啡"], "answer_index": 1, "evidence_sentence": 6 },
+    { "prompt": "我和新同学一起做什么？", "options": ["买东西", "看病", "学习汉语"], "answer_index": 2, "evidence_sentence": 4 },
+    { "prompt": "新同学明天要去哪里？", "options": ["学校", "商店", "医院"], "answer_index": 0, "evidence_sentence": 8 }
   ]
 }

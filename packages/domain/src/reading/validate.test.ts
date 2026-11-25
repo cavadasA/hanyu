@@ -159,4 +159,26 @@ describe('validateReading', () => {
 
     expect(issue?.sentence_index).toBe(0);
   });
+  it('acepta los nombres propios que le pasa el contexto, y sólo ésos', () => {
+    const named = {
+      ...valid,
+      sentences: valid.sentences.map((sentence, index) =>
+        index === 0 ? { ...sentence, zh: '小林喜欢喝茶，茶比咖啡好喝。' } : sentence),
+    };
+
+    expect(validateReading(named, { ...context, proper_nouns: ['小林'] })).toEqual([]);
+    expect(validateReading(named, context).map(i => i.detail)).toContain('小');
+  });
+
+  it('un nombre propio no sirve como palabra objetivo', () => {
+    const named = {
+      ...valid,
+      sentences: valid.sentences.map((sentence, index) =>
+        index === 0 ? { ...sentence, zh: '小林喜欢喝茶，茶比咖啡好喝。' } : sentence),
+      target_words: ['小林'],
+    };
+
+    expect(validateReading(named, { ...context, proper_nouns: ['小林'] }))
+      .toEqual([{ kind: 'unknown_vocabulary', detail: '小林' }]);
+  });
 });

@@ -4,11 +4,12 @@
   "hsk_level": 2,
   "format": "dialogue",
   "topic": "salud",
-  "series": null,
-  "series_index": null,
+  "series": "salud",
+  "series_index": 1,
   "target_words": ["身体", "药", "休息"],
   "target_grammar": [{"code": "6.4.2", "level": 2}],
   "sentences": [
+    { "zh": "我叫陈东。", "pinyin": "Wǒ jiào Chén Dōng.", "es": "Me llamo Chen Dong." },
     { "zh": "今天早上我觉得身体不太好。", "pinyin": "Jīntiān zǎoshang wǒ juéde shēntǐ bú tài hǎo.", "es": "Esta mañana no me encontraba muy bien." },
     { "zh": "我告诉妈妈我的头有一点儿疼。", "pinyin": "Wǒ gàosu māma wǒ de tóu yǒu yìdiǎnr téng.", "es": "Le digo a mamá que me duele un poco la cabeza." },
     { "zh": "妈妈和我去医院看医生。", "pinyin": "Māma hé wǒ qù yīyuàn kàn yīshēng.", "es": "Mamá y yo vamos al hospital a ver al médico." },
@@ -18,8 +19,8 @@
     { "zh": "下午我吃了药，已经好一点儿了。", "pinyin": "Xiàwǔ wǒ chī le yào, yǐjīng hǎo yìdiǎnr le.", "es": "Por la tarde tomo la medicina y ya estoy algo mejor." }
   ],
   "questions": [
-    { "prompt": "我哪里疼？", "options": ["手", "头", "眼睛"], "answer_index": 1, "evidence_sentence": 1 },
-    { "prompt": "医生让我做什么？", "options": ["喝水和休息", "看电影", "买衣服"], "answer_index": 0, "evidence_sentence": 3 },
-    { "prompt": "谁给我药？", "options": ["爸爸", "朋友", "医生"], "answer_index": 2, "evidence_sentence": 4 }
+    { "prompt": "我哪里疼？", "options": ["手", "头", "眼睛"], "answer_index": 1, "evidence_sentence": 2 },
+    { "prompt": "医生让我做什么？", "options": ["喝水和休息", "看电影", "买衣服"], "answer_index": 0, "evidence_sentence": 4 },
+    { "prompt": "谁给我药？", "options": ["爸爸", "朋友", "医生"], "answer_index": 2, "evidence_sentence": 5 }
   ]
 }

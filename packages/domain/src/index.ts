@@ -13,6 +13,7 @@ export { normalizeHanzi, normalizePinyinInput, normalizeText } from './exercises
 export { tokenizeReading, type DictionaryEntry, type ReadingToken } from './reading/tokenize';
 export { coverageOf, type Coverage, type CoverageToken } from './reading/coverage';
 export { validateReading, type IssueKind, type ReadingGrammarTarget, type ReadingQuestion, type ReadingSentence, type ReadingSource, type ValidationContext, type ValidationIssue } from './reading/validate';
+export { COMPLETENESS_KINDS, READING_TOPICS, validateCatalogShape, type CatalogIssue, type CatalogIssueKind, type CatalogReading, type ReadingTopic, type SeriesCharacter, type SeriesDeclaration } from './reading/series';
 export { validateGrammarEntry, type GrammarEntry, type GrammarIssue, type GrammarIssueKind, type GrammarPointRef, type GrammarValidationContext } from './grammar/validate';
 export * from './planner/rank';
 export * from './planner/plan';

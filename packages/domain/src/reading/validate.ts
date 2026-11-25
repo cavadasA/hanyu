@@ -60,6 +60,11 @@ export interface ValidationContext {
   max_level: number;
   target_word_ids: number[];
   grammar_points: Array<{ code: string; hsk_level: number }>;
+  /**
+   * Nombres de los personajes de la serie de la lectura. Se aceptan en el
+   * texto, pero no son vocabulario: no sirven como palabra objetivo.
+   */
+  proper_nouns?: string[];
 }
 
 /**
@@ -82,6 +87,8 @@ export function validateReading(
 
   const allowed = context.dictionary.filter(entry => entry.hsk_level <= context.max_level);
   const allowedForms = new Set(allowed.map(entry => entry.hanzi));
+  const names = (context.proper_nouns ?? []).map(name => ({ hanzi: name, pinyin: '' }));
+  const tokenizable = names.length > 0 ? [...allowed, ...names] : allowed;
 
   reading.sentences.forEach((sentence, index) => {
     if (!sentence.pinyin.trim()) {
@@ -94,7 +101,7 @@ export function validateReading(
       issues.push({ kind: 'unsegmented', sentence_index: index });
     }
 
-    for (const token of tokenizeReading(sentence.zh, allowed)) {
+    for (const token of tokenizeReading(sentence.zh, tokenizable)) {
       if (token.type === 'unknown') {
         issues.push({ kind: 'unknown_vocabulary', detail: token.text, sentence_index: index });
       }

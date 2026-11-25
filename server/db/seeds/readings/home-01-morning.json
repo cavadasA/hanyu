@@ -4,11 +4,12 @@
   "hsk_level": 2,
   "format": "short_text",
   "topic": "vida diaria",
-  "series": null,
-  "series_index": null,
+  "series": "casa",
+  "series_index": 1,
   "target_words": ["起床", "做饭", "事情"],
   "target_grammar": [{"code": "2.2.1", "level": 2}],
   "sentences": [
+    { "zh": "我叫小明。", "pinyin": "Wǒ jiào Xiǎomíng.", "es": "Me llamo Xiaoming." },
     { "zh": "星期天我六点起床。", "pinyin": "Xīngqītiān wǒ liù diǎn qǐchuáng.", "es": "El domingo me levanto a las seis." },
     { "zh": "妈妈在房间做饭，爸爸在房间看书。", "pinyin": "Māma zài fángjiān zuòfàn, bàba zài fángjiān kàn shū.", "es": "Mamá cocina en la habitación y papá lee en la habitación." },
     { "zh": "我喝了水，也吃了鸡蛋和面包。", "pinyin": "Wǒ hē le shuǐ, yě chī le jīdàn hé miànbāo.", "es": "Bebo agua y también como huevos y pan." },
@@ -19,8 +20,8 @@
     { "zh": "星期天大家都不忙。", "pinyin": "Xīngqītiān dàjiā dōu bù máng.", "es": "El domingo nadie está ocupado." }
   ],
   "questions": [
-    { "prompt": "我几点起床？", "options": ["八点", "十点", "六点"], "answer_index": 2, "evidence_sentence": 0 },
-    { "prompt": "谁在房间看书？", "options": ["爸爸", "妈妈", "老师"], "answer_index": 0, "evidence_sentence": 1 },
-    { "prompt": "妈妈做好了什么？", "options": ["晚饭", "午饭", "咖啡"], "answer_index": 1, "evidence_sentence": 3 }
+    { "prompt": "我几点起床？", "options": ["八点", "十点", "六点"], "answer_index": 2, "evidence_sentence": 1 },
+    { "prompt": "谁在房间看书？", "options": ["爸爸", "妈妈", "老师"], "answer_index": 0, "evidence_sentence": 2 },
+    { "prompt": "妈妈做好了什么？", "options": ["晚饭", "午饭", "咖啡"], "answer_index": 1, "evidence_sentence": 4 }
   ]
 }

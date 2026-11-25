@@ -9,6 +9,7 @@
   "target_words": ["因为", "所以", "身体"],
   "target_grammar": [{"code": "6.4.3", "level": 2}],
   "sentences": [
+    { "zh": "我叫李文。", "pinyin": "Wǒ jiào Lǐ Wén.", "es": "Me llamo Li Wen." },
     { "zh": "今天老师问我们为什么没有写字。", "pinyin": "Jīntiān lǎoshī wèn wǒmen wèishénme méiyǒu xiězì.", "es": "Hoy el profesor pregunta por qué no hemos escrito." },
     { "zh": "同学说因为昨天身体不好，所以没有学习。", "pinyin": "Tóngxué shuō yīnwèi zuótiān shēntǐ bù hǎo, suǒyǐ méiyǒu xuéxí.", "es": "El compañero dice que ayer no se encontraba bien, así que no estudió." },
     { "zh": "老师说现在好了吗。", "pinyin": "Lǎoshī shuō xiànzài hǎo le ma.", "es": "El profesor pregunta si ahora está mejor." },
@@ -19,8 +20,8 @@
     { "zh": "今天大家一起学习。", "pinyin": "Jīntiān dàjiā yìqǐ xuéxí.", "es": "Hoy todos estudiamos juntos." }
   ],
   "questions": [
-    { "prompt": "同学昨天为什么没有学习？", "options": ["因为去商店", "因为看电影", "因为身体不好"], "answer_index": 2, "evidence_sentence": 1 },
-    { "prompt": "同学现在想做什么？", "options": ["休息", "买衣服", "踢足球"], "answer_index": 0, "evidence_sentence": 3 },
-    { "prompt": "老师让他什么时候写字？", "options": ["昨天", "明天", "今天"], "answer_index": 1, "evidence_sentence": 4 }
+    { "prompt": "同学昨天为什么没有学习？", "options": ["因为去商店", "因为看电影", "因为身体不好"], "answer_index": 2, "evidence_sentence": 2 },
+    { "prompt": "同学现在想做什么？", "options": ["休息", "买衣服", "踢足球"], "answer_index": 0, "evidence_sentence": 4 },
+    { "prompt": "老师让他什么时候写字？", "options": ["昨天", "明天", "今天"], "answer_index": 1, "evidence_sentence": 5 }
   ]
 }

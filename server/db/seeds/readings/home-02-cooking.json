@@ -4,11 +4,12 @@
   "hsk_level": 2,
   "format": "story",
   "topic": "vida diaria",
-  "series": null,
-  "series_index": null,
+  "series": "casa",
+  "series_index": 2,
   "target_words": ["着", "虽然", "高兴"],
   "target_grammar": [{"code": "7.1.1", "level": 2}],
   "sentences": [
+    { "zh": "我叫小明。", "pinyin": "Wǒ jiào Xiǎomíng.", "es": "Me llamo Xiaoming." },
     { "zh": "今天妈妈在房间做饭。", "pinyin": "Jīntiān māma zài fángjiān zuòfàn.", "es": "Hoy mamá cocina en la habitación." },
     { "zh": "妈妈坐在桌子旁边，手里拿着茶。", "pinyin": "Māma zuò zài zhuōzi pángbiān, shǒu lǐ ná zhe chá.", "es": "Mamá se sienta junto a la mesa y sostiene té en la mano." },
     { "zh": "爸爸在桌子旁边看书。", "pinyin": "Bàba zài zhuōzi pángbiān kàn shū.", "es": "Papá lee junto a la mesa." },
@@ -19,8 +20,8 @@
     { "zh": "爸爸也很高兴。", "pinyin": "Bàba yě hěn gāoxìng.", "es": "Papá también está muy contento." }
   ],
   "questions": [
-    { "prompt": "妈妈手里拿着什么？", "options": ["书", "茶", "水"], "answer_index": 1, "evidence_sentence": 1 },
-    { "prompt": "谁在桌子旁边看书？", "options": ["妈妈", "我", "爸爸"], "answer_index": 2, "evidence_sentence": 2 },
-    { "prompt": "他们什么时候一起吃饭？", "options": ["饭做好以后", "吃饭以前", "明天"], "answer_index": 0, "evidence_sentence": 4 }
+    { "prompt": "妈妈手里拿着什么？", "options": ["书", "茶", "水"], "answer_index": 1, "evidence_sentence": 2 },
+    { "prompt": "谁在桌子旁边看书？", "options": ["妈妈", "我", "爸爸"], "answer_index": 2, "evidence_sentence": 3 },
+    { "prompt": "他们什么时候一起吃饭？", "options": ["饭做好以后", "吃饭以前", "明天"], "answer_index": 0, "evidence_sentence": 5 }
   ]
 }

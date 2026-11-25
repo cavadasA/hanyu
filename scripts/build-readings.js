@@ -6,12 +6,21 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateReading } from '../packages/domain/src/reading/validate.ts';
+import {
+  COMPLETENESS_KINDS,
+  validateCatalogShape,
+} from '../packages/domain/src/reading/series.ts';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const seedDir = join(rootDir, 'server', 'db', 'seeds');
-const readingDir = join(seedDir, 'readings');
+const defaultReadingDir = join(seedDir, 'readings');
+const defaultSeriesFile = join(seedDir, 'reading-series.json');
 
-export function loadReadings() {
+export function loadSeries(seriesFile = defaultSeriesFile) {
+  return JSON.parse(readFileSync(seriesFile, 'utf8'));
+}
+
+export function loadReadings(readingDir = defaultReadingDir) {
   if (!existsSync(readingDir)) {
     return [];
   }
@@ -64,24 +73,54 @@ function loadGrammarPoints() {
     .map(point => ({ code: point.code, hsk_level: point.hsk_level }));
 }
 
-export function validateCatalog() {
+/** Nombres de los personajes de la serie de una lectura: sólo ésos se aceptan en su texto. */
+function properNounsFor(reading, series) {
+  const declaration = series.find(entry => entry.code === reading.series);
+  return declaration ? declaration.characters.map(character => character.name) : [];
+}
+
+export function validateCatalog({ readingsDir, seriesFile } = {}) {
   const dictionary = loadDictionary();
   const grammar_points = loadGrammarPoints();
+  const series = loadSeries(seriesFile);
 
-  return loadReadings().map(reading => ({
+  return loadReadings(readingsDir).map(reading => ({
     slug: reading.slug,
     issues: validateReading(reading, {
       dictionary,
       max_level: reading.hsk_level,
       target_word_ids: [],
       grammar_points,
+      proper_nouns: properNounsFor(reading, series),
     }),
   }));
 }
 
+/**
+ * Forma del catálogo. Mientras las series se van llenando, los huecos y los
+ * temas sin serie no cuentan; con `complete` (el corpus se declara terminado)
+ * cuentan todos.
+ */
+export function validateCatalogStructure({ readingsDir, seriesFile, complete = false } = {}) {
+  const readings = loadReadings(readingsDir).filter(reading => reading.hsk_level === 2);
+  const issues = validateCatalogShape(readings, loadSeries(seriesFile));
+  return complete ? issues : issues.filter(issue => !COMPLETENESS_KINDS.includes(issue.kind));
+}
+
+function argValue(name) {
+  const index = process.argv.indexOf(name);
+  return index === -1 ? undefined : process.argv[index + 1];
+}
+
 if (process.argv[1] && process.argv[1].endsWith('build-readings.js')) {
-  const results = validateCatalog();
+  const options = {
+    readingsDir: argValue('--readings'),
+    seriesFile: argValue('--series'),
+    complete: process.argv.includes('--complete'),
+  };
+  const results = validateCatalog(options);
   const bad = results.filter(entry => entry.issues.length > 0);
+  const structure = validateCatalogStructure(options);
 
   for (const entry of bad) {
     console.error(`\n${entry.slug}`);
@@ -96,6 +135,13 @@ if (process.argv[1] && process.argv[1].endsWith('build-readings.js')) {
     }
   }
 
+  if (structure.length > 0) {
+    console.error('\ncatálogo');
+    for (const issue of structure) {
+      console.error(`  ${issue.kind}: ${issue.detail}`);
+    }
+  }
+
   console.log(`\n${results.length} lecturas, ${bad.length} con problemas`);
-  if (bad.length > 0) process.exit(1);
+  if (bad.length > 0 || structure.length > 0) process.exit(1);
 }
