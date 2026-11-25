@@ -28,10 +28,20 @@ function fixtureCatalog({ series, readingSeries, planned = 1, name = '小林' })
     ...base,
     series: readingSeries,
     series_index: 1,
+    // Texto propio y sin más nombres que el del personaje: las lecturas reales
+    // cambian y nombran a otros personajes de su serie.
     sentences: [
-      { zh: `${name}今天去商店。`, pinyin: 'Xiǎolín jīntiān qù shāngdiàn.', es: 'Xiaolin va hoy a la tienda.' },
-      ...base.sentences.slice(1),
-    ],
+      `${name}今天去商店。`,
+      '我们学校旁边有一个小商店，东西不贵。',
+      '商店的先生很好，他认识我们。',
+      '奶茶比绿茶贵两块钱。',
+      '我们坐在商店门口喝茶，说了很长时间。',
+      '我买了一些水果和一个面包。',
+      '先生说他们的红茶也很好喝。',
+      '我们下次还想来这个商店买东西。',
+    ].map(zh => ({ zh, pinyin: 'pinyin', es: 'es' })),
+    target_words: ['商店', '奶茶'],
+    target_grammar: [],
   };
   writeFileSync(join(readingsDir, `${base.slug}.json`), JSON.stringify(reading));
   const seriesFile = join(dir, 'reading-series.json');
@@ -73,8 +83,11 @@ describe('catálogo de lecturas', () => {
       'shop-01-tea-and-coffee',
       'market-02-too-expensive',
       'market-03-buying-fruit',
+      'tienda-04-broken-bag',
+      'tienda-05-new-bag',
+      'tienda-06-thank-you',
     ]);
-    expect(readings.map(reading => reading.series_index)).toEqual([1, 2, 3]);
+    expect(readings.map(reading => reading.series_index)).toEqual([1, 2, 3, 4, 5, 6]);
     expect(new Set(readings.map(reading => reading.series)).size).toBe(1);
   });
 
