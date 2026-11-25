@@ -9,7 +9,6 @@ export function ReadingText({
   sentences,
   showPinyin,
   readingId,
-  readingLevel,
   activeSentenceIndex = null,
   onPlaySentence,
   onSentenceRead,
@@ -17,7 +16,6 @@ export function ReadingText({
   sentences?: Sentence[];
   showPinyin: boolean;
   readingId: string;
-  readingLevel?: number;
   activeSentenceIndex?: number | null;
   onPlaySentence?: (index: number) => void;
   onSentenceRead?: (index: number) => void;
@@ -44,9 +42,9 @@ export function ReadingText({
         <WordSheet
           key={selected.token.id}
           text={selected.token.text}
+          word={selected.token.word}
           senses={(selected.token.senses ?? (selected.token.word ? [selected.token.word] : [])) as ReadingSense[]}
           sentence={{ text: selected.sentence.zh, tokens: selected.sentence.tokens }}
-          readingLevel={readingLevel}
           readingId={readingId}
           onClose={() => setSelected(null)}
         />

@@ -86,3 +86,23 @@ describe('tokenizeReading', () => {
     expect(tokens.map(token => token.type)).toEqual(['word', 'punctuation', 'unknown']);
   });
 });
+
+describe('tokenizeReading: acepciones', () => {
+  const senses = [
+    { id: 20, hanzi: '好', pinyin: 'hǎo', hsk_level: 2, meaning_en: 'good', meaning_es: 'bueno', pos: 'adjective' },
+    { id: 10, hanzi: '好', pinyin: 'hǎo', hsk_level: 1, meaning_en: 'good', meaning_es: 'bueno', pos: 'adjective' },
+    { id: 30, hanzi: '会', pinyin: 'huì', hsk_level: 1, sense_index: 1, meaning_en: 'can', meaning_es: 'saber', pos: 'verb' },
+    { id: 31, hanzi: '会', pinyin: 'huì', hsk_level: 3, sense_index: 2, meaning_en: 'meeting', meaning_es: 'reunión', pos: 'noun' },
+  ];
+
+  it('dos entradas idénticas en dos niveles son una sola acepción: la de nivel más bajo', () => {
+    const [token] = tokenizeReading('好', senses);
+    expect(token.word?.id).toBe(10);
+    expect(token.senses).toBeUndefined();
+  });
+
+  it('dos acepciones distintas se adjuntan las dos', () => {
+    const [token] = tokenizeReading('会', senses);
+    expect(token.senses?.map(sense => sense.id)).toEqual([30, 31]);
+  });
+});

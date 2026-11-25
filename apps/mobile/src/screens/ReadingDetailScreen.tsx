@@ -258,7 +258,6 @@ export function ReadingDetailScreen() {
           activeSentenceIndex={activeSentenceIndex}
           onPlaySentence={playFrom}
           onSentenceRead={saveSentenceProgress}
-          readingLevel={reading.hsk_level}
         />
       </Card>
 

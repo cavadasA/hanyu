@@ -60,8 +60,8 @@ describe('ReadingText', () => {
     expect(view.getByText('ni hao')).toBeTruthy();
     expect(view.getByText('hello')).toBeTruthy();
 
-    await fireEvent.press(view.getByRole('button', { name: /Añadir acepción 1/ }));
-    await waitFor(() => expect(view.getByText('Añadir acepción 1: ni hao')).toBeTruthy());
+    await fireEvent.press(view.getByRole('button', { name: /Añadir a Cards: ni hao/ }));
+    await waitFor(() => expect(view.getByText('Añadir a Cards: ni hao, hello')).toBeTruthy());
     expect(mockAddCard).toHaveBeenCalledWith(1, {
       context: {
         sentence: '你好，龘。',
@@ -75,7 +75,7 @@ describe('ReadingText', () => {
     expect(view.queryByRole('button', { name: '，' })).toBeNull();
   });
 
-  it('ordena las acepciones por el nivel de la lectura, no por la acepción elegida', async () => {
+  it('pone primero la acepción del token, no la más cercana al nivel de la lectura', async () => {
     const senses = [
       { id: 2, hanzi: '还', pinyin: 'huán', meaning_es: 'devolver', hsk_level: 3 },
       { id: 1, hanzi: '还', pinyin: 'hái', meaning_es: 'todavía', hsk_level: 1 },
@@ -93,14 +93,14 @@ describe('ReadingText', () => {
         sentences={[{ zh: '还', pinyin: '', es: '', tokens: sentenceTokens }]}
         showPinyin={false}
         readingId="reading-1"
-        readingLevel={2}
       />,
     );
 
     await fireEvent.press(view.getByRole('button', { name: '还' }));
 
-    expect(view.getAllByRole('button', { name: /Añadir acepción/ })[0].props.accessibilityLabel)
-      .toContain('hái');
+    expect(view.getAllByRole('button', { name: /Añadir a Cards/ })[0].props.accessibilityLabel)
+      .toContain('huán');
+    expect(view.queryByText('todavía')).toBeNull();
   });
 
   it('reinicia el estado de la ficha al cambiar de palabra', async () => {
@@ -122,7 +122,7 @@ describe('ReadingText', () => {
     await fireEvent.press(view.getByRole('button', { name: '你好' }));
     await fireEvent.press(view.getByRole('button', { name: '谢谢' }));
 
-    expect(view.getByRole('button', { name: /Añadir acepción 1: xie xie/ }).props.accessibilityState)
+    expect(view.getByRole('button', { name: /Añadir a Cards: xie xie/ }).props.accessibilityState)
       .toMatchObject({ disabled: true });
   });
 });

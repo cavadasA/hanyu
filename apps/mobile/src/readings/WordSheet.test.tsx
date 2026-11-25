@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import type { Word } from '@hanyu/data';
 import { WordSheet } from './WordSheet';
 
@@ -101,35 +101,52 @@ describe('WordSheet', () => {
     await waitFor(() => expect(screen.getByText('繁 還')).toBeTruthy());
   });
 
-  it('muestra todas las acepciones cuando la forma tiene varias', async () => {
+  const saber = { id: 30, hanzi: '会', pinyin: 'huì', sense_index: 1, meaning_es: 'saber', hsk_level: 1 };
+  const reunion = { id: 31, hanzi: '会', pinyin: 'huì', sense_index: 2, meaning_es: 'reunión', hsk_level: 3 };
+
+  it('muestra primero la acepción del token y pliega las demás', async () => {
     mockGetSettings.mockResolvedValue({ support_language: 'es' });
-    const senses = [
-      { id: 1, hanzi: '还', pinyin: 'hái', sense_index: null, meaning_es: 'todavía; aún', hsk_level: 1 },
-      { id: 2, hanzi: '还', pinyin: 'huán', sense_index: null, meaning_es: 'devolver', hsk_level: 3 },
-    ];
 
     await act(async () => {
-      render(<WordSheet text="还" senses={senses} readingLevel={2} sentence={null} readingId="r1" onClose={jest.fn()} />);
+      render(<WordSheet text="会" word={reunion as Word} senses={[saber, reunion]} sentence={null} readingId="r1" onClose={jest.fn()} />);
       await Promise.resolve();
     });
 
-    expect(screen.getByText('hái')).toBeTruthy();
-    expect(screen.getByText('huán')).toBeTruthy();
+    expect(screen.getByText('reunión')).toBeTruthy();
+    expect(screen.queryByText('saber')).toBeNull();
+
+    await act(async () => {
+      fireEvent.press(screen.getByText('Otros significados'));
+    });
+
+    expect(screen.getByText('saber')).toBeTruthy();
   });
 
-  it('pone primero la acepción del nivel de la lectura', async () => {
+  it('«Añadir a Cards» añade la acepción del token, no la primera por nivel', async () => {
     mockGetSettings.mockResolvedValue({ support_language: 'es' });
-    const senses = [
-      { id: 2, hanzi: '还', pinyin: 'huán', meaning_es: 'devolver', hsk_level: 3 },
-      { id: 1, hanzi: '还', pinyin: 'hái', meaning_es: 'todavía; aún', hsk_level: 1 },
-    ];
+    mockAddCard.mockResolvedValue(undefined);
 
     await act(async () => {
-      render(<WordSheet text="还" senses={senses} readingLevel={2} sentence={null} readingId="r1" onClose={jest.fn()} />);
+      render(<WordSheet text="会" word={reunion as Word} senses={[saber, reunion]} sentence={null} readingId="r1" onClose={jest.fn()} />);
       await Promise.resolve();
     });
 
-    expect(screen.getAllByLabelText(/acepción/)[0].props.accessibilityLabel).toContain('hái');
+    await act(async () => {
+      fireEvent.press(screen.getAllByLabelText(/Añadir a Cards/)[0]);
+    });
+
+    expect(mockAddCard).toHaveBeenCalledWith(31, expect.anything());
+  });
+
+  it('sin «Otros significados» cuando la palabra tiene una sola acepción', async () => {
+    mockGetSettings.mockResolvedValue({ support_language: 'es' });
+
+    await act(async () => {
+      render(<WordSheet text="会" word={saber as Word} senses={[saber]} sentence={null} readingId="r1" onClose={jest.fn()} />);
+      await Promise.resolve();
+    });
+
+    expect(screen.queryByText('Otros significados')).toBeNull();
   });
 
   it('registra la consulta al abrir la ficha de una palabra', async () => {
@@ -137,7 +154,7 @@ describe('WordSheet', () => {
     // métrica no existe, y era la única de las once sin emisor.
     mockGetSettings.mockResolvedValue({ support_language: 'es' });
 
-    await render(<WordSheet text="还" senses={[huan]} readingLevel={2} sentence={null} readingId="r1" onClose={() => {}} />);
+    await render(<WordSheet text="还" senses={[huan]} sentence={null} readingId="r1" onClose={() => {}} />);
 
     await waitFor(() =>
       expect(mockRecordEvent).toHaveBeenCalledWith(
@@ -155,10 +172,10 @@ describe('WordSheet', () => {
     mockGetSettings.mockResolvedValue({ support_language: 'es' });
 
     const view = await render(
-      <WordSheet text="还" senses={[huan]} readingLevel={2} sentence={null} readingId="r1" onClose={() => {}} />,
+      <WordSheet text="还" senses={[huan]} sentence={null} readingId="r1" onClose={() => {}} />,
     );
     await view.rerender(
-      <WordSheet text="还" senses={[huan]} readingLevel={2} sentence={null} readingId="r1" onClose={() => {}} />,
+      <WordSheet text="还" senses={[huan]} sentence={null} readingId="r1" onClose={() => {}} />,
     );
 
     await waitFor(() => expect(mockRecordEvent).toHaveBeenCalledTimes(1));

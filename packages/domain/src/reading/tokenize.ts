@@ -1,3 +1,5 @@
+import { distinctSenses } from './senses.ts';
+
 export interface DictionaryEntry {
   id?: number;
   hanzi: string;
@@ -48,13 +50,16 @@ export function tokenizeReading(
 
   while (offset < content.length) {
     const text = Array.from(content.slice(offset))[0];
-    const word = (wordsByFirstCharacter.get(text) ?? []).find(candidate =>
+    const match = (wordsByFirstCharacter.get(text) ?? []).find(candidate =>
       content.startsWith(candidate.hanzi, offset),
     );
 
-    if (word) {
-      const senses = (wordsByFirstCharacter.get(text) ?? [])
-        .filter(candidate => candidate.hanzi === word.hanzi);
+    if (match) {
+      // Las entradas repetidas del sílabo (好 en HSK 1 y 2) son una sola acepción.
+      const senses = distinctSenses(
+        (wordsByFirstCharacter.get(text) ?? []).filter(candidate => candidate.hanzi === match.hanzi),
+      );
+      const word = senses[0];
       tokens.push({
         id: `t${offset}`,
         text: word.hanzi,

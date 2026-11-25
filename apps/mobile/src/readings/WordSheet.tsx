@@ -16,7 +16,6 @@ interface Props {
   text: string;
   sentence: Sentence | null;
   readingId: string;
-  readingLevel?: number;
   onClose(): void;
 }
 
@@ -40,21 +39,24 @@ export function WordSheet({
   text,
   sentence,
   readingId,
-  readingLevel,
   onClose,
 }: Props) {
   const { colors } = useTheme();
   const supportLanguage = useSupportLanguage();
   const flashcards = useRef(getData().flashcards);
-  const senses = sortSenses(providedSenses ?? (word ? [word] : []), readingLevel);
-  const firstSense = senses[0] ?? null;
+  const senses = providedSenses ?? (word ? [word] : []);
+  // La acepción del token la decide la lectura (anotada y validada en la
+  // build); la ficha no adivina por nivel. Las demás quedan plegadas.
+  const firstSense = (word ? senses.find(sense => sense.id === word.id) ?? word : senses[0]) ?? null;
+  const otherSenses = firstSense ? senses.filter(sense => sense.id !== firstSense.id) : [];
+  const [showOthers, setShowOthers] = useState(false);
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(() => new Set(senses.filter(sense => sense.in_srs).map(sense => sense.id)));
   const [error, setError] = useState<string | null>(null);
   const looked = useRef<string | null>(null);
 
   useEffect(() => {
-    const first = senses[0];
+    const first = firstSense;
     // La clave es la palabra, no el render: sin esto, cualquier re-render
     // volvería a contar la consulta e inflaría la métrica en silencio.
     if (!first || looked.current === String(first.id)) return;
@@ -69,7 +71,7 @@ export function WordSheet({
         payload: { reading_slug: readingId, form: text },
       }),
     ).catch(() => {});
-  }, [senses, readingId, text]);
+  }, [firstSense, readingId, text]);
 
   async function addCard(sense: ReadingSense) {
     if (added.has(sense.id) || adding) {
@@ -97,6 +99,27 @@ export function WordSheet({
 
   const legacyMode = !providedSenses && Boolean(word);
 
+  function renderSense(sense: ReadingSense) {
+    const gloss = glossFor(sense, supportLanguage);
+    return (
+      <View key={sense.id} style={styles.sense}>
+        <Text style={[styles.pinyin, { color: colors.text }]}>{sense.pinyin}</Text>
+        <Text style={[styles.meaning, { color: colors.textMuted }]}>{gloss}</Text>
+        <View style={styles.badges}>
+          {sense.hsk_level ? <Badge label={`HSK ${sense.hsk_level}`} /> : null}
+          {sense.pos ? <Badge label={sense.pos} /> : null}
+          {sense.traditional ? <Badge label={`繁 ${sense.traditional}`} /> : null}
+          {sense.classifier ? <Badge label={`量 ${sense.classifier}`} /> : null}
+        </View>
+        <Button
+          label={legacyMode ? (added.has(sense.id) ? 'Added' : adding ? 'Adding...' : 'Add to Cards') : `Añadir a Cards: ${sense.pinyin}, ${gloss}`}
+          onPress={() => addCard(sense)}
+          disabled={added.has(sense.id) || adding}
+        />
+      </View>
+    );
+  }
+
   return (
     <Card>
       <View style={styles.header}>
@@ -108,25 +131,17 @@ export function WordSheet({
 
       {firstSense ? (
         <>
-          {senses.map((sense, index) => (
-            <View key={sense.id} style={styles.sense}>
-              <Text style={[styles.pinyin, { color: colors.text }]}>{sense.pinyin}</Text>
-              <Text style={[styles.meaning, { color: colors.textMuted }]}>
-                {glossFor(sense, supportLanguage)}
-              </Text>
-              <View style={styles.badges}>
-                {sense.hsk_level ? <Badge label={`HSK ${sense.hsk_level}`} /> : null}
-                {sense.pos ? <Badge label={sense.pos} /> : null}
-                {sense.traditional ? <Badge label={`繁 ${sense.traditional}`} /> : null}
-                {sense.classifier ? <Badge label={`量 ${sense.classifier}`} /> : null}
-              </View>
-              <Button
-                label={legacyMode ? (added.has(sense.id) ? 'Added' : adding ? 'Adding...' : 'Add to Cards') : `Añadir acepción ${index + 1}: ${sense.pinyin}`}
-                onPress={() => addCard(sense)}
-                disabled={added.has(sense.id) || adding}
-              />
-            </View>
-          ))}
+          {renderSense(firstSense)}
+          {otherSenses.length > 0 ? (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={{ expanded: showOthers }}
+              onPress={() => setShowOthers(current => !current)}
+            >
+              <Text style={[styles.others, { color: colors.textMuted }]}>Otros significados</Text>
+            </Pressable>
+          ) : null}
+          {showOthers ? otherSenses.map(renderSense) : null}
           {sentence ? (
             <Text style={[styles.context, { color: colors.textMuted }]}>{sentence.text}</Text>
           ) : null}
@@ -137,24 +152,6 @@ export function WordSheet({
       )}
     </Card>
   );
-}
-
-function sortSenses(senses: ReadingSense[], readingLevel?: number) {
-  if (readingLevel === undefined) {
-    return senses;
-  }
-
-  return [...senses].sort((left, right) => {
-    const leftLevel = left.hsk_level ?? Number.POSITIVE_INFINITY;
-    const rightLevel = right.hsk_level ?? Number.POSITIVE_INFINITY;
-    const distance = Math.abs(leftLevel - readingLevel) - Math.abs(rightLevel - readingLevel);
-    if (distance !== 0) return distance;
-
-    const leftAtOrBelow = leftLevel <= readingLevel;
-    const rightAtOrBelow = rightLevel <= readingLevel;
-    if (leftAtOrBelow !== rightAtOrBelow) return leftAtOrBelow ? -1 : 1;
-    return leftLevel - rightLevel;
-  });
 }
 
 function glossFor(sense: ReadingSense, language: 'es' | 'en') {
@@ -187,6 +184,10 @@ const styles = StyleSheet.create({
   },
   sense: {
     gap: tokens.spacing.xs,
+  },
+  others: {
+    fontSize: tokens.fontSize.sm,
+    fontWeight: '700',
   },
   context: {
     fontSize: tokens.fontSize.md,
