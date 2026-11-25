@@ -32,3 +32,4 @@ export { validateCommunicativeTask, type TaskIssue, type TaskIssueKind } from '.
 export * from './exam/timeline';
 export * from './exam/components';
 export { IMAGE_MAX_BYTES, validateImageManifest, type ImageIssue, type ImageIssueKind, type ImageManifest } from './media/manifest';
+export * from './expression/recognize-handwriting';
