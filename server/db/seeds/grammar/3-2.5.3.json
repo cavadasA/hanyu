@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "2.5.3",
+  "pattern": "才 / 刚 / 先 / 马上 / 一直 + verbo · 一会儿",
+  "explanation": "才 dice que algo pasó más tarde de lo esperado: 他九点才来 «no vino hasta las nueve»; al contrario que 就, no lleva 了. 刚 o 刚刚 es «acabar de»: 我刚到. 先 es «primero» y suele seguir con 再 o 然后. 马上 es «enseguida», 一直 «todo el rato, sin parar» y 一会儿 «un rato».",
+  "markers": ["才","刚","先","马上","一直"],
+  "examples": [
+    {"zh":"他九点才来。","pinyin":"Tā jiǔ diǎn cái lái.","es":"No vino hasta las nueve."},
+    {"zh":"我刚到家。","pinyin":"Wǒ gāng dào jiā.","es":"Acabo de llegar a casa."},
+    {"zh":"你先吃饭，再做作业。","pinyin":"Nǐ xiān chī fàn, zài zuò zuòyè.","es":"Primero come y luego haz los deberes."},
+    {"zh":"等一会儿，我马上来。","pinyin":"Děng yíhuìr, wǒ mǎshàng lái.","es":"Espera un momento, voy enseguida."},
+    {"zh":"昨天一直下雨。","pinyin":"Zuótiān yìzhí xià yǔ.","es":"Ayer no paró de llover."}
+  ],
+  "common_errors": [
+    {"wrong":"他九点才来了。","right":"他九点才来。","why":"Con 才 («hasta tan tarde») la frase no lleva 了."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.7.3"},{"hsk_level":2,"code":"2.7.6"}]
+}

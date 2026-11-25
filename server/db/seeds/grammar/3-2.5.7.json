@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "2.5.7",
+  "pattern": "当然 / 其实 / 终于 / 才 / 就 + verbo",
+  "explanation": "Añaden la actitud de quien habla. 当然 es «claro, por supuesto». 其实 corrige lo que se cree: «en realidad». 终于 es «por fin», tras esperar mucho. 才 puede subrayar que algo es poco o pronto (他才十岁 «solo tiene diez años») o que solo así se cumple algo. 就 insiste en una decisión o en un hecho: 我就不去 «pues no voy».",
+  "markers": ["当然","其实","终于","才","就"],
+  "examples": [
+    {"zh":"“你会来吗？”“当然会。”","pinyin":"“Nǐ huì lái ma?” “Dāngrán huì.”","es":"—¿Vendrás? —Por supuesto."},
+    {"zh":"其实他不是中国人。","pinyin":"Qíshí tā bú shì Zhōngguó rén.","es":"En realidad no es chino."},
+    {"zh":"我们终于到了。","pinyin":"Wǒmen zhōngyú dào le.","es":"Por fin hemos llegado."},
+    {"zh":"他才十岁，就会做饭了。","pinyin":"Tā cái shí suì, jiù huì zuò fàn le.","es":"Solo tiene diez años y ya sabe cocinar."},
+    {"zh":"你不让我去，我就要去。","pinyin":"Nǐ bú ràng wǒ qù, wǒ jiù yào qù.","es":"Aunque no me dejes, pienso ir."}
+  ],
+  "common_errors": [
+    {"wrong":"我们到了终于。","right":"我们终于到了。","why":"终于 va delante del verbo, no al final como en «hemos llegado por fin»."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.7.7"},{"hsk_level":3,"code":"2.5.3"}]
+}

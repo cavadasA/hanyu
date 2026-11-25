@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "2.5.2",
+  "pattern": "一共 + cantidad · 只 + verbo · 到处 + verbo · 一块儿 + verbo · 就 + cantidad · …，只是…",
+  "explanation": "Delimitan el alcance. 一共 suma un total, «en total». 只 es «solo»: va delante del verbo, no del nombre. 就 con una cantidad también es «solo», con matiz de que es poco: 我就有十块钱. 到处 es «por todas partes» y 一块儿, «juntos» en lo oral. 只是 introduce una pega suave: «solo que…».",
+  "markers": ["一共","只","就","到处"],
+  "examples": [
+    {"zh":"一共多少钱？","pinyin":"Yígòng duōshao qián?","es":"¿Cuánto es en total?"},
+    {"zh":"我只喝了一点儿。","pinyin":"Wǒ zhǐ hē le yìdiǎnr.","es":"Solo bebí un poco."},
+    {"zh":"我就有十块钱。","pinyin":"Wǒ jiù yǒu shí kuài qián.","es":"Solo tengo diez yuanes."},
+    {"zh":"公园里到处都是人。","pinyin":"Gōngyuán li dàochù dōu shì rén.","es":"En el parque hay gente por todas partes."},
+    {"zh":"这件衣服很好看，只是有点儿贵。","pinyin":"Zhè jiàn yīfu hěn hǎokàn, zhǐshì yǒudiǎnr guì.","es":"Esta ropa es muy bonita, solo que es algo cara."}
+  ],
+  "common_errors": [
+    {"wrong":"我喝了只一点儿。","right":"我只喝了一点儿。","why":"只 va delante del verbo, no delante de la cantidad como «solo un poco»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.2"}]
+}

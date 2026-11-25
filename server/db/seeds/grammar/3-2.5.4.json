@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "2.5.4",
+  "pattern": "总 / 总是 / 常常 + verbo · 又 + verbo (+ 了)",
+  "explanation": "总 y 总是 significan «siempre, una y otra vez», a menudo con un tono de queja: 他总是迟到. 常常 es «a menudo». 又 es «otra vez» para algo que ya ha vuelto a pasar, por eso suele llevar 了: 他又来了. Para una repetición futura se usa 再, no 又.",
+  "markers": ["总","常常","又"],
+  "examples": [
+    {"zh":"他总是迟到。","pinyin":"Tā zǒngshì chídào.","es":"Siempre llega tarde."},
+    {"zh":"我常常去那个公园。","pinyin":"Wǒ chángcháng qù nàge gōngyuán.","es":"Voy a menudo a ese parque."},
+    {"zh":"他昨天来了，今天又来了。","pinyin":"Tā zuótiān lái le, jīntiān yòu lái le.","es":"Vino ayer y hoy ha vuelto a venir."},
+    {"zh":"你怎么又忘了？","pinyin":"Nǐ zěnme yòu wàng le?","es":"¿Cómo es que se te ha vuelto a olvidar?"}
+  ],
+  "common_errors": [
+    {"wrong":"我明天又来。","right":"我明天再来。","why":"又 es para lo que ya ha vuelto a pasar; para una repetición futura se usa 再."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.4"},{"hsk_level":2,"code":"2.7.4"}]
+}

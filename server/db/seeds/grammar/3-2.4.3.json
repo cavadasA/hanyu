@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "2.4.3",
+  "pattern": "clasificador + clasificador (+ 都)",
+  "explanation": "Repetir un clasificador significa «todos y cada uno»: 个个 «cada uno de ellos», 张张 «todas las hojas, una por una». Subraya que no hay excepción y casi siempre va con 都 delante del verbo. Se usa como sujeto o delante del nombre (张张照片), nunca detrás del verbo.",
+  "markers": ["个个","张张"],
+  "examples": [
+    {"zh":"我们班的学生个个都很认真。","pinyin":"Wǒmen bān de xuésheng gègè dōu hěn rènzhēn.","es":"Los alumnos de nuestra clase son todos muy aplicados."},
+    {"zh":"这些照片张张都很漂亮。","pinyin":"Zhèxiē zhàopiàn zhāngzhāng dōu hěn piàoliang.","es":"Estas fotos son preciosas, todas y cada una."},
+    {"zh":"他的孩子个个都很聪明。","pinyin":"Tā de háizi gègè dōu hěn cōngming.","es":"Sus hijos son todos muy listos."}
+  ],
+  "common_errors": [
+    {"wrong":"学生个个很认真。","right":"学生个个都很认真。","why":"El clasificador repetido suele ir reforzado con 都 delante del predicado."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.6.1"}]
+}

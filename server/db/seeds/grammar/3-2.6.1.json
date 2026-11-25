@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "2.6.1",
+  "pattern": "为 / 向 + persona + verbo · 关于 + tema (+ 的 + nombre)",
+  "explanation": "为 presenta a quien se beneficia de algo, «por, para»: 妈妈为我做了一个蛋糕. 向 presenta a quien se dirige una acción, «a, hacia»: 向老师问好, 向他学习 «aprender de él». 关于 introduce el tema, «sobre, acerca de», y suele ir delante de un nombre con 的: 关于中国历史的书. Los tres grupos van delante del verbo.",
+  "markers": ["为","向","关于"],
+  "examples": [
+    {"zh":"妈妈为我准备了早饭。","pinyin":"Māma wèi wǒ zhǔnbèi le zǎofàn.","es":"Mamá me ha preparado el desayuno."},
+    {"zh":"我们应该向他学习。","pinyin":"Wǒmen yīnggāi xiàng tā xuéxí.","es":"Deberíamos aprender de él."},
+    {"zh":"我想看一本关于中国历史的书。","pinyin":"Wǒ xiǎng kàn yì běn guānyú Zhōngguó lìshǐ de shū.","es":"Quiero leer un libro sobre la historia de China."},
+    {"zh":"关于这个问题，我们明天再说。","pinyin":"Guānyú zhège wèntí, wǒmen míngtiān zài shuō.","es":"Sobre este tema, ya hablaremos mañana."}
+  ],
+  "common_errors": [
+    {"wrong":"我想看一本书关于中国历史。","right":"我想看一本关于中国历史的书。","why":"El grupo con 关于 que describe un nombre va delante de él con 的, no detrás como «un libro sobre…»."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.8.3"}]
+}

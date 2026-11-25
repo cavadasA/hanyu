@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "2.5.1",
+  "pattern": "比较 / 挺 / 特别 / 有些 + adjetivo · 更 / 还 + adjetivo · 越来越 · adjetivo + 极了",
+  "explanation": "Gradúan un adjetivo. 比较 «bastante, relativamente» y 挺 «bastante», muy oral, suavizan; 特别 es «especialmente». 有些 «un poco» suele ir con algo negativo. 更 «aún más» y 还 «todavía más» comparan con algo ya dicho: 今天比昨天更冷. 越来越 marca un aumento progresivo, y 极了 detrás del adjetivo es «muchísimo»: 好极了.",
+  "markers": ["比较","挺","更","越来越","极了"],
+  "examples": [
+    {"zh":"这个问题比较难。","pinyin":"Zhège wèntí bǐjiào nán.","es":"Esta pregunta es bastante difícil."},
+    {"zh":"他人挺好的。","pinyin":"Tā rén tǐng hǎo de.","es":"Es muy buena persona."},
+    {"zh":"今天比昨天更冷。","pinyin":"Jīntiān bǐ zuótiān gèng lěng.","es":"Hoy hace aún más frío que ayer."},
+    {"zh":"天气越来越热了。","pinyin":"Tiānqì yuè lái yuè rè le.","es":"Cada vez hace más calor."},
+    {"zh":"这个菜好吃极了！","pinyin":"Zhège cài hǎochī jí le!","es":"¡Este plato está buenísimo!"}
+  ],
+  "common_errors": [
+    {"wrong":"今天比昨天很冷。","right":"今天比昨天更冷。","why":"En una comparación con 比 no se usa 很; para reforzarla se pone 更 o 还."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.7.1"},{"hsk_level":3,"code":"3.2.2"}]
+}

@@ -1,0 +1,19 @@
+{
+  "hsk_level": 3,
+  "code": "2.5.6",
+  "pattern": "大概 / 一定 / 必须 / 好像 / 差不多 / 几乎 + verbo / adjetivo",
+  "explanation": "Expresan la seguridad o la necesidad de quien habla. 大概 es «probablemente» y también «aproximadamente». 一定 es «seguro que» o, en consejos, «sin falta». 必须 es «tener que» obligatorio; su negación es 不用. 好像 es «parece que». 差不多 es «casi, más o menos» y 几乎, «casi», con más fuerza.",
+  "markers": ["大概","一定","必须","好像","差不多","几乎"],
+  "examples": [
+    {"zh":"他大概不来了。","pinyin":"Tā dàgài bù lái le.","es":"Probablemente ya no viene."},
+    {"zh":"明天你一定要来！","pinyin":"Míngtiān nǐ yídìng yào lái!","es":"¡Mañana tienes que venir sin falta!"},
+    {"zh":"你必须九点以前到。","pinyin":"Nǐ bìxū jiǔ diǎn yǐqián dào.","es":"Tienes que llegar antes de las nueve."},
+    {"zh":"外面好像下雨了。","pinyin":"Wàimiàn hǎoxiàng xià yǔ le.","es":"Parece que fuera está lloviendo."},
+    {"zh":"我们差不多到了。","pinyin":"Wǒmen chàbuduō dào le.","es":"Ya casi hemos llegado."},
+    {"zh":"我几乎每天都跑步。","pinyin":"Wǒ jīhū měi tiān dōu pǎobù.","es":"Corro casi todos los días."}
+  ],
+  "common_errors": [
+    {"wrong":"你不必须来。","right":"你不用来。","why":"La negación de 必须 no es «不必须», sino 不用 o 不必."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"2.2.1"},{"hsk_level":3,"code":"2.5.8"}]
+}

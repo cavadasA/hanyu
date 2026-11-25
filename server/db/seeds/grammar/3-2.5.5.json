@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "2.5.5",
+  "pattern": "一边 + verbo 1，一边 + verbo 2",
+  "explanation": "一边…一边… dice que una misma persona hace dos cosas a la vez, como «mientras»: 他一边吃饭，一边看电视. Los dos 一边 van delante de su verbo, detrás del sujeto, y cada acción debe ser algo que dura. No sirve para dos personas distintas ni para acciones puntuales.",
+  "markers": ["一边"],
+  "examples": [
+    {"zh":"他一边吃饭，一边看电视。","pinyin":"Tā yìbiān chī fàn, yìbiān kàn diànshì.","es":"Come mientras ve la tele."},
+    {"zh":"我们一边走，一边说话。","pinyin":"Wǒmen yìbiān zǒu, yìbiān shuōhuà.","es":"Hablamos mientras caminábamos."},
+    {"zh":"她一边听歌，一边做作业。","pinyin":"Tā yìbiān tīng gē, yìbiān zuò zuòyè.","es":"Hace los deberes escuchando música."}
+  ],
+  "common_errors": [
+    {"wrong":"他吃饭一边，看电视一边。","right":"他一边吃饭，一边看电视。","why":"一边 va delante de cada verbo, no detrás como «comiendo mientras»."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"6.3.3"}]
+}

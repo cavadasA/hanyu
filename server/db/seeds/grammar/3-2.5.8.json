@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "2.5.8",
+  "pattern": "不用 / 不必 + verbo",
+  "explanation": "不用 y 不必 significan «no hace falta»: 你不用来 «no hace falta que vengas». Son la negación de 得 y de 必须: no prohíben, solo quitan la obligación. 不用 es más oral; 不必, algo más formal. Para prohibir se usa 别 o 不要. 不用谢 es la respuesta habitual a «gracias».",
+  "markers": ["不用","不必"],
+  "examples": [
+    {"zh":"你不用来了，我自己去。","pinyin":"Nǐ búyòng lái le, wǒ zìjǐ qù.","es":"No hace falta que vengas, voy yo solo."},
+    {"zh":"“谢谢！”“不用谢。”","pinyin":"“Xièxie!” “Búyòng xiè.”","es":"—¡Gracias! —De nada."},
+    {"zh":"这件事你不必担心。","pinyin":"Zhè jiàn shì nǐ búbì dānxīn.","es":"No tienes por qué preocuparte por esto."}
+  ],
+  "common_errors": [
+    {"wrong":"你不用在这儿说话！（para prohibir）","right":"你别在这儿说话！","why":"不用 solo quita la obligación («no hace falta»); para prohibir se usa 别 o 不要."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"2.2.1"},{"hsk_level":2,"code":"2.7.5"}]
+}
