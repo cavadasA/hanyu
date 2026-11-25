@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "2.6.5",
+  "pattern": "根据 + fuente / dato，…",
+  "explanation": "根据 «según, de acuerdo con» presenta aquello en lo que se basa una afirmación o una decisión: 根据天气情况，我们决定明天去. Suele abrir la frase, separado por una coma. A diferencia de «según tú», no se usa con personas: para opiniones se dice 在我看来 o 我觉得.",
+  "markers": ["根据"],
+  "examples": [
+    {"zh":"根据天气，我们决定明天去。","pinyin":"Gēnjù tiānqì, wǒmen juédìng míngtiān qù.","es":"Según el tiempo que haga, hemos decidido ir mañana."},
+    {"zh":"根据这本书，这个地方很有名。","pinyin":"Gēnjù zhè běn shū, zhège dìfang hěn yǒumíng.","es":"Según este libro, este sitio es muy famoso."},
+    {"zh":"老师根据我们的成绩分班。","pinyin":"Lǎoshī gēnjù wǒmen de chéngjì fēn bān.","es":"El profesor nos reparte en grupos según las notas."}
+  ],
+  "common_errors": [
+    {"wrong":"根据我，这个电影很好看。","right":"我觉得这个电影很好看。","why":"根据 se basa en datos o fuentes, no en personas; para dar una opinión se usa 我觉得 o 在我看来."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"3.2.2"}]
+}

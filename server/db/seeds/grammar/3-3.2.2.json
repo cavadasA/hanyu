@@ -1,0 +1,19 @@
+{
+  "hsk_level": 3,
+  "code": "3.2.2",
+  "pattern": "看来 · 在…看来 · 看起来 / 看上去 · 一般来说 · 越来越 · 不一会儿 · 不怎么样",
+  "explanation": "Expresiones fijas muy frecuentes. 看来 saca una conclusión, «por lo que se ve»; 在我看来 da una opinión, «en mi opinión». 看起来 y 看上去 describen la apariencia, «parece». 一般来说 es «por lo general». 越来越 marca un cambio progresivo, «cada vez más». 不一会儿 es «al poco rato» y 不怎么样, «no gran cosa».",
+  "markers": ["看来","看起来","一般来说","越来越","不一会儿","不怎么样"],
+  "examples": [
+    {"zh":"看来他今天不来了。","pinyin":"Kànlái tā jīntiān bù lái le.","es":"Por lo que se ve, hoy ya no viene."},
+    {"zh":"在我看来，这个办法不错。","pinyin":"Zài wǒ kànlái, zhège bànfǎ búcuò.","es":"En mi opinión, esta solución no está mal."},
+    {"zh":"他看起来很年轻。","pinyin":"Tā kàn qǐlai hěn niánqīng.","es":"Parece muy joven."},
+    {"zh":"一般来说，南方的冬天不太冷。","pinyin":"Yìbān lái shuō, nánfāng de dōngtiān bú tài lěng.","es":"Por lo general, en el sur el invierno no es muy frío."},
+    {"zh":"他的汉语越来越好了，不一会儿就看完了一本书。","pinyin":"Tā de Hànyǔ yuè lái yuè hǎo le, bù yíhuìr jiù kànwán le yì běn shū.","es":"Su chino es cada vez mejor: en un momento se ha leído un libro."},
+    {"zh":"这个电影不怎么样。","pinyin":"Zhège diànyǐng bù zěnmeyàng.","es":"Esta película no es gran cosa."}
+  ],
+  "common_errors": [
+    {"wrong":"他的汉语越来越很好。","right":"他的汉语越来越好了。","why":"越来越 ya expresa el grado: el adjetivo va solo, sin 很, y suele cerrar con 了."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"2.5.1"},{"hsk_level":3,"code":"4.1"}]
+}

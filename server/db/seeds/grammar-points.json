@@ -7420,7 +7420,51 @@
     "items": [
       "向2"
     ],
-    "order_idx": 21
+    "order_idx": 21,
+    "pattern": "向 + dirección + verbo",
+    "explanation": "向 indica hacia dónde va un movimiento o hacia dónde se mira, como 往: 向前走 «sigue recto», 向左看 «mira a la izquierda». Es algo más formal que 往 y es el que aparece en carteles e indicaciones escritas. El grupo va delante del verbo.",
+    "markers": [
+      "向"
+    ],
+    "examples": [
+      {
+        "zh": "你向前走，银行就在右边。",
+        "pinyin": "Nǐ xiàng qián zǒu, yínháng jiù zài yòubian.",
+        "es": "Sigue recto y el banco está a la derecha."
+      },
+      {
+        "zh": "请向左看。",
+        "pinyin": "Qǐng xiàng zuǒ kàn.",
+        "es": "Mire a la izquierda, por favor."
+      },
+      {
+        "zh": "他向我们走过来了。",
+        "pinyin": "Tā xiàng wǒmen zǒu guòlai le.",
+        "es": "Vino andando hacia nosotros."
+      },
+      {
+        "zh": "从这儿向东走十分钟就到了。",
+        "pinyin": "Cóng zhèr xiàng dōng zǒu shí fēnzhōng jiù dào le.",
+        "es": "Desde aquí, a diez minutos andando hacia el este."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你走向前。",
+        "right": "你向前走。",
+        "why": "En las indicaciones, 向 y la dirección van delante del verbo."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "2.8.2"
+      },
+      {
+        "hsk_level": 3,
+        "code": "2.6.1"
+      }
+    ]
   },
   {
     "code": "2.6.3",
@@ -7432,7 +7476,48 @@
     "items": [
       "为了、为2"
     ],
-    "order_idx": 22
+    "order_idx": 22,
+    "pattern": "为了 + finalidad，… · 为 + causa / beneficiario + verbo",
+    "explanation": "为了 introduce la finalidad, «para, con el fin de», y suele abrir la frase: 为了学好汉语，他每天都听写. 为 puede indicar la causa de un sentimiento («por») o a quién beneficia algo: 我为你高兴 «me alegro por ti». La finalidad no se pone al final como en español «estudio para aprobar»: va delante.",
+    "markers": [
+      "为了",
+      "为"
+    ],
+    "examples": [
+      {
+        "zh": "为了学好汉语，他每天都看中文电视。",
+        "pinyin": "Wèile xuéhǎo Hànyǔ, tā měi tiān dōu kàn Zhōngwén diànshì.",
+        "es": "Para aprender bien chino, ve la tele en chino todos los días."
+      },
+      {
+        "zh": "为了身体健康，我每天跑步。",
+        "pinyin": "Wèile shēntǐ jiànkāng, wǒ měi tiān pǎobù.",
+        "es": "Para estar sano, corro todos los días."
+      },
+      {
+        "zh": "我真为你高兴。",
+        "pinyin": "Wǒ zhēn wèi nǐ gāoxìng.",
+        "es": "Me alegro mucho por ti."
+      },
+      {
+        "zh": "他为这件事很不高兴。",
+        "pinyin": "Tā wèi zhè jiàn shì hěn bù gāoxìng.",
+        "es": "Está muy disgustado por esto."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "我每天跑步为了身体健康。",
+        "right": "为了身体健康，我每天跑步。",
+        "why": "La finalidad con 为了 suele ir delante, no al final como en «corro para estar sano»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "6.3.8"
+      }
+    ]
   },
   {
     "code": "2.6.4",
@@ -7444,7 +7529,52 @@
     "items": [
       "把、被"
     ],
-    "order_idx": 23
+    "order_idx": 23,
+    "pattern": "Sujeto + 把 + objeto + verbo + resultado · Sujeto + 被 (+ agente) + verbo + resultado",
+    "explanation": "把 adelanta el objeto para contar qué le pasa: 我把杯子打坏了 «he roto el vaso». 被 hace lo contrario: el afectado es el sujeto y quien actúa va detrás de 被, o se omite: 杯子被他打坏了. 被 suele usarse para algo negativo o inesperado. En los dos casos el verbo no puede ir solo: necesita un resultado, una dirección o 了.",
+    "markers": [
+      "把",
+      "被"
+    ],
+    "examples": [
+      {
+        "zh": "我把杯子打坏了。",
+        "pinyin": "Wǒ bǎ bēizi dǎhuài le.",
+        "es": "He roto el vaso."
+      },
+      {
+        "zh": "杯子被弟弟打坏了。",
+        "pinyin": "Bēizi bèi dìdi dǎhuài le.",
+        "es": "Mi hermano pequeño ha roto el vaso."
+      },
+      {
+        "zh": "我的手机被人拿走了。",
+        "pinyin": "Wǒ de shǒujī bèi rén názǒu le.",
+        "es": "Alguien se ha llevado mi móvil."
+      },
+      {
+        "zh": "你把这本书带回家吧。",
+        "pinyin": "Nǐ bǎ zhè běn shū dài huí jiā ba.",
+        "es": "Llévate este libro a casa."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "杯子被他打。",
+        "right": "杯子被他打坏了。",
+        "why": "Con 被 el verbo no se queda solo: hay que decir qué le pasó al sujeto (打坏了)."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "6.2.1"
+      },
+      {
+        "hsk_level": 3,
+        "code": "6.2.2"
+      }
+    ]
   },
   {
     "code": "2.6.5",
@@ -7456,7 +7586,42 @@
     "items": [
       "根据"
     ],
-    "order_idx": 24
+    "order_idx": 24,
+    "pattern": "根据 + fuente / dato，…",
+    "explanation": "根据 «según, de acuerdo con» presenta aquello en lo que se basa una afirmación o una decisión: 根据天气情况，我们决定明天去. Suele abrir la frase, separado por una coma. A diferencia de «según tú», no se usa con personas: para opiniones se dice 在我看来 o 我觉得.",
+    "markers": [
+      "根据"
+    ],
+    "examples": [
+      {
+        "zh": "根据天气，我们决定明天去。",
+        "pinyin": "Gēnjù tiānqì, wǒmen juédìng míngtiān qù.",
+        "es": "Según el tiempo que haga, hemos decidido ir mañana."
+      },
+      {
+        "zh": "根据这本书，这个地方很有名。",
+        "pinyin": "Gēnjù zhè běn shū, zhège dìfang hěn yǒumíng.",
+        "es": "Según este libro, este sitio es muy famoso."
+      },
+      {
+        "zh": "老师根据我们的成绩分班。",
+        "pinyin": "Lǎoshī gēnjù wǒmen de chéngjì fēn bān.",
+        "es": "El profesor nos reparte en grupos según las notas."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "根据我，这个电影很好看。",
+        "right": "我觉得这个电影很好看。",
+        "why": "根据 se basa en datos o fuentes, no en personas; para dar una opinión se usa 我觉得 o 在我看来."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "3.2.2"
+      }
+    ]
   },
   {
     "code": "2.7.1",
@@ -7468,7 +7633,47 @@
     "items": [
       "或、或者"
     ],
-    "order_idx": 25
+    "order_idx": 25,
+    "pattern": "A + 或者 / 或 + B (en afirmaciones)",
+    "explanation": "或者, y su forma breve 或, une dos opciones en una afirmación: «o». 你今天或者明天来都可以 «puedes venir hoy o mañana». En una pregunta que pide elegir no se usan: ahí la «o» es 还是. 或 es más escrito y aparece sobre todo entre palabras sueltas.",
+    "markers": [
+      "或者",
+      "或"
+    ],
+    "examples": [
+      {
+        "zh": "你今天或者明天来都可以。",
+        "pinyin": "Nǐ jīntiān huòzhě míngtiān lái dōu kěyǐ.",
+        "es": "Puedes venir hoy o mañana."
+      },
+      {
+        "zh": "我们坐地铁或者打车去。",
+        "pinyin": "Wǒmen zuò dìtiě huòzhě dǎchē qù.",
+        "es": "Iremos en metro o en taxi."
+      },
+      {
+        "zh": "周末我喜欢看书或看电影。",
+        "pinyin": "Zhōumò wǒ xǐhuan kàn shū huò kàn diànyǐng.",
+        "es": "Los fines de semana me gusta leer o ver películas."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "你喝茶或者咖啡？",
+        "right": "你喝茶还是咖啡？",
+        "why": "En una pregunta para elegir la «o» es 还是; 或者 es para afirmaciones."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "6.2.1"
+      },
+      {
+        "hsk_level": 3,
+        "code": "6.3.2"
+      }
+    ]
   },
   {
     "code": "2.7.2",
@@ -7480,7 +7685,70 @@
     "items": [
       "只有、只要、不但、而且、如果、可1、可是、然后"
     ],
-    "order_idx": 26
+    "order_idx": 26,
+    "pattern": "如果 / 只要 / 只有 / 不但…而且 / 可是 / 然后",
+    "explanation": "Unen frases con relaciones distintas. 如果 «si» plantea una condición hipotética. 只要 «basta con que» pide una condición suficiente; 只有 «solo si» pide la única condición posible. 不但…而且… es «no solo… sino también». 可是 y 可 son «pero», más orales que 但是. 然后 es «después, luego» en una secuencia.",
+    "markers": [
+      "如果",
+      "只要",
+      "只有",
+      "不但",
+      "可是",
+      "然后"
+    ],
+    "examples": [
+      {
+        "zh": "如果明天下雨，我们就不去了。",
+        "pinyin": "Rúguǒ míngtiān xià yǔ, wǒmen jiù bú qù le.",
+        "es": "Si mañana llueve, no iremos."
+      },
+      {
+        "zh": "只要你努力，就能学好。",
+        "pinyin": "Zhǐyào nǐ nǔlì, jiù néng xuéhǎo.",
+        "es": "Basta con que te esfuerces para aprenderlo bien."
+      },
+      {
+        "zh": "只有多练习，才能说得好。",
+        "pinyin": "Zhǐyǒu duō liànxí, cái néng shuō de hǎo.",
+        "es": "Solo practicando mucho se llega a hablar bien."
+      },
+      {
+        "zh": "他不但会说汉语，而且说得很好。",
+        "pinyin": "Tā búdàn huì shuō Hànyǔ, érqiě shuō de hěn hǎo.",
+        "es": "No solo habla chino, sino que lo habla muy bien."
+      },
+      {
+        "zh": "我想去，可是没有时间。",
+        "pinyin": "Wǒ xiǎng qù, kěshì méiyǒu shíjiān.",
+        "es": "Quiero ir, pero no tengo tiempo."
+      },
+      {
+        "zh": "我们先吃饭，然后去看电影。",
+        "pinyin": "Wǒmen xiān chī fàn, ránhòu qù kàn diànyǐng.",
+        "es": "Primero comemos y luego vamos al cine."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "只有你努力，就能学好。",
+        "right": "只要你努力，就能学好。",
+        "why": "只有 va con 才 («solo si…, entonces»); 只要 va con 就 («basta con que…»)."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "6.3.6"
+      },
+      {
+        "hsk_level": 3,
+        "code": "6.3.7"
+      },
+      {
+        "hsk_level": 3,
+        "code": "6.3.4"
+      }
+    ]
   },
   {
     "code": "2.8.1",
@@ -7492,7 +7760,42 @@
     "items": [
       "的话"
     ],
-    "order_idx": 27
+    "order_idx": 27,
+    "pattern": "(如果 +) condición + 的话，…",
+    "explanation": "的话 cierra una condición, como un «si» puesto al final: 明天下雨的话，我们就不去了. Puede ir solo o reforzar a 如果 (如果…的话). Es muy frecuente en la conversación. La consecuencia va detrás, a menudo con 就.",
+    "markers": [
+      "的话"
+    ],
+    "examples": [
+      {
+        "zh": "明天下雨的话，我们就不去了。",
+        "pinyin": "Míngtiān xià yǔ dehuà, wǒmen jiù bú qù le.",
+        "es": "Si mañana llueve, no iremos."
+      },
+      {
+        "zh": "如果你有时间的话，来我家吃饭吧。",
+        "pinyin": "Rúguǒ nǐ yǒu shíjiān dehuà, lái wǒ jiā chī fàn ba.",
+        "es": "Si tienes tiempo, ven a comer a casa."
+      },
+      {
+        "zh": "不舒服的话，就去医院看看。",
+        "pinyin": "Bù shūfu dehuà, jiù qù yīyuàn kànkan.",
+        "es": "Si no te encuentras bien, ve al médico."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "的话明天下雨，我们不去。",
+        "right": "明天下雨的话，我们就不去了。",
+        "why": "的话 cierra la condición; va al final de esa parte, no al principio como «si»."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "6.3.6"
+      }
+    ]
   },
   {
     "code": "3.1.1",
@@ -7506,7 +7809,60 @@
       "动补短语2",
       "数量重叠：数词+量词+数词+量词"
     ],
-    "order_idx": 28
+    "order_idx": 28,
+    "pattern": "nombre + nombre (aposición) · verbo + 好 / 完 / 到… · un + clasificador + un + clasificador",
+    "explanation": "Tres construcciones. En la aposición dos nombres se refieren a lo mismo, sin coma: 我们两个人, 你们大家. El grupo verbo + complemento une un verbo con su resultado: 洗干净, 找到. Y repetir «uno + clasificador» indica que se va uno por uno: 一个一个地说 «hablad de uno en uno», 一天一天 «día a día».",
+    "markers": [
+      "我们两个",
+      "你们大家",
+      "干净",
+      "一个一个",
+      "一天一天"
+    ],
+    "examples": [
+      {
+        "zh": "我们两个人一起去吧。",
+        "pinyin": "Wǒmen liǎng gè rén yìqǐ qù ba.",
+        "es": "Vamos los dos juntos."
+      },
+      {
+        "zh": "你们大家都准备好了吗？",
+        "pinyin": "Nǐmen dàjiā dōu zhǔnbèi hǎo le ma?",
+        "es": "¿Estáis todos listos?"
+      },
+      {
+        "zh": "衣服洗干净了。",
+        "pinyin": "Yīfu xǐ gānjìng le.",
+        "es": "La ropa ya está bien limpia."
+      },
+      {
+        "zh": "请大家一个一个地说。",
+        "pinyin": "Qǐng dàjiā yí gè yí gè de shuō.",
+        "es": "Hablad de uno en uno, por favor."
+      },
+      {
+        "zh": "孩子一天一天地长大了。",
+        "pinyin": "Háizi yì tiān yì tiān de zhǎngdà le.",
+        "es": "El niño ha ido creciendo día a día."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "请大家说一个一个。",
+        "right": "请大家一个一个地说。",
+        "why": "La repetición «uno a uno» describe cómo se hace la acción y va delante del verbo, con 地."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 2,
+        "code": "3.1.1"
+      },
+      {
+        "hsk_level": 3,
+        "code": "2.4.3"
+      }
+    ]
   },
   {
     "code": "3.2.1",
@@ -7518,7 +7874,49 @@
     "items": [
       "不A 不 B"
     ],
-    "order_idx": 29
+    "order_idx": 29,
+    "pattern": "不 + A + 不 + B",
+    "explanation": "Con dos adjetivos opuestos, 不A不B dice que algo está en el punto justo, «ni A ni B»: 不冷不热 «ni frío ni calor», 不大不小 «ni grande ni pequeño». Es un molde fijo de cuatro sílabas que suele valorar positivamente. Funciona como predicado o, con 的, delante de un nombre.",
+    "markers": [
+      "不冷不热",
+      "不大不小",
+      "不多不少"
+    ],
+    "examples": [
+      {
+        "zh": "今天的天气不冷不热。",
+        "pinyin": "Jīntiān de tiānqì bù lěng bú rè.",
+        "es": "Hoy no hace ni frío ni calor."
+      },
+      {
+        "zh": "这件衣服不大不小，正好。",
+        "pinyin": "Zhè jiàn yīfu bú dà bù xiǎo, zhènghǎo.",
+        "es": "Esta ropa no es ni grande ni pequeña: justo de mi talla."
+      },
+      {
+        "zh": "我的房间不大不小。",
+        "pinyin": "Wǒ de fángjiān bú dà bù xiǎo.",
+        "es": "Mi habitación no es ni grande ni pequeña."
+      },
+      {
+        "zh": "这里的人不多不少。",
+        "pinyin": "Zhèlǐ de rén bù duō bù shǎo.",
+        "es": "Aquí no hay ni mucha ni poca gente."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "天气不冷和不热。",
+        "right": "天气不冷不热。",
+        "why": "Es un molde fijo de cuatro sílabas: no lleva 和 ni otra conjunción en medio."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 1,
+        "code": "2.6.6"
+      }
+    ]
   },
   {
     "code": "3.2.2",
@@ -7537,7 +7935,66 @@
       "一般来说",
       "不怎么样"
     ],
-    "order_idx": 30
+    "order_idx": 30,
+    "pattern": "看来 · 在…看来 · 看起来 / 看上去 · 一般来说 · 越来越 · 不一会儿 · 不怎么样",
+    "explanation": "Expresiones fijas muy frecuentes. 看来 saca una conclusión, «por lo que se ve»; 在我看来 da una opinión, «en mi opinión». 看起来 y 看上去 describen la apariencia, «parece». 一般来说 es «por lo general». 越来越 marca un cambio progresivo, «cada vez más». 不一会儿 es «al poco rato» y 不怎么样, «no gran cosa».",
+    "markers": [
+      "看来",
+      "看起来",
+      "一般来说",
+      "越来越",
+      "不一会儿",
+      "不怎么样"
+    ],
+    "examples": [
+      {
+        "zh": "看来他今天不来了。",
+        "pinyin": "Kànlái tā jīntiān bù lái le.",
+        "es": "Por lo que se ve, hoy ya no viene."
+      },
+      {
+        "zh": "在我看来，这个办法不错。",
+        "pinyin": "Zài wǒ kànlái, zhège bànfǎ búcuò.",
+        "es": "En mi opinión, esta solución no está mal."
+      },
+      {
+        "zh": "他看起来很年轻。",
+        "pinyin": "Tā kàn qǐlai hěn niánqīng.",
+        "es": "Parece muy joven."
+      },
+      {
+        "zh": "一般来说，南方的冬天不太冷。",
+        "pinyin": "Yìbān lái shuō, nánfāng de dōngtiān bú tài lěng.",
+        "es": "Por lo general, en el sur el invierno no es muy frío."
+      },
+      {
+        "zh": "他的汉语越来越好了，不一会儿就看完了一本书。",
+        "pinyin": "Tā de Hànyǔ yuè lái yuè hǎo le, bù yíhuìr jiù kànwán le yì běn shū.",
+        "es": "Su chino es cada vez mejor: en un momento se ha leído un libro."
+      },
+      {
+        "zh": "这个电影不怎么样。",
+        "pinyin": "Zhège diànyǐng bù zěnmeyàng.",
+        "es": "Esta película no es gran cosa."
+      }
+    ],
+    "common_errors": [
+      {
+        "wrong": "他的汉语越来越很好。",
+        "right": "他的汉语越来越好了。",
+        "why": "越来越 ya expresa el grado: el adjetivo va solo, sin 很, y suele cerrar con 了."
+      }
+    ],
+    "see_also": [
+      {
+        "hsk_level": 3,
+        "code": "2.5.1"
+      },
+      {
+        "hsk_level": 3,
+        "code": "4.1"
+      }
+    ]
   },
   {
     "code": "4.1",

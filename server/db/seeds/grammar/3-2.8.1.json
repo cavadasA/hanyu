@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "2.8.1",
+  "pattern": "(如果 +) condición + 的话，…",
+  "explanation": "的话 cierra una condición, como un «si» puesto al final: 明天下雨的话，我们就不去了. Puede ir solo o reforzar a 如果 (如果…的话). Es muy frecuente en la conversación. La consecuencia va detrás, a menudo con 就.",
+  "markers": ["的话"],
+  "examples": [
+    {"zh":"明天下雨的话，我们就不去了。","pinyin":"Míngtiān xià yǔ dehuà, wǒmen jiù bú qù le.","es":"Si mañana llueve, no iremos."},
+    {"zh":"如果你有时间的话，来我家吃饭吧。","pinyin":"Rúguǒ nǐ yǒu shíjiān dehuà, lái wǒ jiā chī fàn ba.","es":"Si tienes tiempo, ven a comer a casa."},
+    {"zh":"不舒服的话，就去医院看看。","pinyin":"Bù shūfu dehuà, jiù qù yīyuàn kànkan.","es":"Si no te encuentras bien, ve al médico."}
+  ],
+  "common_errors": [
+    {"wrong":"的话明天下雨，我们不去。","right":"明天下雨的话，我们就不去了。","why":"的话 cierra la condición; va al final de esa parte, no al principio como «si»."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"6.3.6"}]
+}

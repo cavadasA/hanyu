@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "2.6.3",
+  "pattern": "为了 + finalidad，… · 为 + causa / beneficiario + verbo",
+  "explanation": "为了 introduce la finalidad, «para, con el fin de», y suele abrir la frase: 为了学好汉语，他每天都听写. 为 puede indicar la causa de un sentimiento («por») o a quién beneficia algo: 我为你高兴 «me alegro por ti». La finalidad no se pone al final como en español «estudio para aprobar»: va delante.",
+  "markers": ["为了","为"],
+  "examples": [
+    {"zh":"为了学好汉语，他每天都看中文电视。","pinyin":"Wèile xuéhǎo Hànyǔ, tā měi tiān dōu kàn Zhōngwén diànshì.","es":"Para aprender bien chino, ve la tele en chino todos los días."},
+    {"zh":"为了身体健康，我每天跑步。","pinyin":"Wèile shēntǐ jiànkāng, wǒ měi tiān pǎobù.","es":"Para estar sano, corro todos los días."},
+    {"zh":"我真为你高兴。","pinyin":"Wǒ zhēn wèi nǐ gāoxìng.","es":"Me alegro mucho por ti."},
+    {"zh":"他为这件事很不高兴。","pinyin":"Tā wèi zhè jiàn shì hěn bù gāoxìng.","es":"Está muy disgustado por esto."}
+  ],
+  "common_errors": [
+    {"wrong":"我每天跑步为了身体健康。","right":"为了身体健康，我每天跑步。","why":"La finalidad con 为了 suele ir delante, no al final como en «corro para estar sano»."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"6.3.8"}]
+}

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "3.2.1",
+  "pattern": "不 + A + 不 + B",
+  "explanation": "Con dos adjetivos opuestos, 不A不B dice que algo está en el punto justo, «ni A ni B»: 不冷不热 «ni frío ni calor», 不大不小 «ni grande ni pequeño». Es un molde fijo de cuatro sílabas que suele valorar positivamente. Funciona como predicado o, con 的, delante de un nombre.",
+  "markers": ["不冷不热","不大不小","不多不少"],
+  "examples": [
+    {"zh":"今天的天气不冷不热。","pinyin":"Jīntiān de tiānqì bù lěng bú rè.","es":"Hoy no hace ni frío ni calor."},
+    {"zh":"这件衣服不大不小，正好。","pinyin":"Zhè jiàn yīfu bú dà bù xiǎo, zhènghǎo.","es":"Esta ropa no es ni grande ni pequeña: justo de mi talla."},
+    {"zh":"我的房间不大不小。","pinyin":"Wǒ de fángjiān bú dà bù xiǎo.","es":"Mi habitación no es ni grande ni pequeña."},
+    {"zh":"这里的人不多不少。","pinyin":"Zhèlǐ de rén bù duō bù shǎo.","es":"Aquí no hay ni mucha ni poca gente."}
+  ],
+  "common_errors": [
+    {"wrong":"天气不冷和不热。","right":"天气不冷不热。","why":"Es un molde fijo de cuatro sílabas: no lleva 和 ni otra conjunción en medio."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.6.6"}]
+}

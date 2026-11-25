@@ -1,0 +1,16 @@
+{
+  "hsk_level": 3,
+  "code": "2.7.1",
+  "pattern": "A + 或者 / 或 + B (en afirmaciones)",
+  "explanation": "或者, y su forma breve 或, une dos opciones en una afirmación: «o». 你今天或者明天来都可以 «puedes venir hoy o mañana». En una pregunta que pide elegir no se usan: ahí la «o» es 还是. 或 es más escrito y aparece sobre todo entre palabras sueltas.",
+  "markers": ["或者","或"],
+  "examples": [
+    {"zh":"你今天或者明天来都可以。","pinyin":"Nǐ jīntiān huòzhě míngtiān lái dōu kěyǐ.","es":"Puedes venir hoy o mañana."},
+    {"zh":"我们坐地铁或者打车去。","pinyin":"Wǒmen zuò dìtiě huòzhě dǎchē qù.","es":"Iremos en metro o en taxi."},
+    {"zh":"周末我喜欢看书或看电影。","pinyin":"Zhōumò wǒ xǐhuan kàn shū huò kàn diànyǐng.","es":"Los fines de semana me gusta leer o ver películas."}
+  ],
+  "common_errors": [
+    {"wrong":"你喝茶或者咖啡？","right":"你喝茶还是咖啡？","why":"En una pregunta para elegir la «o» es 还是; 或者 es para afirmaciones."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"6.2.1"},{"hsk_level":3,"code":"6.3.2"}]
+}

@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "2.6.4",
+  "pattern": "Sujeto + 把 + objeto + verbo + resultado · Sujeto + 被 (+ agente) + verbo + resultado",
+  "explanation": "把 adelanta el objeto para contar qué le pasa: 我把杯子打坏了 «he roto el vaso». 被 hace lo contrario: el afectado es el sujeto y quien actúa va detrás de 被, o se omite: 杯子被他打坏了. 被 suele usarse para algo negativo o inesperado. En los dos casos el verbo no puede ir solo: necesita un resultado, una dirección o 了.",
+  "markers": ["把","被"],
+  "examples": [
+    {"zh":"我把杯子打坏了。","pinyin":"Wǒ bǎ bēizi dǎhuài le.","es":"He roto el vaso."},
+    {"zh":"杯子被弟弟打坏了。","pinyin":"Bēizi bèi dìdi dǎhuài le.","es":"Mi hermano pequeño ha roto el vaso."},
+    {"zh":"我的手机被人拿走了。","pinyin":"Wǒ de shǒujī bèi rén názǒu le.","es":"Alguien se ha llevado mi móvil."},
+    {"zh":"你把这本书带回家吧。","pinyin":"Nǐ bǎ zhè běn shū dài huí jiā ba.","es":"Llévate este libro a casa."}
+  ],
+  "common_errors": [
+    {"wrong":"杯子被他打。","right":"杯子被他打坏了。","why":"Con 被 el verbo no se queda solo: hay que decir qué le pasó al sujeto (打坏了)."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"6.2.1"},{"hsk_level":3,"code":"6.2.2"}]
+}

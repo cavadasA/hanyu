@@ -1,0 +1,19 @@
+{
+  "hsk_level": 3,
+  "code": "2.7.2",
+  "pattern": "如果 / 只要 / 只有 / 不但…而且 / 可是 / 然后",
+  "explanation": "Unen frases con relaciones distintas. 如果 «si» plantea una condición hipotética. 只要 «basta con que» pide una condición suficiente; 只有 «solo si» pide la única condición posible. 不但…而且… es «no solo… sino también». 可是 y 可 son «pero», más orales que 但是. 然后 es «después, luego» en una secuencia.",
+  "markers": ["如果","只要","只有","不但","可是","然后"],
+  "examples": [
+    {"zh":"如果明天下雨，我们就不去了。","pinyin":"Rúguǒ míngtiān xià yǔ, wǒmen jiù bú qù le.","es":"Si mañana llueve, no iremos."},
+    {"zh":"只要你努力，就能学好。","pinyin":"Zhǐyào nǐ nǔlì, jiù néng xuéhǎo.","es":"Basta con que te esfuerces para aprenderlo bien."},
+    {"zh":"只有多练习，才能说得好。","pinyin":"Zhǐyǒu duō liànxí, cái néng shuō de hǎo.","es":"Solo practicando mucho se llega a hablar bien."},
+    {"zh":"他不但会说汉语，而且说得很好。","pinyin":"Tā búdàn huì shuō Hànyǔ, érqiě shuō de hěn hǎo.","es":"No solo habla chino, sino que lo habla muy bien."},
+    {"zh":"我想去，可是没有时间。","pinyin":"Wǒ xiǎng qù, kěshì méiyǒu shíjiān.","es":"Quiero ir, pero no tengo tiempo."},
+    {"zh":"我们先吃饭，然后去看电影。","pinyin":"Wǒmen xiān chī fàn, ránhòu qù kàn diànyǐng.","es":"Primero comemos y luego vamos al cine."}
+  ],
+  "common_errors": [
+    {"wrong":"只有你努力，就能学好。","right":"只要你努力，就能学好。","why":"只有 va con 才 («solo si…, entonces»); 只要 va con 就 («basta con que…»)."}
+  ],
+  "see_also": [{"hsk_level":3,"code":"6.3.6"},{"hsk_level":3,"code":"6.3.7"},{"hsk_level":3,"code":"6.3.4"}]
+}

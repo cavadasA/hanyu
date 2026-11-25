@@ -1,0 +1,18 @@
+{
+  "hsk_level": 3,
+  "code": "3.1.1",
+  "pattern": "nombre + nombre (aposición) · verbo + 好 / 完 / 到… · un + clasificador + un + clasificador",
+  "explanation": "Tres construcciones. En la aposición dos nombres se refieren a lo mismo, sin coma: 我们两个人, 你们大家. El grupo verbo + complemento une un verbo con su resultado: 洗干净, 找到. Y repetir «uno + clasificador» indica que se va uno por uno: 一个一个地说 «hablad de uno en uno», 一天一天 «día a día».",
+  "markers": ["我们两个","你们大家","干净","一个一个","一天一天"],
+  "examples": [
+    {"zh":"我们两个人一起去吧。","pinyin":"Wǒmen liǎng gè rén yìqǐ qù ba.","es":"Vamos los dos juntos."},
+    {"zh":"你们大家都准备好了吗？","pinyin":"Nǐmen dàjiā dōu zhǔnbèi hǎo le ma?","es":"¿Estáis todos listos?"},
+    {"zh":"衣服洗干净了。","pinyin":"Yīfu xǐ gānjìng le.","es":"La ropa ya está bien limpia."},
+    {"zh":"请大家一个一个地说。","pinyin":"Qǐng dàjiā yí gè yí gè de shuō.","es":"Hablad de uno en uno, por favor."},
+    {"zh":"孩子一天一天地长大了。","pinyin":"Háizi yì tiān yì tiān de zhǎngdà le.","es":"El niño ha ido creciendo día a día."}
+  ],
+  "common_errors": [
+    {"wrong":"请大家说一个一个。","right":"请大家一个一个地说。","why":"La repetición «uno a uno» describe cómo se hace la acción y va delante del verbo, con 地."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"3.1.1"},{"hsk_level":3,"code":"2.4.3"}]
+}

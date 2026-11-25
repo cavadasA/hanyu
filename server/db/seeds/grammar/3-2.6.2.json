@@ -1,0 +1,17 @@
+{
+  "hsk_level": 3,
+  "code": "2.6.2",
+  "pattern": "向 + dirección + verbo",
+  "explanation": "向 indica hacia dónde va un movimiento o hacia dónde se mira, como 往: 向前走 «sigue recto», 向左看 «mira a la izquierda». Es algo más formal que 往 y es el que aparece en carteles e indicaciones escritas. El grupo va delante del verbo.",
+  "markers": ["向"],
+  "examples": [
+    {"zh":"你向前走，银行就在右边。","pinyin":"Nǐ xiàng qián zǒu, yínháng jiù zài yòubian.","es":"Sigue recto y el banco está a la derecha."},
+    {"zh":"请向左看。","pinyin":"Qǐng xiàng zuǒ kàn.","es":"Mire a la izquierda, por favor."},
+    {"zh":"他向我们走过来了。","pinyin":"Tā xiàng wǒmen zǒu guòlai le.","es":"Vino andando hacia nosotros."},
+    {"zh":"从这儿向东走十分钟就到了。","pinyin":"Cóng zhèr xiàng dōng zǒu shí fēnzhōng jiù dào le.","es":"Desde aquí, a diez minutos andando hacia el este."}
+  ],
+  "common_errors": [
+    {"wrong":"你走向前。","right":"你向前走。","why":"En las indicaciones, 向 y la dirección van delante del verbo."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.8.2"},{"hsk_level":3,"code":"2.6.1"}]
+}
