@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "2.6.1",
+  "pattern": "很 / 非常 / 真 / 有点儿 + adjetivo · 太 + adjetivo + 了",
+  "explanation": "Van delante del adjetivo. 很 es el más neutro y a veces apenas intensifica: 今天很冷. 非常 es «muchísimo» y 真 expresa sorpresa o admiración: 真漂亮！ 太…了 es «demasiado» o, con algo bueno, «¡qué…!». 有点儿 «un poco» se usa para lo que molesta o no gusta: 有点儿贵.",
+  "markers": ["很","非常","真","太","有点儿"],
+  "examples": [
+    {"zh":"今天很冷。","pinyin":"Jīntiān hěn lěng.","es":"Hoy hace frío."},
+    {"zh":"这个菜非常好吃。","pinyin":"Zhège cài fēicháng hǎochī.","es":"Este plato está riquísimo."},
+    {"zh":"你的衣服真漂亮！","pinyin":"Nǐ de yīfu zhēn piàoliang!","es":"¡Qué bonita es tu ropa!"},
+    {"zh":"这个太贵了。","pinyin":"Zhège tài guì le.","es":"Esto es demasiado caro."},
+    {"zh":"这个有点儿贵。","pinyin":"Zhège yǒudiǎnr guì.","es":"Esto es un poco caro."}
+  ],
+  "common_errors": [
+    {"wrong":"这个有点儿便宜。","right":"这个很便宜。","why":"有点儿 acompaña a lo que molesta o no gusta (有点儿贵, 有点儿冷); para algo positivo se usa 很 o 非常."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.7.1"}]
+}

@@ -1,0 +1,16 @@
+{
+  "hsk_level": 1,
+  "code": "2.8.1",
+  "pattern": "nombre + 和 + nombre",
+  "explanation": "和 une nombres o pronombres: 爸爸和妈妈, 苹果和面包. No une verbos ni frases, como sí hace «y» en español: «como y bebo» no lleva 和. En una lista de tres o más, 和 va solo antes del último y los demás se separan con 、.",
+  "markers": ["和"],
+  "examples": [
+    {"zh":"我和他是同学。","pinyin":"Wǒ hé tā shì tóngxué.","es":"Él y yo somos compañeros de clase."},
+    {"zh":"我买了苹果和面包。","pinyin":"Wǒ mǎi le píngguǒ hé miànbāo.","es":"Compré manzanas y pan."},
+    {"zh":"我爸爸、妈妈和姐姐都在家。","pinyin":"Wǒ bàba, māma hé jiějie dōu zài jiā.","es":"Mi padre, mi madre y mi hermana están en casa."}
+  ],
+  "common_errors": [
+    {"wrong":"我吃饭和喝水。","right":"我吃饭，也喝水。","why":"和 solo une nombres; para unir dos acciones no sirve."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.9.1"}]
+}

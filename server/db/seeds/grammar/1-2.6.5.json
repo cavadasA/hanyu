@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "2.6.5",
+  "pattern": "Sujeto + 也 + verbo · Sujeto + 还 + verbo",
+  "explanation": "也 significa «también» y va detrás del sujeto, delante del verbo: 我也是学生. 还 añade algo más a lo dicho, «además»: 我买了苹果，还买了牛奶. Ninguno va delante del sujeto como «también yo», ni al final como «yo también».",
+  "markers": ["也","还"],
+  "examples": [
+    {"zh":"我也是学生。","pinyin":"Wǒ yě shì xuésheng.","es":"Yo también soy estudiante."},
+    {"zh":"他喜欢喝茶，我也喜欢。","pinyin":"Tā xǐhuan hē chá, wǒ yě xǐhuan.","es":"A él le gusta el té, y a mí también."},
+    {"zh":"我买了苹果，还买了牛奶。","pinyin":"Wǒ mǎi le píngguǒ, hái mǎi le niúnǎi.","es":"Compré manzanas y además leche."},
+    {"zh":"你还想吃什么？","pinyin":"Nǐ hái xiǎng chī shénme?","es":"¿Qué más quieres comer?"}
+  ],
+  "common_errors": [
+    {"wrong":"也我是学生。","right":"我也是学生。","why":"也 va detrás del sujeto, no delante como «también yo»."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"5.4.2"}]
+}

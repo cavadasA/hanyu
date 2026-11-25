@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "2.6.4",
+  "pattern": "再 + verbo",
+  "explanation": "再 significa «otra vez» o «más» para algo que todavía no ha pasado: 明天再来吧 «vuelve mañana». Va delante del verbo. Para una repetición que ya ocurrió se usa 又, no 再. Aparece en peticiones (请再说一下) y en la despedida 再见.",
+  "markers": ["再"],
+  "examples": [
+    {"zh":"请你再说一下。","pinyin":"Qǐng nǐ zài shuō yíxià.","es":"Repítelo, por favor."},
+    {"zh":"明天再来吧。","pinyin":"Míngtiān zài lái ba.","es":"Vuelve mañana."},
+    {"zh":"我想再喝一点儿茶。","pinyin":"Wǒ xiǎng zài hē yìdiǎnr chá.","es":"Quiero tomar un poco más de té."},
+    {"zh":"再见！","pinyin":"Zàijiàn!","es":"¡Hasta luego!"}
+  ],
+  "common_errors": [
+    {"wrong":"他昨天再来了。","right":"他昨天又来了。","why":"再 mira hacia lo que no ha pasado; para «volvió a venir» se usa 又."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.7.6"}]
+}

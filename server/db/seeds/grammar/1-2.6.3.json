@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "2.6.3",
+  "pattern": "Sujeto + (正)在 + verbo (+ 呢)",
+  "explanation": "在 y 正在 delante de un verbo indican que la acción está en curso, como «estar + -ando»: 我在吃饭. 正在 subraya que es justo ahora. A menudo se añade 呢 al final. No se usan con verbos que no son acciones, como 是, 有 o 喜欢.",
+  "markers": ["在"],
+  "examples": [
+    {"zh":"我在吃饭。","pinyin":"Wǒ zài chī fàn.","es":"Estoy comiendo."},
+    {"zh":"妈妈正在做饭呢。","pinyin":"Māma zhèngzài zuò fàn ne.","es":"Mamá está cocinando ahora mismo."},
+    {"zh":"你在做什么？","pinyin":"Nǐ zài zuò shénme?","es":"¿Qué estás haciendo?"},
+    {"zh":"他们正在上课。","pinyin":"Tāmen zhèngzài shàngkè.","es":"Están en clase."}
+  ],
+  "common_errors": [
+    {"wrong":"我在喜欢他。","right":"我喜欢他。","why":"在 marca acciones en curso; con verbos de estado como 喜欢 o 是 no se usa."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"6.1.3"}]
+}

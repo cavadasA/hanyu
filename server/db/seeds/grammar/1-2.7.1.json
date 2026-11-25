@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "2.7.1",
+  "pattern": "Sujeto + 在 + lugar + verbo",
+  "explanation": "在 + lugar va delante del verbo e indica dónde ocurre la acción: 我在学校学习. Es el orden contrario al español «estudio en el colegio». Si el lugar es una cosa, necesita una palabra de posición: 在桌子上. Sin otro verbo, 在 significa «estar en»: 他在家.",
+  "markers": ["在"],
+  "examples": [
+    {"zh":"我在学校学习汉语。","pinyin":"Wǒ zài xuéxiào xuéxí Hànyǔ.","es":"Estudio chino en el colegio."},
+    {"zh":"他在商店买东西。","pinyin":"Tā zài shāngdiàn mǎi dōngxi.","es":"Está comprando en la tienda."},
+    {"zh":"我们在家吃饭。","pinyin":"Wǒmen zài jiā chī fàn.","es":"Comemos en casa."},
+    {"zh":"妈妈不在家。","pinyin":"Māma bú zài jiā.","es":"Mamá no está en casa."}
+  ],
+  "common_errors": [
+    {"wrong":"我学习汉语在学校。","right":"我在学校学习汉语。","why":"El lugar con 在 va delante del verbo, no al final como en español."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"2.1.1"}]
+}

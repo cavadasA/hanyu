@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "2.6.2",
+  "pattern": "Sujeto (plural) + 都 + verbo",
+  "explanation": "都 significa «todos» o «los dos» y va detrás del sujeto, delante del verbo: 我们都是学生. Abarca lo que está delante de él, así que el grupo se coloca antes: 这些书我都喜欢. Con negación, 都不 es «ninguno» y 不都, «no todos».",
+  "markers": ["都"],
+  "examples": [
+    {"zh":"我们都是学生。","pinyin":"Wǒmen dōu shì xuésheng.","es":"Todos somos estudiantes."},
+    {"zh":"爸爸和妈妈都在家。","pinyin":"Bàba hé māma dōu zài jiā.","es":"Papá y mamá están los dos en casa."},
+    {"zh":"这些书我都喜欢。","pinyin":"Zhèxiē shū wǒ dōu xǐhuan.","es":"Me gustan todos estos libros."},
+    {"zh":"他们都不喝茶。","pinyin":"Tāmen dōu bù hē chá.","es":"Ninguno de ellos toma té."}
+  ],
+  "common_errors": [
+    {"wrong":"都我们是学生。","right":"我们都是学生。","why":"都 va detrás del sujeto, nunca al principio como «todos nosotros»."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.7.7"}]
+}

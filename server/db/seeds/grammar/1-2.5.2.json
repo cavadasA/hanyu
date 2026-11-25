@@ -1,0 +1,18 @@
+{
+  "hsk_level": 1,
+  "code": "2.5.2",
+  "pattern": "número + 年 / 天 / 岁 / 点 / 分 · 月 + 号 / 日",
+  "explanation": "Estas palabras miden el tiempo y van directamente detrás del número, sin otro clasificador: 三天, 两年, 五岁, 八点十分. 号 y 日 dan el día del mes (二十号; 日 es más escrito). 点 es la hora del reloj y 分, los minutos. Las horas de duración llevan 个 (三个小时), pero 天 y 年 no: 三天, nunca «三个天».",
+  "markers": ["天","岁","点","号","年"],
+  "examples": [
+    {"zh":"我在中国住了三天。","pinyin":"Wǒ zài Zhōngguó zhù le sān tiān.","es":"Estuve tres días en China."},
+    {"zh":"他今年五岁。","pinyin":"Tā jīnnián wǔ suì.","es":"Este año cumple cinco años."},
+    {"zh":"现在八点十分。","pinyin":"Xiànzài bā diǎn shí fēn.","es":"Son las ocho y diez."},
+    {"zh":"今天是十二月二十号。","pinyin":"Jīntiān shì shí’èr yuè èrshí hào.","es":"Hoy es veinte de diciembre."},
+    {"zh":"我学了两年汉语。","pinyin":"Wǒ xué le liǎng nián Hànyǔ.","es":"Estudié chino dos años."}
+  ],
+  "common_errors": [
+    {"wrong":"我住了三个天。","right":"我住了三天。","why":"天 y 年 ya hacen de clasificador: van directamente detrás del número, sin 个."}
+  ],
+  "see_also": [{"hsk_level":1,"code":"7.2"},{"hsk_level":2,"code":"5.4.4"}]
+}

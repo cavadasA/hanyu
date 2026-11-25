@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "2.9.1",
+  "pattern": "poseedor / descripción + 的 + nombre",
+  "explanation": "的 une lo que posee o describe con el nombre, que va al final: 我的书 «mi libro», 很漂亮的衣服. El poseedor va delante, al revés que en «el libro del profesor» → 老师的书. Con familiares y relaciones cercanas se suele omitir: 我妈妈, 我们学校.",
+  "markers": ["的"],
+  "examples": [
+    {"zh":"这是我的书。","pinyin":"Zhè shì wǒ de shū.","es":"Este es mi libro."},
+    {"zh":"这是老师的电脑。","pinyin":"Zhè shì lǎoshī de diànnǎo.","es":"Este es el ordenador del profesor."},
+    {"zh":"她买了一件很漂亮的衣服。","pinyin":"Tā mǎi le yí jiàn hěn piàoliang de yīfu.","es":"Se compró una ropa muy bonita."},
+    {"zh":"你的手机在这儿。","pinyin":"Nǐ de shǒujī zài zhèr.","es":"Tu móvil está aquí."}
+  ],
+  "common_errors": [
+    {"wrong":"这是书的老师。","right":"这是老师的书。","why":"El poseedor va delante de 的: «el libro del profesor» es 老师的书, al revés que en español."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.10.1"}]
+}

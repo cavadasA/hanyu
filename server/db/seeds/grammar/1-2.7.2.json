@@ -1,0 +1,17 @@
+{
+  "hsk_level": 1,
+  "code": "2.7.2",
+  "pattern": "和 + persona + verbo · 对 + persona / cosa + adjetivo / verbo",
+  "explanation": "和 presenta a la persona con quien se hace algo: 我和朋友去看电影. 对 presenta hacia quién va una actitud o una acción, «con» o «a»: 老师对我们很好 «el profesor es muy bueno con nosotros». Los dos grupos van delante del verbo o del adjetivo, no detrás.",
+  "markers": ["和","对"],
+  "examples": [
+    {"zh":"我和妈妈去商店。","pinyin":"Wǒ hé māma qù shāngdiàn.","es":"Voy a la tienda con mamá."},
+    {"zh":"你想和我说话吗？","pinyin":"Nǐ xiǎng hé wǒ shuōhuà ma?","es":"¿Quieres hablar conmigo?"},
+    {"zh":"老师对我们很好。","pinyin":"Lǎoshī duì wǒmen hěn hǎo.","es":"El profesor es muy bueno con nosotros."},
+    {"zh":"他对我说：“谢谢。”","pinyin":"Tā duì wǒ shuō: “Xièxie.”","es":"Me dijo: «Gracias»."}
+  ],
+  "common_errors": [
+    {"wrong":"老师很好对我们。","right":"老师对我们很好。","why":"对 y la persona van delante del adjetivo, no detrás como en «es bueno con nosotros»."}
+  ],
+  "see_also": [{"hsk_level":2,"code":"2.8.3"}]
+}
