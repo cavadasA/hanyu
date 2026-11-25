@@ -1,0 +1,103 @@
+{
+  "slug": "casa-04-first-week",
+  "title": "奶奶的一个星期",
+  "hsk_level": 2,
+  "format": "short_text",
+  "topic": "vida diaria",
+  "series": "casa",
+  "series_index": 4,
+  "target_words": [
+    "跑步",
+    "经常",
+    "鱼"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.7.4",
+      "level": 2
+    },
+    {
+      "code": "2.10.1",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "奶奶来我们家已经一个星期了。",
+      "pinyin": "Nǎinai lái wǒmen jiā yǐjīng yí gè xīngqī le.",
+      "es": "Ya hace una semana que la abuela vino a nuestra casa."
+    },
+    {
+      "zh": "她每天早上六点就起床，比我们都早。",
+      "pinyin": "Tā měi tiān zǎoshang liù diǎn jiù qǐchuáng, bǐ wǒmen dōu zǎo.",
+      "es": "Cada mañana se levanta ya a las seis, antes que todos nosotros."
+    },
+    {
+      "zh": "起床后，她去外面走路，有时候也跑步。",
+      "pinyin": "Qǐchuáng hòu, tā qù wàimiàn zǒulù, yǒushíhou yě pǎobù.",
+      "es": "Después de levantarse sale a caminar y a veces también corre."
+    },
+    {
+      "zh": "奶奶跑得不快，但是她跑得很高兴。",
+      "pinyin": "Nǎinai pǎo de bú kuài, dànshì tā pǎo de hěn gāoxìng.",
+      "es": "La abuela no corre rápido, pero corre muy contenta."
+    },
+    {
+      "zh": "回来的时候，她经常给我们买早饭。",
+      "pinyin": "Huílái de shíhou, tā jīngcháng gěi wǒmen mǎi zǎofàn.",
+      "es": "Cuando vuelve, a menudo nos compra el desayuno."
+    },
+    {
+      "zh": "下午，奶奶教小雪做饭。",
+      "pinyin": "Xiàwǔ, nǎinai jiāo Xiǎoxuě zuòfàn.",
+      "es": "Por la tarde, la abuela enseña a Xiaoxue a cocinar."
+    },
+    {
+      "zh": "她做的鱼非常好吃，爸爸说他小时候也经常吃奶奶做的鱼。",
+      "pinyin": "Tā zuò de yú fēicháng hǎochī, bàba shuō tā xiǎoshíhou yě jīngcháng chī nǎinai zuò de yú.",
+      "es": "El pescado que hace está buenísimo; papá dice que de pequeño también comía a menudo el pescado de la abuela."
+    },
+    {
+      "zh": "现在小雪也会做一点儿菜了。",
+      "pinyin": "Xiànzài Xiǎoxuě yě huì zuò yìdiǎnr cài le.",
+      "es": "Ahora Xiaoxue también sabe cocinar un poco."
+    },
+    {
+      "zh": "我觉得家里有奶奶，大家都很快乐。",
+      "pinyin": "Wǒ juéde jiā lǐ yǒu nǎinai, dàjiā dōu hěn kuàilè.",
+      "es": "Creo que, con la abuela en casa, todos somos muy felices."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "奶奶每天几点起床？",
+      "options": [
+        "五点",
+        "七点",
+        "六点"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "下午，奶奶教小雪做什么？",
+      "options": [
+        "做饭",
+        "跑步",
+        "写字"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 5
+    },
+    {
+      "prompt": "爸爸小时候经常吃什么？",
+      "options": [
+        "奶奶做的鱼",
+        "妈妈做的饺子",
+        "外面的面包"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 6
+    }
+  ]
+}

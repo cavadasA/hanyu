@@ -1,0 +1,103 @@
+{
+  "slug": "casa-06-birthday",
+  "title": "奶奶的生日",
+  "hsk_level": 2,
+  "format": "story",
+  "topic": "vida diaria",
+  "series": "casa",
+  "series_index": 6,
+  "target_words": [
+    "快乐",
+    "希望",
+    "笑"
+  ],
+  "target_grammar": [
+    {
+      "code": "6.4.4",
+      "level": 2
+    },
+    {
+      "code": "5.4.3",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "星期三晚上，妈妈做了很多奶奶喜欢吃的菜。",
+      "pinyin": "Xīngqīsān wǎnshang, māma zuò le hěn duō nǎinai xǐhuan chī de cài.",
+      "es": "El miércoles por la noche, mamá hizo muchos platos de los que le gustan a la abuela."
+    },
+    {
+      "zh": "奶奶一进门就笑了。",
+      "pinyin": "Nǎinai yí jìn mén jiù xiào le.",
+      "es": "En cuanto la abuela entró por la puerta, se echó a reír."
+    },
+    {
+      "zh": "我们一起对奶奶说生日快乐。",
+      "pinyin": "Wǒmen yìqǐ duì nǎinai shuō shēngrì kuàilè.",
+      "es": "Todos juntos le deseamos a la abuela feliz cumpleaños."
+    },
+    {
+      "zh": "小雪给了奶奶一块手表，说这是她和哥哥送的。",
+      "pinyin": "Xiǎoxuě gěi le nǎinai yí kuài shǒubiǎo, shuō zhè shì tā hé gēge sòng de.",
+      "es": "Xiaoxue le dio a la abuela un reloj y le dijo que era un regalo de su hermano y suyo."
+    },
+    {
+      "zh": "奶奶打开一看，笑得眼睛都没有了。",
+      "pinyin": "Nǎinai dǎkāi yí kàn, xiào de yǎnjing dōu méiyǒu le.",
+      "es": "La abuela lo abrió, lo miró y sonrió tanto que se le cerraron los ojos."
+    },
+    {
+      "zh": "她说明天跑步的时候，就能看时间了。",
+      "pinyin": "Tā shuō míngtiān pǎobù de shíhou, jiù néng kàn shíjiān le.",
+      "es": "Dijo que mañana, cuando corra, ya podrá ver la hora."
+    },
+    {
+      "zh": "吃饭的时候，爸爸问奶奶在这里住得舒服不舒服。",
+      "pinyin": "Chī fàn de shíhou, bàba wèn nǎinai zài zhèlǐ zhù de shūfu bù shūfu.",
+      "es": "Durante la cena, papá le preguntó a la abuela si estaba a gusto viviendo aquí."
+    },
+    {
+      "zh": "奶奶说住在这里很好，她希望每年都跟我们一起过生日。",
+      "pinyin": "Nǎinai shuō zhù zài zhèlǐ hěn hǎo, tā xīwàng měi nián dōu gēn wǒmen yìqǐ guò shēngrì.",
+      "es": "La abuela dijo que aquí se vive muy bien y que espera celebrar todos los años su cumpleaños con nosotros."
+    },
+    {
+      "zh": "那天晚上，我们一家人都很快乐。",
+      "pinyin": "Nà tiān wǎnshang, wǒmen yì jiārén dōu hěn kuàilè.",
+      "es": "Aquella noche toda la familia estuvo muy feliz."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "奶奶一进门怎么了？",
+      "options": [
+        "走了",
+        "笑了",
+        "睡觉了"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 1
+    },
+    {
+      "prompt": "手表是谁送的？",
+      "options": [
+        "爸爸和妈妈",
+        "奶奶的朋友",
+        "小雪和小明"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 3
+    },
+    {
+      "prompt": "奶奶希望每年怎么样？",
+      "options": [
+        "跟他们一起过生日",
+        "一个人住",
+        "去外国旅游"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 7
+    }
+  ]
+}

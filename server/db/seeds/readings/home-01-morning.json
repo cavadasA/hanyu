@@ -1,27 +1,103 @@
 {
   "slug": "home-01-morning",
-  "title": "早上的生活",
+  "title": "奶奶要来了",
   "hsk_level": 2,
   "format": "short_text",
   "topic": "vida diaria",
   "series": "casa",
   "series_index": 1,
-  "target_words": ["起床", "做饭", "事情"],
-  "target_grammar": [{"code": "2.2.1", "level": 2}],
+  "target_words": [
+    "奶奶",
+    "已经",
+    "准备"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.7.3",
+      "level": 2
+    },
+    {
+      "code": "4.1",
+      "level": 2
+    }
+  ],
   "sentences": [
-    { "zh": "我叫小明。", "pinyin": "Wǒ jiào Xiǎomíng.", "es": "Me llamo Xiaoming." },
-    { "zh": "星期天我六点起床。", "pinyin": "Xīngqītiān wǒ liù diǎn qǐchuáng.", "es": "El domingo me levanto a las seis." },
-    { "zh": "妈妈在房间做饭，爸爸在房间看书。", "pinyin": "Māma zài fángjiān zuòfàn, bàba zài fángjiān kàn shū.", "es": "Mamá cocina en la habitación y papá lee en la habitación." },
-    { "zh": "我喝了水，也吃了鸡蛋和面包。", "pinyin": "Wǒ hē le shuǐ, yě chī le jīdàn hé miànbāo.", "es": "Bebo agua y también como huevos y pan." },
-    { "zh": "中午回家的时候，妈妈已经做好了午饭。", "pinyin": "Zhōngwǔ huí jiā de shíhou, māma yǐjīng zuò hǎo le wǔfàn.", "es": "Al volver a casa al mediodía, mamá ya ha preparado el almuerzo." },
-    { "zh": "晚上我们一起说今天的事情。", "pinyin": "Wǎnshang wǒmen yìqǐ shuō jīntiān de shìqing.", "es": "Por la noche hablamos juntos de lo que ha pasado hoy." },
-    { "zh": "我觉得今天很好。", "pinyin": "Wǒ juéde jīntiān hěn hǎo.", "es": "Creo que hoy ha sido un buen día." },
-    { "zh": "晚上我看看书，也喝茶。", "pinyin": "Wǎnshang wǒ kànkan shū, yě hē chá.", "es": "Por la noche leo un poco y también bebo té." },
-    { "zh": "星期天大家都不忙。", "pinyin": "Xīngqītiān dàjiā dōu bù máng.", "es": "El domingo nadie está ocupado." }
+    {
+      "zh": "我叫小明，我家有四个人：爸爸、妈妈、妹妹小雪和我。",
+      "pinyin": "Wǒ jiào Xiǎomíng, wǒ jiā yǒu sì gè rén: bàba, māma, mèimei Xiǎoxuě hé wǒ.",
+      "es": "Me llamo Xiaoming; en mi casa somos cuatro: papá, mamá, mi hermana pequeña Xiaoxue y yo."
+    },
+    {
+      "zh": "星期天早上，我七点起床。",
+      "pinyin": "Xīngqītiān zǎoshang, wǒ qī diǎn qǐchuáng.",
+      "es": "El domingo por la mañana me levanto a las siete."
+    },
+    {
+      "zh": "妈妈已经在做早饭了，爸爸在看手机。",
+      "pinyin": "Māma yǐjīng zài zuò zǎofàn le, bàba zài kàn shǒujī.",
+      "es": "Mamá ya está haciendo el desayuno y papá está mirando el móvil."
+    },
+    {
+      "zh": "小雪还在睡觉，她说她很累。",
+      "pinyin": "Xiǎoxuě hái zài shuìjiào, tā shuō tā hěn lèi.",
+      "es": "Xiaoxue todavía duerme; dice que está muy cansada."
+    },
+    {
+      "zh": "吃早饭的时候，妈妈告诉我们一件事情。",
+      "pinyin": "Chī zǎofàn de shíhou, māma gàosu wǒmen yí jiàn shìqing.",
+      "es": "Mientras desayunamos, mamá nos cuenta una cosa."
+    },
+    {
+      "zh": "奶奶快要来我们家住了。",
+      "pinyin": "Nǎinai kuàiyào lái wǒmen jiā zhù le.",
+      "es": "La abuela va a venir pronto a vivir a nuestra casa."
+    },
+    {
+      "zh": "奶奶七十多岁了，现在一个人住。",
+      "pinyin": "Nǎinai qīshí duō suì le, xiànzài yí gè rén zhù.",
+      "es": "La abuela tiene más de setenta años y ahora vive sola."
+    },
+    {
+      "zh": "爸爸说她跟我们一起住，我们每天都能看见她。",
+      "pinyin": "Bàba shuō tā gēn wǒmen yìqǐ zhù, wǒmen měi tiān dōu néng kànjiàn tā.",
+      "es": "Papá dice que, si vive con nosotros, podremos verla todos los días."
+    },
+    {
+      "zh": "我和小雪都很高兴，我们要给奶奶准备一个房间。",
+      "pinyin": "Wǒ hé Xiǎoxuě dōu hěn gāoxìng, wǒmen yào gěi nǎinai zhǔnbèi yí gè fángjiān.",
+      "es": "Xiaoxue y yo estamos muy contentos; vamos a preparar una habitación para la abuela."
+    }
   ],
   "questions": [
-    { "prompt": "我几点起床？", "options": ["八点", "十点", "六点"], "answer_index": 2, "evidence_sentence": 1 },
-    { "prompt": "谁在房间看书？", "options": ["爸爸", "妈妈", "老师"], "answer_index": 0, "evidence_sentence": 2 },
-    { "prompt": "妈妈做好了什么？", "options": ["晚饭", "午饭", "咖啡"], "answer_index": 1, "evidence_sentence": 4 }
+    {
+      "prompt": "谁快要来小明家住？",
+      "options": [
+        "爷爷",
+        "奶奶",
+        "小雪"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 5
+    },
+    {
+      "prompt": "星期天早上，妈妈在做什么？",
+      "options": [
+        "在睡觉",
+        "在看手机",
+        "在做早饭"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "小明和小雪要给奶奶准备什么？",
+      "options": [
+        "一个房间",
+        "一本书",
+        "一件衣服"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 8
+    }
   ]
 }

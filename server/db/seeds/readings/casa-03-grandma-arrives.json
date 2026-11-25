@@ -1,0 +1,108 @@
+{
+  "slug": "casa-03-grandma-arrives",
+  "title": "在车站等奶奶",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "vida diaria",
+  "series": "casa",
+  "series_index": 3,
+  "target_words": [
+    "车站",
+    "出来",
+    "路上"
+  ],
+  "target_grammar": [
+    {
+      "code": "5.4.2",
+      "level": 2
+    },
+    {
+      "code": "6.2.1",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "星期天下午，爸爸和我去车站等奶奶。",
+      "pinyin": "Xīngqītiān xiàwǔ, bàba hé wǒ qù chēzhàn děng nǎinai.",
+      "es": "El domingo por la tarde, papá y yo vamos a la estación a esperar a la abuela."
+    },
+    {
+      "zh": "小明：爸爸，奶奶的车几点到？",
+      "pinyin": "Xiǎomíng: Bàba, nǎinai de chē jǐ diǎn dào?",
+      "es": "Xiaoming: Papá, ¿a qué hora llega el tren de la abuela?"
+    },
+    {
+      "zh": "爸爸：三点半，我们早来了二十分钟。",
+      "pinyin": "Bàba: Sān diǎn bàn, wǒmen zǎo lái le èrshí fēnzhōng.",
+      "es": "Papá: A las tres y media; hemos llegado veinte minutos antes."
+    },
+    {
+      "zh": "小明：奶奶从哪个门出来？",
+      "pinyin": "Xiǎomíng: Nǎinai cóng nǎge mén chūlái?",
+      "es": "Xiaoming: ¿Por qué puerta sale la abuela?"
+    },
+    {
+      "zh": "爸爸：左边那个门，我们在门口等她吧。",
+      "pinyin": "Bàba: Zuǒbian nàge mén, wǒmen zài ménkǒu děng tā ba.",
+      "es": "Papá: Por la de la izquierda; esperémosla en la entrada."
+    },
+    {
+      "zh": "奶奶：小明！我在这儿！",
+      "pinyin": "Nǎinai: Xiǎomíng! Wǒ zài zhèr!",
+      "es": "Abuela: ¡Xiaoming! ¡Estoy aquí!"
+    },
+    {
+      "zh": "小明：奶奶好！路上累不累？",
+      "pinyin": "Xiǎomíng: Nǎinai hǎo! Lùshang lèi bu lèi?",
+      "es": "Xiaoming: ¡Hola, abuela! ¿Estás cansada del viaje?"
+    },
+    {
+      "zh": "奶奶：不累，车上的人都很好。",
+      "pinyin": "Nǎinai: Bú lèi, chē shàng de rén dōu hěn hǎo.",
+      "es": "Abuela: No; la gente del tren ha sido muy amable."
+    },
+    {
+      "zh": "爸爸：妈妈，我们是坐出租车回家，还是坐地铁回家？",
+      "pinyin": "Bàba: Māma, wǒmen shì zuò chūzūchē huí jiā, háishi zuò dìtiě huí jiā?",
+      "es": "Papá: Mamá, ¿volvemos a casa en taxi o en metro?"
+    },
+    {
+      "zh": "奶奶：坐地铁吧，我想看看这里的地铁。",
+      "pinyin": "Nǎinai: Zuò dìtiě ba, wǒ xiǎng kàn kàn zhèlǐ de dìtiě.",
+      "es": "Abuela: En metro; quiero ver el metro de aquí."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "奶奶的车几点到？",
+      "options": [
+        "两点半",
+        "三点半",
+        "四点"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 2
+    },
+    {
+      "prompt": "他们在哪儿等奶奶？",
+      "options": [
+        "左边的门口",
+        "车上",
+        "家里"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "他们怎么回家？",
+      "options": [
+        "坐出租车",
+        "走路",
+        "坐地铁"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 9
+    }
+  ]
+}

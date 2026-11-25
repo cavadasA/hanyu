@@ -1,0 +1,103 @@
+{
+  "slug": "casa-05-birthday-plan",
+  "title": "送奶奶什么",
+  "hsk_level": 2,
+  "format": "dialogue",
+  "topic": "vida diaria",
+  "series": "casa",
+  "series_index": 5,
+  "target_words": [
+    "生日",
+    "送",
+    "手表"
+  ],
+  "target_grammar": [
+    {
+      "code": "6.3.7",
+      "level": 2
+    },
+    {
+      "code": "2.3.1",
+      "level": 2
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "小雪：哥哥，下个星期三是奶奶的生日。",
+      "pinyin": "Xiǎoxuě: Gēge, xià gè xīngqīsān shì nǎinai de shēngrì.",
+      "es": "Xiaoxue: Hermano, el miércoles que viene es el cumpleaños de la abuela."
+    },
+    {
+      "zh": "小明：我知道，我们送奶奶什么呢？",
+      "pinyin": "Xiǎomíng: Wǒ zhīdào, wǒmen sòng nǎinai shénme ne?",
+      "es": "Xiaoming: Ya lo sé; ¿qué le regalamos a la abuela?"
+    },
+    {
+      "zh": "小雪：送她一件红色的衣服，好不好？",
+      "pinyin": "Xiǎoxuě: Sòng tā yí jiàn hóngsè de yīfu, hǎo bu hǎo?",
+      "es": "Xiaoxue: ¿Le regalamos una prenda de ropa roja?"
+    },
+    {
+      "zh": "小明：她的衣服已经很多了。",
+      "pinyin": "Xiǎomíng: Tā de yīfu yǐjīng hěn duō le.",
+      "es": "Xiaoming: Ya tiene mucha ropa."
+    },
+    {
+      "zh": "小雪：那送她一块手表吧，她每天早上跑步要看时间。",
+      "pinyin": "Xiǎoxuě: Nà sòng tā yí kuài shǒubiǎo ba, tā měi tiān zǎoshang pǎobù yào kàn shíjiān.",
+      "es": "Xiaoxue: Entonces regalémosle un reloj; cada mañana, cuando corre, tiene que mirar la hora."
+    },
+    {
+      "zh": "小明：很好！但是手表很贵，我们的钱可能不多。",
+      "pinyin": "Xiǎomíng: Hěn hǎo! Dànshì shǒubiǎo hěn guì, wǒmen de qián kěnéng bù duō.",
+      "es": "Xiaoming: ¡Muy bien! Pero los relojes son caros y puede que no tengamos bastante dinero."
+    },
+    {
+      "zh": "妈妈：为什么在说钱？你们想买什么？",
+      "pinyin": "Māma: Wèishénme zài shuō qián? Nǐmen xiǎng mǎi shénme?",
+      "es": "Mamá: ¿Por qué habláis de dinero? ¿Qué queréis comprar?"
+    },
+    {
+      "zh": "小雪：妈妈，别告诉奶奶，我们想给她买手表。",
+      "pinyin": "Xiǎoxuě: Māma, bié gàosu nǎinai, wǒmen xiǎng gěi tā mǎi shǒubiǎo.",
+      "es": "Xiaoxue: Mamá, no se lo digas a la abuela: queremos comprarle un reloj."
+    },
+    {
+      "zh": "妈妈：好，我给你们一些钱，星期六一起去商场买。",
+      "pinyin": "Māma: Hǎo, wǒ gěi nǐmen yìxiē qián, xīngqīliù yìqǐ qù shāngchǎng mǎi.",
+      "es": "Mamá: Vale, os doy algo de dinero y el sábado vamos juntos al centro comercial a comprarlo."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "奶奶的生日是哪天？",
+      "options": [
+        "下个星期三",
+        "这个星期六",
+        "今天"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "小雪为什么想送手表？",
+      "options": [
+        "因为奶奶的手表坏了",
+        "因为奶奶跑步要看时间",
+        "因为手表很便宜"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 4
+    },
+    {
+      "prompt": "他们什么时候去商场？",
+      "options": [
+        "星期六",
+        "星期三",
+        "明天"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 8
+    }
+  ]
+}

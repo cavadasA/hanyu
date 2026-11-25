@@ -1,27 +1,107 @@
 {
   "slug": "home-02-cooking",
-  "title": "一起做饭",
+  "title": "给奶奶的房间",
   "hsk_level": 2,
   "format": "story",
   "topic": "vida diaria",
   "series": "casa",
   "series_index": 2,
-  "target_words": ["着", "虽然", "高兴"],
-  "target_grammar": [{"code": "7.1.1", "level": 2}],
+  "target_words": [
+    "帮忙",
+    "画",
+    "颜色"
+  ],
+  "target_grammar": [
+    {
+      "code": "2.2.3",
+      "level": 2
+    },
+    {
+      "code": "6.3.6",
+      "level": 2
+    },
+    {
+      "code": "6.3.5",
+      "level": 2
+    }
+  ],
   "sentences": [
-    { "zh": "我叫小明。", "pinyin": "Wǒ jiào Xiǎomíng.", "es": "Me llamo Xiaoming." },
-    { "zh": "今天妈妈在房间做饭。", "pinyin": "Jīntiān māma zài fángjiān zuòfàn.", "es": "Hoy mamá cocina en la habitación." },
-    { "zh": "妈妈坐在桌子旁边，手里拿着茶。", "pinyin": "Māma zuò zài zhuōzi pángbiān, shǒu lǐ ná zhe chá.", "es": "Mamá se sienta junto a la mesa y sostiene té en la mano." },
-    { "zh": "爸爸在桌子旁边看书。", "pinyin": "Bàba zài zhuōzi pángbiān kàn shū.", "es": "Papá lee junto a la mesa." },
-    { "zh": "我也给大家做饭，也给大家喝水。", "pinyin": "Wǒ yě gěi dàjiā zuòfàn, yě gěi dàjiā hē shuǐ.", "es": "Yo también cocino para todos y les doy agua para beber." },
-    { "zh": "饭做好了，我们一起吃饭。", "pinyin": "Fàn zuò hǎo le, wǒmen yìqǐ chīfàn.", "es": "La comida está lista y comemos juntos." },
-    { "zh": "虽然今天很忙，但是我们都很高兴。", "pinyin": "Suīrán jīntiān hěn máng, dànshì wǒmen dōu hěn gāoxìng.", "es": "Aunque hoy estamos muy ocupados, estamos todos contentos." },
-    { "zh": "吃完饭，我现在去睡觉。", "pinyin": "Chī wán fàn, wǒ xiànzài qù shuìjiào.", "es": "Después de comer, ahora me voy a dormir." },
-    { "zh": "爸爸也很高兴。", "pinyin": "Bàba yě hěn gāoxìng.", "es": "Papá también está muy contento." }
+    {
+      "zh": "奶奶的房间在我的房间旁边，里面有床、桌子和椅子。",
+      "pinyin": "Nǎinai de fángjiān zài wǒ de fángjiān pángbiān, lǐmiàn yǒu chuáng, zhuōzi hé yǐzi.",
+      "es": "La habitación de la abuela está al lado de la mía; dentro hay una cama, una mesa y sillas."
+    },
+    {
+      "zh": "星期六，爸爸妈妈打开门，开始准备房间。",
+      "pinyin": "Xīngqīliù, bàba māma dǎkāi mén, kāishǐ zhǔnbèi fángjiān.",
+      "es": "El sábado, papá y mamá abren la puerta y empiezan a preparar la habitación."
+    },
+    {
+      "zh": "我也来帮忙，桌子上的东西都是我拿出去的。",
+      "pinyin": "Wǒ yě lái bāngmáng, zhuōzi shàng de dōngxi dōu shì wǒ ná chūqù de.",
+      "es": "Yo también vengo a ayudar: las cosas que había sobre la mesa las saqué todas yo."
+    },
+    {
+      "zh": "“我也想帮忙！”小雪说。",
+      "pinyin": "\"Wǒ yě xiǎng bāngmáng!\" Xiǎoxuě shuō.",
+      "es": "«¡Yo también quiero ayudar!», dice Xiaoxue."
+    },
+    {
+      "zh": "妈妈笑着让小雪给奶奶画画。",
+      "pinyin": "Māma xiào zhe ràng Xiǎoxuě gěi nǎinai huà huà.",
+      "es": "Mamá, sonriendo, le pide a Xiaoxue que haga un dibujo para la abuela."
+    },
+    {
+      "zh": "小雪坐在桌子旁边，画了我们一家人。",
+      "pinyin": "Xiǎoxuě zuò zài zhuōzi pángbiān, huà le wǒmen yì jiārén.",
+      "es": "Xiaoxue se sienta junto a la mesa y dibuja a toda la familia."
+    },
+    {
+      "zh": "她的画有红色、绿色和白色，颜色很漂亮。",
+      "pinyin": "Tā de huà yǒu hóngsè, lǜsè hé báisè, yánsè hěn piàoliang.",
+      "es": "Su dibujo tiene rojo, verde y blanco; los colores son muy bonitos."
+    },
+    {
+      "zh": "晚上，房间已经准备好了，小雪的画在桌子上面。",
+      "pinyin": "Wǎnshang, fángjiān yǐjīng zhǔnbèi hǎo le, Xiǎoxuě de huà zài zhuōzi shàngmiàn.",
+      "es": "Por la noche la habitación ya está preparada y el dibujo de Xiaoxue está encima de la mesa."
+    },
+    {
+      "zh": "爸爸说奶奶看见这个画，会非常高兴。",
+      "pinyin": "Bàba shuō nǎinai kànjiàn zhège huà, huì fēicháng gāoxìng.",
+      "es": "Papá dice que, cuando la abuela vea este dibujo, se pondrá muy contenta."
+    }
   ],
   "questions": [
-    { "prompt": "妈妈手里拿着什么？", "options": ["书", "茶", "水"], "answer_index": 1, "evidence_sentence": 2 },
-    { "prompt": "谁在桌子旁边看书？", "options": ["妈妈", "我", "爸爸"], "answer_index": 2, "evidence_sentence": 3 },
-    { "prompt": "他们什么时候一起吃饭？", "options": ["饭做好以后", "吃饭以前", "明天"], "answer_index": 0, "evidence_sentence": 5 }
+    {
+      "prompt": "奶奶的房间在哪儿？",
+      "options": [
+        "在门口",
+        "在小明的房间旁边",
+        "在小雪的房间里面"
+      ],
+      "answer_index": 1,
+      "evidence_sentence": 0
+    },
+    {
+      "prompt": "小雪做了什么？",
+      "options": [
+        "画了一个画",
+        "准备早饭",
+        "拿东西出去"
+      ],
+      "answer_index": 0,
+      "evidence_sentence": 5
+    },
+    {
+      "prompt": "晚上，小雪的画在哪儿？",
+      "options": [
+        "在床上",
+        "在门口",
+        "在桌子上面"
+      ],
+      "answer_index": 2,
+      "evidence_sentence": 7
+    }
   ]
 }
