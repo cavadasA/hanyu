@@ -11,6 +11,8 @@ import {
   loadOfficialCharacters,
 } from './lib/official-terms.js';
 import { loadOfficialGrammar } from './lib/official-grammar.js';
+import { loadDictionary, loadReadings } from './build-readings.js';
+import { tokenizeReading } from '../packages/domain/src/reading/tokenize.ts';
 import { verifyLocalSources } from './fetch-syllabus.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -86,6 +88,44 @@ export function buildCoverageReport() {
   };
 }
 
+const percentOf = (covered, official) =>
+  official === 0 ? 0 : Math.round((covered / official) * 1000) / 10;
+
+/**
+ * Cobertura del corpus de lecturas HSK 2 (Plan 10): palabras HSK 2 que aparecen
+ * en algún texto, según el tokenizador del lector, y puntos de gramática HSK 2
+ * que alguna lectura declara en target_grammar.
+ */
+export function buildReadingCoverage({
+  readings = loadReadings(),
+  dictionary = loadDictionary(),
+  grammarPoints = JSON.parse(readFileSync(join(rootDir, 'server', 'db', 'seeds', 'grammar-points.json'), 'utf8')),
+} = {}) {
+  const level = 2;
+  const corpus = readings.filter(reading => reading.hsk_level === level);
+  const allowed = dictionary.filter(entry => entry.hsk_level <= level);
+  const words = new Set(dictionary.filter(entry => entry.hsk_level === level).map(entry => entry.hanzi));
+  const points = new Set(grammarPoints.filter(point => point.hsk_level === level).map(point => point.code));
+
+  const used = new Set();
+  const targeted = new Set();
+  for (const reading of corpus) {
+    for (const sentence of reading.sentences) {
+      for (const token of tokenizeReading(sentence.zh, allowed)) used.add(token.text);
+    }
+    for (const target of reading.target_grammar ?? []) {
+      if (target.level === level && points.has(target.code)) targeted.add(target.code);
+    }
+  }
+
+  const coveredWords = [...words].filter(word => used.has(word)).length;
+  return {
+    readings: corpus.length,
+    vocabulary: { covered: coveredWords, official: words.size, percent: percentOf(coveredWords, words.size) },
+    grammar: { covered: targeted.size, official: points.size, percent: percentOf(targeted.size, points.size) },
+  };
+}
+
 if (process.argv[1] && process.argv[1].endsWith('coverage-report.js')) {
   const report = buildCoverageReport();
   console.log(`Sílabo HSK 3.0, revisión ${report.revision}`);
@@ -109,4 +149,11 @@ if (process.argv[1] && process.argv[1].endsWith('coverage-report.js')) {
         `gramática ${g.covered}/${g.official} (${g.percent} %)`,
     );
   }
+
+  const readings = buildReadingCoverage();
+  console.log(
+    `Lecturas HSK 2: ${readings.readings} textos, ` +
+      `vocabulario HSK 2 ${readings.vocabulary.covered}/${readings.vocabulary.official} (${readings.vocabulary.percent} %), ` +
+      `gramática HSK 2 ${readings.grammar.covered}/${readings.grammar.official} (${readings.grammar.percent} %)`,
+  );
 }

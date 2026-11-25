@@ -64,7 +64,12 @@ export interface CatalogIssue {
 export type CatalogReading = Pick<ReadingSource, 'slug' | 'topic' | 'sentences'> & {
   series: string | null;
   series_index: number | null;
+  format?: string;
 };
+
+const FORMATS = ['short_text', 'story', 'dialogue'] as const;
+/** Mínimo de cada formato en el corpus: ninguno puede quedar por debajo. */
+const MIN_FORMAT_SHARE = 0.25;
 
 export function validateCatalogShape(
   readings: CatalogReading[],
@@ -123,6 +128,19 @@ export function validateCatalogShape(
         kind: 'series_gap',
         detail: `${declaration.code}: faltan los episodios ${missing.join(', ')}`,
       });
+    }
+  }
+
+  const formatted = readings.filter(reading => typeof reading.format === 'string');
+  if (formatted.length > 0) {
+    for (const format of FORMATS) {
+      const count = formatted.filter(reading => reading.format === format).length;
+      if (count / formatted.length < MIN_FORMAT_SHARE) {
+        issues.push({
+          kind: 'format_unbalanced',
+          detail: `${format}: ${count} de ${formatted.length} (${Math.round((count / formatted.length) * 100)} %)`,
+        });
+      }
     }
   }
 

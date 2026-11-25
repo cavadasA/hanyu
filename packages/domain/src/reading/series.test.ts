@@ -105,3 +105,31 @@ describe('validateCatalogShape', () => {
     ]);
   });
 });
+
+describe('reparto de formatos', () => {
+  const withFormat = (format: string, index: number) => ({
+    ...episode('tienda', index, 'compras', '小林去商店。'),
+    slug: `tienda-${format}-${index}`,
+    format,
+  });
+
+  it('format_unbalanced si algún formato queda por debajo del 25 %', () => {
+    const readings = [
+      withFormat('dialogue', 1), withFormat('dialogue', 2), withFormat('dialogue', 3), withFormat('story', 4),
+    ];
+
+    const issues = validateCatalogShape(readings, [{ ...tienda, planned_episodes: 4 }], { topics: ['compras'] })
+      .filter(issue => issue.kind === 'format_unbalanced');
+
+    expect(issues).toEqual([{ kind: 'format_unbalanced', detail: 'short_text: 0 de 4 (0 %)' }]);
+  });
+
+  it('un reparto de al menos el 25 % por formato no da problemas', () => {
+    const readings = [
+      withFormat('dialogue', 1), withFormat('story', 2), withFormat('short_text', 3), withFormat('dialogue', 4),
+    ];
+
+    expect(validateCatalogShape(readings, [{ ...tienda, planned_episodes: 4 }], { topics: ['compras'] })
+      .filter(issue => issue.kind === 'format_unbalanced')).toEqual([]);
+  });
+});

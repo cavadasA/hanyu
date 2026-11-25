@@ -41,7 +41,8 @@ describe('buildSeedSql', () => {
     expect(generated.sql).toContain('insert into public.exam_structure');
     expect(generated.sql).toContain('target_words');
     expect(generated.sql).toContain('target_grammar');
-    expect(generated.sql).toContain(`'[{"code":"6.4.2","level":2}]'::jsonb`);
+    // Cada objetivo gramatical lleva su nivel, serializado como jsonb.
+    expect(generated.sql).toMatch(/'\[\{"code":"6\.4\.2","level":2\}[^']*\]'::jsonb|'\[[^']*\{"code":"6\.4\.2","level":2\}\]'::jsonb/);
     expect(generated.sql).toContain('insert into public.content_teaches');
 
     expect(generated.counts.words).toBeGreaterThan(0);
