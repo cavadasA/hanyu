@@ -1,5 +1,10 @@
 import { Stack } from 'expo-router';
 
+// El índice está siempre debajo, aunque se entre directo a una pantalla (un enlace
+// o la pila restaurada al reiniciar): si no, Expresión quedaba como primera
+// pantalla y ni volver atrás ni tocar la pestaña Practice llevaban al índice.
+export const unstable_settings = { initialRouteName: 'index' };
+
 export default function PracticeLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
