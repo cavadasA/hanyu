@@ -55,6 +55,28 @@ describe('buildDailyPlan', () => {
     expect(newItems?.reason).toBe('daily_limit_reached');
   });
 
+  it('sin mazo no afirma que el cupo de palabras nuevas está agotado', () => {
+    const plan = buildDailyPlan({ ...base, new_allowance: 0, deck_size: 0, new_quota_left: 10 });
+    const newItems = plan.steps.find((step) => step.kind === 'new_items');
+
+    expect(newItems?.status).toBe('unavailable');
+    expect(newItems?.reason).toBe('no_deck');
+  });
+
+  it('con cupo pendiente y sin palabras nuevas en los mazos lo dice así', () => {
+    const plan = buildDailyPlan({ ...base, new_allowance: 0, deck_size: 300, new_quota_left: 10 });
+    const newItems = plan.steps.find((step) => step.kind === 'new_items');
+
+    expect(newItems?.reason).toBe('no_new_words');
+  });
+
+  it('con el cupo gastado sigue diciendo que el límite diario está alcanzado', () => {
+    const plan = buildDailyPlan({ ...base, new_allowance: 0, deck_size: 300, new_quota_left: 0 });
+    const newItems = plan.steps.find((step) => step.kind === 'new_items');
+
+    expect(newItems?.reason).toBe('daily_limit_reached');
+  });
+
   it('declara una unidad no disponible sin afirmar que está completada', () => {
     const plan = buildDailyPlan({ ...base, active_unit: null });
     const newItems = plan.steps.find((step) => step.kind === 'new_items');

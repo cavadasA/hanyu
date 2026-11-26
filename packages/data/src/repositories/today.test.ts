@@ -33,6 +33,7 @@ function clientFor(options: {
   progress?: unknown[];
   events?: unknown[];
   dueCount?: number;
+  deckSize?: number;
   dueState?: { regular_due_count: number; relearning_count: number };
   queue?: unknown[];
   unit?: unknown;
@@ -42,7 +43,7 @@ function clientFor(options: {
 } = {}) {
   const rpc = vi
     .fn()
-    .mockResolvedValueOnce({ data: [{ deck_id: null, count: 150 }], error: null })
+    .mockResolvedValueOnce({ data: [{ deck_id: null, count: options.deckSize ?? 150 }], error: null })
     .mockResolvedValueOnce({ data: [{ deck_id: null, count: options.dueCount ?? 3 }], error: null })
     .mockResolvedValueOnce({
       data: [options.dueState ?? { regular_due_count: 2, relearning_count: 1 }],
@@ -221,6 +222,13 @@ describe('getToday', () => {
       status: 'ready',
       payload: { unit_title: '离合词', unit_progress: '1/4' },
     });
+  });
+
+  it('un usuario sin mazos no ve el cupo de palabras nuevas como agotado', async () => {
+    const result = await getToday(clientFor({ deckSize: 0, queue: [] }));
+    const newItems = (result as any).steps.find((step: any) => step.kind === 'new_items');
+
+    expect(newItems).toMatchObject({ status: 'unavailable', reason: 'no_deck' });
   });
 
   it('separa repasos normales y reaprendizaje sin contar el subconjunto dos veces', async () => {

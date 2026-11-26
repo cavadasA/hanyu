@@ -159,6 +159,11 @@ export async function getToday(client: HanyuClient) {
         }
       : null,
     new_allowance: queue.filter((row) => row.is_new).length,
+    deck_size: countFromRpc(deckSizeRpc),
+    new_quota_left: Math.max(
+      0,
+      Number(settings.new_cards_per_day ?? 10) - Number((todayStats as any).cards_new || 0),
+    ),
     readings: readingInput.rankable,
     // Hay catálogo pero no se ha podido puntuar: el paso lo dice en vez de
     // afirmar que no hay lecturas.

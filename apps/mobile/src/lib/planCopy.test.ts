@@ -27,4 +27,13 @@ describe('planCopy', () => {
       'Añade una fecha de examen en tu perfil para activar este formato',
     );
   });
+
+  it('sin mazo indica dónde añadir uno en vez de dar el cupo por agotado', () => {
+    expect(unavailableToText('no_deck', 'new_items')).toBe(
+      'Añade un mazo en Library → Decks para empezar',
+    );
+    expect(unavailableToText('no_new_words', 'new_items')).toBe(
+      'No quedan palabras nuevas en tus mazos activos',
+    );
+  });
 });

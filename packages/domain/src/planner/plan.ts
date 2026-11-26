@@ -22,6 +22,11 @@ export type PlanStepReason =
   | 'content_unavailable'
   | 'no_exam_date'
   | 'daily_limit_reached'
+  // La cola de aprendizaje sale de los mazos activos: sin mazo no hay palabras
+  // nuevas que ofrecer, y decir que el cupo está agotado sería falso.
+  | 'no_deck'
+  // Queda cupo hoy, pero los mazos activos no tienen palabras nuevas que dar.
+  | 'no_new_words'
   | 'unit_unavailable';
 
 export interface PlanStep {
@@ -50,6 +55,10 @@ export interface DailyPlanInput {
     settled_items?: number;
   } | null;
   new_allowance: number;
+  /** Tarjetas en los mazos activos. 0 = el usuario aún no ha añadido ningún mazo. */
+  deck_size?: number;
+  /** Cupo diario de palabras nuevas que queda hoy (ajuste menos introducidas). */
+  new_quota_left?: number;
   readings: RankableContent[];
   /** El catálogo existe pero no se ha podido puntuar. Ver `content_unavailable`. */
   readings_unavailable?: boolean;
@@ -127,7 +136,12 @@ export function buildDailyPlan(input: DailyPlanInput): { steps: PlanStep[] } {
   } else if (!activeUnit) {
     steps.push({ kind: 'new_items', status: 'unavailable', reason: 'unit_unavailable' });
   } else if (input.new_allowance <= 0) {
-    steps.push({ kind: 'new_items', status: 'unavailable', reason: 'daily_limit_reached' });
+    const reason: PlanStepReason = input.deck_size === 0
+      ? 'no_deck'
+      : (input.new_quota_left ?? 0) > 0
+        ? 'no_new_words'
+        : 'daily_limit_reached';
+    steps.push({ kind: 'new_items', status: 'unavailable', reason });
   } else {
     const settledItems = activeUnit.settled_items ?? activeUnit.settled_words;
     const totalItems = activeUnit.total_items ?? activeUnit.total_words;

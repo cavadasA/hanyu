@@ -40,6 +40,10 @@ export function unavailableToText(
       return 'Añade una fecha de examen en tu perfil para activar este formato';
     case 'daily_limit_reached':
       return 'Ya has introducido las palabras nuevas de hoy';
+    case 'no_deck':
+      return 'Añade un mazo en Library → Decks para empezar';
+    case 'no_new_words':
+      return 'No quedan palabras nuevas en tus mazos activos';
     case 'unit_unavailable':
       return 'No hay una unidad disponible para introducir palabras nuevas ahora';
     default:
