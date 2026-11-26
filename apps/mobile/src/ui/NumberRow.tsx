@@ -32,7 +32,7 @@ export function NumberRow({
       <View style={styles.controls}>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={`Decrease ${lower}`}
+          accessibilityLabel={`Bajar ${lower}`}
           disabled={decreaseDisabled}
           onPress={() => onChange(value - step)}
           style={[
@@ -44,7 +44,7 @@ export function NumberRow({
         </Pressable>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={`Increase ${lower}`}
+          accessibilityLabel={`Subir ${lower}`}
           disabled={increaseDisabled}
           onPress={() => onChange(value + step)}
           style={[

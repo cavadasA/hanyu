@@ -23,6 +23,9 @@ const THEMES: readonly ThemePreference[] = ['light', 'dark', 'system'];
 const ORDERS: readonly CardOrder[] = ['due', 'frequency'];
 const LEVELS = ['1', '2', '3', '4', '5', '6'] as const;
 const SUPPORT_LANGUAGES = ['es', 'en'] as const;
+const THEME_LABELS: Record<ThemePreference, string> = { light: 'Claro', dark: 'Oscuro', system: 'Sistema' };
+const ORDER_LABELS: Record<CardOrder, string> = { due: 'Por vencimiento', frequency: 'Por frecuencia' };
+const SUPPORT_LANGUAGE_LABELS = { es: 'Español', en: 'Inglés' } as const;
 const RETENTION_OPTIONS = [
   { value: 0.85, label: 'Relajado (0,85)' },
   { value: 0.9, label: 'Equilibrado (0,90)' },
@@ -158,7 +161,7 @@ export default function YouScreen() {
     <Screen>
       {/* Header */}
       <View style={styles.headerRow}>
-        <Text style={[styles.heading, { color: colors.text }]}>You</Text>
+        <Text style={[styles.heading, { color: colors.text }]}>Tú</Text>
         <View style={[styles.sealBadge, { backgroundColor: colors.vermilion }]}>
           <Text style={[styles.sealText, { color: colors.onAccent }]}>漢</Text>
         </View>
@@ -171,11 +174,11 @@ export default function YouScreen() {
         <Text style={[styles.heroMetric, { color: colors.onAccent }]}>
           {heroStats ? String(heroStats.mastered) : '—'}
         </Text>
-        <Text style={[styles.heroLabel, { color: colors.onAccentMuted }]}>words mastered</Text>
+        <Text style={[styles.heroLabel, { color: colors.onAccentMuted }]}>palabras dominadas</Text>
         <View style={[styles.heroDivider, { backgroundColor: colors.onAccent + '33' }]} />
         <Text style={[styles.heroMuted, { color: colors.onAccentMuted }]}>
           {heroStats?.accuracy != null
-            ? `HSK ${currentLevel} · ${Math.round(heroStats.accuracy)}% accuracy`
+            ? `HSK ${currentLevel} · ${Math.round(heroStats.accuracy)}% de aciertos`
             : `HSK ${currentLevel}`}
         </Text>
       </View>
@@ -192,7 +195,7 @@ export default function YouScreen() {
         </View>
         <View style={styles.profileDetails}>
           <Text style={[styles.userEmail, { color: colors.text }]}>{userEmail}</Text>
-          <Text style={[styles.userRole, { color: colors.textMuted }]}>Independent Learner</Text>
+          <Text style={[styles.userRole, { color: colors.textMuted }]}>Estudiante autodidacta</Text>
         </View>
       </View>
 
@@ -206,9 +209,9 @@ export default function YouScreen() {
         >
           {/* Section 1: Study Targets */}
           <View style={styles.panelSection}>
-            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>STUDY TARGETS</Text>
+            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>OBJETIVOS DE ESTUDIO</Text>
             <OptionRow
-              label="Current level"
+              label="Nivel actual"
               value={String(settings.current_level) as (typeof LEVELS)[number]}
               options={LEVELS}
               onChange={(level) => save({ current_level: Number(level) })}
@@ -216,15 +219,16 @@ export default function YouScreen() {
             />
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <OptionRow
-              label="Support language"
+              label="Idioma de las glosas"
               value={settings.support_language}
               options={SUPPORT_LANGUAGES}
+              labels={SUPPORT_LANGUAGE_LABELS}
               onChange={(support_language) => save({ support_language })}
               disabled={saving}
             />
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <NumberRow
-              label="New cards per day"
+              label="Tarjetas nuevas al día"
               value={settings.new_cards_per_day}
               min={0}
               max={100}
@@ -234,7 +238,7 @@ export default function YouScreen() {
             />
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <NumberRow
-              label="Review limit per day"
+              label="Límite de repasos al día"
               value={settings.review_limit_per_day}
               min={10}
               max={999}
@@ -244,7 +248,7 @@ export default function YouScreen() {
             />
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <NumberRow
-              label="Session size"
+              label="Tamaño de la sesión"
               value={settings.session_size}
               min={5}
               max={200}
@@ -255,17 +259,17 @@ export default function YouScreen() {
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <View style={styles.examDateRow}>
               <View style={styles.examDateCopy}>
-                <Text style={[styles.rowLabel, { color: colors.text }]}>Exam date</Text>
-                <Text style={[styles.rowHint, { color: colors.textMuted }]}>YYYY-MM-DD</Text>
+                <Text style={[styles.rowLabel, { color: colors.text }]}>Fecha del examen</Text>
+                <Text style={[styles.rowHint, { color: colors.textMuted }]}>AAAA-MM-DD</Text>
               </View>
               <TextInput
-                accessibilityLabel="Exam date"
+                accessibilityLabel="Fecha del examen"
                 value={draftExamDate}
                 onChangeText={(value) => {
                   setDraftExamDate(value);
                   setExamDateError('');
                 }}
-                placeholder="YYYY-MM-DD"
+                placeholder="AAAA-MM-DD"
                 placeholderTextColor={colors.textMuted}
                 editable={!saving}
                 autoCapitalize="none"
@@ -276,12 +280,12 @@ export default function YouScreen() {
                 <Text style={[styles.examDateError, { color: colors.vermilion }]}>{examDateError}</Text>
               ) : null}
               <Button
-                label="Save exam date"
+                label="Guardar la fecha del examen"
                 variant="outline"
                 onPress={() => {
                   const value = draftExamDate.trim();
                   if (value && !isValidExamDate(value)) {
-                    setExamDateError('Usa una fecha real con formato YYYY-MM-DD');
+                    setExamDateError('Usa una fecha real con formato AAAA-MM-DD');
                     return;
                   }
                   void save({ exam_date: value || null });
@@ -295,9 +299,9 @@ export default function YouScreen() {
 
           {/* Section 2: Algorithm */}
           <View style={styles.panelSection}>
-            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>DECK ALGORITHM</Text>
+            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>ALGORITMO DE REPASO</Text>
             <OptionRow
-              label="Target retention"
+              label="Retención objetivo"
               value={
                 RETENTION_OPTIONS.find((option) => option.value === settings.request_retention)?.label
                   ?? RETENTION_OPTIONS[1].label
@@ -311,9 +315,10 @@ export default function YouScreen() {
             />
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <OptionRow
-              label="Card order"
+              label="Orden de las tarjetas"
               value={settings.card_order}
               options={ORDERS}
+              labels={ORDER_LABELS}
               onChange={(card_order) => save({ card_order })}
               disabled={saving}
             />
@@ -323,11 +328,12 @@ export default function YouScreen() {
 
           {/* Section 3: Appearance */}
           <View style={styles.panelSection}>
-            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>APPEARANCE</Text>
+            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>APARIENCIA</Text>
             <OptionRow
-              label="Theme"
+              label="Tema"
               value={settings.theme}
               options={THEMES}
+              labels={THEME_LABELS}
               onChange={(theme) => save({ theme })}
               disabled={saving}
             />
@@ -343,14 +349,14 @@ export default function YouScreen() {
           ]}
         >
           <View style={styles.panelSection}>
-            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>NEEDS ATTENTION</Text>
-            <Text style={[styles.leechBody, { color: colors.textMuted }]}>These cards were difficult repeatedly.</Text>
+            <Text style={[styles.sectionTitle, { color: colors.vermilion }]}>NECESITAN ATENCIÓN</Text>
+            <Text style={[styles.leechBody, { color: colors.textMuted }]}>Estas tarjetas te han costado una y otra vez.</Text>
             {leeches.map((state) => (
               <View key={state.id} style={styles.leechRow}>
                 <Text style={[styles.leechLabel, { color: colors.text }]}>
-                  {state.word?.hanzi ?? `Word ${state.target_id}`} · {state.lapses} lapses
+                  {state.word?.hanzi ?? `Palabra ${state.target_id}`} · {state.lapses} {state.lapses === 1 ? 'fallo' : 'fallos'}
                 </Text>
-                <Button label="Reactivate" variant="outline" onPress={() => void reactivate(state)} />
+                <Button label="Reactivar" variant="outline" onPress={() => void reactivate(state)} />
               </View>
             ))}
           </View>
@@ -358,7 +364,7 @@ export default function YouScreen() {
       ) : null}
 
       <View style={styles.actionRow}>
-        <Button label="Sign out" variant="secondary" onPress={signOut} />
+        <Button label="Cerrar sesión" variant="secondary" onPress={signOut} />
       </View>
     </Screen>
   );

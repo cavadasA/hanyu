@@ -103,9 +103,9 @@ describe('YouScreen', () => {
     await renderYou();
 
     expect(screen.getByText('learner@example.com')).toBeTruthy();
-    expect(screen.getByText('New cards per day: 10')).toBeTruthy();
-    expect(screen.getByText('Review limit per day: 200')).toBeTruthy();
-    expect(screen.getByText('Session size: 20')).toBeTruthy();
+    expect(screen.getByText('Tarjetas nuevas al día: 10')).toBeTruthy();
+    expect(screen.getByText('Límite de repasos al día: 200')).toBeTruthy();
+    expect(screen.getByText('Tamaño de la sesión: 20')).toBeTruthy();
     expect(screen.getByText('6')).toBeTruthy();
   });
 
@@ -114,7 +114,7 @@ describe('YouScreen', () => {
     mockUpdateSettings.mockResolvedValue({ ...settings, theme: 'dark' });
 
     await renderYou();
-    await fireEvent.press(screen.getByText('dark'));
+    await fireEvent.press(screen.getByText('Oscuro'));
 
     expect(mockUpdateSettings).toHaveBeenCalledWith({ theme: 'dark' });
     expect(mockSetPreference).toHaveBeenCalledWith('dark');
@@ -125,7 +125,7 @@ describe('YouScreen', () => {
     mockUpdateSettings.mockRejectedValue({ message: 'Failed to save settings' });
 
     await renderYou();
-    await fireEvent.press(screen.getByText('dark'));
+    await fireEvent.press(screen.getByText('Oscuro'));
 
     expect(mockSetPreference.mock.calls).toEqual([['dark'], ['light']]);
     expect(screen.getByText('Failed to save settings')).toBeTruthy();
@@ -136,7 +136,7 @@ describe('YouScreen', () => {
     mockUpdateSettings.mockResolvedValue({ ...settings, new_cards_per_day: 15 });
 
     await renderYou();
-    await fireEvent.press(screen.getByLabelText('Increase new cards per day'));
+    await fireEvent.press(screen.getByLabelText('Subir tarjetas nuevas al día'));
 
     expect(mockUpdateSettings).toHaveBeenCalledWith({ new_cards_per_day: 15 });
   });
@@ -146,7 +146,7 @@ describe('YouScreen', () => {
     mockUpdateSettings.mockResolvedValue({ ...settings, support_language: 'en' });
 
     await renderYou();
-    await fireEvent.press(screen.getByText('en'));
+    await fireEvent.press(screen.getByText('Inglés'));
 
     expect(mockUpdateSettings).toHaveBeenCalledWith({ support_language: 'en' });
   });
@@ -156,8 +156,8 @@ describe('YouScreen', () => {
     mockUpdateSettings.mockResolvedValue({ ...settings, exam_date: '2026-10-15' });
 
     await renderYou();
-    await fireEvent.changeText(screen.getByLabelText('Exam date'), '2026-10-15');
-    await fireEvent.press(screen.getByText('Save exam date'));
+    await fireEvent.changeText(screen.getByLabelText('Fecha del examen'), '2026-10-15');
+    await fireEvent.press(screen.getByText('Guardar la fecha del examen'));
 
     expect(mockUpdateSettings).toHaveBeenCalledWith({ exam_date: '2026-10-15' });
   });
@@ -166,11 +166,11 @@ describe('YouScreen', () => {
     mockGetSettings.mockResolvedValue(settings);
 
     await renderYou();
-    await fireEvent.changeText(screen.getByLabelText('Exam date'), '2026-13-45');
-    await fireEvent.press(screen.getByText('Save exam date'));
+    await fireEvent.changeText(screen.getByLabelText('Fecha del examen'), '2026-13-45');
+    await fireEvent.press(screen.getByText('Guardar la fecha del examen'));
 
     expect(mockUpdateSettings).not.toHaveBeenCalled();
-    expect(screen.getByText('Usa una fecha real con formato YYYY-MM-DD')).toBeTruthy();
+    expect(screen.getByText('Usa una fecha real con formato AAAA-MM-DD')).toBeTruthy();
   });
 
   it('persists the target retention setting', async () => {
@@ -189,10 +189,10 @@ describe('YouScreen', () => {
     mockUpdateSettings.mockRejectedValue({ message: 'Failed to save settings' });
 
     await renderYou();
-    await fireEvent.press(screen.getByLabelText('Increase new cards per day'));
+    await fireEvent.press(screen.getByLabelText('Subir tarjetas nuevas al día'));
 
     expect(screen.getByText('Failed to save settings')).toBeTruthy();
-    expect(screen.getByText('New cards per day: 10')).toBeTruthy();
+    expect(screen.getByText('Tarjetas nuevas al día: 10')).toBeTruthy();
   });
 
   it('signs the user out', async () => {
@@ -200,7 +200,7 @@ describe('YouScreen', () => {
     mockSignOut.mockResolvedValue(undefined);
 
     await renderYou();
-    await fireEvent.press(screen.getByText('Sign out'));
+    await fireEvent.press(screen.getByText('Cerrar sesión'));
 
     expect(mockSignOut).toHaveBeenCalledTimes(1);
   });
@@ -211,8 +211,8 @@ describe('YouScreen', () => {
     await renderYou();
 
     expect(screen.getByText('47')).toBeTruthy();
-    expect(screen.getByText('words mastered')).toBeTruthy();
-    expect(screen.getByText('HSK 2 · 82% accuracy')).toBeTruthy();
+    expect(screen.getByText('palabras dominadas')).toBeTruthy();
+    expect(screen.getByText('HSK 2 · 82% de aciertos')).toBeTruthy();
   });
 
   it('shows hero without accuracy when dashboard has no accuracy', async () => {
@@ -238,7 +238,7 @@ describe('YouScreen', () => {
     expect(screen.getByText('—')).toBeTruthy();
     expect(screen.getByText('HSK 2')).toBeTruthy();
     // Settings still load fine
-    expect(screen.getByText('New cards per day: 10')).toBeTruthy();
+    expect(screen.getByText('Tarjetas nuevas al día: 10')).toBeTruthy();
   });
 
   it('muestra el hanzi en la lista de leeches, no el id interno', async () => {
@@ -254,8 +254,8 @@ describe('YouScreen', () => {
 
     await renderYou();
 
-    expect(screen.getByText('学 · 8 lapses')).toBeTruthy();
-    expect(screen.queryByText('Word 42 · 8 lapses')).toBeNull();
+    expect(screen.getByText('学 · 8 fallos')).toBeTruthy();
+    expect(screen.queryByText('Palabra 42 · 8 fallos')).toBeNull();
   });
 
   it('limpia el leech al reactivarlo, en vez de cambiar una suspensión inexistente', async () => {
@@ -271,7 +271,7 @@ describe('YouScreen', () => {
     }]);
 
     await renderYou();
-    await fireEvent.press(screen.getByRole('button', { name: 'Reactivate' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Reactivar' }));
 
     expect(mockClearLeech).toHaveBeenCalledWith({
       target_kind: 'word',

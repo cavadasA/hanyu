@@ -7,6 +7,8 @@ interface OptionRowProps<T extends string> {
   label: string;
   value: T;
   options: readonly T[];
+  /** Texto que se enseña para cada opción; si falta, se enseña el valor tal cual. */
+  labels?: Partial<Record<T, string>>;
   onChange: (next: T) => void | Promise<void>;
   disabled?: boolean;
 }
@@ -15,6 +17,7 @@ export function OptionRow<T extends string>({
   label,
   value,
   options,
+  labels,
   onChange,
   disabled = false,
 }: OptionRowProps<T>) {
@@ -27,7 +30,7 @@ export function OptionRow<T extends string>({
         {options.map((option) => (
           <View key={option} style={styles.option}>
             <Button
-              label={option}
+              label={labels?.[option] ?? option}
               variant={option === value ? 'primary' : 'secondary'}
               selected={option === value}
               onPress={() => onChange(option)}
