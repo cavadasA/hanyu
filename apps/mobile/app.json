@@ -11,6 +11,7 @@
       "expo-router",
       "expo-status-bar",
       "expo-sqlite",
+      "./plugins/withSceneLifecycle",
       [
         "expo-speech-recognition",
         {
