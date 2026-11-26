@@ -4969,7 +4969,7 @@
       "做的菜",
       "买的书",
       "来的人",
-      "说的话"
+      "看的电影"
     ],
     "examples": [
       {
@@ -4988,9 +4988,9 @@
         "es": "Hoy ha venido mucha gente."
       },
       {
-        "zh": "你说的话我都听懂了。",
-        "pinyin": "Nǐ shuō de huà wǒ dōu tīngdǒng le.",
-        "es": "He entendido todo lo que has dicho."
+        "zh": "昨天看的电影很好看。",
+        "pinyin": "Zuótiān kàn de diànyǐng hěn hǎokàn.",
+        "es": "La película que vimos ayer era muy buena."
       }
     ],
     "common_errors": [
