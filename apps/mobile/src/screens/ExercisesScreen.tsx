@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { diagnose } from '@hanyu/domain';
-import type { Exercise } from '@hanyu/data';
 import { ExerciseRenderer } from '../exercises/ExerciseRenderer';
 import { useExerciseSession } from '../exercises/useExerciseSession';
 import { tokens } from '../theme/tokens';
@@ -12,9 +11,6 @@ import { Card } from '../ui/Card';
 import { ErrorBanner } from '../ui/ErrorBanner';
 import { Screen } from '../ui/Screen';
 
-function exerciseIdentifier(exercise: Exercise & { slug?: string }) {
-  return exercise.slug ?? exercise.id;
-}
 
 
 export function ExercisesScreen() {
@@ -93,9 +89,6 @@ export function ExercisesScreen() {
         <Card>
           <View style={styles.progressRow}>
             <Text style={[styles.progress, { color: colors.textMuted }]}>{session.progress}</Text>
-            <Text testID="exercise-slug" style={[styles.exerciseId, { color: colors.textMuted }]}>
-              {exerciseIdentifier(session.exercise as Exercise & { slug?: string })}
-            </Text>
           </View>
           <ExerciseRenderer
             exercise={session.exercise}
@@ -184,9 +177,6 @@ const styles = StyleSheet.create({
   progress: {
     fontSize: tokens.fontSize.sm,
     fontWeight: '700',
-  },
-  exerciseId: {
-    fontSize: tokens.fontSize.xs,
   },
   result: {
     gap: tokens.spacing.xs,

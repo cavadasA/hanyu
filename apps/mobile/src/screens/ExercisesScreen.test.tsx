@@ -106,7 +106,23 @@ describe('ExercisesScreen', () => {
     await renderExercises();
     await fireEvent.press(screen.getByText('Empezar'));
 
-    expect(screen.getByTestId('exercise-slug').props.children).toBe('e2');
+    // El primero es el de opción múltiple (e2), que pregunta «选择».
+    expect(screen.getByText('选择')).toBeTruthy();
+  });
+
+  it('no enseña el identificador interno del ejercicio', async () => {
+    mockBuildExerciseSession.mockResolvedValue({
+      unit_title: '离合词',
+      exercises: [{ ...exercise('e1', 'multiple_choice'), slug: 'l1-multiple-choice-01' }],
+      length: 1,
+    });
+
+    await renderExercises();
+    await fireEvent.press(screen.getByText('Empezar'));
+
+    expect(screen.getByText('选择')).toBeTruthy();
+    expect(screen.queryByText('l1-multiple-choice-01')).toBeNull();
+    expect(screen.queryByText('e1')).toBeNull();
   });
 
   it('muestra el progreso y termina con un resumen', async () => {
