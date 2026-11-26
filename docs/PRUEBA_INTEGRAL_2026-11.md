@@ -23,7 +23,7 @@ Fecha: 26-11-2026. Recorrido completo de la app móvil (Expo 57) en el simulador
   - la ficha de cada punto de gramática daba error;
   - las imágenes del simulacro no se subían a Storage;
   - la sesión de repaso guardada pasaba de una cuenta a otra.
-- **Pendiente grave, sin arreglar:** con el SDK de iOS 27 la app se cierra al arrancar (falta el ciclo de vida UIScene). Para la prueba se parcheó `ios/` en local, que está gitignorado. Ver «Pendientes».
+- **Pendientes:** los 17 que dejó la prueba se corrigieron después, cada uno con su test y su commit (ver «Pendientes (corregidos después)»). El más grave, que con el SDK de iOS 27 la app se cerraba al arrancar, se resuelve con Expo 57.0.34 y un config plugin, sin parches a mano en `ios/`.
 - **No se pudo probar:**
   - la pronunciación con micrófono: el reconocedor de voz no está disponible en el simulador;
   - la recuperación de contraseña por correo.
@@ -40,6 +40,7 @@ Fecha: 26-11-2026. Recorrido completo de la app móvil (Expo 57) en el simulador
 | Edge Functions | `supabase functions serve`. `grade-communicative` y `pronunciation-assess` responden 503 `not_configured` (no hay claves de IA) |
 | App | `apps/mobile/.env.local` (gitignorado) apunta al Supabase local. Metro confirma `env: load .env.local .env` |
 | Simulador | iPhone 18 Pro, iOS 27, Xcode 27.2 |
+| Expo | 57.0.9 durante la prueba; 57.0.34 desde `bf4cd79` |
 | Usuarios | Credenciales en `supabase/seed-test-user.md` (gitignorado). Uno se creó por API admin y otro registrándose desde la app |
 
 ### Problemas del entorno de compilación (no son de la app)
@@ -193,51 +194,47 @@ Capturas en `docs/prueba-integral-2026-11/`.
   - comprensión literal e inferencial.
 - **Estados vacíos:** son honestos («Aún no hay…»).
 
-## Pendientes (no corregidos)
+## Pendientes (corregidos después)
+
+Los 17 pendientes de la prueba, cada uno con un test que fallaba antes del arreglo. Las migraciones nuevas (`2026112612`, `2026112613`) se aplicaron en local; llegarán a producción con el siguiente push a `master`.
 
 ### Grave
 
-1. **iOS 27: la app se cierra al arrancar.**
-   - El SDK de iOS 27 exige el ciclo de vida UIScene; el error es `UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption`, SIGTRAP.
-   - El `AppDelegate` que genera Expo 57.0.9 no adopta escenas. Expo 57.0.34 ya está publicado, y otro proyecto del usuario con Expo 58 usa `ExpoAppSceneDelegate`.
-   - Para la prueba se añadió a mano en `ios/` (gitignorado) un `SceneDelegate` y su entrada en `Info.plist`. Ese parche se pierde con cada `prebuild`.
-   - **Arreglo:** actualizar Expo dentro de la 57 (o a la 58) y comprobar que el `AppDelegate` generado trae escenas, o escribir un config plugin. Cualquier build con Xcode 27, incluido EAS, se cerraría al abrir.
-2. **El simulacro en curso se pierde si la app se cierra.**
-   - Las respuestas y el reloj viven en memoria; tras un reinicio, «Simulacro completo» empieza de cero.
-   - Con 51 minutos de examen, una llamada o que el sistema mate la app hace perder el intento.
+1. **iOS 27: la app se cerraba al arrancar.** → `bf4cd79`
+   - El SDK de iOS 27 exige el ciclo de vida UIScene; el error era `UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption`, SIGTRAP.
+   - Expo pasa de 57.0.9 a 57.0.34, que ya trae `ExpoAppSceneDelegate`. La plantilla de `prebuild` de la SDK 57 (incluso la 57.0.36) sigue sin escenas, así que `apps/mobile/plugins/withSceneLifecycle.js` hace lo que la de la SDK 58: `SceneDelegate`, `AppDelegate` como `ExpoReactNativeFactoryProvider` y `UIApplicationSceneManifest` en `Info.plist`.
+   - Verificado con `expo prebuild -p ios --clean`, `xcodebuild` y arrancando en el simulador con iOS 27, sin el parche manual.
+   - `react-native-reanimated` (peer opcional de expo-router) se queda en 4.5.3: npm resolvía 4.8.0, que exige worklets 0.14 y rompe `pod install`.
+2. **El simulacro en curso se perdía si la app se cerraba.** → `c779b39`
+   - Respuestas, fase e instante absoluto de inicio de la fase se guardan en AsyncStorage, por usuario y forma. Al volver se ofrece «Reanudar» (el reloj de pared sigue mandando) o «Empezar de nuevo», con confirmación.
+   - Se borra al entregar con éxito y al cerrar sesión; un intento de hace más de un día se descarta.
 
 ### Media
 
-3. **«Start learning» en Hoy abre Reviews en modo Review, no en Learn.**
-   - `TodayScreen` hace `router.push('/cards')` sin modo, y `CardsScreen` no lee ningún parámetro.
-   - No se corrigió porque `CardsScreen*` tiene cambios del usuario sin commitear.
-4. **Reviews muestra contadores viejos tras una sesión.**
-   - Al volver de una sesión, «Deck breakdown» y «N due» no se refrescan hasta cambiar de modo (se veía «new 503 / 10 due» tras estudiar 6). Está en `CardsScreen`.
-5. **Sin red, la lista de lecturas tarda 20–25 s en caer a la caché.**
-   - Ese tiempo es el timeout de red. Mientras tanto hay un spinner.
-   - Convendría mirar antes el estado de red (expo-network) o poner un timeout corto.
-6. **Contenido: el punto de gramática 4.1 (固定格式) de HSK 2 y HSK 3 no tiene título.**
-   - Su `title` está vacío. En el «Grammar focus» de las lecturas sale sólo «4.1».
-7. **Salir de Expresión:**
-   - la pantalla no tiene cabecera;
-   - tocar otra vez la pestaña Practice no vuelve a la raíz de la pila;
-   - la única salida es el gesto desde el borde.
-   - Conviene un botón «Salir» o que la pestaña haga `popToTop`.
+3. **«Start learning» en Hoy abría Reviews en modo Review.** → `c07442d` + 4 líneas sin commitear en `CardsScreen.tsx`
+   - Hoy pide el modo (`studyModeHref`) y `useRequestedStudyMode` lo aplica.
+   - Las líneas que usan los hooks en `CardsScreen.tsx`, y sus dos tests en `CardsScreen.test.tsx`, están sin commitear encima de los cambios del usuario en esos ficheros.
+4. **Reviews mostraba contadores viejos tras una sesión.** → `c07442d` + las mismas líneas de `CardsScreen.tsx`
+   - `useReloadOnReturn` recarga la cola y los contadores al cerrar una sesión y al volver a la pestaña.
+5. **Sin red, la lista de lecturas tardaba 20–25 s en caer a la caché.** → `dc14021`
+   - La causa: con el token caducado, `getSession` reintenta el refresco con backoff (≈25 s), y tanto el ámbito de la caché como la petición esperaban a eso.
+   - Ahora el ámbito usa el último usuario conocido si `getSession` no contesta en 2 s, y con copia guardada se sirve la caché si la red no contesta en 3 s. Sin copia se sigue esperando a la red.
+6. **El punto de gramática 4.1 (固定格式) de HSK 2 y HSK 3 no tenía título.** → `eff019c`
+   - El parser del sílabo da a una sección hoja sin título el de su epígrafe padre. Se regeneran los seeds, y la migración `2026112612` corrige las bases existentes.
+7. **Salir de Expresión.** → `9221b66` (botón «Salir») y `1059062` (la pestaña vuelve al índice; ver 15)
 
 ### Menor
 
-8. **Hoy → Exercises:** dice «Todavía no hay ejercicios disponibles» aunque los hay. `today.ts` pasa `exercises: []` porque el banco aún no se rankea; el texto debería decir otra cosa.
-9. **Dos nociones de «unidad»:** la unidad activa de Ejercicios («Repaso HSK 1») no es la de Hoy (方位名词).
-10. **Ejercicios:** se ve el identificador interno («l1-multiple-choice-01»).
-11. **Lector:** los botones de velocidad (0.75x/1x/1.25x) no marcan visualmente cuál está activa.
-12. **Tarea comunicativa:** el aviso de validación de un envío anterior sigue en pantalla después de corregir el texto, hasta reenviar.
-13. **Progreso:**
-    - la etiqueta «Estabilidad ≥ 30 d» se corta por la derecha;
-    - la comprensión literal e inferencial dice «Sin datos todavía» aunque haya respuestas: hace falta un mínimo de 5 por tipo. Mejor «Faltan N respuestas».
-14. **Simulacro:** al pasar de fase, la pantalla no vuelve arriba. 阅读 y 书写 se abren a mitad de página, a la altura donde quedó la fase anterior.
-15. **Practice:** tras reiniciar la app, la pila de Practice se restauró con Expresión como primera pantalla. Ni el gesto desde el borde ni la pestaña llevaban de vuelta al índice; se salió con un enlace `hanyu://practice/exam/next`. Relacionado con el punto 7.
-16. **书写 2:** si el reconocedor no identifica el dibujo, «Hecho» no avisa; la pregunta sigue en «Sin escribir» sin explicar por qué.
-17. **«Entregar»:** la confirmación dice «No podrás volver a esta sección», pensado para las fases. Al entregar, mejor «No podrás cambiar tus respuestas».
+8. **Hoy → Exercises decía que no había ejercicios.** → `1c9fdc5`. El paso queda listo, con la meta del día, y abre la sesión de la unidad.
+9. **Dos nociones de «unidad».** → `c649f97` (y `5e69fe1`, el contrato de migraciones). La unidad era la misma, pero sin ejercicios propios la sesión se titulaba «Repaso HSK 1». Ahora conserva el nombre de la unidad y dice «Todavía no tiene ejercicios propios: repaso general de HSK 1» (migración `2026112613`). La prueba pgTAP, que ya fallaba antes de llegar a sus aserciones, vuelve a pasar.
+10. **Ejercicios enseñaba el identificador interno.** → `7cbd99d`
+11. **Lector: la velocidad activa no se marcaba.** → `5d8d3dd`. `Button` sólo pasaba `selected` a la accesibilidad; ahora un secundario seleccionado va en bermellón.
+12. **Tarea comunicativa: el aviso de validación no se iba.** → `3255190`
+13. **Progreso.** → `ef9e4e5`. La cabecera de sección deja bajar la etiqueta a otra línea, y con alguna respuesta dice «Faltan N respuestas para calcularla».
+14. **Simulacro: al pasar de fase, la página no volvía arriba.** → `30ca21b`
+15. **Practice se restauraba con Expresión como primera pantalla.** → `1059062`. `initialRouteName: 'index'` en la pila de Practice.
+16. **书写 2: «Hecho» no avisaba si no reconocía el dibujo.** → `86293ab`
+17. **«Entregar» decía «No podrás volver a esta sección».** → `4303dc2`. Ahora dice «No podrás cambiar tus respuestas.»
 
 ## No se pudo probar
 
@@ -259,7 +256,6 @@ npx -y supabase@3.4.0 functions serve
 ```
 
 1. Crear `apps/mobile/.env.local` con la URL local y la anon key local.
-2. Ejecutar `npx expo prebuild -p ios`.
+2. Ejecutar `npx expo prebuild -p ios` (el plugin `withSceneLifecycle` ya añade las escenas de iOS 27). El prebuild cambia los scripts `ios`/`android` de `apps/mobile/package.json`: no lo commitees.
 3. Instalar los pods con `LANG=en_US.UTF-8 EXPO_USE_PRECOMPILED_MODULES=0 pod install`.
-4. Aplicar el parche de escenas de iOS 27 (pendiente 1).
-5. Compilar con `xcodebuild` y arrancar Metro con `npx expo start`.
+4. Compilar con `xcodebuild` y arrancar Metro con `npx expo start`.
