@@ -41,6 +41,14 @@ export function PracticeHomeScreen() {
         actionLabel="Mistakes"
         onPress={() => router.push('/practice/mistakes')}
       />
+
+      <HubTile
+        icon="mic-outline"
+        title="Expresión"
+        description="Escribir caracteres, pronunciar y responder en situaciones"
+        actionLabel="Expresión"
+        onPress={() => router.push('/practice/expression')}
+      />
     </Screen>
   );
 }

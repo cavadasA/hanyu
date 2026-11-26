@@ -61,6 +61,17 @@ describe('buildQueue', () => {
     expect(queue.cards[0].user_id).toBe('u1');
   });
 
+  it('pide la cola de pronunciación, que es una habilidad de palabra', async () => {
+    const client = queueClient([]);
+
+    await buildQueue({ skill: 'pronunciation', mode: 'learn' }, client);
+
+    expect((client as any).rpc).toHaveBeenCalledWith('build_review_queue_mode', expect.objectContaining({
+      p_skill: 'pronunciation',
+      p_mode: 'learn',
+    }));
+  });
+
   it('distingue las tarjetas nuevas de los repasos', async () => {
     const client = queueClient([queueRow('c1', false), queueRow('c2', true)]);
 

@@ -33,4 +33,5 @@ export * from './exam/timeline';
 export * from './exam/components';
 export { IMAGE_MAX_BYTES, validateImageManifest, type ImageIssue, type ImageIssueKind, type ImageManifest } from './media/manifest';
 export * from './expression/recognize-handwriting';
+export { planExpressionSession, type ExpressionItem, type ExpressionSessionInput } from './expression/plan-session';
 export { HINT_AFTER_MISTAKES, STROKE_TOLERANCE, quizHint, quizStroke, startWritingQuiz, strokeMatches, writingGrade, type QuizStep, type WritingQuizState } from './expression/stroke-quiz';

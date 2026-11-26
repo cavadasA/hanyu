@@ -2,8 +2,9 @@
 // Ninguna clave de proveedor llega al cliente. Si una función no está configurada, no
 // responde o devuelve algo que no es lo pedido, el resultado es «no disponible» o «sin
 // corregir»: nunca se inventa una nota.
-import type { CommunicativeContext, CommunicativeTask } from '@hanyu/domain';
+import { applyReview, emptyState, schedulingParams, type CommunicativeContext, type CommunicativeTask, type Grade, type SchedulingState } from '@hanyu/domain';
 import type { HanyuClient } from '../client';
+import { getSettings } from './settings';
 import { createRepositoryError } from './shared';
 
 export interface PronunciationAssessment {
@@ -144,4 +145,85 @@ export async function getCommunicativeContext(level: number, client: HanyuClient
       .filter(point => point.code)
       .map(point => ({ hsk_level: point.hsk_level, code: point.code as string, markers: point.markers ?? [] })),
   };
+}
+
+export interface WritingItem {
+  hanzi: string;
+  /** Punto de código del carácter: el target_id de learner_skill_state. */
+  target_id: number;
+  is_new: boolean;
+  version: number;
+  scheduling: SchedulingState;
+  /** Palabra con la que se pide el carácter sin enseñarlo («□生 · xuésheng · estudiante»). */
+  example: { word: string; pinyin: string; meaning: string } | null;
+}
+
+const GRADE_NUMBER: Record<Grade, 1 | 2 | 3 | 4> = { again: 1, hard: 2, good: 3, easy: 4 };
+
+/** Caracteres de escritura que tocan hoy: vencidos, y unos pocos nuevos de palabras ya asentadas. */
+export async function getWritingQueue(
+  input: { limit?: number; newLimit?: number; now?: Date },
+  client: HanyuClient,
+): Promise<WritingItem[]> {
+  const { data, error } = await (client.rpc as any)('build_writing_queue', {
+    p_limit: input.limit ?? 10,
+    p_new: input.newLimit ?? 3,
+  });
+  if (error) throw createRepositoryError(error, 'Failed to build the writing queue');
+  const now = input.now ?? new Date();
+  return ((data ?? []) as any[]).map(row => ({
+    hanzi: String(row.hanzi),
+    target_id: Number(row.target_id),
+    is_new: Boolean(row.is_new),
+    version: Number(row.version ?? 0),
+    example: row.example_word
+      ? { word: String(row.example_word), pinyin: String(row.example_pinyin ?? ''), meaning: String(row.example_meaning ?? '') }
+      : null,
+    scheduling: row.is_new || row.fsrs_state === 'new'
+      ? emptyState(now)
+      : {
+          difficulty: Number(row.difficulty ?? 0),
+          stability: Number(row.stability ?? 0),
+          reps: Number(row.reps ?? 0),
+          lapses: Number(row.lapses ?? 0),
+          learning_steps: Number(row.learning_steps ?? 0),
+          scheduled_days: Number(row.scheduled_days ?? 0),
+          elapsed_days: Number(row.elapsed_days ?? 0),
+          state: row.fsrs_state as SchedulingState['state'],
+          due: String(row.next_review_at ?? now.toISOString()),
+          last_review: row.last_reviewed_at ? String(row.last_reviewed_at) : null,
+        },
+  }));
+}
+
+/**
+ * Registra un quiz de escritura. El estado FSRS se calcula aquí, como en apply_review, y el
+ * servidor lo guarda con control de versión e idempotencia (apply_skill_review).
+ */
+export async function reviewWriting(
+  input: { item: WritingItem; grade: Grade; mistakes: number; hints: number; review_id: string; now?: Date },
+  client: HanyuClient,
+): Promise<{ outcome: 'applied' | 'duplicate' | 'conflict'; version: number }> {
+  const now = input.now ?? new Date();
+  const params = schedulingParams({ request_retention: (await getSettings(client)).request_retention });
+  const next = applyReview(input.item.scheduling, input.grade, now, params);
+  const { data, error } = await (client.rpc as any)('apply_skill_review', {
+    p_target_kind: 'character',
+    p_target_id: input.item.target_id,
+    p_skill: 'writing',
+    p_review_id: input.review_id,
+    p_reviewed_at: now.toISOString(),
+    p_expected_version: input.item.version,
+    p_grade: GRADE_NUMBER[input.grade],
+    p_state: next.state,
+    p_prior: input.item.scheduling,
+    p_payload: { mistakes: input.mistakes, hints: input.hints, hanzi: input.item.hanzi },
+  });
+  if (error) throw createRepositoryError(error, 'Failed to save the writing review');
+  const row = (Array.isArray(data) ? data[0] : data) as { outcome?: string; version?: number } | null;
+  const outcome = row?.outcome;
+  if (outcome !== 'applied' && outcome !== 'duplicate' && outcome !== 'conflict') {
+    throw createRepositoryError(new Error('Unexpected apply_skill_review response'), 'Failed to save the writing review');
+  }
+  return { outcome, version: Number(row?.version ?? input.item.version) };
 }

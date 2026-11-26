@@ -38,7 +38,7 @@ import {
   recordHintUsed,
 } from './repositories/exercises';
 import { getEvents, recordEvent } from './repositories/events';
-import { assessPronunciation, getCommunicativeContext, getCommunicativeTasks, gradeCommunicative } from './repositories/expression';
+import { assessPronunciation, getCommunicativeContext, getCommunicativeTasks, getWritingQueue, gradeCommunicative, reviewWriting } from './repositories/expression';
 import { getExamForm, listExamAttempts, submitExamAttempt, type ExamAttemptInput } from './repositories/exam';
 import {
   completeReading,
@@ -216,6 +216,8 @@ export function createHanyuData(config: HanyuDataConfig) {
       gradeCommunicative: (input: Parameters<typeof gradeCommunicative>[0]) => gradeCommunicative(input, client),
       getCommunicativeTasks: (maxLevel: number) => getCommunicativeTasks(maxLevel, client),
       getCommunicativeContext: (level: number) => getCommunicativeContext(level, client),
+      getWritingQueue: (input: Parameters<typeof getWritingQueue>[0] = {}) => getWritingQueue(input, client),
+      reviewWriting: (input: Parameters<typeof reviewWriting>[0]) => reviewWriting(input, client),
     },
     events: {
       recordEvent: (input: Parameters<typeof recordEvent>[0]) => recordEvent(input, client),

@@ -101,7 +101,8 @@ export async function buildQueue(
   input: BuildQueueInput,
   client: HanyuClient,
 ): Promise<{ cards: VersionedCard[]; deck_size: number | null }> {
-  const validSkills = ['recognition', 'recall', 'listening', 'reading', 'production'];
+  // writing es de carácter y tiene su propia cola (build_writing_queue).
+  const validSkills = ['recognition', 'recall', 'listening', 'reading', 'production', 'pronunciation'];
   const validModes = ['learn', 'review', 'exam'];
   const queueArgs = {
     p_deck_id: typeof input.deckId === 'string' ? input.deckId : null,

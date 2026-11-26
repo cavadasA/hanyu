@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { assessPronunciation, getCommunicativeContext, getCommunicativeTasks, gradeCommunicative } from './expression';
+import { assessPronunciation, getCommunicativeContext, getCommunicativeTasks, getWritingQueue, gradeCommunicative, reviewWriting } from './expression';
 
 /** supabase-js: una respuesta no 2xx llega como error con la Response en `context`. */
 function httpError(status: number, body: unknown) {
@@ -143,5 +143,68 @@ describe('tareas comunicativas y su contexto', () => {
     const tasks = await getCommunicativeTasks(2, fake);
 
     expect(tasks.map(entry => entry.slug)).toEqual(['2-01-a']);
+  });
+});
+
+describe('escritura en la cola', () => {
+  const NOW = new Date('2026-11-26T10:00:00Z');
+
+  function rpcClient(responses: Record<string, unknown>) {
+    const rpc = vi.fn(async (name: string) => ({ data: responses[name] ?? null, error: null }));
+    const settings = {
+      select: () => settings,
+      eq: () => settings,
+      maybeSingle: async () => ({ data: { request_retention: 0.9 }, error: null }),
+      single: async () => ({ data: { request_retention: 0.9 }, error: null }),
+    };
+    return {
+      rpc,
+      auth: { getUser: async () => ({ data: { user: { id: 'user-1' } }, error: null }), getSession: async () => ({ data: { session: { user: { id: 'user-1' } } }, error: null }) },
+      from: () => settings,
+    } as any;
+  }
+
+  it('la cola trae vencidos con su estado y nuevos con estado vacío', async () => {
+    const fake = rpcClient({
+      build_writing_queue: [
+        { hanzi: '学', target_id: 23398, is_new: false, difficulty: 5, stability: 3, reps: 2, lapses: 0, learning_steps: 0, scheduled_days: 3, elapsed_days: 3, fsrs_state: 'review', next_review_at: '2026-11-25T00:00:00Z', last_reviewed_at: '2026-11-22T00:00:00Z', version: 4, example_word: '学生', example_pinyin: 'xuéshēng', example_meaning: 'estudiante' },
+        { hanzi: '生', target_id: 29983, is_new: true, difficulty: null, stability: null, reps: 0, lapses: 0, learning_steps: 0, scheduled_days: 0, elapsed_days: 0, fsrs_state: 'new', next_review_at: null, last_reviewed_at: null, version: 0 },
+      ],
+    });
+
+    const queue = await getWritingQueue({ limit: 10, newLimit: 3, now: NOW }, fake);
+
+    expect(fake.rpc).toHaveBeenCalledWith('build_writing_queue', { p_limit: 10, p_new: 3 });
+    expect(queue.map(item => [item.hanzi, item.is_new, item.version, item.scheduling.state])).toEqual([
+      ['学', false, 4, 'review'],
+      ['生', true, 0, 'new'],
+    ]);
+    expect(queue[0].scheduling.stability).toBe(3);
+    expect(queue[0].example).toEqual({ word: '学生', pinyin: 'xuéshēng', meaning: 'estudiante' });
+    expect(queue[1].example).toBeNull();
+  });
+
+  it('un repaso manda el estado FSRS calculado, la nota, los errores y la versión esperada', async () => {
+    const fake = rpcClient({ apply_skill_review: [{ outcome: 'applied', version: 5 }] });
+    const [item] = await getWritingQueue({ limit: 10, newLimit: 3, now: NOW }, rpcClient({
+      build_writing_queue: [{ hanzi: '学', target_id: 23398, is_new: false, difficulty: 5, stability: 3, reps: 2, lapses: 0, learning_steps: 0, scheduled_days: 3, elapsed_days: 3, fsrs_state: 'review', next_review_at: '2026-11-25T00:00:00Z', last_reviewed_at: '2026-11-22T00:00:00Z', version: 4 }],
+    }));
+
+    const result = await reviewWriting({ item, grade: 'hard', mistakes: 1, hints: 0, review_id: 'rev-1', now: NOW }, fake);
+
+    expect(result).toEqual({ outcome: 'applied', version: 5 });
+    const [name, args] = fake.rpc.mock.calls.at(-1) as [string, any];
+    expect(name).toBe('apply_skill_review');
+    expect(args).toMatchObject({
+      p_target_kind: 'character',
+      p_target_id: 23398,
+      p_skill: 'writing',
+      p_review_id: 'rev-1',
+      p_expected_version: 4,
+      p_grade: 2,
+      p_payload: { mistakes: 1, hints: 0, hanzi: '学' },
+    });
+    expect(args.p_prior.state).toBe('review');
+    expect(new Date(args.p_state.due).getTime()).toBeGreaterThan(NOW.getTime());
   });
 });

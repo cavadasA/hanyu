@@ -73,7 +73,7 @@ describe('createHanyuData', () => {
     const data = createHanyuData(config);
 
     expect(Object.keys(data).sort()).toEqual(
-      ['auth', 'client', 'decks', 'events', 'exam', 'exercises', 'flashcards', 'grammar', 'readings', 'settings', 'skills', 'stats', 'today', 'words'].sort()
+      ['auth', 'client', 'decks', 'events', 'exam', 'exercises', 'expression', 'flashcards', 'grammar', 'readings', 'settings', 'skills', 'stats', 'today', 'words'].sort()
     );
   });
 

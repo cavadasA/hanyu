@@ -432,4 +432,31 @@ describe('contratos de migraciones', () => {
     expect(normalizeSql(migration)).not.toMatch(/for (insert|update|delete|all) to [^;]*\bauthenticated\b/i);
     expectSqlToContain(migration, 'grant select on public.communicative_task to authenticated;');
   });
+
+  it('crea los estados de pronunciación de cada palabra, suspendidos hasta que el reconocimiento se asiente', () => {
+    const migration = readMigration('2026112611_expression_queue.sql');
+
+    expectSqlToContain(migration, 'create or replace function public.initialize_word_skill_states()');
+    expectSqlToContain(migration, "(new.user_id, 'word', new.word_id, 'pronunciation', true, true)");
+    expectSqlToContain(migration, "select sc.user_id, 'word', sc.word_id, 'pronunciation', true, true from public.srs_cards sc");
+  });
+
+  it('sirve la escritura por carácter: vencidos y nuevos de palabras ya asentadas, solo de la lista de escritura', () => {
+    const migration = readMigration('2026112611_expression_queue.sql');
+
+    expectSqlToContain(migration, 'create or replace function public.build_writing_queue(');
+    expectSqlToContain(migration, "join public.hsk_characters c on ascii(c.hanzi) = s.target_id and c.handwriting");
+    expectSqlToContain(migration, "and base.skill = 'recognition' and coalesce(base.stability, 0) >= 7");
+    expectSqlToContain(migration, 'grant execute on function public.build_writing_queue(integer, integer) to authenticated;');
+  });
+
+  it('registra un repaso de escritura con versión, idempotencia y evento review_rated del carácter', () => {
+    const migration = readMigration('2026112611_expression_queue.sql');
+
+    expectSqlToContain(migration, 'create or replace function public.apply_skill_review(');
+    expectSqlToContain(migration, "if p_target_kind <> 'character' or p_skill <> 'writing' then");
+    expectSqlToContain(migration, 'where user_id = v_user_id and client_event_id = p_review_id');
+    expectSqlToContain(migration, "outcome := 'conflict';");
+    expectSqlToContain(migration, "'review_rated', 'character', p_target_id, p_skill,");
+  });
 });
