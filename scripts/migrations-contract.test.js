@@ -459,4 +459,14 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, "outcome := 'conflict';");
     expectSqlToContain(migration, "'review_rated', 'character', p_target_id, p_skill,");
   });
+
+  // El punto 4.1 (固定格式) de HSK 2 y 3 tenía el título vacío y el «Grammar focus»
+  // de las lecturas mostraba sólo «4.1». El seed ya lo trae; las bases creadas
+  // antes (producción) lo reciben por migración.
+  it('da título al punto de gramática 4.1 (固定格式) y a su unidad en las bases existentes', () => {
+    const migration = readMigration('2026112612_grammar_fixed_format_title.sql');
+
+    expectSqlToContain(migration, "update public.grammar_points set title = '固定格式' where code = '4.1' and hsk_level in (2, 3) and title = ''");
+    expectSqlToContain(migration, "update public.unit set title = '固定格式' where code = '4.1' and hsk_level in (2, 3) and title = ''");
+  });
 });

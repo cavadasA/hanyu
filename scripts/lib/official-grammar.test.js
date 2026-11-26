@@ -79,11 +79,20 @@ describe('loadOfficialGrammar', () => {
     }
   });
 
-  it('conserva las secciones hoja sin título explícito', () => {
-    const points = loadOfficialGrammar(2);
-    const fixedFormat = points.find((point) => point.code === '4.1');
+  // «4.1» no tiene título en el sílabo, y el «Grammar focus» de las lecturas
+  // mostraba sólo «4.1». Hereda el del epígrafe padre.
+  it('a una sección hoja sin título le da el de su epígrafe padre', () => {
+    for (const level of [2, 3]) {
+      const fixedFormat = loadOfficialGrammar(level).find((point) => point.code === '4.1');
+      expect(fixedFormat).toMatchObject({ hsk_level: level, group: '固定格式', title: '固定格式' });
+    }
+    const hsk2 = loadOfficialGrammar(2).find((point) => point.code === '4.1');
+    expect(hsk2.items).toEqual(['还是……吧', '要/快要/就要……了', '都……了']);
+  });
 
-    expect(fixedFormat).toMatchObject({ hsk_level: 2, title: '' });
-    expect(fixedFormat.items).toEqual(['还是……吧', '要/快要/就要……了', '都……了']);
+  it('ningún punto de gramática se queda sin título', () => {
+    for (const level of [1, 2, 3]) {
+      expect(loadOfficialGrammar(level).filter((point) => !point.title.trim())).toEqual([]);
+    }
   });
 });

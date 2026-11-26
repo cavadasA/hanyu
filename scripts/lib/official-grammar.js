@@ -39,9 +39,13 @@ export function parseGrammarOutline(text, level) {
 
     const code = section[2];
     const depth = code.split('.').length;
-    const title = section[3].trim();
+    const ownTitle = section[3].trim();
+    // Algún epígrafe hoja no tiene título en el sílabo («4.1» de 固定格式): se
+    // queda con el del padre más cercano, que es lo que lo nombra.
+    let title = ownTitle;
+    for (let up = depth - 1; !title && up >= 1; up -= 1) title = path.get(up) ?? '';
 
-    path.set(depth, title);
+    path.set(depth, ownTitle);
     for (const key of [...path.keys()]) {
       if (key > depth) path.delete(key);
     }
