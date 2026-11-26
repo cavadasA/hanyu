@@ -322,10 +322,19 @@ describe('contratos de migraciones', () => {
     expectSqlToContain(migration, 'v_used_exercise_ids uuid[]');
     expectSqlToContain(migration, "v_section->>'code' = 'listening'");
     expectSqlToContain(migration, 'p_section_code text default null');
-    expectSqlToContain(integrationTest, 'select plan(6);');
+    expectSqlToContain(integrationTest, 'select plan(8);');
     expectSqlToContain(integrationTest, 'public.build_exercise_session(');
     expectSqlToContain(integrationTest, 'public.mistake_queue(');
     expectSqlToContain(integrationTest, 'select * from finish();');
+  });
+
+  it('el repaso de reserva de Ejercicios conserva el título de la unidad y se marca como tal', () => {
+    const migration = readMigration('2026112613_exercise_session_review_fallback.sql');
+    const integrationTest = readFileSync(join(rootDir, 'supabase', 'tests', 'exercises_exam_hardening.sql'), 'utf8');
+
+    expectSqlToContain(migration, "'review_fallback', v_review_fallback,");
+    expect(normalizeSql(migration)).not.toContain("v_unit_title := 'Repaso HSK ' || v_unit_level;");
+    expectSqlToContain(integrationTest, "'el repaso de reserva se marca como tal'");
   });
 
   it('retira el simulacro hecho con ejercicios de práctica: lo sustituyen las formas del Plan 12', () => {
