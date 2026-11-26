@@ -63,6 +63,12 @@ export interface DailyPlanInput {
   /** El catálogo existe pero no se ha podido puntuar. Ver `content_unavailable`. */
   readings_unavailable?: boolean;
   exercises: RankableContent[];
+  /**
+   * La sesión de ejercicios de la unidad activa (Practice → Exercises), con lo
+   * hecho hoy. Existe aunque el banco todavía no se rankee: sin esto el paso
+   * decía que no había ejercicios.
+   */
+  unit_exercises?: { completed: number; target: number };
   exam_date: string | null;
   learner?: LearnerModel;
 }
@@ -176,11 +182,13 @@ export function buildDailyPlan(input: DailyPlanInput): { steps: PlanStep[] } {
   steps.push(
     exercise
       ? { kind: 'exercises', status: 'ready', why: exercise.reasons, payload: { id: exercise.item.id } }
-      : {
-          kind: 'exercises',
-          status: 'unavailable',
-          reason: input.exercises.length > 0 ? 'no_suitable_content' : 'no_content',
-        },
+      : input.unit_exercises
+        ? { kind: 'exercises', status: 'ready', payload: { ...input.unit_exercises } }
+        : {
+            kind: 'exercises',
+            status: 'unavailable',
+            reason: input.exercises.length > 0 ? 'no_suitable_content' : 'no_content',
+          },
   );
 
   steps.push(

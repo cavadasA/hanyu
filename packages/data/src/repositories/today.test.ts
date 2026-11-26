@@ -224,6 +224,14 @@ describe('getToday', () => {
     });
   });
 
+  // Hoy decía «Todavía no hay ejercicios disponibles» aunque la unidad los tenía.
+  it('el paso de ejercicios lleva a la sesión de la unidad con la meta del día', async () => {
+    const today = await getToday(clientFor());
+    const exercises = today.steps.find((step) => step.kind === 'exercises');
+
+    expect(exercises).toMatchObject({ status: 'ready', payload: { completed: 0, target: 5 } });
+  });
+
   it('un usuario sin mazos no ve el cupo de palabras nuevas como agotado', async () => {
     const result = await getToday(clientFor({ deckSize: 0, queue: [] }));
     const newItems = (result as any).steps.find((step: any) => step.kind === 'new_items');

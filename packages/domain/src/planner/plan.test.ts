@@ -201,4 +201,19 @@ describe('buildDailyPlan', () => {
     expect(reading?.reason).toBe('content_unavailable');
   });
 
+  // Hoy decía «Todavía no hay ejercicios disponibles» aunque la unidad activa los
+  // tenía: el banco no se rankea y el paso declaraba un hueco que no existe.
+  it('sin ejercicios rankeados, lleva a la sesión de ejercicios de la unidad con su progreso', () => {
+    const plan = buildDailyPlan({ ...base, unit_exercises: { completed: 2, target: 5 } });
+    const exercises = plan.steps.find((step) => step.kind === 'exercises');
+
+    expect(exercises).toEqual({ kind: 'exercises', status: 'ready', payload: { completed: 2, target: 5 } });
+  });
+
+  it('sin banco de ejercicios de unidad sigue declarando que no hay', () => {
+    const exercises = buildDailyPlan(base).steps.find((step) => step.kind === 'exercises');
+
+    expect(exercises?.status).toBe('unavailable');
+    expect(exercises?.reason).toBe('no_content');
+  });
 });

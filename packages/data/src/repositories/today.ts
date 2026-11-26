@@ -5,6 +5,9 @@ import { getReadingPlannerInput } from './readings';
 import { getSettings } from './settings';
 import { callRpcVariants, createRepositoryError, getRequiredUserId, toDateString } from './shared';
 
+/** Ejercicios al día que cuentan como bloque completado en Hoy. */
+const EXERCISES_TARGET = 5;
+
 // El planificador necesita el catálogo entero para puntuarlo, pero la respuesta
 // de Today solo publica la ficha de la siguiente lectura. Se proyecta a las
 // mismas columnas de antes para no arrastrar sus frases y preguntas completas
@@ -116,7 +119,7 @@ export async function getToday(client: HanyuClient) {
 
   const blocks = [
     Number((todayStats as any).cards_reviewed || 0) > 0,
-    Number((todayStats as any).exercises_done || 0) >= 5,
+    Number((todayStats as any).exercises_done || 0) >= EXERCISES_TARGET,
     Number((todayStats as any).readings_done || 0) >= 1,
   ];
 
@@ -168,9 +171,13 @@ export async function getToday(client: HanyuClient) {
     // Hay catálogo pero no se ha podido puntuar: el paso lo dice en vez de
     // afirmar que no hay lecturas.
     readings_unavailable: readingInput.rows.length > 0 && readingInput.rankable.length === 0,
-    // El banco de ejercicios todavía no se rankea: ese paso sigue declarando su
-    // hueco en vez de inventar material.
+    // El banco de ejercicios todavía no se rankea, pero la unidad activa tiene su
+    // sesión de ejercicios en Practice: el paso lleva allí con la meta del día.
     exercises: [],
+    unit_exercises: {
+      completed: Number((todayStats as any).exercises_done || 0),
+      target: EXERCISES_TARGET,
+    },
     exam_date: (settings as { exam_date?: string | null }).exam_date ?? null,
     learner,
   });
@@ -197,7 +204,7 @@ export async function getToday(client: HanyuClient) {
       completed: Number((todayStats as any).cards_reviewed || 0),
     },
     exercises: {
-      target: 5,
+      target: EXERCISES_TARGET,
       completed: Number((todayStats as any).exercises_done || 0),
     },
     reading: {
