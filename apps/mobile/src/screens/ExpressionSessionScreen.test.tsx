@@ -16,6 +16,8 @@ const mockData = {
 };
 jest.mock('../lib/data', () => ({ getData: () => mockData }));
 jest.mock('expo-crypto', () => ({ randomUUID: () => 'uuid-1' }));
+const mockRouter = { back: jest.fn(), canGoBack: jest.fn(() => true), replace: jest.fn() };
+jest.mock('expo-router', () => ({ useRouter: () => mockRouter }));
 
 const mockSpeech = { status: 'ready' as string, available: true };
 jest.mock('../expression/useSpeechCheck', () => ({ useSpeechCheck: () => mockSpeech }));
@@ -104,6 +106,24 @@ beforeEach(() => {
 });
 
 describe('ExpressionSessionScreen', () => {
+  // La pantalla no tiene cabecera y la única salida era el gesto desde el borde.
+  it('«Salir» vuelve a la pantalla anterior, también a mitad de un ejercicio', async () => {
+    await render(<ExpressionSessionScreen />);
+    await waitFor(() => expect(screen.getByLabelText('lienzo quiz 学')).toBeTruthy());
+
+    await fireEvent.press(screen.getByLabelText('Salir'));
+    expect(mockRouter.back).toHaveBeenCalledTimes(1);
+  });
+
+  it('«Salir» lleva al índice de Practice si no hay pantalla anterior', async () => {
+    mockRouter.canGoBack.mockReturnValueOnce(false);
+    await render(<ExpressionSessionScreen />);
+    await waitFor(() => expect(screen.getByLabelText('Salir')).toBeTruthy());
+
+    await fireEvent.press(screen.getByLabelText('Salir'));
+    expect(mockRouter.replace).toHaveBeenCalledWith('/practice');
+  });
+
   it('pide el carácter con su palabra, sin enseñarlo, y registra el quiz con su nota', async () => {
     await render(<ExpressionSessionScreen />);
 

@@ -9,8 +9,9 @@
 //   de la sesión sin nota.
 // - Tarea comunicativa: solo una corregida deja un evento; «sin corregir» no cuenta.
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { randomUUID } from 'expo-crypto';
+import { useRouter } from 'expo-router';
 import {
   applyReview,
   planExpressionSession,
@@ -63,6 +64,7 @@ function blanked(word: string, hanzi: string): string {
 
 export function ExpressionSessionScreen() {
   const { colors } = useTheme();
+  const router = useRouter();
   const speech = useSpeechCheck();
   const [items, setItems] = useState<Item[] | null>(null);
   const [index, setIndex] = useState(0);
@@ -181,9 +183,25 @@ export function ExpressionSessionScreen() {
       ? 'Sin permiso de micrófono y reconocimiento de voz no hay ejercicios de pronunciación. Puedes activarlo en Ajustes.'
       : null;
 
+  // La pantalla no tiene cabecera: sin esto, la única salida era el gesto desde el borde.
+  const header = (
+    <View style={styles.header}>
+      <Text style={[styles.heading, { color: colors.text }]}>Expresión</Text>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Salir"
+        hitSlop={12}
+        onPress={() => (router.canGoBack() ? router.back() : router.replace('/practice'))}
+      >
+        <Text style={[styles.exit, { color: colors.vermilion }]}>Salir</Text>
+      </Pressable>
+    </View>
+  );
+
   if (error) {
     return (
       <Screen>
+        {header}
         <ErrorBanner message={error} onRetry={() => void load()} />
       </Screen>
     );
@@ -192,6 +210,7 @@ export function ExpressionSessionScreen() {
   if (!items) {
     return (
       <Screen>
+        {header}
         <ActivityIndicator />
       </Screen>
     );
@@ -199,7 +218,7 @@ export function ExpressionSessionScreen() {
 
   return (
     <Screen scrollEnabled={current?.kind !== 'writing'}>
-      <Text style={[styles.heading, { color: colors.text }]}>Expresión</Text>
+      {header}
       {unavailableNote ? <Text style={[styles.note, { color: colors.textMuted }]}>{unavailableNote}</Text> : null}
       {saveError ? <ErrorBanner message={saveError} /> : null}
 
@@ -273,7 +292,9 @@ export function ExpressionSessionScreen() {
 }
 
 const styles = StyleSheet.create({
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   heading: { fontSize: tokens.fontSize.xl, fontWeight: '700' },
+  exit: { fontSize: tokens.fontSize.md, fontWeight: '600' },
   note: { fontSize: tokens.fontSize.sm, textAlign: 'center' },
   item: { gap: tokens.spacing.md },
   progress: { fontSize: tokens.fontSize.sm },
