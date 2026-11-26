@@ -98,7 +98,7 @@ export function DecksScreen() {
           >
             <Text style={[styles.deckName, { color: colors.text }]}>{deck.name}</Text>
             <Text style={[styles.meta, { color: colors.textMuted }]}>
-              {deck.word_count} words · {deck.due_count} due
+              {deck.word_count} {deck.word_count === 1 ? 'palabra' : 'palabras'} · {deck.due_count} {deck.due_count === 1 ? 'pendiente' : 'pendientes'}
             </Text>
           </Pressable>
 

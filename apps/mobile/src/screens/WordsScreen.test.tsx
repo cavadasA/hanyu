@@ -73,6 +73,7 @@ describe('WordsScreen', () => {
     await actTimers(300);
 
     await waitFor(() => expect(view.getByText('你好')).toBeTruthy());
+    expect(view.getByText('21 resultados · página 1')).toBeTruthy();
     expect(mockGetWords).toHaveBeenLastCalledWith({
       search: 'ni',
       level: 2,

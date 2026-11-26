@@ -125,7 +125,7 @@ describe('ReadingDetailScreen', () => {
     await fireEvent.press(view.getByRole('button', { name: 'Enviar respuestas' }));
     await fireEvent.press(view.getByRole('button', { name: 'Enviar respuestas' }));
 
-    await waitFor(() => expect(view.getByText('Score 1/1')).toBeTruthy());
+    await waitFor(() => expect(view.getByText('Aciertos: 1/1')).toBeTruthy());
     expect(mockGetReading).toHaveBeenCalledWith('reading-1');
     expect(mockCompleteReading).toHaveBeenCalledTimes(1);
     expect(mockCompleteReading).toHaveBeenCalledWith('reading-1', { q1: 'B' });

@@ -161,7 +161,7 @@ export function WordsScreen() {
       {words.loading ? <ActivityIndicator /> : null}
 
       <Text style={[styles.count, { color: colors.textMuted }]}>
-        {words.total} results · page {words.page}
+        {words.total} {words.total === 1 ? 'resultado' : 'resultados'} · página {words.page}
       </Text>
 
       {!words.loading && words.words.length === 0 ? (

@@ -59,7 +59,7 @@ describe('DecksScreen', () => {
     await renderDecks();
 
     expect(screen.getByText('HSK 1')).toBeTruthy();
-    expect(screen.getByText('150 words · 12 due')).toBeTruthy();
+    expect(screen.getByText('150 palabras · 12 pendientes')).toBeTruthy();
   });
 
   it('opens the catalog from the header and the empty state', async () => {

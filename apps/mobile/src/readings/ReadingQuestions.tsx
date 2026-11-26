@@ -52,7 +52,7 @@ export function ReadingQuestions({ questions, answers, disabled, result, onAnswe
 
       {result ? (
         <Text style={[styles.score, { color: colors.text }]}>
-          Score {result.score}/{result.total}
+          Aciertos: {result.score}/{result.total}
         </Text>
       ) : null}
     </View>
