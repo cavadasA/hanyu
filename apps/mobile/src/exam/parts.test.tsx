@@ -65,3 +65,25 @@ describe('pickInGroup', () => {
     expect(pickInGroup(picks, 'a-l1', 1, 2, false)).toEqual({ 'a-l1': { 0: 2, 1: 2 } });
   });
 });
+
+// Los caracteres incompletos de 书写 1 tardaban unos 4 s en aparecer: cada uno era una
+// WebView (6 por fase) y la página esperaba a que arrancaran todas.
+describe('BankGroup (W1)', () => {
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><g fill="currentColor"><path d="M 10 10 L 20 20 Z"/></g><rect x="1" y="2" width="3" height="4" stroke="currentColor" stroke-dasharray="40 30"/></svg>';
+  const group: any = {
+    slug: 'a-w1',
+    part: 'W1',
+    bank: ['氵', '扌'],
+    example: { word: { pinyin: 'Méiyǒu' }, shown_answer: 0 },
+    items: [{ word: { pinyin: 'Dǎchē' } }],
+  };
+
+  it('pinta los caracteres en nativo, sin una WebView por carácter', async () => {
+    await render(
+      <BankGroup group={group} numbers={{ 'a-w1:0': 51 }} picks={{}} onPick={jest.fn()} characters={{ 'a-w1:example': svg, 'a-w1:0': svg }} />,
+    );
+    expect(screen.queryAllByTestId('svg')).toHaveLength(0);
+    expect(screen.getAllByTestId('w1-character')).toHaveLength(2);
+  });
+});
+

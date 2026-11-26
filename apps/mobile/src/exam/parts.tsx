@@ -2,7 +2,7 @@
 // encima, como en el examen, y no hay traducción ni pinyin al tocar. Las opciones van con
 // letra (A–F) igual que en la hoja de respuestas.
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { WebView } from 'react-native-webview';
+import { SvgXml } from 'react-native-svg';
 import type { ExamResponse, ServedExamGroup } from '@hanyu/data';
 import type { Printed as PrintedText } from '@hanyu/domain';
 import { CharacterWriting } from '../expression/CharacterWriting';
@@ -59,12 +59,14 @@ function Number_({ value, active = false }: { value: number; active?: boolean })
   return <Text style={[styles.number, { color: active ? colors.vermilion : colors.text }]}>{value}.</Text>;
 }
 
-/** El SVG de un carácter incompleto de 书写 1 (generado en la build). */
+/**
+ * El SVG de un carácter incompleto de 书写 1 (generado en la build), pintado en nativo.
+ * Antes era una WebView por carácter (6 por fase) y tardaban unos 4 s en aparecer.
+ */
 export function SvgView({ svg, size, color }: { svg: string; size: number; color: string }) {
-  const html = `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;background:transparent;color:${color}}svg{width:100%;height:100%}</style></head><body>${svg}</body></html>`;
   return (
-    <View style={{ width: size, height: size }} pointerEvents="none">
-      <WebView originWhitelist={['*']} source={{ html }} scrollEnabled={false} style={styles.transparent} />
+    <View testID="w1-character" style={{ width: size, height: size }} pointerEvents="none">
+      {svg ? <SvgXml xml={svg} width={size} height={size} color={color} /> : null}
     </View>
   );
 }
@@ -341,5 +343,4 @@ const styles = StyleSheet.create({
   example: { fontSize: 14 },
   exampleAnswer: { fontSize: 16, fontWeight: '700' },
   wordRow: { gap: 2 },
-  transparent: { backgroundColor: 'transparent' },
 });
