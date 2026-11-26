@@ -6,6 +6,7 @@ export { resolveGloss } from './gloss';
 export { toUserMessage } from './errors';
 export { isValidExamDate } from './repositories/settings';
 export { getLearningReport } from './repositories/stats';
+export type { AssessOutcome, GradeOutcome, PronunciationAssessment } from './repositories/expression';
 export { answersByIndex, type ExamAttempt, type ExamAttemptInput, type ExamMedia, type ExamResponse, type ExamScope, type ScoreLine, type ServedExamForm, type ServedExamGroup } from './repositories/exam';
 // El rango de comprensibilidad viaja hasta la app para que la etiqueta de la
 // lista y el motivo del planificador salgan del mismo umbral.

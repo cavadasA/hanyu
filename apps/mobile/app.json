@@ -10,7 +10,18 @@
     "plugins": [
       "expo-router",
       "expo-status-bar",
-      "expo-sqlite"
+      "expo-sqlite",
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Hanyu usa el micrófono para comprobar si se te entiende al pronunciar en chino.",
+          "speechRecognitionPermission": "Hanyu usa el reconocimiento de voz para comprobar si se te entiende al pronunciar en chino.",
+          "androidSpeechServicePackages": [
+            "com.google.android.googlequicksearchbox",
+            "com.google.android.as"
+          ]
+        }
+      ]
     ],
     "ios": {
       "supportsTablet": true,
