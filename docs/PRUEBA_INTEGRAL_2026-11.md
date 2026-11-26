@@ -274,6 +274,46 @@ Los 17 pendientes de la prueba, cada uno con un test que fallaba antes del arreg
 - En este simulador el reconocimiento de voz ya está disponible, pero quedó **denegado** para Hanyu tras la prueba del punto 12. Para probar la pronunciación hay que reactivarlo en Ajustes → Privacidad.
 - Datos de prueba que quedan en la BD local: 3 tarjetas aprendidas y un intento de la forma B (3 %).
 
+## Idioma de la interfaz
+
+26-11-2026. La interfaz mezclaba inglés y español; ahora toda va en español de España, con tuteo. No se ha añadido una capa de i18n: se cambiaron los literales y los tests que los buscaban. Se mantienen el contenido en chino, los nombres de las secciones del examen (听力, 阅读, 书写) y `support_language`, que sigue controlando sólo las glosas («Idioma de las glosas: Español / Inglés» en Tú).
+
+Commits por zonas:
+
+- `fa20f4c` pestañas, acceso y avisos comunes;
+- `67614b3` Hoy;
+- `60e7740` errores de `packages/data`;
+- `c7f3ff3` repasos y tarjetas;
+- `b680b51` lecturas;
+- `310eb9a` biblioteca, palabras, gramática y mazos;
+- `2f199fe` práctica y ejercicios;
+- `2575d44` perfil y ajustes;
+- `984c0cc` y `3937a51` restos que quedaban;
+- `a433040` categoría gramatical de las palabras.
+
+Decisiones y detalles:
+
+- **Calificaciones FSRS:** Otra vez, Difícil, Bien y Fácil. Los intervalos se escriben «1 min», «6 h», «8 d», «2 meses» y «1,0 años».
+- **Errores de datos:** el texto en español va en un campo aparte, `userMessage`. El `message` técnico no cambia, porque el motor de sincronización clasifica los fallos por ese texto.
+- **Categoría gramatical:** el corpus la guarda en inglés («pronoun», «measure word»). Se traduce al enseñarla y los datos no se tocan.
+- **Habilidades del selector de Repasos:** Entender, Recordar, Escuchar y Leer. «Reconocimiento» y «Reconocer» no cabían en el segmento.
+- **Fecha de Hoy:** en español es más larga y sacaba de la pantalla la etiqueta HSK2. Ahora encoge (`78e687c`).
+- **Inventario:** se hizo antes y después de traducir, en tres pasadas: un grep de literales, otro de propiedades (`label`, `title`, `accessibilityLabel`…) y un recorrido del AST de TypeScript por todos los textos JSX y las plantillas. La última pasada encontró tres contadores partidos entre expresiones JSX («N results · page N», «N words · N due», «Score x/y») que los grep no veían.
+- **Mensajes técnicos que siguen en inglés:** quedan algunos de invariantes internas, como la caché offline o la versión de tarjeta ausente. No están pensados para el usuario y sólo aparecerían ante un fallo del programa.
+
+Verificación en el simulador (iPhone 18 Pro, Supabase local), con capturas `v21`–`v32`:
+
+- Hoy (`v21`) y Repasos (`v22`).
+- Práctica (`v23`) y lecturas: la lista (`v24`), una lectura (`v25`) y la ficha de palabra, que muestra «pronombre» (`v26`).
+- Un ejercicio de parejas (`v27`) y Mazos (`v28`).
+- Tú (`v29`) y sus ajustes (`v30`).
+- Una tarjeta con las cuatro calificaciones (`v31`).
+- Acceso: «Hola de nuevo», «Correo electrónico», «Entrar» (`v32`).
+
+No apareció ningún texto en inglés de la app. Los menús del sistema, como «Paste», siguen el idioma del simulador.
+
+Observación, sin corregir: en Tú, «Equilibrado (0,90)» se parte a mitad de palabra en su botón de tres columnas (`v30`). Ya estaba así antes de este cambio.
+
 ## No se pudo probar
 
 - **Pronunciación con micrófono.**
