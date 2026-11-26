@@ -312,7 +312,10 @@ Verificación en el simulador (iPhone 18 Pro, Supabase local), con capturas `v21
 
 No apareció ningún texto en inglés de la app. Los menús del sistema, como «Paste», siguen el idioma del simulador.
 
-Observación, sin corregir: en Tú, «Equilibrado (0,90)» se parte a mitad de palabra en su botón de tres columnas (`v30`). Ya estaba así antes de este cambio.
+Observación corregida después: en Tú, «Equilibrado (0,90)» se partía a mitad de palabra en su botón de tres columnas (`v30`); ya estaba así antes de este cambio. Con `661974e`:
+- las opciones de OptionRow van en una sola línea que encoge en vez de partirse;
+- la retención enseña «Equilibrado» y, debajo, «0,90»;
+- los demás selectores de Tú (Nivel, Idioma de las glosas, Orden de las tarjetas y Tema) tampoco parten ninguna palabra (`v33`).
 
 ## No se pudo probar
 
