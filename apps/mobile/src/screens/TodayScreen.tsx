@@ -36,6 +36,7 @@ import { ProgressRing } from '../ui/ProgressRing';
 import { Screen } from '../ui/Screen';
 import { StatusBarChart } from '../ui/StatusBarChart';
 import { reasonToText, unavailableToText } from '../lib/planCopy';
+import { studyModeHref } from '../lib/useRequestedStudyMode';
 
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
 
@@ -371,7 +372,8 @@ export default function TodayScreen() {
         } else if (step.kind === 'reading') {
           router.push('/practice/readings');
         } else {
-          router.push('/cards');
+          // Reviews abre en el modo del paso: «Start learning» abría en modo Review.
+          router.push(studyModeHref(step.kind === 'new_items' ? 'learn' : 'review'));
         }
       }))
     : legacyTasks;

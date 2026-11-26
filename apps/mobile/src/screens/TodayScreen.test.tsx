@@ -155,6 +155,26 @@ describe('TodayScreen', () => {
     expect(screen.getByText('1/4')).toBeTruthy();
   });
 
+  // «Start learning» abría Reviews en modo Review.
+  it('«Start learning» abre Reviews en modo Learn y «Start reviews» en modo Review', async () => {
+    mockGetToday.mockResolvedValue({
+      ...payload,
+      steps: [
+        { kind: 'reviews', status: 'ready', payload: { count: 18, completed: 0, target: 200 } },
+        { kind: 'new_items', status: 'ready', payload: { count: 5, unit_title: '离合词', unit_progress: '1/4' } },
+      ],
+    });
+    mockGetDashboard.mockResolvedValue(dashboard);
+
+    await renderToday();
+
+    await fireEvent.press(screen.getByText('Start learning'));
+    expect(mockPush).toHaveBeenLastCalledWith({ pathname: '/cards', params: { mode: 'learn', at: expect.any(String) } });
+
+    await fireEvent.press(screen.getByText('Start reviews'));
+    expect(mockPush).toHaveBeenLastCalledWith({ pathname: '/cards', params: { mode: 'review', at: expect.any(String) } });
+  });
+
   it('muestra el progreso de repasos del plan diario', async () => {
     mockGetToday.mockResolvedValue({
       ...payload,
