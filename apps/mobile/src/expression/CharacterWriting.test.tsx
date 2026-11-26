@@ -3,7 +3,7 @@ import { CharacterWriting } from './CharacterWriting';
 
 const medians = require('../../assets/hanzi-writer/handwriting-medians.json') as Record<string, Array<Array<[number, number]>>>;
 
-let lastWebView: { onMessage: (event: { nativeEvent: { data: string } }) => void; injected: string[] } | null = null;
+let lastWebView: { onMessage: (event: { nativeEvent: { data: string } }) => void; injected: string[]; html?: string } | null = null;
 const mockInjected: string[] = [];
 beforeEach(() => {
   mockInjected.length = 0;
@@ -15,7 +15,7 @@ jest.mock('react-native-webview', () => {
   return {
     WebView: React.forwardRef((props: any, ref: any) => {
       React.useImperativeHandle(ref, () => ({ injectJavaScript: (code: string) => mockInjected.push(code) }));
-      lastWebView = { onMessage: props.onMessage, injected: mockInjected };
+      lastWebView = { onMessage: props.onMessage, injected: mockInjected, html: props.source?.html };
       return <View testID="writing-canvas" />;
     }),
   };
@@ -39,6 +39,20 @@ const xueShuffled = () => {
   const strokes = medians['学'].map(stroke => stroke.map(([x, y]) => [x * 0.6 + 100, y * 0.6 - 40] as [number, number]));
   return [strokes[6], strokes[1], strokes[0], strokes[7], strokes[3], strokes[2], strokes[5], strokes[4]];
 };
+
+// Al dibujar despacio, iOS trataba el lienzo como texto: lo seleccionaba en azul, sacaba
+// «Copy | Translate» y llegó a dejar la app sin responder a mitad de un trazo.
+describe('el lienzo no se puede seleccionar como texto', () => {
+  it.each([
+    ['exam', <CharacterWriting key="exam" mode="exam" onResult={jest.fn()} />],
+    ['quiz', <CharacterWriting key="quiz" mode="quiz" hanzi="学" onResult={jest.fn()} />],
+  ])('en modo %s', async (_mode, element) => {
+    await render(element);
+    const html = lastWebView?.html ?? '';
+    expect(html).toContain('-webkit-user-select:none');
+    expect(html).toContain('-webkit-touch-callout:none');
+  });
+});
 
 describe('CharacterWriting en modo exam', () => {
   it('no emite ningún resultado hasta «Hecho»', async () => {

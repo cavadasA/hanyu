@@ -64,7 +64,7 @@ export function hasWritingStrokes(hanzi: string): boolean {
  */
 function canvasHtml(ink: string, grid: string) {
   return `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<style>html,body{margin:0;height:100%;overflow:hidden;background:transparent;touch-action:none}canvas{width:100%;height:100%;display:block}</style></head>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:transparent;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}canvas{width:100%;height:100%;display:block}</style></head>
 <body><canvas id="c"></canvas><script>
 var c=document.getElementById('c'),x=c.getContext('2d'),strokes=[],current=null,ratio=window.devicePixelRatio||1;
 function size(){c.width=c.clientWidth*ratio;c.height=c.clientHeight*ratio;draw();}
@@ -91,7 +91,7 @@ window.addEventListener('resize',size);size();
  */
 function traceHtml(paths: string[], outline: boolean, colors: { ink: string; grid: string; accent: string }) {
   return `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<style>html,body{margin:0;height:100%;overflow:hidden;background:transparent;touch-action:none}canvas{width:100%;height:100%;display:block}</style></head>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:transparent;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}canvas{width:100%;height:100%;display:block}</style></head>
 <body><canvas id="c"></canvas><script>
 var paths=${JSON.stringify(paths)};var outline=${outline ? 'true' : 'false'};
 var c=document.getElementById('c'),x=c.getContext('2d'),done=[],current=null,pending=null,hinted=-1,shown=-1,timer=null,ratio=window.devicePixelRatio||1;
