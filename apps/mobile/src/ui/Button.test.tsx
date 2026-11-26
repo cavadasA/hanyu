@@ -86,4 +86,19 @@ describe('Button', () => {
     await fireEvent(button, 'responderRelease', buildResponderReleaseEvent());
     expectTransformsAreArrays(screen.getByRole('button', { name: 'Rate' }).props.style);
   });
+
+  it('con fitLabel la etiqueta va en una línea y encoge en vez de partir la palabra', async () => {
+    await render(<Button label="Equilibrado" sublabel="0,90" onPress={jest.fn()} fitLabel />);
+
+    const label = screen.getByText('Equilibrado');
+    expect(label.props.numberOfLines).toBe(1);
+    expect(label.props.adjustsFontSizeToFit).toBe(true);
+    expect(label.props.minimumFontScale).toBeGreaterThan(0);
+  });
+
+  it('sin fitLabel la etiqueta puede ocupar varias líneas', async () => {
+    await render(<Button label="Guardar la fecha del examen" onPress={jest.fn()} />);
+
+    expect(screen.getByText('Guardar la fecha del examen').props.numberOfLines).toBeUndefined();
+  });
 });

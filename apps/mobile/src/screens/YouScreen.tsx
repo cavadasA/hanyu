@@ -27,10 +27,11 @@ const THEME_LABELS: Record<ThemePreference, string> = { light: 'Claro', dark: 'O
 const ORDER_LABELS: Record<CardOrder, string> = { due: 'Por vencimiento', frequency: 'Por frecuencia' };
 const SUPPORT_LANGUAGE_LABELS = { es: 'Español', en: 'Inglés' } as const;
 const RETENTION_OPTIONS = [
-  { value: 0.85, label: 'Relajado (0,85)' },
-  { value: 0.9, label: 'Equilibrado (0,90)' },
-  { value: 0.95, label: 'Exigente (0,95)' },
+  { value: 0.85, label: 'Relajado', detail: '0,85' },
+  { value: 0.9, label: 'Equilibrado', detail: '0,90' },
+  { value: 0.95, label: 'Exigente', detail: '0,95' },
 ] as const;
+const RETENTION_DETAILS = Object.fromEntries(RETENTION_OPTIONS.map((option) => [option.label, option.detail]));
 
 interface HeroStats {
   mastered: number;
@@ -307,6 +308,7 @@ export default function YouScreen() {
                   ?? RETENTION_OPTIONS[1].label
               }
               options={RETENTION_OPTIONS.map((option) => option.label)}
+              sublabels={RETENTION_DETAILS}
               onChange={(label) => {
                 const option = RETENTION_OPTIONS.find((entry) => entry.label === label);
                 if (option) void save({ request_retention: option.value });

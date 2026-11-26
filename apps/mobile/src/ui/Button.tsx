@@ -10,6 +10,13 @@ interface ButtonProps {
   disabled?: boolean;
   selected?: boolean;
   busy?: boolean;
+  /** Nombre accesible si no basta con `label` (p. ej. para incluir el `sublabel`). */
+  accessibilityLabel?: string;
+  /**
+   * Para botones estrechos (las columnas de OptionRow): la etiqueta va en una línea
+   * y encoge para caber, en vez de partir una palabra a la mitad («Equilibra/do»).
+   */
+  fitLabel?: boolean;
 }
 
 export function Button({
@@ -20,6 +27,8 @@ export function Button({
   disabled = false,
   selected = false,
   busy = false,
+  accessibilityLabel,
+  fitLabel = false,
 }: ButtonProps) {
   const { colors } = useTheme();
   const isPrimary = variant === 'primary';
@@ -36,12 +45,13 @@ export function Button({
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={label}
+      accessibilityLabel={accessibilityLabel ?? label}
       accessibilityState={{ disabled: disabled || busy, selected, busy }}
       onPress={onPress}
       disabled={disabled || busy}
       style={({ pressed }) => [
         styles.button,
+        fitLabel ? styles.fit : null,
         isOutline || (selected && !isPrimary) ? styles.outline : null,
         {
           backgroundColor,
@@ -55,7 +65,12 @@ export function Button({
         <ActivityIndicator size="small" color={spinnerColor} />
       ) : (
         <>
-          <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
+          <Text
+            style={[styles.label, { color: labelColor }]}
+            {...(fitLabel ? { numberOfLines: 1, adjustsFontSizeToFit: true, minimumFontScale: 0.7 } : null)}
+          >
+            {label}
+          </Text>
           {sublabel ? (
             <Text style={[styles.sublabel, { color: isPrimary ? colors.onAccentMuted : colors.textMuted }]}>{sublabel}</Text>
           ) : null}
@@ -75,6 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: 44,
   },
+  fit: { paddingHorizontal: tokens.spacing.sm },
   outline: { borderWidth: 1.5 },
   label: { fontSize: tokens.fontSize.md, fontWeight: '600' },
   sublabel: { fontSize: tokens.fontSize.xs, marginTop: 2 },

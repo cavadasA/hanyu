@@ -178,7 +178,9 @@ describe('YouScreen', () => {
     mockUpdateSettings.mockResolvedValue({ ...settings, request_retention: 0.85 });
 
     await renderYou();
-    await fireEvent.press(screen.getByText('Relajado (0,85)'));
+    expect(screen.getByText('Equilibrado')).toBeTruthy();
+    expect(screen.getByText('0,90')).toBeTruthy();
+    await fireEvent.press(screen.getByRole('button', { name: 'Relajado (0,85)' }));
 
     expect(mockUpdateSettings).toHaveBeenCalledWith({ request_retention: 0.85 });
     expect(mockUpdateReviewSettings).toHaveBeenCalledWith({ request_retention: 0.85 });
