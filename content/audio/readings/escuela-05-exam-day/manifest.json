@@ -57,16 +57,16 @@
     {
       "key": "07",
       "file": "07.m4a",
-      "duration_ms": 2923,
+      "duration_ms": 3283,
       "voice": "zh-CN-XiaoyiNeural",
-      "source_hash": "8b464de0cef017c7fa29fd8cf2db51682eb43cc9b68a49effb781341e86eed01"
+      "source_hash": "56995ce0ce27b7db742358e517a47c91c530edce97493d94936df4b29bec7d31"
     },
     {
       "key": "08",
       "file": "08.m4a",
-      "duration_ms": 5179,
+      "duration_ms": 4963,
       "voice": "zh-CN-XiaoyiNeural",
-      "source_hash": "8b16151996958d67adfa7e7ae6dffcbd4b1c92dadcaeefcf55c911755668b2ec"
+      "source_hash": "6911bdc19b764f3263662e32c48710fe0d525a723de83feda6c91fca2493bc29"
     }
   ]
 }

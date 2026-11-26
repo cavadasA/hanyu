@@ -22,9 +22,9 @@
     {
       "key": "02",
       "file": "02.m4a",
-      "duration_ms": 4051,
+      "duration_ms": 4363,
       "voice": "zh-CN-YunxiNeural",
-      "source_hash": "723e155f7087fe6135a4afa75068e18f7124b888dc238650eab58ffd2325491f"
+      "source_hash": "4bd89cbbe8edc85a2136cbd06d48cf533cf0ce6850b4bbd0b5473c10dda940b9"
     },
     {
       "key": "03",
@@ -43,9 +43,9 @@
     {
       "key": "05",
       "file": "05.m4a",
-      "duration_ms": 3955,
+      "duration_ms": 3667,
       "voice": "zh-CN-XiaoxiaoNeural",
-      "source_hash": "ea86220bb24f8b9c881a6b5cf4a6aca3188a7c124cdfe4d5fb4b1c44295ca9fe"
+      "source_hash": "c3e1267925f1049b72bafd0bc0816fa77a3dcb7691eea4bd05fac9acc1548e31"
     },
     {
       "key": "06",

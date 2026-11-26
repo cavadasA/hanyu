@@ -80,8 +80,8 @@ elige la lectura de estos hanzi. Cada frase se escucha y se compara con su pinyi
 - [ ] `04` 他写得很快，十点就写完了。 — Tā xiě de hěn kuài, shí diǎn jiù xiě wán le. — 得 = de 5, 了 = le 5
 - [ ] `05` 写完后，他再看了看，找到了两个错字。 — Xiě wán hòu, tā zài kàn le kàn, zhǎo dào le liǎng gè cuò zì. — 了 = le 5, 了 = le 5
 - [ ] `06` 三天后，王老师告诉大家考得怎么样。 — Sān tiān hòu, Wáng lǎoshī gàosu dàjiā kǎo de zěnmeyàng. — 得 = de 5
-- [ ] `07` 大卫考得比上次好多了。 — Dàwèi kǎo de bǐ shàng cì hǎo duō le. — 得 = de 5, 了 = le 5
-- [ ] `08` 王老师说，他已经是班里汉字写得最好的外国学生了。 — Wáng lǎoshī shuō, tā yǐjīng shì bān lǐ Hànzì xiě de zuì hǎo de wàiguó xuéshēng le. — 得 = de 5, 了 = le 5
+- [ ] `07` 大卫这次考得比上次好很多。 — Dàwèi zhè cì kǎo de bǐ shàng cì hǎo hěn duō. — 得 = de 5
+- [ ] `08` 王老师说，班里的外国学生，汉字都没有他写得好。 — Wáng lǎoshī shuō, bān lǐ de wàiguó xuéshēng, Hànzì dōu méiyǒu tā xiě de hǎo. — 得 = de 5
 
 ## escuela-06-going-home
 
@@ -159,7 +159,6 @@ elige la lectura de estos hanzi. Cada frase se escucha y se compara con su pinyi
 
 - [ ] `00` 张红今年二十三岁，她找到了一个新工作。 — Zhāng Hóng jīnnián èrshísān suì, tā zhǎo dào le yí gè xīn gōngzuò. — 了 = le 5
 - [ ] `03` 所以她七点就出门了。 — Suǒyǐ tā qī diǎn jiù chūmén le. — 了 = le 5
-- [ ] `04` 公交车上人很多，她站了一个小时。 — Gōngjiāochē shàng rén hěn duō, tā zhàn le yí gè xiǎoshí. — 了 = le 5
 - [ ] `05` 八点半，她到了公司的楼下。 — Bā diǎn bàn, tā dào le gōngsī de lóu xià. — 了 = le 5
 - [ ] `07` 她进了楼，很快就上去了。 — Tā jìn le lóu, hěn kuài jiù shàngqù le. — 了 = le 5, 了 = le 5
 - [ ] `08` 她有一点儿累，但是很高兴，她希望在新公司做得好。 — Tā yǒuyìdiǎnr lèi, dànshì hěn gāoxìng, tā xīwàng zài xīn gōngsī zuò de hǎo. — 得 = de 5
@@ -191,7 +190,7 @@ elige la lectura de estos hanzi. Cada frase se escucha y se compara con su pinyi
 - [ ] `02` 她每天早上七点半起床，起床后还能去外面运动。 — Tā měi tiān zǎoshang qī diǎn bàn qǐchuáng, qǐchuáng hòu hái néng qù wàimiàn yùndòng. — 还 = hai 2
 - [ ] `04` 晚上她自己做饭，还看书学习。 — Wǎnshang tā zìjǐ zuòfàn, hái kàn shū xuéxí. — 还 = hai 2
 - [ ] `05` 白先生说，张红来了一个月，工作做得很好。 — Bái xiānsheng shuō, Zhāng Hóng lái le yí gè yuè, gōngzuò zuò de hěn hǎo. — 了 = le 5, 得 = de 5
-- [ ] `06` 他说张红是这个月公司里做得最好的新人。 — Tā shuō Zhāng Hóng shì zhège yuè gōngsī lǐ zuò de zuì hǎo de xīn rén. — 得 = de 5
+- [ ] `06` 他说这个月公司里的新人，没有人比张红做得好。 — Tā shuō zhège yuè gōngsī lǐ de xīn rén, méiyǒu rén bǐ Zhāng Hóng zuò de hǎo. — 得 = de 5
 - [ ] `07` 张红很高兴，她觉得住得近真好。 — Zhāng Hóng hěn gāoxìng, tā juéde zhù de jìn zhēn hǎo. — 觉 = jue 2, 得 = de 5, 得 = de 5
 - [ ] `08` 她给妈妈打电话，说她在这里很快乐。 — Tā gěi māma dǎdiànhuà, shuō tā zài zhèlǐ hěn kuàilè. — 乐 = le 4
 
@@ -199,7 +198,7 @@ elige la lectura de estos hanzi. Cada frase se escucha y se compara con su pinyi
 
 - [ ] `01` 小丽：陈东，七点了，你怎么还不起床？ — Xiǎolì: Chén Dōng, qī diǎn le, nǐ zěnme hái bù qǐchuáng? — 了 = le 5, 还 = hai 2
 - [ ] `04` 陈东：两点多。昨天工作太多了。 — Chén Dōng: Liǎng diǎn duō. Zuótiān gōngzuò tài duō le. — 了 = le 5
-- [ ] `05` 小丽：你最近每天都睡得很晚。 — Xiǎolì: Nǐ zuì jìn měi tiān dōu shuì de hěn wǎn. — 得 = de 5
+- [ ] `05` 小丽：你这几天都睡得很晚。 — Xiǎolì: Nǐ zhè jǐ tiān dōu shuì de hěn wǎn. — 得 = de 5
 - [ ] `06` 陈东：我休息休息就好了。 — Chén Dōng: Wǒ xiūxi xiūxi jiù hǎo le. — 了 = le 5
 
 ## salud-02-hospital
@@ -224,8 +223,8 @@ elige la lectura de estos hanzi. Cada frase se escucha y se compara con su pinyi
 
 ## salud-04-check-up
 
-- [ ] `02` 陈东：好多了，头不疼了，晚上也睡得很好。 — Chén Dōng: Hǎo duō le, tóu bù téng le, wǎnshang yě shuì de hěn hǎo. — 了 = le 5, 了 = le 5, 得 = de 5
-- [ ] `05` 医生：别坐那么长时间，要经常站起来动一动。 — Yīshēng: Bié zuò nàme cháng shíjiān, yào jīngcháng zhàn qǐlái dòng yi dòng. — 长 = chang 2
+- [ ] `02` 陈东：我好了很多，头不疼了，晚上也睡得很好。 — Chén Dōng: Wǒ hǎo le hěn duō, tóu bù téng le, wǎnshang yě shuì de hěn hǎo. — 了 = le 5, 了 = le 5, 得 = de 5
+- [ ] `05` 医生：别坐那么长时间，要经常起来走一走。 — Yīshēng: Bié zuò nàme cháng shíjiān, yào jīngcháng qǐlái zǒu yi zǒu. — 长 = chang 2
 - [ ] `06` 陈东：好的。我还要吃药吗？ — Chén Dōng: Hǎo de. Wǒ hái yào chī yào ma? — 还 = hai 2
 - [ ] `07` 医生：不要吃了。你要每天运动半个小时。 — Yīshēng: Búyào chī le. Nǐ yào měi tiān yùndòng bàn gè xiǎoshí. — 了 = le 5
 
@@ -233,8 +232,8 @@ elige la lectura de estos hanzi. Cada frase se escucha y se compara con su pinyi
 
 - [ ] `02` 第一天，他们跑了十分钟就很累了。 — Dì yī tiān, tāmen pǎo le shí fēnzhōng jiù hěn lèi le. — 了 = le 5, 了 = le 5
 - [ ] `03` 他们慢慢跑，一个星期后可以跑半个小时了。 — Tāmen màn màn pǎo, yí gè xīngqī hòu kěyǐ pǎo bàn gè xiǎoshí le. — 了 = le 5
-- [ ] `05` 陈东觉得自己的身体比上个月好多了。 — Chén Dōng juéde zìjǐ de shēntǐ bǐ shàng gè yuè hǎo duō le. — 觉 = jue 2, 得 = de 5, 了 = le 5
-- [ ] `06` 他晚上十一点前就睡觉，工作的时候也经常站起来动一动。 — Tā wǎnshang shíyī diǎn qián jiù shuìjiào, gōngzuò de shíhou yě jīngcháng zhàn qǐlái dòng yi dòng. — 觉 = jiao 4
+- [ ] `05` 陈东觉得自己的身体比上个月好了很多。 — Chén Dōng juéde zìjǐ de shēntǐ bǐ shàng gè yuè hǎo le hěn duō. — 觉 = jue 2, 得 = de 5, 了 = le 5
+- [ ] `06` 他晚上十一点前就睡觉，工作的时候也经常起来走一走。 — Tā wǎnshang shíyī diǎn qián jiù shuìjiào, gōngzuò de shíhou yě jīngcháng qǐlái zǒu yi zǒu. — 觉 = jiao 4
 - [ ] `07` 小丽说她丈夫现在很少生病了。 — Xiǎolì shuō tā zhàngfu xiànzài hěn shǎo shēngbìng le. — 了 = le 5
 
 ## shop-01-tea-and-coffee
@@ -306,7 +305,7 @@ elige la lectura de estos hanzi. Cada frase se escucha y se compara con su pinyi
 - [ ] `04` 安安拿着手机，教李奶奶怎么给儿子打电话。 — Ān'ān ná zhe shǒujī, jiāo Lǐ nǎinai zěnme gěi érzi dǎdiànhuà. — 着 = zhe 5
 - [ ] `05` 李奶奶看看手机，再看看安安，学得很慢。 — Lǐ nǎinai kàn kàn shǒujī, zài kàn kàn Ān'ān, xué de hěn màn. — 得 = de 5
 - [ ] `06` 半个小时后，她在手机上看见了儿子。 — Bàn gè xiǎoshí hòu, tā zài shǒujī shàng kànjiàn le érzi. — 了 = le 5
-- [ ] `07` 李奶奶笑了，她说已经一年没有见面了。 — Lǐ nǎinai xiào le, tā shuō yǐjīng yì nián méiyǒu jiàn miàn le. — 了 = le 5, 了 = le 5
+- [ ] `07` 李奶奶笑了，她说已经一年没有看见儿子了。 — Lǐ nǎinai xiào le, tā shuō yǐjīng yì nián méiyǒu kànjiàn érzi le. — 了 = le 5, 了 = le 5
 - [ ] `08` 小平和安安都觉得很高兴。 — Xiǎopíng hé Ān'ān dōu juéde hěn gāoxìng. — 觉 = jue 2, 得 = de 5
 
 ## vecinos-05-dinner
@@ -342,7 +341,7 @@ elige la lectura de estos hanzi. Cada frase se escucha y se compara con su pinyi
 
 - [ ] `01` 大山：小月，我们走了半个小时了，饭馆在哪儿？ — Dàshān: Xiǎoyuè, wǒmen zǒu le bàn gè xiǎoshí le, fànguǎn zài nǎr? — 了 = le 5, 了 = le 5
 - [ ] `03` 大山：我们是不是走错路了？ — Dàshān: Wǒmen shì bu shì zǒu cuò lù le? — 了 = le 5
-- [ ] `04` 小月：可能是，因为我们在那个路口往左走了。 — Xiǎoyuè: Kěnéng shì, yīnwèi wǒmen zài nàge lù kǒu wǎng zuǒ zǒu le. — 了 = le 5
+- [ ] `04` 小月：可能是，因为我们没有往右走，往左走了。 — Xiǎoyuè: Kěnéng shì, yīnwèi wǒmen méiyǒu wǎng yòu zǒu, wǎng zuǒ zǒu le. — 了 = le 5
 - [ ] `08` 小月：太好了，我们进去吧，我想吃饭了。 — Xiǎoyuè: Tài hǎo le, wǒmen jìnqù ba, wǒ xiǎng chī fàn le. — 了 = le 5, 了 = le 5
 
 ## viaje-05-last-day
@@ -350,6 +349,6 @@ elige la lectura de estos hanzi. Cada frase se escucha y se compara con su pinyi
 - [ ] `00` 大山在中国住了一个星期。 — Dàshān zài Zhōngguó zhù le yí gè xīngqī. — 了 = le 5
 - [ ] `01` 这几天，他跟小月去了很多商场和饭馆。 — Zhè jǐ tiān, tā gēn Xiǎoyuè qù le hěn duō shāngchǎng hé fànguǎn. — 了 = le 5
 - [ ] `02` 他们有时坐地铁，有时走路。 — Tāmen yǒushí zuò dìtiě, yǒushí zǒulù. — 地 = di 4
-- [ ] `04` 最后一天，他给家人买了茶和衣服。 — Zuì hòu yì tiān, tā gěi jiārén mǎi le chá hé yīfu. — 了 = le 5
+- [ ] `04` 走的那天，他给家人买了茶和衣服。 — Zǒu de nà tiān, tā gěi jiārén mǎi le chá hé yīfu. — 了 = le 5
 - [ ] `06` 在机场，大山说他很喜欢中国，明年还想来。 — Zài jīchǎng, Dàshān shuō tā hěn xǐhuan Zhōngguó, míngnián hái xiǎng lái. — 还 = hai 2
 - [ ] `08` 大山进去后，小月一个人坐地铁回家了。 — Dàshān jìnqù hòu, Xiǎoyuè yī gè rén zuò dìtiě huí jiā le. — 地 = di 4, 了 = le 5
