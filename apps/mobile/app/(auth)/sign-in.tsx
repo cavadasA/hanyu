@@ -31,12 +31,12 @@ export default function SignIn() {
   }
 
   return (
-    <AuthScaffold title="Welcome back">
+    <AuthScaffold title="Hola de nuevo">
       {error ? <ErrorBanner message={error} /> : null}
 
       <AuthField
-        label="Email"
-        placeholder="you@example.com"
+        label="Correo electrónico"
+        placeholder="tu@ejemplo.com"
         autoCapitalize="none"
         autoComplete="email"
         keyboardType="email-address"
@@ -45,7 +45,7 @@ export default function SignIn() {
       />
 
       <AuthField
-        label="Password"
+        label="Contraseña"
         placeholder="••••••••"
         secure
         autoComplete="password"
@@ -53,17 +53,17 @@ export default function SignIn() {
         onChangeText={setPassword}
         trailing={
           <Link href="/forgot-password" style={[styles.inlineLink, { color: colors.vermilion }]}>
-            Forgot?
+            ¿La olvidaste?
           </Link>
         }
       />
 
-      <AuthSubmit label="Sign in" busyLabel="Signing in…" busy={busy} onPress={submit} />
+      <AuthSubmit label="Entrar" busyLabel="Entrando…" busy={busy} onPress={submit} />
 
       <View style={styles.footer}>
-        <Text style={{ color: colors.textMuted, fontSize: tokens.fontSize.sm }}>New to Hanyu? </Text>
+        <Text style={{ color: colors.textMuted, fontSize: tokens.fontSize.sm }}>¿Eres nuevo en Hanyu? </Text>
         <Link href="/sign-up" style={[styles.footerLink, { color: colors.vermilion }]}>
-          Create an account
+          Crea una cuenta
         </Link>
       </View>
     </AuthScaffold>

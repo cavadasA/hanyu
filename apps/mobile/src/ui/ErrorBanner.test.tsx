@@ -28,13 +28,13 @@ describe('ErrorBanner', () => {
     const onRetry = jest.fn();
 
     await render(<ErrorBanner message="No connection." onRetry={onRetry} />);
-    await fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Reintentar' }));
 
     expect(onRetry).toHaveBeenCalledTimes(1);
   });
 
   it('hides the retry button when no handler is given', async () => {
     await render(<ErrorBanner message="No connection." />);
-    expect(screen.queryByText('Try again')).toBeNull();
+    expect(screen.queryByText('Reintentar')).toBeNull();
   });
 });

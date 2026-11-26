@@ -24,9 +24,9 @@ describe('SignIn', () => {
     mockSignIn.mockResolvedValue({});
 
     await render(<SignIn />);
-    await fireEvent.changeText(screen.getByLabelText('Email'), '  learner@example.com ');
-    await fireEvent.changeText(screen.getByLabelText('Password'), 'secret123');
-    await fireEvent.press(screen.getByText('Sign in'));
+    await fireEvent.changeText(screen.getByLabelText('Correo electrónico'), '  learner@example.com ');
+    await fireEvent.changeText(screen.getByLabelText('Contraseña'), 'secret123');
+    await fireEvent.press(screen.getByText('Entrar'));
 
     expect(mockSignIn).toHaveBeenCalledWith({
       email: 'learner@example.com',
@@ -38,7 +38,7 @@ describe('SignIn', () => {
     mockSignIn.mockRejectedValue({ status: 400, message: 'Invalid login credentials' });
 
     await render(<SignIn />);
-    await fireEvent.press(screen.getByText('Sign in'));
+    await fireEvent.press(screen.getByText('Entrar'));
 
     expect(screen.getByText('Invalid login credentials')).toBeTruthy();
   });

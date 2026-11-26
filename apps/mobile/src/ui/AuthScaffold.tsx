@@ -46,7 +46,7 @@ export function AuthScaffold({ title, children }: { title: string; children: Rea
               汉语
             </Text>
             <Text style={styles.wordmark}>Hanyu</Text>
-            <Text style={styles.tag}>LEARN MANDARIN</Text>
+            <Text style={styles.tag}>APRENDE CHINO</Text>
           </View>
 
           <View

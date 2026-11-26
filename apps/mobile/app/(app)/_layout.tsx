@@ -17,9 +17,16 @@ const ICONS: Record<string, { active: IconName; inactive: IconName }> = {
 
 const TABS = ['today', 'cards', 'practice', 'library', 'you'] as const;
 
-function title(name: string): string {
-  if (name === 'cards') return 'Reviews';
-  return name[0].toUpperCase() + name.slice(1);
+const TITLES: Record<(typeof TABS)[number], string> = {
+  today: 'Hoy',
+  cards: 'Repasos',
+  practice: 'Práctica',
+  library: 'Biblioteca',
+  you: 'Tú',
+};
+
+function title(name: (typeof TABS)[number]): string {
+  return TITLES[name];
 }
 
 export default function AppLayout() {

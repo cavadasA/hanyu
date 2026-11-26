@@ -33,15 +33,15 @@ export default function ForgotPassword() {
   }
 
   return (
-    <AuthScaffold title="Reset your password">
+    <AuthScaffold title="Recupera tu contraseña">
       {error ? <ErrorBanner message={error} /> : null}
       {sent ? (
-        <NoticeBanner message="Check your email. The reset link opens Hanyu on the web." />
+        <NoticeBanner message="Revisa tu correo. El enlace para cambiar la contraseña abre Hanyu en la web." />
       ) : null}
 
       <AuthField
-        label="Email"
-        placeholder="you@example.com"
+        label="Correo electrónico"
+        placeholder="tu@ejemplo.com"
         autoCapitalize="none"
         autoComplete="email"
         keyboardType="email-address"
@@ -49,11 +49,11 @@ export default function ForgotPassword() {
         onChangeText={setEmail}
       />
 
-      <AuthSubmit label="Send reset email" busyLabel="Sending…" busy={busy} onPress={submit} />
+      <AuthSubmit label="Enviar enlace" busyLabel="Enviando…" busy={busy} onPress={submit} />
 
       <View style={styles.footer}>
         <Link href="/sign-in" style={[styles.footerLink, { color: colors.vermilion }]}>
-          Back to sign in
+          Volver a entrar
         </Link>
       </View>
     </AuthScaffold>

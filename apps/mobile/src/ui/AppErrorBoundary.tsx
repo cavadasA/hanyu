@@ -52,14 +52,14 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
     if (error) {
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>Something went wrong</Text>
+          <Text style={styles.title}>Algo ha fallado</Text>
           <Text style={styles.message}>{error.message}</Text>
           <Pressable
             accessibilityRole="button"
             onPress={this.handleRetry}
             style={styles.button}
           >
-            <Text style={styles.buttonLabel}>Try again</Text>
+            <Text style={styles.buttonLabel}>Reintentar</Text>
           </Pressable>
         </View>
       );

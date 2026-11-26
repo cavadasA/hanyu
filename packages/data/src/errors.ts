@@ -1,4 +1,4 @@
-const GENERIC = 'Something went wrong. Please try again.';
+const GENERIC = 'Algo ha fallado. Inténtalo de nuevo.';
 
 interface MaybeRepositoryError {
   status?: number;
@@ -14,15 +14,15 @@ export function toUserMessage(error: unknown): string {
   const { status, message } = error as MaybeRepositoryError;
 
   if (status === 401) {
-    return 'Your session expired. Sign in again to continue.';
+    return 'Tu sesión ha caducado. Vuelve a entrar para continuar.';
   }
 
   if (status === 403) {
-    return 'You do not have access to that data.';
+    return 'No tienes acceso a esos datos.';
   }
 
   if (message && /network|fetch failed|failed to fetch/i.test(message)) {
-    return 'No connection. Check your network and try again.';
+    return 'Sin conexión. Revisa la red e inténtalo de nuevo.';
   }
 
   return message || GENERIC;

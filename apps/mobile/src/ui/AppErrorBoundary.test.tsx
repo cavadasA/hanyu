@@ -20,14 +20,14 @@ describe('AppErrorBoundary', () => {
       </AppErrorBoundary>,
     );
 
-    expect(screen.getByText('Something went wrong')).toBeTruthy();
+    expect(screen.getByText('Algo ha fallado')).toBeTruthy();
     expect(screen.getByText('boom')).toBeTruthy();
     // The Error object itself must be passed to console.error so Hermes
     // serializes the full stack into the Metro terminal log.
     expect(errorSpy).toHaveBeenCalledWith(expect.any(Error));
   });
 
-  it('recovers when "Try again" is pressed after the error source is fixed', async () => {
+  it('recovers when "Reintentar" is pressed after the error source is fixed', async () => {
     const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
     let shouldThrow = true;
 
@@ -47,7 +47,7 @@ describe('AppErrorBoundary', () => {
     expect(screen.getByText('boom')).toBeTruthy();
 
     shouldThrow = false;
-    await fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Reintentar' }));
 
     expect(screen.getByText('recovered')).toBeTruthy();
     // The boundary logs the Error object itself (full stack in Metro); the

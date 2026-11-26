@@ -27,7 +27,7 @@ export default function SignUp() {
     try {
       const result = await getData().auth.signUp({ email: email.trim(), password });
       if (!result.session) {
-        setNotice('Check your email to confirm your account, then return here to sign in.');
+        setNotice('Revisa tu correo para confirmar la cuenta y vuelve aquí para entrar.');
       }
     } catch (caught) {
       setError(toUserMessage(caught));
@@ -37,13 +37,13 @@ export default function SignUp() {
   }
 
   return (
-    <AuthScaffold title="Create your account">
+    <AuthScaffold title="Crea tu cuenta">
       {error ? <ErrorBanner message={error} /> : null}
       {notice ? <NoticeBanner message={notice} /> : null}
 
       <AuthField
-        label="Email"
-        placeholder="you@example.com"
+        label="Correo electrónico"
+        placeholder="tu@ejemplo.com"
         autoCapitalize="none"
         autoComplete="email"
         keyboardType="email-address"
@@ -52,22 +52,22 @@ export default function SignUp() {
       />
 
       <AuthField
-        label="Password"
-        placeholder="At least 8 characters"
+        label="Contraseña"
+        placeholder="Al menos 8 caracteres"
         secure
         autoComplete="new-password"
         value={password}
         onChangeText={setPassword}
       />
 
-      <AuthSubmit label="Create account" busyLabel="Creating…" busy={busy} onPress={submit} />
+      <AuthSubmit label="Crear cuenta" busyLabel="Creando…" busy={busy} onPress={submit} />
 
       <View style={styles.footer}>
         <Text style={{ color: colors.textMuted, fontSize: tokens.fontSize.sm }}>
-          Already have an account?{' '}
+          ¿Ya tienes cuenta?{' '}
         </Text>
         <Link href="/sign-in" style={[styles.footerLink, { color: colors.vermilion }]}>
-          Sign in
+          Entrar
         </Link>
       </View>
     </AuthScaffold>

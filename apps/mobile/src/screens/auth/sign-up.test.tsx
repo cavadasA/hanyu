@@ -24,14 +24,14 @@ describe('SignUp', () => {
     mockSignUp.mockResolvedValue({ session: null });
 
     await render(<SignUp />);
-    await fireEvent.changeText(screen.getByLabelText('Email'), ' learner@example.com ');
-    await fireEvent.changeText(screen.getByLabelText('Password'), 'secret123');
-    await fireEvent.press(screen.getByText('Create account'));
+    await fireEvent.changeText(screen.getByLabelText('Correo electrónico'), ' learner@example.com ');
+    await fireEvent.changeText(screen.getByLabelText('Contraseña'), 'secret123');
+    await fireEvent.press(screen.getByText('Crear cuenta'));
 
     expect(mockSignUp).toHaveBeenCalledWith({
       email: 'learner@example.com',
       password: 'secret123',
     });
-    expect(screen.getByText(/Check your email/)).toBeTruthy();
+    expect(screen.getByText(/Revisa tu correo/)).toBeTruthy();
   });
 });

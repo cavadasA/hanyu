@@ -366,7 +366,7 @@ describe('ReadingDetailScreen', () => {
     await waitFor(() => expect(view.getByText('Quitar marcador')).toBeTruthy());
     await fireEvent.press(view.getByRole('button', { name: 'Quitar marcador' }));
 
-    await waitFor(() => expect(view.getByText('No connection. Check your network and try again.')).toBeTruthy());
+    await waitFor(() => expect(view.getByText('Sin conexión. Revisa la red e inténtalo de nuevo.')).toBeTruthy());
   });
 
   it('detiene el audio al cambiar de lectura en la misma ruta', async () => {

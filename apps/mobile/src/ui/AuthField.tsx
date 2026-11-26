@@ -6,7 +6,7 @@ import { useTheme } from '../theme/ThemeProvider';
 interface AuthFieldProps extends TextInputProps {
   /** Visible label above the input; also drives the accessibility label. */
   label: string;
-  /** Optional element rendered on the right of the label row (e.g. a "Forgot?" link). */
+  /** Optional element rendered on the right of the label row (e.g. a "¿La olvidaste?" link). */
   trailing?: ReactNode;
   /** When true, masks input and shows a Show/Hide toggle. */
   secure?: boolean;
@@ -46,11 +46,11 @@ export function AuthField({ label, trailing, secure = false, style, ...rest }: A
         {secure ? (
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={reveal ? 'Hide password' : 'Show password'}
+            accessibilityLabel={reveal ? 'Ocultar contraseña' : 'Mostrar contraseña'}
             hitSlop={8}
             onPress={() => setReveal((prev) => !prev)}
           >
-            <Text style={[styles.toggle, { color: colors.textMuted }]}>{reveal ? 'Hide' : 'Show'}</Text>
+            <Text style={[styles.toggle, { color: colors.textMuted }]}>{reveal ? 'Ocultar' : 'Mostrar'}</Text>
           </Pressable>
         ) : null}
       </View>

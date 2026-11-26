@@ -20,7 +20,7 @@ export function ErrorBanner({ message, onRetry }: { message: string; onRetry?: (
           onPress={onRetry}
           style={styles.retryButton}
         >
-          <Text style={[styles.retry, { color: colors.vermilion }]}>Try again</Text>
+          <Text style={[styles.retry, { color: colors.vermilion }]}>Reintentar</Text>
         </Pressable>
       ) : null}
     </View>

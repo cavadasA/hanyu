@@ -4,19 +4,19 @@ import { toUserMessage } from './errors';
 describe('toUserMessage', () => {
   it('asks the user to sign in again on 401', () => {
     expect(toUserMessage({ status: 401, message: 'JWT expired' })).toBe(
-      'Your session expired. Sign in again to continue.'
+      'Tu sesión ha caducado. Vuelve a entrar para continuar.'
     );
   });
 
   it('reports a permission problem on 403', () => {
     expect(toUserMessage({ status: 403, message: 'permission denied' })).toBe(
-      'You do not have access to that data.'
+      'No tienes acceso a esos datos.'
     );
   });
 
   it('reports a connection problem for network failures', () => {
     expect(toUserMessage(new TypeError('Network request failed'))).toBe(
-      'No connection. Check your network and try again.'
+      'Sin conexión. Revisa la red e inténtalo de nuevo.'
     );
   });
 
@@ -27,7 +27,7 @@ describe('toUserMessage', () => {
   });
 
   it('falls back to a generic message for unknown values', () => {
-    expect(toUserMessage(null)).toBe('Something went wrong. Please try again.');
-    expect(toUserMessage({})).toBe('Something went wrong. Please try again.');
+    expect(toUserMessage(null)).toBe('Algo ha fallado. Inténtalo de nuevo.');
+    expect(toUserMessage({})).toBe('Algo ha fallado. Inténtalo de nuevo.');
   });
 });

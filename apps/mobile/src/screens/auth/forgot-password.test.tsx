@@ -28,10 +28,10 @@ describe('ForgotPassword', () => {
     mockSendPasswordReset.mockResolvedValue(undefined);
 
     await render(<ForgotPassword />);
-    await fireEvent.changeText(screen.getByLabelText('Email'), ' learner@example.com ');
-    await fireEvent.press(screen.getByText('Send reset email'));
+    await fireEvent.changeText(screen.getByLabelText('Correo electrónico'), ' learner@example.com ');
+    await fireEvent.press(screen.getByText('Enviar enlace'));
 
     expect(mockSendPasswordReset).toHaveBeenCalledWith('learner@example.com');
-    expect(screen.getByText(/Check your email/)).toBeTruthy();
+    expect(screen.getByText(/Revisa tu correo/)).toBeTruthy();
   });
 });
