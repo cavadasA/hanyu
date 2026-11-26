@@ -13,7 +13,7 @@ export const RECOGNITION_THRESHOLD = 0.16;
 /** Un trazo concreto por encima de esto cuenta como error, aunque el carácter se reconozca. */
 const STROKE_MISTAKE = 0.2;
 
-function resample(stroke: Point[], count = SAMPLES): Point[] {
+export function resample(stroke: Point[], count = SAMPLES): Point[] {
   if (stroke.length === 1) return Array.from({ length: count }, () => stroke[0]);
   const lengths = [0];
   for (let index = 1; index < stroke.length; index += 1) {
