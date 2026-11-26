@@ -98,6 +98,87 @@ async function writeReadingCache(
   }
 }
 
+// Sin red, la lista tardaba 20–25 s en caer a la caché: con el token caducado,
+// getSession reintenta el refresco con backoff (≈25 s) antes de rendirse, y la
+// petición espera a lo mismo. Con copia guardada no se espera más que esto.
+const SCOPE_GRACE_MS = 2_000;
+const NETWORK_GRACE_MS = 3_000;
+const LAST_SCOPE_KEY = `${READING_CACHE_PREFIX}last-scope`;
+
+const TIMED_OUT = Symbol('timed-out');
+
+type Settled<T> = { ok: true; value: T } | { ok: false; error: unknown };
+
+function settle<T>(promise: Promise<T>): Promise<Settled<T>> {
+  return promise.then(value => ({ ok: true as const, value }), error => ({ ok: false as const, error }));
+}
+
+function within<T>(promise: Promise<T>, ms: number): Promise<T | typeof TIMED_OUT> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<typeof TIMED_OUT>(resolve => {
+    timer = setTimeout(() => resolve(TIMED_OUT), ms);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
+/**
+ * El ámbito (usuario) de la caché, sin quedarse colgado: si getSession no
+ * contesta a tiempo, se usa el último usuario que sí contestó, también el de
+ * antes de reiniciar la app.
+ */
+async function resolveReadingCacheScope(
+  client: ReturnType<typeof createSupabaseClient>,
+  storage: ReadingCacheStorage,
+  memory: { last: string | null },
+): Promise<string | null> {
+  const resolved = await within(readingCacheScope(client), SCOPE_GRACE_MS);
+  if (resolved !== TIMED_OUT) {
+    if (resolved && resolved !== memory.last) {
+      memory.last = resolved;
+      await writeRaw(storage, LAST_SCOPE_KEY, resolved);
+    }
+    return resolved;
+  }
+  return memory.last ?? (await readRaw(storage, LAST_SCOPE_KEY));
+}
+
+async function readRaw(storage: ReadingCacheStorage, key: string): Promise<string | null> {
+  if (!storage) return null;
+  try {
+    return (await storage.getItem(key)) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function writeRaw(storage: ReadingCacheStorage, key: string, value: string): Promise<void> {
+  if (!storage) return;
+  try {
+    await storage.setItem(key, value);
+  } catch {
+    // Igual que writeReadingCache.
+  }
+}
+
+/**
+ * La red manda; la caché sólo sustituye a un fallo de red o a una red que no
+ * contesta en NETWORK_GRACE_MS. Sin copia guardada se sigue esperando a la red.
+ */
+async function networkOrCache<T>(request: Promise<T>, readCached: () => Promise<T | null>): Promise<T> {
+  const first = await within(settle(request), NETWORK_GRACE_MS);
+  if (first === TIMED_OUT) {
+    const cached = await readCached();
+    if (cached !== null) return cached;
+  }
+  const outcome = first === TIMED_OUT ? await settle(request) : first;
+  if (outcome.ok) return outcome.value;
+  if (isNetworkError(outcome.error)) {
+    const cached = await readCached();
+    if (cached !== null) return cached;
+  }
+  throw outcome.error;
+}
+
 async function readingCacheScope(client: ReturnType<typeof createSupabaseClient>): Promise<string | null> {
   // Los métodos se llaman sobre `auth`: GoTrueClient usa `this` y, sacados del
   // objeto, lanzan. Eso dejaba la caché sin ámbito y nunca se escribía.
@@ -145,6 +226,8 @@ function offlineDetailFromSummary(summary: any) {
 export function createHanyuData(config: HanyuDataConfig) {
   const client = createSupabaseClient(config);
   const redirectTo = config.passwordResetRedirectTo;
+  const readingStorage = config.readingCache ?? config.storage;
+  const lastScope = { last: null as string | null };
 
   return {
     client,
@@ -237,47 +320,43 @@ export function createHanyuData(config: HanyuDataConfig) {
     },
     readings: {
       getReadings: async (params: Parameters<typeof getReadings>[0] = {}) => {
-        const scope = await readingCacheScope(client);
+        type List = Awaited<ReturnType<typeof getReadings>>;
+        // La petición sale ya; el ámbito se resuelve mientras tanto.
+        const request = getReadings(params, client);
+        const scope = await resolveReadingCacheScope(client, readingStorage, lastScope);
         const cacheKey = scope ? readingCacheKey(scope, 'list', JSON.stringify(params)) : null;
 
-        try {
-          const readings = await getReadings(params, client);
+        // Aunque se sirva la caché, la respuesta que llegue tarde la refresca.
+        const fresh = request.then(async readings => {
           if (cacheKey) {
-            const cache = config.readingCache ?? config.storage;
-            await writeReadingCache(cache, cacheKey, readings);
+            await writeReadingCache(readingStorage, cacheKey, readings);
             await Promise.all(readings.map(reading => {
               const detailKey = readingCacheKey(scope!, 'detail', reading.slug);
               const detail = offlineDetailFromSummary(reading);
-              return detail ? writeReadingCache(cache, detailKey, detail) : Promise.resolve();
+              return detail ? writeReadingCache(readingStorage, detailKey, detail) : Promise.resolve();
             }));
           }
           return readings;
-        } catch (error) {
-          if (isNetworkError(error) && cacheKey) {
-            const cached = await readReadingCache<Awaited<ReturnType<typeof getReadings>>>(config.readingCache ?? config.storage, cacheKey);
-            if (cached !== null) return cached;
-          }
-          throw error;
-        }
+        });
+        fresh.catch(() => undefined);
+        return networkOrCache<List>(fresh, () =>
+          cacheKey ? readReadingCache<List>(readingStorage, cacheKey) : Promise.resolve(null),
+        );
       },
       getReading: async (slug: string) => {
-        const scope = await readingCacheScope(client);
+        type Detail = Awaited<ReturnType<typeof getReading>>;
+        const request = getReading(slug, client);
+        const scope = await resolveReadingCacheScope(client, readingStorage, lastScope);
         const cacheKey = scope ? readingCacheKey(scope, 'detail', slug) : null;
 
-        try {
-          const reading = await getReading(slug, client);
-          if (cacheKey) {
-            await writeReadingCache(config.readingCache ?? config.storage, cacheKey, reading);
-          }
+        const fresh = request.then(async reading => {
+          if (cacheKey) await writeReadingCache(readingStorage, cacheKey, reading);
           return reading;
-        } catch (error) {
-          if (isNetworkError(error) && cacheKey) {
-            const cache = config.readingCache ?? config.storage;
-            const cached = await readReadingCache<Awaited<ReturnType<typeof getReading>>>(cache, cacheKey);
-            if (cached !== null) return cached;
-          }
-          throw error;
-        }
+        });
+        fresh.catch(() => undefined);
+        return networkOrCache<Detail>(fresh, () =>
+          cacheKey ? readReadingCache<Detail>(readingStorage, cacheKey) : Promise.resolve(null),
+        );
       },
       getReadingProgress: (slug: string) => getReadingProgress(slug, client),
       saveReadingProgress: (slug: string, lastSentence: number) => saveReadingProgress(slug, lastSentence, client),

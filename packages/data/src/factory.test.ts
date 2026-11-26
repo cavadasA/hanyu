@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const fakeClient = { auth: {} as Record<string, unknown> };
 
@@ -177,6 +177,92 @@ describe('createHanyuData', () => {
     await expect(data.readings.getReading('reading-1')).resolves.toMatchObject({
       id: 'reading-1',
       sentences: [{ zh: '你好。' }],
+    });
+  });
+
+  // Sin red, la lista tardaba 20–25 s en caer a la caché: con el token caducado,
+  // getSession reintenta el refresco con backoff antes de rendirse, y la petición
+  // espera a lo mismo. Con copia guardada no hay por qué esperar tanto.
+  describe('cuando la red no responde', () => {
+    const never = () => new Promise<never>(() => undefined);
+    const list = [{ id: 'reading-1', slug: 'reading-1', title: 'Una lectura' }];
+    let values: Map<string, string>;
+    let storage: { getItem: any; setItem: any; removeItem: any };
+    let getSession: ReturnType<typeof vi.fn>;
+
+    beforeEach(() => {
+      vi.useFakeTimers();
+      values = new Map();
+      storage = {
+        getItem: vi.fn((key: string) => values.get(key) ?? null),
+        setItem: vi.fn((key: string, value: string) => { values.set(key, value); }),
+        removeItem: vi.fn(),
+      };
+      getSession = vi.fn().mockResolvedValue({ data: { session: { user: { id: 'user-a' } } }, error: null });
+      fakeClient.auth.getSession = getSession;
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+      delete fakeClient.auth.getSession;
+    });
+
+    async function settledWithin(ms: number, promise: Promise<unknown>) {
+      let state: 'pending' | 'resolved' | 'rejected' = 'pending';
+      let value: unknown;
+      promise.then(v => { state = 'resolved'; value = v; }, e => { state = 'rejected'; value = e; });
+      await vi.advanceTimersByTimeAsync(ms);
+      return { state, value };
+    }
+
+    it('con copia guardada, sirve la lista de la caché en pocos segundos', async () => {
+      getReadingsMock.mockResolvedValueOnce(list).mockImplementationOnce(never);
+      const data = createHanyuData({ ...config, storage });
+      await data.readings.getReadings({ level: 2 });
+
+      const result = await settledWithin(5_000, data.readings.getReadings({ level: 2 }));
+      expect(result).toEqual({ state: 'resolved', value: list });
+    });
+
+    it('aunque se cuelgue el refresco de la sesión, usa la caché del último usuario', async () => {
+      getReadingsMock.mockResolvedValueOnce(list).mockImplementationOnce(never);
+      const data = createHanyuData({ ...config, storage });
+      await data.readings.getReadings({ level: 2 });
+      getSession.mockImplementation(never);
+
+      const result = await settledWithin(8_000, data.readings.getReadings({ level: 2 }));
+      expect(result).toEqual({ state: 'resolved', value: list });
+    });
+
+    it('tras reiniciar la app, recuerda el último usuario desde el almacenamiento', async () => {
+      getReadingsMock.mockResolvedValueOnce(list).mockImplementationOnce(never);
+      await createHanyuData({ ...config, storage }).readings.getReadings({ level: 2 });
+      getSession.mockImplementation(never);
+
+      const fresh = createHanyuData({ ...config, storage });
+      const result = await settledWithin(8_000, fresh.readings.getReadings({ level: 2 }));
+      expect(result).toEqual({ state: 'resolved', value: list });
+    });
+
+    it('sin copia guardada, sigue esperando a la red en vez de fallar antes', async () => {
+      let answer: (value: unknown) => void = () => undefined;
+      getReadingsMock.mockImplementationOnce(() => new Promise(resolve => { answer = resolve; }));
+      const data = createHanyuData({ ...config, storage });
+
+      const pending = data.readings.getReadings({ level: 2 });
+      expect((await settledWithin(10_000, pending)).state).toBe('pending');
+      answer(list);
+      await expect(pending).resolves.toEqual(list);
+    });
+
+    it('una lectura abierta antes también sale de la caché sin esperar a la red', async () => {
+      const reading = { id: 'reading-1', sentences: [{ zh: '你好。' }] };
+      getReadingMock.mockResolvedValueOnce(reading).mockImplementationOnce(never);
+      const data = createHanyuData({ ...config, storage });
+      await data.readings.getReading('reading-1');
+
+      const result = await settledWithin(5_000, data.readings.getReading('reading-1'));
+      expect(result).toEqual({ state: 'resolved', value: reading });
     });
   });
 });
