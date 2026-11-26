@@ -5,11 +5,13 @@ import { ProgressScreen } from './ProgressScreen';
 
 const mockGetReport = jest.fn();
 
+const mockListExamAttempts = jest.fn(async (_level: number): Promise<unknown[]> => []);
 jest.mock('../lib/data', () => ({
   getData: () => ({
     stats: {
       getLearningReport: () => mockGetReport(),
     },
+    exam: { listExamAttempts: (level: number) => mockListExamAttempts(level) },
     settings: {
       getSettings: () => Promise.resolve({ request_retention: 0.9 }),
     },
@@ -255,5 +257,20 @@ describe('ProgressScreen', () => {
       expect(screen.getByText('Rendimiento en simulacros')).toBeTruthy();
       expect(screen.getByText(/5 errores en cola de consolidación/)).toBeTruthy();
     });
+  });
+
+  // Arriba decía «Último simulacro: 92 %» y abajo «Aún no has realizado simulacros»: la fila
+  // contaba los ejercicios del simulacro antiguo, retirado en el Plan 12.
+  it('el rendimiento en simulacros sale de los simulacros completos de verdad', async () => {
+    const full = (total_percent: number) => ({ scope: 'full', total_percent, repeated: false, part_scores: {}, section_scores: {} });
+    mockListExamAttempts.mockResolvedValueOnce([full(80), full(92), { ...full(50), scope: 'part' }]);
+    mockGetReport.mockResolvedValue(reportWith({}));
+
+    await renderProgress();
+
+    await waitFor(() => expect(screen.getByText(/86 %/)).toBeTruthy());
+    expect(screen.getByText(/media de 2 simulacros completos/)).toBeTruthy();
+    expect(screen.queryByText('Aún no has realizado simulacros de examen.')).toBeNull();
+    expect(mockListExamAttempts).toHaveBeenCalledWith(2);
   });
 });

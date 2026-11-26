@@ -80,6 +80,24 @@ export function ProgressScreen() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Porcentajes de los simulacros completos (exam_attempt). La fila contaba antes los
+  // ejercicios del simulacro antiguo, retirado en el Plan 12, y decía que no había ninguno.
+  const [fullExamPercents, setFullExamPercents] = useState<number[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    Promise.resolve()
+      .then(() => getData().exam.listExamAttempts(2))
+      .then((attempts) => {
+        if (!cancelled) {
+          setFullExamPercents(attempts.filter((a) => a.scope === 'full').map((a) => a.total_percent));
+        }
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const loadData = useCallback(async () => {
     try {
@@ -150,9 +168,6 @@ export function ProgressScreen() {
     const prodCorrect = prodAttempts.filter((a) => a.correct).length;
     const prodTotal = prodAttempts.length;
 
-    const examAttempts = attempts.filter((a) => a.mode === 'exam');
-    const examCorrect = examAttempts.filter((a) => a.correct).length;
-    const examTotal = examAttempts.length;
 
     const mistakesCount = report.mistakes_count ?? 0;
 
@@ -183,8 +198,6 @@ export function ProgressScreen() {
       dictationTotal,
       prodCorrect,
       prodTotal,
-      examCorrect,
-      examTotal,
       mistakesCount,
       speed,
       totalTokens,
@@ -234,8 +247,6 @@ export function ProgressScreen() {
     dictationTotal,
     prodCorrect,
     prodTotal,
-    examCorrect,
-    examTotal,
     mistakesCount,
     speed,
     totalTokens,
@@ -479,11 +490,13 @@ export function ProgressScreen() {
           <View style={[styles.metricRow, { borderBottomColor: colors.border }]}>
             <View style={styles.metricTextContainer}>
               <Text style={[styles.metricName, { color: colors.text }]}>Rendimiento en simulacros</Text>
-              {examTotal > 0 ? (
+              {fullExamPercents.length > 0 ? (
                 <Text style={[styles.metricValue, { color: colors.text }]}>
-                  {Math.round((examCorrect / examTotal) * 100)} %{' '}
+                  {Math.round(fullExamPercents.reduce((sum, value) => sum + value, 0) / fullExamPercents.length)} %{' '}
                   <Text style={[styles.sampleText, { color: colors.textMuted }]}>
-                    ({examCorrect} de {examTotal} preguntas de examen)
+                    {fullExamPercents.length === 1
+                      ? '(1 simulacro completo)'
+                      : `(media de ${fullExamPercents.length} simulacros completos)`}
                   </Text>
                 </Text>
               ) : (
