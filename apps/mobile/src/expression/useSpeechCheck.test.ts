@@ -166,4 +166,21 @@ describe('useSpeechCheck', () => {
     expect(mockModule.start).not.toHaveBeenCalled();
     expect(result.current.available).toBe(false);
   });
+
+  it('transcribe: solo la transcripción, sin comparar ni grabar (tareas comunicativas habladas)', async () => {
+    const { result } = await ready();
+
+    let transcribing!: Promise<any>;
+    await act(async () => {
+      transcribing = result.current.transcribe();
+    });
+    await waitFor(() => expect(mockModule.start).toHaveBeenCalled());
+    await act(async () => {
+      emit('result', { isFinal: true, results: [{ transcript: '我今天有事，所以不能去。' }] });
+      emit('end');
+    });
+
+    expect(await transcribing).toEqual({ status: 'transcribed', transcript: '我今天有事，所以不能去。' });
+    expect(mockModule.start).toHaveBeenCalledWith(expect.objectContaining({ lang: 'zh-CN', addsPunctuation: true, recordingOptions: undefined }));
+  });
 });

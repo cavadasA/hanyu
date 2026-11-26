@@ -2,7 +2,9 @@
 // Ninguna clave de proveedor llega al cliente. Si una función no está configurada, no
 // responde o devuelve algo que no es lo pedido, el resultado es «no disponible» o «sin
 // corregir»: nunca se inventa una nota.
+import type { CommunicativeContext, CommunicativeTask } from '@hanyu/domain';
 import type { HanyuClient } from '../client';
+import { createRepositoryError } from './shared';
 
 export interface PronunciationAssessment {
   accuracy: number;
@@ -93,4 +95,53 @@ export async function gradeCommunicative(
     return { status: 'graded', passed: data.passed, intents: data.intents, feedback_es: data.feedback_es };
   }
   return { status: 'ungraded' };
+}
+
+const PAGE = 1000;
+
+/** Tareas comunicativas hasta un nivel HSK, en orden de catálogo. */
+export async function getCommunicativeTasks(maxLevel: number, client: HanyuClient): Promise<CommunicativeTask[]> {
+  const { data, error } = await (client.from('communicative_task' as any) as any)
+    .select('slug, hsk_level, situation_es, mode, intent, required_markers, min_chars, max_chars, model_answer')
+    .lte('hsk_level', maxLevel)
+    .order('slug');
+  if (error) throw createRepositoryError(error, 'Failed to load communicative tasks');
+  return (data ?? []) as CommunicativeTask[];
+}
+
+/**
+ * Lo que necesitan las reglas deterministas (checkAnswerRules) en el cliente: el
+ * vocabulario hasta el nivel, con las formas alternativas del sílabo, y los marcadores de
+ * los puntos gramaticales hasta ese nivel.
+ */
+export async function getCommunicativeContext(level: number, client: HanyuClient): Promise<CommunicativeContext> {
+  const dictionary: CommunicativeContext['dictionary'] = [];
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await (client.from('words') as any)
+      .select('hanzi, hsk_level, variants')
+      .lte('hsk_level', level)
+      .order('id')
+      .range(from, from + PAGE - 1);
+    if (error) throw createRepositoryError(error, 'Failed to load the dictionary');
+    const rows = (data ?? []) as Array<{ hanzi: string; hsk_level: number; variants: string[] | null }>;
+    for (const row of rows) {
+      dictionary.push({ hanzi: row.hanzi, hsk_level: row.hsk_level });
+      for (const variant of row.variants ?? []) {
+        if (variant !== row.hanzi) dictionary.push({ hanzi: variant, hsk_level: row.hsk_level });
+      }
+    }
+    if (rows.length < PAGE) break;
+  }
+
+  const { data: points, error } = await (client.from('grammar_points') as any)
+    .select('hsk_level, code, markers')
+    .lte('hsk_level', level);
+  if (error) throw createRepositoryError(error, 'Failed to load grammar markers');
+
+  return {
+    dictionary,
+    grammar_points: ((points ?? []) as Array<{ hsk_level: number; code: string | null; markers: string[] | null }>)
+      .filter(point => point.code)
+      .map(point => ({ hsk_level: point.hsk_level, code: point.code as string, markers: point.markers ?? [] })),
+  };
 }

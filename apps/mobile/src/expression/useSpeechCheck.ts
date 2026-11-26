@@ -20,6 +20,16 @@ export type SpeechCheckOutcome =
   | { status: 'unavailable'; reason: 'denied' | 'unsupported' }
   | { status: 'error'; message: string };
 
+type RecognitionOutcome =
+  | { status: 'transcribed'; transcript: string; audioUri: string | null }
+  | { status: 'unavailable'; reason: 'denied' | 'unsupported' }
+  | { status: 'error'; message: string };
+
+export type TranscribeOutcome =
+  | { status: 'transcribed'; transcript: string }
+  | { status: 'unavailable'; reason: 'denied' | 'unsupported' }
+  | { status: 'error'; message: string };
+
 export interface SpeechTarget {
   hanzi: string;
   pinyin: string;
@@ -66,7 +76,11 @@ export function useSpeechCheck() {
     };
   }, []);
 
-  const listen = useCallback(async (target: SpeechTarget): Promise<SpeechCheckOutcome> => {
+  const recognize = useCallback(async (options: {
+    contextualStrings: string[];
+    punctuation: boolean;
+    record: boolean;
+  }): Promise<RecognitionOutcome> => {
     if (statusRef.current === 'unsupported') return { status: 'unavailable', reason: 'unsupported' };
     if (statusRef.current === 'denied') return { status: 'unavailable', reason: 'denied' };
     if (statusRef.current !== 'ready') {
@@ -78,7 +92,7 @@ export function useSpeechCheck() {
       update('ready');
     }
 
-    return new Promise<SpeechCheckOutcome>((resolve) => {
+    return new Promise<RecognitionOutcome>((resolve) => {
       let transcript = '';
       let audioUri: string | null = null;
       let failure: string | null = null;
@@ -102,27 +116,20 @@ export function useSpeechCheck() {
           for (const subscription of subscriptions) subscription.remove();
           if (failure === 'denied') return resolve({ status: 'unavailable', reason: 'denied' });
           if (failure) return resolve({ status: 'error', message: failure });
-          const heard = transcriptToPinyin(transcript);
-          resolve({
-            status: 'heard',
-            transcript,
-            heard,
-            comparison: comparePinyin(target.pinyin, heard, { targetWord: target.pinyin }),
-            audioUri,
-          });
+          resolve({ status: 'transcribed', transcript, audioUri });
         }),
       ];
 
-      const recording = ExpoSpeechRecognitionModule.supportsRecording();
+      const recording = options.record && ExpoSpeechRecognitionModule.supportsRecording();
       ExpoSpeechRecognitionModule.start({
         lang: 'zh-CN',
         interimResults: false,
         continuous: false,
         maxAlternatives: 1,
         requiresOnDeviceRecognition: ExpoSpeechRecognitionModule.supportsOnDeviceRecognition(),
-        addsPunctuation: false,
-        contextualStrings: [target.hanzi],
-        iosTaskHint: 'confirmation',
+        addsPunctuation: options.punctuation,
+        contextualStrings: options.contextualStrings,
+        iosTaskHint: options.punctuation ? 'dictation' : 'confirmation',
         // El audio, en el formato que acepta la evaluación fina (pronunciation-assess).
         recordingOptions: recording
           ? { persist: true, outputSampleRate: 16000, outputEncoding: 'pcmFormatInt16' }
@@ -131,12 +138,33 @@ export function useSpeechCheck() {
     });
   }, []);
 
+  /** Pronunciación: ¿se entendió la palabra o frase objetivo? */
+  const listen = useCallback(async (target: SpeechTarget): Promise<SpeechCheckOutcome> => {
+    const outcome = await recognize({ contextualStrings: [target.hanzi], punctuation: false, record: true });
+    if (outcome.status !== 'transcribed') return outcome;
+    const heard = transcriptToPinyin(outcome.transcript);
+    return {
+      status: 'heard',
+      transcript: outcome.transcript,
+      heard,
+      comparison: comparePinyin(target.pinyin, heard, { targetWord: target.pinyin }),
+      audioUri: outcome.audioUri,
+    };
+  }, [recognize]);
+
+  /** Tareas comunicativas habladas: solo la transcripción, que luego se corrige como texto. */
+  const transcribe = useCallback(async (): Promise<TranscribeOutcome> => {
+    const outcome = await recognize({ contextualStrings: [], punctuation: true, record: false });
+    return outcome.status === 'transcribed' ? { status: 'transcribed', transcript: outcome.transcript } : outcome;
+  }, [recognize]);
+
   const stop = useCallback(() => ExpoSpeechRecognitionModule.stop(), []);
 
   return {
     status,
     available: status === 'ready' || status === 'needs_permission',
     listen,
+    transcribe,
     stop,
   };
 }
