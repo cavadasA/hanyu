@@ -260,7 +260,9 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
   const answered = (slug: string, index: number) => picks[slug]?.[index] !== undefined && picks[slug]?.[index] !== null;
 
   return (
-    <Screen scrollEnabled={!drawing}>
+    // Cada fase con su propio desplazamiento: si no, 阅读 y 书写 se abrían a la
+    // altura donde había quedado la fase anterior.
+    <Screen key={timed} scrollEnabled={!drawing}>
       <View style={styles.gap}>
         <View style={styles.header}>
           <Text style={[styles.title, { color: colors.text }]}>{TITLES[timed]}</Text>

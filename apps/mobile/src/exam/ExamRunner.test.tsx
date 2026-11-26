@@ -259,6 +259,21 @@ describe('ExamRunner', () => {
     });
   });
 
+  // 阅读 y 书写 se abrían a mitad de página, a la altura donde quedó la fase anterior.
+  it('cada fase empieza con la página arriba, en un desplazamiento nuevo', async () => {
+    await start();
+    await advance(35_000 + 3 * 60_000);
+    expect(screen.getByText('阅读')).toBeTruthy();
+    const reading = screen.getByTestId('screen-scroll');
+    await fireEvent.scroll(reading, { nativeEvent: { contentOffset: { x: 0, y: 1200 } } });
+
+    await advance(25 * 60_000);
+    expect(screen.getByText('书写')).toBeTruthy();
+    const writing = screen.getByTestId('screen-scroll');
+    expect(writing).not.toBe(reading);
+    expect(writing.props.contentOffset ?? { x: 0, y: 0 }).toEqual({ x: 0, y: 0 });
+  });
+
   it('durante el examen no se reprograma ninguna tarjeta', async () => {
     await start();
     await fireEvent.press(screen.getByLabelText('Pregunta 1, imagen B'));
