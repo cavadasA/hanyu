@@ -20,6 +20,28 @@ const ASSESSMENT = {
   syllables: [{ syllable: '你', accuracy: 92 }, { syllable: '好', accuracy: 84 }],
 };
 
+/**
+ * En React Native la respuesta del fetch del cliente no es instancia del
+ * `Response` global: `instanceof` falla aunque tenga status y json().
+ */
+function foreignHttpError(status: number, body: unknown) {
+  return Object.assign(new Error(`HTTP ${status}`), {
+    name: 'FunctionsHttpError',
+    context: { status, ok: false, json: async () => body },
+  });
+}
+
+describe('errores de Edge Functions con una Response de otro realm', () => {
+  it('lee el motivo aunque context no sea instancia del Response global', async () => {
+    const outcome = await gradeCommunicative(
+      { task_slug: 't1', answer: '我家旁边有一个商店。' },
+      client({ error: foreignHttpError(503, { reason: 'not_configured' }) }),
+    );
+
+    expect(outcome).toEqual({ status: 'unavailable', reason: 'not_configured' });
+  });
+});
+
 describe('assessPronunciation', () => {
   it('200 → puntuación por sílaba', async () => {
     const fake = client({ data: ASSESSMENT });

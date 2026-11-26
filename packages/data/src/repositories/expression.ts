@@ -35,7 +35,12 @@ async function invoke(client: HanyuClient, name: string, body: unknown): Promise
   try {
     const { data, error } = await functions.invoke(name, { body });
     if (!error) return { data };
-    const response: Response | undefined = error.context instanceof Response ? error.context : undefined;
+    // Se reconoce por su forma y no con instanceof: en React Native la Response
+    // del fetch del cliente no es instancia del Response global, y el motivo
+    // (p. ej. not_configured) se perdía como si fuera un fallo de red.
+    const context = error.context;
+    const response: Response | undefined =
+      context && typeof context.status === 'number' && typeof context.json === 'function' ? context : undefined;
     if (!response) return { failure: { status: null, body: null } };
     const payload = await response.json().catch(() => null);
     return { failure: { status: response.status, body: payload } };
