@@ -293,11 +293,13 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 >
 > **Dos cosas que no se pueden hacer bien y no se fingen.** La desambiguación de sentidos pide análisis sintáctico, y adivinar por frecuencia fallaría en silencio justo en las palabras ambiguas: se muestran **todas las acepciones**, con la del nivel primero. Y el karaoke por palabra necesita marcas de tiempo que `expo-speech` no da: se resalta **la frase que suena**, reproduciendo frase a frase, así que la sincronización es exacta por construcción.
 
+> **Cerrado por el Plan 14 (26 de noviembre de 2026): la acepción.** Las lecturas son contenido de build, así que la acepción no hace falta adivinarla en el móvil. Se resuelve al escribir la lectura y se valida en la build. El pinyin de la frase decide la mayoría de los casos, y una anotación explícita (`senses`) cubre el resto: 点, 会, 花, 站 y 过去. De los 20 hanzi con varias entradas, 10 eran duplicados exactos del sílabo y cuentan como una sola. La acepción resuelta viaja en el seed (`sentences[i].senses`), la Edge Function `tokenize-reading` la aplica, y la ficha la muestra primero, con las demás plegadas. La build falla con `sense_unresolved`, `sense_conflict` o `sense_above_level`. Además, el vocabulario se valida con todo el diccionario HSK 1–3, como lo tokeniza el móvil, así que una palabra HSK 3 ya no se cuela en un texto HSK 2 (`word_above_level`, común a lecturas, gramática y examen). El karaoke por palabra sigue como se describe arriba.
+
 - Traducción por oración y notas gramaticales contextualizadas.
 - Velocidad, seek por palabra y resaltado tipo karaoke sincronizado con el audio.
 - Bookmarks, progreso, historial "leído", series y temas.
 - Porcentaje de vocabulario conocido antes de abrir; recomendación de la siguiente lectura (92–97 % de tokens conocidos, 3–8 objetivos nuevos, ajustable por modo).
-- Tokenización con desambiguación de sentido y pronunciación; hoy toma la primera coincidencia de igual longitud.
+- Tokenización con desambiguación de sentido y pronunciación: resuelta en la build desde el Plan 14 (pinyin de la frase + anotación donde no basta).
 - Distinguir visualmente tokens conocidos, desconocidos y objetivo; hoy se pintan todos igual.
 - Arreglar el pinyin duplicado: bloque global más pinyin bajo cada token al activarlo.
 - Preguntas con evidencia y explicación de por qué falla cada distractor; hoy solo `Score x/y`.
@@ -317,6 +319,8 @@ Añadido además `.nvmrc` con la versión de Node en uso: la deriva de ABI ocurr
 > **Al verificar el estado apareció el único hueco de recogida que quedaba:** `word_looked_up` estaba en el enum desde el Plan 1C y **no lo emitía nadie**, así que «consultas por 100 tokens» no existía. Va como Tarea 1, junto con `reading_progress.pinyin_shown`: sin esa columna, «velocidad de lectura sin pinyin» promedia leer hanzi con leer una transcripción y no mide ninguna de las dos.
 >
 > De las once métricas del §12, **nueve salen enteras, una necesitaba ese evento, y una no se puede medir**: la comprensión inferencial no existe porque el validador del Plan 7 exige evidencia textual en toda pregunta, lo que las hace todas literales por construcción. La pantalla lo dice en vez de mostrar un hueco.
+
+> **Cerrado por el Plan 14 (26 de noviembre de 2026): la comprensión inferencial se mide.** Cada lectura tiene, al final, una pregunta inferencial. Su respuesta no está escrita en el texto y se deduce combinando al menos dos frases. La valida la build (`inference_needs_two`, `inference_is_literal`, `rationale_missing`, `inference_not_last` y, con `--complete`, `no_inferential`), y su explicación se muestra después de responder. `reading_attempts` guarda `inferential_score` e `inferential_total`, y Progreso muestra la comprensión literal y la inferencial por separado, o «Sin datos todavía» con menos de 5 respuestas.
 >
 > Regla que atraviesa el plan: **ninguna métrica sin datos muestra un cero**. Cero repasos no es cero retención, y un 0 % se lee como «lo haces mal» en vez de como «no lo mido».
 
@@ -337,7 +341,7 @@ Tres huecos quedaron abiertos tras ejecutar los planes 6 y 7. Cada uno tiene su 
 | 159 de 165 puntos gramaticales sin explicación ni ejemplos | `docs/superpowers/plans/2026-11-25-plan-11-gramatica-con-contenido.md` |
 | Simulacro con 2 de 8 partes, y esas 2 sin el formato real | `docs/superpowers/plans/2026-11-25-plan-12-simulacro-hsk2-completo.md` |
 | Expresión: sin pronunciación, escritura de caracteres ni tareas comunicativas (Plan 6) | `docs/superpowers/plans/2026-11-25-plan-13-expresion.md` |
-| Límites aceptados en 8 y 9: el lector muestra todas las acepciones; la comprensión inferencial no se mide | `docs/superpowers/plans/2026-11-25-plan-14-acepcion-e-inferencia.md` |
+| ~~Límites aceptados en 8 y 9: el lector muestra todas las acepciones; la comprensión inferencial no se mide~~ Cerrado (Plan 14) | `docs/superpowers/plans/2026-11-25-plan-14-acepcion-e-inferencia.md` |
 
 El Plan 12 depende del pipeline de medios y de la síntesis de audio del Plan 10; el 11 es independiente. El 14 necesita las 48 lecturas del 10; el 13 conviene después de 10 y 12, porque toca la cola y el renderizador de ejercicios.
 
