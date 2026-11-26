@@ -1,4 +1,4 @@
-// Sube a Storage los clips del repositorio que aún no están. Idempotente por
+// Sube a Storage los clips e imágenes del repositorio que aún no están. Idempotente por
 // hash: el nombre del objeto es el sha256 del fichero, así que si ya existe es
 // el mismo. Nunca borra: un objeto que el repositorio ya no usa no estorba, y
 // una versión anterior de la app puede seguir pidiéndolo.
@@ -6,7 +6,7 @@
 // Uso (CI): SUPABASE_URL=… SUPABASE_SERVICE_ROLE_KEY=… node scripts/sync-media.js [--dry-run]
 // Sin dependencias de npm: la CI lo ejecuta sin `npm ci`.
 import { readFileSync } from 'node:fs';
-import { collectMediaFiles } from './lib/media.js';
+import { collectRepoMediaFiles } from './lib/media.js';
 
 const BUCKET = 'media';
 const PAGE = 1000;
@@ -72,7 +72,7 @@ export function createStorageRestClient({ url, serviceKey, fetch = globalThis.fe
 
 export async function syncMedia({
   client,
-  files = collectMediaFiles(),
+  files = collectRepoMediaFiles(),
   readBytes = file => readFileSync(file),
   dryRun = false,
 }) {

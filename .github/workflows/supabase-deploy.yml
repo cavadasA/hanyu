@@ -8,6 +8,7 @@ on:
     paths:
       - 'supabase/**'
       - 'content/audio/**'
+      - 'content/images/**'
       - 'scripts/sync-media.js'
       - 'scripts/lib/media.js'
       - '.github/workflows/supabase-deploy.yml'

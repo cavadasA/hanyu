@@ -1,4 +1,9 @@
+import { createHash } from 'node:crypto';
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { collectImageFiles, collectRepoMediaFiles } from './lib/media.js';
 import { createStorageRestClient, syncMedia } from './sync-media.js';
 
 function fakeStorage(initial = []) {
@@ -75,5 +80,34 @@ describe('sync-media', () => {
     expect(upload.url).toBe('https://p.supabase.co/storage/v1/object/media/aaa.m4a');
     expect(upload.init.headers['x-upsert']).toBe('false');
     expect(upload.init.headers['cache-control']).toContain('immutable');
+  });
+
+  it('collectImageFiles da la ruta de Storage de cada imagen declarada que existe', () => {
+    const imagesDir = mkdtempSync(join(tmpdir(), 'hanyu-images-'));
+    const dir = join(imagesDir, 'exam', 'hsk2', 'A');
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, 'apple.webp'), 'manzana');
+    writeFileSync(join(dir, 'manifest.json'), JSON.stringify({
+      owner: 'exam/hsk2/A',
+      images: [{ key: 'apple', file: 'apple.webp' }, { key: 'ball', file: 'ball.webp' }],
+    }));
+    const sha = createHash('sha256').update('manzana').digest('hex');
+
+    expect(collectImageFiles(imagesDir)).toEqual([{
+      owner: 'exam/hsk2/A',
+      key: 'apple',
+      file: join(dir, 'apple.webp'),
+      storagePath: `media/${sha}.webp`,
+      contentType: 'image/webp',
+    }]);
+  });
+
+  it('el conjunto por defecto incluye cada imagen que sirven las formas del simulacro', () => {
+    const forms = JSON.parse(readFileSync(new URL('../server/db/seeds/exam-forms.json', import.meta.url), 'utf8'));
+    const served = new Set(forms.flatMap(form => Object.values(form.media.images).map(image => image.path)));
+    const synced = new Set(collectRepoMediaFiles().map(file => file.storagePath));
+
+    expect(served.size).toBeGreaterThan(0);
+    expect([...served].filter(path => !synced.has(path))).toEqual([]);
   });
 });

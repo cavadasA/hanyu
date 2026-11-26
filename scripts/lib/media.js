@@ -10,12 +10,20 @@ import { fileURLToPath } from 'node:url';
 const rootDir = dirname(dirname(dirname(fileURLToPath(import.meta.url))));
 export const defaultContentDir = join(rootDir, 'content', 'audio');
 export const defaultIndexFile = join(rootDir, 'server', 'db', 'seeds', 'media-index.json');
+export const defaultImagesDir = join(rootDir, 'content', 'images');
 
 const CONTENT_TYPES = { m4a: 'audio/mp4', mp3: 'audio/mpeg' };
+const IMAGE_CONTENT_TYPES = { webp: 'image/webp', png: 'image/png', jpg: 'image/jpeg' };
 
 export function contentTypeOf(file) {
   const type = CONTENT_TYPES[extname(file).slice(1)];
   if (!type) throw new Error(`Formato de audio no admitido: ${file}`);
+  return type;
+}
+
+function imageContentTypeOf(file) {
+  const type = IMAGE_CONTENT_TYPES[extname(file).slice(1)];
+  if (!type) throw new Error(`Formato de imagen no admitido: ${file}`);
   return type;
 }
 
@@ -73,4 +81,30 @@ export function collectMediaFiles(contentDir = defaultContentDir) {
         };
       }),
   );
+}
+
+/**
+ * Cada imagen declarada bajo `content/images/` (p. ej. las del simulacro) con su
+ * fichero local y su ruta en Storage: la misma que emite build-exam.
+ */
+export function collectImageFiles(imagesDir = defaultImagesDir) {
+  return findManifests(imagesDir)
+    .filter(({ manifest }) => Array.isArray(manifest.images))
+    .flatMap(({ owner, dir, manifest }) => manifest.images
+      .filter(image => existsSync(join(dir, image.file)))
+      .map(image => {
+        const file = join(dir, image.file);
+        return {
+          owner,
+          key: image.key,
+          file,
+          storagePath: storagePathFor(fileSha256(file), image.file),
+          contentType: imageContentTypeOf(image.file),
+        };
+      }));
+}
+
+/** Todo lo que el repositorio publica en Storage: audio e imágenes. */
+export function collectRepoMediaFiles() {
+  return [...collectMediaFiles(), ...collectImageFiles()];
 }
