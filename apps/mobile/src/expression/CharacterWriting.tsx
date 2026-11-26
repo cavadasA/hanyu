@@ -47,6 +47,11 @@ interface CharacterWritingProps {
   /** guided y quiz: el carácter no tiene datos de trazos y no se puede practicar. */
   onContentError?: (error: { kind: 'missing_strokes'; hanzi: string }) => void;
   size?: number;
+  /**
+   * exam: avisa cuando un dedo empieza y deja de tocar el lienzo, para que la pantalla
+   * deje de desplazarse mientras se dibuja (si no, el ScrollView se queda el trazo).
+   */
+  onDrawingChange?: (drawing: boolean) => void;
 }
 
 export function hasWritingStrokes(hanzi: string): boolean {
@@ -120,7 +125,7 @@ export function CharacterWriting(props: CharacterWritingProps) {
   return <TraceWriting {...props} mode={props.mode} />;
 }
 
-function ExamWriting({ onResult, size = 260 }: CharacterWritingProps) {
+function ExamWriting({ onResult, onDrawingChange, size = 260 }: CharacterWritingProps) {
   const { colors } = useTheme();
   const webView = useRef<WebView>(null);
   const [strokes, setStrokes] = useState<Point[][]>([]);
@@ -148,7 +153,13 @@ function ExamWriting({ onResult, size = 260 }: CharacterWritingProps) {
 
   return (
     <View style={styles.wrap}>
-      <View style={[styles.canvas, { width: size, height: size, borderColor: colors.border, backgroundColor: colors.surface }]}>
+      <View
+        testID="exam-writing-canvas"
+        onTouchStart={() => onDrawingChange?.(true)}
+        onTouchEnd={() => onDrawingChange?.(false)}
+        onTouchCancel={() => onDrawingChange?.(false)}
+        style={[styles.canvas, { width: size, height: size, borderColor: colors.border, backgroundColor: colors.surface }]}
+      >
         <WebView
           ref={webView}
           originWhitelist={['*']}

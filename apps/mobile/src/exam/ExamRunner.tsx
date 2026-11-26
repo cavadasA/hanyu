@@ -58,6 +58,8 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
   const [picks, setPicks] = useState<Picks>({});
   const [attempt, setAttempt] = useState<ExamAttempt | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Un dedo sobre el lienzo de 书写 2: la página no se desplaza hasta que se levanta.
+  const [drawing, setDrawing] = useState(false);
 
   const urls = useMemo(() => (form ? mediaUrls(form) : null), [form]);
   const download = useExamDownload(urls);
@@ -211,7 +213,7 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
   const answered = (slug: string, index: number) => picks[slug]?.[index] !== undefined && picks[slug]?.[index] !== null;
 
   return (
-    <Screen>
+    <Screen scrollEnabled={!drawing}>
       <View style={styles.gap}>
         <View style={styles.header}>
           <Text style={[styles.title, { color: colors.text }]}>{TITLES[timed]}</Text>
@@ -257,7 +259,14 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
               group.part === 'W1' ? (
                 <BankGroup key={group.slug} group={group} characters={form.media.characters} numbers={numbers} picks={picks} onPick={onPick} />
               ) : (
-                <HandwriteBlank key={group.slug} group={group as Extract<typeof group, { part: 'W2' }>} numbers={numbers} picks={picks} onPick={onPick} />
+                <HandwriteBlank
+                  key={group.slug}
+                  group={group as Extract<typeof group, { part: 'W2' }>}
+                  numbers={numbers}
+                  picks={picks}
+                  onPick={onPick}
+                  onDrawingChange={setDrawing}
+                />
               ),
             )
           : null}

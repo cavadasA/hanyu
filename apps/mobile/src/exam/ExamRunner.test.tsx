@@ -171,6 +171,28 @@ describe('ExamRunner', () => {
     alert.mockRestore();
   });
 
+  // En 书写 2 la página tiene que poder desplazarse entre preguntas, pero no mientras se
+  // dibuja: el ScrollView se quedaba el gesto, el trazo se cortaba y el carácter salía
+  // aplastado e irreconocible.
+  it('mientras se dibuja en 书写 2 la página no se desplaza', async () => {
+    await start();
+    await advance(35_000 + (3 + 25) * 60_000);
+    expect(screen.getByText('书写')).toBeTruthy();
+    const page = screen.getByTestId('screen-scroll');
+    const canvas = screen.getByTestId('exam-writing-canvas');
+    expect(page.props.scrollEnabled).toBe(true);
+
+    await fireEvent(canvas, 'touchStart');
+    expect(screen.getByTestId('screen-scroll').props.scrollEnabled).toBe(false);
+
+    await fireEvent(canvas, 'touchEnd');
+    expect(screen.getByTestId('screen-scroll').props.scrollEnabled).toBe(true);
+
+    await fireEvent(canvas, 'touchStart');
+    await fireEvent(canvas, 'touchCancel');
+    expect(screen.getByTestId('screen-scroll').props.scrollEnabled).toBe(true);
+  });
+
   it('durante el examen no se reprograma ninguna tarjeta', async () => {
     await start();
     await fireEvent.press(screen.getByLabelText('Pregunta 1, imagen B'));

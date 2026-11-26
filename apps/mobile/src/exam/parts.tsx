@@ -283,7 +283,13 @@ export function BankGroup({ group, numbers, picks, onPick, characters }: GroupPr
 }
 
 /** W2: frase con pinyin completo y un hueco; el carácter se escribe a mano. */
-export function HandwriteBlank({ group, numbers, picks, onPick }: GroupProps<'W2'>) {
+export function HandwriteBlank({
+  group,
+  numbers,
+  picks,
+  onPick,
+  onDrawingChange,
+}: GroupProps<'W2'> & { onDrawingChange?: (drawing: boolean) => void }) {
   const { colors } = useTheme();
   return (
     <View style={styles.group}>
@@ -299,7 +305,12 @@ export function HandwriteBlank({ group, numbers, picks, onPick }: GroupProps<'W2
             <Text style={[styles.pinyin, { color: colors.textMuted }]}>
               {typeof written === 'string' ? `Escrito: ${written}` : 'Sin escribir'}
             </Text>
-            <CharacterWriting mode="exam" size={200} onResult={result => onPick(group.slug, index, result.recognized)} />
+            <CharacterWriting
+              mode="exam"
+              size={200}
+              onDrawingChange={onDrawingChange}
+              onResult={result => onPick(group.slug, index, result.recognized)}
+            />
           </View>
         );
       })}
