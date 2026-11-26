@@ -411,7 +411,15 @@ export default function TodayScreen() {
     >
       <View style={styles.header}>
         <View style={styles.headerText}>
-          <Text style={[styles.heading, { color: colors.text }]}>{dateLabel()}</Text>
+          {/* En español la fecha es larga («Miércoles, 30 de septiembre»): encoge en vez de empujar la etiqueta de nivel fuera de la pantalla. */}
+          <Text
+            style={[styles.heading, { color: colors.text }]}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.7}
+          >
+            {dateLabel()}
+          </Text>
         </View>
         {today ? (
           <Badge label={`HSK${today.profile.current_level ?? 2}`} />
@@ -613,7 +621,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: tokens.spacing.md,
   },
-  headerText: { gap: tokens.spacing.xs },
+  headerText: { flex: 1, gap: tokens.spacing.xs },
   heading: { fontSize: tokens.fontSize.xl, fontWeight: '700' },
 
   hero: {
