@@ -12,3 +12,6 @@ supabase/.temp/
 deno.lock
 /data/*
 !/data/sources.json
+
+# Credenciales del usuario de prueba del Supabase local
+supabase/seed-test-user.md
