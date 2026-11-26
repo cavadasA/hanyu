@@ -84,6 +84,18 @@ describe('ExercisesScreen', () => {
     expect(screen.queryByText('HSK 1')).toBeNull();
   });
 
+  // Ejercicios decía «Unidad activa: Repaso HSK 1» mientras Hoy decía 方位名词.
+  it('si la unidad aún no tiene ejercicios propios, lo dice y ofrece el repaso general', async () => {
+    mockBuildExerciseSession.mockResolvedValue({
+      unit_title: '方位名词', review_fallback: true, hsk_level: 1, exercises: [exercise('e1', 'multiple_choice')], length: 1,
+    });
+
+    await renderExercises();
+
+    expect(screen.getByText('方位名词')).toBeTruthy();
+    expect(screen.getByText('Todavía no tiene ejercicios propios: repaso general de HSK 1')).toBeTruthy();
+  });
+
   it('ordena los ejercicios de discriminación a producción', async () => {
     mockBuildExerciseSession.mockResolvedValue({
       unit_title: '离合词',

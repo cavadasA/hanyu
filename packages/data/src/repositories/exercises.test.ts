@@ -106,6 +106,22 @@ describe('exercises repository', () => {
     });
   });
 
+  it('distingue el repaso general de la unidad de sus ejercicios propios', async () => {
+    const client = clientFor({});
+    client.rpc.mockResolvedValueOnce({
+      data: { unit_code: null, unit_title: '方位名词', review_fallback: true, hsk_level: 1, length: 1, exercises: [reorderRow] },
+      error: null,
+    });
+    const fallback = await buildExerciseSession(null, 3, client);
+    expect(fallback).toMatchObject({ unit_title: '方位名词', review_fallback: true, hsk_level: 1 });
+
+    client.rpc.mockResolvedValueOnce({
+      data: { unit_code: '2.2.2', unit_title: '离合词', length: 1, exercises: [reorderRow] },
+      error: null,
+    });
+    expect((await buildExerciseSession('2.2.2', 3, client)).review_fallback).toBe(false);
+  });
+
   it('checkExercise marca correcto un matching completo y bien emparejado', async () => {
     const client = clientFor({
       generated_exercises: { data: matchingRow, error: null },

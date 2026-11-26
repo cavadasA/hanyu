@@ -62,6 +62,11 @@ export function ExercisesScreen() {
         <Card>
           <Text style={[styles.unitLabel, { color: colors.textMuted }]}>Unidad activa</Text>
           <Text style={[styles.unitTitle, { color: colors.text }]}>{session.unit.unit_title}</Text>
+          {session.unit.review_fallback ? (
+            <Text style={[styles.unitMeta, { color: colors.textMuted }]}>
+              {`Todavía no tiene ejercicios propios: repaso general de HSK ${session.unit.hsk_level}`}
+            </Text>
+          ) : null}
           <Text style={[styles.unitMeta, { color: colors.textMuted }]}>
             {`${session.exercises.length} ejercicios, de reconocer a producir`}
           </Text>

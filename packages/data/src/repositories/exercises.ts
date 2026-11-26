@@ -107,6 +107,7 @@ function normalizeExerciseSession(payload: any): ExerciseSession {
   return {
     unit_code: session?.unit_code ? String(session.unit_code) : null,
     unit_title: String(session?.unit_title ?? 'Unidad activa'),
+    review_fallback: session?.review_fallback === true,
     hsk_level: Number(session?.hsk_level ?? 2) as HskLevel,
     exercises,
     length: Number(session?.length ?? exercises.length),

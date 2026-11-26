@@ -148,6 +148,8 @@ export interface Exercise {
 export interface ExerciseSession {
   unit_code: string | null;
   unit_title: string;
+  /** La unidad aún no tiene ejercicios propios: es un repaso general de su nivel. */
+  review_fallback: boolean;
   hsk_level: HskLevel;
   exercises: Exercise[];
   length: number;
