@@ -99,10 +99,12 @@ async function writeReadingCache(
 }
 
 async function readingCacheScope(client: ReturnType<typeof createSupabaseClient>): Promise<string | null> {
-  const getSession = (client as any).auth?.getSession;
-  if (typeof getSession === 'function') {
+  // Los métodos se llaman sobre `auth`: GoTrueClient usa `this` y, sacados del
+  // objeto, lanzan. Eso dejaba la caché sin ámbito y nunca se escribía.
+  const auth = (client as any).auth;
+  if (typeof auth?.getSession === 'function') {
     try {
-      const { data, error } = await getSession();
+      const { data, error } = await auth.getSession();
       if (data?.session?.user?.id) return String(data.session.user.id);
       if (error) return null;
       return 'anonymous';
@@ -111,11 +113,10 @@ async function readingCacheScope(client: ReturnType<typeof createSupabaseClient>
     }
   }
 
-  const getUser = (client as any).auth?.getUser;
-  if (typeof getUser !== 'function') return 'anonymous';
+  if (typeof auth?.getUser !== 'function') return 'anonymous';
 
   try {
-    const { data, error } = await getUser();
+    const { data, error } = await auth.getUser();
     if (error) return null;
     return data?.user?.id ? String(data.user.id) : 'anonymous';
   } catch {

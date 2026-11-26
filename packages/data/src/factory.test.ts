@@ -94,6 +94,36 @@ describe('createHanyuData', () => {
     expect(getReadingMock).toHaveBeenCalledTimes(2);
   });
 
+  // GoTrueClient.getSession usa `this`: sacarla del objeto y llamarla suelta
+  // lanzaba, la caché se quedaba sin ámbito de usuario y nunca se escribía.
+  it('cachea con el cliente de auth real, cuyos métodos dependen de this', async () => {
+    class AuthWithThis {
+      private readonly userId = 'user-a';
+      async getSession() {
+        return { data: { session: { user: { id: this.userId } } }, error: null };
+      }
+    }
+    const originalAuth = fakeClient.auth;
+    fakeClient.auth = new AuthWithThis() as never;
+    const values = new Map<string, string>();
+    const storage = {
+      getItem: vi.fn((key: string) => values.get(key) ?? null),
+      setItem: vi.fn((key: string, value: string) => { values.set(key, value); }),
+      removeItem: vi.fn(),
+    };
+    const reading = { id: 'reading-1', sentences: [{ zh: '你好。' }] };
+    getReadingMock.mockResolvedValueOnce(reading).mockRejectedValueOnce(new Error('Failed to fetch'));
+
+    try {
+      const data = createHanyuData({ ...config, storage });
+      await data.readings.getReading('reading-1');
+      expect(storage.setItem).toHaveBeenCalledWith(expect.stringContaining('user-a'), expect.any(String));
+      await expect(data.readings.getReading('reading-1')).resolves.toEqual(reading);
+    } finally {
+      fakeClient.auth = originalAuth;
+    }
+  });
+
   it('no sustituye un error HTTP por contenido cacheado', async () => {
     const storage = {
       getItem: vi.fn((key: string) => key ? JSON.stringify({ id: 'cached' }) : null),
