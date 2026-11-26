@@ -67,7 +67,7 @@ export function WrittenAnswer({ expected, kind, onGraded, allowHints = true }: P
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder="Type the answer"
+        placeholder="Escribe la respuesta"
         placeholderTextColor={colors.textMuted}
         value={value}
         editable={result === null}
@@ -81,7 +81,7 @@ export function WrittenAnswer({ expected, kind, onGraded, allowHints = true }: P
         <View style={styles.actions}>
           {allowHints ? (
             <Button
-              label="Show a hint"
+              label="Ver una pista"
               variant="outline"
               onPress={() => {
                 setHints((count) => count + 1);
@@ -89,7 +89,7 @@ export function WrittenAnswer({ expected, kind, onGraded, allowHints = true }: P
               }}
             />
           ) : null}
-          <Button label="Check" onPress={check} disabled={value.trim().length === 0} />
+          <Button label="Comprobar" onPress={check} disabled={value.trim().length === 0} />
         </View>
       ) : (
         <View style={styles.actions}>
@@ -99,10 +99,10 @@ export function WrittenAnswer({ expected, kind, onGraded, allowHints = true }: P
               { color: result.correct ? colors.success : colors.vermilion },
             ]}
           >
-            {result.correct ? 'Correct' : expected}
+            {result.correct ? 'Correcto' : expected}
           </Text>
           {result.correct ? null : (
-            <Button label="I actually knew it" variant="outline" onPress={overrideAsKnown} />
+            <Button label="Sí que lo sabía" variant="outline" onPress={overrideAsKnown} />
           )}
         </View>
       )}

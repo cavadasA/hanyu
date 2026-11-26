@@ -6,8 +6,8 @@ describe('WrittenAnswer', () => {
     const onGraded = jest.fn();
     await render(<WrittenAnswer expected="你好" kind="hanzi" onGraded={onGraded} />);
 
-    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '你好');
-    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
+    await fireEvent.changeText(screen.getByPlaceholderText('Escribe la respuesta'), '你好');
+    await fireEvent.press(screen.getByRole('button', { name: 'Comprobar' }));
 
     expect(onGraded).toHaveBeenCalledWith(
       expect.objectContaining({ correct: true }),
@@ -17,8 +17,8 @@ describe('WrittenAnswer', () => {
   it('muestra la respuesta esperada cuando se falla', async () => {
     await render(<WrittenAnswer expected="你好" kind="hanzi" onGraded={jest.fn()} />);
 
-    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '你号');
-    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
+    await fireEvent.changeText(screen.getByPlaceholderText('Escribe la respuesta'), '你号');
+    await fireEvent.press(screen.getByRole('button', { name: 'Comprobar' }));
 
     expect(screen.getByText('你好')).toBeTruthy();
   });
@@ -27,9 +27,9 @@ describe('WrittenAnswer', () => {
     const onGraded = jest.fn();
     await render(<WrittenAnswer expected="你好" kind="hanzi" onGraded={onGraded} />);
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Show a hint' }));
-    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '你好');
-    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Ver una pista' }));
+    await fireEvent.changeText(screen.getByPlaceholderText('Escribe la respuesta'), '你好');
+    await fireEvent.press(screen.getByRole('button', { name: 'Comprobar' }));
 
     expect(onGraded).toHaveBeenCalledWith(expect.objectContaining({ reason: 'hint', hints: 1 }));
   });
@@ -39,9 +39,9 @@ describe('WrittenAnswer', () => {
     const onGraded = jest.fn();
     await render(<WrittenAnswer expected="你好" kind="hanzi" onGraded={onGraded} />);
 
-    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '你号');
-    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
-    await fireEvent.press(screen.getByRole('button', { name: 'I actually knew it' }));
+    await fireEvent.changeText(screen.getByPlaceholderText('Escribe la respuesta'), '你号');
+    await fireEvent.press(screen.getByRole('button', { name: 'Comprobar' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Sí que lo sabía' }));
 
     expect(onGraded).toHaveBeenLastCalledWith(
       expect.objectContaining({ grade: 'hard', correct: true }),

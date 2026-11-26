@@ -159,7 +159,7 @@ export class OfflineReviewService {
   ): Promise<{ card: VersionedCard; reviewId: string }> {
     // Synchronous double-tap guard — checked before any await.
     if (this.inFlight.has(card.id)) {
-      throw new Error('A rating for this card is already in progress');
+      throw new Error('Ya se está guardando una calificación de esta tarjeta');
     }
     this.inFlight.add(card.id);
 
@@ -224,21 +224,21 @@ export class OfflineReviewService {
       // Sin conexión no se puede deshacer algo que el servidor ya tiene. Se
       // dice, en vez de fingir que se ha deshecho.
       throw new Error(
-        'This rating was already synced and undoing it needs a connection. Try again when you are online.',
+        'Esta calificación ya se sincronizó y para deshacerla hace falta conexión. Inténtalo cuando tengas red.',
       );
     }
 
     if (result.outcome === 'not_found') {
-      throw new Error('This rating could not be found, so it can no longer be undone.');
+      throw new Error('No se encuentra esta calificación, así que ya no se puede deshacer.');
     }
     if (result.outcome === 'already_reverted') {
-      throw new Error('This rating was already undone.');
+      throw new Error('Esta calificación ya se deshizo.');
     }
     if (result.outcome === 'conflict') {
-      throw new Error('This card was reviewed again after that rating, so it can no longer be undone.');
+      throw new Error('Esta tarjeta se volvió a repasar después, así que ya no se puede deshacer.');
     }
     if (!result.card) {
-      throw new Error('The reverted card could not be loaded.');
+      throw new Error('No se pudo cargar la tarjeta tras deshacer.');
     }
 
     await this.store.cacheCards([result.card]);

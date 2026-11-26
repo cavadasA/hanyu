@@ -8,7 +8,7 @@ import { useTheme } from '../theme/ThemeProvider';
 export function AudioButton({
   text,
   audioUrl,
-  label = 'Play audio',
+  label = 'Reproducir audio',
 }: {
   text: string;
   audioUrl?: string | null;

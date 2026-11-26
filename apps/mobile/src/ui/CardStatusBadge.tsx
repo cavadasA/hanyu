@@ -10,17 +10,17 @@ export function CardStatusBadge({ status }: CardStatusBadgeProps) {
   const { colors } = useTheme();
 
   let color = colors.info;
-  let label = 'New';
+  let label = 'Nueva';
 
   if (status === 'learning') {
     color = colors.vermilion;
-    label = 'Learning';
+    label = 'Aprendiendo';
   } else if (status === 'review') {
     color = colors.gold;
-    label = 'Review';
+    label = 'En repaso';
   } else if (status === 'mastered') {
     color = colors.success;
-    label = 'Mastered';
+    label = 'Dominada';
   }
 
   return (

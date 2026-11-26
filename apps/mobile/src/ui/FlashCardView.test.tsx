@@ -63,20 +63,20 @@ describe('FlashCardView', () => {
 
     await render(<FlashCardView card={card} mode="recognition" revealed onRate={jest.fn()} />);
 
-    expect(screen.getByLabelText('Sense 2')).toBeTruthy();
+    expect(screen.getByLabelText('Acepción 2')).toBeTruthy();
   });
 
   it('mantiene el resultado escrito visible hasta que el usuario continúa', async () => {
     const onRate = jest.fn();
     await render(<FlashCardView card={baseCard} mode="recall" onRate={onRate} />);
 
-    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '还');
-    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
+    await fireEvent.changeText(screen.getByPlaceholderText('Escribe la respuesta'), '还');
+    await fireEvent.press(screen.getByRole('button', { name: 'Comprobar' }));
 
     expect(onRate).not.toHaveBeenCalled();
-    expect(screen.getByText('Correct')).toBeTruthy();
+    expect(screen.getByText('Correcto')).toBeTruthy();
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Continuar' }));
 
     expect(onRate).toHaveBeenCalledWith('easy', expect.any(Number));
   });
@@ -85,13 +85,13 @@ describe('FlashCardView', () => {
     const onRate = jest.fn();
     await render(<FlashCardView card={baseCard} mode="recall" onRate={onRate} />);
 
-    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '学');
-    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
-    await fireEvent.press(screen.getByRole('button', { name: 'I actually knew it' }));
+    await fireEvent.changeText(screen.getByPlaceholderText('Escribe la respuesta'), '学');
+    await fireEvent.press(screen.getByRole('button', { name: 'Comprobar' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Sí que lo sabía' }));
 
     expect(onRate).not.toHaveBeenCalled();
-    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
-    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Continuar' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Continuar' }));
 
     expect(onRate).toHaveBeenCalledTimes(1);
     expect(onRate).toHaveBeenCalledWith('hard', expect.any(Number));
@@ -102,15 +102,15 @@ describe('FlashCardView', () => {
     const nextCard = { ...baseCard, id: 'card-2', hanzi: '学' };
     const view = await render(<FlashCardView card={baseCard} mode="recall" onRate={onRate} />);
 
-    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '还');
-    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
-    expect(screen.getByText('Correct')).toBeTruthy();
+    await fireEvent.changeText(screen.getByPlaceholderText('Escribe la respuesta'), '还');
+    await fireEvent.press(screen.getByRole('button', { name: 'Comprobar' }));
+    expect(screen.getByText('Correcto')).toBeTruthy();
 
     await view.rerender(<FlashCardView card={nextCard} mode="recall" onRate={onRate} />);
 
-    expect(screen.getByPlaceholderText('Type the answer').props.value).toBe('');
-    expect(screen.queryByText('Correct')).toBeNull();
-    expect(screen.queryByRole('button', { name: 'Continue' })).toBeNull();
+    expect(screen.getByPlaceholderText('Escribe la respuesta').props.value).toBe('');
+    expect(screen.queryByText('Correcto')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Continuar' })).toBeNull();
   });
 
   it('oculta las pistas de recuperación durante un Exam', async () => {
@@ -123,7 +123,7 @@ describe('FlashCardView', () => {
       />,
     );
 
-    expect(screen.queryByRole('button', { name: 'Show a hint' })).toBeNull();
-    expect(screen.getByPlaceholderText('Type the answer')).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Ver una pista' })).toBeNull();
+    expect(screen.getByPlaceholderText('Escribe la respuesta')).toBeTruthy();
   });
 });

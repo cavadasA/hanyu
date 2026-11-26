@@ -14,16 +14,16 @@ jest.mock('../theme/ThemeProvider', () => ({
 describe('CardStatusBadge', () => {
   it('renders status label for learning', async () => {
     await render(<CardStatusBadge status="learning" />);
-    expect(screen.getByText('Learning')).toBeTruthy();
+    expect(screen.getByText('Aprendiendo')).toBeTruthy();
   });
 
   it('renders status label for review', async () => {
     await render(<CardStatusBadge status="review" />);
-    expect(screen.getByText('Review')).toBeTruthy();
+    expect(screen.getByText('En repaso')).toBeTruthy();
   });
 
   it('renders status label for new', async () => {
     await render(<CardStatusBadge status="new" />);
-    expect(screen.getByText('New')).toBeTruthy();
+    expect(screen.getByText('Nueva')).toBeTruthy();
   });
 });

@@ -369,7 +369,7 @@ describe('undoRating', () => {
     const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(null) });
     const service = makeService({ store, revertReviewOnline });
 
-    await expect(service.undoRating('r1')).rejects.toThrow(/reviewed again/i);
+    await expect(service.undoRating('r1')).rejects.toThrow(/se volvió a repasar/i);
   });
 
   test('explains when the review to undo no longer exists', async () => {
@@ -377,7 +377,7 @@ describe('undoRating', () => {
     const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(null) });
     const service = makeService({ store, revertReviewOnline });
 
-    await expect(service.undoRating('missing-review')).rejects.toThrow(/could not be found/i);
+    await expect(service.undoRating('missing-review')).rejects.toThrow(/no se encuentra/i);
   });
 
   test('explains when the review was already reverted', async () => {
@@ -385,7 +385,7 @@ describe('undoRating', () => {
     const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(null) });
     const service = makeService({ store, revertReviewOnline });
 
-    await expect(service.undoRating('already-undone')).rejects.toThrow(/already undone/i);
+    await expect(service.undoRating('already-undone')).rejects.toThrow(/ya se deshizo/i);
   });
 
   test('says plainly when an already-synced review has no connection', async () => {
@@ -393,7 +393,7 @@ describe('undoRating', () => {
     const store = makeFakeStore({ discardPending: jest.fn().mockResolvedValue(null) });
     const service = makeService({ store, revertReviewOnline });
 
-    await expect(service.undoRating('r1')).rejects.toThrow(/already synced.*connection/i);
+    await expect(service.undoRating('r1')).rejects.toThrow(/ya se sincronizó.*conexión/i);
   });
 });
 
@@ -541,7 +541,7 @@ describe('rateCard – synchronous double-tap guard', () => {
     const promise2 = service.rateCard(card, 'good', null);
 
     await expect(promise2).rejects.toThrow(
-      'A rating for this card is already in progress',
+      'Ya se está guardando una calificación de esta tarjeta',
     );
     await expect(promise1).resolves.toBeDefined();
     expect(store.enqueueAndProject).toHaveBeenCalledTimes(1);

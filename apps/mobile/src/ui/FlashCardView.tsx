@@ -51,10 +51,10 @@ const PEEK_OFFSET = 14;
 type Variant = 'primary' | 'secondary' | 'outline';
 
 const RATINGS: { label: string; grade: Grade; variant: Variant }[] = [
-  { label: 'Again', grade: 'again', variant: 'outline' },
-  { label: 'Hard', grade: 'hard', variant: 'secondary' },
-  { label: 'Good', grade: 'good', variant: 'secondary' },
-  { label: 'Easy', grade: 'easy', variant: 'primary' },
+  { label: 'Otra vez', grade: 'again', variant: 'outline' },
+  { label: 'Difícil', grade: 'hard', variant: 'secondary' },
+  { label: 'Bien', grade: 'good', variant: 'secondary' },
+  { label: 'Fácil', grade: 'easy', variant: 'primary' },
 ];
 
 const SWIPE_THRESHOLD = 88;
@@ -337,7 +337,7 @@ export function FlashCardView({
           <Badge label={`HSK ${card.hsk_level ?? '-'}`} />
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel="Play audio"
+            accessibilityLabel="Reproducir audio"
             onPress={() => speak(card.hanzi ?? '')}
             style={({ pressed }) => [
               styles.audio,
@@ -362,8 +362,8 @@ export function FlashCardView({
               ) : null}
               {presentationMode === 'listening' ? (
                 <>
-                  <Text style={[styles.prompt, { color: colors.textMuted }]}>Listen and identify the word</Text>
-                  <AudioButton text={card.hanzi ?? ''} label="Play again" />
+                  <Text style={[styles.prompt, { color: colors.textMuted }]}>Escucha e identifica la palabra</Text>
+                  <AudioButton text={card.hanzi ?? ''} label="Escuchar otra vez" />
                 </>
               ) : null}
               {presentationMode === 'reading' ? (
@@ -378,7 +378,7 @@ export function FlashCardView({
               />
               {writtenGrade ? (
                 <Button
-                  label="Continue"
+                  label="Continuar"
                   onPress={continueWritten}
                   disabled={ratingDisabled}
                 />
@@ -407,12 +407,12 @@ export function FlashCardView({
                 <Text style={[styles.detail, { color: colors.textMuted }]}>繁 {card.traditional}</Text>
               ) : null}
               {card.variants && card.variants.length > 0 ? (
-                <Text style={[styles.detail, { color: colors.textMuted }]}>Variants: {card.variants.join(' · ')}</Text>
+                <Text style={[styles.detail, { color: colors.textMuted }]}>Variantes: {card.variants.join(' · ')}</Text>
               ) : null}
               {card.sense_index !== null && card.sense_index !== undefined ? (
                 <Badge
-                  label={`Sense ${card.sense_index}`}
-                  accessibilityLabel={`Sense ${card.sense_index}`}
+                  label={`Acepción ${card.sense_index}`}
+                  accessibilityLabel={`Acepción ${card.sense_index}`}
                 />
               ) : null}
               {card.classifier ? <Badge label={`量 ${card.classifier}`} /> : null}
@@ -447,7 +447,7 @@ export function FlashCardView({
             ))}
           </View>
         ) : presentationMode === 'recognition' ? (
-          <Button label="Show answer" onPress={() => onReveal?.()} />
+          <Button label="Mostrar respuesta" onPress={() => onReveal?.()} />
         ) : null}
       </Card>
     </Animated.View>
