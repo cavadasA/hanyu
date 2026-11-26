@@ -60,6 +60,15 @@ describe('CommunicativeTask', () => {
     expect(onFinished).not.toHaveBeenCalled();
   });
 
+  // El aviso de un envío anterior seguía en pantalla después de corregir el texto.
+  it('el aviso de validación desaparece en cuanto se cambia la respuesta', async () => {
+    await answer('wo bu neng qu');
+    expect(screen.getByText(/caracteres chinos/)).toBeTruthy();
+
+    await fireEvent.changeText(screen.getByLabelText('Tu respuesta'), '我');
+    expect(screen.queryByText(/caracteres chinos/)).toBeNull();
+  });
+
   it('sin la estructura pedida: lo dice, y no se corrige', async () => {
     const { grade } = await answer('我今天有事，不能去。明天去吧！');
 

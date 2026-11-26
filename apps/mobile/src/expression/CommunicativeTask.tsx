@@ -148,7 +148,11 @@ export function CommunicativeTask({ task, context, grade, onFinished }: Props) {
         <TextInput
           accessibilityLabel="Tu respuesta"
           value={answer}
-          onChangeText={setAnswer}
+          onChangeText={(text) => {
+            setAnswer(text);
+            // Los avisos son del envío anterior: al cambiar el texto ya no aplican.
+            setProblems([]);
+          }}
           editable={!outcome && busy === null}
           multiline
           placeholder="用中文写…"
