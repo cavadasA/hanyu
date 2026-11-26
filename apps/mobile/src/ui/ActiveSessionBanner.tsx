@@ -30,15 +30,15 @@ export function ActiveSessionBanner({ snapshot, onContinue, onDiscard }: ActiveS
         <View style={styles.left}>
           <Ionicons name="play-circle" size={24} color={colors.vermilion} />
           <View style={styles.textGroup}>
-            <Text style={[styles.title, { color: colors.text }]}>Continue review</Text>
+            <Text style={[styles.title, { color: colors.text }]}>Continuar el repaso</Text>
             <Text style={[styles.sub, { color: colors.textMuted }]}>
-              {`${remaining} ${remaining === 1 ? 'card' : 'cards'} left in session`}
+              {`${remaining === 1 ? 'Queda 1 tarjeta' : `Quedan ${remaining} tarjetas`} en la sesión`}
             </Text>
           </View>
         </View>
         <View style={styles.actions}>
-          <Button label="Continue" variant="primary" onPress={onContinue} />
-          <Button label="Discard" variant="outline" onPress={onDiscard} />
+          <Button label="Continuar" variant="primary" onPress={onContinue} />
+          <Button label="Descartar" variant="outline" onPress={onDiscard} />
         </View>
       </View>
     </Card>

@@ -41,28 +41,28 @@ import { studyModeHref } from '../lib/useRequestedStudyMode';
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
 
 const WEEKDAYS = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
+  'domingo',
+  'lunes',
+  'martes',
+  'miércoles',
+  'jueves',
+  'viernes',
+  'sábado',
 ];
 
 const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
+  'enero',
+  'febrero',
+  'marzo',
+  'abril',
+  'mayo',
+  'junio',
+  'julio',
+  'agosto',
+  'septiembre',
+  'octubre',
+  'noviembre',
+  'diciembre',
 ];
 
 const MOTION_DISABLED = process.env.NODE_ENV === 'test';
@@ -70,7 +70,8 @@ const EASE = Easing.out(Easing.cubic);
 
 function dateLabel(): string {
   const now = new Date();
-  return `${WEEKDAYS[now.getDay()]}, ${MONTHS[now.getMonth()]} ${now.getDate()}`;
+  const weekday = WEEKDAYS[now.getDay()];
+  return `${weekday[0].toUpperCase()}${weekday.slice(1)}, ${now.getDate()} de ${MONTHS[now.getMonth()]}`;
 }
 
 function fraction(completed: number, target: number): `${number}%` {
@@ -110,12 +111,29 @@ const STEP_ICONS: Record<PlanStep['kind'], IconName> = {
 };
 
 const STEP_LABELS: Record<PlanStep['kind'], string> = {
-  reviews: 'Reviews',
-  relearning: 'Relearning',
-  new_items: 'New words',
-  reading: 'Reading',
-  exercises: 'Exercises',
-  exam: 'Exam practice',
+  reviews: 'Repasos',
+  relearning: 'Reaprendizaje',
+  new_items: 'Palabras nuevas',
+  reading: 'Lectura',
+  exercises: 'Ejercicios',
+  exam: 'Práctica de examen',
+};
+
+/** «18 repasos», «3 en reaprendizaje», «10 palabras nuevas». */
+function countLabel(kind: PlanStep['kind'], count: number): string {
+  if (kind === 'reviews') return `${count} ${count === 1 ? 'repaso' : 'repasos'}`;
+  if (kind === 'relearning') return `${count} en reaprendizaje`;
+  if (kind === 'new_items') return `${count} ${count === 1 ? 'palabra nueva' : 'palabras nuevas'}`;
+  return `${STEP_LABELS[kind]}: ${count}`;
+}
+
+const START_LABELS: Record<PlanStep['kind'], string> = {
+  reviews: 'Empezar repasos',
+  relearning: 'Empezar reaprendizaje',
+  new_items: 'Empezar a aprender',
+  reading: 'Empezar lectura',
+  exercises: 'Empezar ejercicios',
+  exam: 'Empezar examen',
 };
 
 function planStepTask(
@@ -129,8 +147,8 @@ function planStepTask(
   const grammarOnly = payload.grammar_only === true;
   const label = STEP_LABELS[step.kind];
   const primary = grammarOnly
-    ? 'Grammar practice'
-    : count === null ? label : `${count} ${step.kind === 'new_items' ? 'new words' : label.toLowerCase()}`;
+    ? 'Práctica de gramática'
+    : count === null ? label : countLabel(step.kind, count);
   const unitTitle = typeof payload.unit_title === 'string' ? payload.unit_title : undefined;
   const unitProgress = typeof payload.unit_progress === 'string' ? payload.unit_progress : undefined;
   const why = step.why?.map(reasonToText) ?? [];
@@ -140,7 +158,7 @@ function planStepTask(
   const progressCompleted = completed ?? unitCompleted;
   const progressTarget = target ?? unitTarget;
   const progressSub = step.kind === 'reviews' && completed !== null && target !== null
-    ? `Reviewed ${completed} of ${target} today`
+    ? `Repasadas ${completed} de ${target} hoy`
     : '';
 
   return {
@@ -161,7 +179,7 @@ function planStepTask(
       : false,
     status: step.status,
     cta: step.status === 'ready'
-      ? grammarOnly ? 'Open grammar' : `Start ${step.kind === 'new_items' ? 'learning' : step.kind}`
+      ? grammarOnly ? 'Abrir gramática' : START_LABELS[step.kind]
       : undefined,
     go: step.status === 'ready' ? go : undefined,
   };
@@ -317,37 +335,37 @@ export default function TodayScreen() {
         {
           key: 'review',
           icon: 'albums',
-          primary: `${today.flashcards.due} cards due`,
-          sub: `Reviewed ${today.flashcards.completed} of ${today.flashcards.review_target} today`,
+          primary: `${today.flashcards.due} tarjetas pendientes`,
+          sub: `Repasadas ${today.flashcards.completed} de ${today.flashcards.review_target} hoy`,
           why: [],
           width: fraction(today.flashcards.completed, today.flashcards.review_target),
           done: isDone(today.flashcards.completed, today.flashcards.review_target),
           status: 'ready',
-          cta: 'Start review',
+          cta: 'Empezar repaso',
           go: () => router.push('/cards'),
         },
         {
           key: 'exercises',
           icon: 'clipboard',
-          primary: `Exercises ${today.exercises.completed}/${today.exercises.target}`,
-          sub: 'Grammar and sentence drills',
+          primary: `Ejercicios ${today.exercises.completed}/${today.exercises.target}`,
+          sub: 'Gramática y frases',
           why: [],
           width: fraction(today.exercises.completed, today.exercises.target),
           done: isDone(today.exercises.completed, today.exercises.target),
           status: 'ready',
-          cta: 'Start exercises',
+          cta: 'Empezar ejercicios',
           go: () => router.push('/practice/exercises'),
         },
         {
           key: 'reading',
           icon: 'book',
-          primary: `Reading ${today.reading.completed}/${today.reading.target}`,
-          sub: today.reading.next?.title ? `Up next: ${today.reading.next.title}` : 'One short passage',
+          primary: `Lectura ${today.reading.completed}/${today.reading.target}`,
+          sub: today.reading.next?.title ? `Siguiente: ${today.reading.next.title}` : 'Un texto corto',
           why: [],
           width: fraction(today.reading.completed, today.reading.target),
           done: isDone(today.reading.completed, today.reading.target),
           status: 'ready',
-          cta: 'Start reading',
+          cta: 'Empezar lectura',
           go: () => router.push('/practice/readings'),
         },
       ]
@@ -417,13 +435,13 @@ export default function TodayScreen() {
               <View style={styles.heroTop}>
                 <View style={styles.heroCopy}>
                   <Text style={[styles.heroLabel, { color: colors.onAccentMuted }]}>
-                    Current streak
+                    Racha actual
                   </Text>
                   <Text style={[styles.heroMetric, { color: colors.onAccent }]}>
-                    {`${streak.current} day streak`}
+                    {`${streak.current} ${streak.current === 1 ? 'día' : 'días'} de racha`}
                   </Text>
                   <Text style={[styles.heroMuted, { color: colors.onAccentMuted }]}>
-                    {`Longest ${streak.longest} ${streak.longest === 1 ? 'day' : 'days'}`}
+                    {`Récord: ${streak.longest} ${streak.longest === 1 ? 'día' : 'días'}`}
                   </Text>
                 </View>
                 <View style={[styles.heroIcon, { backgroundColor: colors.onAccent + '1F' }]}>
@@ -434,7 +452,7 @@ export default function TodayScreen() {
               <View style={[styles.heroDivider, { backgroundColor: colors.onAccent + '33' }]} />
 
               <Text style={[styles.heroMuted, { color: colors.onAccentMuted }]}>
-                {`${blocksDone} of ${blocks} blocks completed today`}
+                {`${blocksDone} de ${blocks} bloques completados hoy`}
               </Text>
               <ProgressRing
                 segments={blocks}
@@ -451,21 +469,21 @@ export default function TodayScreen() {
                 <View style={styles.completedHeader}>
                   <Ionicons name="checkmark-circle" size={44} color={colors.gold} />
                   <Text style={[styles.completedTitle, { color: colors.text }]}>
-                    Session complete! Well done.
+                    ¡Sesión completada! Bien hecho.
                   </Text>
                   <Text style={[styles.completedSub, { color: colors.textMuted }]}>
-                    You fulfilled all daily study goals. Want to do extra practice?
+                    Has cumplido todos los objetivos de hoy. ¿Quieres practicar más?
                   </Text>
                 </View>
                 <View style={styles.extraPracticeRow}>
-                  <Button label="Quick review" variant="outline" onPress={() => router.push('/cards')} />
-                  <Button label="Free reading" variant="outline" onPress={() => router.push('/practice/readings')} />
-                  <Button label="Browse grammar" variant="outline" onPress={() => router.push('/library/grammar')} />
+                  <Button label="Repaso rápido" variant="outline" onPress={() => router.push('/cards')} />
+                  <Button label="Lectura libre" variant="outline" onPress={() => router.push('/practice/readings')} />
+                  <Button label="Ver gramática" variant="outline" onPress={() => router.push('/library/grammar')} />
                 </View>
               </Card>
             ) : (
               <Card>
-                <Text style={[styles.sectionTitle, { color: colors.text }]}>Your plan for today</Text>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Tu plan de hoy</Text>
 
                 {tasks.map((task, index) => (
                   <View key={task.key}>
@@ -546,7 +564,7 @@ export default function TodayScreen() {
                           </View>
 
                           <Button
-                            label={task.done ? 'Done' : task.cta ?? 'Start'}
+                            label={task.done ? 'Hecho' : task.cta ?? 'Empezar'}
                             variant={task.done ? 'outline' : task.key === nextPendingKey ? 'primary' : 'outline'}
                             onPress={task.go ?? (() => undefined)}
                             disabled={task.done}
@@ -578,7 +596,7 @@ export default function TodayScreen() {
 
           <Reveal index={3}>
             <Card>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Deck breakdown</Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Estado de las tarjetas</Text>
               <StatusBarChart byStatus={cards} total={cardTotal} />
             </Card>
           </Reveal>

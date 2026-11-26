@@ -86,8 +86,8 @@ describe('TodayScreen', () => {
     await renderToday();
 
     expect(screen.getByTestId('progress-ring')).toBeTruthy();
-    expect(screen.getByText('12 day streak')).toBeTruthy();
-    expect(screen.getByText(/1 of 3 blocks completed today/)).toBeTruthy();
+    expect(screen.getByText('12 días de racha')).toBeTruthy();
+    expect(screen.getByText(/1 de 3 bloques completados hoy/)).toBeTruthy();
   });
 
   it('opens mobile exercises and readings from the plan card', async () => {
@@ -96,10 +96,10 @@ describe('TodayScreen', () => {
 
     await renderToday();
 
-    await fireEvent.press(screen.getByText('Start exercises'));
+    await fireEvent.press(screen.getByText('Empezar ejercicios'));
     expect(mockPush).toHaveBeenLastCalledWith('/practice/exercises');
 
-    await fireEvent.press(screen.getByText('Start reading'));
+    await fireEvent.press(screen.getByText('Empezar lectura'));
     expect(mockPush).toHaveBeenLastCalledWith('/practice/readings');
   });
 
@@ -119,8 +119,8 @@ describe('TodayScreen', () => {
 
     await renderToday();
 
-    expect(screen.getByText(/15 cards left/)).toBeTruthy();
-    await fireEvent.press(screen.getByText('Continue'));
+    expect(screen.getByText(/Quedan 15 tarjetas/)).toBeTruthy();
+    await fireEvent.press(screen.getByText('Continuar'));
     expect(mockPush).toHaveBeenLastCalledWith('/cards');
   });
 
@@ -130,10 +130,10 @@ describe('TodayScreen', () => {
 
     await renderToday();
 
-    expect(screen.getByText('Session complete! Well done.')).toBeTruthy();
-    expect(screen.getByText('Quick review')).toBeTruthy();
-    expect(screen.getByText('Free reading')).toBeTruthy();
-    expect(screen.getByText('Browse grammar')).toBeTruthy();
+    expect(screen.getByText('¡Sesión completada! Bien hecho.')).toBeTruthy();
+    expect(screen.getByText('Repaso rápido')).toBeTruthy();
+    expect(screen.getByText('Lectura libre')).toBeTruthy();
+    expect(screen.getByText('Ver gramática')).toBeTruthy();
   });
 
   it('dice qué unidad se está estudiando', async () => {
@@ -168,10 +168,10 @@ describe('TodayScreen', () => {
 
     await renderToday();
 
-    await fireEvent.press(screen.getByText('Start learning'));
+    await fireEvent.press(screen.getByText('Empezar a aprender'));
     expect(mockPush).toHaveBeenLastCalledWith({ pathname: '/cards', params: { mode: 'learn', at: expect.any(String) } });
 
-    await fireEvent.press(screen.getByText('Start reviews'));
+    await fireEvent.press(screen.getByText('Empezar repasos'));
     expect(mockPush).toHaveBeenLastCalledWith({ pathname: '/cards', params: { mode: 'review', at: expect.any(String) } });
   });
 
@@ -188,7 +188,7 @@ describe('TodayScreen', () => {
 
     await renderToday();
 
-    expect(screen.getByText('Reviewed 12 of 200 today')).toBeTruthy();
+    expect(screen.getByText('Repasadas 12 de 200 hoy')).toBeTruthy();
   });
 
   it('abre el punto de gramática de la unidad activa cuando no hay palabras', async () => {
@@ -209,7 +209,7 @@ describe('TodayScreen', () => {
     mockGetDashboard.mockResolvedValue(dashboard);
 
     await renderToday();
-    await fireEvent.press(screen.getByText('Open grammar'));
+    await fireEvent.press(screen.getByText('Abrir gramática'));
 
     expect(mockPush).toHaveBeenLastCalledWith({
       pathname: '/library/grammar/[id]',

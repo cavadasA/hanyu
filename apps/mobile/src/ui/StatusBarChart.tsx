@@ -3,6 +3,12 @@ import { tokens } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
 
 const ORDER = ['new', 'learning', 'review', 'mastered'] as const;
+const STATUS_LABELS: Record<(typeof ORDER)[number], string> = {
+  new: 'nuevas',
+  learning: 'aprendiendo',
+  review: 'en repaso',
+  mastered: 'dominadas',
+};
 
 export function StatusBarChart({
   byStatus,
@@ -20,7 +26,7 @@ export function StatusBarChart({
   };
 
   if (!total) {
-    return <Text style={{ color: colors.textMuted }}>No cards in your deck yet</Text>;
+    return <Text style={{ color: colors.textMuted }}>Todavía no hay tarjetas en tus mazos</Text>;
   }
 
   return (
@@ -53,7 +59,7 @@ export function StatusBarChart({
             <View key={status} style={styles.legendItem}>
               <View style={[styles.legendDot, { backgroundColor: palette[status] }]} />
               <Text style={[styles.legendItemLabel, { color: colors.textMuted }]}>
-                {`${status} ${count}`}
+                {`${STATUS_LABELS[status]} ${count}`}
               </Text>
             </View>
           );

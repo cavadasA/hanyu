@@ -34,8 +34,8 @@ describe('ActiveSessionBanner', () => {
         onDiscard={jest.fn()}
       />,
     );
-    expect(screen.getByText(/5 cards left/)).toBeTruthy();
-    expect(screen.getByText('Continue')).toBeTruthy();
+    expect(screen.getByText(/Quedan 5 tarjetas/)).toBeTruthy();
+    expect(screen.getByText('Continuar')).toBeTruthy();
   });
 
   it('calls onContinue when button pressed', async () => {
@@ -47,7 +47,7 @@ describe('ActiveSessionBanner', () => {
         onDiscard={jest.fn()}
       />,
     );
-    await fireEvent.press(screen.getByText('Continue'));
+    await fireEvent.press(screen.getByText('Continuar'));
     expect(mockContinue).toHaveBeenCalledTimes(1);
   });
 
@@ -75,7 +75,7 @@ describe('ActiveSessionBanner', () => {
       <ActiveSessionBanner snapshot={snapshot} onContinue={jest.fn()} onDiscard={mockDiscard} />,
     );
 
-    await fireEvent.press(screen.getByText('Discard'));
+    await fireEvent.press(screen.getByText('Descartar'));
     expect(mockDiscard).toHaveBeenCalledTimes(1);
   });
 });
