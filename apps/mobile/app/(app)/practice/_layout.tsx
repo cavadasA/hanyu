@@ -8,6 +8,9 @@ export default function PracticeLayout() {
           de la sesión. Se queda solo el gesto desde el borde: sin cabecera, es
           la única forma de salir de la pantalla. */}
       <Stack.Screen name="expression" options={{ fullScreenGestureEnabled: false }} />
+      {/* El simulacro no se cierra con ningún gesto (como dentro de su propio
+          Stack): un trazo en 书写 2 lo cerraba y se perdían todas las respuestas. */}
+      <Stack.Screen name="exam" options={{ gestureEnabled: false }} />
     </Stack>
   );
 }

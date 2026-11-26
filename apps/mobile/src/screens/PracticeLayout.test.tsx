@@ -25,4 +25,14 @@ describe('PracticeLayout', () => {
     expect(expression?.options).toMatchObject({ fullScreenGestureEnabled: false });
     expect(expression?.options?.gestureEnabled).not.toBe(false);
   });
+
+  // El simulacro ya quitaba el gesto dentro de su propio Stack, pero el gesto
+  // que lo cerraba era el de la pantalla «exam» en este Stack: un trazo hacia la
+  // derecha en 书写 2 sacaba del examen y se perdían todas las respuestas.
+  it('el simulacro no se cierra con ningún gesto', async () => {
+    await render(<PracticeLayout />);
+
+    const exam = mockScreens.find(screen => screen.name === 'exam');
+    expect(exam?.options).toMatchObject({ gestureEnabled: false });
+  });
 });
