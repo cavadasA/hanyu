@@ -25,10 +25,13 @@ export function Button({
   const isPrimary = variant === 'primary';
   const isOutline = variant === 'outline';
 
+  // Un secundario seleccionado (p. ej. la velocidad activa del lector) se marca en
+  // bermellón; antes `selected` sólo llegaba a la accesibilidad.
+  const accent = isPrimary || isOutline || selected;
   const backgroundColor = isPrimary ? colors.vermilion : isOutline ? 'transparent' : colors.surface;
-  const borderColor = isPrimary || isOutline ? colors.vermilion : colors.border;
-  const spinnerColor = isPrimary ? colors.onAccent : isOutline ? colors.vermilion : colors.text;
-  const labelColor = isPrimary ? colors.onAccent : isOutline ? colors.vermilion : colors.text;
+  const borderColor = accent ? colors.vermilion : colors.border;
+  const spinnerColor = isPrimary ? colors.onAccent : accent ? colors.vermilion : colors.text;
+  const labelColor = isPrimary ? colors.onAccent : accent ? colors.vermilion : colors.text;
 
   return (
     <Pressable
@@ -39,7 +42,7 @@ export function Button({
       disabled={disabled || busy}
       style={({ pressed }) => [
         styles.button,
-        isOutline ? styles.outline : null,
+        isOutline || (selected && !isPrimary) ? styles.outline : null,
         {
           backgroundColor,
           borderColor,

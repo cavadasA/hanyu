@@ -38,6 +38,23 @@ describe('Button', () => {
     );
   });
 
+  // Los botones de velocidad del lector (0.75x/1x/1.25x) no marcaban cuál estaba activa.
+  it('un botón secundario seleccionado se distingue a la vista', async () => {
+    const flat = (style: unknown) => Object.assign({}, ...(Array.isArray(style) ? style.flat(Infinity) : [style]).filter(Boolean));
+    await render(
+      <>
+        <Button label="1x" variant="secondary" onPress={jest.fn()} selected />
+        <Button label="1.25x" variant="secondary" onPress={jest.fn()} />
+      </>,
+    );
+
+    const selected = flat(screen.getByRole('button', { name: '1x' }).props.style);
+    const other = flat(screen.getByRole('button', { name: '1.25x' }).props.style);
+    expect(selected.borderColor).toBe('#c93624');
+    expect(other.borderColor).toBe('#e5e7eb');
+    expect(screen.getByText('1x').props.style).toEqual(expect.arrayContaining([expect.objectContaining({ color: '#c93624' })]));
+  });
+
   it('keeps transform a valid array while pressed', async () => {
     await render(<Button label="Rate" onPress={jest.fn()} />);
 
