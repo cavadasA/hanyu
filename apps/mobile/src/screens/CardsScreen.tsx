@@ -2,7 +2,17 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { randomUUID } from 'expo-crypto';
-import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  AccessibilityInfo,
+  ActivityIndicator,
+  Animated,
+  Easing,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {
   toUserMessage,
   type FlashcardStats,
@@ -37,17 +47,42 @@ import { ActiveSessionBanner } from '../ui/ActiveSessionBanner';
 import { Screen } from '../ui/Screen';
 import { Segmented, type SegmentedOption } from '../ui/Segmented';
 import { StatusBarChart } from '../ui/StatusBarChart';
+import { useReloadOnReturn } from '../lib/useReloadOnReturn';
+import { useRequestedStudyMode } from '../lib/useRequestedStudyMode';
+
+const MOTION_DISABLED = process.env.NODE_ENV === 'test';
+const EASE = Easing.bezier(0.25, 0.1, 0.25, 1);
 
 const STUDY_MODES: StudyMode[] = ['learn', 'review', 'exam'];
+const STUDY_MODE_LABELS: Record<StudyMode, string> = { learn: 'Aprender', review: 'Repasar', exam: 'Examen' };
 const STUDY_MODE_OPTIONS: SegmentedOption<StudyMode>[] = STUDY_MODES.map((value) => ({
   value,
-  label: value[0].toUpperCase() + value.slice(1),
+  label: STUDY_MODE_LABELS[value],
 }));
 const SKILLS: ReviewSkill[] = ['recognition', 'recall', 'listening', 'reading'];
+const SKILL_LABELS: Record<ReviewSkill, string> = {
+  recognition: 'Entender',
+  recall: 'Recordar',
+  listening: 'Escuchar',
+  reading: 'Leer',
+};
 const SKILL_OPTIONS: SegmentedOption<ReviewSkill>[] = SKILLS.map((value) => ({
   value,
-  label: value[0].toUpperCase() + value.slice(1),
+  label: SKILL_LABELS[value],
 }));
+
+const STUDY_MODE_DESCRIPTIONS: Record<StudyMode, string> = {
+  learn: 'Presenta palabras nuevas con audio, pinyin y guía de trazos',
+  review: 'Repasa lo pendiente con repetición espaciada (FSRS)',
+  exam: 'Evaluación con tiempo y sin pistas para medir lo que recuerdas',
+};
+
+const SKILL_DESCRIPTIONS: Record<ReviewSkill, string> = {
+  recognition: 'Entender: hanzi → significado y pinyin',
+  recall: 'Recordar: significado → escribe hanzi y pinyin',
+  listening: 'Escuchar: audio → identifica el hanzi',
+  reading: 'Leer: comprensión de la frase y gramática',
+};
 
 type ScreenPhase = 'pre-session' | 'reviewing' | 'complete';
 interface UndoEntry {
@@ -181,10 +216,84 @@ export default function CardsScreen() {
   useEffect(() => {
     void load();
   }, [load]);
+  useRequestedStudyMode(setStudyMode);
+  useReloadOnReturn(phase, load);
 
   useEffect(() => {
     void loadReviewSession().then(setResumable);
   }, []);
+
+  const contentAnim = useRef(new Animated.Value(MOTION_DISABLED ? 1 : 0)).current;
+  const badgeAnim = useRef(new Animated.Value(MOTION_DISABLED ? 1 : 0)).current;
+  const reviewEntrance = useRef(new Animated.Value(MOTION_DISABLED ? 1 : 0)).current;
+  const reduceMotion = useRef(false);
+
+  useEffect(() => {
+    if (MOTION_DISABLED) return;
+    let mounted = true;
+    AccessibilityInfo.isReduceMotionEnabled()
+      .then((enabled) => {
+        if (mounted) reduceMotion.current = enabled;
+      })
+      .catch(() => undefined);
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const dueCount = allDueCards.length;
+
+  useEffect(() => {
+    if (phase !== 'pre-session') return;
+    if (MOTION_DISABLED || reduceMotion.current) {
+      contentAnim.setValue(1);
+      return;
+    }
+    if (loading) {
+      Animated.timing(contentAnim, {
+        toValue: 0.45,
+        duration: 140,
+        easing: EASE,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      contentAnim.setValue(0);
+      Animated.timing(contentAnim, {
+        toValue: 1,
+        duration: 220,
+        easing: EASE,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [loading, phase, studyMode, skill, allDueCards.length, contentAnim]);
+
+  useEffect(() => {
+    if (MOTION_DISABLED || reduceMotion.current) {
+      badgeAnim.setValue(dueCount > 0 ? 1 : 0);
+      return;
+    }
+    Animated.timing(badgeAnim, {
+      toValue: dueCount > 0 ? 1 : 0,
+      duration: 180,
+      easing: EASE,
+      useNativeDriver: true,
+    }).start();
+  }, [dueCount, badgeAnim]);
+
+  useEffect(() => {
+    if (phase !== 'reviewing') return;
+    if (MOTION_DISABLED || reduceMotion.current) {
+      reviewEntrance.setValue(1);
+      return;
+    }
+    reviewEntrance.setValue(0);
+    Animated.timing(reviewEntrance, {
+      toValue: 1,
+      duration: 200,
+      easing: EASE,
+      useNativeDriver: true,
+    }).start();
+  }, [phase, reviewEntrance]);
 
   function startReview() {
     const sessionCards = allDueCards;
@@ -469,37 +578,37 @@ export default function CardsScreen() {
           <View style={[styles.doneIcon, { backgroundColor: colors.vermilion }]}>
             <Ionicons name="checkmark" size={32} color={colors.onAccent} />
           </View>
-          <Text style={[styles.doneTitle, { color: colors.text }]}>Session complete</Text>
+          <Text style={[styles.doneTitle, { color: colors.text }]}>Sesión completada</Text>
           <Text style={[styles.doneBody, { color: colors.textMuted }]}>
-            Great work! You reviewed {stats.reviewed} {stats.reviewed === 1 ? 'card' : 'cards'}.
+            ¡Buen trabajo! Has repasado {stats.reviewed} {stats.reviewed === 1 ? 'tarjeta' : 'tarjetas'}.
           </Text>
 
           <Card style={styles.statsCard}>
             <View style={styles.statsGrid}>
               <View style={styles.statCell}>
                 <Text style={[styles.statValue, { color: colors.text }]}>{stats.reviewed}</Text>
-                <Text style={[styles.statLabel, { color: colors.textMuted }]}>Reviewed</Text>
+                <Text style={[styles.statLabel, { color: colors.textMuted }]}>Repasadas</Text>
               </View>
               <View style={styles.statCell}>
                 <Text style={[styles.statValue, { color: colors.vermilion }]}>{accuracy}%</Text>
-                <Text style={[styles.statLabel, { color: colors.textMuted }]}>Accuracy</Text>
+                <Text style={[styles.statLabel, { color: colors.textMuted }]}>Aciertos</Text>
               </View>
               {studyMode !== 'learn' ? (
                 <View style={styles.statCell}>
                   <Text style={[styles.statValue, { color: colors.text }]}>{timer.formatted}</Text>
-                  <Text style={[styles.statLabel, { color: colors.textMuted }]}>Time</Text>
+                  <Text style={[styles.statLabel, { color: colors.textMuted }]}>Tiempo</Text>
                 </View>
               ) : null}
               <View style={styles.statCell}>
                 <Text style={[styles.statValue, { color: colors.gold }]}>{stats.again}</Text>
-                <Text style={[styles.statLabel, { color: colors.textMuted }]}>Again</Text>
+                <Text style={[styles.statLabel, { color: colors.textMuted }]}>Otra vez</Text>
               </View>
             </View>
           </Card>
 
           <View style={styles.completeActions}>
             <Button
-              label="Review again"
+              label="Repasar otra vez"
               variant="outline"
               onPress={() => {
                 if (sync) {
@@ -512,7 +621,7 @@ export default function CardsScreen() {
               }}
             />
             <Button
-              label="Back to Today"
+              label="Volver a Hoy"
               variant="primary"
               onPress={() => {
                 if (sync) void Promise.resolve(sync()).catch(() => {});
@@ -521,7 +630,7 @@ export default function CardsScreen() {
             />
             {focusedDeckId ? (
               <Button
-                label="Back to deck"
+                label="Volver al mazo"
                 variant="secondary"
                 onPress={() => router.push(`/library/decks/${focusedDeckId}`)}
               />
@@ -534,17 +643,31 @@ export default function CardsScreen() {
 
   // --- PHASE: PRE-SESSION ---
   if (phase === 'pre-session') {
-    const dueCount = allDueCards.length;
-
     return (
       <Screen>
         <View style={styles.header}>
-          <Text style={[styles.heading, { color: colors.text }]}>Reviews</Text>
+          <Text style={[styles.heading, { color: colors.text }]}>Repasos</Text>
           {dueCount > 0 ? (
-            <View style={[styles.due, { backgroundColor: colors.vermilion + '18' }]}>
+            <Animated.View
+              style={[
+                styles.due,
+                {
+                  backgroundColor: colors.vermilion + '18',
+                  opacity: badgeAnim,
+                  transform: [
+                    {
+                      scale: badgeAnim.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0.85, 1],
+                      }),
+                    },
+                  ],
+                },
+              ]}
+            >
               <View style={[styles.dueDot, { backgroundColor: colors.vermilion }]} />
-              <Text style={[styles.dueLabel, { color: colors.vermilion }]}>{`${dueCount} due`}</Text>
-            </View>
+              <Text style={[styles.dueLabel, { color: colors.vermilion }]}>{`${dueCount} pendientes`}</Text>
+            </Animated.View>
           ) : null}
         </View>
 
@@ -564,7 +687,7 @@ export default function CardsScreen() {
         ) : null}
 
         <Card>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Study mode</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>Modo de estudio</Text>
           <Segmented
             options={STUDY_MODE_OPTIONS}
             value={studyMode}
@@ -572,7 +695,11 @@ export default function CardsScreen() {
               setStudyMode(selectedMode);
             }}
           />
-          <Text style={[styles.sectionTitle, styles.skillTitle, { color: colors.text }]}>Skill</Text>
+          <Text style={[styles.modeHint, { color: colors.textMuted }]}>
+            {STUDY_MODE_DESCRIPTIONS[studyMode]}
+          </Text>
+
+          <Text style={[styles.sectionTitle, styles.skillTitle, { color: colors.text }]}>Habilidad</Text>
           <Segmented
             options={SKILL_OPTIONS}
             value={skill}
@@ -580,33 +707,56 @@ export default function CardsScreen() {
               setSkill(selectedSkill);
             }}
           />
+          <Text style={[styles.modeHint, { color: colors.textMuted }]}>
+            {SKILL_DESCRIPTIONS[skill]}
+          </Text>
         </Card>
 
-        {dueCount === 0 ? (
-          deckSize === 0 && !focusedDeckId ? (
-            <EmptyState
-              title="Set up your HSK2 study plan"
-              body="Build the complete HSK 1–2 plan and skip words you already recognize."
-              actionLabel="Start diagnostic"
-              onAction={() => router.push('/diagnostic')}
-              actionDisabled={loading}
-            />
+        <Animated.View
+          style={{
+            opacity: contentAnim,
+            transform: [
+              {
+                translateY: contentAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [10, 0],
+                }),
+              },
+            ],
+            gap: tokens.spacing.md,
+          }}
+        >
+          {dueCount === 0 ? (
+            deckSize === 0 && !focusedDeckId ? (
+              <EmptyState
+                title="Prepara tu plan de estudio de HSK 2"
+                body="Crea el plan completo de HSK 1–2 y sáltate las palabras que ya reconoces."
+                actionLabel="Empezar el diagnóstico"
+                onAction={() => router.push('/diagnostic')}
+                actionDisabled={loading}
+              />
+            ) : (
+              <EmptyState
+                title="No hay tarjetas pendientes"
+                body="Has repasado todo lo de hoy. ¡Vuelve mañana para mantener la racha!"
+              />
+            )
           ) : (
-            <EmptyState
-              title="No cards due right now"
-              body="You have reviewed everything due today. Come back tomorrow to keep your streak!"
-            />
-          )
-        ) : (
-          <>
-            <Button label="Start review" variant="primary" onPress={startReview} />
+            <>
+              <Button
+                label="Empezar sesión"
+                variant="primary"
+                onPress={startReview}
+                disabled={loading}
+              />
 
-            <Card>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Deck breakdown</Text>
-              <StatusBarChart byStatus={byStatus} total={deckTotal} />
-            </Card>
-          </>
-        )}
+              <Card>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Estado de las tarjetas</Text>
+                <StatusBarChart byStatus={byStatus} total={deckTotal} />
+              </Card>
+            </>
+          )}
+        </Animated.View>
       </Screen>
     );
   }
@@ -623,92 +773,100 @@ export default function CardsScreen() {
 
   return (
     <Screen scrollEnabled={!swiping}>
-      <View style={styles.reviewHeader}>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Close review session"
-          hitSlop={8}
-          onPress={() => {
-            void clearReviewSession();
-            setPhase('pre-session');
-          }}
-        >
-          <Ionicons name="close" size={24} color={colors.textMuted} />
-        </Pressable>
+      <Animated.View
+        style={{
+          flex: 1,
+          opacity: reviewEntrance,
+          gap: tokens.spacing.md,
+        }}
+      >
+        <View style={styles.reviewHeader}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Cerrar la sesión de repaso"
+            hitSlop={8}
+            onPress={() => {
+              void clearReviewSession();
+              setPhase('pre-session');
+            }}
+          >
+            <Ionicons name="close" size={24} color={colors.textMuted} />
+          </Pressable>
 
-        <View style={styles.reviewHeaderCenter}>
-          <View style={styles.progressRow}>
-            <View style={[styles.progressTrack, { backgroundColor: colors.border }]}>
-              <View style={[styles.progressFill, { backgroundColor: colors.vermilion, width: progress }]} />
+          <View style={styles.reviewHeaderCenter}>
+            <View style={styles.progressRow}>
+              <View style={[styles.progressTrack, { backgroundColor: colors.border }]}>
+                <View style={[styles.progressFill, { backgroundColor: colors.vermilion, width: progress }]} />
+              </View>
+              <Text style={[styles.counterLabel, { color: colors.textMuted }]}>{counter}</Text>
             </View>
-            <Text style={[styles.counterLabel, { color: colors.textMuted }]}>{counter}</Text>
+          </View>
+
+          <View style={styles.reviewHeaderRight}>
+            {studyMode !== 'learn' ? (
+              <Text style={[styles.timerLabel, { color: colors.textMuted }]}>{timer.formatted}</Text>
+            ) : null}
+            {undoStack.length > 0 ? (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Deshacer la última calificación"
+                hitSlop={8}
+                onPress={() => {
+                  void undoLastRating();
+                }}
+              >
+                <Ionicons name="arrow-undo" size={20} color={colors.vermilion} />
+              </Pressable>
+            ) : null}
           </View>
         </View>
 
-        <View style={styles.reviewHeaderRight}>
-          {studyMode !== 'learn' ? (
-            <Text style={[styles.timerLabel, { color: colors.textMuted }]}>{timer.formatted}</Text>
-          ) : null}
-          {undoStack.length > 0 ? (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Undo last rating"
-              hitSlop={8}
-              onPress={() => {
-                void undoLastRating();
-              }}
-            >
-              <Ionicons name="arrow-undo" size={20} color={colors.vermilion} />
-            </Pressable>
-          ) : null}
-        </View>
-      </View>
+        {error ? (
+          <ErrorBanner
+            message={error}
+            onRetry={retryGrade === null ? () => void load() : () => rate(retryGrade)}
+          />
+        ) : null}
 
-      {error ? (
-        <ErrorBanner
-          message={error}
-          onRetry={retryGrade === null ? () => void load() : () => rate(retryGrade)}
-        />
-      ) : null}
-
-      {current ? (
-        <>
-          <View style={styles.cardHeaderRow}>
-            <CardStatusBadge status={cardPhase(current.scheduling, previewNow, scheduling)} />
-          </View>
-          <View style={styles.stack}>
-            {next ? (
+        {current ? (
+          <>
+            <View style={styles.cardHeaderRow}>
+              <CardStatusBadge status={cardPhase(current.scheduling, previewNow, scheduling)} />
+            </View>
+            <View style={styles.stack}>
+              {next ? (
+                <FlashCardView
+                  key={next.id}
+                  preview
+                  card={next}
+                  mode={studyMode}
+                  skill={skill}
+                  allowHints={studyMode !== 'exam'}
+                />
+              ) : null}
               <FlashCardView
-                key={next.id}
-                preview
-                card={next}
+                key={current.id}
+                card={current}
                 mode={studyMode}
                 skill={skill}
                 allowHints={studyMode !== 'exam'}
+                intervals={currentIntervals}
+                revealed={revealed}
+                onReveal={() => setRevealed(true)}
+                onRate={rate}
+                ratingDisabled={reviewing}
+                pendingGrade={pendingGrade}
+                onPanActiveChange={setSwiping}
               />
+            </View>
+            {revealed ? (
+              <Text style={[styles.hint, { color: colors.textMuted }]}>
+                Desliza a la izquierda para «Otra vez» y a la derecha para «Bien»
+              </Text>
             ) : null}
-            <FlashCardView
-              key={current.id}
-              card={current}
-              mode={studyMode}
-              skill={skill}
-              allowHints={studyMode !== 'exam'}
-              intervals={currentIntervals}
-              revealed={revealed}
-              onReveal={() => setRevealed(true)}
-              onRate={rate}
-              ratingDisabled={reviewing}
-              pendingGrade={pendingGrade}
-              onPanActiveChange={setSwiping}
-            />
-          </View>
-          {revealed ? (
-            <Text style={[styles.hint, { color: colors.textMuted }]}>
-              Swipe left for Again, right for Good
-            </Text>
-          ) : null}
-        </>
-      ) : null}
+          </>
+        ) : null}
+      </Animated.View>
     </Screen>
   );
 }
@@ -735,6 +893,11 @@ const styles = StyleSheet.create({
 
   sectionTitle: { fontSize: tokens.fontSize.sm, fontWeight: '600', marginBottom: tokens.spacing.xs },
   skillTitle: { marginTop: tokens.spacing.md },
+  modeHint: {
+    fontSize: tokens.fontSize.xs,
+    marginTop: tokens.spacing.xs,
+    lineHeight: 16,
+  },
 
   reviewHeader: {
     flexDirection: 'row',

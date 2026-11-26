@@ -70,6 +70,7 @@ jest.mock('../offline/OfflineReviewProvider', () => ({
   }),
 }));
 
+let mockSearchParams: Record<string, string> = { deckId: 'd1' };
 jest.mock('expo-router', () => {
   const React = jest.requireActual('react');
 
@@ -78,7 +79,7 @@ jest.mock('expo-router', () => {
       React.useEffect(callback, [callback]);
     },
     useRouter: () => ({ push: mockPush }),
-    useLocalSearchParams: () => ({ deckId: 'd1' }),
+    useLocalSearchParams: () => mockSearchParams,
   };
 });
 
@@ -146,6 +147,7 @@ describe('CardsScreen', () => {
     mockPush.mockReset();
     mockPreviewIntervals.mockReset().mockReturnValue({ again: 1, hard: 2, good: 3, easy: 4 });
     mockRequestRetention = 0.9;
+    mockSearchParams = { deckId: 'd1' };
     mockGetDashboard.mockReset().mockResolvedValue({
       cards: { total: 150, due: 2, by_status: { new: 100, learning: 30, review: 20 } },
     });
@@ -160,8 +162,8 @@ describe('CardsScreen', () => {
 
     await renderCards();
 
-    expect(screen.getByText('Reviews')).toBeTruthy();
-    expect(screen.getByText('Start review')).toBeTruthy();
+    expect(screen.getByText('Repasos')).toBeTruthy();
+    expect(screen.getByText('Empezar sesión')).toBeTruthy();
   });
 
   it('reveals the answer and advances to the next card after rating during active review', async () => {
@@ -171,15 +173,15 @@ describe('CardsScreen', () => {
     await renderCards();
 
     // Start session
-    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
 
     expect(screen.getByText('你好')).toBeTruthy();
     expect(screen.getByText('1/2')).toBeTruthy();
 
-    await fireEvent.press(screen.getByText('Show answer'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
     expect(screen.getByText('hello')).toBeTruthy();
 
-    await fireEvent.press(screen.getByText('Good'));
+    await fireEvent.press(screen.getByText('Bien'));
 
     expect(screen.getByText('谢谢')).toBeTruthy();
     expect(mockRateCard).toHaveBeenCalledWith(expect.objectContaining({ id: 'c1' }), 'good', expect.any(Number));
@@ -193,15 +195,15 @@ describe('CardsScreen', () => {
 
     await renderCards();
 
-    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
     expect(screen.getByText('你好')).toBeTruthy();
 
-    await fireEvent.press(screen.getByText('Show answer'));
-    await fireEvent.press(screen.getByText('Easy'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
+    await fireEvent.press(screen.getByText('Fácil'));
 
-    expect(screen.getByText('Session complete')).toBeTruthy();
-    expect(screen.getByText(/You reviewed 1 card/)).toBeTruthy();
-    expect(screen.getByText('Accuracy')).toBeTruthy();
+    expect(screen.getByText('Sesión completada')).toBeTruthy();
+    expect(screen.getByText(/Has repasado 1 tarjeta/)).toBeTruthy();
+    expect(screen.getByText('Aciertos')).toBeTruthy();
     expect(mockLogTime).toHaveBeenCalledTimes(1);
   });
 
@@ -211,9 +213,9 @@ describe('CardsScreen', () => {
 
     await renderCards();
 
-    await fireEvent.press(screen.getByText('Start review'));
-    await fireEvent.press(screen.getByText('Show answer'));
-    await fireEvent.press(screen.getByText('Good'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
+    await fireEvent.press(screen.getByText('Bien'));
 
     expect(mockRateCard).toHaveBeenCalledTimes(1);
     expect(mockReviewCard).not.toHaveBeenCalled();
@@ -226,14 +228,14 @@ describe('CardsScreen', () => {
 
     await renderCards();
 
-    await fireEvent.press(screen.getByText('Start review'));
-    await fireEvent.press(screen.getByText('Show answer'));
-    await fireEvent.press(screen.getByText('Good'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
+    await fireEvent.press(screen.getByText('Bien'));
 
     expect(screen.getByText('谢谢')).toBeTruthy();
 
     // Press undo button
-    const undoButton = screen.getByLabelText('Undo last rating');
+    const undoButton = screen.getByLabelText('Deshacer la última calificación');
     await fireEvent.press(undoButton);
 
     expect(mockUndoRating).toHaveBeenCalledWith('r1');
@@ -248,10 +250,10 @@ describe('CardsScreen', () => {
 
     await renderCards();
 
-    await fireEvent.press(screen.getByText('Start review'));
-    await fireEvent.press(screen.getByText('Show answer'));
-    await fireEvent.press(screen.getByText('Good'));
-    await fireEvent.press(screen.getByLabelText('Undo last rating'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
+    await fireEvent.press(screen.getByText('Bien'));
+    await fireEvent.press(screen.getByLabelText('Deshacer la última calificación'));
 
     expect(screen.getByText('This rating was already synced')).toBeTruthy();
     expect(screen.getByText('谢谢')).toBeTruthy();
@@ -265,7 +267,7 @@ describe('CardsScreen', () => {
     await renderCards();
 
     expect(screen.queryByText('Set up your HSK2 study plan')).toBeNull();
-    expect(screen.getByText('No cards due right now')).toBeTruthy();
+    expect(screen.getByText('No hay tarjetas pendientes')).toBeTruthy();
     expect(mockPush).not.toHaveBeenCalledWith('/diagnostic');
   });
 
@@ -274,7 +276,7 @@ describe('CardsScreen', () => {
 
     await renderCards();
 
-    expect(screen.getByText('No cards due right now')).toBeTruthy();
+    expect(screen.getByText('No hay tarjetas pendientes')).toBeTruthy();
   });
 
   it('no pide un número fijo de tarjetas: la cola la decide el servidor', async () => {
@@ -290,7 +292,7 @@ describe('CardsScreen', () => {
     mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
 
     await renderCards();
-    await fireEvent.press(screen.getByRole('button', { name: 'Recall' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Recordar' }));
 
     await waitFor(() => expect(mockLoadQueue).toHaveBeenLastCalledWith('recall', 'd1'));
   });
@@ -299,7 +301,7 @@ describe('CardsScreen', () => {
     mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
 
     const view = await act(async () => render(<CardsScreen />));
-    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
 
     expect(mockPreviewIntervals).toHaveBeenLastCalledWith(
       expect.any(Object),
@@ -322,18 +324,18 @@ describe('CardsScreen', () => {
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
 
     await renderCards();
-    await fireEvent.press(screen.getByRole('button', { name: 'Recall' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Recordar' }));
     await waitFor(() => expect(mockLoadQueue).toHaveBeenLastCalledWith('recall', 'd1'));
-    await fireEvent.press(screen.getByRole('button', { name: 'Start review' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Empezar sesión' }));
 
-    expect(screen.getByPlaceholderText('Type the answer')).toBeTruthy();
-    expect(screen.queryByRole('button', { name: 'Show answer' })).toBeNull();
+    expect(screen.getByPlaceholderText('Escribe la respuesta')).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Mostrar respuesta' })).toBeNull();
 
-    await fireEvent.changeText(screen.getByPlaceholderText('Type the answer'), '你好');
-    await fireEvent.press(screen.getByRole('button', { name: 'Check' }));
+    await fireEvent.changeText(screen.getByPlaceholderText('Escribe la respuesta'), '你好');
+    await fireEvent.press(screen.getByRole('button', { name: 'Comprobar' }));
 
     expect(mockRateCard).not.toHaveBeenCalled();
-    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Continuar' }));
 
     await waitFor(() => expect(mockRateCard).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'c1' }),
@@ -347,11 +349,11 @@ describe('CardsScreen', () => {
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
 
     await renderCards();
-    await fireEvent.press(screen.getByText('Start review'));
-    await fireEvent.press(screen.getByText('Show answer'));
-    await fireEvent.press(screen.getByText('Good'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
+    await fireEvent.press(screen.getByText('Bien'));
 
-    expect(screen.getByText('Back to deck')).toBeTruthy();
+    expect(screen.getByText('Volver al mazo')).toBeTruthy();
   });
 
   it('vuelve a presentar dentro de la sesión una tarjeta fallada', async () => {
@@ -365,14 +367,14 @@ describe('CardsScreen', () => {
     }));
 
     await renderCards();
-    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
 
-    await fireEvent.press(screen.getByText('Show answer'));
-    await fireEvent.press(screen.getByText('Again'));
-    await fireEvent.press(screen.getByText('Show answer'));
-    await fireEvent.press(screen.getByText('Good'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
+    await fireEvent.press(screen.getByText('Otra vez'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
+    await fireEvent.press(screen.getByText('Bien'));
 
-    expect(screen.queryByText('Session complete')).toBeNull();
+    expect(screen.queryByText('Sesión completada')).toBeNull();
     expect(screen.getByText('你好')).toBeTruthy();
   });
 
@@ -389,14 +391,14 @@ describe('CardsScreen', () => {
     }));
 
     await renderCards();
-    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
 
     for (let pass = 0; pass < MAX_SESSION_SHOWINGS; pass += 1) {
-      await fireEvent.press(screen.getByText('Show answer'));
-      await fireEvent.press(screen.getByText('Hard'));
+      await fireEvent.press(screen.getByText('Mostrar respuesta'));
+      await fireEvent.press(screen.getByText('Difícil'));
     }
 
-    expect(screen.getByText('Session complete')).toBeTruthy();
+    expect(screen.getByText('Sesión completada')).toBeTruthy();
     expect(mockRateCard).toHaveBeenCalledTimes(MAX_SESSION_SHOWINGS);
   });
 
@@ -417,7 +419,7 @@ describe('CardsScreen', () => {
     });
 
     await renderCards();
-    await fireEvent.press(screen.getByText('Continue'));
+    await fireEvent.press(screen.getByText('Continuar'));
 
     expect(screen.getByText('word-5')).toBeTruthy();
     expect(screen.getByText('1/5')).toBeTruthy();
@@ -435,12 +437,12 @@ describe('CardsScreen', () => {
     mockUndoRating.mockResolvedValue(card('c1', '你好'));
 
     await renderCards();
-    await fireEvent.press(screen.getByText('Start review'));
-    await fireEvent.press(screen.getByText('Show answer'));
-    await fireEvent.press(screen.getByText('Again'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
+    await fireEvent.press(screen.getByText('Otra vez'));
 
     expect(screen.getByText('2/3')).toBeTruthy();
-    await fireEvent.press(screen.getByLabelText('Undo last rating'));
+    await fireEvent.press(screen.getByLabelText('Deshacer la última calificación'));
 
     expect(screen.getByText('你好')).toBeTruthy();
     expect(screen.getByText('1/2')).toBeTruthy();
@@ -452,10 +454,10 @@ describe('CardsScreen', () => {
     mockUndoRating.mockResolvedValue(card('c1', '你好'));
 
     await renderCards();
-    await fireEvent.press(screen.getByText('Start review'));
-    await fireEvent.press(screen.getByText('Show answer'));
-    await fireEvent.press(screen.getByText('Good'));
-    await fireEvent.press(screen.getByLabelText('Undo last rating'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
+    await fireEvent.press(screen.getByText('Bien'));
+    await fireEvent.press(screen.getByLabelText('Deshacer la última calificación'));
 
     await waitFor(async () => {
       await expect(loadReviewSession()).resolves.toMatchObject({
@@ -481,17 +483,41 @@ describe('CardsScreen', () => {
     });
 
     await renderCards();
-    await fireEvent.press(screen.getByText('Discard'));
+    await fireEvent.press(screen.getByText('Descartar'));
 
-    expect(screen.queryByText('Continue')).toBeNull();
+    expect(screen.queryByText('Continuar')).toBeNull();
     await expect(loadReviewSession()).resolves.toBeNull();
+  });
+
+  // «Start learning» en Hoy abría Reviews en modo Review.
+  it('abre en el modo que pide la ruta', async () => {
+    mockSearchParams = { deckId: 'd1', mode: 'learn', at: '1' };
+    mockLoadQueue.mockResolvedValue([]);
+
+    await renderCards();
+
+    expect(mockLoadQueue).toHaveBeenLastCalledWith('recognition', 'd1', 'learn');
+  });
+
+  // Tras una sesión, «Deck breakdown» y «N due» seguían con los números de antes.
+  it('al cerrar una sesión vuelve a pedir la cola y los contadores', async () => {
+    mockLoadQueue.mockResolvedValue([card('c1', '你好'), card('c2', '谢谢')]);
+    await renderCards();
+    await fireEvent.press(screen.getByText('Empezar sesión'));
+    const queues = mockLoadQueue.mock.calls.length;
+    const dashboards = mockGetDashboard.mock.calls.length;
+
+    await fireEvent.press(screen.getByLabelText('Cerrar la sesión de repaso'));
+
+    await waitFor(() => expect(mockLoadQueue.mock.calls.length).toBeGreaterThan(queues));
+    expect(mockGetDashboard.mock.calls.length).toBeGreaterThan(dashboards);
   });
 
   it('en modo Learn solo entran elementos nuevos', async () => {
     mockLoadQueue.mockResolvedValue([]);
 
     await renderCards();
-    await fireEvent.press(screen.getByText('Learn'));
+    await fireEvent.press(screen.getByText('Aprender'));
 
     expect(mockLoadQueue).toHaveBeenLastCalledWith('recognition', 'd1', 'learn');
   });
@@ -510,11 +536,11 @@ describe('CardsScreen', () => {
     mockRateCard.mockResolvedValue({ card: card('c1', '你好'), reviewId: 'r1' });
 
     await renderCards();
-    await fireEvent.press(screen.getByText('Learn'));
+    await fireEvent.press(screen.getByText('Aprender'));
     await waitFor(() => expect(mockLoadQueue).toHaveBeenLastCalledWith('recognition', 'd1', 'learn'));
-    await fireEvent.press(screen.getByText('Start review'));
-    await fireEvent.press(screen.getByText('Show answer'));
-    await fireEvent.press(screen.getByText('Good'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
+    await fireEvent.press(screen.getByText('Bien'));
 
     expect(mockRateCard).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'c1' }),
@@ -528,24 +554,50 @@ describe('CardsScreen', () => {
     mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
 
     await renderCards();
-    await fireEvent.press(screen.getByText('Exam'));
-    await fireEvent.press(screen.getByText('Start review'));
+    await fireEvent.press(screen.getByText('Examen'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
 
-    expect(screen.queryByText('Show a hint')).toBeNull();
+    expect(screen.queryByText('Ver una pista')).toBeNull();
   });
 
   it('en modo Exam la valoración se registra pero no reprograma', async () => {
     mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
 
     await renderCards();
-    await fireEvent.press(screen.getByText('Exam'));
-    await fireEvent.press(screen.getByText('Start review'));
-    await fireEvent.press(screen.getByText('Show answer'));
-    await fireEvent.press(screen.getByText('Good'));
+    await fireEvent.press(screen.getByText('Examen'));
+    await fireEvent.press(screen.getByText('Empezar sesión'));
+    await fireEvent.press(screen.getByText('Mostrar respuesta'));
+    await fireEvent.press(screen.getByText('Bien'));
 
     expect(mockRateCard).not.toHaveBeenCalled();
     expect(mockRecordEvent).toHaveBeenCalledWith(
       expect.objectContaining({ kind: 'exercise_attempted' }),
     );
+  });
+
+  it('muestra descripciones contextuales para modo de estudio y habilidad seleccionados', async () => {
+    mockLoadQueue.mockResolvedValue([card('c1', '你好')]);
+
+    await renderCards();
+
+    // Default: review mode + recognition skill
+    expect(screen.getByText('Repasa lo pendiente con repetición espaciada (FSRS)')).toBeTruthy();
+    expect(screen.getByText('Entender: hanzi → significado y pinyin')).toBeTruthy();
+
+    // Change to Learn mode
+    await fireEvent.press(screen.getByText('Aprender'));
+    expect(screen.getByText('Presenta palabras nuevas con audio, pinyin y guía de trazos')).toBeTruthy();
+
+    // Change to Recall skill
+    await fireEvent.press(screen.getByRole('button', { name: 'Recordar' }));
+    expect(screen.getByText('Recordar: significado → escribe hanzi y pinyin')).toBeTruthy();
+
+    // Change to Exam mode
+    await fireEvent.press(screen.getByText('Examen'));
+    expect(screen.getByText('Evaluación con tiempo y sin pistas para medir lo que recuerdas')).toBeTruthy();
+
+    // Change to Listening skill
+    await fireEvent.press(screen.getByRole('button', { name: 'Escuchar' }));
+    expect(screen.getByText('Escuchar: audio → identifica el hanzi')).toBeTruthy();
   });
 });
