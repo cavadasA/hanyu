@@ -46,7 +46,7 @@ export function ReadingDetailScreen() {
 
   async function load() {
     if (!id) {
-      setError('Reading not found');
+      setError('No se encontró la lectura');
       setLoading(false);
       return;
     }
@@ -178,7 +178,7 @@ export function ReadingDetailScreen() {
   return (
     <Screen>
       <View>
-        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Reading</Text>
+        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Lectura</Text>
         <Text style={[styles.title, { color: colors.text }]}>{reading.title}</Text>
       </View>
 
@@ -186,7 +186,7 @@ export function ReadingDetailScreen() {
 
       <View style={styles.meta}>
         <Badge label={`HSK ${reading.hsk_level}`} />
-        <Badge label={reading.format.replace('_', ' ')} />
+        <Badge label={FORMAT_LABELS[reading.format] ?? reading.format} />
       </View>
 
       <View style={styles.actions}>
@@ -232,7 +232,7 @@ export function ReadingDetailScreen() {
         ) : null}
         {reading.sentences.some(sentence => Boolean(sentence.pinyin)) ? (
           <Button
-            label={showPinyin ? 'Hide pinyin' : 'Show pinyin'}
+            label={showPinyin ? 'Ocultar pinyin' : 'Mostrar pinyin'}
             variant="secondary"
             onPress={() => setShowPinyin(value => !value)}
           />
@@ -261,7 +261,7 @@ export function ReadingDetailScreen() {
           }
         />
         <Button
-          label={isSubmitting ? 'Submitting...' : 'Submit answers'}
+          label={isSubmitting ? 'Enviando…' : 'Enviar respuestas'}
           onPress={submit}
           disabled={!canSubmit}
         />
@@ -271,6 +271,12 @@ export function ReadingDetailScreen() {
     </Screen>
   );
 }
+
+const FORMAT_LABELS: Record<string, string> = {
+  short_text: 'Texto corto',
+  story: 'Historia',
+  dialogue: 'Diálogo',
+};
 
 function allAnswered(reading: ReadingDetail, answers: Record<string, string>) {
   return reading.questions.length > 0 && reading.questions.every(question => Boolean(answers[question.id]));

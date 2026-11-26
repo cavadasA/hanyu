@@ -12,7 +12,7 @@ import { Screen } from '../ui/Screen';
 
 const LEVELS: HskLevel[] = [2];
 const TOPICS: Array<{ value?: string; label: string }> = [
-  { label: 'All topics' },
+  { label: 'Todos los temas' },
   { value: 'compras', label: 'compras' },
   { value: 'estudio', label: 'estudio' },
   { value: 'vida diaria', label: 'vida diaria' },
@@ -21,9 +21,9 @@ const TOPICS: Array<{ value?: string; label: string }> = [
   { value: 'ocio', label: 'ocio' },
 ];
 const FORMAT_LABELS: Record<ReadingFormat, string> = {
-  short_text: 'Short text',
-  story: 'Story',
-  dialogue: 'Dialogue',
+  short_text: 'Texto corto',
+  story: 'Historia',
+  dialogue: 'Diálogo',
 };
 
 export function ReadingsScreen() {
@@ -35,8 +35,8 @@ export function ReadingsScreen() {
   return (
     <Screen>
       <View>
-        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Practice</Text>
-        <Text style={[styles.title, { color: colors.text }]}>Readings</Text>
+        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Práctica</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Lecturas</Text>
       </View>
 
       <View style={styles.segmentGroup}>
@@ -87,7 +87,7 @@ export function ReadingsScreen() {
       {readings.loading ? <ActivityIndicator /> : null}
 
       {!readings.loading && readings.readings.length === 0 ? (
-        <EmptyState title="No readings yet" body="No readings match this filter." />
+        <EmptyState title="Todavía no hay lecturas" body="Ninguna lectura coincide con este filtro." />
       ) : null}
 
       {readings.readings.map(reading => (
@@ -105,7 +105,7 @@ export function ReadingsScreen() {
             {reading.coverage ? (
               <View style={styles.coverage}>
                 <Text style={{ color: colors.textMuted }}>
-                  {Math.round(reading.coverage.ratio * 100)}% known · {reading.coverage.unknown_count} not yet known
+                  {Math.round(reading.coverage.ratio * 100)}% conocido · {reading.coverage.unknown_count} sin conocer
                 </Text>
                 <Badge label={coverageLabel(reading.coverage.ratio)} />
               </View>
@@ -113,12 +113,12 @@ export function ReadingsScreen() {
             <View style={styles.progress}>
               <Text style={{ color: colors.textMuted }}>
                 {reading.progress?.finished_at
-                  ? 'Read'
+                  ? 'Leída'
                   : reading.progress && reading.progress.last_sentence > 0
-                    ? 'Started'
-                    : 'Not started'}
+                    ? 'Empezada'
+                    : 'Sin empezar'}
               </Text>
-              {reading.progress?.bookmarked ? <Badge label="Bookmarked" /> : null}
+              {reading.progress?.bookmarked ? <Badge label="Marcada" /> : null}
             </View>
           </Card>
         </Pressable>
@@ -135,9 +135,9 @@ function formatLabel(format: ReadingFormat) {
 // no una copia suya: la etiqueta que se lee antes de abrir tiene que significar
 // lo mismo que el motivo que se lee en el plan del día.
 function coverageLabel(ratio: number) {
-  if (ratio < COMPREHENSIBLE_MIN) return 'Difficult';
-  if (ratio <= COMPREHENSIBLE_MAX) return 'Comfortable';
-  return 'Easy';
+  if (ratio < COMPREHENSIBLE_MIN) return 'Difícil';
+  if (ratio <= COMPREHENSIBLE_MAX) return 'Cómoda';
+  return 'Fácil';
 }
 
 const styles = StyleSheet.create({

@@ -122,7 +122,7 @@ describe('WordSheet', () => {
     expect(screen.getByText('saber')).toBeTruthy();
   });
 
-  it('«Añadir a Cards» añade la acepción del token, no la primera por nivel', async () => {
+  it('«Añadir a tus tarjetas» añade la acepción del token, no la primera por nivel', async () => {
     mockGetSettings.mockResolvedValue({ support_language: 'es' });
     mockAddCard.mockResolvedValue(undefined);
 
@@ -132,7 +132,7 @@ describe('WordSheet', () => {
     });
 
     await act(async () => {
-      fireEvent.press(screen.getAllByLabelText(/Añadir a Cards/)[0]);
+      fireEvent.press(screen.getAllByLabelText(/Añadir a tus tarjetas/)[0]);
     });
 
     expect(mockAddCard).toHaveBeenCalledWith(31, expect.anything());

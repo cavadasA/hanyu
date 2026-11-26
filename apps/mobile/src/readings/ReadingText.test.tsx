@@ -82,8 +82,8 @@ describe('ReadingText', () => {
     expect(view.getByText('ni hao')).toBeTruthy();
     expect(view.getByText('hello')).toBeTruthy();
 
-    await fireEvent.press(view.getByRole('button', { name: /Añadir a Cards: ni hao/ }));
-    await waitFor(() => expect(view.getByText('Añadir a Cards: ni hao, hello')).toBeTruthy());
+    await fireEvent.press(view.getByRole('button', { name: /Añadir a tus tarjetas: ni hao/ }));
+    await waitFor(() => expect(view.getByText('Añadir a tus tarjetas: ni hao, hello')).toBeTruthy());
     expect(mockAddCard).toHaveBeenCalledWith(1, {
       context: {
         sentence: '你好，龘。',
@@ -93,7 +93,7 @@ describe('ReadingText', () => {
     });
 
     await fireEvent.press(view.getByRole('button', { name: '龘' }));
-    expect(view.getByText('Unknown word')).toBeTruthy();
+    expect(view.getByText('Palabra desconocida')).toBeTruthy();
     expect(view.queryByRole('button', { name: '，' })).toBeNull();
   });
 
@@ -120,7 +120,7 @@ describe('ReadingText', () => {
 
     await fireEvent.press(view.getByRole('button', { name: '还' }));
 
-    expect(view.getAllByRole('button', { name: /Añadir a Cards/ })[0].props.accessibilityLabel)
+    expect(view.getAllByRole('button', { name: /Añadir a tus tarjetas/ })[0].props.accessibilityLabel)
       .toContain('huán');
     expect(view.queryByText('todavía')).toBeNull();
   });
@@ -144,7 +144,7 @@ describe('ReadingText', () => {
     await fireEvent.press(view.getByRole('button', { name: '你好' }));
     await fireEvent.press(view.getByRole('button', { name: '谢谢' }));
 
-    expect(view.getByRole('button', { name: /Añadir a Cards: xie xie/ }).props.accessibilityState)
+    expect(view.getByRole('button', { name: /Añadir a tus tarjetas: xie xie/ }).props.accessibilityState)
       .toMatchObject({ disabled: true });
   });
 });

@@ -112,7 +112,7 @@ export function WordSheet({
           {sense.classifier ? <Badge label={`量 ${sense.classifier}`} /> : null}
         </View>
         <Button
-          label={legacyMode ? (added.has(sense.id) ? 'Added' : adding ? 'Adding...' : 'Add to Cards') : `Añadir a Cards: ${sense.pinyin}, ${gloss}`}
+          label={legacyMode ? (added.has(sense.id) ? 'Añadida' : adding ? 'Añadiendo…' : 'Añadir a tus tarjetas') : `Añadir a tus tarjetas: ${sense.pinyin}, ${gloss}`}
           onPress={() => addCard(sense)}
           disabled={added.has(sense.id) || adding}
         />
@@ -124,8 +124,8 @@ export function WordSheet({
     <Card>
       <View style={styles.header}>
         <Text style={[styles.hanzi, { color: colors.text }]}>{text}</Text>
-        <Pressable accessibilityRole="button" accessibilityLabel="Close word" onPress={onClose}>
-          <Text style={[styles.close, { color: colors.textMuted }]}>Close</Text>
+        <Pressable accessibilityRole="button" accessibilityLabel="Cerrar la palabra" onPress={onClose}>
+          <Text style={[styles.close, { color: colors.textMuted }]}>Cerrar</Text>
         </Pressable>
       </View>
 
@@ -148,7 +148,7 @@ export function WordSheet({
           {error ? <Text style={[styles.error, { color: colors.vermilion }]}>{error}</Text> : null}
         </>
       ) : (
-        <Text style={[styles.meaning, { color: colors.textMuted }]}>Unknown word</Text>
+        <Text style={[styles.meaning, { color: colors.textMuted }]}>Palabra desconocida</Text>
       )}
     </Card>
   );

@@ -76,10 +76,10 @@ describe('ReadingsScreen', () => {
 
     const view = await render(<ReadingsScreen />);
 
-    await waitFor(() => expect(view.getByText('50% known · 1 not yet known')).toBeTruthy());
-    expect(view.getByText('Difficult')).toBeTruthy();
-    expect(view.getByText('Started')).toBeTruthy();
-    expect(view.getByText('Bookmarked')).toBeTruthy();
+    await waitFor(() => expect(view.getByText('50% conocido · 1 sin conocer')).toBeTruthy());
+    expect(view.getByText('Difícil')).toBeTruthy();
+    expect(view.getByText('Empezada')).toBeTruthy();
+    expect(view.getByText('Marcada')).toBeTruthy();
   });
 
   it('distingue una cobertura confortable de una cobertura casi completa', async () => {
@@ -101,7 +101,7 @@ describe('ReadingsScreen', () => {
     const view = await render(<ReadingsScreen />);
 
     await waitFor(() => expect(view.getByText('Casi completa')).toBeTruthy());
-    expect(view.getByText('Comfortable')).toBeTruthy();
-    expect(view.getByText('Easy')).toBeTruthy();
+    expect(view.getByText('Cómoda')).toBeTruthy();
+    expect(view.getByText('Fácil')).toBeTruthy();
   });
 });

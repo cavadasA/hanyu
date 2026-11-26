@@ -115,15 +115,15 @@ describe('ReadingDetailScreen', () => {
     await waitFor(() => expect(view.getByText('Ordering tea')).toBeTruthy());
     expect(view.getByRole('button', { name: 'Reproducir' })).toBeTruthy();
 
-    await fireEvent.press(view.getByRole('button', { name: 'Show pinyin' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Mostrar pinyin' }));
     expect(view.getByText('wo yao cha.')).toBeTruthy();
 
-    expect(view.getByRole('button', { name: 'Submit answers' }).props.accessibilityState)
+    expect(view.getByRole('button', { name: 'Enviar respuestas' }).props.accessibilityState)
       .toMatchObject({ disabled: true });
 
     await fireEvent.press(view.getByRole('button', { name: 'Tea' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Submit answers' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Submit answers' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Enviar respuestas' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Enviar respuestas' }));
 
     await waitFor(() => expect(view.getByText('Score 1/1')).toBeTruthy());
     expect(mockGetReading).toHaveBeenCalledWith('reading-1');

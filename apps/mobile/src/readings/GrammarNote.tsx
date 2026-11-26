@@ -13,7 +13,7 @@ export function GrammarNote({ points }: { points: Pick<GrammarPoint, 'code' | 't
 
   return (
     <Card>
-      <Text style={[styles.heading, { color: colors.text }]}>Grammar focus</Text>
+      <Text style={[styles.heading, { color: colors.text }]}>Gramática de la lectura</Text>
       {points.map(point => (
         <View key={point.code} style={styles.point}>
           <Text style={[styles.title, { color: colors.text }]}>{point.title}</Text>
