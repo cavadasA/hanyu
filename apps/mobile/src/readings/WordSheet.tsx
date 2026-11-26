@@ -87,7 +87,8 @@ export function WordSheet({
       await flashcards.current.addCard(sense.id, { context });
       setAdded(current => new Set(current).add(sense.id));
     } catch (caught) {
-      if (toUserMessage(caught).toLowerCase().includes('already')) {
+      // El mensaje técnico, no el que se enseña: ese ya está en español.
+      if (caught instanceof Error && caught.message.toLowerCase().includes('already')) {
         setAdded(current => new Set(current).add(sense.id));
       } else {
         setError(toUserMessage(caught));

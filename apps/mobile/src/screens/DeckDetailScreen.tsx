@@ -95,9 +95,9 @@ export function DeckDetailScreen() {
   }
 
   function confirmDelete() {
-    Alert.alert('Delete deck', `Permanently delete ${deck?.name ?? 'this deck'}? Your review progress is kept.`, [
-      { text: 'Cancel', style: 'cancel' },
-      { text: 'Delete', style: 'destructive', onPress: () => void deleteDeck() },
+    Alert.alert('Borrar mazo', `¿Borrar ${deck?.name ?? 'este mazo'} para siempre? Tu progreso de repaso se conserva.`, [
+      { text: 'Cancelar', style: 'cancel' },
+      { text: 'Borrar', style: 'destructive', onPress: () => void deleteDeck() },
     ]);
   }
 
@@ -134,14 +134,14 @@ export function DeckDetailScreen() {
               }}
               onSubmitEditing={saveName}
               onBlur={renaming ? saveName : undefined}
-              placeholder="Deck name"
+              placeholder="Nombre del mazo"
               placeholderTextColor={colors.textMuted}
               autoCapitalize="words"
               style={[styles.title, { color: colors.text }]}
             />
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={deck.is_active ? 'Pause' : 'Activate'}
+              accessibilityLabel={deck.is_active ? 'Pausar' : 'Activar'}
               onPress={toggleActive}
               style={[
                 styles.toggle,
@@ -160,21 +160,21 @@ export function DeckDetailScreen() {
               <Text
                 style={[styles.toggleLabel, { color: deck.is_active ? colors.text : colors.textMuted }]}
               >
-                {deck.is_active ? 'Active' : 'Paused'}
+                {deck.is_active ? 'Activo' : 'En pausa'}
               </Text>
             </Pressable>
           </View>
 
           <Button
-            label="Review this deck"
+            label="Repasar este mazo"
             variant="primary"
             onPress={() => router.push('/cards?deckId=' + id)}
           />
 
           {wordsToShow.length === 0 ? (
             <EmptyState
-              title="No words yet"
-              body="Add words from the Library to build this deck."
+              title="Todavía no hay palabras"
+              body="Añade palabras desde la Biblioteca para completar este mazo."
             />
           ) : (
             wordsToShow.map((word) => (
@@ -189,11 +189,11 @@ export function DeckDetailScreen() {
                   </View>
                   <Pressable
                     accessibilityRole="button"
-                    accessibilityLabel={`Remove ${word.hanzi}`}
+                    accessibilityLabel={`Quitar ${word.hanzi}`}
                     onPress={() => removeWord(word)}
                     style={[styles.removeButton, { borderColor: colors.border }]}
                   >
-                    <Text style={{ color: colors.vermilion }}>Remove</Text>
+                    <Text style={{ color: colors.vermilion }}>Quitar</Text>
                   </Pressable>
                 </View>
               </Card>
@@ -201,7 +201,7 @@ export function DeckDetailScreen() {
           )}
 
           <Button
-            label="Delete deck"
+            label="Borrar mazo"
             variant="outline"
             onPress={confirmDelete}
             disabled={deleting}

@@ -64,7 +64,7 @@ describe('DeckCatalogScreen', () => {
     await renderCatalog();
 
     await act(async () => {
-      await fireEvent.press(screen.getByText('Add'));
+      await fireEvent.press(screen.getByText('Añadir'));
     });
 
     expect(mockAddDeckFromTemplate).toHaveBeenCalledWith('t1');

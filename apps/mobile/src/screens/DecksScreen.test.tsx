@@ -67,10 +67,10 @@ describe('DecksScreen', () => {
 
     await renderDecks();
 
-    await fireEvent.press(screen.getByText('Catalog'));
+    await fireEvent.press(screen.getByText('Catálogo'));
     expect(mockPush).toHaveBeenLastCalledWith('/library/decks/catalog');
 
-    await fireEvent.press(screen.getByText('Add from catalog'));
+    await fireEvent.press(screen.getByText('Añadir del catálogo'));
     expect(mockPush).toHaveBeenLastCalledWith('/library/decks/catalog');
   });
 
@@ -80,9 +80,9 @@ describe('DecksScreen', () => {
 
     await renderDecks();
 
-    await fireEvent.press(screen.getByLabelText('Pause HSK 1'));
+    await fireEvent.press(screen.getByLabelText('Pausar HSK 1'));
     expect(mockUpdateDeck).toHaveBeenCalledWith('d1', { is_active: false });
-    await waitFor(() => expect(screen.getByLabelText('Activate HSK 1')).toBeTruthy());
+    await waitFor(() => expect(screen.getByLabelText('Activar HSK 1')).toBeTruthy());
   });
 
   it('navigates to the detail screen when a deck is pressed', async () => {
@@ -90,7 +90,7 @@ describe('DecksScreen', () => {
 
     await renderDecks();
 
-    await fireEvent.press(screen.getByLabelText('Open HSK 1'));
+    await fireEvent.press(screen.getByLabelText('Abrir HSK 1'));
     expect(mockPush).toHaveBeenLastCalledWith('/library/decks/d1');
   });
 

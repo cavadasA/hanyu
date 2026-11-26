@@ -78,7 +78,7 @@ describe('DeckDetailScreen', () => {
     await renderDetail();
 
     expect(screen.getByText('你好')).toBeTruthy();
-    await fireEvent.press(screen.getByText('Review this deck'));
+    await fireEvent.press(screen.getByText('Repasar este mazo'));
     expect(mockPush).toHaveBeenCalledWith('/cards?deckId=d1');
   });
 
@@ -89,7 +89,7 @@ describe('DeckDetailScreen', () => {
 
     await renderDetail();
 
-    await fireEvent.press(screen.getByLabelText('Remove 你好'));
+    await fireEvent.press(screen.getByLabelText('Quitar 你好'));
     await waitFor(() => expect(mockRemoveWordFromDeck).toHaveBeenCalledWith('d1', 5));
     expect(screen.queryByText('你好')).toBeNull();
   });

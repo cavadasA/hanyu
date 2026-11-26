@@ -52,7 +52,7 @@ export function DecksScreen() {
     setCreating(true);
     setError(null);
     try {
-      const deck = await getData().decks.createDeck({ name: 'New deck' });
+      const deck = await getData().decks.createDeck({ name: 'Mazo nuevo' });
       setCreating(false);
       router.push(`/library/decks/${deck.id}`);
     } catch (caught) {
@@ -65,11 +65,11 @@ export function DecksScreen() {
     <Screen>
       <View style={styles.header}>
         <View style={styles.headerCopy}>
-          <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Library</Text>
-          <Text style={[styles.title, { color: colors.text }]}>Decks</Text>
+          <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Biblioteca</Text>
+          <Text style={[styles.title, { color: colors.text }]}>Mazos</Text>
         </View>
         <Button
-          label="Catalog"
+          label="Catálogo"
           variant="secondary"
           onPress={() => router.push('/library/decks/catalog')}
         />
@@ -81,9 +81,9 @@ export function DecksScreen() {
 
       {decks !== null && decks.length === 0 ? (
         <EmptyState
-          title="No decks yet"
-          body="Add a curated deck from the catalog to get started."
-          actionLabel="Add from catalog"
+          title="Todavía no tienes mazos"
+          body="Añade un mazo del catálogo para empezar."
+          actionLabel="Añadir del catálogo"
           onAction={() => router.push('/library/decks/catalog')}
         />
       ) : null}
@@ -92,7 +92,7 @@ export function DecksScreen() {
         <Card key={deck.id}>
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={`Open ${deck.name}`}
+            accessibilityLabel={`Abrir ${deck.name}`}
             onPress={() => router.push(`/library/decks/${deck.id}`)}
             style={styles.deckMain}
           >
@@ -104,7 +104,7 @@ export function DecksScreen() {
 
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={`${deck.is_active ? 'Pause' : 'Activate'} ${deck.name}`}
+            accessibilityLabel={`${deck.is_active ? 'Pausar' : 'Activar'} ${deck.name}`}
             accessibilityState={{ selected: deck.is_active }}
             onPress={() => toggleActive(deck)}
             style={[
@@ -127,7 +127,7 @@ export function DecksScreen() {
                 { color: deck.is_active ? colors.text : colors.textMuted },
               ]}
             >
-              {deck.is_active ? 'Active' : 'Paused'}
+              {deck.is_active ? 'Activo' : 'En pausa'}
             </Text>
           </Pressable>
         </Card>

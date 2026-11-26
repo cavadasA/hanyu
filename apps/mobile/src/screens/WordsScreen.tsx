@@ -15,7 +15,7 @@ import { ErrorBanner } from '../ui/ErrorBanner';
 import { Screen } from '../ui/Screen';
 
 const LEVELS: Array<{ label: string; value: HskLevel | undefined }> = [
-  { label: 'All', value: undefined },
+  { label: 'Todos', value: undefined },
   { label: 'HSK 1', value: 1 },
   { label: 'HSK 2', value: 2 },
   { label: 'HSK 3', value: 3 },
@@ -68,7 +68,8 @@ export function WordsScreen() {
       setAdded(current => ({ ...current, [word.id]: true }));
     } catch (caught) {
       const message = toUserMessage(caught);
-      if (message.toLowerCase().includes('already')) {
+      // El mensaje técnico, no el que se enseña: ese ya está en español.
+      if (caught instanceof Error && caught.message.toLowerCase().includes('already')) {
         setAdded(current => ({ ...current, [word.id]: true }));
       } else {
         setAddError(message);
@@ -81,12 +82,12 @@ export function WordsScreen() {
   return (
     <Screen>
       <View>
-        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Library</Text>
-        <Text style={[styles.title, { color: colors.text }]}>Words</Text>
+        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Biblioteca</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Palabras</Text>
       </View>
 
       <TextInput
-        placeholder="Search words"
+        placeholder="Buscar palabras"
         placeholderTextColor={colors.textMuted}
         value={words.query}
         onChangeText={words.setQuery}
@@ -123,7 +124,7 @@ export function WordsScreen() {
               <Pressable
                 key={deck.id}
                 accessibilityRole="button"
-                accessibilityLabel={`Deck ${deck.name}`}
+                accessibilityLabel={`Mazo ${deck.name}`}
                 accessibilityState={{ selected }}
                 onPress={() => setSelectedDeckId(deck.id)}
                 style={[
@@ -144,12 +145,12 @@ export function WordsScreen() {
       {decks !== null && decks.length === 0 ? (
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Add a deck to store words"
+          accessibilityLabel="Añade un mazo para guardar palabras"
           onPress={() => router.push('/library/decks')}
           style={[styles.noDeckHint, { borderColor: colors.border }]}
         >
           <Text style={[styles.noDeckText, { color: colors.textMuted }]}>
-            No decks yet. Create one to organize these words.
+            Todavía no tienes mazos. Crea uno para organizar estas palabras.
           </Text>
         </Pressable>
       ) : null}
@@ -163,7 +164,7 @@ export function WordsScreen() {
       </Text>
 
       {!words.loading && words.words.length === 0 ? (
-        <EmptyState title="No words found" body="Try another search or HSK level." />
+        <EmptyState title="No se encontraron palabras" body="Prueba otra búsqueda u otro nivel HSK." />
       ) : null}
 
       {words.words.map(word => {
@@ -184,7 +185,7 @@ export function WordsScreen() {
             {word.pos ? <Badge label={word.pos} /> : null}
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={`Add ${word.hanzi} to Cards`}
+              accessibilityLabel={`Añadir ${word.hanzi} a tus tarjetas`}
               accessibilityState={{ disabled: isAdded || isAdding }}
               disabled={isAdded || isAdding}
               onPress={() => addWord(word)}
@@ -198,7 +199,7 @@ export function WordsScreen() {
               ]}
             >
               <Text style={{ color: isAdded ? colors.text : colors.onAccent }}>
-                {isAdded ? 'Added' : isAdding ? 'Adding...' : 'Add'}
+                {isAdded ? 'Añadida' : isAdding ? 'Añadiendo…' : 'Añadir'}
               </Text>
             </Pressable>
           </Card>
@@ -207,13 +208,13 @@ export function WordsScreen() {
 
       <View style={styles.pager}>
         <Button
-          label="Previous page"
+          label="Página anterior"
           variant="secondary"
           onPress={words.previousPage}
           disabled={!words.canPrevious}
         />
         <Button
-          label="Next page"
+          label="Página siguiente"
           variant="secondary"
           onPress={words.nextPage}
           disabled={!words.canNext}

@@ -12,33 +12,33 @@ export function LibraryHomeScreen() {
   return (
     <Screen>
       <View style={styles.header}>
-        <Text style={[styles.heading, { color: colors.text }]}>Library</Text>
+        <Text style={[styles.heading, { color: colors.text }]}>Biblioteca</Text>
         <Text style={[styles.subtitle, { color: colors.textMuted }]}>
-          Words and grammar for your level
+          Palabras y gramática de tu nivel
         </Text>
       </View>
 
       <HubTile
         icon="book-outline"
-        title="Words"
-        description="Search HSK words"
-        actionLabel="Words"
+        title="Palabras"
+        description="Busca palabras del HSK"
+        actionLabel="Palabras"
         onPress={() => router.push('/library/words')}
       />
 
       <HubTile
         icon="language-outline"
-        title="Grammar"
-        description="Browse grammar patterns"
-        actionLabel="Grammar"
+        title="Gramática"
+        description="Explora las estructuras gramaticales"
+        actionLabel="Gramática"
         onPress={() => router.push('/library/grammar')}
       />
 
       <HubTile
         icon="albums-outline"
-        title="Decks"
-        description="Manage your study decks"
-        actionLabel="Decks"
+        title="Mazos"
+        description="Gestiona tus mazos de estudio"
+        actionLabel="Mazos"
         onPress={() => router.push('/library/decks')}
       />
     </Screen>

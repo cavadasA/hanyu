@@ -41,8 +41,8 @@ export function GrammarScreen() {
   return (
     <Screen>
       <View>
-        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Library</Text>
-        <Text style={[styles.title, { color: colors.text }]}>Grammar</Text>
+        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Biblioteca</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Gramática</Text>
       </View>
 
       <View style={styles.filters}>
@@ -70,7 +70,7 @@ export function GrammarScreen() {
       {loading ? <ActivityIndicator /> : null}
 
       {!loading && points.length === 0 ? (
-        <EmptyState title="No grammar points" body="Try a different HSK level." />
+        <EmptyState title="No hay puntos de gramática" body="Prueba con otro nivel HSK." />
       ) : null}
 
       {points.map(point => (

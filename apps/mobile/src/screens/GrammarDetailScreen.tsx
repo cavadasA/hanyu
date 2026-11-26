@@ -27,7 +27,7 @@ export function GrammarDetailScreen() {
 
   async function load() {
     if (!id || !level) {
-      setError('Invalid grammar point');
+      setError('Punto de gramática no válido');
       setLoading(false);
       return;
     }
@@ -88,12 +88,12 @@ export function GrammarDetailScreen() {
       {point ? (
         <>
           <View>
-            <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Grammar</Text>
+            <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Gramática</Text>
             <Text style={[styles.title, { color: colors.text }]}>{point.title}</Text>
           </View>
           <Badge label={`HSK ${point.hsk_level}`} />
           <Button
-            label={saving ? 'Saving...' : studied ? 'Studied' : 'Mark as studied'}
+            label={saving ? 'Guardando…' : studied ? 'Estudiado' : 'Marcar como estudiado'}
             variant="outline"
             onPress={() => void markStudied()}
             disabled={saving || studied}

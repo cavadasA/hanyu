@@ -48,8 +48,8 @@ export function DeckCatalogScreen() {
   return (
     <Screen>
       <View>
-        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Decks</Text>
-        <Text style={[styles.title, { color: colors.text }]}>Catalog</Text>
+        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Mazos</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Catálogo</Text>
       </View>
 
       {error ? <ErrorBanner message={error} onRetry={load} /> : null}
@@ -65,7 +65,7 @@ export function DeckCatalogScreen() {
             </Text>
           ) : null}
           <Button
-            label="Add"
+            label="Añadir"
             variant="primary"
             busy={adding[template.id]}
             onPress={() => add(template)}

@@ -90,9 +90,9 @@ describe('Grammar screens', () => {
     expect(view.getByText('Como llueve, no voy.')).toBeTruthy();
     expect(view.queryByText('null')).toBeNull();
     expect(mockGetGrammarPoint).toHaveBeenCalledWith(2, 3);
-    await fireEvent.press(view.getByText('Mark as studied'));
+    await fireEvent.press(view.getByText('Marcar como estudiado'));
     expect(mockMarkGrammarStudied).toHaveBeenCalledWith(3);
-    await waitFor(() => expect(view.getByText('Studied')).toBeTruthy());
+    await waitFor(() => expect(view.getByText('Estudiado')).toBeTruthy());
   });
 
   it('muestra el estado persistido y evita marcar dos veces', async () => {
@@ -109,8 +109,8 @@ describe('Grammar screens', () => {
 
     const view = await render(<GrammarDetailScreen />);
 
-    await waitFor(() => expect(view.getByText('Studied')).toBeTruthy());
-    const studiedButton = view.getByRole('button', { name: 'Studied' });
+    await waitFor(() => expect(view.getByText('Estudiado')).toBeTruthy());
+    const studiedButton = view.getByRole('button', { name: 'Estudiado' });
     expect(studiedButton).toBeDisabled();
     expect(mockMarkGrammarStudied).not.toHaveBeenCalled();
   });

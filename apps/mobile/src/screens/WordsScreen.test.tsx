@@ -68,7 +68,7 @@ describe('WordsScreen', () => {
     mockAddCard.mockResolvedValue({ card_id: 'card-1' });
     const view = await render(<WordsScreen />);
 
-    await fireEvent.changeText(view.getByPlaceholderText('Search words'), 'ni');
+    await fireEvent.changeText(view.getByPlaceholderText('Buscar palabras'), 'ni');
     await fireEvent.press(view.getByRole('button', { name: 'HSK 2' }));
     await actTimers(300);
 
@@ -80,11 +80,11 @@ describe('WordsScreen', () => {
       page_size: 20,
     });
 
-    await fireEvent.press(view.getByRole('button', { name: 'Add 你好 to Cards' }));
-    await waitFor(() => expect(view.getByText('Added')).toBeTruthy());
+    await fireEvent.press(view.getByRole('button', { name: 'Añadir 你好 a tus tarjetas' }));
+    await waitFor(() => expect(view.getByText('Añadida')).toBeTruthy());
     expect(mockAddCard).toHaveBeenCalledWith(1);
 
-    await fireEvent.press(view.getByRole('button', { name: 'Next page' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Página siguiente' }));
     await actTimers(300);
     expect(mockGetWords).toHaveBeenLastCalledWith({
       search: 'ni',
@@ -120,11 +120,11 @@ describe('WordsScreen', () => {
     mockAddCard.mockResolvedValue({ card_id: 'card-1' });
 
     const view = await render(<WordsScreen />);
-    await fireEvent.press(view.getByRole('button', { name: 'Deck Travel' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Mazo Travel' }));
     await actTimers(300);
 
     await waitFor(() => expect(view.getByText('你好')).toBeTruthy());
-    await fireEvent.press(view.getByRole('button', { name: 'Add 你好 to Cards' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Añadir 你好 a tus tarjetas' }));
 
     await waitFor(() => expect(mockAddCard).toHaveBeenCalledWith(1, { deckId: 'd2' }));
   });
