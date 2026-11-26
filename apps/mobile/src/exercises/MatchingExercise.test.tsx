@@ -23,7 +23,7 @@ describe('MatchingExercise', () => {
     );
 
     await fireEvent.press(view.getByRole('button', { name: 'Elegir 学生' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Match student' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Emparejar con student' }));
 
     expect(onChange).toHaveBeenCalledWith({
       kind: 'matching',
@@ -43,7 +43,7 @@ describe('MatchingExercise', () => {
     );
 
     // Press right column first
-    await fireEvent.press(view.getByRole('button', { name: 'Match student' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Emparejar con student' }));
     // Then press left column
     await fireEvent.press(view.getByRole('button', { name: 'Elegir 学生' }));
 
@@ -124,7 +124,7 @@ describe('MatchingExercise', () => {
       />,
     );
 
-    await fireEvent.press(view.getByRole('button', { name: 'Match student' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Emparejar con student' }));
 
     expect(onChange).toHaveBeenCalledWith({
       kind: 'matching',
@@ -146,7 +146,7 @@ describe('MatchingExercise', () => {
     // Select 老师 (unmatched)
     await fireEvent.press(view.getByRole('button', { name: 'Elegir 老师' }));
     // Match with student (was matched to 学生)
-    await fireEvent.press(view.getByRole('button', { name: 'Match student' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Emparejar con student' }));
 
     // Should reassign student to 老师 and remove 学生
     expect(onChange).toHaveBeenCalledWith({
@@ -167,7 +167,7 @@ describe('MatchingExercise', () => {
     );
 
     const btnLeft = view.getByRole('button', { name: 'Elegir 学生' });
-    const btnRight = view.getByRole('button', { name: 'Match student' });
+    const btnRight = view.getByRole('button', { name: 'Emparejar con student' });
 
     await fireEvent.press(btnLeft);
     expect(btnLeft.props.accessibilityState.selected).toBe(false);

@@ -121,7 +121,7 @@ describe('ExerciseRenderer', () => {
     );
 
     await fireEvent.press(view.getByRole('button', { name: 'Elegir 学生' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Match student' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Emparejar con student' }));
 
     expect(onChange).toHaveBeenLastCalledWith({
       kind: 'matching',
@@ -144,8 +144,8 @@ describe('ExerciseRenderer', () => {
     const rendered = view
       .getAllByRole('button')
       .map((node) => String(node.props.accessibilityLabel ?? ''))
-      .filter((label) => label.startsWith('Match '))
-      .map((label) => label.slice('Match '.length));
+      .filter((label) => label.startsWith('Emparejar con '))
+      .map((label) => label.slice('Emparejar con '.length));
 
     const original = MATCHING_PAIRS.map((pair) => pair.right);
 

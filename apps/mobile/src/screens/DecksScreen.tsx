@@ -133,7 +133,7 @@ export function DecksScreen() {
         </Card>
       ))}
 
-      <Button label="New deck" variant="secondary" onPress={createNewDeck} busy={creating} />
+      <Button label="Nuevo mazo" variant="secondary" onPress={createNewDeck} busy={creating} />
     </Screen>
   );
 }

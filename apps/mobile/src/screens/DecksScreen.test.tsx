@@ -96,12 +96,12 @@ describe('DecksScreen', () => {
 
   it('creates a new deck and opens its detail', async () => {
     mockGetDecks.mockResolvedValue([]);
-    mockCreateDeck.mockResolvedValue({ id: 'd9', name: 'New deck' });
+    mockCreateDeck.mockResolvedValue({ id: 'd9', name: 'Mazo nuevo' });
 
     await renderDecks();
 
-    await fireEvent.press(screen.getByText('New deck'));
-    await waitFor(() => expect(mockCreateDeck).toHaveBeenCalled());
+    await fireEvent.press(screen.getByText('Nuevo mazo'));
+    await waitFor(() => expect(mockCreateDeck).toHaveBeenCalledWith({ name: 'Mazo nuevo' }));
     expect(mockPush).toHaveBeenLastCalledWith('/library/decks/d9');
   });
 });

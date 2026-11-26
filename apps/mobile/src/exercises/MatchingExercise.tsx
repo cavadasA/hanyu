@@ -164,7 +164,7 @@ export function MatchingExercise({
               <Pressable
                 key={right}
                 accessibilityRole="button"
-                accessibilityLabel={`Match ${right}`}
+                accessibilityLabel={`Emparejar con ${right}`}
                 accessibilityState={{ selected: isSelected, disabled: Boolean(disabled) }}
                 disabled={disabled}
                 onPress={() => handlePressRight(right)}
