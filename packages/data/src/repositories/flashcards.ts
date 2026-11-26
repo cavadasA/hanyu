@@ -29,7 +29,7 @@ function countFromRpc(payload: unknown) {
 
 function mapVersionedCardRow(row: any, word?: any): VersionedCard {
   if (row.version === undefined || row.version === null) {
-    throw createRepositoryError(new Error('Card version is missing'), 'Failed to load card');
+    throw createRepositoryError(new Error('Card version is missing'), 'No se pudo cargar la tarjeta');
   }
 
   const relatedWord = word ?? (Array.isArray(row.words) ? row.words[0] : row.words);
@@ -75,16 +75,16 @@ function normalizeReviewSyncOutcome(data: unknown): ReviewSyncOutcome {
 
   if (!row || typeof row !== 'object') {
     throw createRepositoryError(
-      new Error('Failed to sync review'),
-      'Failed to sync review'
+      new Error('No se pudo sincronizar el repaso'),
+      'No se pudo sincronizar el repaso'
     );
   }
 
   const outcome = (row as { outcome?: unknown }).outcome;
   if (outcome !== 'applied' && outcome !== 'duplicate' && outcome !== 'conflict') {
     throw createRepositoryError(
-      new Error('Failed to sync review'),
-      'Failed to sync review'
+      new Error('No se pudo sincronizar el repaso'),
+      'No se pudo sincronizar el repaso'
     );
   }
 
@@ -117,7 +117,7 @@ export async function buildQueue(
   const { data, error } = await client.rpc('build_review_queue_mode', queueArgs);
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to build the study queue');
+    throw createRepositoryError(error, 'No se pudo preparar la cola de estudio');
   }
 
   let deckSize: number | null = null;
@@ -143,7 +143,7 @@ export async function buildQueue(
     .in('id', rows.map((row) => Number(row.word_id)));
 
   if (wordsError) {
-    throw createRepositoryError(wordsError, 'Failed to load queue words');
+    throw createRepositoryError(wordsError, 'No se pudieron cargar las palabras de la cola');
   }
 
   const byId = new Map((words ?? []).map((word: any) => [Number(word.id), word]));
@@ -174,12 +174,14 @@ export async function getCard(
     .maybeSingle();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load card');
+    throw createRepositoryError(error, 'No se pudo cargar la tarjeta');
   }
 
   if (!data) {
-    const notFound = new Error('Card not found') as Error & { status?: number };
+    // El message se queda en inglés: el sincronizador lo reconoce («not found»).
+    const notFound = new Error('Card not found') as Error & { status?: number; userMessage?: string };
     notFound.status = 404;
+    notFound.userMessage = 'No se encontró la tarjeta';
     throw notFound;
   }
 
@@ -195,7 +197,7 @@ export async function getCard(
     .maybeSingle();
 
   if (stateError) {
-    throw createRepositoryError(stateError, 'Failed to load card scheduling state');
+    throw createRepositoryError(stateError, 'No se pudo cargar la programación de la tarjeta');
   }
 
   const fallback = emptyState(new Date());
@@ -235,7 +237,7 @@ export async function reviewCardEvent(event: ReviewEvent, client: HanyuClient): 
   });
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to sync review');
+    throw createRepositoryError(error, 'No se pudo sincronizar el repaso');
   }
 
   const outcome = normalizeReviewSyncOutcome(data);
@@ -260,7 +262,7 @@ export async function revertReview(
   });
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to revert review');
+    throw createRepositoryError(error, 'No se pudo deshacer el repaso');
   }
 
   const row = Array.isArray(data) ? data[0] : data;
@@ -271,7 +273,7 @@ export async function revertReview(
 
   const cardId = (row as any)?.card_id;
   if (typeof cardId !== 'string' || cardId.length === 0) {
-    throw createRepositoryError(new Error('Revert response is missing card_id'), 'Failed to revert review');
+    throw createRepositoryError(new Error('Revert response is missing card_id'), 'No se pudo deshacer el repaso');
   }
 
   const card = await getCard(cardId, client);
@@ -294,7 +296,7 @@ export async function addCard(
       { user_id: userId, word_id: numericWordId } as any,
       { onConflict: 'user_id,word_id', ignoreDuplicates: true }
     );
-  if (cardError) throw createRepositoryError(cardError, 'Failed to add card');
+  if (cardError) throw createRepositoryError(cardError, 'No se pudo añadir la tarjeta');
 
   if (options.context) {
     const { error: contextError } = await client
@@ -309,7 +311,7 @@ export async function addCard(
         } as any,
         { onConflict: 'user_id,word_id,sentence', ignoreDuplicates: true },
       );
-    if (contextError) throw createRepositoryError(contextError, 'Failed to save word context');
+    if (contextError) throw createRepositoryError(contextError, 'No se pudo guardar el contexto de la palabra');
   }
 
   // Resolve target deck (explicit, else the default deck).
@@ -329,7 +331,7 @@ export async function addCard(
       .upsert({ deck_id: targetDeckId, word_id: numericWordId } as any, {
         onConflict: 'deck_id,word_id',
       });
-    if (memberError) throw createRepositoryError(memberError, 'Failed to add word to deck');
+    if (memberError) throw createRepositoryError(memberError, 'No se pudo añadir la palabra al mazo');
   }
 
   return { word_id: numericWordId, deck_id: targetDeckId ?? null };
@@ -339,7 +341,7 @@ export async function createStudyPlan(levels: number[], client: HanyuClient) {
   const { data, error } = await (client.rpc as any)('create_study_plan', { p_levels: levels });
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to create the study plan');
+    throw createRepositoryError(error, 'No se pudo crear el plan de estudio');
   }
 
   const row = Array.isArray(data) ? data[0] : data;
@@ -353,7 +355,7 @@ export async function submitDiagnostic(
   const { data, error } = await (client.rpc as any)('submit_diagnostic', { p_results: results });
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to save the diagnostic');
+    throw createRepositoryError(error, 'No se pudo guardar el diagnóstico');
   }
 
   const row = Array.isArray(data) ? data[0] : data;
@@ -388,19 +390,19 @@ export async function getFlashcardStats(client: HanyuClient) {
   ]);
 
   if (totalResult.error) {
-    throw createRepositoryError(totalResult.error, 'Failed to load flashcard totals');
+    throw createRepositoryError(totalResult.error, 'No se pudieron contar las tarjetas');
   }
 
   if (dueResult.error) {
-    throw createRepositoryError(dueResult.error, 'Failed to load due count');
+    throw createRepositoryError(dueResult.error, 'No se pudo contar lo pendiente');
   }
 
   if (statusResult.error) {
-    throw createRepositoryError(statusResult.error, 'Failed to load status breakdown');
+    throw createRepositoryError(statusResult.error, 'No se pudo cargar el estado de las tarjetas');
   }
 
   if (levelResult.error) {
-    throw createRepositoryError(levelResult.error, 'Failed to load level breakdown');
+    throw createRepositoryError(levelResult.error, 'No se pudo cargar el resumen por nivel');
   }
 
   const byStatus: Record<string, number> = {};

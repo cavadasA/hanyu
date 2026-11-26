@@ -6,7 +6,11 @@ export function createRepositoryError(error: any, fallbackMessage: string) {
   const wrapped = new Error(error?.message || fallbackMessage) as Error & {
     status?: number;
     code?: string;
+    userMessage?: string;
   };
+  // El message se queda como lo da el servidor (técnico, en inglés) para el código que lo
+  // examina; la pantalla usa el texto propio de la operación.
+  wrapped.userMessage = fallbackMessage;
 
   if (error?.status !== undefined) {
     wrapped.status = error.status;
@@ -38,12 +42,12 @@ export function parseJsonField(value: any, fallback: any = null) {
 export async function getRequiredUserId(client: HanyuClient) {
   const { data, error } = await client.auth.getUser();
   if (error) {
-    throw createRepositoryError(error, 'Failed to resolve authenticated user');
+    throw createRepositoryError(error, 'No se pudo comprobar tu sesión');
   }
 
   const userId = data?.user?.id;
   if (!userId) {
-    const authError = new Error('You must be signed in to use this feature.') as Error & {
+    const authError = new Error('Tienes que entrar para usar esta función.') as Error & {
       status?: number;
     };
     authError.status = 401;
@@ -69,5 +73,5 @@ export async function callRpcVariants(
     lastError = error;
   }
 
-  throw createRepositoryError(lastError, `Failed to call ${rpcName}`);
+  throw createRepositoryError(lastError, 'No se pudo completar la operación');
 }

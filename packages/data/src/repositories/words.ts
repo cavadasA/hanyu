@@ -50,11 +50,11 @@ export async function getWords(
 
   const [countResult, dataResult] = await Promise.all([countQuery, dataQuery]);
   if (countResult.error) {
-    throw createRepositoryError(countResult.error, 'Failed to count words');
+    throw createRepositoryError(countResult.error, 'No se pudieron contar las palabras');
   }
 
   if (dataResult.error) {
-    throw createRepositoryError(dataResult.error, 'Failed to load words');
+    throw createRepositoryError(dataResult.error, 'No se pudieron cargar las palabras');
   }
 
   const items = (dataResult.data || []).map((row: any): Word => ({
@@ -82,7 +82,7 @@ export async function getWord(id: number | string, client: HanyuClient) {
     .single();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load word');
+    throw createRepositoryError(error, 'No se pudo cargar la palabra');
   }
 
   return {

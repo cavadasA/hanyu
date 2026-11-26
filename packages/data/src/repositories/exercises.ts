@@ -120,7 +120,7 @@ export async function getMistakes(client: HanyuClient, limit = 20): Promise<Mist
   });
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load mistake queue');
+    throw createRepositoryError(error, 'No se pudieron cargar los errores');
   }
 
   const rows = Array.isArray(data) ? data : [];
@@ -151,7 +151,7 @@ async function incrementExerciseDone(client: HanyuClient, userId: string) {
     .maybeSingle();
 
   if (existingError) {
-    throw createRepositoryError(existingError, 'Failed to load exercise stats');
+    throw createRepositoryError(existingError, 'No se pudieron cargar las estadísticas de ejercicios');
   }
 
   if (existing) {
@@ -161,7 +161,7 @@ async function incrementExerciseDone(client: HanyuClient, userId: string) {
       .eq('id', existing.id);
 
     if (error) {
-      throw createRepositoryError(error, 'Failed to update exercise stats');
+      throw createRepositoryError(error, 'No se pudieron guardar las estadísticas de ejercicios');
     }
 
     return;
@@ -174,7 +174,7 @@ async function incrementExerciseDone(client: HanyuClient, userId: string) {
   } as any);
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to create exercise stats row');
+    throw createRepositoryError(error, 'No se pudieron guardar las estadísticas de ejercicios');
   }
 }
 
@@ -197,7 +197,7 @@ export async function buildExerciseSession(
   const { data, error } = await (client.rpc as any)('build_exercise_session', params);
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to build exercise session');
+    throw createRepositoryError(error, 'No se pudo preparar la sesión de ejercicios');
   }
 
   return normalizeExerciseSession(data);
@@ -218,7 +218,7 @@ export async function generateExercise(
     }
 
     if (!data) {
-      throw new Error('Exercise generation returned an empty payload.');
+      throw new Error('No se pudo generar el ejercicio.');
     }
 
     return normalizeExercise(data);
@@ -232,11 +232,11 @@ export async function generateExercise(
       .limit(12);
 
     if (error) {
-      throw createRepositoryError(error, 'Failed to load fallback exercises');
+      throw createRepositoryError(error, 'No se pudieron cargar los ejercicios');
     }
 
     if (!data || data.length === 0) {
-      throw new Error('No cached exercises are available for this type and level.');
+      throw new Error('No hay ejercicios guardados de este tipo y nivel.');
     }
 
     const selected = data[Math.floor(Math.random() * data.length)];
@@ -265,7 +265,7 @@ export async function checkExercise(
     .single();
 
   if (exerciseError) {
-    throw createRepositoryError(exerciseError, 'Failed to load exercise for local scoring');
+    throw createRepositoryError(exerciseError, 'No se pudo cargar el ejercicio');
   }
 
   const row = exerciseRow as any;
@@ -285,7 +285,7 @@ export async function checkExercise(
   } as any);
 
   if (attemptError) {
-    throw createRepositoryError(attemptError, 'Failed to record exercise attempt');
+    throw createRepositoryError(attemptError, 'No se pudo guardar el intento');
   }
 
   const targetWordId = row.target_word_id == null ? null : Number(row.target_word_id);
@@ -304,7 +304,7 @@ export async function checkExercise(
   } as any);
 
   if (eventError) {
-    throw createRepositoryError(eventError, 'Failed to record exercise learning event');
+    throw createRepositoryError(eventError, 'No se pudo guardar el intento');
   }
 
   await incrementExerciseDone(client, userId);
@@ -332,7 +332,7 @@ export async function recordHintUsed(exerciseId: string, client: HanyuClient): P
     .single();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load exercise for hint tracking');
+    throw createRepositoryError(error, 'No se pudo cargar el ejercicio');
   }
 
   const targetWordId = data?.target_word_id == null ? null : Number(data.target_word_id);
@@ -345,7 +345,7 @@ export async function recordHintUsed(exerciseId: string, client: HanyuClient): P
   } as any);
 
   if (eventError) {
-    throw createRepositoryError(eventError, 'Failed to record hint usage');
+    throw createRepositoryError(eventError, 'No se pudo guardar la pista');
   }
 }
 
@@ -358,7 +358,7 @@ export async function getExerciseHistory(limit: number = 20, client: HanyuClient
     .limit(safeLimit);
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load exercise history');
+    throw createRepositoryError(error, 'No se pudo cargar el historial de ejercicios');
   }
 
   return {

@@ -59,7 +59,7 @@ export async function recordEvent(
     .single();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to record learning event');
+    throw createRepositoryError(error, 'No se pudo guardar la actividad');
   }
 
   return data as unknown as LearningEvent;
@@ -94,7 +94,7 @@ export async function getEvents(
   const { data, error } = await query;
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load learning events');
+    throw createRepositoryError(error, 'No se pudo cargar tu actividad');
   }
 
   return (data ?? []) as unknown as LearningEvent[];

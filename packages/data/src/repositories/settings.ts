@@ -176,7 +176,7 @@ async function readSettingsRow(userId: string, client: HanyuClient) {
     .maybeSingle();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load settings');
+    throw createRepositoryError(error, 'No se pudieron cargar los ajustes');
   }
 
   return data;
@@ -192,7 +192,7 @@ async function ensureSettingsRow(userId: string, client: HanyuClient) {
     .single();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to initialize settings');
+    throw createRepositoryError(error, 'No se pudieron preparar los ajustes');
   }
 
   return data;
@@ -223,7 +223,7 @@ export async function updateSettings(input: Record<string, unknown>, client: Han
     .single();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to save settings');
+    throw createRepositoryError(error, 'No se pudieron guardar los ajustes');
   }
 
   return normalizeSettings(data);

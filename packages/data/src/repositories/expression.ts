@@ -111,7 +111,7 @@ export async function getCommunicativeTasks(maxLevel: number, client: HanyuClien
     .select('slug, hsk_level, situation_es, mode, intent, required_markers, min_chars, max_chars, model_answer')
     .lte('hsk_level', maxLevel)
     .order('slug');
-  if (error) throw createRepositoryError(error, 'Failed to load communicative tasks');
+  if (error) throw createRepositoryError(error, 'No se pudieron cargar las tareas comunicativas');
   return (data ?? []) as CommunicativeTask[];
 }
 
@@ -128,7 +128,7 @@ export async function getCommunicativeContext(level: number, client: HanyuClient
       .lte('hsk_level', level)
       .order('id')
       .range(from, from + PAGE - 1);
-    if (error) throw createRepositoryError(error, 'Failed to load the dictionary');
+    if (error) throw createRepositoryError(error, 'No se pudo cargar el diccionario');
     const rows = (data ?? []) as Array<{ hanzi: string; hsk_level: number; variants: string[] | null }>;
     for (const row of rows) {
       dictionary.push({ hanzi: row.hanzi, hsk_level: row.hsk_level });
@@ -142,7 +142,7 @@ export async function getCommunicativeContext(level: number, client: HanyuClient
   const { data: points, error } = await (client.from('grammar_points') as any)
     .select('hsk_level, code, markers')
     .lte('hsk_level', level);
-  if (error) throw createRepositoryError(error, 'Failed to load grammar markers');
+  if (error) throw createRepositoryError(error, 'No se pudieron cargar las estructuras de gramática');
 
   return {
     dictionary,
@@ -174,7 +174,7 @@ export async function getWritingQueue(
     p_limit: input.limit ?? 10,
     p_new: input.newLimit ?? 3,
   });
-  if (error) throw createRepositoryError(error, 'Failed to build the writing queue');
+  if (error) throw createRepositoryError(error, 'No se pudo preparar la cola de escritura');
   const now = input.now ?? new Date();
   return ((data ?? []) as any[]).map(row => ({
     hanzi: String(row.hanzi),
@@ -224,11 +224,11 @@ export async function reviewWriting(
     p_prior: input.item.scheduling,
     p_payload: { mistakes: input.mistakes, hints: input.hints, hanzi: input.item.hanzi },
   });
-  if (error) throw createRepositoryError(error, 'Failed to save the writing review');
+  if (error) throw createRepositoryError(error, 'No se pudo guardar el repaso de escritura');
   const row = (Array.isArray(data) ? data[0] : data) as { outcome?: string; version?: number } | null;
   const outcome = row?.outcome;
   if (outcome !== 'applied' && outcome !== 'duplicate' && outcome !== 'conflict') {
-    throw createRepositoryError(new Error('Unexpected apply_skill_review response'), 'Failed to save the writing review');
+    throw createRepositoryError(new Error('Unexpected apply_skill_review response'), 'No se pudo guardar el repaso de escritura');
   }
   return { outcome, version: Number(row?.version ?? input.item.version) };
 }

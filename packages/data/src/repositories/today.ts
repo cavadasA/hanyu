@@ -109,7 +109,7 @@ export async function getToday(client: HanyuClient) {
   ]);
 
   if (statsResult.error) {
-    throw createRepositoryError(statsResult.error, 'Failed to load daily stats');
+    throw createRepositoryError(statsResult.error, 'No se pudieron cargar las estadísticas del día');
   }
 
   const todayStats = {

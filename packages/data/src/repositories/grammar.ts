@@ -17,7 +17,7 @@ export function normalizeGrammarPoint(point: any): GrammarPoint {
 export async function getGrammar(level: HskLevel | string, client: HanyuClient): Promise<GrammarPoint[]> {
   const numericLevel = parseInt(String(level), 10);
   if (Number.isNaN(numericLevel)) {
-    throw new Error('Invalid level');
+    throw new Error('Nivel no válido');
   }
 
   const { data, error } = await client
@@ -27,7 +27,7 @@ export async function getGrammar(level: HskLevel | string, client: HanyuClient):
     .order('order_idx', { ascending: true, nullsFirst: false });
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load grammar points');
+    throw createRepositoryError(error, 'No se pudieron cargar los puntos de gramática');
   }
 
   return (data || []).map(normalizeGrammarPoint);
@@ -41,7 +41,7 @@ export async function getGrammarPoint(
   const numericLevel = parseInt(String(level), 10);
   const numericId = parseInt(String(id), 10);
   if (Number.isNaN(numericLevel) || Number.isNaN(numericId)) {
-    throw new Error('Invalid grammar parameters');
+    throw new Error('Parámetros de gramática no válidos');
   }
 
   const { data, error } = await client
@@ -52,7 +52,7 @@ export async function getGrammarPoint(
     .single();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load grammar point');
+    throw createRepositoryError(error, 'No se pudo cargar el punto de gramática');
   }
 
   return normalizeGrammarPoint(data);
@@ -81,7 +81,7 @@ export async function getGrammarReadings(
     .maybeSingle();
 
   if (pointError) {
-    throw createRepositoryError(pointError, 'Failed to load grammar point');
+    throw createRepositoryError(pointError, 'No se pudo cargar el punto de gramática');
   }
 
   const { data, error } = await client
@@ -93,7 +93,7 @@ export async function getGrammarReadings(
     .order('slug');
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load grammar readings');
+    throw createRepositoryError(error, 'No se pudieron cargar las lecturas del punto de gramática');
   }
 
   const markers = ((point?.markers ?? []) as string[]).map(normalizeMarker).filter(Boolean);
@@ -113,12 +113,12 @@ export async function markGrammarStudied(
 ): Promise<void> {
   const numericId = parseInt(String(id), 10);
   if (Number.isNaN(numericId)) {
-    throw new Error('Invalid grammar parameters');
+    throw new Error('Parámetros de gramática no válidos');
   }
 
   const { error } = await client.rpc('mark_grammar_studied', { p_grammar_id: numericId });
   if (error) {
-    throw createRepositoryError(error, 'Failed to save grammar progress');
+    throw createRepositoryError(error, 'No se pudo guardar tu avance en gramática');
   }
 }
 
@@ -128,7 +128,7 @@ export async function getGrammarStudyState(
 ): Promise<boolean> {
   const numericId = parseInt(String(id), 10);
   if (Number.isNaN(numericId)) {
-    throw new Error('Invalid grammar parameters');
+    throw new Error('Parámetros de gramática no válidos');
   }
 
   const { data, error } = await client
@@ -140,7 +140,7 @@ export async function getGrammarStudyState(
     .maybeSingle();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load grammar progress');
+    throw createRepositoryError(error, 'No se pudo cargar tu avance en gramática');
   }
 
   return data?.fsrs_state === 'review' || Boolean(data?.suspended);

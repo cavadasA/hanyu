@@ -37,7 +37,7 @@ export async function getSkillStates(
   const { data, error } = await query;
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load skill states');
+    throw createRepositoryError(error, 'No se pudo cargar tu avance por habilidad');
   }
 
   return (data ?? []) as unknown as LearnerSkillState[];
@@ -77,7 +77,7 @@ export async function upsertSkillState(
     .single();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to save skill state');
+    throw createRepositoryError(error, 'No se pudo guardar tu avance');
   }
 
   return data as unknown as LearnerSkillState;
@@ -98,7 +98,7 @@ export async function getLeechStates(
     .order('lapses', { ascending: false });
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load leeches');
+    throw createRepositoryError(error, 'No se pudieron cargar las tarjetas difíciles');
   }
 
   const states = (data ?? []) as unknown as LearnerSkillState[];
@@ -113,7 +113,7 @@ export async function getLeechStates(
     .in('id', wordIds);
 
   if (wordsError) {
-    throw createRepositoryError(wordsError, 'Failed to load leech words');
+    throw createRepositoryError(wordsError, 'No se pudieron cargar las palabras difíciles');
   }
 
   const wordsById = new Map(
@@ -146,6 +146,6 @@ export async function clearLeech(
   });
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to clear leech');
+    throw createRepositoryError(error, 'No se pudo reactivar la tarjeta');
   }
 }

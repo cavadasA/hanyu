@@ -138,27 +138,27 @@ export async function getDashboard(client: HanyuClient) {
   ]);
 
   if (todayResult.error) {
-    throw createRepositoryError(todayResult.error, 'Failed to load dashboard daily stats');
+    throw createRepositoryError(todayResult.error, 'No se pudieron cargar las estadísticas del día');
   }
 
   if (heatmapResult.error) {
-    throw createRepositoryError(heatmapResult.error, 'Failed to load dashboard heatmap');
+    throw createRepositoryError(heatmapResult.error, 'No se pudo cargar el historial de estudio');
   }
 
   if (weekRowsResult.error) {
-    throw createRepositoryError(weekRowsResult.error, 'Failed to load weekly time data');
+    throw createRepositoryError(weekRowsResult.error, 'No se pudo cargar el tiempo de estudio');
   }
 
   if (allRowsResult.error) {
-    throw createRepositoryError(allRowsResult.error, 'Failed to load total time data');
+    throw createRepositoryError(allRowsResult.error, 'No se pudo cargar el tiempo de estudio');
   }
 
   if (exerciseRowsResult.error) {
-    throw createRepositoryError(exerciseRowsResult.error, 'Failed to load exercise breakdown');
+    throw createRepositoryError(exerciseRowsResult.error, 'No se pudo cargar el resumen de ejercicios');
   }
 
   if (readingCountResult.error) {
-    throw createRepositoryError(readingCountResult.error, 'Failed to load reading totals');
+    throw createRepositoryError(readingCountResult.error, 'No se pudo cargar el resumen de lectura');
   }
 
   const todayStats = {
@@ -223,7 +223,7 @@ export async function getStreak(client: HanyuClient) {
     .limit(365);
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load streak data');
+    throw createRepositoryError(error, 'No se pudo cargar la racha');
   }
 
   const activeDates = ((data || []) as any[])
@@ -268,7 +268,7 @@ export async function logTime(ms: number, client: HanyuClient) {
     .maybeSingle();
 
   if (existingError) {
-    throw createRepositoryError(existingError, 'Failed to log study time');
+    throw createRepositoryError(existingError, 'No se pudo guardar el tiempo de estudio');
   }
 
   if (existing) {
@@ -279,7 +279,7 @@ export async function logTime(ms: number, client: HanyuClient) {
       .eq('id', existing.id);
 
     if (error) {
-      throw createRepositoryError(error, 'Failed to update study time');
+      throw createRepositoryError(error, 'No se pudo guardar el tiempo de estudio');
     }
 
     return { time_spent_ms: nextValue };
@@ -292,7 +292,7 @@ export async function logTime(ms: number, client: HanyuClient) {
   } as any);
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to create study time row');
+    throw createRepositoryError(error, 'No se pudo guardar el tiempo de estudio');
   }
 
   return { time_spent_ms: safeMs };
@@ -320,7 +320,7 @@ export async function getLearningReport(
 ): Promise<LearningReport> {
   const { data, error } = await (client.rpc as any)('learning_report', { p_days: days });
   if (error) {
-    throw createRepositoryError(error, 'Failed to load learning report');
+    throw createRepositoryError(error, 'No se pudo cargar tu progreso');
   }
 
   const payload = (typeof data === 'object' && data !== null ? data : {}) as Record<string, any>;

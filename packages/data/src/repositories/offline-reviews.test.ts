@@ -169,7 +169,7 @@ describe('reviewCardEvent', () => {
 
     await expect(
       reviewCardEvent(reviewEvent, client as unknown as HanyuClient),
-    ).rejects.toThrow(/Failed to sync review/);
+    ).rejects.toThrow(/No se pudo sincronizar el repaso/);
     expect(client.from).not.toHaveBeenCalled();
   });
 
@@ -180,7 +180,7 @@ describe('reviewCardEvent', () => {
 
     await expect(
       reviewCardEvent(reviewEvent, client as unknown as HanyuClient),
-    ).rejects.toThrow(/Failed to sync review/);
+    ).rejects.toThrow(/No se pudo sincronizar el repaso/);
     expect(client.from).not.toHaveBeenCalled();
   });
 

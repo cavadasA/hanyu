@@ -13,7 +13,7 @@ export async function getDecks(client: HanyuClient): Promise<DeckSummary[]> {
     .select(DECK_COLUMNS)
     .eq('user_id', userId)
     .order('sort_order', { ascending: true });
-  if (error) throw createRepositoryError(error, 'Failed to load decks');
+  if (error) throw createRepositoryError(error, 'No se pudieron cargar los mazos');
 
   if (!decks || decks.length === 0) {
     return [];
@@ -46,7 +46,7 @@ export async function getDecks(client: HanyuClient): Promise<DeckSummary[]> {
     .from('deck_cards')
     .select('deck_id, word_id')
     .in('deck_id', (decks as any[]).map((d) => d.id));
-  if (memberError) throw createRepositoryError(memberError, 'Failed to load deck membership');
+  if (memberError) throw createRepositoryError(memberError, 'No se pudieron cargar los mazos de la palabra');
 
   const { data: due, error: dueError } = await client
     .from('learner_skill_state')
@@ -56,7 +56,7 @@ export async function getDecks(client: HanyuClient): Promise<DeckSummary[]> {
     .eq('skill', 'recognition')
     .eq('suspended', false)
     .lte('next_review_at', nowIso);
-  if (dueError) throw createRepositoryError(dueError, 'Failed to load due words');
+  if (dueError) throw createRepositoryError(dueError, 'No se pudieron cargar las palabras pendientes');
 
   const dueWords = new Set(
     (due || [])
@@ -82,7 +82,7 @@ export async function getDeckTemplates(client: HanyuClient): Promise<DeckTemplat
     .from('deck_templates')
     .select('id, slug, name, description, category, hsk_level, sort_order')
     .order('sort_order', { ascending: true });
-  if (error) throw createRepositoryError(error, 'Failed to load catalog');
+  if (error) throw createRepositoryError(error, 'No se pudo cargar el catálogo');
   return (data || []) as DeckTemplate[];
 }
 
@@ -104,7 +104,7 @@ export async function createDeck(
     .insert({ user_id: userId, name: input.name, description: input.description ?? null } as any)
     .select(DECK_COLUMNS)
     .single();
-  if (error) throw createRepositoryError(error, 'Failed to create deck');
+  if (error) throw createRepositoryError(error, 'No se pudo crear el mazo');
   return data as Deck;
 }
 
@@ -121,14 +121,14 @@ export async function updateDeck(
     .eq('user_id', userId)
     .select(DECK_COLUMNS)
     .single();
-  if (error) throw createRepositoryError(error, 'Failed to update deck');
+  if (error) throw createRepositoryError(error, 'No se pudo actualizar el mazo');
   return data as Deck;
 }
 
 export async function deleteDeck(deckId: string, client: HanyuClient) {
   const userId = await getRequiredUserId(client);
   const { error } = await client.from('decks').delete().eq('id', deckId).eq('user_id', userId);
-  if (error) throw createRepositoryError(error, 'Failed to delete deck');
+  if (error) throw createRepositoryError(error, 'No se pudo borrar el mazo');
   return { id: deckId };
 }
 
@@ -143,7 +143,7 @@ export async function addWordToDeck(
   const { error: memberError } = await client
     .from('deck_cards')
     .upsert({ deck_id: deckId, word_id: numericWordId } as any, { onConflict: 'deck_id,word_id' });
-  if (memberError) throw createRepositoryError(memberError, 'Failed to add word to deck');
+  if (memberError) throw createRepositoryError(memberError, 'No se pudo añadir la palabra al mazo');
 
   // Ensure the shared SRS card exists; never reset an existing one.
   const { error: cardError } = await client
@@ -152,7 +152,7 @@ export async function addWordToDeck(
       { user_id: userId, word_id: numericWordId } as any,
       { onConflict: 'user_id,word_id', ignoreDuplicates: true }
     );
-  if (cardError) throw createRepositoryError(cardError, 'Failed to ensure card');
+  if (cardError) throw createRepositoryError(cardError, 'No se pudo crear la tarjeta');
 
   const { error: stateError } = await client
     .from('learner_skill_state')
@@ -165,7 +165,7 @@ export async function addWordToDeck(
       } as any,
       { onConflict: 'user_id,target_kind,target_id,skill', ignoreDuplicates: true },
     );
-  if (stateError) throw createRepositoryError(stateError, 'Failed to initialize card scheduling state');
+  if (stateError) throw createRepositoryError(stateError, 'No se pudo preparar la programación de la tarjeta');
 
   return { deck_id: deckId, word_id: numericWordId };
 }
@@ -181,7 +181,7 @@ export async function removeWordFromDeck(
     .delete()
     .eq('deck_id', deckId)
     .eq('word_id', numericWordId);
-  if (error) throw createRepositoryError(error, 'Failed to remove word from deck');
+  if (error) throw createRepositoryError(error, 'No se pudo quitar la palabra del mazo');
   return { deck_id: deckId, word_id: numericWordId };
 }
 
@@ -192,7 +192,7 @@ export async function getDeckCards(deckId: string, client: HanyuClient) {
       'word_id, words:word_id(id, hanzi, traditional, pinyin, meaning_en, meaning_es, classifier, hsk_level)'
     )
     .eq('deck_id', deckId);
-  if (error) throw createRepositoryError(error, 'Failed to load deck cards');
+  if (error) throw createRepositoryError(error, 'No se pudieron cargar las tarjetas del mazo');
   return (data || []).map((row: any) => {
     const w = Array.isArray(row.words) ? row.words[0] : row.words;
     return {

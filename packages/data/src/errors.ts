@@ -4,6 +4,8 @@ interface MaybeRepositoryError {
   status?: number;
   code?: string;
   message?: string;
+  /** Texto para la pantalla, en español. El message suele ser técnico y en inglés. */
+  userMessage?: string;
 }
 
 export function toUserMessage(error: unknown): string {
@@ -11,7 +13,7 @@ export function toUserMessage(error: unknown): string {
     return GENERIC;
   }
 
-  const { status, message } = error as MaybeRepositoryError;
+  const { status, message, userMessage } = error as MaybeRepositoryError;
 
   if (status === 401) {
     return 'Tu sesión ha caducado. Vuelve a entrar para continuar.';
@@ -25,5 +27,5 @@ export function toUserMessage(error: unknown): string {
     return 'Sin conexión. Revisa la red e inténtalo de nuevo.';
   }
 
-  return message || GENERIC;
+  return userMessage || message || GENERIC;
 }

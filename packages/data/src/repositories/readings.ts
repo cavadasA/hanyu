@@ -83,7 +83,7 @@ async function getReadingGrammarPoints(
     .in('code', codes);
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load reading grammar points');
+    throw createRepositoryError(error, 'No se pudo cargar la gramática de la lectura');
   }
 
   const targetKeys = new Set(targets.map(target => `${target.code}:${target.level}`));
@@ -106,7 +106,7 @@ async function getReadingGrammarPointMap(
     .select('id, hsk_level, code, "group", category, detail, title, pattern, explanation, items, examples, order_idx')
     .in('code', codes);
   if (error) {
-    throw createRepositoryError(error, 'Failed to load reading grammar points');
+    throw createRepositoryError(error, 'No se pudo cargar la gramática de la lectura');
   }
 
   const normalized = (data ?? []).map(normalizeGrammarPoint);
@@ -158,7 +158,7 @@ async function getRecognitionStates(wordIds: number[], client: HanyuClient) {
   if (typeof query.in !== 'function') return states;
   const { data, error } = await query.in('target_id', wordIds);
   if (error) {
-    throw createRepositoryError(error, 'Failed to load reading word progress');
+    throw createRepositoryError(error, 'No se pudo cargar tu avance con las palabras');
   }
 
   for (const state of data ?? []) {
@@ -224,7 +224,7 @@ async function getReadingProgressMap(
 
   const { data, error } = await query.in('reading_slug', summaries.map(summary => summary.slug));
   if (error) {
-    throw createRepositoryError(error, 'Failed to load reading progress');
+    throw createRepositoryError(error, 'No se pudo cargar tu avance en la lectura');
   }
 
   for (const row of data ?? []) {
@@ -338,7 +338,7 @@ async function incrementReadingStat(client: HanyuClient, userId: string) {
     .maybeSingle();
 
   if (existingError) {
-    throw createRepositoryError(existingError, 'Failed to read daily reading stats');
+    throw createRepositoryError(existingError, 'No se pudieron cargar las estadísticas de lectura');
   }
 
   if (existing) {
@@ -348,7 +348,7 @@ async function incrementReadingStat(client: HanyuClient, userId: string) {
       .eq('id', existing.id);
 
     if (error) {
-      throw createRepositoryError(error, 'Failed to update daily reading stats');
+      throw createRepositoryError(error, 'No se pudieron guardar las estadísticas de lectura');
     }
 
     return;
@@ -361,7 +361,7 @@ async function incrementReadingStat(client: HanyuClient, userId: string) {
   } as any);
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to create daily reading stats');
+    throw createRepositoryError(error, 'No se pudieron guardar las estadísticas de lectura');
   }
 }
 
@@ -405,7 +405,7 @@ async function getFinishedReadings(userId: string, client: HanyuClient): Promise
 
   const { data, error } = await scoped.eq('user_id', userId);
   if (error) {
-    throw createRepositoryError(error, 'Failed to load reading progress');
+    throw createRepositoryError(error, 'No se pudo cargar tu avance en la lectura');
   }
 
   return (data ?? [])
@@ -436,7 +436,7 @@ async function getRecentlyCompletedReadings(userId: string, client: HanyuClient)
 
   const { data, error } = await filtered;
   if (error) {
-    throw createRepositoryError(error, 'Failed to load completed readings');
+    throw createRepositoryError(error, 'No se pudieron cargar las lecturas terminadas');
   }
 
   const slugs: string[] = [];
@@ -464,7 +464,7 @@ export async function getReadingPlannerInput(
 
   const { data, error } = await query;
   if (error) {
-    throw createRepositoryError(error, 'Failed to load next reading');
+    throw createRepositoryError(error, 'No se pudo cargar la siguiente lectura');
   }
 
   const rows = (data ?? []) as any[];
@@ -550,7 +550,7 @@ export async function getReadings(
 
   const { data, error } = await query;
   if (error) {
-    throw createRepositoryError(error, 'Failed to load readings');
+    throw createRepositoryError(error, 'No se pudieron cargar las lecturas');
   }
 
   const summaries = (data || []).map(row => normalizeSummary(row, client));
@@ -665,7 +665,7 @@ async function loadProgress(slug: string, userId: string, client: HanyuClient) {
     .maybeSingle();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load reading progress');
+    throw createRepositoryError(error, 'No se pudo cargar tu avance en la lectura');
   }
 
   return normalizeProgress(slug, data);
@@ -692,7 +692,7 @@ async function saveProgress(
   );
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to save reading progress');
+    throw createRepositoryError(error, 'No se pudo guardar tu avance en la lectura');
   }
 
   return progress;
@@ -785,7 +785,7 @@ export async function markRead(
   });
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to record completed reading');
+    throw createRepositoryError(error, 'No se pudo guardar la lectura terminada');
   }
 
   return progress;
@@ -799,7 +799,7 @@ async function loadReadingRow(slug: string, client: HanyuClient) {
     .single();
 
   if (error) {
-    throw createRepositoryError(error, 'Failed to load reading detail');
+    throw createRepositoryError(error, 'No se pudo cargar la lectura');
   }
 
   return data as any;
@@ -822,7 +822,7 @@ export async function getReading(slug: string, client: HanyuClient): Promise<Rea
           ? tokenMessage
           : 'Failed to prepare reading words',
       },
-      'Failed to prepare reading words',
+      'No se pudieron preparar las palabras de la lectura',
     );
   }
 
