@@ -68,6 +68,6 @@ describe('catálogo de lecturas: acepciones', () => {
   it('el seed lleva en cada frase las acepciones resueltas', () => {
     const annotated = loadReadings().find(entry => readingSenses(entry, words).sentences.some(sentence => sentence.senses));
     expect(annotated).toBeDefined();
-    expect(buildSeedSql()).toContain('"senses":[{"hanzi":');
+    expect(buildSeedSql().sql).toContain('"senses":[{"hanzi":');
   });
 });
