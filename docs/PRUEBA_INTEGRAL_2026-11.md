@@ -221,7 +221,7 @@ Los 17 pendientes de la prueba, cada uno con un test que fallaba antes del arreg
    - Ahora el ámbito usa el último usuario conocido si `getSession` no contesta en 2 s, y con copia guardada se sirve la caché si la red no contesta en 3 s. Sin copia se sigue esperando a la red.
 6. **El punto de gramática 4.1 (固定格式) de HSK 2 y HSK 3 no tenía título.** → `eff019c`
    - El parser del sílabo da a una sección hoja sin título el de su epígrafe padre. Se regeneran los seeds, y la migración `2026112612` corrige las bases existentes.
-7. **Salir de Expresión.** → `9221b66` (botón «Salir») y `1059062` (la pestaña vuelve al índice; ver 15)
+7. **Salir de Expresión.** → `9221b66` (botón «Salir») y `1059062` + `c3a741c` (la pestaña vuelve al índice; ver 15)
 
 ### Menor
 
@@ -232,9 +232,45 @@ Los 17 pendientes de la prueba, cada uno con un test que fallaba antes del arreg
 12. **Tarea comunicativa: el aviso de validación no se iba.** → `3255190`
 13. **Progreso.** → `ef9e4e5`. La cabecera de sección deja bajar la etiqueta a otra línea, y con alguna respuesta dice «Faltan N respuestas para calcularla».
 14. **Simulacro: al pasar de fase, la página no volvía arriba.** → `30ca21b`
-15. **Practice se restauraba con Expresión como primera pantalla.** → `1059062`. `initialRouteName: 'index'` en la pila de Practice.
+15. **Practice se restauraba con Expresión como primera pantalla.** → `1059062` y `c3a741c`. `1059062` sólo arreglaba la entrada por enlace; la verificación manual mostró que por la pestaña seguía abriendo Expresión, y `c3a741c` pone `initialRouteName="index"` en el propio `<Stack>`.
 16. **书写 2: «Hecho» no avisaba si no reconocía el dibujo.** → `86293ab`
 17. **«Entregar» decía «No podrás volver a esta sección».** → `4303dc2`. Ahora dice «No podrás cambiar tus respuestas.»
+
+## Verificación manual de los arreglos
+
+26-11-2026, en el simulador iPhone 18 Pro con iOS 27, contra el Supabase local, con la app compilada sin el parche manual de `ios/`. Capturas `v*.png` en `docs/prueba-integral-2026-11/`.
+
+| # | Resultado | Qué se hizo |
+|---|---|---|
+| 1 | Verificado | La app arranca y carga Hoy con iOS 27 (`v01`). |
+| 2 | Verificado | Simulacro empezado, respuestas 1C/2B/3A y app cerrada con `simctl terminate`. Al volver salen «Reanudar» y «Empezar de nuevo» (`v02-simulacro-reanudar`); al reanudar están las respuestas y el reloj siguió corriendo (13:23 → 11:55 en 90 s; `v02-simulacro-reanudado`). Después de entregar, la forma ya no ofrece reanudar. El borrado al cerrar sesión no se probó a mano (está cubierto por test). |
+| 3 | Verificado | «Start learning» abre Reviews en Learn (`v03`). |
+| 4 | Verificado | Tras estudiar 3 tarjetas y cerrar con la X: «10 due / new 291 / review 9» pasa a «7 due / new 288 / review 12» (`v04`). |
+| 5 | Verificado | Con `supabase_kong_hanyu` parado, la lista de lecturas en caché aparece en unos 3 s (`v05`). Un filtro sin copia guardada sigue esperando a la red, como estaba previsto. |
+| 6 | Verificado | Gramática HSK 2 muestra «固定格式» (`v06`), y el «Grammar focus» de 奶奶要来了 dice «固定格式 · 4.1». |
+| 7 | Verificado tras `c3a741c` | «Salir» está en la cabecera (`v07`). Antes de `c3a741c`, «Salir» llevaba a otra pestaña, porque Expresión era la única pantalla de la pila. Ahora vuelve al índice de Practice. |
+| 8 | Verificado | El paso Exercises de Hoy está listo, con barra de progreso y «Start exercises» (`v08`). |
+| 9 | Verificado | «Unidad activa: 方位名词 · Todavía no tiene ejercicios propios: repaso general de HSK 1» (`v09`). |
+| 10 | Verificado | Sólo «1/8», sin identificador (`v10`). |
+| 11 | Verificado | La velocidad activa (1x, luego 1.25x) va en bermellón (`v11`). |
+| 12 | Verificado | «wo bu neng qu» da el aviso de caracteres chinos; al borrar una letra desaparece (`v12-tarea-aviso`, `v12-tarea-aviso-se-va`). Para llegar a la tarea se bajó un momento, en la BD local, la estabilidad de las palabras que abren la escritura (y se restauró), y se denegó el permiso de reconocimiento de voz. |
+| 13 | Verificado | La etiqueta baja de línea entera (`v13-progreso-etiqueta`) y la comprensión dice «Faltan 2/4 respuestas para calcularla» (`v13-progreso-faltan`). |
+| 14 | Verificado | Desde el final de la hoja de respuestas, 阅读 empieza arriba (`v14-lectura-arriba`); lo mismo 书写 desde el final de 阅读 (`v14-escritura-arriba`). |
+| 15 | Falla → corregido en `c3a741c` | Tras `1059062`, la pestaña Practice seguía abriendo Expresión como única pantalla, y tocarla otra vez no hacía nada. Causa: al declarar `<Stack.Screen name="expression">`, expo-router la pone la primera de la pila, y `unstable_settings.initialRouteName` sólo lo usan los enlaces. Con `c3a741c`, Practice abre su índice y tocar la pestaña desde Expresión vuelve a él (`v15`). |
+| 16 | Verificado | Garabato y «Hecho»: «No se ha reconocido ningún carácter. Borra y escríbelo otra vez.»; «Hecho» sin dibujar: «Escribe el carácter antes de pulsar «Hecho».» (`v16`). |
+| 17 | Verificado | «¿Entregar el simulacro? No podrás cambiar tus respuestas.» (`v17`). |
+
+**Bugs nuevos encontrados y corregidos:**
+
+- `c3a741c`: la pestaña Practice abría Expresión (el punto 15 de arriba).
+- `a8ca210`: Progreso decía «Último simulacro: 92 %» y, más abajo, «Aún no has realizado simulacros de examen». La fila «Rendimiento en simulacros» contaba los ejercicios del simulacro antiguo, retirado en el Plan 12. Ahora da la media de los simulacros completos (`v18`).
+
+**Observaciones, sin corregir:**
+
+- En 书写 1, los caracteres con el hueco tardan unos 4 s en aparecer al entrar en la fase; mientras tanto sólo se ve el pinyin.
+- El subtítulo gris de los botones primarios («8d» en Easy, «Di la palabra en voz alta» en Hablar) apenas se lee sobre el bermellón.
+- En este simulador el reconocimiento de voz ya está disponible, pero quedó **denegado** para Hanyu tras la prueba del punto 12. Para probar la pronunciación hay que reactivarlo en Ajustes → Privacidad.
+- Datos de prueba que quedan en la BD local: 3 tarjetas aprendidas y un intento de la forma B (3 %).
 
 ## No se pudo probar
 
