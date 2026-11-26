@@ -16,12 +16,13 @@ jest.mock('expo-router', () => {
 describe('PracticeLayout', () => {
   // Desde iOS 26 se vuelve atrás deslizando desde cualquier punto del
   // contenido: un trazo hacia la derecha en el lienzo de escritura sacaba de la
-  // sesión de expresión. Como en el simulacro, esa pantalla no admite el gesto.
-  it('desactiva el gesto de volver en la sesión de expresión', async () => {
+  // sesión de expresión. Se quita ese gesto a pantalla completa, pero no el del
+  // borde: la pantalla no tiene cabecera y sin él no habría forma de salir.
+  it('en la sesión de expresión solo se vuelve atrás desde el borde', async () => {
     await render(<PracticeLayout />);
 
-    expect(mockScreens).toContainEqual(
-      expect.objectContaining({ name: 'expression', options: expect.objectContaining({ gestureEnabled: false }) }),
-    );
+    const expression = mockScreens.find(screen => screen.name === 'expression');
+    expect(expression?.options).toMatchObject({ fullScreenGestureEnabled: false });
+    expect(expression?.options?.gestureEnabled).not.toBe(false);
   });
 });
