@@ -1,7 +1,11 @@
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { ExamRunner } from './ExamRunner';
 import { ExamResult } from './ExamResult';
+import { loadExamProgress } from './examProgressStore';
+
+jest.mock('../session/SessionProvider', () => ({ useSession: () => ({ session: { user: { id: 'u1' } } }) }));
 
 const mockGetExamForm = jest.fn();
 const mockSubmit = jest.fn();
@@ -55,8 +59,9 @@ const form = {
   },
 };
 
-beforeEach(() => {
+beforeEach(async () => {
   jest.useFakeTimers();
+  await AsyncStorage.clear();
   mockGetExamForm.mockReset().mockResolvedValue(form);
   mockSubmit.mockReset().mockResolvedValue({
     id: 'x', level: 2, form_code: 'A', scope: 'full', part_code: null, started_at: '', finished_at: '', answers: {},
@@ -73,9 +78,10 @@ afterEach(() => {
 });
 
 async function start() {
-  await render(<ExamRunner formCode={null} />);
+  const view = await render(<ExamRunner formCode={null} />);
   await waitFor(() => expect(screen.getByLabelText('Empezar')).toBeTruthy());
   await fireEvent.press(screen.getByLabelText('Empezar'));
+  return view;
 }
 
 const advance = async (ms: number) => {
@@ -191,6 +197,66 @@ describe('ExamRunner', () => {
     await fireEvent(canvas, 'touchStart');
     await fireEvent(canvas, 'touchCancel');
     expect(screen.getByTestId('screen-scroll').props.scrollEnabled).toBe(true);
+  });
+
+  // Con 51 minutos de examen, una llamada o que el sistema mate la app no puede costar el intento.
+  describe('si la app se cierra a mitad del simulacro', () => {
+    async function closeDuringReading() {
+      const view = await start();
+      await fireEvent.press(screen.getByLabelText('Pregunta 1, imagen C'));
+      await advance(35_000 + 3 * 60_000 + 5 * 60_000); // 5 min dentro de 阅读
+      expect(screen.getByText('阅读')).toBeTruthy();
+      await view.unmount();
+    }
+
+    it('al volver ofrece reanudarlo en su fase, con su reloj', async () => {
+      await closeDuringReading();
+      await render(<ExamRunner formCode={null} />);
+      await waitFor(() => expect(screen.getByLabelText('Reanudar')).toBeTruthy());
+      expect(screen.getByText(/a medias/)).toBeTruthy();
+
+      await fireEvent.press(screen.getByLabelText('Reanudar'));
+      await advance(0);
+      expect(screen.getByText('阅读')).toBeTruthy();
+      expect(screen.getByText('20:00')).toBeTruthy();
+    });
+
+    it('el reloj siguió corriendo mientras estaba cerrada, y se entregan las respuestas de antes', async () => {
+      await closeDuringReading();
+      await advance(25 * 60_000); // 20 min de 阅读 + 5 de 书写
+      await render(<ExamRunner formCode={null} />);
+      await waitFor(() => expect(screen.getByLabelText('Reanudar')).toBeTruthy());
+      await fireEvent.press(screen.getByLabelText('Reanudar'));
+      await advance(0);
+      expect(screen.getByText('书写')).toBeTruthy();
+      expect(screen.getByText('5:00')).toBeTruthy();
+
+      await advance(5 * 60_000);
+      await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
+      expect(mockSubmit.mock.calls[0][0].answers['a-l1']).toEqual([2, null, null]);
+    });
+
+    it('«Empezar de nuevo» pide confirmación y descarta lo guardado', async () => {
+      const alert = jest.spyOn(Alert, 'alert');
+      await closeDuringReading();
+      await render(<ExamRunner formCode={null} />);
+      await waitFor(() => expect(screen.getByLabelText('Empezar de nuevo')).toBeTruthy());
+      await fireEvent.press(screen.getByLabelText('Empezar de nuevo'));
+      expect(screen.queryByText('听力')).toBeNull();
+      await act(async () => {
+        (alert.mock.calls[0][2] ?? []).find(button => button.style === 'destructive')?.onPress?.();
+      });
+      expect(screen.getByText('听力')).toBeTruthy();
+      await waitFor(async () => expect((await loadExamProgress('u1', 2, 'A'))?.phase).toBe('listening'));
+      alert.mockRestore();
+    });
+
+    it('tras entregar con éxito ya no queda nada que reanudar', async () => {
+      await start();
+      await advance(35_000 + (3 + 25 + 10) * 60_000);
+      await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
+      await waitFor(async () => expect(await loadExamProgress('u1', 2, 'A')).toBeNull());
+    });
   });
 
   it('durante el examen no se reprograma ninguna tarjeta', async () => {

@@ -12,6 +12,11 @@ jest.mock('../lib/reviewSessionStore', () => ({
   clearReviewSession: () => mockClearReviewSession(),
 }));
 
+const mockClearAllExamProgress = jest.fn(async () => undefined);
+jest.mock('../exam/examProgressStore', () => ({
+  clearAllExamProgress: () => mockClearAllExamProgress(),
+}));
+
 jest.mock('../lib/data', () => ({
   getData: () => ({
     auth: {
@@ -37,6 +42,7 @@ describe('SessionProvider', () => {
     mockGetSession.mockReset();
     mockStartAutoRefresh.mockClear();
     mockClearReviewSession.mockClear();
+    mockClearAllExamProgress.mockClear();
     mockSubscribeToAuthChanges.mockImplementation((_handler: never) => () => undefined);
   });
 
@@ -121,6 +127,24 @@ describe('SessionProvider', () => {
     });
 
     expect(mockClearReviewSession).toHaveBeenCalled();
+  });
+
+  it('olvida el simulacro a medias al cerrar sesión', async () => {
+    mockGetSession.mockResolvedValue({ user: { id: 'user-1' } });
+
+    await act(async () => {
+      render(
+        <SessionProvider>
+          <Probe />
+        </SessionProvider>,
+      );
+    });
+    expect(mockClearAllExamProgress).not.toHaveBeenCalled();
+    await act(async () => {
+      fireEvent.press(screen.getByText('signed-in'));
+    });
+
+    expect(mockClearAllExamProgress).toHaveBeenCalled();
   });
 
   it('olvida la sesión de repaso guardada cuando entra otro usuario', async () => {

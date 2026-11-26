@@ -9,10 +9,12 @@ import { Alert, AppState, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { answersByIndex, type ExamAttempt, type ServedExamForm } from '@hanyu/data';
 import { getData } from '../lib/data';
+import { useSession } from '../session/SessionProvider';
 import { Button } from '../ui/Button';
 import { Screen } from '../ui/Screen';
 import { useTheme } from '../theme/ThemeProvider';
 import { ExamResult } from './ExamResult';
+import { clearExamProgress, loadExamProgress, saveExamProgress, type ExamProgress } from './examProgressStore';
 import { ListeningSection } from './ListeningSection';
 import { EXAM_MINUTES, listeningEndMs, mediaUrls, questionKey, questionNumbers } from './examModel';
 import { BankGroup, HandwriteBlank, ImageChoiceGroup, pickInGroup, TextChoice, type Picks } from './parts';
@@ -50,6 +52,7 @@ const clock = (ms: number) => {
 export function ExamRunner({ formCode }: { formCode: string | null }) {
   const { colors } = useTheme();
   const router = useRouter();
+  const userId = useSession().session?.user?.id ?? null;
   const [form, setForm] = useState<ServedExamForm | null>(null);
   const [phase, setPhase] = useState<Phase>('loading');
   const [phaseStart, setPhaseStart] = useState(0);
@@ -60,6 +63,8 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
   const [error, setError] = useState<string | null>(null);
   // Un dedo sobre el lienzo de 书写 2: la página no se desplaza hasta que se levanta.
   const [drawing, setDrawing] = useState(false);
+  // Un intento a medias de esta forma, guardado antes de que la app se cerrara.
+  const [saved, setSaved] = useState<ExamProgress | null>(null);
 
   const urls = useMemo(() => (form ? mediaUrls(form) : null), [form]);
   const download = useExamDownload(urls);
@@ -69,9 +74,11 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
     let cancelled = false;
     getData()
       .exam.getExamForm(2, formCode)
-      .then(served => {
+      .then(async served => {
+        const previous = served && userId ? await loadExamProgress(userId, served.level, served.code) : null;
         if (cancelled) return;
         setForm(served);
+        setSaved(previous);
         setPhase(served ? 'ready' : 'empty');
       })
       .catch(reason => {
@@ -82,7 +89,7 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
     return () => {
       cancelled = true;
     };
-  }, [formCode]);
+  }, [formCode, userId]);
 
   const running = phase === 'listening' || phase === 'answer_sheet' || phase === 'reading' || phase === 'writing';
   useEffect(() => {
@@ -97,6 +104,20 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
       subscription.remove();
     };
   }, [running]);
+
+  // Cada respuesta y cada cambio de fase quedan en el dispositivo: si el sistema mata la app,
+  // al volver se reanuda donde toque por reloj.
+  useEffect(() => {
+    if (!running || !form || !userId) return;
+    void saveExamProgress(userId, {
+      level: form.level,
+      form_code: form.code,
+      phase: phase as TimedPhase,
+      phase_start: phaseStart,
+      started_at: startedAt,
+      picks,
+    });
+  }, [running, form, userId, phase, phaseStart, startedAt, picks]);
 
   const duration = useCallback(
     (timed: TimedPhase) => (timed === 'listening' ? (form ? listeningEndMs(form) : 0) : EXAM_MINUTES[timed] * 60_000),
@@ -114,13 +135,14 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
         started_at: startedAt,
         answers: answersByIndex(form, picks),
       });
+      if (userId) await clearExamProgress(userId, form.level, form.code);
       setAttempt(graded);
       setPhase('result');
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : String(reason));
       setPhase('error');
     }
-  }, [form, picks, startedAt]);
+  }, [form, picks, startedAt, userId]);
 
   useEffect(() => {
     if (!running) return;
@@ -144,6 +166,21 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
     setPhaseStart(at);
     setNow(at);
     setPhase('listening');
+  };
+
+  const resume = (progress: ExamProgress) => {
+    setPicks(progress.picks);
+    setStartedAt(progress.started_at);
+    setPhaseStart(progress.phase_start);
+    setNow(Date.now());
+    setPhase(progress.phase);
+  };
+
+  const restart = () => {
+    Alert.alert('¿Empezar de nuevo?', 'Se descartarán las respuestas del simulacro a medias.', [
+      { text: 'Cancelar', style: 'cancel' },
+      { text: 'Empezar de nuevo', style: 'destructive', onPress: begin },
+    ]);
   };
 
   // Función normal y no useCallback: así añadirla no cambia la lista de hooks.
@@ -201,7 +238,17 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
               <Button label="Reintentar descarga" variant="outline" onPress={download.retry} />
             </>
           ) : null}
-          <Button label="Empezar" onPress={begin} disabled={!download.ready} />
+          {saved ? (
+            <>
+              <Text style={{ color: colors.text }}>
+                Tienes este simulacro a medias, en {TITLES[saved.phase]}. El reloj ha seguido corriendo mientras tanto.
+              </Text>
+              <Button label="Reanudar" onPress={() => resume(saved)} disabled={!download.ready} />
+              <Button label="Empezar de nuevo" variant="outline" onPress={restart} disabled={!download.ready} />
+            </>
+          ) : (
+            <Button label="Empezar" onPress={begin} disabled={!download.ready} />
+          )}
         </View>
       </Screen>
     );

@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState, type R
 import { AppState, type AppStateStatus } from 'react-native';
 import { getData } from '../lib/data';
 import { clearReviewSession } from '../lib/reviewSessionStore';
+import { clearAllExamProgress } from '../exam/examProgressStore';
 
 type Session = { user?: { id: string; email?: string } } | null;
 
@@ -94,6 +95,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       signOut: async () => {
         await getData().auth.signOut();
         await clearReviewSession();
+        // El simulacro a medias va por usuario, pero no se queda en un dispositivo del que se salió.
+        await clearAllExamProgress();
         setSession(null);
       },
     }),
