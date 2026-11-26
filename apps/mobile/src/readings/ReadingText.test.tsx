@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { fireEvent, render, waitFor, within } from '@testing-library/react-native';
 import type { ReadingToken } from '@hanyu/data';
 import { ReadingText } from './ReadingText';
 
@@ -44,6 +44,28 @@ const tokens: ReadingToken[] = [
 describe('ReadingText', () => {
   beforeEach(() => {
     mockAddCard.mockReset();
+  });
+
+  // En línea, la ficha aparecía al final del texto: quien tocaba una palabra de
+  // arriba no veía nada. Va en una hoja modal, sobre lo que se está leyendo.
+  it('abre la ficha de la palabra en una hoja modal y la cierra al tocar fuera', async () => {
+    const view = await render(
+      <ReadingText
+        sentences={[{ zh: '你好，龘。', pinyin: 'ni hao', es: 'Hello.', tokens }]}
+        showPinyin={false}
+        readingId="reading-1"
+      />,
+    );
+
+    expect(view.queryByTestId('word-sheet-modal')).toBeNull();
+    await fireEvent.press(view.getByRole('button', { name: '你好' }));
+
+    const modal = view.getByTestId('word-sheet-modal');
+    expect(modal.type).toBe('Modal');
+    expect(within(modal).getByText('hello')).toBeTruthy();
+
+    await fireEvent.press(view.getByLabelText('Cerrar la ficha de la palabra'));
+    expect(view.queryByTestId('word-sheet-modal')).toBeNull();
   });
 
   it('opens known and unknown word details and adds a known word once', async () => {

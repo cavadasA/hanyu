@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import type { ReadingToken } from '@hanyu/data';
 import { tokens } from '../theme/tokens';
 import { ReadingSentence, type Sentence } from './ReadingSentence';
@@ -38,16 +38,36 @@ export function ReadingText({
         />
       ))}
 
+      {/* La ficha va en una hoja sobre el texto: en línea aparecía al final de
+          la lectura y quien tocaba una palabra de arriba no veía nada. */}
       {selected ? (
-        <WordSheet
-          key={selected.token.id}
-          text={selected.token.text}
-          word={selected.token.word}
-          senses={(selected.token.senses ?? (selected.token.word ? [selected.token.word] : [])) as ReadingSense[]}
-          sentence={{ text: selected.sentence.zh, tokens: selected.sentence.tokens }}
-          readingId={readingId}
-          onClose={() => setSelected(null)}
-        />
+        <Modal
+          visible
+          transparent
+          animationType="slide"
+          testID="word-sheet-modal"
+          onRequestClose={() => setSelected(null)}
+        >
+          <View style={styles.overlay}>
+            <Pressable
+              style={styles.backdrop}
+              accessibilityRole="button"
+              accessibilityLabel="Cerrar la ficha de la palabra"
+              onPress={() => setSelected(null)}
+            />
+            <ScrollView style={styles.sheet} contentContainerStyle={styles.sheetContent}>
+              <WordSheet
+                key={selected.token.id}
+                text={selected.token.text}
+                word={selected.token.word}
+                senses={(selected.token.senses ?? (selected.token.word ? [selected.token.word] : [])) as ReadingSense[]}
+                sentence={{ text: selected.sentence.zh, tokens: selected.sentence.tokens }}
+                readingId={readingId}
+                onClose={() => setSelected(null)}
+              />
+            </ScrollView>
+          </View>
+        </Modal>
       ) : null}
     </View>
   );
@@ -56,5 +76,20 @@ export function ReadingText({
 const styles = StyleSheet.create({
   container: {
     gap: tokens.spacing.md,
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  backdrop: {
+    ...StyleSheet.absoluteFill,
+    backgroundColor: 'rgba(0, 0, 0, 0.35)',
+  },
+  sheet: {
+    maxHeight: '70%',
+  },
+  sheetContent: {
+    padding: tokens.spacing.md,
+    paddingBottom: tokens.spacing.xl,
   },
 });
