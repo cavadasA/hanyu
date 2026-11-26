@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { PostgrestClient } from '@supabase/postgrest-js';
 import { getGrammarPoint, getGrammarReadings, normalizeGrammarPoint } from './grammar';
 
 describe('normalizeGrammarPoint', () => {
@@ -69,8 +70,28 @@ describe('getGrammarReadings', () => {
     await getGrammarReadings(2, '2.2.1', client);
 
     expect(client.from).toHaveBeenCalledWith('reading');
-    expect(calls.contains).toEqual([['target_grammar', [{ code: '2.2.1', level: 2 }]]]);
+    expect(calls.contains).toEqual([['target_grammar', JSON.stringify([{ code: '2.2.1', level: 2 }])]]);
     expect(calls.eq).toEqual([['hsk_level', 2], ['code', '2.2.1']]);
+  });
+
+  // target_grammar es jsonb: postgrest-js convierte un array JS en un literal de
+  // array de Postgres ({[object Object]}) y PostgREST responde «invalid input
+  // syntax for type json». El filtro tiene que llegar como JSON.
+  it('envía a PostgREST un filtro cs. que es JSON válido', async () => {
+    const urls: string[] = [];
+    const fetch = vi.fn(async (url: string) => {
+      urls.push(String(url));
+      const body = String(url).includes('/grammar_points') ? { markers: [] } : [];
+      return new Response(JSON.stringify(body), { status: 200, headers: { 'content-type': 'application/json' } });
+    });
+    const client: any = new PostgrestClient('http://local.test/rest/v1', { fetch: fetch as never });
+
+    await getGrammarReadings(2, '2.2.1', client);
+
+    const readingUrl = new URL(urls.find(url => url.includes('/reading'))!);
+    const filter = readingUrl.searchParams.get('target_grammar') ?? '';
+    expect(filter.startsWith('cs.')).toBe(true);
+    expect(JSON.parse(filter.slice(3))).toEqual([{ code: '2.2.1', level: 2 }]);
   });
 
   it('devuelve cada lectura con la primera frase que contiene un marcador', async () => {

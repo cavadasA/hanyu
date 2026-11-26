@@ -87,7 +87,9 @@ export async function getGrammarReadings(
   const { data, error } = await client
     .from('reading')
     .select('slug, title, sentences')
-    .contains('target_grammar', [{ code, level }])
+    // target_grammar es jsonb: el filtro va como JSON. Un array JS lo convertiría
+    // postgrest-js en un literal de array de Postgres y PostgREST lo rechazaría.
+    .contains('target_grammar', JSON.stringify([{ code, level }]))
     .order('slug');
 
   if (error) {
