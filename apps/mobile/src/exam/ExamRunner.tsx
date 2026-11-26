@@ -2,8 +2,10 @@
 // 3 minutos de hoja de respuestas, 阅读 (25 min), 书写 (10 min), entrega y resultado.
 // Las fases las decide el reloj de pared, no un temporizador que se para en segundo plano.
 // Es el modo Exam: sin ayudas, con tiempo y sin tocar ninguna tarjeta.
+// Quien acaba antes puede cerrar la hoja de respuestas, 阅读 o 书写 (como en el examen por
+// ordenador); 听力 no, porque va al ritmo del audio. El tiempo sobrante no pasa a la siguiente.
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { AppState, StyleSheet, Text, View } from 'react-native';
+import { Alert, AppState, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { answersByIndex, type ExamAttempt, type ServedExamForm } from '@hanyu/data';
 import { getData } from '../lib/data';
@@ -30,6 +32,12 @@ const TITLES: Record<TimedPhase, string> = {
   answer_sheet: 'Hoja de respuestas de 听力',
   reading: '阅读',
   writing: '书写',
+};
+/** Botón para cerrar la fase antes de que acabe su tiempo. 听力 no tiene. */
+const FINISH_EARLY: Partial<Record<TimedPhase, { label: string; title: string; confirm: string }>> = {
+  answer_sheet: { label: 'Pasar a 阅读', title: '¿Pasar ya a 阅读?', confirm: 'Pasar' },
+  reading: { label: 'Terminar 阅读', title: '¿Terminar 阅读?', confirm: 'Terminar' },
+  writing: { label: 'Entregar', title: '¿Entregar el simulacro?', confirm: 'Entregar' },
 };
 /** En los grupos de banco común cada opción se usa una vez. */
 const EXCLUSIVE = new Set(['L2', 'R1', 'R2', 'R3', 'W1']);
@@ -136,6 +144,30 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
     setPhase('listening');
   };
 
+  // Función normal y no useCallback: así añadirla no cambia la lista de hooks.
+  const finishEarly = (timed: TimedPhase) => {
+    const copy = FINISH_EARLY[timed];
+    if (!copy) return;
+    Alert.alert(copy.title, 'No podrás volver a esta sección.', [
+      { text: 'Seguir', style: 'cancel' },
+      {
+        text: copy.confirm,
+        style: 'destructive',
+        onPress: () => {
+          const next = NEXT[timed];
+          if (next === 'submit') {
+            void submit();
+            return;
+          }
+          const at = Date.now();
+          setPhaseStart(at);
+          setNow(at);
+          setPhase(next);
+        },
+      },
+    ]);
+  };
+
   const onPick = useCallback((slug: string, index: number, value: number | string | null) => {
     setPicks(previous => {
       const group = form?.content.groups.find(entry => entry.slug === slug);
@@ -229,6 +261,10 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
               ),
             )
           : null}
+
+        {FINISH_EARLY[timed] ? (
+          <Button label={FINISH_EARLY[timed]!.label} variant="outline" onPress={() => finishEarly(timed)} />
+        ) : null}
       </View>
     </Screen>
   );

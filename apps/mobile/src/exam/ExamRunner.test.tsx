@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { ExamRunner } from './ExamRunner';
 import { ExamResult } from './ExamResult';
@@ -124,6 +125,50 @@ describe('ExamRunner', () => {
       scope: 'full',
       answers: { 'a-l1': [null, null, null], 'a-r4': [null], 'a-w2': [null] },
     });
+  });
+
+  it('en 听力 no se puede terminar antes: va al ritmo del audio', async () => {
+    await start();
+    expect(screen.queryByLabelText('Terminar 听力')).toBeNull();
+    expect(screen.queryByLabelText(/^Pasar a|^Terminar|^Entregar/)).toBeNull();
+  });
+
+  it('terminar 阅读 antes de tiempo pide confirmación y abre 书写 con sus 10 minutos', async () => {
+    const alert = jest.spyOn(Alert, 'alert');
+    await start();
+    await advance(35_000 + 3 * 60_000);
+    expect(screen.getByText('阅读')).toBeTruthy();
+    await advance(5 * 60_000);
+
+    await fireEvent.press(screen.getByLabelText('Terminar 阅读'));
+    expect(alert).toHaveBeenCalledTimes(1);
+    expect(screen.getByText('阅读')).toBeTruthy();
+    const buttons = alert.mock.calls[0][2] ?? [];
+    await act(async () => {
+      buttons.find(button => button.style === 'destructive')?.onPress?.();
+    });
+
+    expect(screen.getByText('书写')).toBeTruthy();
+    expect(screen.getByText('10:00')).toBeTruthy();
+    alert.mockRestore();
+  });
+
+  it('«Entregar» en 书写 entrega al confirmar, con lo respondido hasta entonces', async () => {
+    const alert = jest.spyOn(Alert, 'alert');
+    await start();
+    await fireEvent.press(screen.getByLabelText('Pregunta 1, imagen C'));
+    await advance(35_000 + (3 + 25) * 60_000);
+    expect(screen.getByText('书写')).toBeTruthy();
+
+    await fireEvent.press(screen.getByLabelText('Entregar'));
+    expect(mockSubmit).not.toHaveBeenCalled();
+    await act(async () => {
+      (alert.mock.calls[0][2] ?? []).find(button => button.style === 'destructive')?.onPress?.();
+    });
+
+    await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
+    expect(mockSubmit.mock.calls[0][0].answers['a-l1']).toEqual([2, null, null]);
+    alert.mockRestore();
   });
 
   it('durante el examen no se reprograma ninguna tarjeta', async () => {
