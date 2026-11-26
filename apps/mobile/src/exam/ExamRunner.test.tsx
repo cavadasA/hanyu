@@ -148,6 +148,7 @@ describe('ExamRunner', () => {
 
     await fireEvent.press(screen.getByLabelText('Terminar 阅读'));
     expect(alert).toHaveBeenCalledTimes(1);
+    expect(alert.mock.calls[0][1]).toBe('No podrás volver a esta sección.');
     expect(screen.getByText('阅读')).toBeTruthy();
     const buttons = alert.mock.calls[0][2] ?? [];
     await act(async () => {
@@ -168,6 +169,8 @@ describe('ExamRunner', () => {
 
     await fireEvent.press(screen.getByLabelText('Entregar'));
     expect(mockSubmit).not.toHaveBeenCalled();
+    // Al entregar no se «vuelve a una sección»: lo que se pierde es poder cambiar respuestas.
+    expect(alert.mock.calls[0][1]).toBe('No podrás cambiar tus respuestas.');
     await act(async () => {
       (alert.mock.calls[0][2] ?? []).find(button => button.style === 'destructive')?.onPress?.();
     });

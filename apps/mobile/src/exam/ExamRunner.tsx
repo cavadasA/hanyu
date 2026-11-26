@@ -36,10 +36,12 @@ const TITLES: Record<TimedPhase, string> = {
   writing: '书写',
 };
 /** Botón para cerrar la fase antes de que acabe su tiempo. 听力 no tiene. */
-const FINISH_EARLY: Partial<Record<TimedPhase, { label: string; title: string; confirm: string }>> = {
-  answer_sheet: { label: 'Pasar a 阅读', title: '¿Pasar ya a 阅读?', confirm: 'Pasar' },
-  reading: { label: 'Terminar 阅读', title: '¿Terminar 阅读?', confirm: 'Terminar' },
-  writing: { label: 'Entregar', title: '¿Entregar el simulacro?', confirm: 'Entregar' },
+const LEAVE_SECTION = 'No podrás volver a esta sección.';
+const FINISH_EARLY: Partial<Record<TimedPhase, { label: string; title: string; warning: string; confirm: string }>> = {
+  answer_sheet: { label: 'Pasar a 阅读', title: '¿Pasar ya a 阅读?', warning: LEAVE_SECTION, confirm: 'Pasar' },
+  reading: { label: 'Terminar 阅读', title: '¿Terminar 阅读?', warning: LEAVE_SECTION, confirm: 'Terminar' },
+  // Al entregar no hay «sección siguiente»: lo que se pierde es poder cambiar respuestas.
+  writing: { label: 'Entregar', title: '¿Entregar el simulacro?', warning: 'No podrás cambiar tus respuestas.', confirm: 'Entregar' },
 };
 /** En los grupos de banco común cada opción se usa una vez. */
 const EXCLUSIVE = new Set(['L2', 'R1', 'R2', 'R3', 'W1']);
@@ -187,7 +189,7 @@ export function ExamRunner({ formCode }: { formCode: string | null }) {
   const finishEarly = (timed: TimedPhase) => {
     const copy = FINISH_EARLY[timed];
     if (!copy) return;
-    Alert.alert(copy.title, 'No podrás volver a esta sección.', [
+    Alert.alert(copy.title, copy.warning, [
       { text: 'Seguir', style: 'cancel' },
       {
         text: copy.confirm,
