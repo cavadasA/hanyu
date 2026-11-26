@@ -265,10 +265,12 @@ Los 17 pendientes de la prueba, cada uno con un test que fallaba antes del arreg
 - `c3a741c`: la pestaña Practice abría Expresión (el punto 15 de arriba).
 - `a8ca210`: Progreso decía «Último simulacro: 92 %» y, más abajo, «Aún no has realizado simulacros de examen». La fila «Rendimiento en simulacros» contaba los ejercicios del simulacro antiguo, retirado en el Plan 12. Ahora da la media de los simulacros completos (`v18`).
 
-**Observaciones, sin corregir:**
+**Observaciones corregidas después:**
 
-- En 书写 1, los caracteres con el hueco tardan unos 4 s en aparecer al entrar en la fase; mientras tanto sólo se ve el pinyin.
-- El subtítulo gris de los botones primarios («8d» en Easy, «Di la palabra en voz alta» en Hablar) apenas se lee sobre el bermellón.
+- `8a9d659`: en 书写 1, los caracteres con el hueco tardaban unos 4 s en aparecer. Cada uno era una WebView (6 por fase) y el retraso era su arranque; ahora se pintan en nativo con `react-native-svg`. En el simulador ya están en la primera captura tras pulsar «Reanudar» (`v19`).
+- `33e64a2`: el subtítulo gris de los botones primarios («8d» en Easy, «Di la palabra en voz alta» en Hablar) daba 1,08:1 sobre el bermellón. Con el token `onAccentMuted` da 4,76:1 en claro y 6,35:1 en oscuro (`v20`). Los textos secundarios de los héroes de Hoy y You, que se quedaban en 4,497:1, usan el mismo token.
+
+**Observaciones, sin corregir:**
 - En este simulador el reconocimiento de voz ya está disponible, pero quedó **denegado** para Hanyu tras la prueba del punto 12. Para probar la pronunciación hay que reactivarlo en Ajustes → Privacidad.
 - Datos de prueba que quedan en la BD local: 3 tarjetas aprendidas y un intento de la forma B (3 %).
 
