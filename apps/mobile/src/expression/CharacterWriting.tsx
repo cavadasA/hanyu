@@ -9,7 +9,7 @@
 // orden de trazos: es enseñanza, y quien lo usa no registra ningún evento. `quiz` no muestra
 // nada hasta el tercer error en un trazo, o hasta que se pide una pista.
 import { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { WebView, type WebViewMessageEvent } from 'react-native-webview';
 import {
   quizHint,
@@ -129,6 +129,8 @@ function ExamWriting({ onResult, onDrawingChange, size = 260 }: CharacterWriting
   const { colors } = useTheme();
   const webView = useRef<WebView>(null);
   const [strokes, setStrokes] = useState<Point[][]>([]);
+  // Sin esto, un dibujo no reconocido dejaba la pregunta en «Sin escribir» sin explicar por qué.
+  const [notice, setNotice] = useState<string | null>(null);
 
   const onMessage = (event: WebViewMessageEvent) => {
     const message = JSON.parse(event.nativeEvent.data) as { type: string; strokes?: Point[][] };
@@ -137,6 +139,13 @@ function ExamWriting({ onResult, onDrawingChange, size = 260 }: CharacterWriting
 
   const finish = () => {
     const result = recognizeHandwriting(strokes, HANDWRITING_MEDIANS);
+    setNotice(
+      result.recognized !== null
+        ? null
+        : strokes.length === 0
+          ? 'Escribe el carácter antes de pulsar «Hecho».'
+          : 'No se ha reconocido ningún carácter. Borra y escríbelo otra vez.',
+    );
     onResult({
       mistakes: result.mistakes,
       hints: 0,
@@ -149,6 +158,7 @@ function ExamWriting({ onResult, onDrawingChange, size = 260 }: CharacterWriting
   const clear = () => {
     webView.current?.injectJavaScript('window.clearCanvas(); true;');
     setStrokes([]);
+    setNotice(null);
   };
 
   return (
@@ -178,6 +188,7 @@ function ExamWriting({ onResult, onDrawingChange, size = 260 }: CharacterWriting
           <Button label="Hecho" onPress={finish} />
         </View>
       </View>
+      {notice ? <Text style={[styles.notice, { color: colors.vermilion }]}>{notice}</Text> : null}
     </View>
   );
 }
@@ -277,6 +288,7 @@ function TraceWriting({
 
 const styles = StyleSheet.create({
   wrap: { alignItems: 'center', gap: 12 },
+  notice: { fontSize: 14, textAlign: 'center' },
   canvas: { borderWidth: 1, borderRadius: 12, overflow: 'hidden' },
   web: { backgroundColor: 'transparent' },
   actions: { flexDirection: 'row', gap: 12, alignSelf: 'stretch' },

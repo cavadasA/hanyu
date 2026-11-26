@@ -79,6 +79,24 @@ describe('CharacterWriting en modo exam', () => {
     expect(onResult).toHaveBeenCalledWith(expect.objectContaining({ completed: false, recognized: null }));
   });
 
+  // La pregunta seguía en «Sin escribir» sin explicar que el dibujo no se había reconocido.
+  it('si «Hecho» no reconoce el dibujo, lo dice; al reconocerlo o borrar, el aviso se va', async () => {
+    await render(<CharacterWriting mode="exam" onResult={jest.fn()} />);
+    await drawn([[[100, 100], [900, 800]], [[900, 100], [100, 800]]]);
+    await fireEvent.press(screen.getByLabelText('Hecho'));
+    expect(screen.getByText('No se ha reconocido ningún carácter. Borra y escríbelo otra vez.')).toBeTruthy();
+
+    await fireEvent.press(screen.getByLabelText('Borrar'));
+    expect(screen.queryByText(/No se ha reconocido/)).toBeNull();
+
+    await fireEvent.press(screen.getByLabelText('Hecho'));
+    expect(screen.getByText('Escribe el carácter antes de pulsar «Hecho».')).toBeTruthy();
+
+    await drawn(xueShuffled());
+    await fireEvent.press(screen.getByLabelText('Hecho'));
+    expect(screen.queryByText(/No se ha reconocido|Escribe el carácter antes/)).toBeNull();
+  });
+
   it('sin contorno ni pistas: no muestra el carácter ni su pinyin', async () => {
     await render(<CharacterWriting mode="exam" onResult={jest.fn()} />);
     expect(screen.queryByText('学')).toBeNull();
