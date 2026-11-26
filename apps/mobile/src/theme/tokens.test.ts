@@ -25,6 +25,9 @@ describe('theme tokens', () => {
       const colors = tokens.colors[scheme];
 
       expect(contrast(colors.vermilion, colors.onAccent)).toBeGreaterThanOrEqual(4.5);
+      // Texto secundario sobre el bermellón (subtítulo de los botones primarios, héroes).
+      // Antes era onAccent al 90 %, que en claro se queda en 4,497:1.
+      expect(contrast(colors.vermilion, colors.onAccentMuted)).toBeGreaterThanOrEqual(4.5);
       expect(contrast(colors.gold, colors.surface)).toBeGreaterThanOrEqual(4.5);
       expect(contrast(colors.info, colors.surface)).toBeGreaterThanOrEqual(4.5);
       expect(contrast(colors.success, colors.surface)).toBeGreaterThanOrEqual(4.5);

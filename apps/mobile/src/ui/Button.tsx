@@ -56,7 +56,9 @@ export function Button({
       ) : (
         <>
           <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
-          {sublabel ? <Text style={[styles.sublabel, { color: colors.textMuted }]}>{sublabel}</Text> : null}
+          {sublabel ? (
+            <Text style={[styles.sublabel, { color: isPrimary ? colors.onAccentMuted : colors.textMuted }]}>{sublabel}</Text>
+          ) : null}
         </>
       )}
     </Pressable>

@@ -19,9 +19,10 @@ is the core of the daily loop so it must feel fast and safe
 ## Tokens — the only source of color / spacing / radius
 
 Everything derives from [`theme/tokens.ts`](../theme/tokens.ts) via `useTheme()`.
-No hardcoded hex in screens. On the vermilion hero, secondary text uses
-`colors.onAccent + 'E6'` (90% alpha) so small text keeps WCAG AA (≥ 4.5:1) in
-both modes; decorative elements (divider, block dots, icon wash) use lower
+No hardcoded hex in screens. On vermilion (hero, primary-button sublabel),
+secondary text uses `colors.onAccentMuted` so small text keeps WCAG AA
+(≥ 4.5:1) in both modes — `onAccent + 'E6'` (90% alpha) only reached 4.497:1
+in light mode. Decorative elements (divider, block dots, icon wash) use lower
 alphas.
 
 - **Accent (locked):** `vermilion` — active tab tint, primary buttons, progress
@@ -71,8 +72,9 @@ alphas.
   names (`Words`, `Grammar`, `Exercises`, `Readings`) must stay exact: single
   `Text` nodes / accessible labels the suite asserts.
 - **Both themes, always.** Style through `useTheme()` colors; never a raw color
-  in a screen. Token-derived alphas (`colors.onAccent + 'E6'`) are allowed on
-  the hero.
+  in a screen. Token-derived alphas (`colors.onAccent + '33'`) are allowed on
+  the hero for decoration only; text on vermilion uses `onAccent` or
+  `onAccentMuted`.
 - **Accessibility:** touch targets ≥ 44pt, visible labels, real buttons, hero
   secondary text ≥ 4.5:1 in both modes. The pressed rating shows a spinner and
   keeps its label as `accessibilityLabel` while busy.

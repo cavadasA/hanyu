@@ -13,6 +13,8 @@ jest.mock('../theme/ThemeProvider', () => ({
       border: '#e5e7eb',
       vermilion: '#c93624',
       onAccent: '#ffffff',
+      onAccentMuted: '#fcf3f2',
+      textMuted: '#6b7280',
     },
   }),
 }));
@@ -53,6 +55,20 @@ describe('Button', () => {
     expect(selected.borderColor).toBe('#c93624');
     expect(other.borderColor).toBe('#e5e7eb');
     expect(screen.getByText('1x').props.style).toEqual(expect.arrayContaining([expect.objectContaining({ color: '#c93624' })]));
+  });
+
+  // El subtítulo gris («8d» en Easy, «Di la palabra en voz alta») apenas se leía sobre el
+  // bermellón: 1,08:1.
+  it('el subtítulo de un botón primario usa el color legible sobre el bermellón', async () => {
+    await render(
+      <>
+        <Button label="Easy" sublabel="8d" onPress={jest.fn()} />
+        <Button label="Good" sublabel="10m" variant="secondary" onPress={jest.fn()} />
+      </>,
+    );
+
+    expect(screen.getByText('8d').props.style).toEqual(expect.arrayContaining([expect.objectContaining({ color: '#fcf3f2' })]));
+    expect(screen.getByText('10m').props.style).toEqual(expect.arrayContaining([expect.objectContaining({ color: '#6b7280' })]));
   });
 
   it('keeps transform a valid array while pressed', async () => {

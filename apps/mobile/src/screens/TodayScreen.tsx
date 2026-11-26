@@ -416,13 +416,13 @@ export default function TodayScreen() {
             <View style={[styles.hero, { backgroundColor: colors.vermilion }]}>
               <View style={styles.heroTop}>
                 <View style={styles.heroCopy}>
-                  <Text style={[styles.heroLabel, { color: colors.onAccent + 'E6' }]}>
+                  <Text style={[styles.heroLabel, { color: colors.onAccentMuted }]}>
                     Current streak
                   </Text>
                   <Text style={[styles.heroMetric, { color: colors.onAccent }]}>
                     {`${streak.current} day streak`}
                   </Text>
-                  <Text style={[styles.heroMuted, { color: colors.onAccent + 'E6' }]}>
+                  <Text style={[styles.heroMuted, { color: colors.onAccentMuted }]}>
                     {`Longest ${streak.longest} ${streak.longest === 1 ? 'day' : 'days'}`}
                   </Text>
                 </View>
@@ -433,7 +433,7 @@ export default function TodayScreen() {
 
               <View style={[styles.heroDivider, { backgroundColor: colors.onAccent + '33' }]} />
 
-              <Text style={[styles.heroMuted, { color: colors.onAccent + 'E6' }]}>
+              <Text style={[styles.heroMuted, { color: colors.onAccentMuted }]}>
                 {`${blocksDone} of ${blocks} blocks completed today`}
               </Text>
               <ProgressRing

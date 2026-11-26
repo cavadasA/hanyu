@@ -9,6 +9,8 @@ const light = {
   info: '#2563eb',
   success: '#047857',
   onAccent: '#ffffff',
+  // Texto secundario sobre el bermellón: 4,76:1 (onAccent al 90 % daba 4,497:1).
+  onAccentMuted: '#fcf3f2',
 };
 
 const dark = {
@@ -22,6 +24,8 @@ const dark = {
   info: '#60a5fa',
   success: '#34d399',
   onAccent: '#0f172a',
+  // Texto secundario sobre el bermellón: 6,35:1.
+  onAccentMuted: '#1d1d2d',
 };
 
 export type ThemeColors = typeof light;

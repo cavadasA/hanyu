@@ -171,9 +171,9 @@ export default function YouScreen() {
         <Text style={[styles.heroMetric, { color: colors.onAccent }]}>
           {heroStats ? String(heroStats.mastered) : '—'}
         </Text>
-        <Text style={[styles.heroLabel, { color: colors.onAccent + 'E6' }]}>words mastered</Text>
+        <Text style={[styles.heroLabel, { color: colors.onAccentMuted }]}>words mastered</Text>
         <View style={[styles.heroDivider, { backgroundColor: colors.onAccent + '33' }]} />
-        <Text style={[styles.heroMuted, { color: colors.onAccent + 'E6' }]}>
+        <Text style={[styles.heroMuted, { color: colors.onAccentMuted }]}>
           {heroStats?.accuracy != null
             ? `HSK ${currentLevel} · ${Math.round(heroStats.accuracy)}% accuracy`
             : `HSK ${currentLevel}`}
