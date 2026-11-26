@@ -7,7 +7,10 @@ export const unstable_settings = { initialRouteName: 'index' };
 
 export default function PracticeLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    // initialRouteName también aquí: unstable_settings sólo lo usan los enlaces. Al entrar
+    // por la pestaña, la pila arranca en su primera pantalla, y declarar abajo
+    // <Stack.Screen name="expression"> la convertía en la primera.
+    <Stack initialRouteName="index" screenOptions={{ headerShown: false }}>
       {/* Desde iOS 26 se vuelve atrás deslizando desde cualquier punto del
           contenido, y un trazo hacia la derecha en el lienzo de escritura sacaba
           de la sesión. Se queda solo el gesto desde el borde: sin cabecera, es
