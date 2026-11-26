@@ -13,6 +13,7 @@ import { Card } from '../ui/Card';
 import { EmptyState } from '../ui/EmptyState';
 import { ErrorBanner } from '../ui/ErrorBanner';
 import { Screen } from '../ui/Screen';
+import { partOfSpeechLabel } from '../lib/partOfSpeech';
 
 const LEVELS: Array<{ label: string; value: HskLevel | undefined }> = [
   { label: 'Todos', value: undefined },
@@ -182,7 +183,7 @@ export function WordsScreen() {
             <Text style={[styles.meaning, { color: colors.text }]}>
               {resolveGloss(word, supportLanguage)}
             </Text>
-            {word.pos ? <Badge label={word.pos} /> : null}
+            {word.pos ? <Badge label={partOfSpeechLabel(word.pos)} /> : null}
             <Pressable
               accessibilityRole="button"
               accessibilityLabel={`Añadir ${word.hanzi} a tus tarjetas`}

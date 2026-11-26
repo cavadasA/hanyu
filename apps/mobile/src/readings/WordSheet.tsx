@@ -9,6 +9,7 @@ import { useTheme } from '../theme/ThemeProvider';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
+import { partOfSpeechLabel } from '../lib/partOfSpeech';
 
 interface Props {
   word?: Word | null;
@@ -108,7 +109,7 @@ export function WordSheet({
         <Text style={[styles.meaning, { color: colors.textMuted }]}>{gloss}</Text>
         <View style={styles.badges}>
           {sense.hsk_level ? <Badge label={`HSK ${sense.hsk_level}`} /> : null}
-          {sense.pos ? <Badge label={sense.pos} /> : null}
+          {sense.pos ? <Badge label={partOfSpeechLabel(sense.pos)} /> : null}
           {sense.traditional ? <Badge label={`繁 ${sense.traditional}`} /> : null}
           {sense.classifier ? <Badge label={`量 ${sense.classifier}`} /> : null}
         </View>
