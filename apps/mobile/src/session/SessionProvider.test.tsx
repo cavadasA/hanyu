@@ -1,11 +1,16 @@
-import { act, render, screen } from '@testing-library/react-native';
-import { AppState, Text } from 'react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { AppState, Pressable, Text } from 'react-native';
 import { SessionProvider, useSession } from './SessionProvider';
 
 const mockGetSession = jest.fn();
 const mockSubscribeToAuthChanges = jest.fn((_handler: never) => () => undefined);
 const mockStartAutoRefresh = jest.fn();
 const mockStopAutoRefresh = jest.fn();
+const mockClearReviewSession = jest.fn(async () => undefined);
+
+jest.mock('../lib/reviewSessionStore', () => ({
+  clearReviewSession: () => mockClearReviewSession(),
+}));
 
 jest.mock('../lib/data', () => ({
   getData: () => ({
@@ -19,14 +24,20 @@ jest.mock('../lib/data', () => ({
 }));
 
 function Probe() {
-  const { session, loading } = useSession();
-  return <Text>{loading ? 'loading' : session ? 'signed-in' : 'signed-out'}</Text>;
+  const { session, loading, signOut } = useSession();
+  return (
+    <Pressable onPress={() => void signOut()}>
+      <Text>{loading ? 'loading' : session ? 'signed-in' : 'signed-out'}</Text>
+    </Pressable>
+  );
 }
 
 describe('SessionProvider', () => {
   beforeEach(() => {
     mockGetSession.mockReset();
     mockStartAutoRefresh.mockClear();
+    mockClearReviewSession.mockClear();
+    mockSubscribeToAuthChanges.mockImplementation((_handler: never) => () => undefined);
   });
 
   afterEach(() => {
@@ -91,5 +102,50 @@ describe('SessionProvider', () => {
     });
 
     expect(mockStartAutoRefresh).toHaveBeenCalled();
+  });
+
+  // La sesión de repaso a medias se guarda en el dispositivo sin dueño: sin
+  // esto, quien entra después ve «Continue review» con las tarjetas de otro.
+  it('olvida la sesión de repaso guardada al cerrar sesión', async () => {
+    mockGetSession.mockResolvedValue({ user: { id: 'user-1' } });
+
+    await act(async () => {
+      render(
+        <SessionProvider>
+          <Probe />
+        </SessionProvider>,
+      );
+    });
+    await act(async () => {
+      fireEvent.press(screen.getByText('signed-in'));
+    });
+
+    expect(mockClearReviewSession).toHaveBeenCalled();
+  });
+
+  it('olvida la sesión de repaso guardada cuando entra otro usuario', async () => {
+    let emit: (event: { session: unknown }) => void = () => undefined;
+    mockSubscribeToAuthChanges.mockImplementation(((handler: typeof emit) => {
+      emit = handler;
+      return () => undefined;
+    }) as never);
+    mockGetSession.mockResolvedValue({ user: { id: 'user-1' } });
+
+    await act(async () => {
+      render(
+        <SessionProvider>
+          <Probe />
+        </SessionProvider>,
+      );
+    });
+    await act(async () => {
+      emit({ session: { user: { id: 'user-1' } } });
+    });
+    expect(mockClearReviewSession).not.toHaveBeenCalled();
+
+    await act(async () => {
+      emit({ session: { user: { id: 'user-2' } } });
+    });
+    expect(mockClearReviewSession).toHaveBeenCalled();
   });
 });
