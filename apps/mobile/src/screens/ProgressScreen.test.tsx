@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import { render, screen, waitFor } from '@testing-library/react-native';
 import type { LearningReport } from '@hanyu/data';
 import { ProgressScreen } from './ProgressScreen';
@@ -81,6 +82,34 @@ describe('ProgressScreen', () => {
     });
     expect(screen.queryByText(/todas las preguntas del catálogo son literales/i)).toBeNull();
     expect(screen.queryByText(/^0 %/)).toBeNull();
+  });
+
+  // Con respuestas, pero menos de las necesarias, decía «Sin datos todavía».
+  it('con respuestas pero sin las suficientes, dice cuántas faltan', async () => {
+    const attempts: LearningReport['reading_attempts'] = [
+      { created_at: '2026-11-01T00:00:00Z', reading_slug: 'text-1', score: 3, total: 4, inferential_score: 1, inferential_total: 1 },
+    ];
+    mockGetReport.mockResolvedValue(reportWith({ reading_attempts: attempts }));
+
+    await renderProgress();
+
+    await waitFor(() => {
+      expect(screen.getByText('Faltan 2 respuestas para calcularla')).toBeTruthy();
+      expect(screen.getByText('Faltan 4 respuestas para calcularla')).toBeTruthy();
+    });
+    expect(screen.queryByText('Sin datos todavía')).toBeNull();
+  });
+
+  // «Estabilidad ≥ 30 d y retención activa» se cortaba por la derecha.
+  it('las cabeceras de sección dejan bajar la etiqueta a otra línea', async () => {
+    mockGetReport.mockResolvedValue(reportWith({}));
+    await renderProgress();
+
+    const badge = await screen.findByText('Estabilidad ≥ 30 d y retención activa');
+    let node: any = badge.parent;
+    while (node && !(node.props?.testID === 'section-header')) node = node.parent;
+    expect(node).toBeTruthy();
+    expect(StyleSheet.flatten(node.props.style)).toMatchObject({ flexWrap: 'wrap' });
   });
 
   it('separa la comprensión inferencial de la literal', async () => {

@@ -1,5 +1,5 @@
 // packages/domain/src/analytics/reading.test.ts
-import { comprehensionByKind, lookupsPer100Tokens, readingSpeed } from './reading';
+import { comprehensionAnswersMissing, comprehensionByKind, lookupsPer100Tokens, readingSpeed } from './reading';
 
 describe('readingSpeed', () => {
   it('calcula caracteres por minuto', () => {
@@ -82,5 +82,14 @@ describe('comprehensionByKind', () => {
 
   it('sin intentos no hay ninguna métrica, nunca un cero', () => {
     expect(comprehensionByKind([])).toEqual({ literal: null, inferential: null });
+  });
+});
+
+// Progreso decía «Sin datos todavía» aunque hubiera respuestas, sin decir cuántas faltaban.
+describe('comprehensionAnswersMissing', () => {
+  it('dice cuántas respuestas de cada tipo faltan para calcular la métrica', () => {
+    expect(comprehensionAnswersMissing([{ score: 6, total: 9, inferential_score: 2, inferential_total: 4 }]))
+      .toEqual({ literal: 0, inferential: 1 });
+    expect(comprehensionAnswersMissing([])).toEqual({ literal: 5, inferential: 5 });
   });
 });

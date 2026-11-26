@@ -14,7 +14,9 @@ import {
   type LearningReportSkillState,
 } from '@hanyu/data';
 import {
+  comprehensionAnswersMissing,
   comprehensionByKind,
+  MIN_ANSWERS_PER_KIND,
   lookupsPer100Chars,
   masteryBySkill,
   observedRetention,
@@ -168,6 +170,7 @@ export function ProgressScreen() {
 
     // Comprensión literal e inferencial, por separado (reading_attempts)
     const comprehension = comprehensionByKind(report.reading_attempts ?? []);
+    const comprehensionMissing = comprehensionAnswersMissing(report.reading_attempts ?? []);
 
     return {
       retention7,
@@ -188,6 +191,7 @@ export function ProgressScreen() {
       lookups,
       lookupRate,
       comprehension,
+      comprehensionMissing,
     };
   }, [report, targetRetention]);
 
@@ -238,6 +242,7 @@ export function ProgressScreen() {
     lookups,
     lookupRate,
     comprehension,
+    comprehensionMissing,
   } = metrics;
 
   return (
@@ -259,7 +264,7 @@ export function ProgressScreen() {
 
         {/* BLOQUE 1: MEMORIA */}
         <Card style={styles.sectionCard}>
-          <View style={styles.sectionHeader}>
+          <View testID="section-header" style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Memoria y retención</Text>
             <Badge label={`Objetivo: ${Math.round(targetRetention * 100)} %`} />
           </View>
@@ -333,7 +338,7 @@ export function ProgressScreen() {
 
         {/* BLOQUE 2: VOCABULARIO Y SÍLABO */}
         <Card style={styles.sectionCard}>
-          <View style={styles.sectionHeader}>
+          <View testID="section-header" style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Vocabulario demostrado</Text>
             <Badge label="Estabilidad ≥ 30 d y retención activa" />
           </View>
@@ -400,7 +405,7 @@ export function ProgressScreen() {
 
         {/* BLOQUE 3: GRAMÁTICA */}
         <Card style={styles.sectionCard}>
-          <View style={styles.sectionHeader}>
+          <View testID="section-header" style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Gramática y unidades</Text>
           </View>
           <Text style={[styles.sectionCaption, { color: colors.textMuted }]}>
@@ -428,7 +433,7 @@ export function ProgressScreen() {
 
         {/* BLOQUE 4: PRECISIÓN Y EVALUACIÓN */}
         <Card style={styles.sectionCard}>
-          <View style={styles.sectionHeader}>
+          <View testID="section-header" style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Precisión y evaluación</Text>
           </View>
 
@@ -505,7 +510,7 @@ export function ProgressScreen() {
 
         {/* BLOQUE 5: LECTURA Y ESFUERZO */}
         <Card style={styles.sectionCard}>
-          <View style={styles.sectionHeader}>
+          <View testID="section-header" style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Lectura y esfuerzo</Text>
           </View>
 
@@ -562,12 +567,14 @@ export function ProgressScreen() {
           <ComprehensionRow
             name="Comprensión literal"
             value={comprehension.literal}
+            missing={comprehensionMissing.literal}
             colors={colors}
             bordered
           />
           <ComprehensionRow
             name="Comprensión inferencial"
             value={comprehension.inferential}
+            missing={comprehensionMissing.inferential}
             colors={colors}
           />
         </Card>
@@ -579,11 +586,14 @@ export function ProgressScreen() {
 function ComprehensionRow({
   name,
   value,
+  missing,
   colors,
   bordered = false,
 }: {
   name: string;
   value: ComprehensionRatio | null;
+  /** Respuestas que faltan para calcularla; con alguna ya dada, se dice cuántas. */
+  missing: number;
   colors: ReturnType<typeof useTheme>['colors'];
   bordered?: boolean;
 }) {
@@ -599,7 +609,11 @@ function ComprehensionRow({
             </Text>
           </Text>
         ) : (
-          <Text style={[styles.emptyNotice, { color: colors.textMuted }]}>Sin datos todavía</Text>
+          <Text style={[styles.emptyNotice, { color: colors.textMuted }]}>
+            {missing > 0 && missing < MIN_ANSWERS_PER_KIND
+              ? `Faltan ${missing} ${missing === 1 ? 'respuesta' : 'respuestas'} para calcularla`
+              : 'Sin datos todavía'}
+          </Text>
         )}
       </View>
     </View>
@@ -635,8 +649,12 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     flexDirection: 'row',
+    // Una etiqueta larga («Estabilidad ≥ 30 d y retención activa») baja de línea
+    // en vez de salirse por la derecha.
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'center',
+    gap: tokens.spacing.xs,
   },
   sectionTitle: {
     fontSize: tokens.fontSize.lg,

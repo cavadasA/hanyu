@@ -61,16 +61,13 @@ export interface ComprehensionRatio {
 }
 
 /** Con menos respuestas que esto, un porcentaje dice más del azar que del alumno. */
-const MIN_ANSWERS_PER_KIND = 5;
+export const MIN_ANSWERS_PER_KIND = 5;
 
 function ratioOf(correct: number, total: number): ComprehensionRatio | null {
   return total < MIN_ANSWERS_PER_KIND ? null : { correct, total, ratio: correct / total };
 }
 
-export function comprehensionByKind(attempts: readonly ReadingAttemptScore[]): {
-  literal: ComprehensionRatio | null;
-  inferential: ComprehensionRatio | null;
-} {
+function totalsByKind(attempts: readonly ReadingAttemptScore[]) {
   let literalCorrect = 0;
   let literalTotal = 0;
   let inferentialCorrect = 0;
@@ -85,8 +82,28 @@ export function comprehensionByKind(attempts: readonly ReadingAttemptScore[]): {
     literalTotal += attempt.total - inferentialCount;
   }
 
+  return { literalCorrect, literalTotal, inferentialCorrect, inferentialTotal };
+}
+
+export function comprehensionByKind(attempts: readonly ReadingAttemptScore[]): {
+  literal: ComprehensionRatio | null;
+  inferential: ComprehensionRatio | null;
+} {
+  const totals = totalsByKind(attempts);
   return {
-    literal: ratioOf(literalCorrect, literalTotal),
-    inferential: ratioOf(inferentialCorrect, inferentialTotal),
+    literal: ratioOf(totals.literalCorrect, totals.literalTotal),
+    inferential: ratioOf(totals.inferentialCorrect, totals.inferentialTotal),
+  };
+}
+
+/** Respuestas de cada tipo que faltan para que comprehensionByKind dé un porcentaje. */
+export function comprehensionAnswersMissing(attempts: readonly ReadingAttemptScore[]): {
+  literal: number;
+  inferential: number;
+} {
+  const totals = totalsByKind(attempts);
+  return {
+    literal: Math.max(0, MIN_ANSWERS_PER_KIND - totals.literalTotal),
+    inferential: Math.max(0, MIN_ANSWERS_PER_KIND - totals.inferentialTotal),
   };
 }
