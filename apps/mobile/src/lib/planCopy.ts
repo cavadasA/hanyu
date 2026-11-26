@@ -41,7 +41,7 @@ export function unavailableToText(
     case 'daily_limit_reached':
       return 'Ya has introducido las palabras nuevas de hoy';
     case 'no_deck':
-      return 'Añade un mazo en Library → Decks para empezar';
+      return 'Añade un mazo en Biblioteca → Mazos para empezar';
     case 'no_new_words':
       return 'No quedan palabras nuevas en tus mazos activos';
     case 'unit_unavailable':

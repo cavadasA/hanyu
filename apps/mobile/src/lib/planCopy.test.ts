@@ -30,7 +30,7 @@ describe('planCopy', () => {
 
   it('sin mazo indica dónde añadir uno en vez de dar el cupo por agotado', () => {
     expect(unavailableToText('no_deck', 'new_items')).toBe(
-      'Añade un mazo en Library → Decks para empezar',
+      'Añade un mazo en Biblioteca → Mazos para empezar',
     );
     expect(unavailableToText('no_new_words', 'new_items')).toBe(
       'No quedan palabras nuevas en tus mazos activos',

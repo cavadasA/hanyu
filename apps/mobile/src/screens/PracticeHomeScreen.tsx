@@ -12,33 +12,33 @@ export function PracticeHomeScreen() {
   return (
     <Screen>
       <View style={styles.header}>
-        <Text style={[styles.heading, { color: colors.text }]}>Practice</Text>
+        <Text style={[styles.heading, { color: colors.text }]}>Práctica</Text>
         <Text style={[styles.subtitle, { color: colors.textMuted }]}>
-          Exercises and graded readings
+          Ejercicios y lecturas graduadas
         </Text>
       </View>
 
       <HubTile
         icon="create-outline"
-        title="Exercises"
-        description="Five focused exercise types"
-        actionLabel="Exercises"
+        title="Ejercicios"
+        description="Cinco tipos de ejercicio"
+        actionLabel="Ejercicios"
         onPress={() => router.push('/practice/exercises')}
       />
 
       <HubTile
         icon="reader-outline"
-        title="Readings"
-        description="Read and inspect words"
-        actionLabel="Readings"
+        title="Lecturas"
+        description="Lee y consulta las palabras"
+        actionLabel="Lecturas"
         onPress={() => router.push('/practice/readings')}
       />
 
       <HubTile
         icon="alert-circle-outline"
-        title="Mistakes"
-        description="Practise words that still need work"
-        actionLabel="Mistakes"
+        title="Cuaderno de errores"
+        description="Practica las palabras que todavía fallas"
+        actionLabel="Cuaderno de errores"
         onPress={() => router.push('/practice/mistakes')}
       />
 

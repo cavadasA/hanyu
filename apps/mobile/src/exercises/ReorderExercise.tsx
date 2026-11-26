@@ -18,13 +18,13 @@ export function ReorderExercise({
 
   return (
     <View style={styles.container}>
-      <Text style={{ color: colors.textMuted }}>Build the sentence</Text>
+      <Text style={{ color: colors.textMuted }}>Ordena la frase</Text>
       <View style={styles.row}>
         {ordered.map((token, index) => (
           <Pressable
             key={`${token}-${index}`}
             accessibilityRole="button"
-            accessibilityLabel={`Remove ${token}`}
+            accessibilityLabel={`Quitar ${token}`}
             disabled={disabled}
             onPress={() =>
               onChange({
@@ -43,7 +43,7 @@ export function ReorderExercise({
           <Pressable
             key={token}
             accessibilityRole="button"
-            accessibilityLabel={`Add ${token}`}
+            accessibilityLabel={`Añadir ${token}`}
             disabled={disabled}
             onPress={() => onChange({ kind: 'reorder', tokens: [...ordered, token] })}
             style={[styles.token, { borderColor: colors.border }]}
@@ -54,11 +54,11 @@ export function ReorderExercise({
       </View>
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel="Clear order"
+        accessibilityLabel="Borrar el orden"
         disabled={disabled || ordered.length === 0}
         onPress={() => onChange({ kind: 'reorder', tokens: [] })}
       >
-        <Text style={{ color: colors.vermilion }}>Clear order</Text>
+        <Text style={{ color: colors.vermilion }}>Borrar el orden</Text>
       </Pressable>
     </View>
   );

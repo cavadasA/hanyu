@@ -45,7 +45,7 @@ describe('ExerciseRenderer', () => {
       />,
     );
 
-    await fireEvent.changeText(view.getByPlaceholderText('Type your answer'), '学习');
+    await fireEvent.changeText(view.getByPlaceholderText('Escribe tu respuesta'), '学习');
     expect(onChange).toHaveBeenLastCalledWith({ kind: 'fill_blank', text: '学习' });
   });
 
@@ -85,8 +85,8 @@ describe('ExerciseRenderer', () => {
       />,
     );
 
-    expect(view.getByRole('button', { name: 'Play dictation' })).toBeTruthy();
-    await fireEvent.changeText(view.getByPlaceholderText('Type what you hear'), '你好');
+    expect(view.getByRole('button', { name: 'Reproducir el dictado' })).toBeTruthy();
+    await fireEvent.changeText(view.getByPlaceholderText('Escribe lo que oyes'), '你好');
     expect(onChange).toHaveBeenLastCalledWith({ kind: 'dictation', text: '你好' });
   });
 
@@ -104,7 +104,7 @@ describe('ExerciseRenderer', () => {
       />,
     );
 
-    await fireEvent.press(view.getByRole('button', { name: 'Add 我' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Añadir 我' }));
 
     expect(onChange).toHaveBeenLastCalledWith({ kind: 'reorder', tokens: ['我'] });
   });
@@ -120,7 +120,7 @@ describe('ExerciseRenderer', () => {
       />,
     );
 
-    await fireEvent.press(view.getByRole('button', { name: 'Select 学生' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Elegir 学生' }));
     await fireEvent.press(view.getByRole('button', { name: 'Match student' }));
 
     expect(onChange).toHaveBeenLastCalledWith({

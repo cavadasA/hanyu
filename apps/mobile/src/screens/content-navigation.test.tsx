@@ -16,13 +16,13 @@ describe('content tab navigation', () => {
   it('opens every content destination from its tab landing screen', async () => {
     const practice = await render(<PracticeHomeScreen />);
 
-    await fireEvent.press(practice.getByRole('button', { name: 'Exercises' }));
+    await fireEvent.press(practice.getByRole('button', { name: 'Ejercicios' }));
     expect(mockPush).toHaveBeenLastCalledWith('/practice/exercises');
 
-    await fireEvent.press(practice.getByRole('button', { name: 'Readings' }));
+    await fireEvent.press(practice.getByRole('button', { name: 'Lecturas' }));
     expect(mockPush).toHaveBeenLastCalledWith('/practice/readings');
 
-    await fireEvent.press(practice.getByRole('button', { name: 'Mistakes' }));
+    await fireEvent.press(practice.getByRole('button', { name: 'Cuaderno de errores' }));
     expect(mockPush).toHaveBeenLastCalledWith('/practice/mistakes');
 
     await fireEvent.press(practice.getByRole('button', { name: 'Expresión' }));
@@ -30,10 +30,10 @@ describe('content tab navigation', () => {
     await practice.unmount();
 
     const library = await render(<LibraryHomeScreen />);
-    await fireEvent.press(library.getByRole('button', { name: 'Words' }));
+    await fireEvent.press(library.getByRole('button', { name: 'Palabras' }));
     expect(mockPush).toHaveBeenLastCalledWith('/library/words');
 
-    await fireEvent.press(library.getByRole('button', { name: 'Grammar' }));
+    await fireEvent.press(library.getByRole('button', { name: 'Gramática' }));
     expect(mockPush).toHaveBeenLastCalledWith('/library/grammar');
   });
 });

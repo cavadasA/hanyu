@@ -22,7 +22,7 @@ describe('MatchingExercise', () => {
       />,
     );
 
-    await fireEvent.press(view.getByRole('button', { name: 'Select 学生' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Elegir 学生' }));
     await fireEvent.press(view.getByRole('button', { name: 'Match student' }));
 
     expect(onChange).toHaveBeenCalledWith({
@@ -45,7 +45,7 @@ describe('MatchingExercise', () => {
     // Press right column first
     await fireEvent.press(view.getByRole('button', { name: 'Match student' }));
     // Then press left column
-    await fireEvent.press(view.getByRole('button', { name: 'Select 学生' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Elegir 学生' }));
 
     expect(onChange).toHaveBeenCalledWith({
       kind: 'matching',
@@ -64,7 +64,7 @@ describe('MatchingExercise', () => {
       />,
     );
 
-    const btn = view.getByRole('button', { name: 'Select 学生' });
+    const btn = view.getByRole('button', { name: 'Elegir 学生' });
     await fireEvent.press(btn);
     expect(btn.props.accessibilityState.selected).toBe(true);
 
@@ -82,8 +82,8 @@ describe('MatchingExercise', () => {
       />,
     );
 
-    const btn1 = view.getByRole('button', { name: 'Select 学生' });
-    const btn2 = view.getByRole('button', { name: 'Select 老师' });
+    const btn1 = view.getByRole('button', { name: 'Elegir 学生' });
+    const btn2 = view.getByRole('button', { name: 'Elegir 老师' });
 
     await fireEvent.press(btn1);
     expect(btn1.props.accessibilityState.selected).toBe(true);
@@ -105,7 +105,7 @@ describe('MatchingExercise', () => {
       />,
     );
 
-    await fireEvent.press(view.getByRole('button', { name: 'Select 学生' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Elegir 学生' }));
 
     expect(onChange).toHaveBeenCalledWith({
       kind: 'matching',
@@ -144,7 +144,7 @@ describe('MatchingExercise', () => {
     );
 
     // Select 老师 (unmatched)
-    await fireEvent.press(view.getByRole('button', { name: 'Select 老师' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Elegir 老师' }));
     // Match with student (was matched to 学生)
     await fireEvent.press(view.getByRole('button', { name: 'Match student' }));
 
@@ -166,7 +166,7 @@ describe('MatchingExercise', () => {
       />,
     );
 
-    const btnLeft = view.getByRole('button', { name: 'Select 学生' });
+    const btnLeft = view.getByRole('button', { name: 'Elegir 学生' });
     const btnRight = view.getByRole('button', { name: 'Match student' });
 
     await fireEvent.press(btnLeft);

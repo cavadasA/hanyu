@@ -47,8 +47,8 @@ export function ExercisesScreen() {
   return (
     <Screen>
       <View>
-        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Practice</Text>
-        <Text style={[styles.title, { color: colors.text }]}>Exercises</Text>
+        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>Práctica</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Ejercicios</Text>
       </View>
 
       {session.error ? <ErrorBanner message={session.error} onRetry={retrySession} /> : null}

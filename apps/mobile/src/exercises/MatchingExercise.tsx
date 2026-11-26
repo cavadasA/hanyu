@@ -108,7 +108,7 @@ export function MatchingExercise({
 
   return (
     <View style={styles.container}>
-      <Text style={{ color: colors.textMuted }}>Select a Chinese word, then its meaning</Text>
+      <Text style={{ color: colors.textMuted }}>Elige una palabra en chino y luego su significado</Text>
       <View style={styles.columns}>
         <View style={styles.column}>
           {prompt.pairs.map((pair) => {
@@ -125,7 +125,7 @@ export function MatchingExercise({
               <Pressable
                 key={pair.left}
                 accessibilityRole="button"
-                accessibilityLabel={`Select ${pair.left}`}
+                accessibilityLabel={`Elegir ${pair.left}`}
                 accessibilityState={{ selected: isSelected, disabled: Boolean(disabled) }}
                 disabled={disabled}
                 onPress={() => handlePressLeft(pair.left)}

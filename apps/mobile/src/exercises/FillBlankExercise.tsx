@@ -26,7 +26,7 @@ export function FillBlankExercise({
     <View style={styles.container}>
       <Text style={[styles.prompt, { color: colors.text }]}>{prompt.sentence}</Text>
       <TextInput
-        placeholder="Type your answer"
+        placeholder="Escribe tu respuesta"
         placeholderTextColor={colors.textMuted}
         value={value.kind === 'fill_blank' ? value.text : ''}
         editable={!disabled}

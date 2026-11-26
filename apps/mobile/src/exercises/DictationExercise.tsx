@@ -17,9 +17,9 @@ export function DictationExercise({
 
   return (
     <View style={styles.container}>
-      <AudioButton text={prompt.audio_text} label="Play dictation" />
+      <AudioButton text={prompt.audio_text} label="Reproducir el dictado" />
       <TextInput
-        placeholder="Type what you hear"
+        placeholder="Escribe lo que oyes"
         placeholderTextColor={colors.textMuted}
         value={value.kind === 'dictation' ? value.text : ''}
         editable={!disabled}
