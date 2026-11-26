@@ -4,9 +4,9 @@
 // diccionario; para hanzi sueltos y nombres sin entrada usa las lecturas de
 // `pinyin-pro`.
 //
-// Es la lógica de scripts/lib/ssml.js (Plan 10). Solo la usa la build: depende
-// de pinyin-pro, así que no se importa desde nada que corra en el móvil o en
-// la Edge Function. Cuando el Plan 10 termine, ssml.js importará de aquí.
+// La usan la build (acepciones, Plan 14) y la síntesis de audio
+// (scripts/lib/ssml.js, Plan 10). Depende de pinyin-pro, así que no se importa
+// desde nada que corra en el móvil o en la Edge Function.
 import { pinyin as pinyinPro } from 'pinyin-pro';
 import { pinyinLetters, renderPinyin, type PinyinLetter } from './pinyin.ts';
 import { tokenizeReading, type DictionaryEntry, type ReadingToken } from './tokenize.ts';
@@ -84,36 +84,77 @@ function* tokenAlignments(
   }
 }
 
-const dictionaryCache = new WeakMap<object, Map<string, string[]>>();
-/** Lecturas sin tono de cada forma del diccionario, de la más larga a la más corta. */
-function entriesByHanziOf(dictionary: DictionaryEntry[]): Map<string, string[]> {
+interface DictionaryIndex {
+  /** Lecturas sin tono de cada forma, de la más larga a la más corta. */
+  entriesByHanzi: Map<string, string[]>;
+  /** Lecturas sin tono que el diccionario da a cada hanzi suelto. */
+  readingsByChar: Map<string, Set<string>>;
+}
+
+const dictionaryCache = new WeakMap<object, DictionaryIndex>();
+function indexDictionary(dictionary: DictionaryEntry[]): DictionaryIndex {
   const cached = dictionaryCache.get(dictionary);
   if (cached) return cached;
 
   const entriesByHanzi = new Map<string, string[]>();
+  const readingsByChar = new Map<string, Set<string>>();
   for (const entry of dictionary) {
     const entryBase = baseOf(entry.pinyin);
     const bases = entriesByHanzi.get(entry.hanzi) ?? [];
     if (!bases.includes(entryBase)) bases.push(entryBase);
     entriesByHanzi.set(entry.hanzi, bases);
+
+    // Una entrada cuyo pinyin no se reparte entre sus hanzi (las variantes como
+    // 没（有） comparten el pinyin de la forma larga) no dice nada de cada hanzi.
+    const chars = Array.from(entry.hanzi);
+    const split = splitChars(chars, entryBase, 0, entryBase.length).next().value;
+    if (!split) continue;
+    chars.forEach((ch, i) => {
+      const reading = entryBase.slice(...split.bounds[i]);
+      if (reading === ERHUA) return;
+      const readings = readingsByChar.get(ch) ?? new Set<string>();
+      readings.add(reading);
+      readingsByChar.set(ch, readings);
+    });
   }
   for (const bases of entriesByHanzi.values()) bases.sort((a, b) => b.length - a.length);
 
-  dictionaryCache.set(dictionary, entriesByHanzi);
-  return entriesByHanzi;
+  const index = { entriesByHanzi, readingsByChar };
+  dictionaryCache.set(dictionary, index);
+  return index;
+}
+
+/** Lecturas sin tono que el diccionario da a cada hanzi: un polífono tiene más de una. */
+export function charReadings(dictionary: DictionaryEntry[]): Map<string, Set<string>> {
+  return indexDictionary(dictionary).readingsByChar;
+}
+
+/** Sílaba en el formato de SAPI: letras sin tono y el tono al final (5 = neutro). */
+export function syllableOf(letters: readonly PinyinLetter[], [start, end]: Bounds): string {
+  const span = letters.slice(start, end);
+  const tone = span.find(letter => letter.tone)?.tone ?? 5;
+  return `${span.map(letter => letter.base).join('')} ${tone}`;
+}
+
+export interface AlignedHanzi {
+  token: ReadingToken;
+  char: string;
+  /** Posición del hanzi en `zh`, en unidades UTF-16. */
+  index: number;
+  /** Letras de `letters` que dicen este hanzi. */
+  bounds: Bounds;
 }
 
 /**
- * Los tokens de la frase, tokenizada con `dictionary`, con la parte del pinyin
- * de la frase que dice cada uno (null en la puntuación). Si las sílabas del
- * pinyin no se pueden repartir entre los hanzi, devuelve null.
+ * La sílaba de cada hanzi de la frase según su propio pinyin, o null si las
+ * sílabas del pinyin no se pueden repartir entre los hanzi.
  */
-export function alignTokens(
+export function alignHanzi(
   sentence: { zh: string; pinyin: string },
   dictionary: DictionaryEntry[],
-): SenseToken[] | null {
-  const entriesByHanzi = entriesByHanziOf(dictionary);
-  const letters: PinyinLetter[] = pinyinLetters(sentence.pinyin);
+): { letters: PinyinLetter[]; tokens: ReadingToken[]; hanzi: AlignedHanzi[] } | null {
+  const { entriesByHanzi } = indexDictionary(dictionary);
+  const letters = pinyinLetters(sentence.pinyin);
   const base = letters.map(letter => letter.base).join('');
   const tokens = tokenizeReading(sentence.zh, dictionary);
   const han = tokens.filter(token => HAN.test(token.text));
@@ -130,11 +171,39 @@ export function alignTokens(
   const splits = search(0, 0);
   if (!splits) return null;
 
-  const pinyinByToken = new Map<ReadingToken, string>();
-  han.forEach((token, index) => {
-    const { bounds } = splits[index];
-    pinyinByToken.set(token, renderPinyin(letters.slice(bounds[0][0], bounds[bounds.length - 1][1])));
+  const hanzi = han.flatMap((token, t) => {
+    const chars = Array.from(token.text);
+    const start = Number(token.id.slice(1));
+    return splits[t].bounds.map((bounds, k) => ({
+      token,
+      char: chars[k],
+      index: start + chars.slice(0, k).join('').length,
+      bounds,
+    }));
   });
+  return { letters, tokens, hanzi };
+}
 
-  return tokens.map(token => ({ text: token.text, pinyin: pinyinByToken.get(token) ?? null }));
+/**
+ * Los tokens de la frase, tokenizada con `dictionary`, con la parte del pinyin
+ * de la frase que dice cada uno (null en la puntuación). Si las sílabas del
+ * pinyin no se pueden repartir entre los hanzi, devuelve null.
+ */
+export function alignTokens(
+  sentence: { zh: string; pinyin: string },
+  dictionary: DictionaryEntry[],
+): SenseToken[] | null {
+  const aligned = alignHanzi(sentence, dictionary);
+  if (!aligned) return null;
+
+  const pinyinByToken = new Map<ReadingToken, string>();
+  for (const token of new Set(aligned.hanzi.map(entry => entry.token))) {
+    const own = aligned.hanzi.filter(entry => entry.token === token);
+    pinyinByToken.set(
+      token,
+      renderPinyin(aligned.letters.slice(own[0].bounds[0], own[own.length - 1].bounds[1])),
+    );
+  }
+
+  return aligned.tokens.map(token => ({ text: token.text, pinyin: pinyinByToken.get(token) ?? null }));
 }
